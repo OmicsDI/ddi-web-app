@@ -1,0 +1,46 @@
+
+.container {
+  background: #fff;
+  width:100%;
+}
+
+.container-main {
+  min-height: 500px;
+  padding-top: 10px;
+  width:100%;
+}
+.dot-bottom {
+    font-size: 0;
+    line-height: 0;
+    border-width: 10px;
+    border-color: lightblue;
+    border-bottom-width: 0;
+    border-style: dashed;
+    border-top-style: solid;
+    border-left-color: white;
+    border-right-color: white;
+    margin-top: 10px;
+    margin-right: auto; 
+}
+
+    .scrollbox {
+        overflow: auto; /* This is changed by enscroll, but must be defined */
+//        width: 368px; /* The arbitrary width and height of the view pane */
+        height: 550px;
+    }
+    .vertical-track {
+        width: 16px; /* How wide is the scrollbar going to be? */
+        background-color: #aaa; /* What color should the vertical track be? */
+    }
+    .vertical-handle {
+        width: 16px; /* How wide is the scrollbar handle? */
+        background-color: #aaf; /* What color should the handle be? */
+    }
+
+ a.disabled
+{
+	color: #AAAAAA;
+	cursor: default;
+	pointer-events: none;
+	text-decoration: none;
+}

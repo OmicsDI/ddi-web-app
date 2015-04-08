@@ -1,0 +1,3184 @@
+<html xmlns:ng="http://angularjs.org" ng-app="rnacentralApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+        
+    
+          <meta charset="utf-8">
+          <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+          <meta content="width=device-width" name="viewport">
+        
+    <meta content="RNAcentral is a new resource to organise data for non-protein coding RNAs" name="description">
+
+
+        <title>Search: DDI</title>
+
+<!---        <link type="text/css" href="static/CACHE/css/3fdcc03c118e.css" rel="stylesheet">
+-->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+        <link type="text/css" href="css/test.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+<!--        <link type="text/css" href="css/984-24-col-fluid.css" rel="stylesheet">
+-->
+        
+
+        <!-- Favicons -->
+        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+    
+	<script src="css/jquery.min.js"></script>
+        
+    </head>
+
+    <body class="level2">
+        <header>
+        <!--
+Copyright [2009-2014] EMBL-European Bioinformatics Institute
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="container rnacentral-masthead">
+<div class="masthead grid_24" id="global-masthead">
+            <!--This has to be one line and no newline characters-->
+            <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"></a>
+
+            <nav>
+                <ul id="global-nav">
+                    <!-- set active class as appropriate -->
+                                        <li class="first active" id="services"><a title="Services" href="//www.ebi.ac.uk/services">Services</a></li>
+                                        <li class="" id="research"><a title="Research" href="//www.ebi.ac.uk/research">Research</a></li>
+                                        <li class="" id="training"><a title="Training" href="//www.ebi.ac.uk/training">Training</a></li>
+                                        <li class="" id="industry"><a title="Industry" href="//www.ebi.ac.uk/industry">Industry</a></li>
+                                        <li class=" last" id="about"><a title="About us" href="//www.ebi.ac.uk/about">About us</a></li>
+                                    </ul>
+            </nav>
+
+        </div>
+</div>
+
+<div class="navbar navbar-default navbar-static-top">
+
+  <div class="container rnacentral-masthead">
+
+    <!-- global-search -->
+    <div class="row">
+      <div class="col-md-4">
+        <a href="/"><img class="rnacentral-header-logo" alt="RNAcentral logo" src="static/img/logo/RNAcentral_logo_ltgrey.png"></a>
+      </div>
+
+      <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
+
+
+
+
+        <form ng-submit="submit_query()" class="global-search ng-pristine ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required" name="queryForm" novalidate>
+          <fieldset>
+          <div ng-class="(query.submitted &amp;&amp; queryForm.$invalid) ? 'has-error' : ''" class="form-group">
+            <div class="input-group">
+              <input type="text" required autocomplete="off" ng-maxlength="1000" ng-minlength="2" ng-model="query.text" tabindex="1" name="text" id="query-text" class="form-control ng-pristine ng-valid-minlength ng-valid-maxlength ng-valid ng-valid-required ng-touched" placeholder="organism, expert database, gene, ncRNA type, accession">
+              <div class="input-group-btn">
+                <button class="btn btn-primary"  type="submit"> Search
+                  <i class="fa fa-search"></i>
+                </button>
+              </div><!-- /input-group-btn -->
+            </div><!--input-group -->
+            <span class="help-block example-searches">
+              <small>
+                <i>
+                  Examples:
+                  <a ng-click="meta_search('RNA')" rel="nofollow" href="">RNA</a>,
+                  <a ng-click="meta_search('TAXONOMY:&quot;9606&quot;')" rel="nofollow" href="">Homo sapiens</a>,
+                  <a ng-click="meta_search('mirbase')" rel="nofollow" href="">miRBase</a>,
+                  <a ng-click="meta_search('HOTAIR')" rel="nofollow" href="">HOTAIR</a>,
+                  <a ng-click="meta_search('Escherichia*')" rel="nofollow" href="">Escherichia*</a>
+                </i>
+              </small>
+            </span>
+            <label ng-show="query.submitted &amp;&amp; (queryForm.text.$error.required || queryForm.text.$error.minlength)" for="query-text" class="control-label has-error ng-hide">
+              Your query is too short
+            </label>
+            <label ng-show="query.submitted &amp;&amp; (queryForm.text.$error.maxlength)" for="query-text" class="control-label ng-hide">
+              Your query is too long
+            </label>
+          </div><!-- /form-group -->
+          </fieldset>
+        </form><!-- /form -->
+
+</div><!-- /ng-controlleomething in the input box:</p>
+<p>Name: <input type="text" ng-model="name"></p>
+<p>{{name}}</p>-->
+    </div><!-- /row -->
+    <!-- /global-search -->
+
+  </div>
+
+
+</div>
+
+<div class="masthead grid_24 nomenu" id="local-masthead">
+
+
+        <!-- /local-search -->
+        
+        <!-- local-nav -->
+
+        <nav>
+            <ul id="local-nav" class="grid_24">
+                                <li class=" first" id="home-menu"><a title="Home" href="http://www.ebi.ac.uk/ddi/">Home</a></li>
+                                <li class="" id="browse-menu"><a title="Browse" href="http://www.ebi.ac.uk/ddi/simpleSearch?q=&amp;submit=Search">Browse</a></li>
+                                <li class="" id="api-menu"><a title="DDI API" href="http://www.ebi.ac.uk/ddi/api">API</a></li>
+                                <li class="" id="help-menu"><a title="DDI help" href="http://www.ebi.ac.uk/ddi/help/">Help</a></li>
+                                <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://www.ebi.ac.uk/ddi/help/about">About DDI</a></li>
+                                                <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                             add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                             whichever one will show up last...
+                             For example: -->
+                                <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
+                                <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+                                <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+                            </ul>
+        </nav>
+
+        <!-- /local-nav -->
+
+</div>
+
+        </header>
+
+            <!--
+Copyright [2009-2014] EMBL-European Bioinformatics Institute
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+<div ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="">
+
+  <h1>
+    <i class="fa fa-search"></i> Results
+    <small ng-show="search_in_progress" class="ng-hide" style="">
+      <i class="fa fa-spinner fa-spin"></i>
+    </small>
+    <small ng-class="search_in_progress ? 'animated flash infinite' : 'hidden'" id="metadata-search-status" class="hidden">
+      Searching...
+    </small>
+    <small ng-show="result.hitCount &gt; 0" class="" style="">
+      <!-- ngIf: result.hitCount == 1 -->
+      <!-- ngIf: result.hitCount > 1 --><span id="metasearch-results-count" ng-if="result.hitCount &gt; 1" class="ng-binding ng-scope">15 out of 8,446,855 sequences</span><!-- end ngIf: result.hitCount > 1 -->
+    </small>
+
+
+  </h1>
+
+  <div class="row visible-xs">
+    <div class="col-xs-12">
+      <button id="toggle-facets" ng-click="toggle_facets()" class="btn btn-default">Show facets</button>
+
+      <a href="/help/metadata-search" class="btn btn-default">Search help</a>
+
+    </div>
+  </div> <!-- .visible-xs -->
+
+  <!-- ngIf: show_error --> <!-- ng-if="show_error" -->
+
+  <!-- ngIf: show_export_error --> <!-- ng-if="show_export_error" -->
+
+  <!-- ngIf: result.hitCount == 0 -->
+
+  <div ng-show="result.hitCount &gt; 0" class="row" style="">
+
+
+    <div class="col-md-3 col-sm-4 hidden-xs metasearch-facets">
+      <div class="metasearch-organism-facet force-scrollbars">
+      <h3 class="ng-binding">Show results for</h3>
+      <ul class="list-unstyled metasearch-facet-values">
+      <li> <label><input type="radio" name="optradio">Proteomics</label></li>
+      <li> <label><input type="radio" name="optradio">Metabolomics</label></li>
+      <li> <label><input type="radio" name="optradio">Genomics</label></li>
+      </ul>      
+      </div>
+    
+      <ul class="list-unstyled">
+      <div>
+      <h3 class="ng-binding">Repository</h3>
+<!--      <div class="metasearch-organism-facet force-scrollbars">  -->
+<div  class="metasearch-organism-facet force-scrollbars">
+        <!-- ngRepeat: facet in result.facets -->
+        <li ng-repeat="facet in result.facets" class="facet animate-repeat ng-scope" style="">
+
+            <ul ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}" class="list-unstyled metasearch-facet-values">
+                <!-- ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Peptide Atlas <small class="ng-binding">(7,320,570)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">PRIDE <small class="ng-binding">(2,493,782)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">MetaboLights <small class="ng-binding">(39,164)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">EGA <small class="ng-binding">(29,771)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">gtRNAdb <small class="ng-binding">(10,625)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">miRBase <small class="ng-binding">(8,795)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">RDP <small class="ng-binding">(4,779)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">tmRNA Website <small class="ng-binding">(2,857)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">PDBe <small class="ng-binding">(1,753)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">snOPY <small class="ng-binding">(620)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">SRPDB <small class="ng-binding">(503)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">lncRNAdb <small class="ng-binding">(62)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues -->
+                <!-- ngIf: facet.label == 'Organisms' && facet.facetValues.length > 10 -->
+            </ul>
+        </li><!-- end ngRepeat: facet in result.facets -->
+        </div>
+        <p><span class="label label-info  item dot-bottom"  > </span></p>
+        </div>
+       </ul>
+       
+       <ul class="list-unstyled">
+<!--       <h2 class="ng-binding">Refine by</h2>
+-->
+       <h2 >Refine by</h2>
+       <div>
+       <li ng-repeat="facet in result.facets" class="facet animate-repeat ng-scope" style="">
+           
+            <h3 class="ng-binding">Species & Organisms</h3>
+            <div style="border:1px solid #b7b7b7">
+            <input type="text" class="form-control" id="usr" placeholder="Find your species">
+            <ul ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}" class="list-unstyled metasearch-facet-values metasearch-organism-facet force-scrollbars">
+                <!-- ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">rRNA <small class="ng-binding">(5,880,822)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">misc RNA <small class="ng-binding">(1,138,619)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">tRNA <small class="ng-binding">(848,678)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">piRNA <small class="ng-binding">(208,933)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">other <small class="ng-binding">(132,237)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">miRNA <small class="ng-binding">(95,603)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">snRNA <small class="ng-binding">(90,546)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">snoRNA <small class="ng-binding">(80,702)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">siRNA <small class="ng-binding">(45,059)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">lncRNA <small class="ng-binding">(43,809)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">hammerhead ribozyme <small class="ng-binding">(40,229)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">precursor RNA <small class="ng-binding">(20,436)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">SRP RNA <small class="ng-binding">(14,422)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">antisense RNA <small class="ng-binding">(11,028)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">RNase P RNA <small class="ng-binding">(9,207)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">tmRNA <small class="ng-binding">(4,522)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">scRNA <small class="ng-binding">(968)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">ribozyme <small class="ng-binding">(926)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">autocatalytically spliced intron <small class="ng-binding">(589)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">RNase MRP RNA <small class="ng-binding">(587)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">vault RNA <small class="ng-binding">(456)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">rasiRNA <small class="ng-binding">(325)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">telomerase RNA <small class="ng-binding">(273)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">guide RNA <small class="ng-binding">(68)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Y RNA <small class="ng-binding">(18)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues -->
+                <!-- ngIf: facet.label == 'Organisms' && facet.facetValues.length > 10 -->
+            </ul>
+           </div>
+        </li><!-- end ngRepeat: facet in result.facets -->
+        </div>
+        <div>
+            <p><span class="label label-info  item dot-bottom"  > </span></p>
+        </div>
+        
+        <li ng-repeat="facet in result.facets" class="facet animate-repeat ng-scope" style="">
+            <h3 class="ng-binding">Technology</h3>
+            <div style="border:1px solid #b7b7b7">
+            <ul ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}" class="list-unstyled metasearch-facet-values metasearch-organism-facet force-scrollbars">
+                <!-- ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Mass Spectrum <small class="ng-binding">(112,238)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">NMR Spectrum <small class="ng-binding">(87,372)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">NGS <small class="ng-binding">(69,006)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><!-- end ngRepeat: facet_value in facet.facetValues -->
+                <!-- ngIf: facet.label == 'Organisms' && facet.facetValues.length > 10 --><!-- end ngIf: facet.label == 'Organisms' && facet.facetValues.length > 10 -->
+              <li>  
+             <span class="item dot-bottom"></span>
+              </li>
+            </ul>
+            </div>
+        </li><!-- end ngRepeat: facet in result.facets -->
+        
+        <li ng-repeat="facet in result.facets" class="facet animate-repeat ng-scope" style="">
+            <h3 class="ng-binding">Modifications<small> in Proteomics</small></h3>
+            <div style="border:1px solid #b7b7b7">
+            <input type="text" class="form-control" id="usr" placeholder="Find your Modifications">
+            <ul ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}" class="list-unstyled metasearch-facet-values">
+                <!-- ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Not available <small class="ng-binding">(8,311,202)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Available <small class="ng-binding">(135,653)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues -->
+                <!-- ngIf: facet.label == 'Organisms' && facet.facetValues.length > 10 -->
+            </ul>
+            </div>
+        </li><!-- end ngRepeat: facet in result.facets -->
+        
+        <li ng-repeat="facet in result.facets" class="facet animate-repeat ng-scope" style="">
+            <h3 class="ng-binding">Instruments & Platforms</h3>
+            <div style="border:1px solid #b7b7b7">
+            <input type="text" class="form-control" id="usr" placeholder="Find your instrument">
+            <ul ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}" class="list-unstyled metasearch-facet-values">
+                <!-- ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Active <small class="ng-binding">(8,416,528)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues --><li ng-repeat="facet_value in facet.facetValues" class="ng-scope">
+                  <input type="checkbox" ng-click="facet_search(facet.id, facet_value.value)" ng-checked="is_facet_applied(facet.id, facet_value.value)" name="facet.label">
+                  <a class="metasearch-facet-link ng-binding" ng-click="facet_search(facet.id, facet_value.value)" href="">Obsolete <small class="ng-binding">(30,327)</small></a>
+                </li><!-- end ngRepeat: facet_value in facet.facetValues -->
+                <!-- ngIf: facet.label == 'Organisms' && facet.facetValues.length > 10 -->
+            </ul>
+            </div>
+        </li><!-- end ngRepeat: facet in result.facets -->
+      </ul>
+      
+      <hr>
+      <small class="text-muted">
+        Powered by <a target="_blank" href="http://www.ebi.ac.uk/ebisearch/">EBI Search</a>
+      </small>
+    </div>
+
+    <div class="col-md-9 col-sm-8 col-xs-12 metasearch-results">
+<div id="search-results" class="grid_18 right-column">
+
+            <!-- paging buttons -->
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- paging buttons -->
+<div class="grid_24">
+    
+    <div class="col_pager">
+        <div class="pr-pager">
+            
+            
+            
+                
+                    Page
+                    
+                        
+                            <span>1</span>
+                        
+                        
+                    
+                
+                
+
+                
+                
+
+                
+                    
+                    
+                
+
+                
+
+                
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=1&amp;sort=publication_date&amp;order=desc" class="">2</a>
+
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=2&amp;sort=publication_date&amp;order=desc" class="">3</a>
+
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=3&amp;sort=publication_date&amp;order=desc" class="">4</a>
+
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=4&amp;sort=publication_date&amp;order=desc" class="">5</a>
+
+                                
+                            
+                        
+                    
+                
+
+                
+                ...
+                
+                    
+                        
+                        
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=134&amp;sort=publication_date&amp;order=desc" class="">135</a>
+
+                        
+                    
+                
+            
+        </div>
+        <div class="pr-page-size">
+            
+                Page size
+                
+                    
+                        <span>10</span>
+                    
+                    
+                
+            
+            
+                
+                    
+                    
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=20&amp;page=0&amp;sort=publication_date&amp;order=desc" class="">20</a>
+
+                    
+                
+            
+            
+                
+                    
+                    
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=50&amp;page=0&amp;sort=publication_date&amp;order=desc" class="">50</a>
+
+                    
+                
+            
+            
+                
+                    
+                    
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=100&amp;page=0&amp;sort=publication_date&amp;order=desc" class="">100</a>
+
+                    
+                
+            
+        </div>
+        <div class="pr-stats">
+            Showing <span>1 - 10</span> of <span>1346</span> results
+        </div>
+    </div>
+</div> <!-- paging buttons -->
+
+
+                
+                <div class="grid_24">
+                    <div id="sort-by" class="clearfix">
+                            
+                        <ul id="sort-by-menu" class="search-header">
+                            <li>Sort by: </li>
+                                
+                            <li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=0&amp;sort=id&amp;order=desc" class="">Accession</a>
+</li>
+                                
+                            <li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=0&amp;sort=project_title&amp;order=desc" class="">Title</a>
+</li>
+                                
+                            <li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=0&amp;sort=score&amp;order=desc" class="desc">Relevance</a>
+</li>
+                                
+                            <li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=0&amp;sort=publication_date&amp;order=asc" class="selected desc">Publication date</a>
+</li>
+                        </ul>
+                    </div>
+                </div>
+
+                
+                <div>
+                    
+                    <div id="search-results-items" class="grid_24 list-group">
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="project-widget  list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD001719">PXD001719</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Quantitative proteomics analysis of the Arg/N-end rule pathway of targeted degradation in Arabidopsis roots
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Arabidopsis thaliana (Mouse-ear cress)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        According to the Arg/N-end rule pathway, proteins with basic N-t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD001719">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+                
+                    
+                        
+                            
+                            
+                        
+                        
+                        
+                    
+
+                    
+                        
+                    
+
+                    <a title="Biological Dataset" class="biological" href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;projectTagFilters=Biological">Biological Dataset</a>
+                
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000734">PXD000734</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Proteomic Analysis of Human Liver S9 Fraction by 2D-LC-MSMS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Homo sapiens (Human)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Liver plays a crucial role in numerous metabolic processes and t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000734">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000733">PXD000733</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Proteomic Analysis of Mouse Liver S9 Fraction by 2D-LC-MSMS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Mus musculus (Mouse)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Liver plays a crucial role in numerous metabolic processes and t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000733">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000731">PXD000731</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Proteomic Analysis of Mouse Liver Microsomes by 2D-LC-MSMS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Mus musculus (Mouse)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Liver plays a crucial role in numerous metabolic processes and t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000731">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000721">PXD000721</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Proteomic Analysis of Human Liver Microsomes by 2D-LC-MSMS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Homo sapiens (Human)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Liver plays a crucial role in numerous metabolic processes and t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000721">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000720">PXD000720</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Proteomic Analysis of Rat Liver Microsomes by 2D-LC-MSMS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Rattus norvegicus (Rat)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Liver plays a crucial role in numerous metabolic processes and t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000720">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000717">PXD000717</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Proteomic Analysis of Rat Liver S9 Fraction by 2D-LC-MSMS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Rattus norvegicus (Rat)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Liver plays a crucial role in numerous metabolic processes and t
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000717">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000955">PXD000955</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Highly accurate protein complex retrieval by affinity enrichment MS rather than affinity purification MS
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Saccharomyces cerevisiae (Baker's yeast)
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Protein-protein interactions are fundamental to the understandin
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD000955">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+                
+                    
+                        
+                            
+                            
+                        
+                        
+                        
+                    
+
+                    
+                        
+                    
+
+                    <a title="Technical Dataset" class="technical" href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;projectTagFilters=Technical">Technical Dataset</a>
+                
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PRD000542">PRD000542</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Metaproteome analysis of different soil types
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    unidentified
+                
+                    environmental samples
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        Metaproteome analysis of a forest soil and a potting soil. Diffe
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PRD000542">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-26
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+    <div class="project-widget list-group-item">
+
+        
+        <div class="project-widget-accession">
+
+            
+            
+                
+            
+            <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD001385">PXD001385</a>
+            
+
+        </div>
+            
+        <div class="project-widget-title">
+            
+            
+                
+                
+                    Intensity-based label-free proteomics using a quadrupole orbitrap mass spectrometer
+                
+            
+            <br>
+        </div>
+
+        
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+        <div class="project-widget-paragraph">
+            
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+
+
+            
+            
+            Species:
+            
+                
+                
+                
+                
+            
+            
+            
+            
+            
+                
+                    Homo sapiens (Human)
+                
+                    Escherichia coli
+                
+            
+            <br>
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+                
+                
+                    Project description:
+                    
+                        
+                        We present a unique data set for benchmarking label free quantit
+                        
+                            
+                        
+                        <a href="http://www.ebi.ac.uk/pride/archive/projects/PXD001385">(More)</a>
+                        
+                        
+                    
+                    <br>
+                
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+            
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            Made public:
+            2015-03-25
+        </div>
+
+            
+        <div class="project-widget-paragraph">
+            
+        </div>
+
+            
+        <div class="project-widget-tag">
+            
+        </div>
+    </div>
+
+
+                        <br>
+                    </div>
+                </div>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- paging buttons -->
+<div class="grid_24">
+    
+    <div class="col_pager">
+        <div class="pr-pager">
+            
+            
+            
+                
+                    Page
+                    
+                        
+                            <span>1</span>
+                        
+                        
+                    
+                
+                
+
+                
+                
+
+                
+                    
+                    
+                
+
+                
+
+                
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=1&amp;sort=publication_date&amp;order=desc" class="">2</a>
+
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=2&amp;sort=publication_date&amp;order=desc" class="">3</a>
+
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=3&amp;sort=publication_date&amp;order=desc" class="">4</a>
+
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=4&amp;sort=publication_date&amp;order=desc" class="">5</a>
+
+                                
+                            
+                        
+                    
+                
+
+                
+                ...
+                
+                    
+                        
+                        
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=10&amp;page=134&amp;sort=publication_date&amp;order=desc" class="">135</a>
+
+                        
+                    
+                
+            
+        </div>
+        <div class="pr-page-size">
+            
+                Page size
+                
+                    
+                        <span>10</span>
+                    
+                    
+                
+            
+            
+                
+                    
+                    
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=20&amp;page=0&amp;sort=publication_date&amp;order=desc" class="">20</a>
+
+                    
+                
+            
+            
+                
+                    
+                    
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=50&amp;page=0&amp;sort=publication_date&amp;order=desc" class="">50</a>
+
+                    
+                
+            
+            
+                
+                    
+                    
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+<a href="http://www.ebi.ac.uk/pride/archive/simpleSearch?q=&amp;show=100&amp;page=0&amp;sort=publication_date&amp;order=desc" class="">100</a>
+
+                    
+                
+            
+        </div>
+        <div class="pr-stats">
+            Showing <span>1 - 10</span> of <span>1346</span> results
+        </div>
+    </div>
+</div> <!-- paging buttons -->
+
+            </div>
+
+
+    </div>
+
+  </div><!--/row-->
+
+</div>
+
+
+          </div>
+
+          <footer>
+<div class="grid_24" id="global-footer">
+
+        <nav id="global-nav-expanded" class="row">
+        <div class="grid_4 alpha col-sm-2">  <a title="EMBL-EBI" href="http://www.ebi.ac.uk"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_black.png"></a>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/about/news">News</a></li>  <li><a href="//www.ebi.ac.uk/about/brochures">Brochures</a></li>  <li><a href="//www.ebi.ac.uk/about/contact">Contact us</a>  </li><li class="last"><a href="http://intranet.ebi.ac.uk">Intranet</a></li>  </ul>  </div>   
+        <div class="grid_4 col-sm-2">  <h3 class="services"><a href="//www.ebi.ac.uk/services">Services</a></h3>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/services">By topic</a></li>  <li><a href="//www.ebi.ac.uk/services/all">By name (A-Z)</a></li>  <li class="last"><a href="//www.ebi.ac.uk/support">Help &amp; Support</a></li>  </ul>  </div> 
+        <div class="grid_4 col-sm-2">  <h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/research">Overview</a></li>  <li><a href="//www.ebi.ac.uk/research/publications">Publications</a></li>  <li><a href="//www.ebi.ac.uk/research/groups">Research groups</a></li>  <li class="last"><a href="//www.ebi.ac.uk/research/postdocs">Postdocs</a> &amp; <a href="//www.ebi.ac.uk/research/eipp">PhDs</a></li>  </ul>  </div>   
+        <div class="grid_4 col-sm-2">  <h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/training">Overview</a></li>  <li><a href="//www.ebi.ac.uk/training/handson">Train at EBI</a></li>  <li><a href="//www.ebi.ac.uk/training/roadshow">Train outside EBI</a></li>  <li><a href="//www.ebi.ac.uk/training/online">Train online</a></li>  <li class="last"><a href="//www.ebi.ac.uk/training/contact-us">Contact organisers</a></li>  </ul>  </div>   
+        <div class="grid_4 col-sm-2">  <h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/industry">Overview</a></li>  <li><a href="//www.ebi.ac.uk/industry/private">Members Area</a></li>  <li><a href="//www.ebi.ac.uk/industry/workshops">Workshops</a></li>  <li><a href="//www.ebi.ac.uk/industry/sme-forum"><abbr title="Small Medium Enterprise">SME</abbr> Forum</a></li>  <li class="last"><a href="//www.ebi.ac.uk/industry/contact">Contact Industry programme</a></li>  </ul>  </div> 
+        <div class="grid_4 omega col-sm-2">  <h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3>  <ul>  <li class="first"><a href="//www.ebi.ac.uk/about">Overview</a></li>  <li><a href="//www.ebi.ac.uk/about/leadership">Leadership</a></li>  <li><a href="//www.ebi.ac.uk/about/funding">Funding</a></li>  <li><a href="//www.ebi.ac.uk/about/background">Background</a></li>  <li><a href="//www.ebi.ac.uk/about/partnerships">Collaboration</a></li>  <li><a title="Jobs, postdocs, PhDs..." href="//www.ebi.ac.uk/about/jobs">Jobs</a></li>  <li><a href="//www.ebi.ac.uk/about/people">People &amp; groups</a></li>  <li><a href="//www.ebi.ac.uk/about/news">News</a></li>  <li><a href="//www.ebi.ac.uk/about/events">Events</a></li>  <li><a href="//www.ebi.ac.uk/about/travel">Visit us</a></li>  <li class="last"><a href="//www.ebi.ac.uk/about/contact">Contact us</a></li>  </ul>  </div></nav>
+
+        <section id="ebi-footer-meta"><p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p><p>Copyright &copy; EMBL-EBI 2015 | EBI is an outstation of the <a href="http://www.embl.org">European Molecular Biology Laboratory</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a> | <a href="/about/terms-of-use">Terms of use</a></p></section>
+
+    </div>
+
+          </footer>
+
+        </div> <!-- container -->
+
+
+        <script async src="//www.google-analytics.com/analytics.js"></script><script src="/static/CACHE/js/3b7ae7aead31.js" type="text/javascript"></script>
+
+        
+<script>
+  $(function() {
+    $('.help').tooltip();
+  });
+  
+
+  
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "http://rnacentral.org/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "http://rnacentral.org/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+
+        <!--Google Analytics-->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-51212613-1', 'rnacentral.org');
+          ga('send', 'pageview');
+        </script>
+        <!--Google Analytics-->
+
+    
+ <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+ <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-animate.min.js"></script>
+ <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+ <script src="js/vendor/underscore/underscore-min.js"></script>
+ <script src="js/search/metadata.search.js"></script>
+ <script src="js/search/sequence.search.js"></script>
+ <script src="js/search/export-results.search.js"></script>
+ <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/vendor/query-string.js"></script>
+ <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+ <script src="js/d3/d3.speciesSunburst.js"></script>
+ <script src="js/d3/d3.speciesTree.js"></script>
+ <script src="js/jquery.EuropePMCAbstracts.js"></script>
+ <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+ <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+ <script src="js/vendor/handlebars-v1.1.2.js"></script>
+ <script src="js/guidedTour.js"></script>
+ <script src="js/rnaView.js"></script>
+ <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+ <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+ <script src="js/genoverse.RNAcentralTrack.js"></script>
+
+</body></html>

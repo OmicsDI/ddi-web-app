@@ -1,0 +1,68 @@
+549     $scope.load_more_results = function(page,pagesize,sortfield) {
+550         if(pagesize!=='default'){$scope.pagesize=pagesize}
+551         if(pagesize==='default'){pagesize=$scope.pagesize}
+552
+553         if(sortfield!=='default'){$scope.sortfield=sortfield}
+554         if(sortfield==='default'){sortfield=sortfield}
+555
+556         var start = (page-1)*pagesize + 1;
+557
+558         results.load_more_results(start,pagesize,sortfield);
+559     };
+
+508     $scope.$watch(function () { return results.get_result(); }, function (newValue, oldValue) {
+509         if (newValue !== null) {
+510             $scope.result = newValue;
+511             alert($scope.);
+512             $scope.pages = results.get_pages(9,10,100);
+513             alert("2page"+$scope.pages);
+514         }
+515     });
+
+
+488 angular.module('rnacentralApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', functi    on($scope, $location, $http, results) {
+489
+490     $scope.result = {
+491         entries: [],
+492     };
+493     $scope.show_export_error = false;
+494     $scope.currentpage = 5;
+495     $scope.pagesize = 10;
+496     $scope.start = 0;
+497     $scope.sortfield = 'name';
+498     $scope.pages=[1,2,3,4,5];
+499
+
+
+
+423     this.get_pages = function(currentpage,pagesize,hitcount){
+424         var maxpageno = hitcount/pagesize + 1;
+425
+426         var startpage = 1;
+427         var pages=[0,0,0,0];
+428
+429         if(maxpageno-currentpage < 5) {
+430         startpage = maxpageno - 5;
+431         }
+432         else{
+433         startpage = currentpage - 2;
+434         }
+435
+436
+437         for(var i=0; i<5; i++,startpage++){
+438
+439                 pages[i] = startpage;
+440         }
+441
+442         if(maxpageno === 1) pages=[1];
+443         if(maxpageno === 2) pages=[1,2];
+444         if(maxpageno === 3) pages=[1,2,3];
+445         if(maxpageno === 4) pages=[1,2,3,4];
+446         if(maxpageno === 5) pages=[1,2,3,4,5];
+447         if(maxpageno === 6) pages=[1,2,3,4,5];
+448
+449         return pages;
+450     };
+
+
+

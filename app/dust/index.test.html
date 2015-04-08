@@ -1,0 +1,240 @@
+<!--
+-->
+<html xmlns:ng="http://angularjs.org" ng-app="rnacentralApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+
+
+<!--
+-->     
+
+<!DOCTYPE html>
+<!--
+<html ng-app="rnacentralApp">
+
+<head>
+-->    
+          <meta charset="utf-8">
+          <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+          <meta content="width=device-width" name="viewport">
+<!--	  <base href="/"/>
+-->
+    <meta content="RNAcentral is a new resource to organise data for non-protein coding RNAs" name="description">
+
+
+        <title>Search: DDI</title>
+
+<!--        <link type="text/css" href="static/CACHE/css/3fdcc03c118e.css" rel="stylesheet">     -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+        <link type="text/css" href="css/test.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+<!--        <link type="text/css" href="css/984-24-col-fluid.css" rel="stylesheet">  -->
+        
+        <!-- Favicons -->
+        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+    
+	<script src="css/jquery.min.js"></script>
+        
+    </head>
+
+    <body class="level2">
+    <div  ng-controller="QueryCtrl">
+  <p>Name: <input type="text" ng-model="name"></p>
+  <p>{{name}}</p>
+    </div>
+ <!-- global-search -->
+ <div class="row">
+	 <div class="col-md-4">
+		 <a href="/"><img src="{% static "img/logo/RNAcentral_logo_ltgrey.png" %}" alt="RNAcentral logo" class="rnacentral-header-logo"></a>
+	 </div>
+	 <div class="col-md-8" ng-controller="QueryCtrl">
+		 <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+			 <fieldset>
+				 <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+					 <div class="input-group">
+						 <input type="text"
+						 placeholder="organism, expert database, gene, ncRNA type, accession"
+						 class="form-control"
+						 id="query-text"
+						 name="text"
+						 tabindex="1"
+						 ng-model="query.text"
+						 ng-minlength="2"
+						 ng-maxlength="1000"
+						 autocomplete="off"
+						 required>
+						 <div class="input-group-btn">
+							 <button type="submit" class="btn btn-primary">
+								 <i class="fa fa-search"></i>
+							 </button>
+						 </div><!-- /input-group-btn -->
+					 </div><!--input-group -->
+					 <span class="help-block example-searches">
+						 <small>
+							 <i>
+								 Examples:
+								 <a href="" rel="nofollow" ng-click="meta_search('RNA')">RNA</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
+							 </i>
+						 </small>
+					 </span>
+					 <label class="control-label ng-cloak has-error"
+						 for="query-text" ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+						 ng-cloak>
+						 Your query is too short
+					 </label>
+					 <label class="control-label ng-cloak"
+						 for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+						 ng-cloak>
+						 Your query is too long
+					 </label>
+				 </div><!-- /form-group -->
+			 </fieldset>
+		 </form><!-- /form -->
+	 </div><!-- /ng-controller -->
+ </div><!-- /row -->
+ <!-- /global-search -->
+
+
+
+ <div ng-controller="ResultsListCtrl">
+ <p>
+
+ there have(has)  {{result.hitCount}} result(s)
+ {{$scope.show_error}}
+ </p>
+
+ <div class="row" ng-show="1">
+	 <div class="col-md-3 col-sm-4 hidden-xs metasearch-facets">
+		 <ul class="list-unstyled">
+			 <li class="facet animate-repeat" ng-repeat="facet in result.facets">
+			 <h3>{{facet.label}}</h3>
+			 <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}">
+				 <li ng-repeat="facet_value in facet.facetValues">
+				 <input type="checkbox" name="facet.label" ng-checked="is_facet_applied(facet.id, facet_value.value)" ng-click="facet_search(facet.id, facet_value.value)">
+				 <a href="" ng-click="facet_search(facet.id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
+				 </li>
+				 <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small>
+			 </ul>
+			 </li>
+		 </ul>
+	 </div>
+	 <div class="col-md-9 col-sm-8 col-xs-12 metasearch-results">
+		 <ul class="list-unstyled">
+			 <li class="result animate-repeat" ng-repeat="rna in result.entries">
+			 <div>
+				 <h4>
+					 <a href="/rna/{{rna.id}}" ng-if="!result.taxid">{{rna.fields.description[0]}}</a>
+					 <a href="/rna/{{rna.id}}/{{result.taxid}}" ng-if="result.taxid">{{rna.fields.description[0]}}</a>
+					 <small ng-if="!result.taxid">{{rna.id}}</small>
+					 <small ng-if="result.taxid">{{rna.id}}/{{result.taxid}}</small>
+				 </h4>
+				 <ul class="list-inline small">
+					 <li>
+					 <strong>{{rna.fields.length[0] | number}}</strong> nucleotides
+					 </li>
+					 <li ng-if="rna.fields.active[0] == 'Obsolete'"><span class="label label-danger help" title="No active annotations">Obsolete</span></li>
+				 </ul>
+			 </div>
+			 </li>
+		 </ul>
+		 <br>
+		 <small ng-if="result.hitCount > result.entries.length" class="text-muted">Displaying {{result.entries.length}} out of {{result.hitCount | number}} sequences</small>
+		 <br>
+		 <button class="btn btn-default load-more col-md-3" ng-click="load_more_results()" ng-show="result.hitCount > result.entries.length"><i ng-class="search_in_progress ? 'fa fa-spinner fa-spin' : 'hidden'"></i> Load more</button>
+ </div>
+ </div>
+
+<!-- <div class="row" ng-show="result.hitCount > 0">
+-->
+ <div class="row" ng-show="1">
+	 <div class="col-md-3 col-sm-4 hidden-xs metasearch-facets">
+		 <ul class="list-unstyled">
+			 <li class="facet animate-repeat" ng-repeat="facet in result.facets">
+			 <h3>{{facet.label}}</h3>
+			 <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' || facet.label=='RNA type'}">
+				 <li ng-repeat="facet_value in facet.facetValues">
+				 <input type="checkbox" name="facet.label" ng-checked="is_facet_applied(facet.id, facet_value.value)" ng-click="facet_search(facet.id, facet_value.value)">
+				 <a href="" ng-click="facet_search(facet.id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
+				 </li>
+				 <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small>
+			 </ul>
+			 </li>
+		 </ul>
+		 <hr>
+		 <small class="text-muted">
+			 Powered by <a href="http://www.ebi.ac.uk/ebisearch/" target="_blank">EBI Search</a>
+		 </small>
+	 </div>
+	 <div class="col-md-9 col-sm-8 col-xs-12 metasearch-results">
+		 <ul class="list-unstyled">
+			 <li class="result animate-repeat" ng-repeat="rna in result.entries">
+			 <div>
+				 <h4>
+					 <a href="/rna/{{rna.id}}" ng-if="!result.taxid">{{rna.fields.description[0]}}</a>
+					 <a href="/rna/{{rna.id}}/{{result.taxid}}" ng-if="result.taxid">{{rna.fields.description[0]}}</a>
+					 <small ng-if="!result.taxid">{{rna.id}}</small>
+					 <small ng-if="result.taxid">{{rna.id}}/{{result.taxid}}</small>
+				 </h4>
+				 <ul class="list-inline small">
+					 <li>
+					 <strong>{{rna.fields.length[0] | number}}</strong> nucleotides
+					 </li>
+					 <li ng-if="rna.fields.active[0] == 'Obsolete'"><span class="label label-danger help" title="No active annotations">Obsolete</span></li>
+				 </ul>
+			 </div>
+			 </li>
+		 </ul>
+		 <br>
+		 <small ng-if="result.hitCount > result.entries.length" class="text-muted">Displaying {{result.entries.length}} out of {{result.hitCount | number}} sequences</small>
+		 <br>
+		 <button class="btn btn-default load-more col-md-3" ng-click="load_more_results(12)" ng-show="result.hitCount > result.entries.length"><i ng-class="search_in_progress ? 'fa fa-spinner fa-spin' : 'hidden'"></i> Load more</button>
+	 </div>
+ </div><!--/row-->
+
+        <!--Google Analytics-->
+
+    
+ <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+ <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-animate.min.js"></script>
+ <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+ <script src="js/vendor/underscore/underscore-min.js"></script>
+<!--
+ <script src="js/search/metadata.search.js"></script>
+ -->
+ <script src="test1.js"></script>
+ <script src="js/search/sequence.search.js"></script>
+ <script src="js/search/export-results.search.js"></script>
+ <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/vendor/query-string.js"></script>
+ <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+ <script src="js/d3/d3.speciesSunburst.js"></script>
+ <script src="js/d3/d3.speciesTree.js"></script>
+ <script src="js/jquery.EuropePMCAbstracts.js"></script>
+ <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+ <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+ <script src="js/vendor/handlebars-v1.1.2.js"></script>
+ <script src="js/guidedTour.js"></script>
+ <script src="js/rnaView.js"></script>
+ <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+ <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+ <script src="js/genoverse.RNAcentralTrack.js"></script>
+
+</body></html>

@@ -1,0 +1,231 @@
+<html xmlns:ng="http://angularjs.org" ng-app="rnacentralApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope"><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+        
+    
+          <meta charset="utf-8">
+          <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+          <meta content="width=device-width" name="viewport">
+        
+    <meta content="RNAcentral is a new resource to organise data for non-protein coding RNAs" name="description">
+
+
+        <title>Search: DDI</title>
+
+<!---        <link type="text/css" href="static/CACHE/css/3fdcc03c118e.css" rel="stylesheet">
+-->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+        <link type="text/css" href="css/test.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+<!--        <link type="text/css" href="css/984-24-col-fluid.css" rel="stylesheet">
+-->
+        
+        <base href="/">
+        <!-- Favicons -->
+        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+    
+	<script src="css/jquery.min.js"></script>
+        
+    </head>
+
+    <body class="level2">
+        <header>
+        <!--
+Copyright [2009-2014] EMBL-European Bioinformatics Institute
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<div class="container rnacentral-masthead">
+<div class="masthead grid_24" id="global-masthead">
+            <!--This has to be one line and no newline characters-->
+            <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"></a>
+
+            <nav>
+                <ul id="global-nav">
+                    <!-- set active class as appropriate -->
+                                        <li class="first active" id="services"><a title="Services" href="//www.ebi.ac.uk/services">Services</a></li>
+                                        <li class="" id="research"><a title="Research" href="//www.ebi.ac.uk/research">Research</a></li>
+                                        <li class="" id="training"><a title="Training" href="//www.ebi.ac.uk/training">Training</a></li>
+                                        <li class="" id="industry"><a title="Industry" href="//www.ebi.ac.uk/industry">Industry</a></li>
+                                        <li class=" last" id="about"><a title="About us" href="//www.ebi.ac.uk/about">About us</a></li>
+                                    </ul>
+            </nav>
+
+        </div>
+</div>
+
+<div class="navbar navbar-default navbar-static-top">
+
+  <div class="container rnacentral-masthead">
+
+    <!-- global-search -->
+    <div class="row">
+      <div class="col-md-4">
+        <a href="/"><img class="rnacentral-header-logo" alt="RNAcentral logo" src="static/img/logo/RNAcentral_logo_ltgrey.png"></a>
+      </div>
+
+      <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
+		 <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+			 <fieldset>
+				 <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+					 <div class="input-group">
+						 <input type="text"
+						 placeholder="organism, expert database, gene, ncRNA type, accession"
+						 class="form-control"
+						 id="query-text"
+						 name="text"
+						 tabindex="1"
+						 ng-model="query.text"
+						 ng-minlength="2"
+						 ng-maxlength="1000"
+						 autocomplete="off"
+						 required>
+						 <div class="input-group-btn">
+							 <button type="submit" class="btn btn-primary">
+								 <i class="fa fa-search"></i>
+							 </button>
+						 </div><!-- /input-group-btn -->
+					 </div><!--input-group -->
+					 <span class="help-block example-searches">
+						 <small>
+							 <i>
+								 Examples:
+								 <a href="" rel="nofollow" ng-click="meta_search('RNA')">RNA</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
+								 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
+							 </i>
+						 </small>
+					 </span>
+					 <label class="control-label ng-cloak has-error"
+						 for="query-text" ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+						 ng-cloak>
+						 Your query is too short
+					 </label>
+					 <label class="control-label ng-cloak"
+						 for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+						 ng-cloak>
+						 Your query is too long
+					 </label>
+				 </div><!-- /form-group -->
+			 </fieldset>
+		 </form><!-- /form -->
+</div><!-- /ng-controlleomething in the input box:</p>
+<p>Name: <input type="text" ng-model="name"></p>
+<p>{{name}}</p>-->
+    </div><!-- /row -->
+    <!-- /global-search -->
+
+  </div>
+
+
+</div>
+
+<div class="masthead grid_24 nomenu" id="local-masthead">
+
+
+        <!-- /local-search -->
+        
+        <!-- local-nav -->
+
+        <nav>
+            <ul id="local-nav" class="grid_24">
+                                <li class=" first" id="home-menu"><a title="Home" href="http://www.ebi.ac.uk/ddi/">Home</a></li>
+                                <li class="" id="browse-menu"><a title="Browse" href="http://www.ebi.ac.uk/ddi/simpleSearch?q=&amp;submit=Search">Browse</a></li>
+                                <li class="" id="api-menu"><a title="DDI API" href="http://www.ebi.ac.uk/ddi/api">API</a></li>
+                                <li class="" id="help-menu"><a title="DDI help" href="http://www.ebi.ac.uk/ddi/help/">Help</a></li>
+                                <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://www.ebi.ac.uk/ddi/help/about">About DDI</a></li>
+                                                <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                             add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                             whichever one will show up last...
+                             For example: -->
+                                <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
+                                <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+                                <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+                            </ul>
+        </nav>
+
+        <!-- /local-nav -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+            <!--
+Copyright [2009-2014] EMBL-European Bioinformatics Institute
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+                    
+                
+
+    
+ <script src="test1.js"></script>
+ <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+ <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-animate.min.js"></script>
+ <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+ <script src="js/vendor/underscore/underscore-min.js"></script>
+<!--
+ <script src="js/search/metadata.search.js"></script>
+ -->
+ <script src="js/search/sequence.search.js"></script>
+ <script src="js/search/export-results.search.js"></script>
+ <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/vendor/query-string.js"></script>
+ <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+ <script src="js/d3/d3.speciesSunburst.js"></script>
+ <script src="js/d3/d3.speciesTree.js"></script>
+ <script src="js/jquery.EuropePMCAbstracts.js"></script>
+ <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+ <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+ <script src="js/vendor/handlebars-v1.1.2.js"></script>
+ <script src="js/guidedTour.js"></script>
+ <script src="js/rnaView.js"></script>
+ <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+ <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+ <script src="js/genoverse.RNAcentralTrack.js"></script>
+
+</body></html>
