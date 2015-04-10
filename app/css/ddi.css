@@ -44,3 +44,26 @@
 	pointer-events: none;
 	text-decoration: none;
 }
+
+body {
+	font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
+}
+
+.legend {
+	border: 1px solid #555555;
+	border-radius: 5px 5px 5px 5px;
+	font-size: 0.8em;
+	margin: 10px;
+	padding: 8px;
+}
+
+
+.bld {
+	font-weight: bold;
+}
+
+
+text:hover { 
+cursor: pointer;
+cursor: hand;
+opacity: .7 !important; }
