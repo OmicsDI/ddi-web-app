@@ -67,3 +67,14 @@ text:hover {
 cursor: pointer;
 cursor: hand;
 opacity: .7 !important; }
+
+
+.slice:hover { 
+cursor: pointer;
+cursor: hand;
+opacity: .7 !important; }
+
+
+#insidecycle{
+opacity:.7;
+}

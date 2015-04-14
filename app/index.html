@@ -5,8 +5,8 @@
     </style>
         <meta charset="utf-8">
         <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width" name="viewport">
-        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+        <meta content="width=device-width" id="viewport">
+        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" id="description">
 
 
         <title>Search: DDI</title>
@@ -63,7 +63,7 @@
       </div>
 
       <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
-         <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+         <form novalidate id="queryForm" class="global-search" ng-submit="submit_query()">
              <fieldset>
                  <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
                      <div class="input-group">
@@ -71,7 +71,7 @@
                          placeholder="organism, repository, gene, tissue, accession"
                          class="form-control"
                          id="query-text"
-                         name="text"
+                         id="text"
                          tabindex="1"
                          ng-model="query.text"
                          ng-minlength="2"
@@ -141,17 +141,17 @@
 <div class="row" >
 <h1> Datasets in DDI</h1>
 
-<div name="statistic_graphs"  style="border:solid lightblue; height:240px">
+<div id="statistic_graphs"  style="border:solid lightblue; height:240px">
 
-    <div name="graph1" class="col-md-4">
+    <div id="graph1" class="col-md-4">
         <img src="css/graph1.png"/>
     </div>
 
-    <div name="graph2" class="col-md-4">
+    <div id="graph2" class="col-md-4">
         <img src="css/graph2.png"/>
     </div>
 
-    <div name="graph2" class="col-md-4">
+    <div id="graph2" class="col-md-4">
         <img src="css/graph3.png"/>
     </div>
 </div>
@@ -159,8 +159,8 @@
 </div>
 
 
-<div name="buttoms" class="row" >
-    <div name="left" class="col-md-4" style="float:left">
+<div id="buttoms" class="row" >
+    <div id="left" class="col-md-4" style="float:left">
 
 
 
@@ -172,9 +172,9 @@
         </div>
 
 
-        <div name="latest datasets">
+        <div id="latest datasets">
             <h3>Latest Datasets</h3>
-            <div name="datasets" style="border:solid lightblue">
+            <div id="datasets" style="border:solid lightblue">
                 <ul>
                     <li>PXD001611:Defining a minimal cell</li>
                     <li>PXD001611:Defining a minimal cell</li>
@@ -186,19 +186,32 @@
         </div>
     </div>
 
-    <div name="documents_center" class="col-md-4" style="float:auto">
-    <div name="" class="" style="border:solid lightblue; margin:3px">
+    <div id="documents_center" class="col-md-4" style="float:auto">
+    <div id="" class="" style="border:solid lightblue; margin:3px">
      <p>
         The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.
      </p>
     </div>
     </div>
 
-    <div name="tweetfeeds_right" class="col-md-4" style="float:right">
-    <div name="" class="" style="border:solid lightblue; margin:3px">
-        The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.
+    <div id="tweetfeeds_right" class="col-md-4" style="float:right">
+    <div style="border:solid lightblue; margin:3px">
+    <div id="dataset-of-the-month" class="" >
+
+        <h3 data-icon="N" class="icon icon-generic">
+            News
+        </h3>
+
+
     </div>
+
+    <div id="dataset-of-the-month" class="" >
+     <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More news</a>
     </div>
+
+    </div>
+    </div >
+
 
 </div>
 
@@ -287,6 +300,8 @@
  <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
  <script src="js/vendor/underscore/underscore-min.js"></script>
  <script src="js/search/ddi.metadata.search.js"></script>
+ <script src="js/getTweets.js"></script>
+ <script src="js/gradientPie.js"></script>
 <!--
  <script src="js/search/metadata.search.js"></script>
  <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
@@ -358,7 +373,66 @@
   }
 
 });
+
+/**
+*  get tweets and write into the page
+*
+*/
+
+var tf = new TweetFetcher('587537366514012160');
+ 
+tf.fetch(function(tweets)
+{
+  publishtweets(tweets);
+}, 4);
+
 </script>
+
+
+
+
+
+<script>
+/**
+*  draw the pie charts
+*/
+
+
+var salesData=[
+    {label:"Basic", color:"#3366CC"},
+    {label:"Plus", color:"#DC3912"},
+    {label:"Lite", color:"#FF9900"},
+    {label:"Elite", color:"#109618"},
+    {label:"Delux", color:"#990099"}
+];
+
+var svg = d3.select("#graph1").append("svg").attr("width", 350).attr("height", 200);
+
+svg.append("g").attr("id","salespie");
+svg.append("g").attr("id","quotespie");
+    
+gradPie.draw("salespie", randomData(), 200, 200, 160);
+gradPie.draw("quotespie", randomData(), 500, 200, 100);
+
+function changeData(){
+    gradPie.transition("salespie", randomData(), 160);
+    gradPie.transition("quotespie", randomData(), 100);
+}
+
+function randomData(){
+    return salesData.map(function(d){ 
+        return {label:d.label, value:1000*Math.random(), color:d.color};});
+}
+
+
+</script>
+
+
+
+
+
+
+
 
 
 </body></html>
