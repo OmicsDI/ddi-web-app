@@ -1,0 +1,3123 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<head>
+    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
+    </style>
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width" name="viewport">
+        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+
+
+        <title>Search: DDI</title>
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+        <link type="text/css" href="css/ddi.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+        
+        <!-- Favicons -->
+        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+    
+        
+</head>
+
+<body class="level2">
+<div class="container rnacentral-masthead">
+<div class="masthead grid_24" id="global-masthead">    
+
+     <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png">
+     </a>
+    <nav>
+        <ul id="global-nav">
+                    <!-- set active class as appropriate -->
+            <li class="first active" id="services"><a title="Services" href="//www.ebi.ac.uk/services">Services</a></li>
+            <li class="" id="research"><a title="Research" href="//www.ebi.ac.uk/research">Research</a></li>
+            <li class="" id="training"><a title="Training" href="//www.ebi.ac.uk/training">Training</a></li>
+            <li class="" id="industry"><a title="Industry" href="//www.ebi.ac.uk/industry">Industry</a></li>
+            <li class=" last" id="about"><a title="About us" href="//www.ebi.ac.uk/about">About us</a></li>
+        </ul>
+   </nav>
+
+</div>
+</div>
+
+<div class="navbar navbar-default navbar-static-top">
+<div class="container rnacentral-masthead">
+
+    <!-- global-search -->
+    <div class="row">
+      <div class="col-md-4">
+        <a href="/"><img class="rnacentral-header-logo" alt="DDI logo" src="static/img/logo/DDI_logo_ltgrey.png"></a>
+      </div>
+
+      <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
+         <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+             <fieldset>
+                 <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                     <div class="input-group">
+                         <input type="text"
+                         placeholder="organism, repository, gene, tissue, accession"
+                         class="form-control"
+                         id="query-text"
+                         name="text"
+                         tabindex="1"
+                         ng-model="query.text"
+                         ng-minlength="2"
+                         ng-maxlength="1000"
+                         autocomplete="off"
+                         required>
+                         <div class="input-group-btn">
+                             <button type="submit" class="btn btn-primary">
+                                 <i class="fa fa-search"></i> Search
+                             </button>
+                         </div><!-- /input-group-btn -->
+                     </div><!--input-group -->
+                     <span class="help-block example-searches">
+                         <small>
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
+                             </i>
+                         </small>
+                     </span>
+                     <label class="control-label ng-cloak has-error"
+                         for="query-text" ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                         ng-cloak>
+                         Your query is too short
+                     </label>
+                     <label class="control-label ng-cloak"
+                         for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                         ng-cloak>
+                         Your query is too long
+                     </label>
+                 </div><!-- /form-group -->
+             </fieldset>
+         </form><!-- /form -->
+    </div><!--/controller-->
+    </div><!-- /row -->
+
+</div> <!-- /container-->
+</div> <!-- /navbar-->
+
+
+<div class="masthead grid_24 nomenu" id="local-masthead">
+    <nav>
+        <ul id="local-nav" class="grid_24">
+            <li class=" first" id="home-menu"><a title="Home" href="http://www.ebi.ac.uk/ddi/">Home</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://www.ebi.ac.uk/ddi/simpleSearch?q=&amp;submit=Search">Browse</a></li>
+            <li class="" id="api-menu"><a title="DDI API" href="http://www.ebi.ac.uk/ddi/api">API</a></li>
+            <li class="" id="help-menu"><a title="DDI help" href="http://www.ebi.ac.uk/ddi/help/">Help</a></li>
+            <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://www.ebi.ac.uk/ddi/help/about">About DDI</a></li>
+            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+            whichever one will show up last...
+            For example: -->
+            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
+            <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+            <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+            </ul>
+    </nav>
+</div><!-- local-masthead-->
+
+
+<div class="container">
+<div >
+<h1>  Dataset: PXD000102
+</h1>
+<div class="row">
+<div class="col-md-8 project-summary clear-fix">
+<h4>  Summary</h4>
+<h5>  Title: </h5> 
+<p class="longtext readmore-js-section" style="height: 50px;">Defining a minimal cell: essentiality of small ORFs and ncRNAs in a genome-reduced bacteriumi</p>
+<h5>  Description: </h5>
+<p class="longtext readmore-js-section" style="height: 50px;">Identifying all essential genomic components is critical for the ......</p>
+<h5>  Repository: </h5>
+<p class="longtext readmore-js-section" style="height: 50px;">PeptideAtlas</p>
+<h5>  Type: </h5>
+<p class="longtext readmore-js-section" style="height: 50px;">Metabolomics dataset</p>
+</div><!--md 8 -->
+
+<div class="col-md-4 panel panel-default ">
+<h3>List of related Datasets
+</h3>
+<ul>
+<li>  PXD000112: Label-free Experiment in Mouse</li>
+<li>  MXD000112: Metabolomics study in bacterium</li>
+<li>  PXD000112: Label-free Experiment in Mouse</li>
+<li>  MXD000112: Metabolomics study in bacterium</li>
+<li>  PXD000112: Label-free Experiment in Mouse</li>
+<li>  MXD000112: Metabolomics study in bacterium</li>
+<li>  PXD000112: Label-free Experiment in Mouse</li>
+<li>  MXD000112: Metabolomics study in bacterium</li>
+</ul>
+
+</div><!--md 8 -->
+
+</div><!-- -->
+
+<div class="row project-summary clear-fix"> 
+<h4> List of Publications:</h4>
+<ul>
+<li>  Lluch-Senar M, Delgado J, Chen WH. Defining a minimal cell: essentiality of small ORFs and ncRNAs in a genome-reduced bacterium. Mol Syst Biol. 2015 Jan 21;11:780. doi: 10.15252/msb.20145558.</li>
+<li>  Lluch-Senar M, Delgado J, Chen WH. Defining a minimal cell: essentiality of small ORFs and ncRNAs in a genome-reduced bacterium. Mol Syst Biol. 2015 Jan 21;11:780. doi: 10.15252/msb.20145558.</li>
+<li>  Lluch-Senar M, Delgado J, Chen WH. Defining a minimal cell: essentiality of small ORFs and ncRNAs in a genome-reduced bacterium. Mol Syst Biol. 2015 Jan 21;11:780. doi: 10.15252/msb.20145558.</li>
+<li>  Lluch-Senar M, Delgado J, Chen WH. Defining a minimal cell: essentiality of small ORFs and ncRNAs in a genome-reduced bacterium. Mol Syst Biol. 2015 Jan 21;11:780. doi: 10.15252/msb.20145558.</li>
+</ul>
+</div><!--row -->
+
+
+<div class="grid_23 clearfix file-list">
+
+    <h4>Submitted Files</h4>
+
+    
+
+    
+        <h5>47 Search Files</h5>
+        
+
+
+
+
+
+
+<p>
+
+    
+    
+    
+
+</p><table class="summary-table footable-loaded footable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        
+        <th>Size</th>
+        <th>HTTP Download</th>
+        
+        
+            <th class="aspera-content aspera-content-hidden">Fast Download (<a href="http://asperasoft.com/">Aspera</a>)</th>
+        
+    </tr>
+    </thead>
+
+    <tbody>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s1_20130923095617.zip
+        </td>
+        
+                
+        
+        <td>
+            6.228
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s1_20130923095617.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s1_20130923095617.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s2_20130923095510.zip
+        </td>
+        
+                
+        
+        <td>
+            3.037
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s2_20130923095510.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s2_20130923095510.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s3_20130923093707.zip
+        </td>
+        
+                
+        
+        <td>
+            6.508
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s3_20130923093707.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s3_20130923093707.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s4_20130923093808.zip
+        </td>
+        
+                
+        
+        <td>
+            4.823
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s4_20130923093808.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s4_20130923093808.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s5_20130923093914.zip
+        </td>
+        
+                
+        
+        <td>
+            4.916
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s5_20130923093914.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s5_20130923093914.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s6_20130923093937.zip
+        </td>
+        
+                
+        
+        <td>
+            2.276
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s6_20130923093937.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s6_20130923093937.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s7_20130923094049.zip
+        </td>
+        
+                
+        
+        <td>
+            6.794
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s7_20130923094049.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s7_20130923094049.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s8_20130923094157.zip
+        </td>
+        
+                
+        
+        <td>
+            5.4
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s8_20130923094157.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s8_20130923094157.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s10_20130913134116.zip
+        </td>
+        
+                
+        
+        <td>
+            0.805
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s10_20130913134116.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s10_20130913134116.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s11_20130913134121.zip
+        </td>
+        
+                
+        
+        <td>
+            0.946
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s11_20130913134121.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s11_20130913134121.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s12_20130913134128.zip
+        </td>
+        
+                
+        
+        <td>
+            1.416
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s12_20130913134128.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s12_20130913134128.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s13_20130913134143.zip
+        </td>
+        
+                
+        
+        <td>
+            5.445
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s13_20130913134143.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s13_20130913134143.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s14_20130913134203.zip
+        </td>
+        
+                
+        
+        <td>
+            5.37
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s14_20130913134203.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s14_20130913134203.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s15_20130913134219.zip
+        </td>
+        
+                
+        
+        <td>
+            5.362
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s15_20130913134219.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s15_20130913134219.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s16_20130913134244.zip
+        </td>
+        
+                
+        
+        <td>
+            6.854
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s16_20130913134244.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s16_20130913134244.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s17_20130913134309.zip
+        </td>
+        
+                
+        
+        <td>
+            6.381
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s17_20130913134309.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s17_20130913134309.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s18_20130913134335.zip
+        </td>
+        
+                
+        
+        <td>
+            6.711
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s18_20130913134335.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s18_20130913134335.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s19_20130913134410.zip
+        </td>
+        
+                
+        
+        <td>
+            6.895
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s19_20130913134410.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s19_20130913134410.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s1_20130913134109.zip
+        </td>
+        
+                
+        
+        <td>
+            5.815
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s1_20130913134109.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s1_20130913134109.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s20_20130913134449.zip
+        </td>
+        
+                
+        
+        <td>
+            6.081
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s20_20130913134449.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s20_20130913134449.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s21_20130913134504.zip
+        </td>
+        
+                
+        
+        <td>
+            4.021
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s21_20130913134504.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s21_20130913134504.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s22_20130913134613.zip
+        </td>
+        
+                
+        
+        <td>
+            7.855
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22_20130913134613.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22_20130913134613.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s22a_20130913134013.zip
+        </td>
+        
+                
+        
+        <td>
+            8.962
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22a_20130913134013.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22a_20130913134013.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s23a_20130913134827.zip
+        </td>
+        
+                
+        
+        <td>
+            0.017
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s23a_20130913134827.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s23a_20130913134827.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s24_20130913134831.zip
+        </td>
+        
+                
+        
+        <td>
+            0.013
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s24_20130913134831.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s24_20130913134831.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s2_20130913134428.zip
+        </td>
+        
+                
+        
+        <td>
+            4.989
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s2_20130913134428.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s2_20130913134428.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s34_20130913134028.zip
+        </td>
+        
+                
+        
+        <td>
+            1.377
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s34_20130913134028.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s34_20130913134028.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s35_20130913134037.zip
+        </td>
+        
+                
+        
+        <td>
+            2.241
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s35_20130913134037.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s35_20130913134037.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s36_20130913134045.zip
+        </td>
+        
+                
+        
+        <td>
+            1.844
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s36_20130913134045.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s36_20130913134045.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s37_20130913134844.zip
+        </td>
+        
+                
+        
+        <td>
+            4.037
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s37_20130913134844.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s37_20130913134844.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s38_20130913134902.zip
+        </td>
+        
+                
+        
+        <td>
+            4.454
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s38_20130913134902.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s38_20130913134902.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s39_20130913134924.zip
+        </td>
+        
+                
+        
+        <td>
+            5.102
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s39_20130913134924.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s39_20130913134924.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s3_20130913134635.zip
+        </td>
+        
+                
+        
+        <td>
+            5.437
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s3_20130913134635.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s3_20130913134635.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s40_20130913134932.zip
+        </td>
+        
+                
+        
+        <td>
+            1.821
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s40_20130913134932.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s40_20130913134932.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s41_20130913134944.zip
+        </td>
+        
+                
+        
+        <td>
+            3.357
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s41_20130913134944.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s41_20130913134944.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s42_20130913134954.zip
+        </td>
+        
+                
+        
+        <td>
+            1.932
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s42_20130913134954.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s42_20130913134954.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s4_20130913134644.zip
+        </td>
+        
+                
+        
+        <td>
+            1.696
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4_20130913134644.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4_20130913134644.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s4a_20130913134654.zip
+        </td>
+        
+                
+        
+        <td>
+            2.404
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4a_20130913134654.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4a_20130913134654.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s5_20130913134708.zip
+        </td>
+        
+                
+        
+        <td>
+            3.385
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5_20130913134708.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5_20130913134708.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s5a_20130913134730.zip
+        </td>
+        
+                
+        
+        <td>
+            3.515
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5a_20130913134730.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5a_20130913134730.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s6_20130913134743.zip
+        </td>
+        
+                
+        
+        <td>
+            3.31
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6_20130913134743.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6_20130913134743.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s6a_20130913134754.zip
+        </td>
+        
+                
+        
+        <td>
+            3.052
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6a_20130913134754.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6a_20130913134754.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s7_20130913134801.zip
+        </td>
+        
+                
+        
+        <td>
+            1.001
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7_20130913134801.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7_20130913134801.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s7a_20130913134808.zip
+        </td>
+        
+                
+        
+        <td>
+            0.758
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7a_20130913134808.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7a_20130913134808.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s8_20130913134812.zip
+        </td>
+        
+                
+        
+        <td>
+            0.032
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8_20130913134812.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8_20130913134812.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s8a_20130913134819.zip
+        </td>
+        
+                
+        
+        <td>
+            0.552
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8a_20130913134819.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8a_20130913134819.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s9_20130913134824.zip
+        </td>
+        
+                
+        
+        <td>
+            0.031
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s9_20130913134824.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s9_20130913134824.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    </tbody>
+
+</table>
+<p></p>
+
+    
+
+    
+
+    
+        <h5>47 RAW Files</h5>
+        
+
+
+
+
+
+
+<p>
+
+    
+    
+    
+
+</p><table class="summary-table footable-loaded footable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        
+        <th>Size</th>
+        <th>HTTP Download</th>
+        
+        
+            <th class="aspera-content aspera-content-hidden">Fast Download (<a href="http://asperasoft.com/">Aspera</a>)</th>
+        
+    </tr>
+    </thead>
+
+    <tbody>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s1.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            2,019.944
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s1.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s1.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s2.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,434.439
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s2.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s2.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s3.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,879.977
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s3.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s3.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s4.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,739.942
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s4.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s4.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s5.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,708.586
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s5.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s5.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s6.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,149.457
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s6.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s6.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130705_s7.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,702.985
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s7.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s7.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130705_s8.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,700.929
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s8.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130705_s8.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s1.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,314.824
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s1.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s1.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s10.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            843.096
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s10.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s10.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s11.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            780.439
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s11.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s11.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s12.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            839.356
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s12.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s12.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s13.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,037.377
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s13.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s13.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s14.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,084.917
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s14.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s14.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s15.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,087.043
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s15.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s15.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s16.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,060.057
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s16.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s16.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s17.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,099.902
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s17.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s17.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s18.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,119.975
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s18.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s18.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s19.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,025.532
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s19.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s19.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s2.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,229.425
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s2.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s2.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s20.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,074.418
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s20.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s20.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s21.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,098.54
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s21.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s21.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s22.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,459.178
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s22a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,713.992
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s22a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s23a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            632.875
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s23a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s23a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s24.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            577.688
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s24.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s24.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s3.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,263.018
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s3.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s3.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s34.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            651.903
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s34.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s34.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s35.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            747.37
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s35.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s35.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s36.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            812.056
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s36.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s36.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s37.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            907.575
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s37.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s37.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s38.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            890.869
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s38.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s38.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s39.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,040.886
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s39.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s39.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s4.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            934.333
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s40.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            638.418
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s40.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s40.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s41.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            713.509
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s41.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s41.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s42.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            737.265
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s42.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s42.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s4a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,178.158
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s4a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s5.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            966.187
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s5a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            1,244.968
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s5a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s6.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            996.898
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s6a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            856.983
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s6a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s7.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            736.843
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s7a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            940.369
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s7a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s8.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            120.349
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-odd">
+        <td>
+                20130823_s8a.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            923.896
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8a.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s8a.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    <tr class="footable-even">
+        <td>
+                20130823_s9.raw.zip
+        </td>
+        
+                
+        
+        <td>
+            629.841
+            MB
+        </td>
+        <td width="10%">
+            
+                
+                    <a data-icon="=" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s9.raw.zip">Download</a>
+                
+                
+            
+        </td>
+            
+        
+            <td class="aspera-content aspera-content-hidden">
+                <a onclick="asperaDownload('fasp://prd_ascp@fasp.ebi.ac.uk/pride/data/archive/2014/12/PXD001577/20130823_s9.raw.zip?auth=no&amp;bwcap=300000&amp;targetrate=100p&amp;policy=fair&amp;enc=none')" data-icon="=" class="icon icon-functional" href="#">
+                    Download
+                </a>
+            </td>
+        
+    </tr>
+    
+    </tbody>
+
+</table>
+<p></p>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+</div>
+
+
+
+</div>
+</div><!-- container-->
+
+<footer>
+<div class="grid_24" id="global-footer">
+
+        <nav id="global-nav-expanded" class="row">
+        <div class="grid_4 alpha col-sm-2"> 
+         <a title="EMBL-EBI" href="http://www.ebi.ac.uk"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_black.png"></a>  
+         <ul>  
+          <li class="first"><a href="//www.ebi.ac.uk/about/news">News</a></li>  
+          <li><a href="//www.ebi.ac.uk/about/brochures">Brochures</a></li>  
+          <li><a href="//www.ebi.ac.uk/about/contact">Contact us</a>  </li>
+          <li class="last"><a href="http://intranet.ebi.ac.uk">Intranet</a></li>  
+        </ul>  
+      </div>   
+        <div class="grid_4 col-sm-2">  
+          <h3 class="services">
+            <a href="//www.ebi.ac.uk/services">Services</a></h3>  
+            <ul>  
+              <li class="first"><a href="//www.ebi.ac.uk/services">By topic</a></li>  
+              <li><a href="//www.ebi.ac.uk/services/all">By name (A-Z)</a></li>  
+              <li class="last"><a href="//www.ebi.ac.uk/support">Help &amp; Support</a></li>  
+            </ul>  
+          </div> 
+        <div class="grid_4 col-sm-2">  
+          <h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/research">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/research/publications">Publications</a></li>  
+            <li><a href="//www.ebi.ac.uk/research/groups">Research groups</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/research/postdocs">Postdocs</a> &amp; 
+              <a href="//www.ebi.ac.uk/research/eipp">PhDs</a></li>  
+            </ul>  
+          </div>   
+        <div class="grid_4 col-sm-2">  
+          <h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/training">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/training/handson">Train at EBI</a></li>  
+            <li><a href="//www.ebi.ac.uk/training/roadshow">Train outside EBI</a></li>  
+            <li><a href="//www.ebi.ac.uk/training/online">Train online</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/training/contact-us">Contact organisers</a></li>  
+          </ul>  
+        </div>   
+        <div class="grid_4 col-sm-2">  
+          <h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/industry">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/industry/private">Members Area</a></li>  
+            <li><a href="//www.ebi.ac.uk/industry/workshops">Workshops</a></li>  
+            <li><a href="//www.ebi.ac.uk/industry/sme-forum"><abbr title="Small Medium Enterprise">SME</abbr> Forum</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/industry/contact">Contact Industry programme</a></li>  
+          </ul>  
+        </div> 
+        <div class="grid_4 omega col-sm-2">  
+          <h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/about">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/leadership">Leadership</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/funding">Funding</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/background">Background</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/partnerships">Collaboration</a></li>  
+            <li><a title="Jobs, postdocs, PhDs..." href="//www.ebi.ac.uk/about/jobs">Jobs</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/people">People &amp; groups</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/news">News</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/events">Events</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/travel">Visit us</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/about/contact">Contact us</a></li>  
+          </ul>  
+        </div>
+      </nav>
+
+        <section id="ebi-footer-meta">
+          <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p><p>Copyright &copy; EMBL-EBI 2015 | EBI is an outstation of the <a href="http://www.embl.org">European Molecular Biology Laboratory</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a> | <a href="/about/terms-of-use">Terms of use</a></p>
+        </section>
+
+    </div>
+
+</footer>
+</div><!-- container -->
+
+    
+ <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-animate.min.js"></script>
+ <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+ <script src="js/vendor/underscore/underscore-min.js"></script>
+ <script src="js/search/ddi.metadata.search.js"></script>
+<!--
+ <script src="js/search/metadata.search.js"></script>
+ <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+ <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="js/search/sequence.search.js"></script>
+ <script src="js/search/export-results.search.js"></script>
+ <script src="js/vendor/query-string.js"></script>
+ <script src="js/jquery.EuropePMCAbstracts.js"></script>
+ <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+ <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+ <script src="js/vendor/handlebars-v1.1.2.js"></script>
+ <script src="js/guidedTour.js"></script>
+ <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+ <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+ -->
+ <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+ <script src="js/d3/d3.speciesSunburst.js"></script>
+ <script src="js/d3/d3.speciesTree.js"></script>
+
+</body></html>

@@ -6,7 +6,7 @@ var piechasdata;
 piechasdata= d3.json(piechats_url, function(error,json) {
     if (error) return console.warn(error);
 var width = 480,
-    height = 225,
+    height = 325,
 	radius = Math.min(width, height) / 2;
 
 var body = d3.select("#"+piechartname);
@@ -41,8 +41,10 @@ body.append('form')
     .attr('name','dataset')
     .attr('value',function (d) { return d; })
     .text(function (d) { return d; })
-
-  d3.select('input[value="Species"]').property('checked',true)
+  
+  for (first in json) break;
+  
+  d3.select("#"+piechartname+"_form").select('input[value='+first+']').property('checked',true)
 
   d3.select("#"+piechartname+"_form").selectAll('input')
     .on('change',change);
@@ -69,13 +71,17 @@ var outerArc = d3.svg.arc()
     .attr("cy", 0);
 
 var text_name = svg.append('text')
-                .attr('x', 0-radius*0.2)
-                .attr('y', 0-radius*0.2)
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline','middle')
                 .attr('fill', 'white');
 
 var text_value = svg.append('text')
-                .attr('x', 0-radius*0.2)
-                .attr('y', 0+radius*0.1)
+                .attr('x', 0)
+                .attr('y', 0+radius*0.2)
+                .attr('text-anchor', 'middle')
+                .attr('alignment-baseline','middle')
                 .attr('fill', 'white');
 
 
@@ -84,9 +90,7 @@ svg.attr("transform", "translate(" + width / 2.5 + "," + height / 2 + ")");
 var key = function(d){ return d.data.label; };
 
 
-var color2 = d3.scale.ordinal()
- 	.domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
- 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
 var color = d3.scale.category20();
 
 
@@ -97,7 +101,7 @@ change();
 function change() {
 
 
-    var value = this.value || "Species";
+    var value = this.value || first;
     var data = json[value]; 
     console.log(value);
 	/* ------- PIE SLICES -------*/
@@ -180,7 +184,7 @@ function change() {
 			return function(t) {
 				var d2 = interpolate(t);
 				var pos = outerArc.centroid(d2);
-				pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+				pos[0] = 0.8*radius * (midAngle(d2) < Math.PI ? 1 : -1);
 				return "translate("+ pos +")";
 			};
 		})
@@ -214,7 +218,7 @@ function change() {
 			return function(t) {
 				var d2 = interpolate(t);
 				var pos = outerArc.centroid(d2);
-				pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+				pos[0] = 0.8*radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
 				return [arc.centroid(d2), outerArc.centroid(d2), pos];
 			};			
 		});

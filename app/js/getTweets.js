@@ -78,7 +78,7 @@ TweetFetcher.prototype.parse = function(res)
 
 publishtweets =  function (data) {
 
-  d3.select("#dataset-of-the-month").append("div").selectAll("div")
+  d3.select("#tweets-of-the-month").append("div").selectAll("div")
     .data(data) // top level data-join
   .enter().append("div")
     .each(function() {

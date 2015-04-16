@@ -34,6 +34,13 @@ polyline{
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
+
+var piechats_url="data/testjson.json";
+var piechasdata; 
+piechasdata= d3.json(piechats_url, function(error,json) {
+    if (error) return console.warn(error);
+var body = d3.select("body");
+
 var svg = d3.select("body")
 	.append("svg")
 	.append("g")
@@ -45,9 +52,26 @@ svg.append("g")
 svg.append("g")
 	.attr("class", "lines");
 svg.append("circle")
-    .attr("id","insidecycle");
+    .attr("id","insidecycle")
+    .attr("style","stroke:none");
 
-    
+   
+body.append('form')
+  .attr("id","Tissue_Species_form")
+  .selectAll('label')
+  .data(d3.keys(json)).enter()
+  .append('label')
+    .text(function (d) { return d;})
+  .append('input')
+    .attr('type','radio')
+    .attr('name','dataset')
+    .attr('value',function (d) { return d; })
+    .text(function (d) { return d; })
+
+  d3.select('input[value="Species"]').property('checked',true)
+
+  d3.select("#Tissue_Species_form").selectAll('input')
+    .on('change',change);
 
 var width = 960,
     height = 450,
@@ -67,7 +91,7 @@ var outerArc = d3.svg.arc()
 	.innerRadius(radius * 0.9)
 	.outerRadius(radius * 0.9);
 
-     svg.select("#insidecycle")
+    svg.select("#insidecycle")
     .attr("r", radius*0.4)
     .style("fill","white")
     .attr("cx", 0)
@@ -77,46 +101,32 @@ svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 var key = function(d){ return d.data.label; };
 
- var color2 = d3.scale.ordinal()
+
+var color2 = d3.scale.ordinal()
  	.domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
  	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 var color = d3.scale.category20();
 
-
-rect = svg.append('text').transition().duration(500).attr('width', radius*0.4*1.414)
-                .attr('height', radius*0.4*1.414)
-                .attr('x', 0-radius*0.4/1.414)
-                .attr('y', 0-radius*0.4/1.414)
-                .attr('stroke', 'black')
-                // .attr('opacity','.01')
 text_name = svg.append('text')
                 .attr('x', 0-radius*0.2)
                 .attr('y', 0-radius*0.2)
                 .attr('fill', 'white');
+
 
 text_value = svg.append('text')
                 .attr('x', 0-radius*0.2)
                 .attr('y', 0+radius*0.1)
                 .attr('fill', 'white');
 
-
-function randomData (){
-	var labels = color2.domain();
-	return labels.map(function(label){
-		return { label: label, value: Math.random() }
-	});
-}
-
-change(randomData());
-
-d3.select(".randomize")
-	.on("click", function(){
-		change(randomData());
-	});
+change();
 
 
-function change(data) {
+function change() {
 
+
+    var value = this.value || "Species";
+    var data = json[value]; 
+    console.log(value);
 	/* ------- PIE SLICES -------*/
 	var slice = svg.select(".slices").selectAll("path.slice")
 		.data(pie(data), key);
@@ -127,22 +137,19 @@ function change(data) {
 		.style("fill", function(d,i) { return color(i); })
 		.attr("class", "slice")
 		.on("click", function(d,i){
-              alert("you have clicked"+d.text);
+              alert("you have clicked"+d.data.label);
               // window.open("browse.html#/search?q="+d.text);
                })
 		.on("mouseover", function(d,i) {
+			var temptext1 = d.data.label;
+			var temptext2 = d.data.value;
 			colorinside = color(i);
             svg.select("#insidecycle") 
-            .text(function(d) {return "hello";})
     		.style("fill", colorinside );
     		text_name
-		    .text(function(d) {
-			  return "1hello world2";
-		  })
+		    .text( temptext1);
     		text_value
-		    .text(function(d) {
-			  return "1hello world2";
-		  })
+		    .text(temptext2);
         })
 		;
 
@@ -172,20 +179,14 @@ function change(data) {
 		.style("fill", function(d,i) { return color(i); })
 		.attr("dy", ".35em")
 		.text(function(d) {
-			return d.data.label;
+			 return d.data.label;
 		})
 		.on("mouseover", function(d,i) {
 			colorinside = color(i);
             svg.select("#insidecycle") 
     		.style("fill", colorinside );
-    		text_name
-		    .text(function(d) {
-			  return "hello world";
-		  })
-    		text_value
-		    .text(function(d) {
-			  return "hello world";
-		  })
+    		text_name.text("");
+    		text_value.text("");
         })
 		;
 
@@ -244,6 +245,6 @@ function change(data) {
 	polyline.exit()
 		.remove();
 };
-
+});
 </script>
 </body>

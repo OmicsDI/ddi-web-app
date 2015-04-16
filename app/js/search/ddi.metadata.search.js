@@ -730,12 +730,12 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
     $scope.submit_query = function() {
         $scope.query.submitted = true;
 
-
 	$scope.$root.currentpage = 1;
 
 
         if ($scope.queryForm.text.$invalid) {
             return;
+        alert("submitted invalid" + $scope.queryForm);
         }
         $scope.meta_search($scope.query.text);
     };

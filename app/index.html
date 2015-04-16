@@ -62,11 +62,50 @@
         <a href="/"><img class="rnacentral-header-logo" alt="DDI logo" src="static/img/logo/DDI_logo_ltgrey.png"></a>
       </div>
 
-      <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
-         <form novalidate id="queryForm" class="global-search" ng-submit="submit_query()">
-             <fieldset>
+
+    </div><!-- /row -->
+
+</div> <!-- /container-->
+</div> <!-- /navbar-->
+
+
+<div class="masthead grid_24 nomenu" id="local-masthead">
+    <nav >
+        <ul id="local-nav" class="grid_24" style="background-color:black">
+            <li class=" first" id="home-menu"><a title="Home" href="http://www.ebi.ac.uk/ddi/">Home</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://www.ebi.ac.uk/ddi/simpleSearch?q=&amp;submit=Search">Browse</a></li>
+            <li class="" id="api-menu"><a title="DDI API" href="http://www.ebi.ac.uk/ddi/api">API</a></li>
+            <li class="" id="help-menu"><a title="DDI help" href="http://www.ebi.ac.uk/ddi/help/">Help</a></li>
+            <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://www.ebi.ac.uk/ddi/help/about">About DDI</a></li>
+            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+            whichever one will show up last...
+            For example: -->
+            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
+            <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+            <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+            </ul>
+    </nav>
+</div><!-- local-masthead-->
+
+<div>
+<p> <br>   </p>
+<p> <br>   </p>
+</div>
+
+<div class="container">
+<div class="row" >
+
+      <div class="col-md-8" >
+      <div ng-controller="QueryCtrl" class="ng-scope" style="border:solid lightgray; border-radius:8px; background-color:lightblue">
+         <form novalidate id="queryForm" class="global-search center" ng-submit="submit_query()">
+        <br>
+        Omics Discovery Iterface (ODI) is a freely available search engin of multiple Omics experiments focused on Knowledge Discovery in Biology.
+        <br>
+        <br>
+
                  <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                     <div class="input-group">
+                     <div class="input-group center" style="width:70%">
                          <input type="text"
                          placeholder="organism, repository, gene, tissue, accession"
                          class="form-control"
@@ -84,18 +123,7 @@
                              </button>
                          </div><!-- /input-group-btn -->
                      </div><!--input-group -->
-                     <span class="help-block example-searches">
-                         <small>
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
-                             </i>
-                         </small>
-                     </span>
+                 
                      <label class="control-label ng-cloak has-error"
                          for="query-text" ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
                          ng-cloak>
@@ -107,115 +135,194 @@
                          Your query is too long
                      </label>
                  </div><!-- /form-group -->
-             </fieldset>
+                <span class="help-block  ">
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
+                             </i>
+                     </span> 
          </form><!-- /form -->
     </div><!--/controller-->
-    </div><!-- /row -->
+    </div>
 
-</div> <!-- /container-->
-</div> <!-- /navbar-->
+    <div  class="col-md-4" >
+    <div id="statisticspanel" class="panel panel-default">
 
-
-<div class="masthead grid_24 nomenu" id="local-masthead">
-    <nav>
-        <ul id="local-nav" class="grid_24">
-            <li class=" first" id="home-menu"><a title="Home" href="http://www.ebi.ac.uk/ddi/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://www.ebi.ac.uk/ddi/simpleSearch?q=&amp;submit=Search">Browse</a></li>
-            <li class="" id="api-menu"><a title="DDI API" href="http://www.ebi.ac.uk/ddi/api">API</a></li>
-            <li class="" id="help-menu"><a title="DDI help" href="http://www.ebi.ac.uk/ddi/help/">Help</a></li>
-            <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://www.ebi.ac.uk/ddi/help/about">About DDI</a></li>
-            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-            whichever one will show up last...
-            For example: -->
-            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
-            <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
-            <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+        <div class="" >
+           <h4 class="icon icon-functional " data-icon="z" > Statistics</h4> 
+        </div>
+        <div class="panel-body ">
+            <ul>
+              <li>Release <strong>2</strong> (18 Feb 2015)</li>
+              <li><em>8,446,855</em> distinct sequences</li>
+              <li><em>12</em> Expert Databases</li>
             </ul>
-    </nav>
-</div><!-- local-masthead-->
+        </div>
+    </div>
+    </div>
+    
 
+</div>
 
-
-<div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style="">
+<!-- <div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style=""> -->
 <div class="row" >
 <h1> Datasets in DDI</h1>
 
-<div id="statistic_graphs"  style="border:solid lightblue; height:240px">
-
-    <div id="graph1" class="col-md-4">
-        <img src="css/graph1.png"/>
+    <div  class="col-md-4">
+    <div id="hotwords" class="panel panel-default">
+    </div>
     </div>
 
-    <div id="graph2" class="col-md-4">
-        <img src="css/graph2.png"/>
+
+    <div  class="col-md-4">
+    <div id="chart1" class="panel panel-default">
+    </div>
     </div>
 
-    <div id="graph2" class="col-md-4">
-        <img src="css/graph3.png"/>
+    <div  class="col-md-4">
+    <div id="chart2" class="panel panel-default">
     </div>
-</div>
-
-</div>
-
-
-<div id="buttoms" class="row" >
-    <div id="left" class="col-md-4" style="float:left">
-
-
-
-        <div id="hotwords"  style="height:350px; width:350px ">
+    </div>
 
 
 
 
+</div><!-- row -->
+
+
+
+<div  class="row" >
+    <div  class="col-md-4" >
+    <div id="latestdatasetspanel" class="panel panel-default">
+
+        <div class="" >
+           <h4 class="icon icon-functional " data-icon="z" > Latest Datasets</h4> 
         </div>
-
-
-        <div id="latest datasets">
-            <h3>Latest Datasets</h3>
-            <div id="datasets" style="border:solid lightblue">
-                <ul>
-                    <li>PXD001611:Defining a minimal cell</li>
-                    <li>PXD001611:Defining a minimal cell</li>
-                    <li>PXD001611:Defining a minimal cell</li>
-                    <li>PXD001611:Defining a minimal cell</li>
-                </ul>
-
-            </div>
+        <div class="panel-body ">
+            <ul>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+            </ul>
         </div>
     </div>
+    </div>  
 
-    <div id="documents_center" class="col-md-4" style="float:auto">
-    <div id="" class="" style="border:solid lightblue; margin:3px">
-     <p>
-        The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.The API of DDI is intened to be a way of indexing different resources in the same way.
-     </p>
+    <div  class="col-md-4" >
+    <div id="most_accessed_datasets" class="panel panel-default">
+
+        <div class="" >
+           <h4 class="icon icon-functional " data-icon="z" > Most Accessed Datasets</h4> 
+        </div>
+        <div class="panel-body ">
+            <ul>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+              <li>PXD001611:Defining a minimal cell</li>
+            </ul>
+        </div>
+    </div>
+    </div>  
+
+
+    <div  class="col-md-4" >
+    <div id="temppanel" class="panel panel-default">
+
+        <div class="" >
+           <h4  > Under construction, if you have some ideas on the datasets faceting to share, please feel free to contact us</h4> 
+        </div>
+        <div class="panel-body ">
+            <ul>
+            </ul>
+        </div>
     </div>
     </div>
 
-    <div id="tweetfeeds_right" class="col-md-4" style="float:right">
-    <div style="border:solid lightblue; margin:3px">
-    <div id="dataset-of-the-month" class="" >
 
+</div> <!--row -->
+
+<hr>
+
+<div class="row">
+    <div  class="col-md-4" >
+    <div  class="panel panel-default">
+    <div id="tweets-of-the-month" class="" >
+        <h3 data-icon="N" class="icon icon-generic">
+            Tweets 
+        </h3>
+    </div>
+
+    <div >
+     <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More tweets</a>
+    </div>
+    </div>
+    </div>
+
+
+    <div  class="col-md-4" >
+    <div  class="panel panel-default">
+      <div id="news-of-the-month" class="" >
         <h3 data-icon="N" class="icon icon-generic">
             News
         </h3>
-
-
+        <ul>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+        </ul>
+      </div>
+      <div >
+        <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More news</a>
+      </div>
+    </div>
     </div>
 
-    <div id="dataset-of-the-month" class="" >
-     <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More news</a>
+
+    <div  class="col-md-4" >
+    <div  class="panel panel-default">
+      <div id="FAQs" class="" >
+        <h3 data-icon="N" class="icon icon-generic">
+            FAQs 
+        </h3>
+        <ul>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+            <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
+        </ul>
+      </div>
+      <div >
+        <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More FAQs</a>
+      </div>
+    </div>
     </div>
 
-    </div>
-    </div >
+
+</div> <!--row -->
 
 
-</div>
+</div> <!--main container of page -->
 
-</div> <!-- ResultsListCtrl -->
+<!-- </div> ResultsListCtrl -->
 
 <footer>
 <div class="grid_24" id="global-footer">
@@ -301,8 +408,9 @@
  <script src="js/vendor/underscore/underscore-min.js"></script>
  <script src="js/search/ddi.metadata.search.js"></script>
  <script src="js/getTweets.js"></script>
- <script src="js/gradientPie.js"></script>
+ <script src="js/pieCharts.js"></script>
 <!--
+ <script src="js/gradientPie.js"></script>
  <script src="js/search/metadata.search.js"></script>
  <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
  <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -328,6 +436,9 @@
 
 <script>
 
+  pieCharts("data/testjson.json","chart1");
+  pieCharts("data/OmicsRepositoryData.json","chart2");
+
   var hotwords_url="data/data.json";
   var hotwords; 
  hotwords = d3.json(hotwords_url, function(error,json) {
@@ -336,7 +447,7 @@
 
   var fill = d3.scale.category20();
   
-  d3.layout.cloud().size([320, 320])
+  d3.layout.cloud().size([410, 325])
       .words(json)
       .padding(1)
       .rotate(function() { return ~~(Math.random() * 2) * 5; })
@@ -349,11 +460,11 @@
   function draw(words) {
     // d3.select("#hotwords").append("svg")
     d3.select("#hotwords").append("svg")
-        .attr("width", 350)
+        .attr("width", 470)
         .attr("height", 350)
         .attr("class", "wordcloud")
       .append("g")
-        .attr("transform", "translate(180,180)")
+        .attr("transform", "translate(200,180)")
       .selectAll("text")
         .data(words)
       .enter().append("text")
@@ -387,52 +498,4 @@ tf.fetch(function(tweets)
 }, 4);
 
 </script>
-
-
-
-
-
-<script>
-/**
-*  draw the pie charts
-*/
-
-
-var salesData=[
-    {label:"Basic", color:"#3366CC"},
-    {label:"Plus", color:"#DC3912"},
-    {label:"Lite", color:"#FF9900"},
-    {label:"Elite", color:"#109618"},
-    {label:"Delux", color:"#990099"}
-];
-
-var svg = d3.select("#graph1").append("svg").attr("width", 350).attr("height", 200);
-
-svg.append("g").attr("id","salespie");
-svg.append("g").attr("id","quotespie");
-    
-gradPie.draw("salespie", randomData(), 200, 200, 160);
-gradPie.draw("quotespie", randomData(), 500, 200, 100);
-
-function changeData(){
-    gradPie.transition("salespie", randomData(), 160);
-    gradPie.transition("quotespie", randomData(), 100);
-}
-
-function randomData(){
-    return salesData.map(function(d){ 
-        return {label:d.label, value:1000*Math.random(), color:d.color};});
-}
-
-
-</script>
-
-
-
-
-
-
-
-
-
 </body></html>

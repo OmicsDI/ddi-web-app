@@ -1,65 +1,73 @@
 
 .container {
-  background: #fff;
-  width:100%;
+background: #fff;
+width:100%;
 }
 
 .container-main {
-  min-height: 500px;
-  padding-top: 10px;
-  width:100%;
+min-height: 500px;
+padding-top: 10px;
+width:100%;
 }
 .dot-bottom {
-    font-size: 0;
-    line-height: 0;
-    border-width: 10px;
-    border-color: lightblue;
-    border-bottom-width: 0;
-    border-style: dashed;
-    border-top-style: solid;
-    border-left-color: white;
-    border-right-color: white;
-    margin-top: 10px;
-    margin-right: auto; 
+font-size: 0;
+line-height: 0;
+border-width: 10px;
+border-color: lightblue;
+border-bottom-width: 0;
+border-style: dashed;
+border-top-style: solid;
+border-left-color: white;
+border-right-color: white;
+margin-top: 10px;
+margin-right: auto; 
 }
 
-    .scrollbox {
-        overflow: auto; /* This is changed by enscroll, but must be defined */
-//        width: 368px; /* The arbitrary width and height of the view pane */
-        height: 550px;
-    }
-    .vertical-track {
-        width: 16px; /* How wide is the scrollbar going to be? */
-        background-color: #aaa; /* What color should the vertical track be? */
-    }
-    .vertical-handle {
-        width: 16px; /* How wide is the scrollbar handle? */
-        background-color: #aaf; /* What color should the handle be? */
-    }
+
+.center {
+margin-left: auto;
+margin-right: auto;
+width: 70%;
+//background-color: #b0e0e6;
+}
+
+.scrollbox {
+overflow: auto; / This is changed by enscroll, but must be defined /
+//width: 368px; / The arbitrary width and height of the view pane /
+height: 550px;
+}
+.vertical-track {
+width: 16px; / How wide is the scrollbar going to be? /
+background-color: #aaa; / What color should the vertical track be? /
+}
+.vertical-handle {
+width: 16px; / How wide is the scrollbar handle? /
+background-color: #aaf; / What color should the handle be? /
+}
 
  a.disabled
 {
-	color: #AAAAAA;
-	cursor: default;
-	pointer-events: none;
-	text-decoration: none;
+ color: #AAAAAA;
+ cursor: default;
+ pointer-events: none;
+ text-decoration: none;
 }
 
 body {
-	font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
+ font-family:"Lucida Grande","Droid Sans",Arial,Helvetica,sans-serif;
 }
 
 .legend {
-	border: 1px solid #555555;
-	border-radius: 5px 5px 5px 5px;
-	font-size: 0.8em;
-	margin: 10px;
-	padding: 8px;
+ border: 1px solid #555555;
+ border-radius: 5px 5px 5px 5px;
+ font-size: 0.8em;
+ margin: 10px;
+ padding: 8px;
 }
 
 
 .bld {
-	font-weight: bold;
+ font-weight: bold;
 }
 
 
@@ -77,4 +85,196 @@ opacity: .7 !important; }
 
 #insidecycle{
 opacity:.7;
+}
+
+
+
+
+
+.piesvg {
+width: 420px;
+height: 320px;
+}
+
+path.slice{
+stroke-width:2px;
+}
+
+polyline{
+ opacity: .3;
+ stroke: black;
+ stroke-width: 2px;
+ fill: none;
+}
+
+
+//below stlyes are copied from "??"
+
+form {
+color: #444;
+font-family: Helvetica,sans-serif;
+font-size: 100%;
+}
+h1, h2, h3, h4, h5, h6, p, form, table, body.table-layout table.data {
+padding-bottom: 0;
+padding-left: 9px;
+padding-right: 9px;
+padding-top: 0;
+}
+
+
+form {
+margin-bottom: 0;
+margin-left: 0;
+margin-right: 0;
+margin-top: 0;
+ font-weight: inherit;
+ font-style: normal;
+ text-decoration-color: -moz-use-text-color;
+ text-decoration-line: none;
+ text-decoration-style: solid;
+ text-indent: 0;
+ }
+
+
+
+
+ ::-moz-selection {
+ background-attachment: scroll;
+ background-clip: border-box;
+ background-color: #71b360;
+ background-image: none;
+ background-origin: padding-box;
+ background-position: 0 0;
+ background-repeat: repeat;
+ background-size: auto auto;
+ color: #fff;
+ text-shadow: none;
+ }
+
+
+
+
+ .panel-default {
+ border-bottom-color: #dddddd;
+ border-left-color-ltr-source: physical;
+ border-left-color-rtl-source: physical;
+ border-left-color-value: #dddddd;
+ border-right-color-ltr-source: physical;
+ border-right-color-rtl-source: physical;
+ border-right-color-value: #dddddd;
+ border-top-color: #dddddd;
+ }
+
+ .panel {
+ -moz-border-bottom-colors: none;
+ -moz-border-left-colors: none;
+ -moz-border-right-colors: none;
+ -moz-border-top-colors: none;
+ background-color: #ffffff;
+ border-bottom-left-radius: 4px;
+ border-bottom-right-radius: 4px;
+ border-bottom-style: solid;
+ border-bottom-width: 1px;
+ border-image-outset: 0 0 0 0;
+ border-image-repeat: stretch stretch;
+ border-image-slice: 100% 100% 100% 100%;
+ border-image-source: none;
+ border-image-width: 1 1 1 1;
+ border-left-color-ltr-source: physical;
+ border-left-color-rtl-source: physical;
+ border-left-color-value: transparent;
+ border-left-style-ltr-source: physical;
+ border-left-style-rtl-source: physical;
+ border-left-style-value: solid;
+ border-left-width-ltr-source: physical;
+ border-left-width-rtl-source: physical;
+ border-left-width-value: 1px;
+ border-right-color-ltr-source: physical;
+ border-right-color-rtl-source: physical;
+ border-right-color-value: transparent;
+ border-right-style-ltr-source: physical;
+ border-right-style-rtl-source: physical;
+ border-right-style-value: solid;
+ border-right-width-ltr-source: physical;
+ border-right-width-rtl-source: physical;
+ border-right-width-value: 1px;
+ border-top-left-radius: 4px;
+ border-top-right-radius: 4px;
+ border-top-style: solid;
+ border-top-width: 1px;
+ box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+ margin-bottom: 20px;
+ }
+
+
+ .panel-default > .panel-heading {
+ background-color: #f5f5f5;
+ border-bottom-color: #dddddd;
+ border-left-color-ltr-source: physical;
+ border-left-color-rtl-source: physical;
+ border-left-color-value: #dddddd;
+ border-right-color-ltr-source: physical;
+ border-right-color-rtl-source: physical;
+ border-right-color-value: #dddddd;
+ border-top-color: #dddddd;
+ color: #333333;
+ }
+ .panel-heading {
+ border-bottom-style: solid;
+ border-bottom-width: 1px;
+ border-top-left-radius: 3px;
+ border-top-right-radius: 3px;
+ padding-bottom: 10px;
+ padding-left: 15px;
+ padding-right: 15px;
+ padding-top: 10px;
+ }
+
+ .panel-title {
+ font-size: 16px;
+ margin-bottom: 0;
+ margin-top: 0;
+ }
+
+ .text-center {
+ text-align: center;
+ }
+
+ .panel-body::before, .panel-body::after {
+ content: " ";
+ display: table;
+ }
+
+
+ .fa {
+ -x-system-font: none;
+ display: inline-block;
+ font-family: FontAwesome;
+ font-feature-settings: normal;
+ font-kerning: auto;
+ font-language-override: normal;
+ font-size: inherit;
+ font-size-adjust: none;
+ font-stretch: normal;
+ font-style: normal;
+ font-synthesis: weight style;
+ font-variant-alternates: normal;
+ font-variant-caps: normal;
+ font-variant-east-asian: normal;
+ font-variant-ligatures: normal;
+ font-variant-numeric: normal;
+ font-variant-position: normal;
+ font-weight: normal;
+ line-height: 1;
+ text-rendering: auto;
+ transform: translate(0px, 0px);
+ }
+
+ h3.panel-title {
+ color: black;
+ }
+
+.fa-bar-chart-o:before,.fa-bar-chart:before{
+content:"\f080";
 }
