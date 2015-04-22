@@ -27,7 +27,7 @@ margin-right: auto;
 .center {
 margin-left: auto;
 margin-right: auto;
-width: 70%;
+width: 50%;
 //background-color: #b0e0e6;
 }
 
@@ -277,4 +277,9 @@ margin-top: 0;
 
 .fa-bar-chart-o:before,.fa-bar-chart:before{
 content:"\f080";
+}
+
+
+.list-group-item {
+ margin-top:10px;
 }

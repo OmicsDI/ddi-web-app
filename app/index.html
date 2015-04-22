@@ -12,6 +12,7 @@
         <title>Search: DDI</title>
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
         <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
@@ -29,7 +30,6 @@
         <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
         <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
         <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
-    
 
 </head>
 
@@ -70,13 +70,13 @@
 
 
 <div class="masthead grid_24 nomenu" id="local-masthead">
-    <nav >
+    <nav  class="">
         <ul id="local-nav" class="grid_24" style="background-color:black">
-            <li class=" first" id="home-menu"><a title="Home" href="http://www.ebi.ac.uk/ddi/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://www.ebi.ac.uk/ddi/simpleSearch?q=&amp;submit=Search">Browse</a></li>
-            <li class="" id="api-menu"><a title="DDI API" href="http://www.ebi.ac.uk/ddi/api">API</a></li>
-            <li class="" id="help-menu"><a title="DDI help" href="http://www.ebi.ac.uk/ddi/help/">Help</a></li>
-            <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://www.ebi.ac.uk/ddi/help/about">About DDI</a></li>
+            <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=human">Browse</a></li>
+            <li class="" id="api-menu"><a title="DDI API" href="http://localhost:9091/">API</a></li>
+            <li class="" id="help-menu"><a title="DDI help" href="http://localhost:8000/app/help/">Help</a></li>
+            <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://localhost:8000/app/help/about">About DDI</a></li>
             <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
             add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
             whichever one will show up last...
@@ -97,20 +97,19 @@
 <div class="row" >
 
       <div class="col-md-8" >
-      <div ng-controller="QueryCtrl" class="ng-scope" style="border:solid lightgray; border-radius:8px; background-color:lightblue">
-         <form novalidate id="queryForm" class="global-search center" ng-submit="submit_query()">
-        <br>
-        Omics Discovery Iterface (ODI) is a freely available search engin of multiple Omics experiments focused on Knowledge Discovery in Biology.
-        <br>
-        <br>
-
+      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">
+      <h4> 
+       Omics Discovery Index is an integrated multiple Omics resouces discovry site. 
+      </h4> 
+         <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+             <!-- <fieldset> -->
                  <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                     <div class="input-group center" style="width:70%">
+                     <div class="input-group">
                          <input type="text"
                          placeholder="organism, repository, gene, tissue, accession"
                          class="form-control"
                          id="query-text"
-                         id="text"
+                         name="text"
                          tabindex="1"
                          ng-model="query.text"
                          ng-minlength="2"
@@ -123,7 +122,18 @@
                              </button>
                          </div><!-- /input-group-btn -->
                      </div><!--input-group -->
-                 
+                     <span class="help-block example-searches">
+                         <!-- <small> -->
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
+                             </i>
+                         <!-- </small> -->
+                     </span>
                      <label class="control-label ng-cloak has-error"
                          for="query-text" ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
                          ng-cloak>
@@ -135,16 +145,7 @@
                          Your query is too long
                      </label>
                  </div><!-- /form-group -->
-                <span class="help-block  ">
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('mirbase')">miRBase</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('HOTAIR')">HOTAIR</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Escherichia*')">Escherichia*</a>
-                             </i>
-                     </span> 
+             <!-- </fieldset> -->
          </form><!-- /form -->
     </div><!--/controller-->
     </div>
@@ -179,12 +180,12 @@
 
 
     <div  class="col-md-4">
-    <div id="chart1" class="panel panel-default">
+    <div id="chart_tissues_organisms" class="panel panel-default">
     </div>
     </div>
 
     <div  class="col-md-4">
-    <div id="chart2" class="panel panel-default">
+    <div id="chart_repos_omics" class="panel panel-default">
     </div>
     </div>
 
@@ -195,7 +196,7 @@
 
 
 
-<div  class="row" >
+<div  class="row" ng-controller="DatasetListsCtrl">
     <div  class="col-md-4" >
     <div id="latestdatasetspanel" class="panel panel-default">
 
@@ -204,15 +205,10 @@
         </div>
         <div class="panel-body ">
             <ul>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
+              <li ng-repeat="dataset in latestList">
+                <a href={{"dataset.html#/"+dataset.id}}>{{dataset.id}}</a>
+                : {{dataset.title |limitTo:37}} {{dataset.title.length>37?'...':''}}
+              </li>
             </ul>
         </div>
     </div>
@@ -381,7 +377,7 @@
           <ul>  
             <li class="first"><a href="//www.ebi.ac.uk/about">Overview</a></li>  
             <li><a href="//www.ebi.ac.uk/about/leadership">Leadership</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/funding">Funding</a></li>  
+            <li><a href="   //www.ebi.ac.uk/about/funding">Funding</a></li>  
             <li><a href="//www.ebi.ac.uk/about/background">Background</a></li>  
             <li><a href="//www.ebi.ac.uk/about/partnerships">Collaboration</a></li>  
             <li><a title="Jobs, postdocs, PhDs..." href="//www.ebi.ac.uk/about/jobs">Jobs</a></li>  
@@ -409,13 +405,15 @@
  <script src="js/search/ddi.metadata.search.js"></script>
  <script src="js/getTweets.js"></script>
  <script src="js/pieCharts.js"></script>
+ <script src="js/drawHotwords.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="http://d3js.org/queue.v1.min.js"></script>
 <!--
  <script src="js/gradientPie.js"></script>
  <script src="js/search/metadata.search.js"></script>
  <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
  <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
  <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
  <script src="js/search/sequence.search.js"></script>
  <script src="js/search/export-results.search.js"></script>
  <script src="js/vendor/query-string.js"></script>
@@ -436,54 +434,10 @@
 
 <script>
 
-  pieCharts("data/testjson.json","chart1");
-  pieCharts("data/OmicsRepositoryData.json","chart2");
+  pieCharts_Tissues_Organisms();
+  pieCharts_Repos_Omics();
+  drawHotwords();
 
-  var hotwords_url="data/data.json";
-  var hotwords; 
- hotwords = d3.json(hotwords_url, function(error,json) {
-    if (error) return console.warn(error);
-    //rendering logic here
-
-  var fill = d3.scale.category20();
-  
-  d3.layout.cloud().size([410, 325])
-      .words(json)
-      .padding(1)
-      .rotate(function() { return ~~(Math.random() * 2) * 5; })
-      // .rotate(0)
-      .font("Impact")
-      .fontSize(function(d) { return d.size; })
-      .on("end", draw)
-      .start();
-
-  function draw(words) {
-    // d3.select("#hotwords").append("svg")
-    d3.select("#hotwords").append("svg")
-        .attr("width", 470)
-        .attr("height", 350)
-        .attr("class", "wordcloud")
-      .append("g")
-        .attr("transform", "translate(200,180)")
-      .selectAll("text")
-        .data(words)
-      .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
-        .style("font-family", "Impact")
-        .style("fill", function(d, i) { return fill(i); })
-        .attr("text-anchor", "middle")
-        .attr("transform", function(d) {
-          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-        })
-        .text(function(d) { return d.text; })
-        .on("click", function(d,i){
-              alert("you have clicked"+d.text);
-              window.open("browse.html#/search?q="+d.text);
-        })
-        ;
-  }
-
-});
 
 /**
 *  get tweets and write into the page

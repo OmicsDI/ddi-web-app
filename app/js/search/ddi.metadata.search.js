@@ -50,6 +50,31 @@ angular.module('ddiApp').config(['$locationProvider', function($locationProvider
     }
 }]);
 
+
+
+/*
+angular.module('ddiApp')
+
+.config(function($routeProvider,$locationProvider){
+	$routeProvider
+		.when('/index',{
+			redirectTo: '/index.html'
+//			templateUrl:'/index.html'
+		})
+	.when('/dataset',{
+		redirectTo:'/dataset.html'
+	})
+	.when('/browse',{
+		redirectTo:'/browse.html'
+	});
+
+	//usetheHTML5HistoryAPI
+	//$locationProvider.html5Mode(true);
+	});
+
+*/
+
+
 /**
  * Service for launching a metadata search.
  */
@@ -75,7 +100,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      * Service initialization.
      */
     var result = {
-        hitCount: null,
+        count: null,
         taxid: null,
         entries: [],
         facets: [],
@@ -89,28 +114,28 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     };
 
     var search_config = {
-        ebeye_base_url: 'http://www.ebi.ac.uk/ebisearch/ws/rest/pride',
+        ebeye_base_url: 'http://localhost:9091/dataset/search',
         ddi_base_url: get_base_url(),
-        fields: ['name','description', 'keywords', 'publication','species'],
-        facetfields: [
-            'TAXONOMY',
-            'experiment_type',
-            'modification',
-            'instrument',
-        ], // will be displayed in this order
-        facetcount: 30,
-        pagesize: 10,
-        sortfield: 'name',
+        // fields: ['name','description', 'keywords', 'publication','species'],
+        // facetfields: [
+            // 'TAXONOMY',
+            // 'experiment_type',
+            // 'modification',
+            // 'instrument',
+        // ], // will be displayed in this order
+        facetcount: 100,
+        // pagesize: 10,
+        // sortfield: 'title',
 	
     };
 
     var query_urls = {
         'ebeye_search': search_config.ebeye_base_url +
                         '?query={QUERY}' +
-                        '&format=json' +
-                        '&fields=' + search_config.fields.join() +
+                        // '&format=json' +
+                        // '&fields=' + search_config.fields.join() +
                         '&facetcount=' + search_config.facetcount +
-                        '&facetfields=' + search_config.facetfields.join() +
+                        // '&facetfields=' + search_config.facetfields.join() +
 //                        '&size=' + search_config.pagesize +
                         '&size={PAGESIZE}' + 
                         '&sortfield={SORTFIELD}' + 
@@ -140,7 +165,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     this.search = function(query, start, pagesize,sortfield) {
         start = start || 0;
 	pagesize = pagesize || 10;
-	sortfield = sortfield || 'name';
+	sortfield = sortfield || 'id';
 
         display_search_interface();
         display_spinner();
@@ -155,7 +180,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
          */
         function display_spinner() {
             if (start === 0) {
-                result.hitCount = null; // display spinner
+                result.count = null; // display spinner
             }
         }
 
@@ -276,8 +301,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
                 method: 'GET'
             }).success(function(data) {
                 data = preprocess_results(data);
-
-                overwrite_results = overwrite_results || false;
+               overwrite_results = overwrite_results || false;
                 if (overwrite_results) {
                     data.taxid = result.taxid;
                     data._query = result._query;
@@ -488,9 +512,15 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.show_export_error = false;
     $scope.pagesize = 10;
 //    $scope.currentpage = 1;
-    $scope.sortfield = 'name';
+    $scope.sortfield = 'title';
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
+
+    $scope.proteomics_list="pride,peptideatlas,massive";
+    $scope.metabolomics_list="metamolights";
+    $scope.genomics_list="ega,ena";
+  
+     $scope.test="test";
 
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
@@ -501,10 +531,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () { return results.get_result(); }, function (newValue, oldValue) {
         if (newValue !== null) {
             $scope.result = newValue;
-	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.hitCount);
-	    $scope.maxpageno = 1+parseInt(($scope.result.hitCount-1)/$scope.pagesize);
+	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.count);
+	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.pagesize);
             $scope.query = $location.search().q;
-//	    $scope.pages= results.get_pages(5, 10, $scope.result.hitCount);
+//	    $scope.pages= results.get_pages(5, 10, $scope.result.count);
         }
     });
 
@@ -650,8 +680,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     $scope.$watch(function () { return $location.url(); }, function (newUrl, oldUrl) {
 	    $scope.$root.currentpage = 1;
-	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.hitCount);
-	    $scope.maxpageno = 1+parseInt(($scope.result.hitCount-1)/$scope.pagesize);
+	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.count);
+	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.pagesize);
 
     });
 
@@ -679,6 +709,12 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
     $scope.meta_search = function(query) {
 	$scope.$root.currentpage = 1;
         search.meta_search(query);
+        var current_abs_url = $location.absUrl();
+	alert(current_abs_url);
+	
+        if(current_abs_url.match("index.html")) {$window.location = current_abs_url.replace("index.html","browse.html");}
+        if(current_abs_url.match("/#/")) {$window.location = current_abs_url.replace("/#/","/browse.html#/");}
+        if(current_abs_url.match("dataset.html")){$window.location = current_abs_url.replace("dataset.html","browse.html");}
     };
 
 
@@ -754,6 +790,45 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
 
 }]);
 
+
+
+
+
+/**
+ * Dataset controller
+ * Responsible for the Dataset fetching.
+ */
+angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http', function($scope, $location, $window, $timeout, $http ) {
+     $scope.datasetid = $location.url().replace("/",""); 
+     var url = "getdataset?id="+$scope.datasetid;
+     var url = "/app/data/dataset_"+$scope.datasetid+".json";
+     $http({
+                url: url,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.dataset = data;
+            }).error(function(){
+	alert("GET error:" + url);
+
+            });
+}]);
+
+/**
+ * Datasets Statistics Lists controller
+ * Responsible for the Datasets Stastistic Lists.
+ */
+angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
+     var url = "http://localhost:9091/dataset/latest?size=10";
+     $http({
+                url: url,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.latestList = data["datasets"];
+            }).error(function(){
+    alert("GET error:" + url);
+
+            });
+}]);
 
 /**
  * Create a keyboard shortcut for quickly accessing the search box.
