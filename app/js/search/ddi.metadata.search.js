@@ -224,6 +224,8 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
 
             apply_species_specific_filtering();
 
+            if(query==='*:*') return query;// for the DDI wildcard
+
             var words = query.match(/[^\s"]+|"[^"]*"/g);
             var array_length = words.length;
             for (var i = 0; i < array_length; i++) {
@@ -517,10 +519,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.maxpageno= 1;
 
     $scope.proteomics_list="pride,peptideatlas,massive";
-    $scope.metabolomics_list="metamolights";
+    $scope.metabolomics_list="metabolights";
     $scope.genomics_list="ega,ena";
   
-     $scope.test="test";
 
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
@@ -818,6 +819,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  * Responsible for the Datasets Stastistic Lists.
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
+    $scope.proteomics_list="pride,peptideatlas,massive";
+    $scope.metabolomics_list="metabolights";
+    $scope.genomics_list="ega,ena";
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,
@@ -827,6 +831,17 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
             }).error(function(){
     alert("GET error:" + url);
 
+            });
+
+    url = "http://localhost:9091/stats/general";
+
+    $http({
+                url: url,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.statisticList = data;
+            }).error(function(){
+    alert("GET error:" + url);
             });
 }]);
 

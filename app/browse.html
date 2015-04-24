@@ -120,7 +120,7 @@
     <nav>
         <ul id="local-nav" class="grid_24">
             <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=human">Browse</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
             <li class="" id="api-menu"><a title="DDI API" href="http://localhost:9091/">API</a></li>
             <li class="" id="help-menu"><a title="DDI help" href="http://localhost:8000/app/help/">Help</a></li>
             <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://localhost:8000/app/help/about">About DDI</a></li>
@@ -163,8 +163,8 @@
           <h3 class="ng-binding">Show results for</h3>
           <ul class="list-unstyled metasearch-facet-values">
           <li> <a href="" ng-click="facet_search(result.facets[1].id, result.facets[1].facetValues[0].value)"><img src="css/Proteomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Proteomics</span><small>({{result.facets[0].facetValues[0].count | number}})</small></a></li>
-          <li> <a href="" ng-click="facet_search(result.facets[1].id, result.facets[1].facetValues[1].value)"><img src="css/Metabolomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Metabolomics</span><small>({{result.facets[1].facetValues[1].count | number}})</small></a></li>
-          <li> <a href="" ng-click="facet_search(result.facets[1].id, result.facets[1].facetValues[2].value)"><img src="css/Genomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Geneomics</span><small>({{result.facets[1].facetValues[2].count | number}})</small></label></li>
+          <li> <a href="" ng-click="facet_search(result.facets[1].id, result.facets[1].facetValues[1].value)"><img src="css/Metabolomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Metabolomics</span><small>({{result.facets[1].facetValues[1].count||0 | number}})</small></a></li>
+          <li> <a href="" ng-click="facet_search(result.facets[1].id, result.facets[1].facetValues[2].value)"><img src="css/Genomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Geneomics</span><small>({{result.facets[1].facetValues[2].count||0 | number}})</small></label></li>
           </ul>      
         </div>
         <div><!-- Repository -->
@@ -296,8 +296,8 @@
         
         <div class="project-widget-accession">
             <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1" /> 
-            <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" /> <span>  </span>
-            <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1" /> <span>  </span>
+            <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" /> 
+            <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1" /> 
             <a href={{"dataset.html#/"+dataset["id"]}}>{{dataset.title}}</a>  <span>{{test}}  </span>
         </div>
             

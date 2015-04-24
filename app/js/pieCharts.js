@@ -25,12 +25,13 @@ function draw_chart_tissues_organsims(error, tissues, organisms) {
 tissues.shift();
 organisms.shift();
  var unavailableNoTissues = tissues.pop();
+ var unavailableNoOrganisms = organisms.pop(); 
 
-var totaltissues = gettotal(tissues);
-var totalorganisms = gettotal(organisms);
+ var totaltissues = gettotal(tissues);
+ var totalorganisms = gettotal(organisms);
 
- console.log(totaltissues);
- console.log(totalorganisms);
+ // console.log(totaltissues);
+ // console.log(totalorganisms);
  console.log(unavailableNoTissues);
 
 
@@ -68,28 +69,59 @@ var svg = d3.select("#"+piechartname)
 
 svg.append("g")
 	.attr("class", "slices");
-svg.append("g")
-	.attr("class", "labels");
-svg.append("g")
-	.attr("class", "lines");
+// svg.append("g")
+// 	.attr("class", "labels");
+// svg.append("g")
+// 	.attr("class", "lines");
 svg.append("circle")
     .attr("id","insidecycle")
     .attr("style","stroke:none");
 
-var label_data = ['Tissues', 'Organisms'];
+ 
    
-body.append('form')
+var radioform = body.append('form');
+
+  radioform
   .attr("id",piechartname+"_form")
   .attr("class","center")
-  .selectAll('label')
-  .data(label_data).enter()
-  .append('label')
-    .text(function (d) { return d;})
+  .attr("style","margin-bottom:8px")
   .append('input')
     .attr('type','radio')
     .attr('name','dataset')
-    .attr('value',function (d) { return d; })
-    .text(function (d) { return d; })
+    .attr('value','Tissues')
+    .attr('id','Tissues' )
+    .text('Tissues');
+  radioform 
+   .append('label')
+     .text('Tissues')
+     .attr('for','Tissues')
+     .append('span')
+     .append('span')
+     ;
+
+  radioform
+  .append('input')
+    .attr('type','radio')
+    .attr('name','dataset')
+    .attr('value','Organisms')
+    .attr('id','Organisms' )
+    .text('Organisms');
+  radioform 
+   .append('label')
+     .text('Organisms')
+     .attr('for','Organisms')
+     .append('span')
+     .append('span')
+     ;
+  // .selectAll('label')
+  // .data(label_data).enter()
+  // .append('label')
+  //   .text(function (d) { return d;})
+  // .append('input')
+  //   .attr('type','radio')
+  //   .attr('name','dataset')
+  //   .attr('value',function (d) { return d; })
+  //   .text(function (d) { return d; })
   
   
   d3.select("#"+piechartname+"_form").select('input[value=Tissues]').property('checked',true)
@@ -105,18 +137,21 @@ var pie = d3.layout.pie()
 	});
 
 var arc = d3.svg.arc()
-	.outerRadius(radius * 0.7)
-	.innerRadius(radius * 0.4);
+	.outerRadius(radius * 0.95)
+	.innerRadius(radius * 0.5);
 
-var outerArc = d3.svg.arc()
-	.innerRadius(radius * 0.8)
-	.outerRadius(radius * 0.8);
+// var outerArc = d3.svg.arc()
+// 	.innerRadius(radius * 0.9)
+// 	.outerRadius(radius * 0.8);
 
     svg.select("#insidecycle")
-    .attr("r", radius*0.4)
+    .attr("r", radius*0.5)
     .style("fill","white")
     .attr("cx", 0)
     .attr("cy", 0);
+
+
+
 
 var text_name = svg.append('text')
                 .attr('x', 0)
@@ -133,17 +168,17 @@ var text_value = svg.append('text')
                 .attr('fill', 'white');
 
 
-var text_total = svg.append('text')
-                .attr('x', 0)
-                .attr('y', radius*0.85)
-                .attr('text-anchor', 'middle')
-                .attr('alignment-baseline','middle')
-                .attr('fill', 'black');
+ var text_total = svg.append('text')
+                 .attr('x', radius*0.65)
+                 .attr('y', radius*-0.75)
+                 .attr('text-anchor', 'left')
+                 .attr('alignment-baseline','middle')
+                 .attr('fill', 'black');
                 
 var text_unavail = svg.append('text')
-                .attr('x', 0)
-                .attr('y', radius*0.95)
-                .attr('text-anchor', 'middle')
+                .attr('x', radius*0.65)
+                .attr('y', radius*-0.85)
+                .attr('text-anchor', 'left')
                 .attr('alignment-baseline','middle')
                 .attr('fill', 'black');
 
@@ -175,7 +210,7 @@ function change() {
     if(value == 'Organisms') {
     	data = organisms;
     	text_total.text("Total:"+totalorganisms);
-    	text_unavail.text("Unavailable:"+unavailableNoTissues.value);
+    	text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
     }
 
     text_name.text("");
@@ -193,8 +228,8 @@ function change() {
 		.style("fill", function(d,i) { return color(i); })
 		.attr("class", "slice")
 		.on("click", function(d,i){
-              alert("you have clicked"+d.data.name);
-              // window.open("browse.html#/search?q="+d.text);
+              // alert("you have clicked"+d.data.name);
+               window.open("browse.html#/search?q="+d.data.name);
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;
@@ -227,83 +262,83 @@ function change() {
 
 	/* ------- TEXT LABELS -------*/
 
-	var text = svg.select(".labels").selectAll("text")
-		.data(pie(data), key);
+	// var text = svg.select(".labels").selectAll("text")
+	// 	.data(pie(data), key);
 
-	text.enter()
-		.append("text")
-		.style("fill", function(d,i) { return color(i); })
-		.attr("dy", ".35em")
-		.text(function(d) {
-			 return d.data.name;
-		})
-		.on("mouseover", function(d,i) {
-			var temptext1 = d.data.name;
-			var temptext2 = d.data.value;
-			colorinside = color(i);
-            svg.select("#insidecycle") 
-    		.style("fill", colorinside );
-    		text_name
-		    .text( temptext1);
-    		text_value
-		    .text(temptext2);
-        })
-		;
+	// text.enter()
+	// 	.append("text")
+	// 	.style("fill", function(d,i) { return color(i); })
+	// 	.attr("dy", ".35em")
+	// 	.text(function(d) {
+	// 		 return d.data.name;
+	// 	})
+	// 	.on("mouseover", function(d,i) {
+	// 		var temptext1 = d.data.name;
+	// 		var temptext2 = d.data.value;
+	// 		colorinside = color(i);
+ //            svg.select("#insidecycle") 
+ //    		.style("fill", colorinside );
+ //    		text_name
+	// 	    .text( temptext1);
+ //    		text_value
+	// 	    .text(temptext2);
+ //        })
+	// 	;
 
 	
-	function midAngle(d){
-		return d.startAngle + (d.endAngle - d.startAngle)/2;
-	}
+	// function midAngle(d){
+	// 	return d.startAngle + (d.endAngle - d.startAngle)/2;
+	// }
 
-	text.transition().duration(1000)
-		.attrTween("transform", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = 0.8*radius * (midAngle(d2) < Math.PI ? 1 : -1);
-				return "translate("+ pos +")";
-			};
-		})
-		.styleTween("text-anchor", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				return midAngle(d2) < Math.PI ? "start":"end";
-			};
-		});
+	// text.transition().duration(1000)
+	// 	.attrTween("transform", function(d) {
+	// 		this._current = this._current || d;
+	// 		var interpolate = d3.interpolate(this._current, d);
+	// 		this._current = interpolate(0);
+	// 		return function(t) {
+	// 			var d2 = interpolate(t);
+	// 			var pos = outerArc2.centroid(d2);
+	// 			pos[0] = 0.6*radius * (midAngle(d2) < Math.PI ? 1 : -1);
+	// 			return "translate("+ pos +")";
+	// 		};
+	// 	})
+	// 	.styleTween("text-anchor", function(d){
+	// 		this._current = this._current || d;
+	// 		var interpolate = d3.interpolate(this._current, d);
+	// 		this._current = interpolate(0);
+	// 		return function(t) {
+	// 			var d2 = interpolate(t);
+	// 			return midAngle(d2) < Math.PI ? "start":"end";
+	// 		};
+	// 	});
 
-	text.exit()
-		.remove();
+	// text.exit()
+	// 	.remove();
 
 	/* ------- SLICE TO TEXT POLYLINES -------*/
 
-	var polyline = svg.select(".lines").selectAll("polyline")
-		.data(pie(data), key);
+	// var polyline = svg.select(".lines").selectAll("polyline")
+	// 	.data(pie(data), key);
 	
-	polyline.enter()
-		.append("polyline")
-		.style("stroke", function(d,i) { return color(i); });
+	// polyline.enter()
+	// 	.append("polyline")
+	// 	.style("stroke", function(d,i) { return color(i); });
 
-	polyline.transition().duration(1000)
-		.attrTween("points", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = 0.8*radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-				return [arc.centroid(d2), outerArc.centroid(d2), pos];
-			};			
-		});
+	// polyline.transition().duration(1000)
+	// 	.attrTween("points", function(d){
+	// 		this._current = this._current || d;
+	// 		var interpolate = d3.interpolate(this._current, d);
+	// 		this._current = interpolate(0);
+	// 		return function(t) {
+	// 			var d2 = interpolate(t);
+	// 			var pos = outerArc.centroid(d2);
+	// 			pos[0] = 0.6*radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+	// 			return [arc.centroid(d2), outerArc.centroid(d2), pos];
+	// 		};			
+	// 	});
 	
-	polyline.exit()
-		.remove();
+	// polyline.exit()
+	// 	.remove();
 };
 }
 }
@@ -330,20 +365,14 @@ queue()
 function draw_chart_Repos_Omics(error, domains, omicstype) {
 
 
-omicstype.shift();
 var subdomains= domains[0]['subdomains'];
-
 var repos = transformsubdomains(subdomains);
-
-
+omicstype.shift();
+var unavailableomics = omicstype.pop();
 
 var totalomics = gettotal(omicstype);
 var totalrepos = gettotal(repos);
-// var totaltissues = gettotal(tissues);
-// var totalorganisms = gettotal(organisms);
 
-//  console.log(totaltissues);
-//  console.log(totalorganisms);
 
 
 // function findElement(arr, propName, propValue) {
@@ -392,29 +421,60 @@ var svg = d3.select("#"+piechartname)
 
 svg.append("g")
 	.attr("class", "slices");
-svg.append("g")
-	.attr("class", "labels");
-svg.append("g")
-	.attr("class", "lines");
+// svg.append("g")
+// 	.attr("class", "labels");
+// svg.append("g")
+// 	.attr("class", "lines");
 svg.append("circle")
     .attr("id","insidecycle")
     .attr("style","stroke:none");
 
-var label_data = ['Repos', 'Omics'];
-   
-body.append('form')
+// body.append('form')
+//   .attr("id",piechartname+"_form")
+//   .attr("class","center")
+//   .attr("style","margin-bottom:8px")
+//   .selectAll('label')
+//   .data(label_data).enter()
+//   .append('label')
+//     .text(function (d) { return d;})
+//   .append('input')
+//     .attr('type','radio')
+//     .attr('name','dataset')
+//     .attr('value',function (d) { return d; })
+//     .text(function (d) { return d; })
+ var radioform = body.append('form');
+  radioform
   .attr("id",piechartname+"_form")
   .attr("class","center")
-  .selectAll('label')
-  .data(label_data).enter()
-  .append('label')
-    .text(function (d) { return d;})
+  .attr("style","margin-bottom:8px; width:40%")
   .append('input')
     .attr('type','radio')
     .attr('name','dataset')
-    .attr('value',function (d) { return d; })
-    .text(function (d) { return d; })
-  
+    .attr('value','Repos')
+    .attr('id','Repos' )
+    .text('Repos');
+  radioform 
+   .append('label')
+     .text('Repos')
+     .attr('for','Repos')
+     .append('span')
+     .append('span')
+     ;
+
+  radioform
+  .append('input')
+    .attr('type','radio')
+    .attr('name','dataset')
+    .attr('value','Omics')
+    .attr('id','Omics' )
+    .text('Omics');
+  radioform 
+   .append('label')
+     .text('Omics')
+     .attr('for','Omics')
+     .append('span')
+     .append('span')
+     ; 
   
   d3.select("#"+piechartname+"_form").select('input[value=Repos]').property('checked',true)
 
@@ -429,15 +489,15 @@ var pie = d3.layout.pie()
 	});
 
 var arc = d3.svg.arc()
-	.outerRadius(radius * 0.8)
-	.innerRadius(radius * 0.4);
+	.outerRadius(radius * 0.95)
+	.innerRadius(radius * 0.5);
 
-var outerArc = d3.svg.arc()
-	.innerRadius(radius * 0.9)
-	.outerRadius(radius * 0.9);
+// var outerArc = d3.svg.arc()
+// 	.innerRadius(radius * 0.9)
+// 	.outerRadius(radius * 0.9);
 
     svg.select("#insidecycle")
-    .attr("r", radius*0.4)
+    .attr("r", radius*0.5)
     .style("fill","white")
     .attr("cx", 0)
     .attr("cy", 0);
@@ -456,11 +516,17 @@ var text_value = svg.append('text')
                 .attr('alignment-baseline','middle')
                 .attr('fill', 'white');
 
-
-var text_total = svg.append('text')
-                .attr('x', 0)
-                .attr('y', radius*0.9)
-                .attr('text-anchor', 'middle')
+ var text_total = svg.append('text')
+                 .attr('x', radius*0.65)
+                 .attr('y', radius*-0.75)
+                 .attr('text-anchor', 'left')
+                 .attr('alignment-baseline','middle')
+                 .attr('fill', 'black');
+                
+var text_unavail = svg.append('text')
+                .attr('x', radius*0.65)
+                .attr('y', radius*-0.85)
+                .attr('text-anchor', 'left')
                 .attr('alignment-baseline','middle')
                 .attr('fill', 'black');
                 
@@ -488,11 +554,15 @@ function change() {
     if(value == 'Omics') { 
     	data = omicstype;
     	text_total.text("Total:"+totalomics);
+    	text_unavail.text("Unavailable:"+unavailableomics.value);
+    	// text_total.text("Total:"+totalomics);
 
     }
     if(value == 'Repos') {
     	data = repos;
     	text_total.text("Total:"+totalrepos);
+    	text_unavail.text("");
+    	// text_total.text("Total:"+totalrepos);
 
     }
 
@@ -513,8 +583,8 @@ function change() {
 		.style("fill", function(d,i) { return color(i); })
 		.attr("class", "slice")
 		.on("click", function(d,i){
-              alert("you have clicked"+d.data.name);
-              // window.open("browse.html#/search?q="+d.text);
+               alert("you have clicked"+d.data.name);
+               // window.open("browse.html#/search?q="+d.data.name);
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;
@@ -543,86 +613,6 @@ function change() {
         ;
 
 	slice.exit()
-		.remove();
-
-	/* ------- TEXT LABELS -------*/
-
-	var text = svg.select(".labels").selectAll("text")
-		.data(pie(data), key);
-
-	text.enter()
-		.append("text")
-		.style("fill", function(d,i) { return color(i); })
-		.attr("dy", ".35em")
-		.text(function(d) {
-			 return d.data.name;
-		})
-		.on("mouseover", function(d,i) {
-			var temptext1 = d.data.name;
-			var temptext2 = d.data.value;
-			colorinside = color(i);
-            svg.select("#insidecycle") 
-    		.style("fill", colorinside );
-    		text_name
-		    .text( temptext1);
-    		text_value
-		    .text(temptext2);
-        })
-		;
-
-	
-	function midAngle(d){
-		return d.startAngle + (d.endAngle - d.startAngle)/2;
-	}
-
-	text.transition().duration(1000)
-		.attrTween("transform", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = 0.8*radius * (midAngle(d2) < Math.PI ? 1 : -1);
-				return "translate("+ pos +")";
-			};
-		})
-		.styleTween("text-anchor", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				return midAngle(d2) < Math.PI ? "start":"end";
-			};
-		});
-
-	text.exit()
-		.remove();
-
-	/* ------- SLICE TO TEXT POLYLINES -------*/
-
-	var polyline = svg.select(".lines").selectAll("polyline")
-		.data(pie(data), key);
-	
-	polyline.enter()
-		.append("polyline")
-		.style("stroke", function(d,i) { return color(i); });
-
-	polyline.transition().duration(1000)
-		.attrTween("points", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = 0.8*radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-				return [arc.centroid(d2), outerArc.centroid(d2), pos];
-			};			
-		});
-	
-	polyline.exit()
 		.remove();
 };
 }

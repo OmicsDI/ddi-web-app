@@ -73,7 +73,7 @@
     <nav  class="">
         <ul id="local-nav" class="grid_24" style="background-color:black">
             <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=human">Browse</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
             <li class="" id="api-menu"><a title="DDI API" href="http://localhost:9091/">API</a></li>
             <li class="" id="help-menu"><a title="DDI help" href="http://localhost:8000/app/help/">Help</a></li>
             <li class=" last" id="about-prider-menu"><a title="About DDI" href="http://localhost:8000/app/help/about">About DDI</a></li>
@@ -151,16 +151,14 @@
     </div>
 
     <div  class="col-md-4" >
-    <div id="statisticspanel" class="panel panel-default">
+    <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl">
 
         <div class="" >
            <h4 class="icon icon-functional " data-icon="z" > Statistics</h4> 
         </div>
         <div class="panel-body ">
             <ul>
-              <li>Release <strong>2</strong> (18 Feb 2015)</li>
-              <li><em>8,446,855</em> distinct sequences</li>
-              <li><em>12</em> Expert Databases</li>
+              <li ng-repeat="statisticdata in statisticList "><strong>{{statisticdata.value || 0}} </strong>  {{"&nbsp;&nbsp;" + statisticdata.name}} </li>
             </ul>
         </div>
     </div>
@@ -171,7 +169,6 @@
 
 <!-- <div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style=""> -->
 <div class="row" >
-<h1> Datasets in DDI</h1>
 
     <div  class="col-md-4">
     <div id="hotwords" class="panel panel-default">
@@ -205,9 +202,11 @@
         </div>
         <div class="panel-body ">
             <ul>
-              <li ng-repeat="dataset in latestList">
-                <a href={{"dataset.html#/"+dataset.id}}>{{dataset.id}}</a>
-                : {{dataset.title |limitTo:37}} {{dataset.title.length>37?'...':''}}
+              <li ng-repeat="dataset in latestList"> 
+                <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" /> 
+                <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
+                <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
+                <a href={{"dataset.html#/"+dataset.id}}>{{dataset.title |limitTo:40}} {{dataset.title.length>40?'...':''}}</a>
               </li>
             </ul>
         </div>
@@ -238,7 +237,7 @@
 
 
     <div  class="col-md-4" >
-    <div id="temppanel" class="panel panel-default">
+<!--     <div id="temppanel" class="panel panel-default">
 
         <div class="" >
            <h4  > Under construction, if you have some ideas on the datasets faceting to share, please feel free to contact us</h4> 
@@ -247,7 +246,7 @@
             <ul>
             </ul>
         </div>
-    </div>
+    </div> -->
     </div>
 
 
