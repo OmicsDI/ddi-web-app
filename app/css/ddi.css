@@ -74,17 +74,17 @@ body {
 text:hover { 
 cursor: pointer;
 cursor: hand;
-opacity: .7 !important; }
+opacity: .8 !important; }
 
 
-.slice:hover { 
+.node:hover,.slice:hover { 
 cursor: pointer;
 cursor: hand;
-opacity: .7 !important; }
+opacity: .8 !important; }
 
 
 #insidecycle{
-opacity:.7;
+opacity:.8;
 }
 
 

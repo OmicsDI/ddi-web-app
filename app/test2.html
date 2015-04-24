@@ -1,250 +1,86 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-        <!-- <link type="text/css" href="css/main.css" rel="stylesheet"> -->
-        <link type="text/css" href="css/ddi.css" rel="stylesheet">
 <style>
 
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  width: 960px;
-  height: 500px;
-  position: relative;
-}
-
-svg {
-	width: 100%;
-	height: 100%;
-}
-
-path.slice{
-	stroke-width:2px;
-}
-
-polyline{
-	opacity: .3;
-	stroke: black;
-	stroke-width: 2px;
-	fill: none;
+text {
+  font: 10px sans-serif;
 }
 
 </style>
 <body>
-<button class="randomize">randomize</button>
-
 <script src="http://d3js.org/d3.v3.min.js"></script>
+ <script src="http://d3js.org/queue.v1.min.js"></script>
 <script>
 
+queue()
+    .defer(d3.json, 'http://localhost:9091/stats/tissues') // topojson polygons
+    .defer(d3.json, 'http://localhost:9091/stats/organisms') // geojson points
+    .await(draw_chart_tissues_organsims); // function that uses files
 
-var piechats_url="data/testjson.json";
-var piechasdata; 
-piechasdata= d3.json(piechats_url, function(error,json) {
-    if (error) return console.warn(error);
-var body = d3.select("body");
+function draw_chart_tissues_organsims(error, tissues, organisms) {
+var diameter = 360,
+    format = d3.format(",d"),
+    color = d3.scale.category20c();
 
-var svg = d3.select("body")
-	.append("svg")
-	.append("g")
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(1.5);
 
-svg.append("g")
-	.attr("class", "slices");
-svg.append("g")
-	.attr("class", "labels");
-svg.append("g")
-	.attr("class", "lines");
-svg.append("circle")
-    .attr("id","insidecycle")
-    .attr("style","stroke:none");
+var svg = d3.select("body").append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
 
-   
-body.append('form')
-  .attr("id","Tissue_Species_form")
-  .selectAll('label')
-  .data(d3.keys(json)).enter()
-  .append('label')
-    .text(function (d) { return d;})
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset')
-    .attr('value',function (d) { return d; })
-    .text(function (d) { return d; })
+// var tooltip = d3.select("body")
+//     .append("div")
+//     .style("position", "absolute")
+//     .style("z-index", "10")
+//     .style("visibility", "hidden")
+//     .text("a simple tooltip");
 
-  d3.select('input[value="Species"]').property('checked',true)
+  var node = svg.selectAll(".node")
+      .data(bubble.nodes(classes(tissues))
+      .filter(function(d) { return !d.children; }))
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-  d3.select("#Tissue_Species_form").selectAll('input')
-    .on('change',change);
+  node.append("title")
+      .text(function(d) { return d.className + ": " + format(d.value); });
 
-var width = 960,
-    height = 450,
-	radius = Math.min(width, height) / 2;
+  node.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return color(d.packageName); });
 
-var pie = d3.layout.pie()
-	.sort(null)
-	.value(function(d) {
-		return d.value;
-	});
+  node.append("text")
+      .attr("dy", ".3em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.className.substring(0, d.r / 3); });
 
-var arc = d3.svg.arc()
-	.outerRadius(radius * 0.8)
-	.innerRadius(radius * 0.4);
+  // node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
+  //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+  //     .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
 
-var outerArc = d3.svg.arc()
-	.innerRadius(radius * 0.9)
-	.outerRadius(radius * 0.9);
+// Returns a flattened hierarchy containing all leaf nodes under the root.
+function classes(root) {
+  var classes = [];
 
-    svg.select("#insidecycle")
-    .attr("r", radius*0.4)
-    .style("fill","white")
-    .attr("cx", 0)
-    .attr("cy", 0);
+  function recurse(arr) {
+    for(var i = 0; i < arr.length; i++)
+    classes.push({packageName: arr[i].name, className: arr[i].name, value: arr[i].value});
+  }
 
-svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+  recurse(root);
+  var total_tissues = classes.shift();
+  var unavalabie_tissues = classes.pop();
+  return {children: classes};
+}
 
-var key = function(d){ return d.data.label; };
-
-
-var color2 = d3.scale.ordinal()
- 	.domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
- 	.range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-var color = d3.scale.category20();
-
-text_name = svg.append('text')
-                .attr('x', 0-radius*0.2)
-                .attr('y', 0-radius*0.2)
-                .attr('fill', 'white');
+d3.select(self.frameElement).style("height", diameter + "px");
 
 
-text_value = svg.append('text')
-                .attr('x', 0-radius*0.2)
-                .attr('y', 0+radius*0.1)
-                .attr('fill', 'white');
-
-change();
 
 
-function change() {
-
-
-    var value = this.value || "Species";
-    var data = json[value]; 
-    console.log(value);
-	/* ------- PIE SLICES -------*/
-	var slice = svg.select(".slices").selectAll("path.slice")
-		.data(pie(data), key);
-
-
-	slice.enter()
-		.insert("path")
-		.style("fill", function(d,i) { return color(i); })
-		.attr("class", "slice")
-		.on("click", function(d,i){
-              alert("you have clicked"+d.data.label);
-              // window.open("browse.html#/search?q="+d.text);
-               })
-		.on("mouseover", function(d,i) {
-			var temptext1 = d.data.label;
-			var temptext2 = d.data.value;
-			colorinside = color(i);
-            svg.select("#insidecycle") 
-    		.style("fill", colorinside );
-    		text_name
-		    .text( temptext1);
-    		text_value
-		    .text(temptext2);
-        })
-		;
-
-	slice		
-		.transition().duration(1000)
-		.attrTween("d", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				return arc(interpolate(t));
-			};
-		})
-
-        ;
-
-	slice.exit()
-		.remove();
-
-	/* ------- TEXT LABELS -------*/
-
-	var text = svg.select(".labels").selectAll("text")
-		.data(pie(data), key);
-
-	text.enter()
-		.append("text")
-		.style("fill", function(d,i) { return color(i); })
-		.attr("dy", ".35em")
-		.text(function(d) {
-			 return d.data.label;
-		})
-		.on("mouseover", function(d,i) {
-			colorinside = color(i);
-            svg.select("#insidecycle") 
-    		.style("fill", colorinside );
-    		text_name.text("");
-    		text_value.text("");
-        })
-		;
-
-	
-	function midAngle(d){
-		return d.startAngle + (d.endAngle - d.startAngle)/2;
-	}
-
-	text.transition().duration(1000)
-		.attrTween("transform", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
-				return "translate("+ pos +")";
-			};
-		})
-		.styleTween("text-anchor", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				return midAngle(d2) < Math.PI ? "start":"end";
-			};
-		});
-
-	text.exit()
-		.remove();
-
-	/* ------- SLICE TO TEXT POLYLINES -------*/
-
-	var polyline = svg.select(".lines").selectAll("polyline")
-		.data(pie(data), key);
-	
-	polyline.enter()
-		.append("polyline")
-		.style("stroke", function(d,i) { return color(i); });
-
-	polyline.transition().duration(1000)
-		.attrTween("points", function(d){
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				var d2 = interpolate(t);
-				var pos = outerArc.centroid(d2);
-				pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-				return [arc.centroid(d2), outerArc.centroid(d2), pos];
-			};			
-		});
-	
-	polyline.exit()
-		.remove();
-};
-});
+}
 </script>
-</body>

@@ -52,37 +52,28 @@ function gettotal(arr) {
       return sum;
 }
 
-var width = 480,
-    height = 325,
-	radius = Math.min(width, height) / 2;
- 
-var piechartname = 'chart_tissues_organisms';
+var diameter = 320,
+    format = d3.format(",d"),
+    color = d3.scale.category20c();
 
-var body = d3.select("#"+piechartname);
+var bubchartname = 'chart_tissues_organisms';
 
-var svg = d3.select("#"+piechartname)
-	.append("svg")
-    .attr("style","height:"+height)
-    .attr("style","width:"+width-10)
-	.attr("class", "piesvg")
-	.append("g");
+var body = d3.select("#"+bubchartname);
 
-svg.append("g")
-	.attr("class", "slices");
-// svg.append("g")
-// 	.attr("class", "labels");
-// svg.append("g")
-// 	.attr("class", "lines");
-svg.append("circle")
-    .attr("id","insidecycle")
-    .attr("style","stroke:none");
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter*1.3, diameter])
+    .padding(1.5);
 
- 
+var svg = body.append("svg")
+    .attr("width", diameter*1.3)
+    .attr("height", diameter)
+    .attr("class", "bubble");
    
 var radioform = body.append('form');
 
   radioform
-  .attr("id",piechartname+"_form")
+  .attr("id",bubchartname+"_form")
   .attr("class","center")
   .attr("style","margin-bottom:8px")
   .append('input')
@@ -113,84 +104,15 @@ var radioform = body.append('form');
      .append('span')
      .append('span')
      ;
-  // .selectAll('label')
-  // .data(label_data).enter()
-  // .append('label')
-  //   .text(function (d) { return d;})
-  // .append('input')
-  //   .attr('type','radio')
-  //   .attr('name','dataset')
-  //   .attr('value',function (d) { return d; })
-  //   .text(function (d) { return d; })
-  
-  
-  d3.select("#"+piechartname+"_form").select('input[value=Tissues]').property('checked',true)
 
-  d3.select("#"+piechartname+"_form").selectAll('input')
+  d3.select("#"+bubchartname+"_form").select('input[value=Tissues]').property('checked',true);
+
+  d3.select("#"+bubchartname+"_form").selectAll('input')
     .on('change',change);
 
 
-var pie = d3.layout.pie()
-	.sort(null)
-	.value(function(d) {
-		return d.value;
-	});
+d3.select(self.frameElement).style("height", diameter + "px");
 
-var arc = d3.svg.arc()
-	.outerRadius(radius * 0.95)
-	.innerRadius(radius * 0.5);
-
-// var outerArc = d3.svg.arc()
-// 	.innerRadius(radius * 0.9)
-// 	.outerRadius(radius * 0.8);
-
-    svg.select("#insidecycle")
-    .attr("r", radius*0.5)
-    .style("fill","white")
-    .attr("cx", 0)
-    .attr("cy", 0);
-
-
-
-
-var text_name = svg.append('text')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('text-anchor', 'middle')
-                .attr('alignment-baseline','middle')
-                .attr('fill', 'white');
-
-var text_value = svg.append('text')
-                .attr('x', 0)
-                .attr('y', 0+radius*0.2)
-                .attr('text-anchor', 'middle')
-                .attr('alignment-baseline','middle')
-                .attr('fill', 'white');
-
-
- var text_total = svg.append('text')
-                 .attr('x', radius*0.65)
-                 .attr('y', radius*-0.75)
-                 .attr('text-anchor', 'left')
-                 .attr('alignment-baseline','middle')
-                 .attr('fill', 'black');
-                
-var text_unavail = svg.append('text')
-                .attr('x', radius*0.65)
-                .attr('y', radius*-0.85)
-                .attr('text-anchor', 'left')
-                .attr('alignment-baseline','middle')
-                .attr('fill', 'black');
-
-
-
-svg.attr("transform", "translate(" + width / 2.5 + "," + height / 2 + ")");
-
-var key = function(d){ return d.data.name; };
-
-
-
-var color = d3.scale.category20();
 
 
 
@@ -201,145 +123,62 @@ function change() {
 
 
     var value = this.value || 'Tissues';
-    var data ; 
+    var data = [] ; 
     if(value == 'Tissues') { 
-    	data = tissues;
-    	text_total.text("Total:"+totaltissues);
-    	text_unavail.text("Unavailable:"+unavailableNoTissues.value);
+    	 data = tissues;
+    	// text_total.text("Total:"+totaltissues);
+    	// text_unavail.text("Unavailable:"+unavailableNoTissues.value);
     }
     if(value == 'Organisms') {
     	data = organisms;
-    	text_total.text("Total:"+totalorganisms);
-    	text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
+    	// text_total.text("Total:"+totalorganisms);
+    	// text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
     }
 
-    text_name.text("");
-    text_value.text("");
-	svg.select("#insidecycle") 
-    	.style("fill", "white");
-
-	/* ------- PIE SLICES -------*/
-	var slice = svg.select(".slices").selectAll("path.slice")
-		.data(pie(data), key);
+  svg.selectAll(".node").remove();
 
 
-	slice.enter()
-		.insert("path")
-		.style("fill", function(d,i) { return color(i); })
-		.attr("class", "slice")
-		.on("click", function(d,i){
-              // alert("you have clicked"+d.data.name);
-               window.open("browse.html#/search?q="+d.data.name);
-               })
-		.on("mouseover", function(d,i) {
-			var temptext1 = d.data.name;
-			var temptext2 = d.data.value;
-			colorinside = color(i);
-            svg.select("#insidecycle") 
-    		.style("fill", colorinside );
-    		text_name
-		    .text( temptext1);
-    		text_value
-		    .text(temptext2);
-        })
-		;
+  var node = svg.selectAll(".node")
+      .data(bubble.nodes(classes(data))
+      .filter(function(d) { return !d.children; }));
 
-	slice		
-		.transition().duration(1000)
-		.attrTween("d", function(d) {
-			this._current = this._current || d;
-			var interpolate = d3.interpolate(this._current, d);
-			this._current = interpolate(0);
-			return function(t) {
-				return arc(interpolate(t));
-			};
-		})
+  node.enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .on("click", function(d,i){
+               // alert("you have clicked"+d.data.name);
+               window.open("browse.html#/search?q="+d.name);
+               });
 
-        ;
+  node.append("title")
+      .text(function(d) { return d.className + ": " + format(d.value); });
 
-	slice.exit()
-		.remove();
+  node.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d) { return color(d.packageName); });
 
-	/* ------- TEXT LABELS -------*/
+  node.append("text")
+      .attr("dy", ".3em")
+      .style("text-anchor", "middle")
+      .text(function(d) { console.log(d.r); return d.r<10 ? '': d.className.substring(0, d.r / 3); });
+  
+  // node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
+  //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+  //     .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
 
-	// var text = svg.select(".labels").selectAll("text")
-	// 	.data(pie(data), key);
+// Returns a flattened hierarchy containing all leaf nodes under the root.
 
-	// text.enter()
-	// 	.append("text")
-	// 	.style("fill", function(d,i) { return color(i); })
-	// 	.attr("dy", ".35em")
-	// 	.text(function(d) {
-	// 		 return d.data.name;
-	// 	})
-	// 	.on("mouseover", function(d,i) {
-	// 		var temptext1 = d.data.name;
-	// 		var temptext2 = d.data.value;
-	// 		colorinside = color(i);
- //            svg.select("#insidecycle") 
- //    		.style("fill", colorinside );
- //    		text_name
-	// 	    .text( temptext1);
- //    		text_value
-	// 	    .text(temptext2);
- //        })
-	// 	;
 
-	
-	// function midAngle(d){
-	// 	return d.startAngle + (d.endAngle - d.startAngle)/2;
-	// }
-
-	// text.transition().duration(1000)
-	// 	.attrTween("transform", function(d) {
-	// 		this._current = this._current || d;
-	// 		var interpolate = d3.interpolate(this._current, d);
-	// 		this._current = interpolate(0);
-	// 		return function(t) {
-	// 			var d2 = interpolate(t);
-	// 			var pos = outerArc2.centroid(d2);
-	// 			pos[0] = 0.6*radius * (midAngle(d2) < Math.PI ? 1 : -1);
-	// 			return "translate("+ pos +")";
-	// 		};
-	// 	})
-	// 	.styleTween("text-anchor", function(d){
-	// 		this._current = this._current || d;
-	// 		var interpolate = d3.interpolate(this._current, d);
-	// 		this._current = interpolate(0);
-	// 		return function(t) {
-	// 			var d2 = interpolate(t);
-	// 			return midAngle(d2) < Math.PI ? "start":"end";
-	// 		};
-	// 	});
-
-	// text.exit()
-	// 	.remove();
-
-	/* ------- SLICE TO TEXT POLYLINES -------*/
-
-	// var polyline = svg.select(".lines").selectAll("polyline")
-	// 	.data(pie(data), key);
-	
-	// polyline.enter()
-	// 	.append("polyline")
-	// 	.style("stroke", function(d,i) { return color(i); });
-
-	// polyline.transition().duration(1000)
-	// 	.attrTween("points", function(d){
-	// 		this._current = this._current || d;
-	// 		var interpolate = d3.interpolate(this._current, d);
-	// 		this._current = interpolate(0);
-	// 		return function(t) {
-	// 			var d2 = interpolate(t);
-	// 			var pos = outerArc.centroid(d2);
-	// 			pos[0] = 0.6*radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-	// 			return [arc.centroid(d2), outerArc.centroid(d2), pos];
-	// 		};			
-	// 	});
-	
-	// polyline.exit()
-	// 	.remove();
 };
+function classes(arr) {
+  var classes = [];
+
+    for(var i = 0; i < arr.length; i++)
+    classes.push({packageName: arr[i].name, className: arr[i].name, value: arr[i].value});
+
+  return {children: classes};
+}
+
 }
 }
 
@@ -583,8 +422,8 @@ function change() {
 		.style("fill", function(d,i) { return color(i); })
 		.attr("class", "slice")
 		.on("click", function(d,i){
-               alert("you have clicked"+d.data.name);
-               // window.open("browse.html#/search?q="+d.data.name);
+               // alert("you have clicked"+d.data.name);
+               window.open("browse.html#/search?q="+d.data.name);
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;
