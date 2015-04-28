@@ -224,7 +224,6 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
 
             apply_species_specific_filtering();
 
-            if(query==='*:*') return query;// for the DDI wildcard
 
             var words = query.match(/[^\s"]+|"[^"]*"/g);
             var array_length = words.length;
@@ -263,6 +262,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             }
             query = words.join(' ');
             query = query.replace(/\: /g, ':'); // to avoid spaces after faceted search terms
+            query = query.replace(/\*\\\:\*/g, '*:*'); // to  set the right wildcard
             result._query = query;
             return query;
 
@@ -802,6 +802,21 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
  */
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http', function($scope, $location, $window, $timeout, $http ) {
      $scope.datasetid = $location.url().replace("/",""); 
+     $scope.sharemethod = {email:["mailto:?body=[&subject=]"],
+                        twitter:["https://twitter.com/intent/tweet?url=[&text=]",450],
+                        facebook:["https://www.facebook.com/sharer.php?u=[",330], 
+                        google:["https://plus.google.com/share?url=[",460],
+                        tumblr:["https://www.tumblr.com/share/link?url=[&name=]",450],
+                        linkedin:["https://www.linkedin.com/shareArticle?mini=true&url=[",520]
+                    };
+
+    $scope.clicksharethis = function(label){
+     var value = $scope.sharemethod[label];
+                var c=value[0].replace("[",encodeURIComponent(location.href)).replace("]",encodeURIComponent(document.title));
+                1==value.length?location.href=c:window.open(c,"_blank","menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=500,height="+value[1]);
+                // "preventDefault"in a?a.preventDefault():event.returnValue=!1
+
+    };
      // var url = "getdataset?id="+$scope.datasetid;
  //     var url = "/app/data/dataset_"+$scope.datasetid+".json";
  //     $http({

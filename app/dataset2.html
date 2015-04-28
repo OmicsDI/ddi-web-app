@@ -129,8 +129,8 @@
             whichever one will show up last...
             For example: -->
             <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
-            <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
-            <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+            <li class="functional" id="login-menu"hidden="true" ><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
             </ul>
     </nav>
 </div><!-- local-masthead-->
@@ -140,12 +140,17 @@
 <div class="row" style="margin-top:3%">
 
 
-<div class="col-md-9" id="leftpanel">
+<div class="col-md-9" id="leftpanel"style="margin-left:-15px">
 
 <div class="row" id="left_upper">
-<div class="col-md-1" id="socialnetworks">
+<div class="col-md-1" id="socialnetworks" >
 <!-- <g:plusone></g:plusone> -->
-<img src="css/socialnetwork.png"  style="" /> 
+<a href=""><img src="css/email.png"  style="" ng-click="clicksharethis('email')"/> </a>
+<a href=""><img src="css/twitter.png"  style="" ng-click="clicksharethis('twitter')"/> </a>
+<a href=""><img src="css/facebook.png"  style="" ng-click="clicksharethis('facebook')"/></a> 
+<a href=""><img src="css/google.png"  style="" ng-click="clicksharethis('google')"/> </a>
+<a href=""><img src="css/tumblr.png"  style="" ng-click="clicksharethis('tumblr')"/> </a>
+<a href=""><img src="css/linkedin.png"  style="" ng-click="clicksharethis('linkedin')"/> </a>
 </div><!-- col-md-1-->
 
 <div class="col-md-5 panel panel-default " id="dataset">
@@ -173,7 +178,7 @@
     </div>
 
    </div> <!--dataset_upper --> 
-   <div class="row" id="dataset_bottom"> 
+   <div class="row" id="dataset_bottom" style="margin-top:10px"> 
      <div class="col-md-6"> 
        Repository: PXD000112(PRIDE)
      </div>
@@ -215,7 +220,7 @@
     </div>
 
    </div> <!--dataset_upper --> 
-   <div class="row" id="dataset_bottom"> 
+   <div class="row" id="dataset_bottom" style="margin-top:10px"> 
      <div class="col-md-6"> 
        PMID: PMID000112
      </div>

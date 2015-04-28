@@ -129,12 +129,11 @@
             whichever one will show up last...
             For example: -->
             <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
-            <li class="functional" id="login-menu"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
-            <li class="functional first" id="register-menu"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+            <li class="functional" id="login-menu" hidden="true" ><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
             </ul>
     </nav>
 </div><!-- local-masthead-->
-
 
 
 <div ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="">
@@ -174,6 +173,7 @@
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms'}">
                         <li ng-repeat="facet_value in result.facets[0].facetValues | filter:repos_input">
                             <input type="checkbox" name="result.facet[0].label" ng-checked="is_facet_applied(result.facets[0].id, facet_value.value)" ng-click="facet_search(result.facets[0].id, facet_value.value)">
+                            <label for="result.facet[0].label"><span></span>{{result.facet[0].label}}</label>
                             <a href="" ng-click="facet_search(result.facets[0].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
@@ -187,7 +187,8 @@
                     <input type="text" class="form-control" ng-model="species_input" placeholder="Find your species">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
                         <li ng-repeat="facet_value in result.facets[4].facetValues | filter:species_input">
-                            <input type="checkbox" name="result.facet[4].label" ng-checked="is_facet_applied(result.facets[4].id, facet_value.value)" ng-click="facet_search(result.facets[4].id, facet_value.value)">
+                            <input type="checkbox" id="facet_value.label" ng-checked="is_facet_applied(result.facets[4].id, facet_value.value)" ng-click="facet_search(result.facets[4].id, facet_value.value)"> 
+                            <label for="facet_value.label"><span></span></label>
                             <a href="" ng-click="facet_search(result.facets[4].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
@@ -197,23 +198,41 @@
         <div><!-- Tissue -->
             <h3 class="ng-binding">Tissue</h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
-                    <input type="text" class="form-control" ng-model="tech_input" placeholder="Find your techonology">
+                    <input type="text" class="form-control" ng-model="tech_input" placeholder="Find your Tissues">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
                         <li ng-repeat="facet_value in result.facets[2].facetValues | filter:tech_input">
-                            <input type="checkbox" name="result.facet[2].label" ng-checked="is_facet_applied(result.facets[2].id, facet_value.value)" ng-click="facet_search(result.facets[2].id, facet_value.value)">
+                            <input type="checkbox" id="result.facet[2].label" ng-checked="is_facet_applied(result.facets[2].id, facet_value.value)" ng-click="facet_search(result.facets[2].id, facet_value.value)">
+                            <label for="result.facet[2].label"><span></span>{{result.facet[2].label}}</label>
                             <a href="" ng-click="facet_search(result.facets[2].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
                     </ul>
                 </div>
         </div>
+
+        <div><!-- Disease-->
+            <h3 class="ng-binding">Disease</h3>
+                <div  class="metasearch-organism-facet force-scrollbars list-group-item">
+                    <input type="text" class="form-control" ng-model="tech_input" placeholder="Find your Disease">
+                    <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
+                        <li ng-repeat="facet_value in result.facets[3].facetValues | filter:tech_input">
+                            <input type="checkbox" id="result.facet[3].label" ng-checked="is_facet_applied(result.facets[3].id, facet_value.value)" ng-click="facet_search(result.facets[3].id, facet_value.value)">
+                            <label for="result.facet[3].label"><span></span>{{result.facet[3].label}}</label>
+                            <a href="" ng-click="facet_search(result.facets[3].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
+                        </li>
+                        <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
+                    </ul>
+                </div>
+        </div>
+
         <div><!-- Modification -->
             <h3 class="ng-binding">Modifications <small>in Proteomics</small></h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="modifi_input" placeholder="Find your Modifications">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
                         <li ng-repeat="facet_value in result.facets[0].facetValues | filter:modifi_input">
-                            <input type="checkbox" name="result.facet[0].label" ng-checked="is_facet_applied(result.facets[0].id, facet_value.value)" ng-click="facet_search(result.facets[0].id, facet_value.value)">
+                            <input type="checkbox" id="result.facet[0].label"  ng-click="facet_search(result.facets[0].id, facet_value.value)" ng-checked="is_facet_applied(result.facets[0].id, facet_value.value)">
+                            <label for="result.facet[0].label" ><span></span>{{result.facet[0].label}}</label>
                             <a href="" ng-click="facet_search(result.facets[0].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
@@ -226,7 +245,8 @@
                     <input type="text" class="form-control" ng-model="instr_input" placeholder="Find your Instruments & Platforms">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
                         <li ng-repeat="facet_value in result.facets[1].facetValues | filter:instr_input">
-                            <input type="checkbox" name="result.facet[1].label" ng-checked="is_facet_applied(result.facets[1].id, facet_value.value)" ng-click="facet_search(result.facets[1].id, facet_value.value)">
+                            <input type="checkbox" id="result.facet[1].label" ng-checked="is_facet_applied(result.facets[1].id, facet_value.value)" ng-click="facet_search(result.facets[1].id, facet_value.value)">
+                            <label for="result.facet[1].label"><span></span>{{result.facet[1].label}}</label>
                             <a href="" ng-click="facet_search(result.facets[1].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->

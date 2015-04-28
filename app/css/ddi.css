@@ -328,13 +328,13 @@ background-image : linear-gradient(rgb(224,224,224),rgb(240,240,240));
 }
 
 input[type=checkbox]:not(old):checked + label > span:before{
-content : '鉁?;
+content : '✓';
 display : block;
 width : 1em;
-color : rgb(153,204,102);
-font-size : 0.875em;
-line-height : 1em;
-text-align: center;
+color : rgb(153,104,202);
+font-size : 1em;
+line-height : 0.5em;
+text-align: left;
 text-shadow : 0 0 0.0714em rgb(115,153,77);
 font-weight : bold;
 }

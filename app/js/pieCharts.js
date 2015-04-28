@@ -161,7 +161,8 @@ function change() {
   node.append("text")
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
-      .text(function(d) { console.log(d.r+":"+d.className.length); return d.r/d.className.length<3 ? '': d.className; });
+      .style("font-size", "10px")
+      .text(function(d) { console.log(d.r+":"+d.className.length); return d.r/d.className.length<2.5 ? '': d.className; });
   
   node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
   //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
@@ -347,6 +348,7 @@ var text_name = svg.append('text')
                 .attr('y', 0)
                 .attr('text-anchor', 'middle')
                 .attr('alignment-baseline','middle')
+                .attr('font-size','10px')
                 .attr('fill', 'white');
 
 var text_value = svg.append('text')
@@ -354,6 +356,7 @@ var text_value = svg.append('text')
                 .attr('y', 0+radius*0.2)
                 .attr('text-anchor', 'middle')
                 .attr('alignment-baseline','middle')
+                .attr('font-size','10px')
                 .attr('fill', 'white');
 
  var text_total = svg.append('text')
@@ -432,12 +435,19 @@ function change() {
 			var temptext2 = d.data.value;
 			colorinside = color(i);
             svg.select("#insidecycle") 
-    		.style("fill", colorinside );
+    		.style("fill", colorinside )
+         .style("opacity", ".8");
     		text_name
 		    .text( temptext1);
     		text_value
 		    .text(temptext2);
-        })
+    })
+    .on("mouseout", function(d,i) {
+      colorinside = color(i);
+      svg.select("#insidecycle")
+         .style("fill", colorinside )
+         .style("opacity", ".95");
+    })
 		;
 
 	slice		
