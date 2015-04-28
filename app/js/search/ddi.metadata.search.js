@@ -521,7 +521,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.proteomics_list="pride,peptideatlas,massive";
     $scope.metabolomics_list="metabolights";
     $scope.genomics_list="ega,ena";
-  
+    
+    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };
 
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
@@ -801,17 +802,17 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
  */
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http', function($scope, $location, $window, $timeout, $http ) {
      $scope.datasetid = $location.url().replace("/",""); 
-     var url = "getdataset?id="+$scope.datasetid;
-     var url = "/app/data/dataset_"+$scope.datasetid+".json";
-     $http({
-                url: url,
-                method: 'GET'
-            }).success(function(data) {
-      $scope.dataset = data;
-            }).error(function(){
-	alert("GET error:" + url);
+     // var url = "getdataset?id="+$scope.datasetid;
+ //     var url = "/app/data/dataset_"+$scope.datasetid+".json";
+ //     $http({
+ //                url: url,
+ //                method: 'GET'
+ //            }).success(function(data) {
+ //      $scope.dataset = data;
+ //            }).error(function(){
+	// alert("GET error:" + url);
 
-            });
+ //            });
 }]);
 
 /**

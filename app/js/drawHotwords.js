@@ -48,8 +48,9 @@ var drawHotwords = function (){
         })
         .text(function(d) { return d.label; })
         .on("click", function(d,i){
-              alert("you have clicked"+d.label);
-              window.open("browse.html#/search?q="+d.label);
+              // alert("you have clicked"+d.label);
+              location.href = "browse.html#/search?q="+d.label;
+              // window.open("browse.html#/search?q="+d.label);
         })
         ;
   }

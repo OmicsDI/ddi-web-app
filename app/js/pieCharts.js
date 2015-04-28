@@ -147,7 +147,8 @@ function change() {
       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
       .on("click", function(d,i){
                // alert("you have clicked"+d.data.name);
-               window.open("browse.html#/search?q="+d.name);
+               // window.open("browse.html#/search?q="+d.name);
+              location.href = "browse.html#/search?q="+d.name;
                });
 
   node.append("title")
@@ -160,9 +161,9 @@ function change() {
   node.append("text")
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
-      .text(function(d) { console.log(d.r); return d.r<10 ? '': d.className.substring(0, d.r / 3); });
+      .text(function(d) { console.log(d.r+":"+d.className.length); return d.r/d.className.length<3 ? '': d.className; });
   
-  // node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
+  node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
   //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
   //     .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
 
@@ -423,7 +424,8 @@ function change() {
 		.attr("class", "slice")
 		.on("click", function(d,i){
                // alert("you have clicked"+d.data.name);
-               window.open("browse.html#/search?q="+d.data.name);
+               // window.open("browse.html#/search?q="+d.data.name);
+               location.href = "browse.html#/search?q="+d.data.name;
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;

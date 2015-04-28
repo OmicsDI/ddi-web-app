@@ -116,9 +116,9 @@
 </div> <!-- /navbar-->
 
 
-<div class="masthead grid_24 nomenu" id="local-masthead">
+<div class="masthead grid_24 nomenu" id="local-masthead" >
     <nav>
-        <ul id="local-nav" class="grid_24">
+        <ul id="local-nav" class="grid_24" style="background-color:black">
             <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
             <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
             <li class="" id="api-menu"><a title="DDI API" href="http://localhost:9091/">API</a></li>
@@ -139,7 +139,7 @@
 
 <div ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="">
     <div style="margin-top:35px" >
-    <h2>
+    <h3>
       <small ng-show="search_in_progress" class="ng-hide" style="">
         <i class="fa fa-spinner fa-spin"></i>
       </small>
@@ -152,7 +152,7 @@
       </span>
       <i class="fa fa-search"></i> Results  for search term:
        <b ng-bind="query"></b>
-    </h2>
+    </h3>
     </div>
 
 <div ng-show="result.count &gt; 0" class="row" style="">
@@ -174,7 +174,7 @@
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms'}">
                         <li ng-repeat="facet_value in result.facets[0].facetValues | filter:repos_input">
                             <input type="checkbox" name="result.facet[0].label" ng-checked="is_facet_applied(result.facets[0].id, facet_value.value)" ng-click="facet_search(result.facets[0].id, facet_value.value)">
-                            <a href="" ng-click="facet_search(result.facets[0].id, facet_value.value)" class="metasearch-facet-link">{{result.facets[0].id}}{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
+                            <a href="" ng-click="facet_search(result.facets[0].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
                     </ul>
@@ -320,7 +320,7 @@
         </div>
             
         <div class="project-widget-paragraph">
-            {{dataset.id}} in {{dataset.source}}
+            {{dataset.id}} ({{repositories[dataset.source]}})
         </div>
             
         <div class="project-widget-paragraph" ng-show="dataset.publicationDate">
