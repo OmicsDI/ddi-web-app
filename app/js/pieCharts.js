@@ -5,11 +5,12 @@ var pieCharts_Tissues_Organisms = function()
 
 
 queue()
-    .defer(d3.json, 'http://localhost:9091/stats/tissues') // topojson polygons
-    .defer(d3.json, 'http://localhost:9091/stats/organisms') // geojson points
+    .defer(d3.json, 'http://localhost:9091/stats/tissues?size=100') // topojson polygons
+    .defer(d3.json, 'http://localhost:9091/stats/organisms?size=100') // geojson points
+    .defer(d3.json, 'http://localhost:9091/stats/diseases?size=100') // geojson points
     .await(draw_chart_tissues_organsims); // function that uses files
 
-function draw_chart_tissues_organsims(error, tissues, organisms) {
+function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
 
 //prepare the dataset of total
 
@@ -21,36 +22,42 @@ function draw_chart_tissues_organsims(error, tissues, organisms) {
 
 // console.log(indexoftottiss + totaltissues);
 // console.log(indexoftotorg + totalorganisms);
+if(tissues[tissues.length-1].name!=="Not available") {alert("the last element of tissues is not total number, charts is wrong")};
+if(organisms[organisms.length-1].name!=="Not available") {alert("the last element of organisms is not total number, charts is wrong")};
+if(diseases[diseases.length-1].name!=="Not available") {alert("the last element of diseases is not total number, charts is wrong")};
 
-tissues.shift();
-organisms.shift();
  var unavailableNoTissues = tissues.pop();
  var unavailableNoOrganisms = organisms.pop(); 
+ var unavailableNoDiseases = diseases.pop(); 
 
- var totaltissues = gettotal(tissues);
- var totalorganisms = gettotal(organisms);
+if(tissues[0].name!=="Total") {alert("the first element of tissues is not total number, charts is wrong")};
+if(organisms[0].name!=="Total") {alert("the first element of tissues is not total number, charts is wrong")};
+if(diseases[0].name!=="Total") {alert("the first element of tissues is not total number, charts is wrong")};
+ var totaltissues = tissues.shift();
+ var totalorganisms = organisms.shift();
+ var totaldiseases= diseases.shift();
 
  // console.log(totaltissues);
  // console.log(totalorganisms);
- console.log(unavailableNoTissues);
+ // console.log(unavailableNoTissues);
 
 
 
-function findElement(arr, propName, propValue) {
-  for (var i=0; i < arr.length; i++)
-    if (arr[i][propName] == propValue)
-      return i;
+// function findElement(arr, propName, propValue) {
+//   for (var i=0; i < arr.length; i++)
+//     if (arr[i][propName] == propValue)
+//       return i;
 
-  // will return undefined if not found; you could return a default instead
-}
+//   // will return undefined if not found; you could return a default instead
+// }
 
 
-function gettotal(arr) {
-	var sum = 0;
-  for (var i=0; i < arr.length; i++)
-  	   sum += parseInt(arr[i].value);
-      return sum;
-}
+// function gettotal(arr) {
+// 	// var sum = 0;
+//  //  for (var i=0; i < arr.length; i++)
+//  //  	   sum += parseInt(arr[i].value);
+//  //      return sum;
+// }
 
 var diameter = 320,
     format = d3.format(",d"),
@@ -76,6 +83,7 @@ var radioform = body.append('form');
   .attr("id",bubchartname+"_form")
   .attr("class","center")
   .attr("style","margin-bottom:8px")
+  .attr("style","width:70%")
   .append('input')
     .attr('type','radio')
     .attr('name','dataset')
@@ -89,7 +97,6 @@ var radioform = body.append('form');
      .append('span')
      .append('span')
      ;
-
   radioform
   .append('input')
     .attr('type','radio')
@@ -101,6 +108,20 @@ var radioform = body.append('form');
    .append('label')
      .text('Organisms')
      .attr('for','Organisms')
+     .append('span')
+     .append('span')
+     ;
+  radioform
+  .append('input')
+    .attr('type','radio')
+    .attr('name','dataset')
+    .attr('value','Diseases')
+    .attr('id','Diseases' )
+    .text('Diseases');
+  radioform 
+   .append('label')
+     .text('Diseases')
+     .attr('for','Diseases')
      .append('span')
      .append('span')
      ;
@@ -133,6 +154,11 @@ function change() {
     	data = organisms;
     	// text_total.text("Total:"+totalorganisms);
     	// text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
+    }
+    if(value == 'Diseases') {
+      data = diseases;
+      // text_total.text("Total:"+totalorganisms);
+      // text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
     }
 
   svg.selectAll(".node").remove();

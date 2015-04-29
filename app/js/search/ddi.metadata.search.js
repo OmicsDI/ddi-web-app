@@ -172,7 +172,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         update_page_title();
         query = preprocess_query(query);
         query_url = get_query_url(query, start);
-	alert("wget"+query_url);
+	// alert("wget"+query_url);
 //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
         /**
@@ -712,7 +712,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
 	$scope.$root.currentpage = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
-	alert(current_abs_url);
+	// alert(current_abs_url);
 	
         if(current_abs_url.match("index.html")) {$window.location = current_abs_url.replace("index.html","browse.html");}
         if(current_abs_url.match("/#/")) {$window.location = current_abs_url.replace("/#/","/browse.html#/");}
@@ -773,7 +773,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
 
         if ($scope.queryForm.text.$invalid) {
             return;
-        alert("submitted invalid" + $scope.queryForm);
+        // alert("submitted invalid" + $scope.queryForm);
         }
         $scope.meta_search($scope.query.text);
     };
