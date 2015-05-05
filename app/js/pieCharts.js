@@ -188,7 +188,7 @@ function change() {
       .attr("dy", ".3em")
       .style("text-anchor", "middle")
       .style("font-size", "10px")
-      .text(function(d) { console.log(d.r+":"+d.className.length); return d.r/d.className.length<2.5 ? '': d.className; });
+      .text(function(d) {  return d.r/d.className.length<2.5 ? '': d.className; });
   
   node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
   //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
@@ -493,4 +493,138 @@ function change() {
 		.remove();
 };
 }
+
 }
+
+
+var barCharts_Years_Omicstypes= function()
+{
+ queue()
+    // .defer(d3.json, 'http://localhost:9091/stats/omicsType_annual?omicstype=proteomics') // topojson polygons
+    .defer(d3.json, 'http://localhost:9091/stats/omicsType_annual') // geojson points
+    // .defer(d3.json, 'http://localhost:9091/stats/omicsType_annual?omicstype=genomics') // geojson points
+    .await(draw_chart_omicstype_annual); // function that uses files
+
+function draw_chart_omicstype_annual(error, annalData) { 
+// function draw_chart_omicstype_annual(error, proteomics, metabolomics) { 
+  // console.log(proteomics);
+var margin = {top: 20, right: 2, bottom: 20, left: 40},
+    width = 420 - margin.left - margin.right,
+    height = 280 - margin.top - margin.bottom;
+
+var x0 = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var x1 = d3.scale.ordinal();
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var xAxis = d3.svg.axis()
+    .scale(x0)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(d3.format(".2s"));
+
+var svg = d3.select("#barchart_omicstype_annual").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// d3.csv("data.csv", function(error, data) {
+
+
+   // var omicsTypes= d3.keys(data[0]).filter(function(key) { return key !== "year"; });
+   var omicsTypes= d3.keys(annalData[0]).filter(function(key) { return key !== "year"; });
+
+
+  data = annalData;
+  data.forEach(function(d) {
+    d.omics = omicsTypes.map(function(name) { if(name!=="year") return {name: name, value: +d[name], year:d["year"]}; });
+    console.log(d.omics);
+  });
+
+  // data.forEach(function(d) {
+  //   d.omics = omicsTypes.map(function(name) { return {name: name, value: +d[name]}; });
+  //   console.log(d.omics);
+  // });
+
+  x0.domain(data.map(function(d) { return d.year; }));
+
+  // x0.domain(years);
+  x1.domain(omicsTypes).rangeRoundBands([0, x0.rangeBand()]);
+  y.domain([0, d3.max(data, function(d) { return d3.max(d.omics, function(d) { return d.value; }); })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "-2.3em")
+      .style("text-anchor", "end")
+      .text("Datasets No.");
+
+  var year = svg.selectAll(".year")
+      .data(data)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x0(d.year) + ",0)"; });
+
+  year.selectAll("rect")
+      .data(function(d) { return d.omics; })
+    .enter().append("rect")
+      .attr("width", x1.rangeBand())
+      .attr("x", function(d) { return x1(d.name); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); })
+      .style("fill", function(d) { return color(d.name); })
+      .attr("class", "bar")
+      .on("click", function(d){
+               location.href = "browse.html#/search?q=*:* AND omics_type:\""+d.name+"\" AND publication_date:\""+d.year+"\"";
+       }) 
+      ;
+
+d3.select('.x.axis')
+  .selectAll('.tick')
+  .attr("class","hotword")
+    .on('click',clickMe);
+function clickMe(d){
+    location.href = "browse.html#/search?q=*:* AND publication_date:\""+d+"\"";
+};
+
+  var legend = svg.selectAll(".legend")
+      .data(omicsTypes.slice().reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+// });
+}
+}
+

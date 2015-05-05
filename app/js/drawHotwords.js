@@ -47,6 +47,7 @@ var drawHotwords = function (){
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
         .text(function(d) { return d.label; })
+        .attr("class","hotword")
         .on("click", function(d,i){
               // alert("you have clicked"+d.label);
               location.href = "browse.html#/search?q="+d.label;

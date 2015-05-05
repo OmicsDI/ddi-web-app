@@ -302,6 +302,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
                 url: url,
                 method: 'GET'
             }).success(function(data) {
+                // alert("get success: "+url);
                 data = preprocess_results(data);
                overwrite_results = overwrite_results || false;
                 if (overwrite_results) {

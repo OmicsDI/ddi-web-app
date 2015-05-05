@@ -71,13 +71,13 @@ body {
 }
 
 
-text:hover { 
+.hotword:hover { 
 cursor: pointer;
 cursor: hand;
 opacity: .8 !important; }
 
 
-.node:hover,.slice:hover { 
+.node:hover,.slice:hover, .bar:hover, .legend:hover{ 
 cursor: pointer;
 cursor: hand;
 opacity: .8 !important; }
