@@ -802,7 +802,30 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
  * Responsible for the Dataset fetching.
  */
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http', function($scope, $location, $window, $timeout, $http ) {
-     $scope.datasetid = $location.url().replace("/",""); 
+
+     var input= $location.url().replace("/",""); 
+     var inputs = input.split("*");
+     var acc = inputs[0];
+     var domain = inputs[1];
+     $scope.acc = acc;
+     $scope.domain= domain;
+     $scope.descriptionshowfull = "false";
+     $scope.pubmedabstractshowfull = "false";
+     $scope.dataprotocolshowfull = "false";
+     $scope.sampleprotocolshowfull = "false";
+
+     var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
+     $http({
+                url: url,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.dataset = data;
+            }).error(function(){
+    alert("GET error:" + url);
+            });
+
+
+
      $scope.sharemethod = {email:["mailto:?body=[&subject=]"],
                         twitter:["https://twitter.com/intent/tweet?url=[&text=]",450],
                         facebook:["https://www.facebook.com/sharer.php?u=[",330], 
@@ -818,17 +841,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 // "preventDefault"in a?a.preventDefault():event.returnValue=!1
 
     };
-     // var url = "getdataset?id="+$scope.datasetid;
- //     var url = "/app/data/dataset_"+$scope.datasetid+".json";
- //     $http({
- //                url: url,
- //                method: 'GET'
- //            }).success(function(data) {
- //      $scope.dataset = data;
- //            }).error(function(){
-	// alert("GET error:" + url);
-
- //            });
 }]);
 
 /**
