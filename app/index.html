@@ -11,8 +11,7 @@
 
         <title>Search: DDI</title>
 
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
@@ -206,7 +205,7 @@
                 <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" /> 
                 <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
                 <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
-                <a href={{"dataset.html#/"+dataset.id}}>{{dataset.title |limitTo:40}} {{dataset.title.length>40?'...':''}}</a>
+                <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title |limitTo:40}} {{dataset.title.length>40?'...':''}}</a>
               </li>
             </ul>
         </div>
@@ -221,15 +220,11 @@
         </div>
         <div class="panel-body ">
             <ul>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
-              <li>PXD001611:Defining a minimal cell</li>
+              <li ng-repeat="dataset in mostAccessedList"> 
+                <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" /> 
+                <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
+                <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
+                <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title |limitTo:40}} {{dataset.title.length>40?'...':''}}</a>
             </ul>
         </div>
     </div>
@@ -260,9 +255,9 @@
     <div  class="col-md-4" >
     <div  class="panel panel-default">
     <div id="tweets-of-the-month" class="" >
-        <h3 data-icon="N" class="icon icon-generic">
+        <h4 data-icon="N" class="icon icon-generic">
             Tweets 
-        </h3>
+        </h4>
     </div>
 
     <div >
@@ -275,9 +270,9 @@
     <div  class="col-md-4" >
     <div  class="panel panel-default">
       <div id="news-of-the-month" class="" >
-        <h3 data-icon="N" class="icon icon-generic">
+        <h4 data-icon="N" class="icon icon-generic">
             News
-        </h3>
+        </h4>
         <ul>
             <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
             <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
@@ -296,9 +291,9 @@
     <div  class="col-md-4" >
     <div  class="panel panel-default">
       <div id="FAQs" class="" >
-        <h3 data-icon="N" class="icon icon-generic">
+        <h4 data-icon="N" class="icon icon-generic">
             FAQs 
-        </h3>
+        </h4>
         <ul>
             <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
             <li>New #PXD001711 from the Gopal P Sapkota lab via PRIDE:  (Human) Casein kinase 2 (CK2) phosphorylates the deubiqu</li>
@@ -408,7 +403,7 @@
  <script src="js/pieCharts.js"></script>
  <script src="js/drawHotwords.js"></script>
  <script src="js/vendor/jquery-1.10.1.min.js"></script>
- <script src="http://d3js.org/queue.v1.min.js"></script>
+ <script src="js/queue.v1.min.js"></script>
 <!--
  <script src="js/gradientPie.js"></script>
  <script src="js/search/metadata.search.js"></script>

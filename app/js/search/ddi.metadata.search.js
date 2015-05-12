@@ -528,6 +528,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
 
+
+    $scope.facetsNo = 8;
+    $scope.indexoffacets={"omics_type":"0", "repository":"0", "organism":"tissue", "desease":"0", "modifications":"0", "instruments":"0", "publicatedate":"0", "technology":"0", "test":"0" }
+
     /**
      * Watch `result` changes.
      */
@@ -538,6 +542,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.pagesize);
             $scope.query = $location.search().q;
 //	    $scope.pages= results.get_pages(5, 10, $scope.result.count);
+	    getnewindexes(); 
         }
     });
 
@@ -690,9 +695,23 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
 
 
+    function getnewindexes(){
+        console.log($scope.result.facets); 
+    $scope.indexoffacets={"omics_type":"0", "repository":"0", "TAXONOMY":"0","tissue":"0", "disease":"0", "modification":"0", "instrument_platform":"0", "publication_date":"0", "technology_type":"0", "test":"0" };
 
+        for(facet in $scope.indexoffacets){
+//           console.log("facet:"+facet);
+//           console.log("results.facet length:"+$scope.result.facets.length);
+           for( i = 0; i<$scope.result.facets.length; i++){
+//           console.log("check on:"+$scope.result.facets[i].id);
+              if(facet===$scope.result.facets[i].id) {
+                 $scope.indexoffacets[facet] = i; 
+              }
+           }
+        };
 
-
+    };
+   
 }]);
 
 /**
@@ -851,12 +870,23 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     $scope.proteomics_list="pride,peptideatlas,massive";
     $scope.metabolomics_list="metabolights";
     $scope.genomics_list="ega,ena";
+    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,
                 method: 'GET'
             }).success(function(data) {
       $scope.latestList = data["datasets"];
+            }).error(function(){
+    alert("GET error:" + url);
+
+            });
+     var url = "http://localhost:9091/dataset/mostAccessed?size=10";
+     $http({
+                url: url,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.mostAccessedList = data["datasets"];
             }).error(function(){
     alert("GET error:" + url);
 

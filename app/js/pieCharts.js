@@ -508,7 +508,7 @@ var barCharts_Years_Omicstypes= function()
 function draw_chart_omicstype_annual(error, annalData) { 
 // function draw_chart_omicstype_annual(error, proteomics, metabolomics) { 
   // console.log(proteomics);
-var margin = {top: 20, right: 2, bottom: 20, left: 40},
+var margin = {top: 20, right: 2, bottom: 20, left: 60},
     width = 420 - margin.left - margin.right,
     height = 280 - margin.top - margin.bottom;
 
@@ -541,7 +541,7 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
 
 
    // var omicsTypes= d3.keys(data[0]).filter(function(key) { return key !== "year"; });
-   var omicsTypes= d3.keys(annalData[0]).filter(function(key) { return key !== "year"; });
+  var omicsTypes= d3.keys(annalData[0]).filter(function(key) { return key !== "year"; });
 
 
   data = annalData;
@@ -572,7 +572,8 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
-      .attr("dy", "-2.3em")
+      .attr("dy", "-2.9em")
+      .attr("dx", "-4.9em")
       .style("text-anchor", "end")
       .text("Datasets No.");
 
