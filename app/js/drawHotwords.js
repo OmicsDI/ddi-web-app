@@ -32,214 +32,71 @@ function draw_word_cloud(error,pride_des,metabol_des,pride_datap,metabol_datap,p
   "MetaboLights_description":metabol_des,
   "MetaboLights_data_protocol":metabol_datap,
   "MetaboLights_sample_protocol":metabol_samp
-  }
+  };
 
   var fill = d3.scale.category20();
  
+  var repoList = [
+     "PRIDE",
+     "MetaboLights"
+  ];
+
+  var fieldList = [
+     "description",
+     "sample_protocol",
+     "data_protocol"
+  ];
 
 
-
-  var body =  d3.select("#hotwords");
+var body =  d3.select("#hotwords");
   
-  var leftdiv = body.append("div")
-                .style("float","left")
-		.attr("Opacity",0.5)
-	        .attr("width","1em");
-  var rightdiv= body.append("div")
-                .attr("position","absolute")
-                .attr("bottom","0px")
-                .style("right","0px")
-	        .attr("width","320");
 
-var svg = rightdiv.append("svg")
-        .attr("width", 320)
+var svg = body.append("svg")
+        .attr("width", 420)
         .attr("height", 325)
         .attr("class", "wordcloud");
 
-var radioform_v = leftdiv.append('form');
-var radioform_h = rightdiv.append('form');
+var select_form = body.append("form")
+        .attr("style","width:87%")
+        .attr("class","center");
+select_form.append("span").text("Repo: ").selectAll("span").attr("font-weight","bold");
+var select_repo = select_form.append("select");
+select_form.append("span").text("  Field: ");
+var select_field = select_form.append("select");
 
-  radioform_v
-  .attr("id","radioform_v")
-  .attr("class","center")
-  .attr("style","margin-bottom:8px")
-  .attr("style","width:50%")
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset')
-    .attr('value','PRIDE')
-    .attr('id','PRIDE' )
-    .text('PRIDE');
-  radioform_v 
-   .append('label')
-     .text('PRIDE')
-     .attr('for','PRIDE')
-     .append('span')
-     .append('span')
-     ;
+select_repo.selectAll("option").data(d3.values(repoList)).enter().append("option").text(function(d) {
+    return d;
+});
 
-  radioform_v
-  .append('input')
-    .attr('class','block')
-    .attr('type','radio')
-    .attr('name','dataset')
-    .attr('value','MetaboLights')
-    .attr('id','MetaboLights' )
-    .text('MetaboLights');
-  radioform_v
-   .append('label')
-     .text('MetaboL')
-     .attr('for','MetaboLights')
-     .append('span')
-     .append('span')
-     ;
-/*
-  radioform_h
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset')
-    .attr('value','PeptideAtlas')
-    .attr('id','PeptideAtlas' )
-    .text('PeptideAtlas');
-  radioform_h
-   .append('label')
-     .text('PeptideAtlas')
-     .attr('for','PeptideAtlas')
-     .append('span')
-     .append('span')
-     ;
+select_field.selectAll("option").data(d3.values(fieldList)).enter().append("option").text(function(d) {
+    return d;
+});
 
 
-  radioform_h
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset')
-    .attr('value','MassIVE')
-    .attr('id','MassIVE' )
-    .text('MassIVE');
-  radioform_h
-   .append('label')
-     .text('MassIVE')
-     .attr('for','MassIVE')
-     .append('span')
-     .append('span')
-     ;
+select_repo.on('change',change);
+select_field.on('change',change);
 
-  radioform_h
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset')
-    .attr('value','PeptideAtlas')
-    .attr('id','PeptideAtlas' )
-    .text('PeptideAtlas');
-  radioform_h
-   .append('label')
-     .text('PeptideAtlas')
-     .attr('for','PeptideAtlas')
-     .append('span')
-     .append('span')
-     ;
-*/
-/*
-  radioform_h
-  .attr("id","radioform_h")
-  .attr("class","center")
-  .attr("style","width:70%")
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset2')
-    .attr('value','description')
-    .attr('id','description' )
-    .text('description');
-  radioform_h 
-   .append('label')
-     .text('description')
-     .attr('for','description')
-     .append('span')
-     .append('span')
-     ;
-*/
-
-  radioform_h
-  .attr("id","radioform_h")
-  .attr("class","center")
-  .attr("style","margin-bottom:8px")
-  .attr("style","width:100%")
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset2')
-    .attr('value','data_protocol')
-    .attr('id','data_protocol' )
-    .text('data_protocol');
-  radioform_h 
-   .append('label')
-     .text('data_protocol')
-     .attr('for','data_protocol')
-     .append('span')
-     .append('span')
-     ;
-
-  radioform_h
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset2')
-    .attr('value','sample_protocol')
-    .attr('id','sample_protocol' )
-    .text('sample_protocol');
-  radioform_h 
-   .append('label')
-     .text('sample_protocol')
-     .attr('for','sample_protocol')
-     .append('span')
-     .append('span')
-     ;
-
-  radioform_h
-  .append('input')
-    .attr('type','radio')
-    .attr('name','dataset2')
-    .attr('value','description')
-    .attr('id','description2' )
-    .text('description');
-  radioform_h 
-   .append('label')
-     .text('description')
-     .attr('for','description2')
-     .append('span')
-     .append('span')
-     ;
-  
-
-  d3.select("#radioform_v").select('input[value=PRIDE]').property('checked',true);
-  d3.select("#radioform_h").select('input[value=description]').property('checked',true);
-
-  d3.select("#radioform_v").selectAll('input')
-    .on('change',change);
-
-  d3.select("#radioform_h").selectAll('input')
-    .on('change',change);
-var old_v = "PRIDE";
-var old_h = "description";
+var old_r = "PRIDE";
+var old_s = "description";
 change();
 
 function change(){
   
   var value = this.value; 
   
-  
   if(value === "PRIDE" || 
      value === "MetaboLights")
-   old_v = value;  
+   old_r = value;  
    
   if(value === "description" || 
      value === "data_protocol" ||
      value === "sample_protocol")
-   old_h = value;  
+   old_s = value;  
 
-  var hotwordss = terms[old_v+"_"+old_h];
+  var hotwordss = terms[old_r+"_"+old_s];
   var maxfrequent = getmax(hotwordss);
   svg.selectAll(".cloud").remove();
-  d3.layout.cloud().size([325, 320])
+  d3.layout.cloud().size([425, 320])
       .words(hotwordss)
       .padding(1)
 //      .rotate(function() { return ~~(Math.random() * 2) * 2; })
@@ -256,7 +113,7 @@ function change(){
   var maxfrequent = getmax(words);
       svg.append("g")
 	.attr("class","cloud")
-        .attr("transform", "translate(160,180)")
+        .attr("transform", "translate(200,180)")
       .selectAll("text")
         .data(words)
       .enter().append("text")

@@ -13,7 +13,7 @@ limitations under the License.
 */
 
 /**
- * RNAcentral metadata search Angular.js app.
+ * DDI Angular.js app.
  */
 
 ; // concatenation safeguard
@@ -27,7 +27,7 @@ underscore.factory('_', function() {
 });
 
 /**
- * Create RNAcentral app.
+ * Create DDI app.
  */
 angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate']);
 
@@ -200,7 +200,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         }
 
         /**
-         * Create an RNAcentral proxy query url which includes EBeye query url.
+         * Create an proxy query url which includes EBeye query url.
          */
         function get_query_url() {
             var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}',pagesize).replace('{SORTFIELD}',sortfield);
@@ -514,7 +514,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     };
     $scope.show_export_error = false;
     $scope.pagesize = 10;
-//    $scope.currentpage = 1;
     $scope.sortfield = 'title';
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
@@ -543,7 +542,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.count);
 	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.pagesize);
             $scope.query = $location.search().q;
-//	    $scope.pages= results.get_pages(5, 10, $scope.result.count);
 	    getnewindexes(); 
 	    checkomicstypenull();
         }
