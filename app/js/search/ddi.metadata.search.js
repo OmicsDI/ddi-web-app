@@ -519,7 +519,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
 
-    $scope.proteomics_list="pride,peptideatlas,massive";
+    $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights";
     $scope.genomics_list="ega,ena";
     
@@ -532,6 +532,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.facetsNo = 8;
     $scope.indexoffacets={"omics_type":"0", "repository":"0", "organism":"tissue", "desease":"0", "modifications":"0", "instruments":"0", "publicatedate":"0", "technology":"0", "test":"0" }
 
+    $scope.omicsfacetsno={"Proteomics":"","Metabolomics":"","Genomics":""};
+
     /**
      * Watch `result` changes.
      */
@@ -543,6 +545,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             $scope.query = $location.search().q;
 //	    $scope.pages= results.get_pages(5, 10, $scope.result.count);
 	    getnewindexes(); 
+	    checkomicstypenull();
         }
     });
 
@@ -698,7 +701,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     function getnewindexes(){
         console.log($scope.result.facets); 
     $scope.indexoffacets={"omics_type":"0", "repository":"0", "TAXONOMY":"0","tissue":"0", "disease":"0", "modification":"0", "instrument_platform":"0", "publication_date":"0", "technology_type":"0", "test":"0" };
-
         for(facet in $scope.indexoffacets){
 //           console.log("facet:"+facet);
 //           console.log("results.facet length:"+$scope.result.facets.length);
@@ -711,6 +713,17 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         };
 
     };
+
+    function checkomicstypenull(){
+    $scope.omicsfacetsno={"Proteomics":"0","Metabolomics":"0","Genomics":"0"};
+    $scope.omicsfacetsindex={"Proteomics":"","Metabolomics":"","Genomics":""};
+         var omicsfacet = $scope.result.facets[$scope.indexoffacets.omics_type].facetValues; 
+         for(omic in omicsfacet){
+	     $scope.omicsfacetsno[omicsfacet[omic].label]=omicsfacet[omic].count; 
+	     $scope.omicsfacetsindex[omicsfacet[omic].label]=omic; 
+	 }
+    console.log($scope.omicsfacetsindex);
+    }
    
 }]);
 
@@ -867,7 +880,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  * Responsible for the Datasets Stastistic Lists.
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
-    $scope.proteomics_list="pride,peptideatlas,massive";
+    $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights";
     $scope.genomics_list="ega,ena";
     $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };

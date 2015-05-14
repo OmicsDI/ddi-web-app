@@ -231,9 +231,7 @@ queue()
 
 function draw_chart_Repos_Omics(error, domains, omicstype) {
 
-
-var subdomains= domains[0]['subdomains'];
-var repos = transformsubdomains(subdomains);
+var repos = transformdomains(domains);
 omicstype.shift();
 var unavailableomics = omicstype.pop();
 
@@ -260,7 +258,7 @@ function gettotal(arr) {
 
 
 
-function transformsubdomains(arr){
+function transformdomains(arr){
      
     var newarry = [];
     for(var i=0; i<arr.length; i++)

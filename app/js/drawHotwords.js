@@ -245,7 +245,7 @@ function change(){
 //      .rotate(function() { return ~~(Math.random() * 2) * 2; })
        .rotate(0)
       .font("Impact")
-      .text(function(d) { return d.word; }) // THE SOLUTION
+      .text(function(d) { return d.label; }) // THE SOLUTION
       .fontSize(function(d) { return d.frequent/maxfrequent * 50; })
       .on("end", draw)
       .start();
