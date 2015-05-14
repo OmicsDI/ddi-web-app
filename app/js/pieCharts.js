@@ -270,7 +270,7 @@ function transformdomains(arr){
 }
 
 var width = 480,
-    height = 325,
+    height = 300,
 	radius = Math.min(width, height) / 2;
  
 var piechartname = 'chart_repos_omics';

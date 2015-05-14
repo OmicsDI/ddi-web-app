@@ -519,7 +519,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.maxpageno= 1;
 
     $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
-    $scope.metabolomics_list="metabolights";
+    $scope.metabolomics_list="metabolights,metabolights_dataset";
     $scope.genomics_list="ega,ena";
     
     $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };
@@ -879,7 +879,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
     $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
-    $scope.metabolomics_list="metabolights";
+    $scope.metabolomics_list="metabolights,metabolights_dataset";
     $scope.genomics_list="ega,ena";
     $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };
      var url = "http://localhost:9091/dataset/latest?size=10";
