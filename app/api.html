@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<head>
+    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
+    </style>
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width" name="viewport">
+        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+
+
+        <title>Search: DDI</title>
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+        <link type="text/css" href="css/ddi.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+        
+        <!-- Favicons -->
+        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+    
+        
+</head>
+
+<body class="level2">
+<div class="container rnacentral-masthead">
+<div class="masthead grid_24" id="global-masthead">    
+
+     <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png">
+     </a>
+    <nav>
+        <ul id="global-nav">
+                    <!-- set active class as appropriate -->
+            <li class="first active" id="services"><a title="Services" href="//www.ebi.ac.uk/services">Services</a></li>
+            <li class="" id="research"><a title="Research" href="//www.ebi.ac.uk/research">Research</a></li>
+            <li class="" id="training"><a title="Training" href="//www.ebi.ac.uk/training">Training</a></li>
+            <li class="" id="industry"><a title="Industry" href="//www.ebi.ac.uk/industry">Industry</a></li>
+            <li class=" last" id="about"><a title="About us" href="//www.ebi.ac.uk/about">About us</a></li>
+        </ul>
+   </nav>
+
+</div>
+</div>
+
+<div class="navbar navbar-default navbar-static-top">
+<div class="container rnacentral-masthead">
+
+    <!-- global-search -->
+    <div class="row">
+      <div class="col-md-4">
+        <a href="/"><img class="rnacentral-header-logo" alt="DDI logo" src="static/img/logo/DDI_logo_ltgrey.png"></a>
+      </div>
+
+      <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
+         <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+             <fieldset>
+                 <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                     <div class="input-group">
+                         <input type="text"
+                         placeholder="organism, repository, gene, tissue, accession"
+                         class="form-control"
+                         id="query-text"
+                         name="text"
+                         tabindex="1"
+                         ng-model="query.text"
+                         ng-minlength="2"
+                         ng-maxlength="1000"
+                         autocomplete="off"
+                         required>
+                         <div class="input-group-btn">
+                             <button type="submit" class="btn btn-primary">
+                                 <i class="fa fa-search"></i> Search
+                             </button>
+                         </div><!-- /input-group-btn -->
+                     </div><!--input-group -->
+                     <span class="help-block example-searches">
+                         <small>
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
+                             </i>
+                         </small>
+                     </span>
+                     <label class="control-label ng-cloak has-error"
+                         for="query-text" ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                         ng-cloak>
+                         Your query is too short
+                     </label>
+                     <label class="control-label ng-cloak"
+                         for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                         ng-cloak>
+                         Your query is too long
+                     </label>
+                 </div><!-- /form-group -->
+             </fieldset>
+         </form><!-- /form -->
+    </div><!--/controller-->
+    </div><!-- /row -->
+
+</div> <!-- /container-->
+</div> <!-- /navbar-->
+
+
+<div class="masthead grid_24 nomenu" id="local-masthead" >
+    <nav>
+        <ul id="local-nav" class="grid_24" style="background-color:#057794">
+            <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
+            <li class="" id="api-menu"><a title="DDI API" href="http://localhost:9091/">API</a></li>
+            <li class="" id="help-menu"><a title="DDI help" href="http://localhost:8000/app/help/">Help</a></li>
+            <li class=" last" id="about-prider-menu"><a title="Databases" href="http://localhost:8000/app/databases.html">Databases</a></li>
+            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+            whichever one will show up last...
+            For example: -->
+            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
+            <li class="functional" id="login-menu" hidden="true" ><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+            </ul>
+    </nav>
+</div><!-- local-masthead-->
+
+
+
+          <div class="container-main">
+            <!--[if lt IE 10]>
+              <div class="alert alert-danger">
+                You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
+              </div>
+            <![endif]-->
+
+            <noscript>
+              <div class="alert alert-danger">
+                Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
+              </div>
+            </noscript>
+
+            <div class="ng-scope" ng-show="!display_search_interface" ng-controller="MainContent">
+              
+
+<div class="row">
+
+  <div class="col-md-9" role="main">
+
+  
+  <h1 id="overview">
+  <i class="fa fa-book"></i> API overview
+</h1>
+
+<p>Most data in DDI can be accessed programmatically using a RESTful API
+allowing for integration with other resources.
+The API implementation is based on the <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.</p>
+
+<h2 id="web-browsable-api">Web browsable API</h2>
+
+<p>The DDI API is <strong>web browsable</strong>, which means that:</p>
+
+<ul>
+<li><p>the data is served in either <strong>human- or computer-friendly formats</strong> depending on whether
+a URL is viewed in a browser or is retrieved programmatically</p></li>
+<li><p>many resources are <strong>hyperlinked</strong> so that it's possible to navigate the API in the browser.</p></li>
+</ul>
+
+<p>As a result, developers can familiarise themselves with the API and get a better sense of the DDI data.</p>
+
+<p><a href="/api/" class="btn btn-primary" role="button" target="_blank">Browse the API</a></p>
+<!--
+<h2 id="versioning">Versioning</h2>
+
+<p>To ensure that changes in the DDI API don't break the applications
+relying on it, the API is versioned, and <strong>the version is included in the API's URL</strong>.</p>
+
+<p>For example, the <strong>current API is at Version 1</strong> and is available at <a href="/api">http://www.ebi.ac.uk/api/v1</a>,
+and the next version will be available at http://rnacentral.org/api/v2.</p>
+
+<p>The <strong>latest version</strong> of the API can be accessed at <a href="/api/current">http://rnacentral.org/api/current</a>,
+but it's not recommended to use this endpoint for long-term
+development as the underlying data model may change.</p>
+
+<p>No <strong>backward-incompatible changes</strong> are made to each version after it's been made public.
+More specifically, it's guaranteed that within one version there will be no:</p>
+
+<ul>
+<li>changing urls</li>
+<li>deleting or renaming data fields</li>
+<li>changing data field types</li>
+</ul>
+
+<p>The following <strong>non-disruptive changes</strong> may be implemented to a public API:</p>
+
+<ul>
+<li>adding new endpoints</li>
+<li>adding new data fields</li>
+<li>adding new filtering methods</li>
+</ul>
+
+<p>An advance notice will be given before obsoleting an API version. To stay up to date,
+please consider signing up for the <a href="http://blog.rnacentral.org">DDI updates</a>.</p>
+-->
+<h2 id="throttling">Throttling</h2>
+
+<p>The maximum number of requests from the same IP address is limited to <strong>20 requests per second</strong>.
+Currently there is no limit on the total number of requests from the same IP.</p>
+
+<p>The limit can be lifted for registered users, so please get in touch if you require a higher request rate.</p>
+
+<hr>
+
+<h1 id="v1">API documentation</h1>
+
+<h2 id="v1-example-responses">Example responses</h2>
+
+<p>Responses containing <strong>multiple entries</strong> have the following fields:</p>
+
+<ul>
+<li><em>count</em> is the number of entries in the matching set</li>
+<li><em>datasets</em> is an array of datasets.</li>
+<li><em>facets</em> is an array of facets.</li>
+</ul>
+
+<h4>Example</h4>
+
+<pre><code>http://localhost:9091/dataset/search?query=human&start=0&size=20&faceCount=20
+{
+    "count": 733,
+    "datasets": [
+    {
+      "id": "PXD000456",
+      "source": "pride",
+      "title": "Human glomerular extracellular matrix analysed by LC-MSMS",
+      "description": "Extracellular matrix proteins were isolated from human glomeruli and analysed by LC-MSMS",
+      "keywords": [
+        "Human",
+        "kidney",
+        "glomerulus",
+        "extracellular matrix"
+      ],
+      "organisms": [
+        {
+          "acc": "9606",
+          "name": "Homo sapiens"
+        }
+      ],
+      "publicationDate": "20140122"
+    },
+        // 19 more datasets 
+    ],
+  "facets": [
+    {
+      "id": "modification",
+      "label": "Modification",
+      "total": 181,
+      "facetValues": [
+        {
+          "label": "Unknown modification",
+          "value": "unknown modification",
+          "count": "5"
+        },
+        //other facet values
+     ],
+    },
+   //other facets
+  ]
+}
+</code></pre>
+
+<p>Responses containing just a <strong>single dataset</strong> have some extra navigation fields,and without the facets</p>
+
+<pre><code>http://localhost:9091/dataset/get?acc=PXD001848&database=PRIDE
+{
+  "id": "PXD001848",
+  "name": "Global Analysis of Protein Folding Thermodynamics for Disease State Characterization, MCF7 vs MDAMB231",
+  "description": "Protein biomarkers can be used to characterize and diagnose disease states such as cancer.  They can also serve as therapeutic targets. Current methods for protein biomarker discovery, which generally rely on the large-scale analysis of gene and/or protein expression levels, fail to detect protein biomarkers with disease-related functions and unaltered expression levels. Here we describe the large-scale use of thermodynamic measurements of protein folding and stability for disease state characterization and the discovery of protein biomarkers. Using the Stable Isotope Labeling with Amino Acids in Cell Culture and Stability of Proteins from Rates of Oxidation (SILAC-SPROX) technique, we assayed ~800 proteins for protein folding and stability changes in three different cell culture models of breast cancer including the MCF-10A, MCF-7, and MDA-MB-231 cell lines. The thermodynamic stability profiles generated here created distinct molecular markers for the three cell lines, and a significant fraction (~45%) of the differentially stabilized proteins did not have altered expression levels. Thus, the protein biomarkers reported here created novel molecular signatures of breast cancer and provided additional insight into the molecular basis of the disease. Our results establish the utility of protein folding and stability measurements for the study of disease processes.",
+  "keywords": null,
+  "publicationDate": "20150410",
+  "publications": [
+    {
+      "id": "25825992",
+      "publicationDate": "2015-04-09",
+      "title": "Global analysis of protein folding thermodynamics for disease state characterization.",
+      "pubabstract": "Current methods for the large-scale characterization of disease states generally rely on the analysis of gene and/or protein expression levels. These existing methods fail to detect proteins with disease-related functions and unaltered expression levels. Here we describe the large-scale use of thermodynamic measurements of protein folding and stability for the characterization of disease states. Using the Stable Isotope Labeling with Amino Acids in Cell Culture and Stability of Proteins from Rates of Oxidation (SILAC-SPROX) technique, we assayed ∼800 proteins for protein folding and stability changes in three different cell culture models of breast cancer including the MCF-10A, MCF-7, and MDA-MB-231 cell lines. The thermodynamic stability profiles generated here created distinct molecular markers to differentiate the three cell lines, and a significant fraction (∼45%) of the differentially stabilized proteins did not have altered expression levels. Thus, the differential thermodynamic profiling strategy reported here created novel molecular signatures of breast cancer and provided additional insight into the molecular basis of the disease. Our results establish the utility of protein folding and stability measurements for the study of disease processes, and they suggest that such measurements may be useful for biomarker discovery in disease.",
+      "cycle": "testcyclehere"
+    }
+  ],
+  "relatedDatasets": null,
+  "data_protocol": "Peak lists were extracted from the raw LC-MS/MS data files and the data were searched against the 20265 human proteins in the 2014-04 release of the UniProt Knowledgebase (downloaded at ftp://ftp.uniprot.org/pub/databases/uniprot/current_releases/release-2014_04/knowledgebase/) using Maxquant 1.3.0.5.41 The following modifications were used: methyl methanethiosulfonate at cysteine as a fixed modification, SILAC labeling of lysine (13C614N2) and arginine (13C6), and variable (0-1) oxidation of methionine and deamidation of Asparagine and Glutamine (N and Q), and acetylation of the protein N-terminus. The enzyme was set as Trypsin, and up to 2 missed cleavages were permitted. The false discovery rate for peptide and protein identifications was set to 1%, and rest of the parameters were set at the default settings.  As part of the default settings the mass tolerance for precursor ions was set to 20 ppm for the first search where initial mass recalibration was completed and a 6 ppm precursor mass tolerance was used for the main search. The mass tolerance for fragment ions was 0.5 Da. We also included match between runs and re-quantification of the searched peptides. The search results were exported to Excel for further data analysis as described below.  Only the protein and peptide identifications with non-zero positive ratios (H/L >0) were used in subsequent data analysis steps.  The methionine-containing peptides were selected, and those methionine-containing peptides consistently identified in the protein samples derived from six or more denaturant-containing buffers were assayed.    For the methionine-containing peptides, a single averaged H/L ratio was calculated for each peptide sequence and each charge state at each denaturant concentration.  Similarly, for each analysis a median H/L ratio was determined for each protein using the H/L ratios measured for all the non-methionine-containing peptides identified in all the denaturant concentrations for a given protein.  These median H/L ratios were used to select hits with H/L>2 fold in the protein expression level analyses.  For hit peptide and protein selection in the thermodynamic analyses, all the H/L ratios generated for the non-methionine containing peptides from a given protein were divided by the median H/L ratio for that protein in order to generate normalized H/L ratios for each non-methionine containing peptide. These normalized H/L ratios were log2 transformed. The normalized and log2 transformed H/L ratios generated for the non-methionine-containing peptides in a given analysis were used to determine the 5th and 95th percentiles values used in subsequent analysis of methionine-containing peptides. The averaged H/L ratios calculated for each methionine-containing peptides were also normalized and log2 transformed. The methionine-containing peptides and proteins with log2 transformed H/L ratios less than the 5th percentile or greater than the 95th percentile values determined above were selected and then visually inspected to determine which peptides had altered H/L ratios at 2 or more consecutive denaturant concentrations to generate an initial list of protein hits.",
+  "sample_protocol": "SILAC labeled MCF-7 and MDA-MB-231 cell lysates were prepared according to established SILAC protocols. Aliquots of each lysate were distributed into a series of denaturant-containing buffers, reacted with hydrogen peroxide under conditions that selectively oxidize exposed methionine residues, and quenched with the addition of excess methionine. The light and heavy samples generated at matching denaturant concentration were combined. Each combined protein sample was  submitted to a bottom-up, solution-phase, shotgun proteomics analysis using LC-MS/MS. Ultimately, L/H ratios were obtained for the peptides detected at each denaturant concentration, and the denaturant dependence of the L/H ratio’s was examined."
+}
+</code></pre>
+
+<h2 id="v1-pagination">Pagination</h2>
+
+<p>Responses containing multuple datasets are paginated to prevent accidental downloads of large amounts of data and to speed up the API.</p>
+<p>The page size is controlled by the <code>size</code> parameter. Its default value is
+<strong>20 datasets per page</strong>, and the maximum number of datasets per page is <strong>100</strong>.</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href="http://localhost:9091/dataset/search?query=human&start=0&size=50&faceCount=20">http://localhost:9091/dataset/search?query=human&start=0&size=50&faceCount=20</a></li>
+<li><a href="http://localhost:9091/dataset/search?query=human&start=0&size=50&faceCount=20">http://localhost:9091/dataset/search?query=human&start=0&size=20&faceCount=20</a></li>
+</ul>
+
+<h2 id="v1-output-formats">Output formats</h2>
+
+<p>The following output format is: <strong>JSON</strong></p>
+
+<h2 id="v1-filtering">Filtering</h2>
+
+<p>The API supports several filtering operations that complement the main DDI search functionality.</p>
+
+<h3 id="v1-filtering-by-sequence-length">Filtering by sequence length</h3>
+
+<p>There are 3 url parameters: <code>length</code>, <code>min_length</code> (greater or equal length), and <code>max_length</code> (less or equal length).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href="/api/v1/rna/?length=2014">http://rnacentral.org/api/v1/rna/?length=2014</a></li>
+<li><a href="/api/v1/rna/?min_length=200000">http://rnacentral.org/api/v1/rna/?min_length=200000</a></li>
+<li><a href="/api/v1/rna/?max_length=10">http://rnacentral.org/api/v1/rna/?max_length=10</a></li>
+<li><a href="/api/v1/rna/?min_length=1&amp;max_length=4">http://rnacentral.org/api/v1/rna/?min_length=1&amp;max_length=4</a></li>
+</ul>
+
+<h3 id="v1-filtering-by-database">Filtering by database</h3>
+
+<p>The expert database can be specified by setting the <code>database</code> url parameter
+(possible values: <em>srpdb</em>, <em>mirbase</em>, <em>vega</em>, <em>tmrna-website</em>, <em>lncrnadb</em>, <em>gtrnadb</em>, <em>ena</em>, <em>rdp</em>, <em>rfam</em>, <em>refseq</em>, <em>snopy</em>, <em>pdbe</em>).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href="/api/v1/rna/?database=srpdb">http://rnacentral.org/api/v1/rna/?database=srpdb</a></li>
+<li><a href="/api/v1/rna/?database=mirbase">http://rnacentral.org/api/v1/rna/?database=mirbase</a></li>
+<li><a href="/api/v1/rna/?database=vega">http://rnacentral.org/api/v1/rna/?database=vega</a></li>
+<li><a href="/api/v1/rna/?database=tmrna-website">http://rnacentral.org/api/v1/rna/?database=tmrna-website</a></li>
+<li><a href="/api/v1/rna/?database=lncrnadb">http://rnacentral.org/api/v1/rna/?database=lncrnadb</a></li>
+<li><a href="/api/v1/rna/?database=gtrnadb">http://rnacentral.org/api/v1/rna/?database=gtrnadb</a></li>
+<li><a href="/api/v1/rna/?database=ena">http://rnacentral.org/api/v1/rna/?database=ena</a></li>
+<li><a href="/api/v1/rna/?database=rdp">http://rnacentral.org/api/v1/rna/?database=rdp</a></li>
+<li><a href="/api/v1/rna/?database=rfam">http://rnacentral.org/api/v1/rna/?database=rfam</a></li>
+<li><a href="/api/v1/rna/?database=refseq">http://rnacentral.org/api/v1/rna/?database=refseq</a></li>
+</ul>
+
+<h3 id="v1-filtering-by-external-ids">Filtering by external ids</h3>
+
+<p>The external id is an id assigned to a sequence in one of the Expert Databases,
+which is imported into DDI as a cross-reference.</p>
+
+<p>The external id can be specified by setting the <code>external_id</code> url parameter.</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href="/api/v1/rna/?external_id=Stap.epid._AF269831" target="_blank">http://rnacentral.org/api/v1/rna/?external_id=Stap.epid._AF269831</a> (SRPDB)</li>
+<li><a href="/api/v1/rna/?external_id=MIMAT0000091" target="_blank">http://rnacentral.org/api/v1/rna/?external_id=MIMAT0000091</a> (miRBase)</li>
+<li><a href="/api/v1/rna/?external_id=OTTHUMG00000172092" target="_blank">http://rnacentral.org/api/v1/rna/?external_id=OTTHUMG00000172092</a> (Vega)</li>
+<li><a href="/api/v1/rna/?external_id=Lepto_inter_Lai566" target="_blank">http://rnacentral.org/api/v1/rna/?external_id=Lepto_inter_Lai566</a> (tmRNA Website)</li>
+</ul>
+
+<h3 id="v1-combined-filters">Combined filters</h3>
+
+<p>Any filters can be combined to narrow down the query using the <code>&amp;</code> symbol as a separator,
+which acts as the logical <code>AND</code> operator. More logical operators will be supported in the future.</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href="/api/v1/rna/?database=srpdb&amp;min_length=200">http://rnacentral.org/api/v1/rna/?database=srpdb&amp;min_length=200</a></li>
+<li><a href="/api/v1/rna/?min_length=1&amp;max_length=4">http://rnacentral.org/api/v1/rna/?min_length=1&amp;max_length=4</a></li>
+</ul>
+
+<h2 id="v1-genome-annotations">Genome annotations</h2>
+
+<p>The API provides an endpoint for retrieving annotations based on genomic coordinates for a <a href="/help/genomic-mapping">number of species</a>.</p>
+
+<p>The response content is similar to that provided by the
+<a href="http://rest.ensembl.org/documentation/info/overlap_region">Ensembl REST API</a>
+and can be directly used to visualise the data using the <a href="http://genoverse.org">Genoverse</a> HTML5 genome browser.</p>
+
+<p>The genome location should be in the <code>chromosome:start-end</code> format and may contain optional commas.</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href="/api/v1/overlap/region/homo_sapiens/2:39,745,816-39,826,679">http://rnacentral.org/api/v1/overlap/region/homo_sapiens/2:39,745,816-39,826,679</a></li>
+</ul>
+
+<h2 id="v1-example-script">Example script</h2>
+
+<p>A common task is finding whether some sequence of interest has an DDI id.</p>
+
+<p>An example <strong>Python</strong> script for <strong>looking up DDI unique sequence ids</strong> (URS) is provided
+and can be used in more complicated programs.</p>
+
+<p>Instead of sending the entire sequence over the network to the DDI servers,
+the script only submits the <a href="http://en.wikipedia.org/wiki/MD5">md5</a> value
+calculated based on the sequence. The md5 value is 32 characters long and is unique
+for each sequence. Using md5 saves traffic and decreases the response time.</p>
+
+<p>Internally DDI uses the <a href="http://search.cpan.org/dist/Digest-MD5/MD5.pm">Digest::MD5</a>
+Perl module for computing the md5 values. Additional notes:</p>
+
+<ul>
+<li>all sequences are uppercase</li>
+<li>md5 is computed for DNA sequences (so all U's should be replaced with T's).</li>
+</ul>
+
+<script src="//www.google-analytics.com/analytics.js" async=""></script><script src="https://gist.github.com/AntonPetrov/177cef0a3b4799f01536.js"></script><link rel="stylesheet" href="https://gist-assets.github.com/assets/embed-8bf0013c72fb64f0bb1bc1872b43e39e.css"><div id="gist8938389" class="gist">
+        <div class="gist-file">
+          <div class="gist-data gist-syntax">
+            
+
+
+
+    <div class="file-data">
+      <table class="lines highlight" cellpadding="0" cellspacing="0">
+        <tbody><tr>
+          <td class="line-numbers">
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L1" rel="file-retrieve_rnacentral_id-py-L1">1</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L2" rel="file-retrieve_rnacentral_id-py-L2">2</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L3" rel="file-retrieve_rnacentral_id-py-L3">3</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L4" rel="file-retrieve_rnacentral_id-py-L4">4</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L5" rel="file-retrieve_rnacentral_id-py-L5">5</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L6" rel="file-retrieve_rnacentral_id-py-L6">6</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L7" rel="file-retrieve_rnacentral_id-py-L7">7</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L8" rel="file-retrieve_rnacentral_id-py-L8">8</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L9" rel="file-retrieve_rnacentral_id-py-L9">9</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L10" rel="file-retrieve_rnacentral_id-py-L10">10</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L11" rel="file-retrieve_rnacentral_id-py-L11">11</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L12" rel="file-retrieve_rnacentral_id-py-L12">12</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L13" rel="file-retrieve_rnacentral_id-py-L13">13</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L14" rel="file-retrieve_rnacentral_id-py-L14">14</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L15" rel="file-retrieve_rnacentral_id-py-L15">15</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L16" rel="file-retrieve_rnacentral_id-py-L16">16</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L17" rel="file-retrieve_rnacentral_id-py-L17">17</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L18" rel="file-retrieve_rnacentral_id-py-L18">18</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L19" rel="file-retrieve_rnacentral_id-py-L19">19</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L20" rel="file-retrieve_rnacentral_id-py-L20">20</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L21" rel="file-retrieve_rnacentral_id-py-L21">21</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L22" rel="file-retrieve_rnacentral_id-py-L22">22</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L23" rel="file-retrieve_rnacentral_id-py-L23">23</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L24" rel="file-retrieve_rnacentral_id-py-L24">24</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L25" rel="file-retrieve_rnacentral_id-py-L25">25</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L26" rel="file-retrieve_rnacentral_id-py-L26">26</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L27" rel="file-retrieve_rnacentral_id-py-L27">27</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L28" rel="file-retrieve_rnacentral_id-py-L28">28</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L29" rel="file-retrieve_rnacentral_id-py-L29">29</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L30" rel="file-retrieve_rnacentral_id-py-L30">30</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L31" rel="file-retrieve_rnacentral_id-py-L31">31</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L32" rel="file-retrieve_rnacentral_id-py-L32">32</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L33" rel="file-retrieve_rnacentral_id-py-L33">33</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L34" rel="file-retrieve_rnacentral_id-py-L34">34</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L35" rel="file-retrieve_rnacentral_id-py-L35">35</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L36" rel="file-retrieve_rnacentral_id-py-L36">36</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L37" rel="file-retrieve_rnacentral_id-py-L37">37</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L38" rel="file-retrieve_rnacentral_id-py-L38">38</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L39" rel="file-retrieve_rnacentral_id-py-L39">39</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L40" rel="file-retrieve_rnacentral_id-py-L40">40</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L41" rel="file-retrieve_rnacentral_id-py-L41">41</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L42" rel="file-retrieve_rnacentral_id-py-L42">42</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L43" rel="file-retrieve_rnacentral_id-py-L43">43</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L44" rel="file-retrieve_rnacentral_id-py-L44">44</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L45" rel="file-retrieve_rnacentral_id-py-L45">45</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L46" rel="file-retrieve_rnacentral_id-py-L46">46</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L47" rel="file-retrieve_rnacentral_id-py-L47">47</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L48" rel="file-retrieve_rnacentral_id-py-L48">48</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L49" rel="file-retrieve_rnacentral_id-py-L49">49</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L50" rel="file-retrieve_rnacentral_id-py-L50">50</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L51" rel="file-retrieve_rnacentral_id-py-L51">51</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L52" rel="file-retrieve_rnacentral_id-py-L52">52</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L53" rel="file-retrieve_rnacentral_id-py-L53">53</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L54" rel="file-retrieve_rnacentral_id-py-L54">54</span>
+            <span class="line-number" id="file-retrieve_rnacentral_id-py-L55" rel="file-retrieve_rnacentral_id-py-L55">55</span>
+          </td>
+          <td class="line-data">
+            <pre class="line-pre"><div class="line" id="file-retrieve_rnacentral_id-py-LC1"><span class="pl-s1"><span class="pl-pds">"""</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC2"><span class="pl-s1">Copyright [2009-2014] EMBL-European Bioinformatics Institute</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC3"><span class="pl-s1">Licensed under the Apache License, Version 2.0 (the "License");</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC4"><span class="pl-s1">you may not use this file except in compliance with the License.</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC5"><span class="pl-s1">You may obtain a copy of the License at</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC6"><span class="pl-s1">     http://www.apache.org/licenses/LICENSE-2.0</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC7"><span class="pl-s1">Unless required by applicable law or agreed to in writing, software</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC8"><span class="pl-s1">distributed under the License is distributed on an "AS IS" BASIS,</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC9"><span class="pl-s1">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC10"><span class="pl-s1">See the License for the specific language governing permissions and</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC11"><span class="pl-s1">limitations under the License.</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC12"><span class="pl-s1"></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC13"><span class="pl-s1">An example Python script showing how to retrieve the DDI id for an RNA sequence.</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC14"><span class="pl-s1"></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC15"><span class="pl-s1">Usage:</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC16"><span class="pl-s1">python retrieve_rnacentral_id.py</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC17"><span class="pl-s1"><span class="pl-pds">"""</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC18">&nbsp;
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC19"><span class="pl-k">import</span> hashlib
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC20"><span class="pl-k">import</span> requests <span class="pl-c"># pip install requests</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC21">&nbsp;
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC22">&nbsp;
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC23"><span class="pl-st">def</span> <span class="pl-en">get_md5</span>(<span class="pl-vpf">sequence</span>):
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC24">	<span class="pl-s1"><span class="pl-pds">"""</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC25"><span class="pl-s1">	Calculate md5 for an RNA sequence</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC26"><span class="pl-s1">	<span class="pl-pds">"""</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC27">	<span class="pl-c"># DDI stores DNA md5 hashes</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC28">	sequence <span class="pl-k">=</span> sequence.replace(<span class="pl-s1"><span class="pl-pds">'</span>U<span class="pl-pds">'</span></span>,<span class="pl-s1"><span class="pl-pds">'</span>T<span class="pl-pds">'</span></span>)
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC29">	<span class="pl-c"># get the md5 digest</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC30">	m <span class="pl-k">=</span> hashlib.md5()
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC31">	m.update(sequence)
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC32">	<span class="pl-k">return</span> m.hexdigest()
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC33">&nbsp;
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC34"><span class="pl-c"># get the DDI id</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC35"><span class="pl-st">def</span> <span class="pl-en">get_rnacentral_id</span>(<span class="pl-vpf">md5</span>):
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC36">	<span class="pl-s1"><span class="pl-pds">"""</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC37"><span class="pl-s1">	Parse json output and return the DDI id.</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC38"><span class="pl-s1">	<span class="pl-pds">"""</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC39">	url <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>http://rnacentral.org/api/v1/rna<span class="pl-pds">'</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC40">	r <span class="pl-k">=</span> requests.get(url, <span class="pl-vpf">params</span> <span class="pl-k">=</span> {<span class="pl-s1"><span class="pl-pds">'</span>md5<span class="pl-pds">'</span></span>: md5})
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC41">	data <span class="pl-k">=</span> r.json()
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC42">	<span class="pl-k">if</span> data[<span class="pl-s1"><span class="pl-pds">'</span>count<span class="pl-pds">'</span></span>] <span class="pl-k">&gt;</span> <span class="pl-c1">0</span>:
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC43">		<span class="pl-k">return</span> data[<span class="pl-s1"><span class="pl-pds">'</span>results<span class="pl-pds">'</span></span>][<span class="pl-c1">0</span>][<span class="pl-s1"><span class="pl-pds">'</span>rnacentral_id<span class="pl-pds">'</span></span>]
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC44">	<span class="pl-k">else</span>:
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC45">		<span class="pl-k">return</span> <span class="pl-s1"><span class="pl-pds">'</span>DDI id not found<span class="pl-pds">'</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC46">&nbsp;
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC47"><span class="pl-c"># This sequence has an DDI id</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC48">sequence <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>CUGAAUAAAUAAGGUAUCUUAUAUCUUUUAAUUAACAGUUAAACGCUUCCAUAAAGCUUUUAUCCA<span class="pl-pds">'</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC49">md5 <span class="pl-k">=</span> get_md5(sequence)
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC50"><span class="pl-k">print</span> get_rnacentral_id(md5)  <span class="pl-c"># URS00002C9E9D</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC51">&nbsp;
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC52"><span class="pl-c"># This sequence doesn't have an DDI id</span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC53">sequence <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">'</span>Not an RNA sequence<span class="pl-pds">'</span></span>
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC54">md5 <span class="pl-k">=</span> get_md5(sequence)
+</div><div class="line" id="file-retrieve_rnacentral_id-py-LC55"><span class="pl-k">print</span> get_rnacentral_id(md5) <span class="pl-c"># DDI id not found</span>
+</div></pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+
+          </div>
+          <div class="gist-meta">
+            <a href="https://gist.github.com/AntonPetrov/177cef0a3b4799f01536/raw/retrieve_rnacentral_id.py" style="float:right">view raw</a>
+            <a href="https://gist.github.com/AntonPetrov/177cef0a3b4799f01536#file-retrieve_rnacentral_id-py">retrieve_rnacentral_id.py</a>
+            hosted with ❤ by <a href="https://github.com">GitHub</a>
+          </div>
+        </div>
+</div>
+
+
+<h2 id="v1-cross-domain-requests">Cross domain requests</h2>
+
+<p>To use the API in a javascript application, please use jsonp requests.</p>
+
+<h4>Example using jQuery</h4>
+
+<pre><code>$.ajax({
+    url: 'http://rnacentral.org/api/v1/rna/URS0000000001?format=jsonp',
+    dataType: 'jsonp',
+    jsonp: false,
+    jsonpCallback: 'callback',
+    success: function(data){
+        // do something with the data
+        console.log(data.rnacentral_id + ', ' + data.sequence);
+    },
+});
+</code></pre>
+
+<h2 id="v1-trailing-slash">Trailing slash</h2>
+
+<p>The trailing slash in all urls used in the API is <strong>optional</strong>.</p>
+
+<h4>Examples</h4>
+
+<p>These requests should return the same results, both in the browser and when retrieved programmatically:</p>
+
+<ul>
+<li><a href="/api/v1">http://rnacentral.org/api/v1</a></li>
+<li><a href="/api/v1/">http://rnacentral.org/api/v1/</a></li>
+</ul>
+
+
+  <hr>
+
+  <a class="btn btn-default btn-sm" title="Edit on GitHub" href="https://github.com/DDI/rnacentral-webcode/edit/master/rnacentral/portal/templates/portal/docs/api-v1.md" target="_blank"><i class="fa fa-pencil-square-o"></i> Improve this page</a>
+
+  <br>
+  <br>
+
+  </div>
+
+  
+  <nav id="affix-nav" class="sidebar col-md-3 hidden-print visible-lg" role="complementary">
+    <ul style="width: 272px;" class="nav sidenav affix-top" data-spy="affix" id="affix-ul">
+        <li>
+          <a href="" ng-click="scrollTo('overview')">API Overview</a>
+          <ul class="nav">
+            <li><a href="" ng-click="scrollTo('web-browsable-api')">Web browsable API</a></li>
+            <li><a href="" ng-click="scrollTo('versioning')">Versioning</a></li>
+            <li><a href="" ng-click="scrollTo('throttling')">Throttling</a></li>
+          </ul>
+        </li>
+        <li>
+          <a ng-click="scrollTo('v1')">API v1 documentation</a>
+          <ul class="nav">
+            <li>
+              <a href="" ng-click="scrollTo('v1-example-responses')">Example responses</a>
+              <ul class="nav">
+                <li><a href="" ng-click="scrollTo('v1-hyperlinked-vs-flat-responses')">Hyperlinked vs flat responses</a></li>
+              </ul>
+            </li>
+            <li><a href="" ng-click="scrollTo('v1-pagination')">Pagination</a></li>
+            <li><a href="" ng-click="scrollTo('v1-output-formats')">Output formats</a></li>
+            <li>
+              <a href="" ng-click="scrollTo('v1-filtering')">Filtering</a>
+              <ul class="nav">
+                <li><a href="" ng-click="scrollTo('v1-filtering-by-sequence-length')">Filtering by length</a></li>
+                <li><a href="" ng-click="scrollTo('v1-filtering-by-database')">Filtering by database</a></li>
+                <li><a href="" ng-click="scrollTo('v1-filtering-by-external-ids')">Filtering by external ids</a></li>
+                <li><a href="" ng-click="scrollTo('v1-combined-filters')">Combined filters</a></li>
+              </ul>
+            </li>
+            <li><a href="" ng-click="scrollTo('v1-genome-annotations')">Genome annotations</a></li>
+            <li><a href="" ng-click="scrollTo('v1-example-script')">Example script</a></li>
+            <li><a href="" ng-click="scrollTo('v1-cross-domain-requests')">Cross-domain requests</a></li>
+            <li><a href="" ng-click="scrollTo('v1-trailing-slash')">Trailing slash</a></li>
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+</div>
+
+
+            </div>
+
+          <footer>
+            <div id="local-footer">
+              
+            </div>
+            <!--
+Copyright [2009-2014] EMBL-European Bioinformatics Institute
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+
+
+
+<div id="global-footer" class="row">
+
+  <nav id="global-nav-expanded" class="col-md-12">
+
+    <div class="col-md-2 col-xs-12">
+      <br>
+      <br>
+      <a href="http://www.ebi.ac.uk/" class="no-icon" target="_blank" title="European Bioinformatics Institute homepage">
+          <img src="/static/img/logo/embl-ebi.jpg" alt="EMBL-EBI logo" class="ebi-img">
+      </a>
+      <a href="http://www.bbsrc.ac.uk/" class="no-icon" target="_blank" title="Biotechnology and Biological Sciences Research Council homepage">
+          <img src="/static/img/logo/bbsrc.png" alt="BBSRC logo" class="bbsrc-img">
+      </a>
+    </div>
+
+    <div class="col-md-8 col-xs-6">
+      <h3 class="about">
+        DDI Expert Databases
+      </h3>
+
+      
+
+      
+        <div class="col-md-3">
+          <ul>
+          
+              <li><a class="no-icon" href="http://www.rna.ccbb.utexas.edu/" target="_blank">CRW Site</a></li>
+          
+              <li><a class="no-icon" href="http://www.ebi.ac.uk/ena/" target="_blank">ENA</a></li>
+          
+              <li><a class="no-icon" href="http://flybase.org/" target="_blank">FlyBase</a></li>
+          
+              <li><a class="no-icon" href="http://greengenes.secondgenome.com/downloads" target="_blank">GreenGenes</a></li>
+          
+              <li><a class="no-icon" href="http://gtrnadb.ucsc.edu/" target="_blank">gtRNAdb</a></li>
+          
+              <li><a class="no-icon" href="http://www.genenames.org/" target="_blank">HGNC</a></li>
+          
+              <li><a class="no-icon" href="http://www.microrna.gr/LncBase" target="_blank">LncBase</a></li>
+          
+              <li><a class="no-icon" href="http://www.lncipedia.org/" target="_blank">LNCipedia</a></li>
+          
+              <li><a class="no-icon" href="http://lncrnadb.org/" target="_blank">lncRNAdb</a></li>
+          
+          </ul>
+        </div>
+      
+        <div class="col-md-3">
+          <ul>
+          
+              <li><a class="no-icon" href="http://www.informatics.jax.org/" target="_blank">MGI</a></li>
+          
+              <li><a class="no-icon" href="http://www.mirbase.org/" target="_blank">miRBase</a></li>
+          
+              <li><a class="no-icon" href="http://modomics.genesilico.pl/" target="_blank">MODOMICS</a></li>
+          
+              <li><a class="no-icon" href="http://www.noncode.org/" target="_blank">NONCODE</a></li>
+          
+              <li><a class="no-icon" href="http://bioinfo.ibp.ac.cn/NPInter/" target="_blank">NPInter</a></li>
+          
+              <li><a class="no-icon" href="http://www.ebi.ac.uk/pdbe/" target="_blank">PDBe</a></li>
+          
+              <li><a class="no-icon" href="http://pirnabank.ibab.ac.in/" target="_blank">piRNABank</a></li>
+          
+              <li><a class="no-icon" href="http://chualab.rockefeller.edu/gbrowse2/homepage.html" target="_blank">PLncDB</a></li>
+          
+              <li><a class="no-icon" href="http://www.pombase.org/" target="_blank">PomBase</a></li>
+          
+          </ul>
+        </div>
+      
+        <div class="col-md-3">
+          <ul>
+          
+              <li><a class="no-icon" href="http://rdp.cme.msu.edu/" target="_blank">RDP</a></li>
+          
+              <li><a class="no-icon" href="http://www.ncbi.nlm.nih.gov/refseq/" target="_blank">RefSeq</a></li>
+          
+              <li><a class="no-icon" href="http://rfam.xfam.org" target="_blank">Rfam</a></li>
+          
+              <li><a class="no-icon" href="http://rgd.mcw.edu/" target="_blank">RGD</a></li>
+          
+              <li><a class="no-icon" href="http://genesilico.pl/rnapathwaysdb" target="_blank">RNApathwaysDB</a></li>
+          
+              <li><a class="no-icon" href="http://yeastgenome.org/" target="_blank">SGD</a></li>
+          
+              <li><a class="no-icon" href="http://www.arb-silva.de/" target="_blank">SILVA</a></li>
+          
+              <li><a class="no-icon" href="http://snoopy.med.miyazaki-u.ac.jp" target="_blank">snOPY</a></li>
+          
+              <li><a class="no-icon" href="http://lowelab.ucsc.edu/snoRNAdb/" target="_blank">snoRNA Database</a></li>
+          
+          </ul>
+        </div>
+      
+        <div class="col-md-3">
+          <ul>
+          
+              <li><a class="no-icon" href="http://srnamap.mbc.nctu.edu.tw/" target="_blank">sRNAmap</a></li>
+          
+              <li><a class="no-icon" href="http://rnp.uthscsa.edu/rnp/SRPDB/SRPDB.html" target="_blank">SRPDB</a></li>
+          
+              <li><a class="no-icon" href="http://www.arabidopsis.org/" target="_blank">TAIR</a></li>
+          
+              <li><a class="no-icon" href="http://www.microrna.gr/tarbase" target="_blank">TarBase</a></li>
+          
+              <li><a class="no-icon" href="http://rth.dk/resources/rnp/tmRDB/" target="_blank">tmRDB</a></li>
+          
+              <li><a class="no-icon" href="http://bioinformatics.sandia.gov/tmrna/" target="_blank">tmRNA Website</a></li>
+          
+              <li><a class="no-icon" href="http://trna.bioinf.uni-leipzig.de/DataOutput/" target="_blank">tRNAdb</a></li>
+          
+              <li><a class="no-icon" href="http://vega.sanger.ac.uk/" target="_blank">Vega</a></li>
+          
+              <li><a class="no-icon" href="http://www.wormbase.org/" target="_blank">WormBase</a></li>
+          
+          </ul>
+        </div>
+      
+
+    </div>
+
+    <div class="col-md-2 col-xs-6">
+      <h3 class="about">Information</h3>
+      <ul>
+        <li><a href="/about-us">About DDI</a></li>
+        <li><a href="/expert-databases">Expert Databases</a></li>
+        <li><a href="/help">Help</a></li>
+        <li><a href="/contact">Contact us</a></li>
+        <li><a href="/status">Website status</a></li>
+        <li><a class="no-icon" href="https://github.com/DDI/" target="_blank">Code on GitHub</a></li>
+        <li><a class="no-icon" href="http://www.ebi.ac.uk/about/terms-of-use" target="_blank">Terms of use</a></li>
+      </ul>
+    </div>
+
+  </nav>
+
+</div>
+
+<br>
+
+          </footer>
+
+        
+
+<footer>
+<div class="grid_24" id="global-footer">
+
+        <nav id="global-nav-expanded" class="row">
+        <div class="grid_4 alpha col-sm-2"> 
+         <a title="EMBL-EBI" href="http://www.ebi.ac.uk"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_black.png"></a>  
+         <ul>  
+          <li class="first"><a href="//www.ebi.ac.uk/about/news">News</a></li>  
+          <li><a href="//www.ebi.ac.uk/about/brochures">Brochures</a></li>  
+          <li><a href="//www.ebi.ac.uk/about/contact">Contact us</a>  </li>
+          <li class="last"><a href="http://intranet.ebi.ac.uk">Intranet</a></li>  
+        </ul>  
+      </div>   
+        <div class="grid_4 col-sm-2">  
+          <h3 class="services">
+            <a href="//www.ebi.ac.uk/services">Services</a></h3>  
+            <ul>  
+              <li class="first"><a href="//www.ebi.ac.uk/services">By topic</a></li>  
+              <li><a href="//www.ebi.ac.uk/services/all">By name (A-Z)</a></li>  
+              <li class="last"><a href="//www.ebi.ac.uk/support">Help &amp; Support</a></li>  
+            </ul>  
+          </div> 
+        <div class="grid_4 col-sm-2">  
+          <h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/research">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/research/publications">Publications</a></li>  
+            <li><a href="//www.ebi.ac.uk/research/groups">Research groups</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/research/postdocs">Postdocs</a> &amp; 
+              <a href="//www.ebi.ac.uk/research/eipp">PhDs</a></li>  
+            </ul>  
+          </div>   
+        <div class="grid_4 col-sm-2">  
+          <h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/training">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/training/handson">Train at EBI</a></li>  
+            <li><a href="//www.ebi.ac.uk/training/roadshow">Train outside EBI</a></li>  
+            <li><a href="//www.ebi.ac.uk/training/online">Train online</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/training/contact-us">Contact organisers</a></li>  
+          </ul>  
+        </div>   
+        <div class="grid_4 col-sm-2">  
+          <h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/industry">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/industry/private">Members Area</a></li>  
+            <li><a href="//www.ebi.ac.uk/industry/workshops">Workshops</a></li>  
+            <li><a href="//www.ebi.ac.uk/industry/sme-forum"><abbr title="Small Medium Enterprise">SME</abbr> Forum</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/industry/contact">Contact Industry programme</a></li>  
+          </ul>  
+        </div> 
+        <div class="grid_4 omega col-sm-2">  
+          <h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3>  
+          <ul>  
+            <li class="first"><a href="//www.ebi.ac.uk/about">Overview</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/leadership">Leadership</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/funding">Funding</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/background">Background</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/partnerships">Collaboration</a></li>  
+            <li><a title="Jobs, postdocs, PhDs..." href="//www.ebi.ac.uk/about/jobs">Jobs</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/people">People &amp; groups</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/news">News</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/events">Events</a></li>  
+            <li><a href="//www.ebi.ac.uk/about/travel">Visit us</a></li>  
+            <li class="last"><a href="//www.ebi.ac.uk/about/contact">Contact us</a></li>  
+          </ul>  
+        </div>
+      </nav>
+
+        <section id="ebi-footer-meta">
+          <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p><p>Copyright &copy; EMBL-EBI 2015 | EBI is an outstation of the <a href="http://www.embl.org">European Molecular Biology Laboratory</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a> | <a href="/about/terms-of-use">Terms of use</a></p>
+        </section>
+
+    </div>
+
+</footer>
+</div><!-- container -->
+
+    
+ <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-animate.min.js"></script>
+ <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+ <script src="js/vendor/underscore/underscore-min.js"></script>
+ <script src="js/search/ddi.metadata.search.js"></script>
+<!--
+ <script src="js/search/metadata.search.js"></script>
+ <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+ <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="js/search/sequence.search.js"></script>
+ <script src="js/search/export-results.search.js"></script>
+ <script src="js/vendor/query-string.js"></script>
+ <script src="js/jquery.EuropePMCAbstracts.js"></script>
+ <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+ <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+ <script src="js/vendor/handlebars-v1.1.2.js"></script>
+ <script src="js/guidedTour.js"></script>
+ <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+ <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+ -->
+ <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+ <script src="js/d3/d3.speciesSunburst.js"></script>
+ <script src="js/d3/d3.speciesTree.js"></script>
+
+</body></html>
