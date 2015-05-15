@@ -58,6 +58,7 @@ var svg = body.append("svg")
 
 var select_form = body.append("form")
         .attr("style","width:87%")
+        .attr("style","margin-bottom:8px")
         .attr("class","center");
 select_form.append("span").text("Repo: ").selectAll("span").attr("font-weight","bold");
 var select_repo = select_form.append("select");
