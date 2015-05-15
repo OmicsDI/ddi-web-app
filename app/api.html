@@ -325,38 +325,90 @@ Currently there is no limit on the total number of requests from the same IP.</p
 
 <p>The API supports several filtering operations that complement the main DDI search functionality.</p>
 
-<h3 id="v1-filtering-by-sequence-length">Filtering by sequence length</h3>
+<h3 id="v1-filtering-by-sequence-length">Filtering by search term</h3>
 
-<p>There are 3 url parameters: <code>length</code>, <code>min_length</code> (greater or equal length), and <code>max_length</code> (less or equal length).</p>
-
-<h4>Examples</h4>
-
-<ul>
-<li><a href="/api/v1/rna/?length=2014">http://rnacentral.org/api/v1/rna/?length=2014</a></li>
-<li><a href="/api/v1/rna/?min_length=200000">http://rnacentral.org/api/v1/rna/?min_length=200000</a></li>
-<li><a href="/api/v1/rna/?max_length=10">http://rnacentral.org/api/v1/rna/?max_length=10</a></li>
-<li><a href="/api/v1/rna/?min_length=1&amp;max_length=4">http://rnacentral.org/api/v1/rna/?min_length=1&amp;max_length=4</a></li>
-</ul>
-
-<h3 id="v1-filtering-by-database">Filtering by database</h3>
-
-<p>The expert database can be specified by setting the <code>database</code> url parameter
-(possible values: <em>srpdb</em>, <em>mirbase</em>, <em>vega</em>, <em>tmrna-website</em>, <em>lncrnadb</em>, <em>gtrnadb</em>, <em>ena</em>, <em>rdp</em>, <em>rfam</em>, <em>refseq</em>, <em>snopy</em>, <em>pdbe</em>).</p>
+<p>There is 1 url parameter: <code>query</code></p>
 
 <h4>Examples</h4>
 
 <ul>
-<li><a href="/api/v1/rna/?database=srpdb">http://rnacentral.org/api/v1/rna/?database=srpdb</a></li>
-<li><a href="/api/v1/rna/?database=mirbase">http://rnacentral.org/api/v1/rna/?database=mirbase</a></li>
-<li><a href="/api/v1/rna/?database=vega">http://rnacentral.org/api/v1/rna/?database=vega</a></li>
-<li><a href="/api/v1/rna/?database=tmrna-website">http://rnacentral.org/api/v1/rna/?database=tmrna-website</a></li>
-<li><a href="/api/v1/rna/?database=lncrnadb">http://rnacentral.org/api/v1/rna/?database=lncrnadb</a></li>
-<li><a href="/api/v1/rna/?database=gtrnadb">http://rnacentral.org/api/v1/rna/?database=gtrnadb</a></li>
-<li><a href="/api/v1/rna/?database=ena">http://rnacentral.org/api/v1/rna/?database=ena</a></li>
-<li><a href="/api/v1/rna/?database=rdp">http://rnacentral.org/api/v1/rna/?database=rdp</a></li>
-<li><a href="/api/v1/rna/?database=rfam">http://rnacentral.org/api/v1/rna/?database=rfam</a></li>
-<li><a href="/api/v1/rna/?database=refseq">http://rnacentral.org/api/v1/rna/?database=refseq</a></li>
+<li><a href="http://localhost:9091/dataset/search?query=human">http://localhost:9091/dataset/search?query=human</a></li>
+<li><a href="http://localhost:9091/dataset/search?query=cancer">http://localhost:9091/dataset/search?query=cancer</a></li>
 </ul>
+
+<h3 id="v1-filtering-by-database">Filtering by omics type</h3>
+
+<p>The omics type can be specified by adding term in the <code>query</code> url parameter with key: "omics_type"
+(possible values: <em>Proteomics</em>, <em>Metabolomics</em>, <em>Proteomics</em>).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href='http://localhost:9091/dataset/search?query=human AND omics_type: "Proteomics"'>http://localhost:9091/dataset/search?query=human AND omics_type:"Proteomics"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND omics_type: "Metabolomics"'>http://localhost:9091/dataset/search?query=human AND omics_type:"Metabolomics"</a></li>
+</ul>
+
+<h3 id="v1-filtering-by-database">Filtering by databases</h3>
+
+<p>The database can be specified by adding term in the <code>query</code> url parameter with key: "repository"
+(possible values: <em>MassIVE</em>, <em>Metabolights</em>, <em>PeptideAtlas</em>, <em>PRIDE</em>).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href='http://localhost:9091/dataset/search?query=human AND repository:"MassIVE"'>http://localhost:9091/dataset/search?query=human AND repository:"MassIVE"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND repository:"Metabolights"'>http://localhost:9091/dataset/search?query=human AND repository:"Metabolights"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND repository:"PeptideAtlas"'>http://localhost:9091/dataset/search?query=human AND repository:"PeptideAtlas"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND repository:"PRIDE"'>http://localhost:9091/dataset/search?query=human AND repository:"PRIDE"</a></li>
+</ul>
+
+<h3 id="v1-filtering-by-database">Filtering by Organism</h3>
+
+<p>The organism can be specified by adding term in the <code>query</code> url parameter with key: "TAXONOMY"
+(possible values must be the TAXONOMY id: <em>9606</em>, <em>10090</em>...).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href='http://localhost:9091/dataset/search?query=human AND TAXONOMY:"9606"'>http://localhost:9091/dataset/search?query=human AND TAXONOMY:"9606"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND TAXONOMY:"10090"'>http://localhost:9091/dataset/search?query=human AND TAXONOMY:"10090"</a></li>
+</ul>
+
+<h3 id="v1-filtering-by-database">Filtering by Tissue</h3>
+
+<p>The tissue can be specified by adding term in the <code>query</code> url parameter with key: "tissue"
+(possible values: <em>Liver</em>, <em>Cell culture</em>, <em>Brain</em>, <em>Lung</em>...).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href='http://localhost:9091/dataset/search?query=human AND tissue:"Brain"'>http://localhost:9091/dataset/search?query=human AND tissue:"Brain"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND tissue:"Cell culture"'>http://localhost:9091/dataset/search?query=human AND tissue:"Cell culture"</a></li>
+
+<h3 id="v1-filtering-by-database">Filtering by Disease</h3>
+
+<p>The disease can be specified by adding term in the <code>query</code> url parameter with key: "disease"
+(possible values: <em>Breast cancer</em>, <em>Lymphoma</em>, <em>Carcinoma</em>, <em>prostate adenocarcinoma</em>...).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href='http://localhost:9091/dataset/search?query=human AND disease:"Breast cancer"'>http://localhost:9091/dataset/search?query=human AND tissue:"Breast cancer"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND disease:"Lymphoma"'>http://localhost:9091/dataset/search?query=human AND tissue:"Lymphoma"</a></li>
+
+
+<h3 id="v1-filtering-by-database">Filtering by Modifications <small>(in proteomics)</small></h3>
+
+<p>The expert database can be specified by adding term in the <code>query</code> url parameter with key: "disease"
+(possible values: <em>Breast cancer</em>, <em>Lymphoma</em>, <em>Carcinoma</em>, <em>prostate adenocarcinoma</em>...).</p>
+
+<h4>Examples</h4>
+
+<ul>
+<li><a href='http://localhost:9091/dataset/search?query=human AND disease:"Breast cancer"'>http://localhost:9091/dataset/search?query=human AND tissue:"Breast cancer"</a></li>
+<li><a href='http://localhost:9091/dataset/search?query=human AND disease:"Lymphoma"'>http://localhost:9091/dataset/search?query=human AND tissue:"Lymphoma"</a></li>
+
+
 
 <h3 id="v1-filtering-by-external-ids">Filtering by external ids</h3>
 
