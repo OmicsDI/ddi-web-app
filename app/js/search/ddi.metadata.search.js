@@ -522,7 +522,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.metabolomics_list="metabolights,metabolights_dataset";
     $scope.genomics_list="ega,ena";
     
-    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","ega":"EGA", "ena":"ENA",  };
 
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
@@ -881,7 +881,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset";
     $scope.genomics_list="ega,ena";
-    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","ega":"EGA", "ena":"ENA",  };
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,
