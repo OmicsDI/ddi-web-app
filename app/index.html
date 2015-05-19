@@ -29,68 +29,20 @@
         <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
         <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
         <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
 
 </head>
 
+
+<script> 
+$(function(){
+  $("#header").load("header.html"); 
+  $("#footer").load("footer.html"); 
+});
+</script> 
+
 <body class="level2">
-<div class="container rnacentral-masthead">
-<div class="masthead grid_24" id="global-masthead">    
-
-     <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png">
-     </a>
-    <nav>
-        <ul id="global-nav">
-                    <!-- set active class as appropriate -->
-            <li class="first active" id="services"><a title="Services" href="//www.ebi.ac.uk/services">Services</a></li>
-            <li class="" id="research"><a title="Research" href="//www.ebi.ac.uk/research">Research</a></li>
-            <li class="" id="training"><a title="Training" href="//www.ebi.ac.uk/training">Training</a></li>
-            <li class="" id="industry"><a title="Industry" href="//www.ebi.ac.uk/industry">Industry</a></li>
-            <li class=" last" id="about"><a title="About us" href="//www.ebi.ac.uk/about">About us</a></li>
-        </ul>
-   </nav>
-
-</div>
-</div>
-
-<div class="navbar navbar-default navbar-static-top">
-<div class="container rnacentral-masthead">
-
-    <!-- global-search -->
-    <div class="row">
-      <div class="col-md-4">
-        <a href="/"><img class="" alt="DDI logo" src="static/img/logo/DDI-icon-3.png"></a>
-      </div>
-
-
-    </div><!-- /row -->
-
-</div> <!-- /container-->
-</div> <!-- /navbar-->
-
-
-<div class="masthead grid_24 nomenu" id="local-masthead">
-    <nav  class="">
-        <ul id="local-nav" class="grid_24" style="background-color:#057794">
-            <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
-            <li class="" id="api-menu"><a title="DDI API" href="http://localhost:9091/">API</a></li>
-            <li class="" id="help-menu"><a title="DDI help" href="http://localhost:8000/app/help/">Help</a></li>
-            <li class=" last" id="about-prider-menu"><a title="Databases" href="http://localhost:8000/app/databases.html">Databases</a></li>
-            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-            whichever one will show up last...
-            For example: -->
-            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
-            <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
-            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
-            </ul>
-    </nav>
-</div><!-- local-masthead-->
-
-<div>
-<p> <br>   </p>
-<p> <br>   </p>
-</div>
+    <div id="header"></div>
 
 <div class="container">
 <div class="row" >
@@ -317,84 +269,11 @@
 </div> <!--main container of page -->
 
 <!-- </div> ResultsListCtrl -->
-
 <footer>
-<div class="grid_24" id="global-footer">
-
-        <nav id="global-nav-expanded" class="row">
-        <div class="grid_4 alpha col-sm-2"> 
-         <a title="EMBL-EBI" href="http://www.ebi.ac.uk"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_black.png"></a>  
-         <ul>  
-          <li class="first"><a href="//www.ebi.ac.uk/about/news">News</a></li>  
-          <li><a href="//www.ebi.ac.uk/about/brochures">Brochures</a></li>  
-          <li><a href="//www.ebi.ac.uk/about/contact">Contact us</a>  </li>
-          <li class="last"><a href="http://intranet.ebi.ac.uk">Intranet</a></li>  
-        </ul>  
-      </div>   
-        <div class="grid_4 col-sm-2">  
-          <h3 class="services">
-            <a href="//www.ebi.ac.uk/services">Services</a></h3>  
-            <ul>  
-              <li class="first"><a href="//www.ebi.ac.uk/services">By topic</a></li>  
-              <li><a href="//www.ebi.ac.uk/services/all">By name (A-Z)</a></li>  
-              <li class="last"><a href="//www.ebi.ac.uk/support">Help &amp; Support</a></li>  
-            </ul>  
-          </div> 
-        <div class="grid_4 col-sm-2">  
-          <h3 class="research"><a href="//www.ebi.ac.uk/research">Research</a></h3>  
-          <ul>  
-            <li class="first"><a href="//www.ebi.ac.uk/research">Overview</a></li>  
-            <li><a href="//www.ebi.ac.uk/research/publications">Publications</a></li>  
-            <li><a href="//www.ebi.ac.uk/research/groups">Research groups</a></li>  
-            <li class="last"><a href="//www.ebi.ac.uk/research/postdocs">Postdocs</a> &amp; 
-              <a href="//www.ebi.ac.uk/research/eipp">PhDs</a></li>  
-            </ul>  
-          </div>   
-        <div class="grid_4 col-sm-2">  
-          <h3 class="training"><a href="//www.ebi.ac.uk/training">Training</a></h3>  
-          <ul>  
-            <li class="first"><a href="//www.ebi.ac.uk/training">Overview</a></li>  
-            <li><a href="//www.ebi.ac.uk/training/handson">Train at EBI</a></li>  
-            <li><a href="//www.ebi.ac.uk/training/roadshow">Train outside EBI</a></li>  
-            <li><a href="//www.ebi.ac.uk/training/online">Train online</a></li>  
-            <li class="last"><a href="//www.ebi.ac.uk/training/contact-us">Contact organisers</a></li>  
-          </ul>  
-        </div>   
-        <div class="grid_4 col-sm-2">  
-          <h3 class="industry"><a href="//www.ebi.ac.uk/industry">Industry</a></h3>  
-          <ul>  
-            <li class="first"><a href="//www.ebi.ac.uk/industry">Overview</a></li>  
-            <li><a href="//www.ebi.ac.uk/industry/private">Members Area</a></li>  
-            <li><a href="//www.ebi.ac.uk/industry/workshops">Workshops</a></li>  
-            <li><a href="//www.ebi.ac.uk/industry/sme-forum"><abbr title="Small Medium Enterprise">SME</abbr> Forum</a></li>  
-            <li class="last"><a href="//www.ebi.ac.uk/industry/contact">Contact Industry programme</a></li>  
-          </ul>  
-        </div> 
-        <div class="grid_4 omega col-sm-2">  
-          <h3 class="about"><a href="//www.ebi.ac.uk/about">About us</a></h3>  
-          <ul>  
-            <li class="first"><a href="//www.ebi.ac.uk/about">Overview</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/leadership">Leadership</a></li>  
-            <li><a href="   //www.ebi.ac.uk/about/funding">Funding</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/background">Background</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/partnerships">Collaboration</a></li>  
-            <li><a title="Jobs, postdocs, PhDs..." href="//www.ebi.ac.uk/about/jobs">Jobs</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/people">People &amp; groups</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/news">News</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/events">Events</a></li>  
-            <li><a href="//www.ebi.ac.uk/about/travel">Visit us</a></li>  
-            <li class="last"><a href="//www.ebi.ac.uk/about/contact">Contact us</a></li>  
-          </ul>  
-        </div>
-      </nav>
-
-        <section id="ebi-footer-meta">
-          <p class="address">EMBL-EBI, Wellcome Trust Genome Campus, Hinxton, Cambridgeshire, CB10 1SD, UK &nbsp; &nbsp; +44 (0)1223 49 44 44</p><p>Copyright &copy; EMBL-EBI 2015 | EBI is an outstation of the <a href="http://www.embl.org">European Molecular Biology Laboratory</a> | <a href="/about/privacy">Privacy</a> | <a href="/about/cookies">Cookies</a> | <a href="/about/terms-of-use">Terms of use</a></p>
-        </section>
-
-    </div>
-
+    <div id="footer"></div>
 </footer>
+
+
 
  <script src="js/vendor/angular/angular.min.js"></script>
  <script src="js/vendor/angular/angular-animate.min.js"></script>
@@ -404,7 +283,6 @@
  <script src="js/getTweets.js"></script>
  <script src="js/pieCharts.js"></script>
  <script src="js/drawHotwords.js"></script>
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
  <script src="js/queue.v1.min.js"></script>
 <!--
  <script src="js/gradientPie.js"></script>

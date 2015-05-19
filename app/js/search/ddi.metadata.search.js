@@ -166,7 +166,6 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         start = start || 0;
 	pagesize = pagesize || 10;
 	sortfield = sortfield || 'id';
-
         display_search_interface();
         display_spinner();
         update_page_title();
@@ -513,8 +512,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         entries: [],
     };
     $scope.show_export_error = false;
-    $scope.pagesize = 10;
-    $scope.sortfield = 'title';
+    $scope.$root.pagesize = 10;
+    $scope.$root.sortfield = 'id';
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
 
@@ -539,8 +538,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () { return results.get_result(); }, function (newValue, oldValue) {
         if (newValue !== null) {
             $scope.result = newValue;
-	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.count);
-	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.pagesize);
+	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
+	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.$root.pagesize);
             $scope.query = $location.search().q;
 	    getnewindexes(); 
 	    checkomicstypenull();
@@ -578,11 +577,11 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      * Fired when "Load more" button is clicked.
      */
     $scope.load_more_results = function(page,pagesize,sortfield) {
-            if(pagesize!=='default'){$scope.pagesize=pagesize}
-	    if(pagesize==='default'){pagesize=$scope.pagesize}
+            if(pagesize!=='default'){$scope.$root.pagesize=pagesize}
+	    if(pagesize==='default'){pagesize=$scope.$root.pagesize}
 	    
-	    if(sortfield!=='default'){$scope.sortfield=sortfield}
-	    if(sortfield==='default'){sortfield=$scope.sortfield}
+	    if(sortfield!=='default'){$scope.$root.sortfield=sortfield; }
+	    if(sortfield==='default'){sortfield=$scope.$root.sortfield; }
 	    
 	    var start = (page-1)*pagesize;
 	    
@@ -590,11 +589,11 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     };
 
     $scope.pagination= function(currentpage,pagesize,sortfield) {
-            if(pagesize!=='default'){$scope.pagesize=pagesize}
-	    if(pagesize==='default'){pagesize=$scope.pagesize}
+            if(pagesize!=='default'){$scope.$root.pagesize=pagesize}
+	    if(pagesize==='default'){pagesize=$scope.$root.pagesize}
 	    
-	    if(sortfield!=='default'){$scope.sortfield=sortfield}
-	    if(sortfield==='default'){sortfield=$scope.sortfield}
+	    if(sortfield!=='default'){$scope.$root.sortfield=sortfield; }
+	    if(sortfield==='default'){sortfield=$scope.$root.sortfield; }
 	   
 	    $scope.$root.currentpage = currentpage;
 
@@ -689,8 +688,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     $scope.$watch(function () { return $location.url(); }, function (newUrl, oldUrl) {
 	    $scope.$root.currentpage = 1;
-	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.pagesize, $scope.result.count);
-	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.pagesize);
+	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
+	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.$root.pagesize);
 
     });
 
@@ -779,7 +778,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
             } else {
                 // the new url is a search result page, launch that search
                 $scope.query.text = $location.search().q;
-                results.search($location.search().q);
+                results.search($location.search().q,0,$scope.$root.pagesize, $scope.$root.sortfield);
                 $scope.query.submitted = false;
             }
         }
