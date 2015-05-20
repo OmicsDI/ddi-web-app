@@ -157,9 +157,11 @@ $(function(){
       <small ng-class="search_in_progress ? 'animated flash infinite' : 'hidden'" id="metadata-search-status" class="hidden">
         Searching...
       </small>
-      <span ng-show="result.count &gt; 0" class="" style="">
+<!--      <span ng-show="result.count &gt; 0" class="" style="">-->
+      <span  class="" style="">
         <!-- ngIf: result.count == 1 -->
-        <!-- ngIf: result.count > 1 --><span id="metasearch-results-count" ng-if="result.count &gt; 0" class="ng-binding ng-scope">{{result.count}}</span><!-- end ngIf: result.count > 1 -->
+        <!-- span id="metasearch-results-count" ng-if="result.count &gt; 0" class="ng-binding ng-scope">{{result.count}}</span> -->
+        <span id="metasearch-results-count"  class="ng-binding ng-scope">{{result.count}}</span>
       </span>
       <i class="fa fa-search"></i> Results  for search term:
        <b ng-bind="query"></b>

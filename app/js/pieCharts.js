@@ -136,7 +136,7 @@ var radioform = body.append('form');
 
 d3.select(self.frameElement).style("height", diameter + "px");
 
-var tooltip = body.append("div")   
+var tooltip = d3.select('body').append("div")   
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
@@ -199,8 +199,8 @@ function change() {
 	    .duration(200)
             .style("opacity",.9);
         tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong>")
-               .style("left",(d3.event.pageX - 450) + "px")
-               .style("top",(d3.event.pageY -370) + "px")
+               .style("left",(d3.event.pageX + 20) + "px")
+               .style("top",(d3.event.pageY - 20) + "px")
 	       .style("width",d.className.length*10 + "px");
         })
    .on("mouseout", function(d) {       
@@ -437,10 +437,12 @@ function change() {
 
     var value = this.value || 'Repos';
     var data ; 
+    var url_pre;
     if(value == 'Omics') { 
     	data = omicstype;
     	text_total.text("Total:"+totalomics);
     	text_unavail.text("Unavailable:"+unavailableomics.value);
+	url_pre = 'browse.html#/search?q=*:* AND omics_type:"';
     	// text_total.text("Total:"+totalomics);
 
     }
@@ -448,11 +450,12 @@ function change() {
     	data = repos;
     	text_total.text("Total:"+totalrepos);
     	text_unavail.text("");
+	url_pre = 'browse.html#/search?q=*:* AND repository:"';
     	// text_total.text("Total:"+totalrepos);
 
     }
 
-
+console.log(url_pre);
 
     text_name.text("");
     text_value.text("");
@@ -471,7 +474,9 @@ function change() {
 		.on("click", function(d,i){
                // alert("you have clicked"+d.data.name);
                // window.open("browse.html#/search?q="+d.data.name);
-               location.href = "browse.html#/search?q="+d.data.name;
+                   location.href = url_pre + d.data.name + '"';
+                 if(d.data.name=="MetaboLights Dataset")
+                   location.href = url_pre + "MetaboLights" + '"';
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;

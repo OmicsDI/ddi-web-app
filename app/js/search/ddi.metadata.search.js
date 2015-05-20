@@ -517,11 +517,11 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
 
-    $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
+    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset";
     $scope.genomics_list="ega,ena";
     
-    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "peptide_atlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","ega":"EGA", "ena":"ENA",  };
 
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
@@ -536,6 +536,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      * Watch `result` changes.
      */
     $scope.$watch(function () { return results.get_result(); }, function (newValue, oldValue) {
+        console.log(newValue);
         if (newValue !== null) {
             $scope.result = newValue;
 	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
@@ -696,8 +697,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
 
     function getnewindexes(){
-        console.log($scope.result.facets); 
-    $scope.indexoffacets={"omics_type":"0", "repository":"0", "TAXONOMY":"0","tissue":"0", "disease":"0", "modification":"0", "instrument_platform":"0", "publication_date":"0", "technology_type":"0", "test":"0" };
+      if($scope.result.count == '0'  ) return; 
+      if($scope.result.count == null  ) return; 
+      $scope.indexoffacets={"omics_type":"0", "repository":"0", "TAXONOMY":"0","tissue":"0", "disease":"0", "modification":"0", "instrument_platform":"0", "publication_date":"0", "technology_type":"0", "test":"0" };
         for(facet in $scope.indexoffacets){
 //           console.log("facet:"+facet);
 //           console.log("results.facet length:"+$scope.result.facets.length);
@@ -712,8 +714,11 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     };
 
     function checkomicstypenull(){
-    $scope.omicsfacetsno={"Proteomics":"0","Metabolomics":"0","Genomics":"0"};
-    $scope.omicsfacetsindex={"Proteomics":"","Metabolomics":"","Genomics":""};
+      if($scope.result.count == '0'  ) return; 
+      if($scope.result.count == null  ) return; 
+      $scope.omicsfacetsno={"Proteomics":"0","Metabolomics":"0","Genomics":"0"};
+      $scope.omicsfacetsindex={"Proteomics":"","Metabolomics":"","Genomics":""};
+         console.log($scope.result.facets);
          var omicsfacet = $scope.result.facets[$scope.indexoffacets.omics_type].facetValues; 
          for(omic in omicsfacet){
 	     $scope.omicsfacetsno[omicsfacet[omic].label]=omicsfacet[omic].count; 
@@ -877,10 +882,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  * Responsible for the Datasets Stastistic Lists.
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
-    $scope.proteomics_list="pride,peptideatlas,massive,PRIDE";
+    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset";
     $scope.genomics_list="ega,ena";
-    $scope.repositories={"pride":"PRIDE", "peptideatlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE",  "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "massive":"MassIVE", "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","ega":"EGA", "ena":"ENA",  };
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,
