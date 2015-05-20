@@ -59,13 +59,15 @@ if(diseases[0].name!=="Total") {alert("the first element of tissues is not total
 //  //      return sum;
 // }
 
-var diameter = 320,
-    format = d3.format(",d"),
-    color = d3.scale.category20c();
-
 var bubchartname = 'chart_tissues_organisms';
 
 var body = d3.select("#"+bubchartname);
+
+var divwidth_px= body.style("width");  
+var divwidth= divwidth_px.substr(0,divwidth_px.length-2);  
+var diameter = divwidth/1.3,
+    format = d3.format(",d"),
+    color = d3.scale.category20c();
 
 var bubble = d3.layout.pack()
     .sort(null)
@@ -83,7 +85,7 @@ var radioform = body.append('form');
   .attr("id",bubchartname+"_form")
   .attr("class","center")
   .attr("style","margin-bottom:8px")
-  .attr("style","width:70%")
+//  .attr("style","width:70%")
   .append('input')
     .attr('type','radio')
     .attr('name','dataset')
@@ -134,7 +136,9 @@ var radioform = body.append('form');
 
 d3.select(self.frameElement).style("height", diameter + "px");
 
-
+var tooltip = body.append("div")   
+    .attr("class", "tooltip")               
+    .style("opacity", 0);
 
 
 change();
@@ -177,8 +181,8 @@ function change() {
               location.href = "browse.html#/search?q="+d.name;
                });
 
-  node.append("title")
-      .text(function(d) { return d.className + ": " + format(d.value); });
+//  node.append("title")
+//      .text(function(d) { return d.className + ": " + format(d.value); });
 
   node.append("circle")
       .attr("r", function(d) { return d.r; })
@@ -190,7 +194,20 @@ function change() {
       .style("font-size", "10px")
       .text(function(d) {  return d.r/d.className.length<2.5 ? '': d.className; });
   
-  node.on("mouseover", function(d){return tooltip.style("visibility", "visible");})
+  node.on("mouseover", function(d){
+	tooltip.transition()
+	    .duration(200)
+            .style("opacity",.9);
+        tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong>")
+               .style("left",(d3.event.pageX - 450) + "px")
+               .style("top",(d3.event.pageY -370) + "px")
+	       .style("width",d.className.length*10 + "px");
+        })
+   .on("mouseout", function(d) {       
+        tooltip.transition()        
+            .duration(500)      
+            .style("opacity", 0);   
+        });
   //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
   //     .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
 
@@ -269,18 +286,20 @@ function transformdomains(arr){
     return newarry;
 }
 
-var width = 480,
+var piechartname = 'chart_repos_omics';
+var body = d3.select("#"+piechartname);
+
+var divwidth_px= body.style("width");  
+var divwidth= parseInt(divwidth_px.substr(0,divwidth_px.length-2));  
+var width = divwidth,
     height = 300,
 	radius = Math.min(width, height) / 2;
  
-var piechartname = 'chart_repos_omics';
-
-var body = d3.select("#"+piechartname);
 
 var svg = d3.select("#"+piechartname)
 	.append("svg")
     .attr("style","height:"+height)
-    .attr("style","width:"+width-10)
+    .attr("style","width:"+width)
 	.attr("class", "piesvg")
 	.append("g");
 
@@ -400,7 +419,7 @@ var text_unavail = svg.append('text')
 
 
 
-svg.attr("transform", "translate(" + width / 2.5 + "," + height / 2 + ")");
+svg.attr("transform", "translate(" + width / 2.0 + "," + height / 1.8 + ")");
 
 var key = function(d){ return d.data.name; };
 
@@ -506,10 +525,14 @@ var barCharts_Years_Omicstypes= function()
 function draw_chart_omicstype_annual(error, annalData) { 
 // function draw_chart_omicstype_annual(error, proteomics, metabolomics) { 
   // console.log(proteomics);
+  //
+  
+var body = d3.select('#barchart_omicstype_annual');
+var divwidth_px= body.style("width");  
+var divwidth= parseInt(divwidth_px.substr(0,divwidth_px.length-2));  
 var margin = {top: 20, right: 2, bottom: 20, left: 60},
-    width = 420 - margin.left - margin.right,
+    width = divwidth - margin.left - margin.right,
     height = 280 - margin.top - margin.bottom;
-
 var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
 

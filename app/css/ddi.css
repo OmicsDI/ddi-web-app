@@ -372,4 +372,15 @@ background-image : linear-gradient(rgb(179,217,140),rgb(153,204,102));
 display: block;
 }
 
-
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 60px;                  
+  height: 28px;                 
+  padding: 2px;             
+  font: 12px sans-serif;        
+  background: lightsteelblue;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}

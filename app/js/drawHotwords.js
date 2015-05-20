@@ -49,15 +49,16 @@ function draw_word_cloud(error,pride_des,metabol_des,pride_datap,metabol_datap,p
 
 
 var body =  d3.select("#hotwords");
-  
+
+var divwidth= body.style("width");  
 
 var svg = body.append("svg")
-        .attr("width", 420)
+        .attr("width", divwidth)
         .attr("height", 325)
         .attr("class", "wordcloud");
 
 var select_form = body.append("form")
-        .attr("style","width:87%")
+//        .attr("style","width:87%")
         .attr("style","margin-bottom:8px")
         .attr("class","center");
 select_form.append("span").text("Repo: ").selectAll("span").attr("font-weight","bold");
