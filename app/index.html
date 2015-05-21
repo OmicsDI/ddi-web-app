@@ -9,7 +9,7 @@
         <meta content="DDI is an integrated resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" id="description">
 
 
-        <title>Search: DDI</title>
+        <title>DDI</title>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
@@ -46,13 +46,16 @@ $(function(){
 
 <div class="container">
 
-<div class="row" >
+<div id="error-row" class="row" >
+    <p>
+    </p>
 </div>
 
 <div class="row" >
 
       <div class="col-md-8" >
-      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">
+      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="">
+          <!--      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">   -->
       <h4> 
        Omics Discovery Index is an integrated multiple Omics Data Discovry site. 
       </h4> 
@@ -227,7 +230,7 @@ $(function(){
 
     <div  class="col-md-4" >
     <div  class="panel panel-default">
-      <div id="news-of-the-month" class="" >
+      <div id="related-tools" class="" >
         <h4 data-icon="N" class="icon icon-generic">
            Related Tools 
         </h4>
@@ -240,7 +243,6 @@ $(function(){
         </ul>
       </div>
       <div >
-        <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More news</a>
       </div>
     </div>
     </div>
@@ -248,7 +250,7 @@ $(function(){
 
     <div  class="col-md-4" >
     <div  class="panel panel-default">
-      <div id="FAQs" class="" >
+      <div id="About" class="" >
         <h4 data-icon="N" class="icon icon-generic">
            About 
         </h4>
@@ -261,7 +263,6 @@ $(function(){
         </ul>
       </div>
       <div >
-        <a href="https://twitter.com/@pride_ebi" data-icon="T" class="justify-body-text icon icon-socialmedia">More FAQs</a>
       </div>
     </div>
     </div>

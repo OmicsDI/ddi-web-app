@@ -9,7 +9,7 @@ TweetFetcher.prototype.fetch = function(cb, limit)
 {
     this.cb = cb;
     this.limit = limit || 30;
-  console.log(this.limit);
+//  console.log(this.limit);
     var s = document.createElement('script');
     s.src = '//cdn.syndication.twimg.com/widgets/timelines/' + encodeURIComponent(this.id) +
             '?&lang=en&callback=' + encodeURIComponent(this.instance + '.parse') +
@@ -27,9 +27,12 @@ TweetFetcher.prototype.parse = function(res)
         output = [];
     var month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; 
  
+    if (tweets.length == 0){
+        publishtweets([{content:"Your Browser can not get our news from twitter service now.",id:"111",time:{}}]);
+   }
     for (var i = 0; i < limit; i++) {
         var tr = tweets[i], t = {};
-        console.log("tr:  "+tr); 
+//        console.log("tr:  "+tr); 
         t.id = tr.getAttribute('data-tweet-id');
         // t.author = {
         //     handle: tr.querySelector('span.p-nickname b').innerText,
@@ -69,7 +72,7 @@ TweetFetcher.prototype.parse = function(res)
         }
  
         t.content = content.innerHTML.replace(/<\/?b[^>]*>/gi, '');
-         console.log(i+"st content:"+t.content); 
+//         console.log(i+"st content:"+t.content); 
         output.push(t);
     }
  

@@ -11,6 +11,10 @@ queue()
     .await(draw_chart_tissues_organsims); // function that uses files
 
 function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
+    if (error) {
+        outputerrorinfo();
+        return;
+    }
 
 //prepare the dataset of total
 
@@ -247,6 +251,11 @@ queue()
     .await(draw_chart_Repos_Omics); // function that uses files
 
 function draw_chart_Repos_Omics(error, domains, omicstype) {
+    
+    if (error) {
+        outputerrorinfo();
+        return;
+    }
 
 var repos = transformdomains(domains);
 omicstype.shift();
@@ -475,8 +484,11 @@ console.log(url_pre);
                // alert("you have clicked"+d.data.name);
                // window.open("browse.html#/search?q="+d.data.name);
                    location.href = url_pre + d.data.name + '"';
+
                  if(d.data.name=="MetaboLights Dataset")
                    location.href = url_pre + "MetaboLights" + '"';
+                 if(d.data.name=="Metabolome Workbench")
+                   location.href = url_pre + "MetabolomeWorkbench" + '"';
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;
@@ -531,6 +543,10 @@ function draw_chart_omicstype_annual(error, annalData) {
 // function draw_chart_omicstype_annual(error, proteomics, metabolomics) { 
   // console.log(proteomics);
   //
+    if (error) {
+        outputerrorinfo();
+        return;
+    }
   
 var body = d3.select('#barchart_omicstype_annual');
 var divwidth_px= body.style("width");  
@@ -652,5 +668,10 @@ function clickMe(d){
 
 // });
 }
+}
+
+function outputerrorinfo(){
+    d3.select("#error-row").select("p")
+        .html("We are sorry about that the webservice is temporarily inaccessible now");
 }
 

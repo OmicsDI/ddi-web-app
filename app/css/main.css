@@ -40,7 +40,7 @@ Master Stylesheet for the RNAcentral Portal
 [1. Body and main layout]
 */
 body {
-  background: #fff url("../img/pale_grey_slight_texture.jpg") top left repeat;
+/*  background: #fff url("../img/pale_grey_slight_texture.jpg") top left repeat;*/
 }
 
 .container {
