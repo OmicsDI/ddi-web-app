@@ -21,8 +21,13 @@ queue()
     .await(draw_word_cloud); // function that uses files
 
 function draw_word_cloud(error,pride_des,metabol_des,pride_datap,metabol_datap,pride_samp,metabol_samp){
-    if (error) return console.warn(error);
+    if (error) {
+        outputerrorinfo();
+        return;
+    }
     //rendering logic here
+
+
 
 
   var terms={
@@ -144,6 +149,12 @@ function change(){
       if(arr[i].frequent>max) {max=arr[i].frequent;}
     return max;
   }
+
+function outputerrorinfo(){
+    d3.select("#error-row").select("p")
+        .html("We are sorry about that the webservice is temporarily inaccessible now");
+}
+
 
 }
 }

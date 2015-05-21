@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<head>
+    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
+    </style>
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width" name="viewport">
+        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+
+
+        <title>DDI: Databases</title>
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+        <link type="text/css" href="css/ddi.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+        
+        <!-- Favicons -->
+        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
+        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+    
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+        
+</head>
+
+<script> 
+$(function(){
+  $("#header").load("header_with_search.html"); 
+  $("#footer").load("footer.html"); 
+});
+</script> 
+
+<body class="level2">
+
+<div id="header"></div>
+
+<div class="container">
+<div class="container-main">
+            <!--[if lt IE 10]>
+              <div class="alert alert-danger">
+                You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
+              </div>
+            <![endif]-->
+
+            <noscript>
+              <div class="alert alert-danger">
+                Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
+              </div>
+            </noscript>
+<div class = "row"> </div>
+
+<div id="expert-databases">
+    
+      <div class="row">
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="">PRIDE</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="PRIDE Database" href="" class="pull-right expert-db-logo">
+              <img alt="PRIDE logo" src="static/img/db-logos/pride_logo.jpg" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+is a centralized, standards compliant, public data repository for proteomics data, including protein and peptide identifications, post-translational modifications and supporting spectral evidence.</div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('')" rel="nofollow" href=""><em>7.3 million</em> sequences</a> |
+            <a id="ena-examples" href="">Example</a>
+            
+              <span title="" class="label label-primary help" data-original-title="New data imported in release 2">Updated</span>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="">EGA</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="EGA Database" href="" class="pull-right expert-db-logo">
+              <img alt="EGA logo" src="static/img/db-logos/ega_phenome_logo.jpg" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+allows you to explore datasets from genomic studies, provided by a range of data providers. Access to datasets must be approved by the specified Data Access Committee (DAC).
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22Rfam%22')" rel="nofollow" href=""><em>2.5 million</em> sequences</a> |
+            <a id="rfam-examples" href="/rna/URS00000478B7">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="">MetaboLights</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="MetaboLights Database" href="" class="pull-right expert-db-logo">
+              <img alt="MetaboLignts logo" src="static/img/db-logos/MetaboLightsLogo.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+ is a database for Metabolomics experiments and derived information. 
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22Vega%22')" rel="nofollow" href=""><em>29,771</em> sequences</a> |
+            <a id="vega-examples" href="/rna/URS00000B15DA">Example</a>
+            
+              <span title="" class="label label-primary help" data-original-title="New data imported in release 2">Updated</span>
+            
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="">PeptideAtlas</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="PeptideAtlas Database" href="" class="pull-right expert-db-logo">
+              <img alt="RefSeq logo" src="static/img/db-logos/PeptideAtlas_Logo.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+           is a multi-organism, publicly accessible compendium of peptides identified in a large set of tandem mass spectrometry proteomics experiments.
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22RefSeq%22')" rel="nofollow" href=""><em>39,164</em> sequences</a> |
+            <a id="refseq-examples" href="/rna/URS000075A3E5">Example</a>
+            
+              <span title="" class="label label-primary help" data-original-title="New data imported in release 2">Updated</span>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+
+      </div>
+    
+      <div class="row">
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="">MassIVE</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="MassIVE Database" href="" class="pull-right expert-db-logo">
+              <img alt="MassIVE logo" src="static/img/db-logos/MassIVE_logo.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+           is a community resource developed by the NIH-funded Center for Computational Mass Spectrometry to promote the global, free exchange of mass spectrometry data. 
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22gtRNAdb%22')" rel="nofollow" href=""><em>10,625</em> sequences</a> |
+            <a id="gtrnadb-examples" href="/rna/URS000047C79B">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/mirbase">miRBase</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="miRBase Expert Database" href="/expert-database/mirbase" class="pull-right expert-db-logo">
+              <img alt="miRBase logo" src="/static/img/expert-db-logos/mirbase.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            is a database of published miRNA sequences and annotations that provides a centralised system for assigning names to miRNA genes
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22miRBase%22')" rel="nofollow" href=""><em>8,795</em> sequences</a> |
+            <a id="mirbase-examples" href="/rna/URS000075A685">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/rdp">RDP</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="RDP Expert Database" href="/expert-database/rdp" class="pull-right expert-db-logo">
+              <img alt="RDP logo" src="/static/img/expert-db-logos/rdp.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            provides quality-controlled, aligned and annotated rRNA sequences and a suite of analysis tools
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22RDP%22')" rel="nofollow" href=""><em>4,779</em> sequences</a> |
+            <a id="rdp-examples" href="/rna/URS000064300F">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card ">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/tmrna-website">tmRNA Website</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="tmRNA Website Expert Database" href="/expert-database/tmrna-website" class="pull-right expert-db-logo">
+              <img alt="tmRNA Website logo" src="/static/img/expert-db-logos/tmrna-website.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            contains predicted tmRNA sequences from RefSeq prokaryotic genomes, plasmids and phages
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22tmRNA Website%22')" rel="nofollow" href=""><em>2,857</em> sequences</a> |
+            <a id="tmrna-website-examples" href="/rna/URS000060F5B3">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      </div>
+    
+      <div class="row">
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card margin-bottom-5px">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/pdbe">PDBe</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="PDBe Expert Database" href="/expert-database/pdbe" class="pull-right expert-db-logo">
+              <img alt="PDBe logo" src="/static/img/expert-db-logos/pdbe.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            is the European repository of information about the 3D structures of large biological molecules. PDBe is a member of the Worldwide Protein Data Bank
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22PDBe%22')" rel="nofollow" href=""><em>1,753</em> sequences</a> |
+            <a id="pdbe-examples" href="/rna/URS00000ABFE9">Example</a>
+            
+              <span title="" class="label label-primary help" data-original-title="New Expert Database imported in release 2">New</span>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card margin-bottom-5px">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/snopy">snOPY</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="snOPY Expert Database" href="/expert-database/snopy" class="pull-right expert-db-logo">
+              <img alt="snOPY logo" src="/static/img/expert-db-logos/snopy.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            provides comprehensive information about snoRNAs, snoRNA gene loci, and target RNAs
+                          as well as information about snoRNA orthologues
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22snOPY%22')" rel="nofollow" href=""><em>620</em> sequences</a> |
+            <a id="snopy-examples" href="/rna/URS00004B0879">Example</a>
+            
+              <span title="" class="label label-primary help" data-original-title="New Expert Database imported in release 2">New</span>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card margin-bottom-5px">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/srpdb">SRPDB</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="SRPDB Expert Database" href="/expert-database/srpdb" class="pull-right expert-db-logo">
+              <img alt="SRPDB logo" src="/static/img/expert-db-logos/srpdb.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            provides aligned, annotated and phylogenetically ordered sequences related to structure and function of SRP
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22SRPDB%22')" rel="nofollow" href=""><em>503</em> sequences</a> |
+            <a id="srpdb-examples" href="/rna/URS00000478B7">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      
+    
+      
+
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="panel panel-default expert-db-card margin-bottom-5px">
+
+          <div class="expert-db-card-header">
+            <a href="/expert-database/lncrnadb">lncRNAdb</a>
+          </div>
+
+          <div class="expert-db-card-logo">
+            <a title="lncRNAdb Expert Database" href="/expert-database/lncrnadb" class="pull-right expert-db-logo">
+              <img alt="lncRNAdb logo" src="/static/img/expert-db-logos/lncrnadb.png" class="img-rounded hvr-grow">
+            </a>
+          </div>
+
+          <div class="panel-body small">
+            is a database providing comprehensive annotations of eukaryotic long non-coding RNAs (lncRNAs)
+          </div>
+
+          <div class="panel-footer small">
+            <a ng-click="meta_search('expert_db:%22lncRNAdb%22')" rel="nofollow" href=""><em>62</em> sequences</a> |
+            <a id="lncrnadb-examples" href="/rna/URS00000478B7">Example</a>
+            
+          </div>
+
+        </div>
+      </div>
+
+      </div>
+    
+  </div>
+
+
+</div>
+</div>
+
+
+
+<footer>
+    <div id="footer"></div>
+</footer>
+        
+    
+ <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-animate.min.js"></script>
+ <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+ <script src="js/vendor/underscore/underscore-min.js"></script>
+ <script src="js/search/ddi.metadata.search.js"></script>
+<!--
+ <script src="js/search/metadata.search.js"></script>
+ <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+ <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+ <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+ <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="js/search/sequence.search.js"></script>
+ <script src="js/search/export-results.search.js"></script>
+ <script src="js/vendor/query-string.js"></script>
+ <script src="js/jquery.EuropePMCAbstracts.js"></script>
+ <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+ <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+ <script src="js/vendor/handlebars-v1.1.2.js"></script>
+ <script src="js/guidedTour.js"></script>
+ <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+ <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+ -->
+ <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+ <script src="js/d3/d3.speciesSunburst.js"></script>
+ <script src="js/d3/d3.speciesTree.js"></script>
+
+</body></html>
