@@ -488,7 +488,7 @@ console.log(url_pre);
                  if(d.data.name=="MetaboLights Dataset")
                    location.href = url_pre + "MetaboLights" + '"';
                  if(d.data.name=="Metabolome Workbench")
-                   location.href = url_pre + "MetabolomeWorkbench" + '"';
+                   location.href = url_pre + "MetabolomicsWorkbench" + '"';
                })
 		.on("mouseover", function(d,i) {
 			var temptext1 = d.data.name;
