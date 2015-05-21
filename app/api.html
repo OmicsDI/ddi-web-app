@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+
 <head>
+
     <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
     </style>
         <meta charset="utf-8">
@@ -45,32 +47,24 @@ $(function(){
 
 <div id="header"></div>
 
-          <div class="container-main">
-            <!--[if lt IE 10]>
-              <div class="alert alert-danger">
-                You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
-              </div>
+
+<div class="container-main"><!--[if lt IE 10]>
+    <div class="alert alert-danger">
+        You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
+    </div>
             <![endif]-->
+    <noscript>
+        <div class="alert alert-danger">
+            Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
+        </div>
+    </noscript>
+    <div class="ng-scope" ng-show="!display_search_interface" ng-controller="MainContent">
 
-            <noscript>
-              <div class="alert alert-danger">
-                Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
-              </div>
-            </noscript>
-
-            <div class="ng-scope" ng-show="!display_search_interface" ng-controller="MainContent">
-              
-
-<div class="row">
-
-  <div class="col-md-9" role="main">
-
-  
-  <h1 id="overview">
-  <i class="fa fa-book"></i>API overview
-</h1>
-
-<p>Most data in DDI can be accessed programmatically using a <a href="http://localhost:9091/">RESTful API</a>
+        <div class="row">
+            <div class="col-md-9" role="main">
+                <h1 id="overview">
+                    <i class="fa fa-book"></i>API overview</h1>
+                <p>Most data in DDI can be accessed programmatically using a <a href="http://localhost:9091/">RESTful API</a>
 allowing for integration with other resources.
 The API implementation is based on the <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.</p>
 
