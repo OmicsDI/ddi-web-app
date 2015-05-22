@@ -44,7 +44,7 @@ $(function(){
 
 <body class="level2">
 
-<div class="container rnacentral-masthead">
+<div class="container ddi-masthead">
 <div class="masthead grid_24" id="global-masthead">    
 
      <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png">
@@ -64,12 +64,12 @@ $(function(){
 </div>
 
 <div class="navbar navbar-default navbar-static-top">
-<div class="container rnacentral-masthead">
+<div class="container ddi-logoarea">
 
     <!-- global-search -->
     <div class="row">
       <div class="col-md-4">
-        <a href="/"><img class="rnacentral-header-logo" alt="DDI logo" src="static/img/logo/DDI_logo_ltgrey.png"></a>
+        <a href="/"><img class="ddi-header-logo" alt="DDI logo" src="static/img/logo/DDI-icon-3.png"></a>
       </div>
 
       <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
@@ -148,7 +148,7 @@ $(function(){
 </div><!-- local-masthead-->
 
 
-<div ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="">
+<div id="content" ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="">
     <div style="margin-top:35px" >
     <h3>
       <small ng-show="search_in_progress" class="ng-hide" style="">
@@ -177,7 +177,7 @@ $(function(){
           <ul class="list-unstyled metasearch-facet-values">
           <li> <a href="" ng-class="{'disabled':omicsfacetsno.Proteomics==='0'}"  ng-click="facet_search(result.facets[indexoffacets.omics_type].id, result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Proteomics].value)"><img src="css/Proteomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Proteomics</span><small>({{result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Proteomics].count||0 | number}})</small></a></li>
           <li> <a href="" ng-class="{'disabled':omicsfacetsno.Metabolomics==='0'}"  ng-click="facet_search(result.facets[indexoffacets.omics_type].id, result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Metabolomics].value)"><img src="css/Metabolomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Metabolomics</span><small>({{result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Metabolomics].count||0 | number}})</small></a></li>
-          <li> <a href="" ng-class="{'disabled':omicsfacetsno.Genomics==='0'}"  ng-click="facet_search(result.facets[indexoffacets.omics_type].id, result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img src="css/Genomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Geneomics</span><small>({{result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Geneomics].count||0 | number}})</small></label></a></li>
+          <li> <a href="" ng-class="{'disabled':omicsfacetsno.Genomics==='0'}"  ng-click="facet_search(result.facets[indexoffacets.omics_type].id, result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img src="css/Genomics2.png" style="vertical-align: top"/><span>  </span><span style="font-size:15px; font-weight:bold" >Genomics</span><small>({{result.facets[indexoffacets.omics_type].facetValues[omicsfacetsindex.Geneomics].count||0 | number}})</small></label></a></li>
           </ul>      
         </div>
         <div><!-- Repository -->
@@ -188,7 +188,7 @@ $(function(){
                         <li ng-repeat="facet_value in result.facets[indexoffacets.repository].facetValues | filter:repos_input">
                             <input type="checkbox" name="result.facets[indexoffacets.repository].label" ng-checked="is_facet_applied(result.facets[indexoffacets.repository].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)">
                             <label for="result.facets[indexoffacets.repository].label"><span></span></label>
-                            <a href="" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
+                            <a href="" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)" class="metasearch-facet-link">{{repositories[facet_value.label]}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
                     </ul>
@@ -212,9 +212,9 @@ $(function(){
         <div><!-- Tissue -->
             <h3 class="ng-binding">Tissue</h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
-                    <input type="text" class="form-control" ng-model="tech_input" placeholder="Find your Tissues">
+                    <input type="text" class="form-control" ng-model="tissue_input" placeholder="Find your Tissues">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
-                        <li ng-repeat="facet_value in result.facets[indexoffacets.tissue].facetValues | filter:tech_input">
+                        <li ng-repeat="facet_value in result.facets[indexoffacets.tissue].facetValues | filter:tissue_input">
                             <input type="checkbox" id="result.facets[indexoffacets.tissue].label" ng-checked="is_facet_applied(result.facets[indexoffacets.tissue].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.tissue].id, facet_value.value)">
                             <label for="result.facets[indexoffacets.tissue].label"><span></span></label>
                             <a href="" ng-click="facet_search(result.facets[indexoffacets.tissue].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
@@ -227,9 +227,9 @@ $(function(){
         <div><!-- Disease-->
             <h3 class="ng-binding">Disease</h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
-                    <input type="text" class="form-control" ng-model="tech_input" placeholder="Find your Disease">
+                    <input type="text" class="form-control" ng-model="disease_input" placeholder="Find your Disease">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
-                        <li ng-repeat="facet_value in result.facets[indexoffacets.disease].facetValues | filter:tech_input">
+                        <li ng-repeat="facet_value in result.facets[indexoffacets.disease].facetValues | filter:disease_input">
                             <input type="checkbox" id="result.facets[indexoffacets.disease].label" ng-checked="is_facet_applied(result.facets[indexoffacets.disease].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.disease].id, facet_value.value)">
                             <label for="result.facets[indexoffacets.disease].label"><span></span></label>
                             <a href="" ng-click="facet_search(result.facets[indexoffacets.disease].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
@@ -271,9 +271,9 @@ $(function(){
         <div><!-- publication_date -->
             <h3 class="ng-binding">Publication Date</h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
-                    <input type="text" class="form-control" ng-model="instr_input" placeholder="Find your publication data">
+                    <input type="text" class="form-control" ng-model="publicdate_input" placeholder="Find your publication data">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
-                        <li ng-repeat="facet_value in result.facets[indexoffacets.publication_date].facetValues | filter:instr_input">
+                        <li ng-repeat="facet_value in result.facets[indexoffacets.publication_date].facetValues | filter:publicdate_input">
                             <input type="checkbox" id="result.facets[indexoffacets.publication_date].label" ng-checked="is_facet_applied(result.facets[indexoffacets.publication_date].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.publication_date].id, facet_value.value)">
                             <label for="result.facets[indexoffacets.publication_date].label"><span></span></label>
                             <a href="" ng-click="facet_search(result.facets[indexoffacets.publication_date].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
@@ -286,9 +286,9 @@ $(function(){
         <div><!-- technology-->
             <h3 class="ng-binding">Technology Type</h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
-                    <input type="text" class="form-control" ng-model="instr_input" placeholder="Find your publication data">
+                    <input type="text" class="form-control" ng-model="techtype_input" placeholder="Find your publication data">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
-                        <li ng-repeat="facet_value in result.facets[indexoffacets.technology_type].facetValues | filter:instr_input">
+                        <li ng-repeat="facet_value in result.facets[indexoffacets.technology_type].facetValues | filter:techtype_input">
                             <input type="checkbox" id="result.facets[indexoffacets.technology_type].label" ng-checked="is_facet_applied(result.facets[indexoffacets.technology_type].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.technology_type].id, facet_value.value)">
                             <label for="result.facets[indexoffacets.technology_type].label"><span></span>{{result.facet[1].label}}</label>
                             <a href="" ng-click="facet_search(result.facets[indexoffacets.technology_type].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
@@ -343,9 +343,10 @@ $(function(){
             <li>
             <a href="" ng-click="pagination(1,'default','id')" ng-class="{'disabled':sortfield==='id'}">Accession</a>
             </li>
-            <li>
+<!--            <li>
             <a href="" ng-click="pagination(1,'default','relevance')"  ng-class="{'disabled':sortfield==='relevance'}">Relevance</a>
             </li>
+-->
             <li>
             <a href="" ng-click="pagination(1,'default','publication_date')" ng-class="{'disabled':sortfield==='publication_date'}" >Publication date</a>
             </li>
@@ -393,9 +394,8 @@ $(function(){
             <b>Made public: </b> {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
         </div>
 
-            
         <div class="project-widget-tag" ng-hide="dataset.keywords[0] === 'Not available'">
-                    <a ng-repeat="keyword in dataset.keywords"  title={{keyword}} class="biological" href={{"browse.html#/search?q="+keyword">{{keyword}}</a>
+            <a ng-repeat="keyword in dataset.keywords"  title={{keyword}} class="biological" href={{"browse.html#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
         </div>
     </div>
   </li>  

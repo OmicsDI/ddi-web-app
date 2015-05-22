@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
-
 <head>
-
     <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
     </style>
         <meta charset="utf-8">
@@ -19,7 +17,7 @@
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
         <link type="text/css" href="css/prider.css" rel="stylesheet">
         <link type="text/css" href="css/main.css" rel="stylesheet">
-        
+
         <!-- Favicons -->
         <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
         <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
@@ -31,42 +29,46 @@
         <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
         <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
         <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
-    
+
  <script src="js/vendor/jquery-1.10.1.min.js"></script>
-        
+
 </head>
 
-<script> 
+<script>
 $(function(){
-  $("#header").load("header_with_search.html"); 
-  $("#footer").load("footer.html"); 
+  $("#header").load("header_with_search.html");
+  $("#footer").load("footer.html");
 });
-</script> 
+</script>
 
 <body class="level2">
 
 <div id="header"></div>
 
-
-<div class="container-main"><!--[if lt IE 10]>
-    <div class="alert alert-danger">
-        You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
-    </div>
+<div class="container-main container">
+            <!--[if lt IE 10]>
+              <div class="alert alert-danger">
+                You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
+              </div>
             <![endif]-->
-    <noscript>
-        <div class="alert alert-danger">
-            Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
-        </div>
-    </noscript>
-    <div class="ng-scope" ng-show="!display_search_interface" ng-controller="MainContent">
 
-        <div class="row">
-            <div class="col-md-9" role="main">
-                <h1 id="overview">
-                    <i class="fa fa-book"></i>API overview</h1>
-                <p>Most data in DDI can be accessed programmatically using a <a href="http://localhost:9091/">RESTful API</a>
-allowing for integration with other resources.
-The API implementation is based on the <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.</p>
+            <noscript>
+              <div class="alert alert-danger">
+                Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
+              </div>
+            </noscript>
+
+<div id="content" class="row" >
+
+<div id="" class="col-md-9" role="main">
+
+
+  <h1 id="overview">
+  <i class="fa fa-book"></i>API overview
+</h1>
+
+<p>Most data in the Datatsets Discovery Index can be accessed programmatically using a <a href="http://localhost:9091/">RESTful API</a>
+allowing for integration with other resources. The API implementation is based on the <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.</p>
 
 <h2 id="web-browsable-api">Web browsable API</h2>
 
@@ -81,8 +83,8 @@ The API implementation is based on the <a href="https://spring.io/guides/gs/rest
 <p>As a result, developers can familiarise themselves with the API and get a better sense of the DDI data.</p>
 
 
-
 <p><a href="/api/" class="btn btn-primary" role="button" target="_blank">Browse the API</a></p>
+
 <h2 id="versioning">Versioning</h2>
             <p>
                 To ensure that changes in the DDI API don't break the applications relying on it, the API is versioned, and the version is included in the API's URL.
@@ -113,13 +115,6 @@ The API implementation is based on the <a href="https://spring.io/guides/gs/rest
                 An advance notice will be given before obsoleting an API version. To stay up to date, please consider signing up for the PRIDE <a href="https://twitter.com/DDIndex">Twitter</a> account.
             </p>
         
-
-<h2 id="throttling">Throttling</h2>
-
-<p>The maximum number of requests from the same IP address is limited to <strong>20 requests per second</strong>.
-Currently there is no limit on the total number of requests from the same IP.</p>
-
-<p>The limit can be lifted for registered users, so please get in touch if you require a higher request rate.</p>
 
 <hr>
 
@@ -426,7 +421,6 @@ Currently there is no limit on the total number of requests from the same IP.</p
 </div>
 
 
-</div>
 
 
 
@@ -439,25 +433,7 @@ Currently there is no limit on the total number of requests from the same IP.</p
  <script src="js/vendor/angular/angular-animate.min.js"></script>
  <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
  <script src="js/vendor/underscore/underscore-min.js"></script>
- <script src="js/search/ddi.metadata.search.js"></script>
-<!--
- <script src="js/search/metadata.search.js"></script>
- <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
- <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
- <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
- <script src="js/search/sequence.search.js"></script>
- <script src="js/search/export-results.search.js"></script>
- <script src="js/vendor/query-string.js"></script>
- <script src="js/jquery.EuropePMCAbstracts.js"></script>
- <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
- <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
- <script src="js/vendor/handlebars-v1.1.2.js"></script>
- <script src="js/guidedTour.js"></script>
- <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
- <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
- -->
- <script src="js/vendor/d3/d3.min.js"></script>
+ <script src="js/search/ddi.metadata.search.js"></script><script src="js/vendor/d3/d3.min.js"></script>
  <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
  <script src="js/d3/d3.speciesSunburst.js"></script>
  <script src="js/d3/d3.speciesTree.js"></script>

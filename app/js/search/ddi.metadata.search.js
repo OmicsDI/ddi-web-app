@@ -520,9 +520,12 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,metabolome_workbench";
     $scope.genomics_list="ega,ena";
-    $scope.repositories={"pride":"PRIDE",  "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "massive":"MassIVE", 
-                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","metabolome_workbench":"Metabolomics Workbench",
-                         "ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
+                        "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
+                        "massive":"MassIVE", "MassIVE":"MassIVE",
+                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
+                         "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
+                         "ega":"EGA", "EGA":"EGA",  };
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
 
@@ -718,13 +721,13 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
       if($scope.result.count == null  ) return; 
       $scope.omicsfacetsno={"Proteomics":"0","Metabolomics":"0","Genomics":"0"};
       $scope.omicsfacetsindex={"Proteomics":"","Metabolomics":"","Genomics":""};
-         console.log($scope.result.facets);
-         var omicsfacet = $scope.result.facets[$scope.indexoffacets.omics_type].facetValues; 
-         for(omic in omicsfacet){
-	     $scope.omicsfacetsno[omicsfacet[omic].label]=omicsfacet[omic].count; 
-	     $scope.omicsfacetsindex[omicsfacet[omic].label]=omic; 
-	 }
-    console.log($scope.omicsfacetsindex);
+//         console.log($scope.result.facets);
+      var omicsfacet = $scope.result.facets[$scope.indexoffacets.omics_type].facetValues; 
+      for(omic in omicsfacet){
+      $scope.omicsfacetsno[omicsfacet[omic].label]=omicsfacet[omic].count; 
+      $scope.omicsfacetsindex[omicsfacet[omic].label]=omic; 
+      }
+      console.log($scope.omicsfacetsindex);
     }
    
 }]);
@@ -885,9 +888,12 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,MetabolomicsWorkbench";
     $scope.genomics_list="ega,ena";
-    $scope.repositories={"pride":"PRIDE",  "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "massive":"MassIVE", 
-                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetabolomicsWorkbench":"Metabolomics Workbench",
-                         "ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
+                        "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
+                        "massive":"MassIVE", "MassIVE":"MassIVE",
+                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
+                         "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
+                         "ega":"EGA", "EGA":"EGA",  };
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,
@@ -898,6 +904,8 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     console.log("GET error:" + url);
 
             });
+//
+//
      var url = "http://localhost:9091/dataset/mostAccessed?size=10";
      $http({
                 url: url,
@@ -909,6 +917,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
 
             });
 
+     //get general statistics
     url = "http://localhost:9091/stats/general";
 
     $http({
@@ -919,6 +928,25 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
             }).error(function(){
     console.log("GET error:" + url);
             });
+
+    //get datasets No. of each repository 
+    url = "http://localhost:9091/stats/domains";
+    $scope.databases = {"test":"0"};
+    $http({
+                url: url,
+                method: 'GET'
+            }).success(function(data) {
+           console.log(data[0]);
+        for(var i=0; i<data.length; i++){
+           console.log(data[i].domain.name);
+           $scope.databases[data[i].domain.name]= data[i].domain.value;
+        }
+    console.log($scope.databases);
+            }).error(function(){
+    console.log("GET error:" + url);
+            });
+
+
 }]);
 
 /**

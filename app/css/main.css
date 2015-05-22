@@ -62,46 +62,50 @@ body {
       url('../fonts/helveticaneueltprolt.ttf') format('truetype'),
       url('../fonts/helveticaneueltprolt.svg#HelveticaNeueLTPro-Lt') format('svg');
   font-weight:normal;
-  font-style:normal;
-}
+  font-style:normal; }
 
 /*------------------------------------------------------------------
 [2. Masthead]
 */
-.rnacentral-masthead {
-  background: rgb(188,216,224); /* Old browsers */
-  background: -moz-linear-gradient(left,  rgba(188,216,224,1) 41%, rgba(154,195,206,1) 68%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(41%,rgba(188,216,224,1)), color-stop(68%,rgba(154,195,206,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* IE10+ */
-  background: linear-gradient(to right,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* W3C */
+.ddi-masthead{
+  background: #057794 ; /* Old browsers */
+  background: -moz-linear-gradient(left,  #057794  41%, #057794  68%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(41%,#057794 ), color-stop(68%,#057794 )); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  #057794  41%,#057794  68%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #057794   41%,#057794  68%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  #057794 41%,#057794  68%); /* IE10+ */
+  background: linear-gradient(to right,  #057794 41%,#057794 68%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bcd8e0', endColorstr='#9ac3ce',GradientType=1 ); /* IE6-9 */
 }
 
-.rnacentral-masthead .form-group {
+.ddi-logoarea{
+    background:lightblue;
+    height:120px;
+}
+
+.ddi-masthead .form-group {
   margin-bottom: 0;
 }
 
-.rnacentral-masthead .help-block {
+.ddi-masthead .help-block {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.rnacentral-masthead-menu {
+.ddi-masthead-menu {
 	background-color: #3F7D97;
   padding: 0px;
 }
 
-.rnacentral-masthead-menu .nav>li>a {
+.ddi-masthead-menu .nav>li>a {
   padding-right: 6px;
   padding-left: 6px;
 }
 
-.rnacentral-masthead-menu .nav>li a:hover,
-.rnacentral-masthead-menu .nav>li a:focus,
-.rnacentral-masthead-menu .nav>li a:active,
-.rnacentral-masthead-menu .navbar-text
+.ddi-masthead-menu .nav>li a:hover,
+.ddi-masthead-menu .nav>li a:focus,
+.ddi-masthead-menu .nav>li a:active,
+.ddi-masthead-menu .navbar-text
 {
   color: white;
 }
@@ -123,7 +127,7 @@ body {
 	color: #DDDDDD;
 }
 
-.rnacentral-masthead-menu .navbar-text {
+.ddi-masthead-menu .navbar-text {
   margin-left: 0px;
   margin-right: 8px;
 }
@@ -146,9 +150,9 @@ body {
   border-bottom-color: white;
 }
 
-.rnacentral-header-logo {
+.ddi-header-logo {
 	margin-top: 15px;
-	width: 300px;
+	width: 160px;
 }
 
 div#local-search form fieldset, form#local-search fieldset {
@@ -171,7 +175,7 @@ div#local-search form fieldset, form#local-search fieldset {
   .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
     color: white;
   }
-  .rnacentral-masthead-menu .navbar-text {
+  .ddi-masthead-menu .navbar-text {
     margin-left: 15px;
   }
 }
@@ -202,7 +206,7 @@ footer a:hover {
 */
 
 /* change external link color on hover */
-a[href^="http://"]:not([href^="http://rnacentral.org"]):hover, .gv_menu a:hover {
+a[href^="http://"]:not([href^="http://ddi.org"]):hover, .gv_menu a:hover {
   color: #DD8621;
 }
 
@@ -224,8 +228,8 @@ a[href^="http://"]:not([href^="http://rnacentral.org"]):hover, .gv_menu a:hover 
 
 
 /* remove external link icon from links to own resources or with class no-icon */
-a[href^="http://rnacentral.org"]:after,
-a[href^="http://blog.rnacentral.org"]:after,
+a[href^="http://ddi.org"]:after,
+a[href^="http://blog.ddi.org"]:after,
 a.no-icon:after {
   content: "" !important;
   padding-left: 0;
@@ -318,11 +322,11 @@ form input {
   margin-right: 10px;
 }
 
-ul.breadcrumb.rnacentral-api {
+ul.breadcrumb.ddi-api {
   margin-top: 10px;
 }
 
-.alert.rnacentral-api {
+.alert.ddi-api {
   margin-bottom: 0;
 }
 

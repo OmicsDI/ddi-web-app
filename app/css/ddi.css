@@ -4,16 +4,6 @@ background: #fff;
 width:100%;
 }
 
-.ddi-masthead {
-  background: rgb(188,216,224); /* Old browsers */
-  background: -moz-linear-gradient(left,  rgba(188,216,224,1) 41%, rgba(154,195,206,1) 68%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(41%,rgba(188,216,224,1)), color-stop(68%,rgba(154,195,206,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* IE10+ */
-  background: linear-gradient(to right,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bcd8e0', endColorstr='#9ac3ce',GradientType=1 ); /* IE6-9 */
-}
 .ddi-header-logo {
 	margin-top: 15px;
 	width: 300px;
