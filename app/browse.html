@@ -44,7 +44,7 @@ $(function(){
 
 <body class="level2">
 
-<div class="container rnacentral-masthead">
+<div class="container ddi-masthead">
 <div class="masthead grid_24" id="global-masthead">    
 
      <a title="Go to the EMBL-EBI homepage" href="//www.ebi.ac.uk/"><img alt="EMBL European Bioinformatics Institute" src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png">
@@ -64,12 +64,12 @@ $(function(){
 </div>
 
 <div class="navbar navbar-default navbar-static-top">
-<div class="container rnacentral-masthead">
+<div class="container ddi-masthead">
 
     <!-- global-search -->
     <div class="row">
       <div class="col-md-4">
-        <a href="/"><img class="rnacentral-header-logo" alt="DDI logo" src="static/img/logo/DDI_logo_ltgrey.png"></a>
+        <a href="/"><img class="ddi-header-logo" alt="DDI logo" src="static/img/logo/DDI-icon-3.png"></a>
       </div>
 
       <div ng-controller="QueryCtrl" class="col-md-8 ng-scope">
@@ -188,7 +188,7 @@ $(function(){
                         <li ng-repeat="facet_value in result.facets[indexoffacets.repository].facetValues | filter:repos_input">
                             <input type="checkbox" name="result.facets[indexoffacets.repository].label" ng-checked="is_facet_applied(result.facets[indexoffacets.repository].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)">
                             <label for="result.facets[indexoffacets.repository].label"><span></span></label>
-                            <a href="" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}} <small>({{facet_value.count | number}})</small></a>
+                            <a href="" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)" class="metasearch-facet-link">{{repositories[facet_value.label]}} <small>({{facet_value.count | number}})</small></a>
                         </li>
                         <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
                     </ul>
@@ -393,9 +393,8 @@ $(function(){
             <b>Made public: </b> {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
         </div>
 
-            
         <div class="project-widget-tag" ng-hide="dataset.keywords[0] === 'Not available'">
-                    <a ng-repeat="keyword in dataset.keywords"  title={{keyword}} class="biological" href={{"browse.html#/search?q="+keyword">{{keyword}}</a>
+            <a ng-repeat="keyword in dataset.keywords"  title={{keyword}} class="biological" href={{"browse.html#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
         </div>
     </div>
   </li>  

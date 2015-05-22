@@ -520,9 +520,12 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,metabolome_workbench";
     $scope.genomics_list="ega,ena";
-    $scope.repositories={"pride":"PRIDE",  "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "massive":"MassIVE", 
-                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","metabolome_workbench":"Metabolomics Workbench",
-                         "ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
+                        "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
+                        "massive":"MassIVE", "MassIVE":"MassIVE",
+                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
+                         "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
+                         "ega":"EGA", "EGA":"EGA",  };
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
 
@@ -885,9 +888,12 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,MetabolomicsWorkbench";
     $scope.genomics_list="ega,ena";
-    $scope.repositories={"pride":"PRIDE",  "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "massive":"MassIVE", 
-                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetabolomicsWorkbench":"Metabolomics Workbench",
-                         "ega":"EGA", "ena":"ENA",  };
+    $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
+                        "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
+                        "massive":"MassIVE", "MassIVE":"MassIVE",
+                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
+                         "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
+                         "ega":"EGA", "EGA":"EGA",  };
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,

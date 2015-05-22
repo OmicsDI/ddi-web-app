@@ -153,20 +153,24 @@ function change() {
 
     var value = this.value || 'Tissues';
     var data = [] ; 
+    var url_pre;
     if(value == 'Tissues') { 
     	 data = tissues;
     	// text_total.text("Total:"+totaltissues);
     	// text_unavail.text("Unavailable:"+unavailableNoTissues.value);
+	  url_pre = 'browse.html#/search?q=*:* AND tissue:"';
     }
     if(value == 'Organisms') {
     	data = organisms;
     	// text_total.text("Total:"+totalorganisms);
     	// text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
+	  url_pre = 'browse.html#/search?q=*:* AND TAXONOMY:"';
     }
     if(value == 'Diseases') {
       data = diseases;
       // text_total.text("Total:"+totalorganisms);
       // text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
+	  url_pre = 'browse.html#/search?q=*:* AND disease:"';
     }
 
   svg.selectAll(".node").remove();
@@ -182,7 +186,8 @@ function change() {
       .on("click", function(d,i){
                // alert("you have clicked"+d.data.name);
                // window.open("browse.html#/search?q="+d.name);
-              location.href = "browse.html#/search?q="+d.name;
+              location.href = url_pre + d.className + '"';
+              if(value == 'Organisms') { location.href = url_pre + d.taxonomyid+ '"';  }
                });
 
 //  node.append("title")
@@ -223,7 +228,7 @@ function classes(arr) {
   var classes = [];
 
     for(var i = 0; i < arr.length; i++)
-    classes.push({packageName: arr[i].name, className: arr[i].name, value: arr[i].value});
+    classes.push({packageName: arr[i].name, className: arr[i].name, value: arr[i].value, taxonomyid: arr[i].id});
 
   return {children: classes};
 }
