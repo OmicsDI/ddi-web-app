@@ -62,21 +62,25 @@ body {
       url('../fonts/helveticaneueltprolt.ttf') format('truetype'),
       url('../fonts/helveticaneueltprolt.svg#HelveticaNeueLTPro-Lt') format('svg');
   font-weight:normal;
-  font-style:normal;
-}
+  font-style:normal; }
 
 /*------------------------------------------------------------------
 [2. Masthead]
 */
 .ddi-masthead{
-  background: rgb(188,216,224); /* Old browsers */
-  background: -moz-linear-gradient(left,  rgba(188,216,224,1) 41%, rgba(154,195,206,1) 68%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(41%,rgba(188,216,224,1)), color-stop(68%,rgba(154,195,206,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* IE10+ */
-  background: linear-gradient(to right,  rgba(188,216,224,1) 41%,rgba(154,195,206,1) 68%); /* W3C */
+  background: #057794 ; /* Old browsers */
+  background: -moz-linear-gradient(left,  #057794  41%, #057794  68%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(41%,#057794 ), color-stop(68%,#057794 )); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  #057794  41%,#057794  68%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #057794   41%,#057794  68%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  #057794 41%,#057794  68%); /* IE10+ */
+  background: linear-gradient(to right,  #057794 41%,#057794 68%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bcd8e0', endColorstr='#9ac3ce',GradientType=1 ); /* IE6-9 */
+}
+
+.ddi-logoarea{
+    background:lightblue;
+    height:120px;
 }
 
 .ddi-masthead .form-group {
@@ -148,7 +152,7 @@ body {
 
 .ddi-header-logo {
 	margin-top: 15px;
-	width: 130px;
+	width: 160px;
 }
 
 div#local-search form fieldset, form#local-search fieldset {
