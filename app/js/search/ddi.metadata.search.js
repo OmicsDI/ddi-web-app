@@ -743,6 +743,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
         submitted: false
     };
 
+
     /**
      * Launch a metadata search using the service.
      */
@@ -750,11 +751,13 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
 	$scope.$root.currentpage = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
-	// console.log(current_abs_url);
+        console.log(current_abs_url);
 	
         if(current_abs_url.match("index.html")) {$window.location = current_abs_url.replace("index.html","browse.html");}
         if(current_abs_url.match("/#/")) {$window.location = current_abs_url.replace("/#/","/browse.html#/");}
         if(current_abs_url.match("dataset.html")){$window.location = current_abs_url.replace("dataset.html","browse.html");}
+        if(current_abs_url.match("api.html")){$window.location = current_abs_url.replace("api.html","browse.html");}
+        if(current_abs_url.match("databases.html")){$window.location = current_abs_url.replace("databases.html","browse.html");}
     };
 
 

@@ -12,38 +12,143 @@
         <title>DDI: API</title>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link type="text/css" href="css/ddi.css" rel="stylesheet">
+        <link type="text/css" href="css/main.css" rel="stylesheet">
+        <!--
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
-        <link type="text/css" href="css/ddi.css" rel="stylesheet">
-        <link type="text/css" href="css/prider.css" rel="stylesheet">
-        <link type="text/css" href="css/main.css" rel="stylesheet">
-        
-        <!-- Favicons -->
-        <link type="image/x-icon" href="static/img/icons/favicon.ico" rel="shortcut icon">
-        <link href="static/img/icons/apple-touch-icon.png" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-60x60.png" sizes="60x60" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-72x72.png" sizes="72x72" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-76x76.png" sizes="76x76" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-120x120.png" sizes="120x120" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
-        <link href="static/img/icons/apple-touch-icon-152x152.png" sizes="152x152" rel="apple-touch-icon">
+        -->
+
+        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
     
  <script src="js/vendor/jquery-1.10.1.min.js"></script>
-        
 </head>
 
 <script> 
 $(function(){
-  $("#header").load("header_with_search.html"); 
   $("#footer").load("footer.html"); 
 });
 </script> 
 
 <body class="level2">
 
-<div id="header"></div>
+<div id="skip-to">
+    <ul>
+        <li><a href="#content">Skip to main content</a></li>
+        <li><a href="#local-nav">Skip to local navigation</a></li>
+        <li><a href="#global-nav">Skip to EBI global navigation menu</a></li>
+        <li><a href="#global-nav-expanded">Skip to expanded EBI global navigation menu (includes all sub-sections)</a></li>
+    </ul>
+</div>
+
+<div id="wrapper" class="container_24">
+<header>
+   <div id="global-masthead" class="masthead grid_24">
+   <!--This has to be one line and no newline characters-->
+     <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute"></a>
+     <nav>
+     <ul id="global-nav">
+     <!-- set active class as appropriate -->
+       <li id="services" class=" first active"><a href="//www.ebi.ac.uk/services" title="Services">Services</a></li>
+       <li id="research" class=""><a href="//www.ebi.ac.uk/research" title="Research">Research</a></li>
+       <li id="training" class=""><a href="//www.ebi.ac.uk/training" title="Training">Training</a></li>
+       <li id="industry" class=""><a href="//www.ebi.ac.uk/industry" title="Industry">Industry</a></li>
+       <li id="about" class=" last"><a href="//www.ebi.ac.uk/about" title="About us">About us</a></li>
+     </ul>
+     </nav>
+  </div>
+
+
+  <div id="local-masthead" class="masthead grid_24 nomenu">
+    <!-- local-title -->
+    <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+      <div class="grid_12 alpha logo-title" id="local-title">
+        <a href="/app" title="Back to DDI homepage"><img src="/app/static/img/logo/DDI-icon-3.png" alt="logo" width="64" height="64"></a>
+        <span><h1><a href="/app" title="Back to DDI homepage">DDI</a></h1></span>
+      </div>
+    <!-- /local-title -->
+
+    <!-- local-search -->
+    <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
+      <div ng-controller="QueryCtrl" class="grid_12 omega">
+         <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+            <fieldset>
+               <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                  <div class="input-group">
+                         <input type="text" style="background-color:#fff; width:99%"
+                         placeholder="organism, repository, gene, tissue, accession"
+                         class="form-control"
+                         id="query-text"
+                         name="text"
+                         tabindex="1"
+                         ng-model="query.text"
+                         ng-minlength="2"
+                         ng-maxlength="1000"
+                         autocomplete="off"
+                         required>
+                         <div class="input-group-btn">
+                             <button type="submit" class="btn btn-primary">
+                                 <i class="fa fa-search"></i> Search
+                             </button>
+                         </div><!-- /input-group-btn -->
+                  </div><!--input-group -->
+                     <span class="help-block example-searches">
+                         <small>
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
+                             </i>
+                         </small>
+                     </span>
+                     <label class="control-label ng-cloak has-error"
+                            for="query-text" 
+                            ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                            ng-cloak>
+                     Your query is too short
+                     </label>
+                     <label class="control-label ng-cloak"
+                            for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                            ng-cloak>
+                     Your query is too long
+                     </label>
+                 </div><!-- /form-group -->
+             </fieldset>
+            </form>
+        </div>
+        <!-- /local-search -->
+
+
+        <!-- local-nav -->
+        <nav>
+            <ul class="grid_24" id="local-nav">
+            <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
+            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
+            <li class="" id="api-menu"><a title="DDI API" href="http://localhost:8000/app/api.html">API</a></li>
+            <li class=" last" id="about-prider-menu"><a title="Databases" href="http://localhost:8000/app/databases.html">Databases</a></li>
+            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+            whichever one will show up last...
+            For example: -->
+            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
+            <li class="functional"><a class="" href="http://localhost:8000/about.html">About</a></li>
+            <li class="functional"><a class="" href="http://localhost:8000/help.html">Help</a></li>
+            <li class="functional" id="login-menu" hidden="true" ><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
+            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
+            </ul>
+        </nav>
+
+        <!-- /local-nav -->
+</div>
+
 
 <div class="container-main container">
             <!--[if lt IE 10]>
@@ -59,13 +164,12 @@ $(function(){
             </noscript>
 
 <div id="content" class="row" >
-
 <div id="" class="col-md-9" role="main">
 
   
   <h1 id="overview">
   <i class="fa fa-book"></i>API overview
-</h1>
+  </h1>
 
 <p>Most data in DDI can be accessed programmatically using a <a href="http://localhost:9091/">RESTful API</a>
 allowing for integration with other resources.
@@ -442,23 +546,6 @@ Currently there is no limit on the total number of requests from the same IP.</p
  <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
  <script src="js/vendor/underscore/underscore-min.js"></script>
  <script src="js/search/ddi.metadata.search.js"></script>
-<!--
- <script src="js/search/metadata.search.js"></script>
- <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
- <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
- <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
- <script src="js/search/sequence.search.js"></script>
- <script src="js/search/export-results.search.js"></script>
- <script src="js/vendor/query-string.js"></script>
- <script src="js/jquery.EuropePMCAbstracts.js"></script>
- <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
- <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
- <script src="js/vendor/handlebars-v1.1.2.js"></script>
- <script src="js/guidedTour.js"></script>
- <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
- <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
- -->
  <script src="js/vendor/d3/d3.min.js"></script>
  <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
  <script src="js/d3/d3.speciesSunburst.js"></script>
