@@ -749,7 +749,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }
 
     function getLabelByTaxid(taxonomyid){
-        if(taxonomyarray === undefined) return;
+        if(taxonomyid === undefined) return;
+        if($scope.result.facets[$scope.indexoffacets.TAXONOMY] === undefined) return;
         var taxonomyarray = $scope.result.facets[$scope.indexoffacets.TAXONOMY].facetValues;
         for(var i=0; i<taxonomyarray.length;i++){
             if(taxonomyarray[i].value === taxonomyid) return taxonomyarray[i].label;
