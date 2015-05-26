@@ -15,11 +15,11 @@
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
         <link type="text/css" href="css/main.css" rel="stylesheet">
         <!--
-        <link type="text/css" href="css/prider.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+        <link type="text/css" href="css/prider.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
         -->
-
+        <link type="text/css" rel="stylesheet" href="http://www.ebi.ac.uk/pride/archive/resources/css/prider.css">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
@@ -150,7 +150,10 @@ $(function(){
 </div>
 
 <div id="content" ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="">
-    <div style="margin-top:35px" >
+
+
+
+    <div style="margin-top:185px" >
     <h3>
       <small ng-show="search_in_progress" class="ng-hide" style="">
         <i class="fa fa-spinner fa-spin"></i>
@@ -308,7 +311,7 @@ $(function(){
 
 <!-- paging buttons -->
 
-<div class="grid_24">
+<div class="grid_22">
     
     <div class="col_pager">
         <div class="pr-pager">
@@ -334,7 +337,7 @@ $(function(){
 </div>
 
 <!-- paging buttons -->
-<div class="grid_24">
+<div class="grid_22">
     <div class="clearfix" id="sort-by">
         <ul class="search-header" id="sort-by-menu">
             <li>Sort by: </li>
@@ -355,7 +358,7 @@ $(function(){
     </div>
 </div>
 
-<div id="search-results" class="grid_18 right-column">
+<div id="search-results" class="grid_22 right-column">
 <div id="search-results-items" class="list-group">
 <ul class="list-unstyled">
   <li class="result animate-repeat" ng-repeat="dataset in result.datasets">

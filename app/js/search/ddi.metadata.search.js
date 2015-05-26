@@ -202,7 +202,13 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
          * Create an proxy query url which includes EBeye query url.
          */
         function get_query_url() {
-            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}',pagesize).replace('{SORTFIELD}',sortfield);
+            var newSortField = sortfield;
+            console.log(newSortField);
+            console.log(sortfield);
+            if(newSortField === "relevance") {newSortField = ""};
+
+            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}',pagesize).replace('{SORTFIELD}',newSortField);
+            console.log(ebeye_url);
         //    var url = query_urls.proxy.replace('{EBEYE_URL}', encodeURIComponent(ebeye_url));
         //    return url;
 	    return ebeye_url;
@@ -545,6 +551,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
 	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.$root.pagesize);
             $scope.query = $location.search().q;
+            $scope.queryForShow = prepareQueryForShow();
 	    getnewindexes(); 
 	    checkomicstypenull();
         }
@@ -728,6 +735,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
       $scope.omicsfacetsindex[omicsfacet[omic].label]=omic; 
       }
       console.log($scope.omicsfacetsindex);
+    }
+
+    function prepareQueryForShow(){
+    
     }
    
 }]);

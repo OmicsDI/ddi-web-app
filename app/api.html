@@ -26,6 +26,7 @@
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
     
  <script src="js/vendor/jquery-1.10.1.min.js"></script>
+ <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 </head>
 
 <script>
@@ -148,6 +149,7 @@ $(function(){
 
         <!-- /local-nav -->
 </div>
+</header>
 
 
 <div class="container-main container">
@@ -162,6 +164,14 @@ $(function(){
                 Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
               </div>
             </noscript>
+
+<div id="" class="row" >
+</div>
+<div id="" class="row" >
+    <p>   
+    </p>
+</div>
+
 
 <div id="content" class="row" >
 <div id="" class="col-md-9" role="main">
@@ -187,7 +197,7 @@ allowing for integration with other resources. The API implementation is based o
 <p>As a result, developers can familiarise themselves with the API and get a better sense of the DDI data.</p>
 
 
-<p><a href="/api/" class="btn btn-primary" role="button" target="_blank">Browse the API</a></p>
+<p><a href="http://localhost:9091/" class="btn btn-primary" role="button" target="_blank">Browse the API</a></p>
 
 <h2 id="versioning">Versioning</h2>
             <p>
@@ -235,8 +245,9 @@ allowing for integration with other resources. The API implementation is based o
 </ul>
 
 <h4>Example</h4>
-
-<pre><code>http://localhost:9091/dataset/search?query=human
+<pre>
+<code  class="prettyprint">
+http://localhost:9091/dataset/search?query=human
 {
     "count": 733,
     "datasets": [
@@ -278,11 +289,14 @@ allowing for integration with other resources. The API implementation is based o
    //other facets
   ]
 }
-</code></pre>
+</code>
+</pre>
 
 <p>Responses containing just a <strong>single dataset</strong> have some extra navigation fields,and without the facets</p>
 
-<pre><code>http://localhost:9091/dataset/get?acc=PXD001848&database=PRIDE
+<pre>
+<code  class="prettyprint">
+http://localhost:9091/dataset/get?acc=PXD001848&database=PRIDE
 {
   "id": "PXD001848",
   "name": "Global Analysis of Protein Folding Thermodynamics for Disease State Characterization, MCF7 vs MDAMB231",

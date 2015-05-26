@@ -422,3 +422,20 @@ div.tooltip {
     padding: 2px;
     text-transform: uppercase;
 }
+
+#error-row {
+    margin-top:10px;
+}
+
+.metasearch-facets{
+    margin-left:10px;
+}
+
+.metasearch-results{
+    margin-left:-10px;
+}
+
+a.biological{
+    margin-left:2px;
+    margin-right:2px;
+}
