@@ -203,12 +203,10 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
          */
         function get_query_url() {
             var newSortField = sortfield;
-            console.log(newSortField);
-            console.log(sortfield);
             if(newSortField === "relevance") {newSortField = ""};
 
             var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}',pagesize).replace('{SORTFIELD}',newSortField);
-            console.log(ebeye_url);
+//            console.log(ebeye_url);
         //    var url = query_urls.proxy.replace('{EBEYE_URL}', encodeURIComponent(ebeye_url));
         //    return url;
 	    return ebeye_url;
@@ -537,7 +535,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
 
     $scope.facetsNo = 8;
-    $scope.indexoffacets={"omics_type":"0", "repository":"0", "organism":"tissue", "desease":"0", "modifications":"0", "instruments":"0", "publicatedate":"0", "technology":"0", "test":"0" }
+    $scope.indexoffacets={"omics_type":"0", "repository":"0", "TAXONOMY":"0","tissue":"0", "disease":"0", "modifications":"0", "instruments":"0", "publicatedate":"0", "technology":"0", "test":"0" }
 
     $scope.omicsfacetsno={"Proteomics":"","Metabolomics":"","Genomics":""};
 
@@ -545,13 +543,13 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      * Watch `result` changes.
      */
     $scope.$watch(function () { return results.get_result(); }, function (newValue, oldValue) {
-        console.log(newValue);
         if (newValue !== null) {
             $scope.result = newValue;
 	    $scope.pages= results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
 	    $scope.maxpageno = 1+parseInt(($scope.result.count-1)/$scope.$root.pagesize);
             $scope.query = $location.search().q;
-            $scope.queryForShow = prepareQueryForShow();
+            $scope.queryForShow = $scope.query;
+            prepareQueryForShow();
 	    getnewindexes(); 
 	    checkomicstypenull();
         }
@@ -734,11 +732,29 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
       $scope.omicsfacetsno[omicsfacet[omic].label]=omicsfacet[omic].count; 
       $scope.omicsfacetsindex[omicsfacet[omic].label]=omic; 
       }
-      console.log($scope.omicsfacetsindex);
+//      console.log($scope.omicsfacetsindex);
     }
 
     function prepareQueryForShow(){
-    
+//        console.log($scope.result.facets);
+        getnewindexes();        
+        var taxonomyRe = /TAXONOMY:"(\d+)"/g;
+        var taxonomymatches=$scope.queryForShow.match(taxonomyRe);
+        for(var i=0; i<taxonomymatches.length; i++){
+            var taxonomymatch = taxonomymatches[i];
+            var taxonomyid = taxonomymatch.substr(10,taxonomymatch.length-11);
+            var taxlabel = getLabelByTaxid(taxonomyid);
+            $scope.queryForShow = $scope.queryForShow.replace(taxonomyid, taxlabel);
+        }
+    }
+
+    function getLabelByTaxid(taxonomyid){
+        if(taxonomyarray === undefined) return;
+        var taxonomyarray = $scope.result.facets[$scope.indexoffacets.TAXONOMY].facetValues;
+        for(var i=0; i<taxonomyarray.length;i++){
+            if(taxonomyarray[i].value === taxonomyid) return taxonomyarray[i].label;
+        }
+        console.error("find no label for the taxid");
     }
    
 }]);
@@ -762,7 +778,6 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
 	$scope.$root.currentpage = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
-        console.log(current_abs_url);
 	
         if(current_abs_url.match("index.html")) {$window.location = current_abs_url.replace("index.html","browse.html");}
         if(current_abs_url.match("/#/")) {$window.location = current_abs_url.replace("/#/","/browse.html#/");}
@@ -950,12 +965,9 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
                 url: url,
                 method: 'GET'
             }).success(function(data) {
-           console.log(data[0]);
         for(var i=0; i<data.length; i++){
-           console.log(data[i].domain.name);
            $scope.databases[data[i].domain.name]= data[i].domain.value;
         }
-    console.log($scope.databases);
             }).error(function(){
     console.log("GET error:" + url);
             });

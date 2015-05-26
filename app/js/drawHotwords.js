@@ -79,10 +79,11 @@ var select_form = body.append("form")
 //        .attr("style","width:87%")
         .attr("style","margin-bottom:8px")
         .attr("class","center");
-select_form.append("span").text("Repo: ").selectAll("span").attr("font-weight","bold");
+select_form.append("span").text("Repo: ").attr("font-weight","bold");
 var select_repo = select_form.append("select");
-select_form.append("span").text("  Field: ");
-var select_field = select_form.append("select");
+var divfield = select_form.append("div").attr("style","display:block");
+divfield.append("span").text("  Field: ");
+var select_field = divfield.append("select");
 
 select_repo.selectAll("option").data(d3.values(repoList)).enter().append("option").text(function(d) {
     return d;
