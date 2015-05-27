@@ -619,7 +619,7 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
     .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
-      .attr("dy", "-2.9em")
+      .attr("dy", "-3.9em")
       .attr("dx", "-4.9em")
       .style("text-anchor", "end")
       .text("Datasets No.");

@@ -187,7 +187,7 @@ $(function(){
         <div><!-- Repository -->
             <h3 class="ng-binding">Repository</h3>
                 <div  class="metasearch-organism-facet force-scrollbars list-group-item">
-                    <input type="text" class="form-control" ng-model="repos_input" placeholder="Find your repositories">
+                    <input type="text" class="form-control" ng-model="repos_input" placeholder="Find your repositories" style="margin-top:10px">
                     <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms'}">
                         <li ng-repeat="facet_value in result.facets[indexoffacets.repository].facetValues | filter:repos_input">
                             <input type="checkbox" name="result.facets[indexoffacets.repository].label" ng-checked="is_facet_applied(result.facets[indexoffacets.repository].id, facet_value.value)" ng-click="facet_search(result.facets[indexoffacets.repository].id, facet_value.value)">
