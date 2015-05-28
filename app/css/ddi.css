@@ -439,3 +439,88 @@ a.biological{
     margin-left:2px;
     margin-right:2px;
 }
+
+.tabactive{
+    color:green;
+}
+
+
+.next, .prev {
+    display: block;
+    height: 43px;
+    left: -39px;
+    top: 107px;
+    width: 24px;
+    z-index: 101;
+}
+
+.next {
+   left: 90%;
+}
+
+
+/**slider
+ */
+.jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
+    background: rgba(0, 0, 0, 0) url("./img/b05.png") no-repeat scroll 0 0;
+    cursor: pointer;
+    overflow: hidden;
+}
+.jssorb05 div {
+    background-position: -7px -7px;
+}
+.jssorb05 div:hover, .jssorb05 .av:hover {
+    background-position: -37px -7px;
+}
+.jssorb05 .av {
+    background-position: -67px -7px;
+}
+.jssorb05 .dn, .jssorb05 .dn:hover {
+background-position: -97px -7px;
+}
+.jssorb01 div, .jssorb01 div:hover, .jssorb01 .av {
+border: 1px solid #000;
+cursor: pointer;
+opacity: 0.7;
+overflow: hidden;
+}
+.jssorb01 div {
+background-color: #6e8b8d;
+}
+.jssorb01 div:hover, .jssorb01 .av:hover {
+background-color: #a3d3c6;
+}
+.jssorb01 .av {
+background-color: #fff;
+}
+.jssorb01 .dn, .jssorb01 .dn:hover {
+background-color: #555555;
+}
+.jssora13l, .jssora13r, .jssora13ldn, .jssora13rdn {
+background: rgba(0, 0, 0, 0) url("/app/css/a13.png") no-repeat scroll 0 0;
+cursor: pointer;
+display: block;
+overflow: hidden;
+position: absolute;
+}
+.jssora13l {
+background-position: -16px -37px;
+}
+.jssora13r {
+background-position: -75px -37px;
+}
+.jssora13l:hover {
+background-position: -136px -37px;
+}
+.jssora13r:hover {
+background-position: -195px -37px;
+}
+.jssora13ldn {
+background-position: -256px -37px;
+}
+.jssora13rdn {
+background-position: -315px -37px;
+}
+.no-margin {
+margin: 0;
+

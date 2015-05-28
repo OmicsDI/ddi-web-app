@@ -227,35 +227,51 @@ $(function(){
 
     <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" >
         <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" >
-            <li class="ui-state-default ui-corner-top"
+            <li class="ui-state-default ui-corner-top hotword"
                 ng-repeat="tab in tabs" 
-                ng-class="{tabsactive:isActiveTab(tab.url)}" 
+                ng-class="{tabactive:isActiveTab(tab.url)}" 
                 ng-click="onClickTab(tab)">{{tab.title}}</li>
         </ul>
     </div> 
 
-        <div id="mainView">
+        <div id="mainView" style="position:relative">
+        <span ng-hide="currentTab!=='protocols.tpl.html' " style="position: absolute; width: 30px; height: 46px; top: 30px; left: 2px;" class="jssora13l" u="arrowleft">
+        </span>
+        <span ng-hide="currentTab!=='protocols.tpl.html' " style="position: absolute; width: 30px; height: 46px; top: 30px; right: 2px;" class="jssora13r" u="arrowright">
+        </span>
             <div ng-include="currentTab"></div>
         </div>
    </div> <!--dataset_bottom_panel--> 
 
-    <script type="text/ng-template" id="one.tpl.html">
-        <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-            <h1>View One</h1>
-            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc.</p>
+    <script type="text/ng-template" id="protocols.tpl.html">
+        <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom "
+            ng-class = "currentTab !== 'protocols.tpl.html' ? 'ui-tabs-hide' :'' "
+        >
+
+            <div style="margin-left:30px" >
+            <h3>{{protocol_type}}</h3>
+            <p>{{dataset['sample_protocol']}}</p>
+            </div>
+
+        </div>
+
         </div>
     </script>
     
-    <script type="text/ng-template" id="two.tpl.html">
-        <div id="viewTwo" class="ui-tabs-panel ui-tabs-hide ui-widget-content ui-corner-bottom">
-            <h1>View Two</h1>
+    <script type="text/ng-template" id="bioentities.tpl.html">
+        <div id="viewTwo" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
+            ng-class = "currentTab !== 'bioentities.tpl.html' ? 'ui-tabs-hide' :'' "
+        >
+            <h3>BioEntities</h3>
             <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
         </div>
     </script>
     
-    <script type="text/ng-template" id="three.tpl.html">
-        <div id="viewThree" class="ui-tabs-panel ui-tabs-hide ui-widget-content ui-corner-bottom">
-            <h1>View Three</h1>
+    <script type="text/ng-template" id="labdetails.tpl.html">
+        <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
+            ng-class = "currentTab !== 'labdetails.tpl.html' ? 'ui-tabs-hide' :'' "
+        >
+            <h3>Lab Details</h3>
             <p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
         </div>
     </script>

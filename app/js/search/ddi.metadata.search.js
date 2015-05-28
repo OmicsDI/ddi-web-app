@@ -910,21 +910,23 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
 
     };
 
+    $scope.protocol_type = "Sample Protocol";
+
     /**
      * for tab control
      */
     $scope.tabs = [{
-        title: 'One',
-        url: 'one.tpl.html'
+        title: 'protocols',
+        url: 'protocols.tpl.html'
     }, {
-        title: 'Two',
-        url: 'two.tpl.html'
+        title: 'bioentities',
+        url: 'bioentities.tpl.html'
     }, {
-        title: 'Three',
-        url: 'three.tpl.html'
+        title: 'labdetails',
+        url: 'labdetails.tpl.html'
     }]; 
 
-    $scope.currentTab = 'one.tpl.html';
+    $scope.currentTab = 'protocols.tpl.html';
 
     $scope.onClickTab = function (tab) {
     $scope.currentTab = tab.url;
