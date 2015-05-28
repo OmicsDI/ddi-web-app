@@ -9,7 +9,7 @@
         <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
 
 
-        <title>DDI: API</title>
+        <title>DDI: Dataset</title>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
@@ -20,6 +20,7 @@
         <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
         -->
 
+        <link rel="stylesheet" href="//europepmc.org/css_min/min/jquery-ui-min.css">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
@@ -148,15 +149,11 @@ $(function(){
 
         <!-- /local-nav -->
 </div>
-
+</header>
 
 <div class="container" ng-controller="DatasetCtrl">
 <div class="row" style="margin-top:3%">
 
-
-<div class="col-md-9" id="leftpanel"style="margin-left:-15px">
-
-<div class="row" id="left_upper">
 <div class="col-md-1" id="socialnetworks" >
 <!-- <g:plusone></g:plusone> -->
 <a href=""><img src="css/email.png"  style="" ng-click="clicksharethis('email')"/> </a>
@@ -167,12 +164,11 @@ $(function(){
 <a href=""><img src="css/linkedin.png"  style="" ng-click="clicksharethis('linkedin')"/> </a>
 </div><!-- col-md-1-->
 
-<div class="col-md-5 panel panel-default " id="dataset">
+<div class="col-md-8" id="centerpanel"style="margin-left:-15px">
 
-   <div class="" id="dataset_upper" style="overflow:hidden"> 
-    <div class="" id="dataset_upper_left" style="height:30px;width:30px;float:left;">
-      <br>
-      <img src="css/Proteomics2.png"   /> 
+   <div class="panel panel-default" id="dataset_upper" > 
+    <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
+      <img src="css/Proteomics.png"/> 
     </div>
     <div class = "" id="dataset_upper_right" style="overflow:hidden">
         <div>
@@ -183,52 +179,28 @@ $(function(){
                 <div ng-show="dataset.description!=='Not available'">    
                <p ng-show="descriptionshowfull=='true'"> {{dataset.description}}<span ng-click="descriptionshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
                <p ng-show="descriptionshowfull=='false'"> {{dataset.description|limitTo:500}} <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span></p>
+                </div>
         </div>
-        </div>
-
-
-
     </div>
 
-   </div> <!--dataset_upper --> 
-   <div class="row" id="dataset_bottom" style="margin-top:10px"> 
+     <div class="row" id="dataset_bottom" style="margin-top:10px"> 
      <div class="col-md-6"> 
-       Repository: {{acc}}({{domain}})
+       Repository: {{acc}}[As supplied by {{domain}}]
      </div>
      <div class="col-md-6"> 
         <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
-        <p><a herf="#">Dataset Source</a></p>
      </div>
    </div> <!--dataset_bottom--> 
-</div><!-- col-md-6-->
 
-<div class="col-md-6" id="protocol_pubmed">
-
-     <div class="panel panel-default" if="protocolpanel">
-        <div style="margin:10px">
-        <h4> Protocols </h4>
-        <hr>
-        <h5> Sample Protocol</h5>
-        <div ng-show="dataset.sample_protocol!=='Not available'">
-               <p ng-show="sampleprotocolshowfull=='true'"> {{dataset.sample_protocol}}<span ng-click="sampleprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
-               <p ng-show="sampleprotocolshowfull=='false'"> {{dataset.sample_protocol|limitTo:500}} <span ng-click="sampleprotocolshowfull='true'" class="hotword"><b>{{dataset.sample_protocol.length>500?"...more":""}}</b></span></p>
-        </div>
-        <h5> Data Protocol</h5>
-        <div ng-show="dataset.data_protocol!=='Not available'">    
-               <p ng-show="dataprotocolshowfull=='true'"> {{dataset.data_protocol}}<span ng-click="dataprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
-               <p ng-show="dataprotocolshowfull=='false'"> {{dataset.data_protocol|limitTo:500}} <span ng-click="dataprotocolshowfull='true'" class="hotword"><b>{{dataset.data_protocol.length>500?"...more":""}}</b></span></p>
-        </div>    
-        </div>
-     </div>
+   </div> <!--dataset_upper --> 
 
 
-  <div class="panel panel-default " id="pubmedpanel" style="">
 
-   <div class="" id="pubmedpanel_upper" style="overflow:hidden"> 
-    <div class=" " id="pubmedpanel_upper_left" style="float:left; height:90px;width:90px">
-      <img src="css/pubmed_cycle.png"  style="height:95px;width:95px "/> 
+   <div class="panel panel-default" id="dataset_middle" > 
+    <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
+      <img src="css/pubmed_cycle.png"/> 
     </div>
-    <div class = "" id="pubmed_cycle_upper_right" style="overflow:hidden">
+    <div class = "" id="dataset_middle" style="overflow:hidden">
         <div>
             <h4>{{dataset.publications[0].title}}</h4>
         </div>
@@ -237,32 +209,73 @@ $(function(){
                <p ng-show="pubmedabstractshowfull=='true'"> {{dataset.publications[0].pubabstract}}<span ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
                <p ng-show="pubmedabstractshowfull=='false'"> {{dataset.publications[0].pubabstract|limitTo:500}} <span ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{dataset.publications[0].pubabstract.length>500?"...more":""}}</b></span></p>
         </div>
-
+     </div> 
+       
+     <div class="row" id="dataset_middle_bottom" style="margin-top:10px"> 
      <div class="col-md-6"> 
      <a href={{"http://europepmc.org/abstract/MED/"+dataset.publications[0].id}}>  PMID: {{dataset.publications[0].id}}</a>
      </div>
      <div class="col-md-6"> 
         <p>{{dataset.publications[0].publicationDate}}</p>
      </div>
+   </div> <!--dataset_middle_bottom--> 
 
-    </div>
+   </div> <!--dataset_middle_panel--> 
 
-   </div> <!--dataset_upper --> 
-   <div class="row" id="dataset_bottom" style="margin-top:10px"> 
+   <div class="panel panel-default" id="dataset_bottom" > 
+   
 
-   </div> <!--dataset_bottom--> 
-</div><!-- col-md-6-->
+    <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" >
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" >
+            <li class="ui-state-default ui-corner-top"
+                ng-repeat="tab in tabs" 
+                ng-class="{tabsactive:isActiveTab(tab.url)}" 
+                ng-click="onClickTab(tab)">{{tab.title}}</li>
+        </ul>
+    </div> 
 
-</div><!-- col-md-5-->
+        <div id="mainView">
+            <div ng-include="currentTab"></div>
+        </div>
+   </div> <!--dataset_bottom_panel--> 
 
-</div><!-- row leftupper-->
+    <script type="text/ng-template" id="one.tpl.html">
+        <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+            <h1>View One</h1>
+            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc.</p>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="two.tpl.html">
+        <div id="viewTwo" class="ui-tabs-panel ui-tabs-hide ui-widget-content ui-corner-bottom">
+            <h1>View Two</h1>
+            <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="three.tpl.html">
+        <div id="viewThree" class="ui-tabs-panel ui-tabs-hide ui-widget-content ui-corner-bottom">
+            <h1>View Three</h1>
+            <p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+        </div>
+    </script>
 
 
-<div class = "row panel panel-default "><!-- row leftbottom-->
-    <img src="css/leftbottom.png" style="width:100%; height:500px">
-</div><!-- row leftbottom-->
+</div><!-- col-md-8 centerpanel-->
 
-</div><!-- col-md-9 leftpanel-->
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="col-md-3 panel panel-default" id="rightpanel">
     <p>

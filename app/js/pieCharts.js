@@ -469,7 +469,6 @@ function change() {
 
     }
 
-console.log(url_pre);
 
     text_name.text("");
     text_value.text("");
@@ -594,7 +593,6 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
   data = annalData;
   data.forEach(function(d) {
     d.omics = omicsTypes.map(function(name) { if(name!=="year") return {name: name, value: +d[name], year:d["year"]}; });
-    console.log(d.omics);
   });
 
   // data.forEach(function(d) {

@@ -171,7 +171,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         update_page_title();
         query = preprocess_query(query);
         query_url = get_query_url(query, start);
-	// console.log("wget"+query_url);
+        console.log("wget"+query_url);
 //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
         /**
@@ -740,6 +740,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         getnewindexes();        
         var taxonomyRe = /TAXONOMY:"(\d+)"/g;
         var taxonomymatches=$scope.queryForShow.match(taxonomyRe);
+        if(taxonomymatches === null) return;
         for(var i=0; i<taxonomymatches.length; i++){
             var taxonomymatch = taxonomymatches[i];
             var taxonomyid = taxonomymatch.substr(10,taxonomymatch.length-11);
@@ -908,6 +909,29 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 // "preventDefault"in a?a.preventDefault():event.returnValue=!1
 
     };
+
+    /**
+     * for tab control
+     */
+    $scope.tabs = [{
+        title: 'One',
+        url: 'one.tpl.html'
+    }, {
+        title: 'Two',
+        url: 'two.tpl.html'
+    }, {
+        title: 'Three',
+        url: 'three.tpl.html'
+    }]; 
+
+    $scope.currentTab = 'one.tpl.html';
+
+    $scope.onClickTab = function (tab) {
+    $scope.currentTab = tab.url;
+    }
+    $scope.isActiveTab = function(tabUrl) {
+    return tabUrl == $scope.currentTab;
+    }
 }]);
 
 /**
