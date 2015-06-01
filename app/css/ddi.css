@@ -441,7 +441,15 @@ a.biological{
 }
 
 .tabactive{
-    color:green;
+    border-top-color:gray;
+    border-right-color:gray;
+    border-left-color:gray;
+    border-bottom-color:white;
+    border-top-width:1px;
+    border-left-width:1px;
+    border-right-width:1px;
+    border-bottom-width:1px;
+    border-style: dotted;
 }
 
 
@@ -524,3 +532,6 @@ background-position: -315px -37px;
 .no-margin {
 margin: 0;
 
+#tablink{
+    border-bottom-style:red;
+}

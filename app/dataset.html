@@ -154,7 +154,7 @@ $(function(){
 <div class="container" ng-controller="DatasetCtrl">
 <div class="row" style="margin-top:3%">
 
-<div class="col-md-1" id="socialnetworks" >
+<div class="col-md-1" id="socialnetworks" style="margin-left:-15px" >
 <!-- <g:plusone></g:plusone> -->
 <a href=""><img src="css/email.png"  style="" ng-click="clicksharethis('email')"/> </a>
 <a href=""><img src="css/twitter.png"  style="" ng-click="clicksharethis('twitter')"/> </a>
@@ -196,27 +196,44 @@ $(function(){
 
 
 
-   <div class="panel panel-default" id="dataset_middle" > 
+   <div class="panel panel-default" id="dataset_middle" style="position:relative"> 
+        <span ng-hide="currentPublication===0 || dataset.publications === null" 
+            style="position: absolute; width: 30px; height: 46px; top: 70px; left: 2px;" 
+            class="jssora13l" u="arrowleft"
+            ng-click="onClickPublicationLeft()">
+        </span>
+        <span ng-hide="currentPublication===dataset.publications.length-1 || dataset.publications === null" 
+            style="position: absolute; width: 30px; height: 46px; top: 70px; right: 2px;"
+            class="jssora13r" u="arrowright"
+            ng-click="onClickPublicationRight()">
+        </span>
     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
       <img src="css/pubmed_cycle.png"/> 
     </div>
-    <div class = "" id="dataset_middle" style="overflow:hidden">
+    <div class = "" id="dataset_middle" style="overflow:hidden;margin-right:20px">
         <div>
-            <h4>{{dataset.publications[0].title}}</h4>
+            <h4>{{dataset.publications[currentPublication].title}}</h4>
         </div>
         <hr>
-        <div>
-               <p ng-show="pubmedabstractshowfull=='true'"> {{dataset.publications[0].pubabstract}}<span ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
-               <p ng-show="pubmedabstractshowfull=='false'"> {{dataset.publications[0].pubabstract|limitTo:500}} <span ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{dataset.publications[0].pubabstract.length>500?"...more":""}}</b></span></p>
+        <div style="margin-right:20px">
+               <p ng-show="dataset.publications===null">No Publication.</p>
+               <p ng-show="pubmedabstractshowfull=='true'"> {{dataset.publications[currentPublication].pubabstract}}<span ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
+               <p ng-show="pubmedabstractshowfull=='false'"> {{dataset.publications[currentPublication].pubabstract|limitTo:500}} <span ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{dataset.publications[currentPublication].pubabstract.length>500?"...more":""}}</b></span></p>
         </div>
      </div> 
        
      <div class="row" id="dataset_middle_bottom" style="margin-top:10px"> 
-     <div class="col-md-6"> 
-     <a href={{"http://europepmc.org/abstract/MED/"+dataset.publications[0].id}}>  PMID: {{dataset.publications[0].id}}</a>
+     <div class="col-md-4"> 
+     <a ng-hide="dataset.publications === null" href={{"http://europepmc.org/abstract/MED/"+dataset.publications[currentPublication].id}}>  PMID: {{dataset.publications[currentPublication].id}}</a>
+     <p ng-hide="dataset.publications !== null"> No relative publication.</a>
      </div>
-     <div class="col-md-6"> 
-        <p>{{dataset.publications[0].publicationDate}}</p>
+     <div class="col-md-4"> 
+         <span ng-hide="dataset.publications === null">
+        Publication:{{currentPublication +1}}/
+        {{dataset.publications.length}}</span>
+     </div>
+     <div class="col-md-4"> 
+        <p>{{dataset.publications[currentPublication].publicationDate}}</p>
      </div>
    </div> <!--dataset_middle_bottom--> 
 
@@ -226,18 +243,38 @@ $(function(){
    
 
     <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" >
-        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" >
-            <li class="ui-state-default ui-corner-top hotword"
+      <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist" >
+           <li class="ui-corner-top hotword" style="border-style:solid; border-width:1px;border-top-left-radius:1em; margin-left:-1px" 
                 ng-repeat="tab in tabs" 
                 ng-class="{tabactive:isActiveTab(tab.url)}" 
-                ng-click="onClickTab(tab)">{{tab.title}}</li>
+                ng-click="onClickTab(tab)">
+                <span style="font-size:18px;margin:4px;font-weight:300">{{tab.title}}<img border="1" src="css/mark.png" style=""></span>     
+           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
+                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>     
+           </li>
+           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
+                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>     
+           </li>
+           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
+                <span style="font-size:16px">&nbsp; <img border="1" src="css/mark.png" style=""></span>     
+           </li>
+           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
+                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>     
+           </li>
         </ul>
+  
     </div> 
 
-        <div id="mainView" style="position:relative">
-        <span ng-hide="currentTab!=='protocols.tpl.html' " style="position: absolute; width: 30px; height: 46px; top: 30px; left: 2px;" class="jssora13l" u="arrowleft">
+        <div id="mainView" style="position:relative; border-style:none">
+        <span ng-hide="currentTab!=='protocols.tpl.html' " 
+            style="position: absolute; width: 30px; height: 46px; top: 30px; left: 2px;" 
+            class="jssora13l" u="arrowleft"
+            ng-click="onClickProtocol()">
         </span>
-        <span ng-hide="currentTab!=='protocols.tpl.html' " style="position: absolute; width: 30px; height: 46px; top: 30px; right: 2px;" class="jssora13r" u="arrowright">
+        <span ng-hide="currentTab!=='protocols.tpl.html' "
+            style="position: absolute; width: 30px; height: 46px; top: 30px; right: 2px;"
+            class="jssora13r" u="arrowright"
+            ng-click="onClickProtocol()">
         </span>
             <div ng-include="currentTab"></div>
         </div>
@@ -246,11 +283,12 @@ $(function(){
     <script type="text/ng-template" id="protocols.tpl.html">
         <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom "
             ng-class = "currentTab !== 'protocols.tpl.html' ? 'ui-tabs-hide' :'' "
+        style="border-style:none"
         >
 
             <div style="margin-left:30px" >
-            <h3>{{protocol_type}}</h3>
-            <p>{{dataset['sample_protocol']}}</p>
+            <h3>{{protocols[currentProtocol]}}</h3>
+            <p>{{dataset[currentProtocol]}}</p>
             </div>
 
         </div>
@@ -261,6 +299,7 @@ $(function(){
     <script type="text/ng-template" id="bioentities.tpl.html">
         <div id="viewTwo" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
             ng-class = "currentTab !== 'bioentities.tpl.html' ? 'ui-tabs-hide' :'' "
+            style="border-style:none"
         >
             <h3>BioEntities</h3>
             <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
@@ -270,6 +309,7 @@ $(function(){
     <script type="text/ng-template" id="labdetails.tpl.html">
         <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
             ng-class = "currentTab !== 'labdetails.tpl.html' ? 'ui-tabs-hide' :'' "
+            style="border-style:none"
         >
             <h3>Lab Details</h3>
             <p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>

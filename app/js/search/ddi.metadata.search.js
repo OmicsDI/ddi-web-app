@@ -910,19 +910,20 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
 
     };
 
-    $scope.protocol_type = "Sample Protocol";
+    $scope.currentProtocol= "sample_protocol";
+    $scope.protocols = {"sample_protocol":"Sample Protocol", "data_protocol":"Data Protocol"};
 
     /**
      * for tab control
      */
     $scope.tabs = [{
-        title: 'protocols',
+        title: 'Protocols',
         url: 'protocols.tpl.html'
     }, {
-        title: 'bioentities',
+        title: 'Bioentities',
         url: 'bioentities.tpl.html'
     }, {
-        title: 'labdetails',
+        title: 'Lab Details',
         url: 'labdetails.tpl.html'
     }]; 
 
@@ -934,6 +935,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     $scope.isActiveTab = function(tabUrl) {
     return tabUrl == $scope.currentTab;
     }
+
+    /* onclick for change protocol type
+     */
+    $scope.onClickProtocol = function (){
+        if($scope.currentProtocol== "sample_protocol") {
+            $scope.currentProtocol = "data_protocol";
+        }
+        else{
+            $scope.currentProtocol = "sample_protocol";
+        }
+    }
+
+    /*
+     * for the multiple publications click
+     */
+
+    $scope.currentPublication = 0;
+
+    $scope.onClickPublicationLeft = function(){
+        $scope.currentPublication--;
+    }
+
+    $scope.onClickPublicationRight = function(){
+        $scope.currentPublication++;
+    }
+
 }]);
 
 /**
