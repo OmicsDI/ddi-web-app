@@ -5,7 +5,7 @@
 *{font-weight:normal;font-style:normal;text-decoration:none;text-align:left;text-indent:0}body{margin:0
 auto;width:96%;max-width:1350px}body.narrow{max-width:984px}body.wide{max-width:1600px}body.full-width{max-width:none}body.level1{max-width:1200px}body{font-family:Verdana,sans-serif}@font-face{font-family:'HelveticaNeueLT Pro';src:url('/web_guidelines/fonts/helveticaneueltprolt.eot');src:url('/web_guidelines/fonts/helveticaneueltprolt.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/helveticaneueltprolt.otf') format('opentype'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/helveticaneueltprolt.woff') format('woff'),
 url('/web_guidelines/fonts/helveticaneueltprolt.ttf') format('truetype'),
 url('/web_guidelines/fonts/helveticaneueltprolt.svg#HelveticaNeueLTPro-Lt') format('svg');font-weight:normal;font-style:normal}h1,h2,h3,h4,h5,h6{font-family:'HelveticaNeueLT Pro','Helvetica Neue',Helvetica,Arial,sans-serif;margin:9px
@@ -80,7 +80,10 @@ td code,
 pre
 code{font-size:100%}pre{padding:3%;border-width:1px;border-style:dotted;overflow:auto;margin:0
 0.69em}i,em{font-style:italic}b,strong{font-weight:bold}abbr,acronym{border-bottom:1px dashed #ccc;cursor:help}dfn{padding:2px
-3px;background-color:#ddd;cursor:help}img{border:0;margin:0;width:auto;max-width:100%}img:not(.imagecache-screenshot-carousel-img){height:auto}section
+3px;background-color:#ddd;cursor:help}
+img{border:0;margin:0;max-width:100%}
+img:not(.imagecache-screenshot-carousel-img){}
+section
 img{margin:7px
 0}img.logo{margin-bottom:2px}img.photo{border:1px
 solid #777;margin:0
@@ -94,8 +97,7 @@ table{padding:0}h1, h2, h3, h4, h5, h6, p,
 form,
 table, body.table-layout
 table.data{padding:0
-9px}
-a,a:link,a:visited{border-bottom-width:1px;border-bottom-style:none;border-bottom-color:inherit}a:hover,a:focus,a:active{border-bottom-style:none}a.special{font-style:italic;border-bottom-style:double;border-bottom-width:3px;padding:0.1em 0.3em}td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active{border-bottom-color:#222}div#local-title-logo
+9px}a,a:link,a:visited{border-bottom-width:1px;border-bottom-style:dotted;border-bottom-color:inherit}a:hover,a:focus,a:active{border-bottom-style:solid}a.special{font-style:italic;border-bottom-style:double;border-bottom-width:3px;padding:0.1em 0.3em}td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active{border-bottom-color:#222}div#local-title-logo
 a{border:0
 none;text-decoration:none}h1 a, h1 a:link,
 h1 a:visited,
@@ -149,31 +151,31 @@ td{padding:0;border:none;font-size:100%}table.predoc-details
 th{width:20%;background-color:#aad095}ul,ol{padding:0
 9px 0 27px}ul li>p{padding-left:0}@font-face{font-family:'EBI-Conceptual';src:url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
 url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Functional';src:url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
 url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Generic';src:url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');src:url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
 url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Species';src:url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),
 url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-SocialMedia';src:url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-SocialMedia') format('svg'),
 url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-FileFormats';src:url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.eot');src:url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.svg#EBI-Functional') format('svg'),
 url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Chemistry';src:url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.eot');src:url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.eot?#iefix') format('embedded-opentype'),
 url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.woff') format('woff'),
-local('?'),
+local('☺'),
 url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.svg#EBI-Chemistry') format('svg'),
 url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.ttf') format('truetype');font-weight:normal;font-style:normal}html.fontface
 .icon{text-decoration:none;font-style:normal}html.fontface  .icon-conceptual:before{font-family:'EBI-Conceptual';font-size:138.5%;color:#bbb;content:attr(data-icon);margin:0

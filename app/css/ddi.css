@@ -1,4 +1,7 @@
-
+.socialnetwork {
+ height:50px; 
+ width:50px;
+}
 .container {
 background: #fff;
 width:100%;
@@ -512,22 +515,22 @@ overflow: hidden;
 position: absolute;
 }
 .jssora13l {
-background-position: -16px -37px;
+background-position: -8px -18px;
 }
 .jssora13r {
-background-position: -75px -37px;
+background-position: -37px -18px;
 }
 .jssora13l:hover {
-background-position: -136px -37px;
+background-position: -68px -18px;
 }
 .jssora13r:hover {
-background-position: -195px -37px;
+background-position: -97px -18px;
 }
 .jssora13ldn {
-background-position: -256px -37px;
+background-position: -128px -18px;
 }
 .jssora13rdn {
-background-position: -315px -37px;
+background-position: -158px -18px;
 }
 .no-margin {
 margin: 0;
@@ -535,3 +538,5 @@ margin: 0;
 #tablink{
     border-bottom-style:red;
 }
+
+
