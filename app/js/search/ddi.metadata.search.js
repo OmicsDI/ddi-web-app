@@ -522,7 +522,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.maxpageno= 1;
 
     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
-    $scope.metabolomics_list="metabolights,metabolights_dataset,metabolome_workbench";
+    $scope.metabolomics_list="metabolights,metabolights_dataset,metabolome_workbench,MetaboLights";
     $scope.genomics_list="ega,ena";
     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
                         "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
@@ -869,7 +869,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
  * Dataset controller
  * Responsible for the Dataset fetching.
  */
-angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http', function($scope, $location, $window, $timeout, $http ) {
+angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http','$q', function($scope, $location, $window, $timeout, $http, $q ) {
 
      var input= $location.url().replace("/",""); 
      var inputs = input.split("*");
@@ -881,6 +881,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      $scope.pubmedabstractshowfull = "false";
      $scope.dataprotocolshowfull = "false";
      $scope.sampleprotocolshowfull = "false";
+     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
+     $scope.metabolomics_list=" MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench";
+     $scope.genomics_list="ega,ena";
+
+     $scope.getdatasetfail = true;
 
      var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
      $http({
@@ -888,9 +893,44 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 method: 'GET'
             }).success(function(data) {
       $scope.dataset = data;
+      $scope.getdatasetfail = false;
             }).error(function(){
     console.log("GET error:" + url);
             });
+                     
+     $scope.altmetricEntities = [];
+     $scope.publicationIndex = {};
+     var arr = [];
+     var altmetricUrls = [];
+//     for (var a = 0; a < subs.length; ++a) {
+     arr.push($http.get(url));
+//     }
+
+     $q.all(arr).then(function (ret) {
+             // ret[0] contains the response of the first call
+             // ret[1] contains the second response
+             // etc.
+     var dataset2 = ret[0].data;
+     for(var i=0; i<dataset2.publications.length; i++){
+        var pubmedid = dataset2.publications[i].id;
+        altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmedid;
+
+        $http.get(altmetricUrl).success(function(data){
+            var altmetricEntity = {};
+            var insideId = data.pmid;
+            altmetricEntity ={"pubmedid":insideId,"detailUrl":data.details_url,"imageUrl":data.images.small};
+            $scope.altmetricEntities.push(altmetricEntity);
+            $scope.publicationIndex[insideId] = $scope.altmetricEntities.indexOf(altmetricEntity);
+            console.log(insideId+":"+$scope.altmetricEntities.indexOf(altmetricEntity));
+            console.log($scope.publicationIndex);
+            console.log($scope.publicationIndex["12665801"]);
+        }).error(function(){
+        });
+
+     }
+
+
+     }); //outside $q
 
 
 
@@ -961,6 +1001,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
         $scope.currentPublication++;
     }
 
+    /*
+     * to get the altmetric bardges
+     */
+
+
 }]);
 
 /**
@@ -969,7 +1014,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
-    $scope.metabolomics_list="metabolights,metabolights_dataset,MetabolomicsWorkbench";
+    $scope.metabolomics_list="metabolights,metabolights_dataset,MetabolomicsWorkbench,MetaboLights";
     $scope.genomics_list="ega,ena";
     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
                         "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
