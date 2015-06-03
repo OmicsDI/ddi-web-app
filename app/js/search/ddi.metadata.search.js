@@ -521,9 +521,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
 
-    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
+    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,metabolome_workbench,MetaboLights";
-    $scope.genomics_list="ega,ena";
+    $scope.genomics_list="ega,EGA";
     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
                         "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
                         "massive":"MassIVE", "MassIVE":"MassIVE",
@@ -881,16 +881,16 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      $scope.pubmedabstractshowfull = "false";
      $scope.dataprotocolshowfull = "false";
      $scope.sampleprotocolshowfull = "false";
-     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
-     $scope.metabolomics_list=" MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench";
-     $scope.genomics_list="ega,ena";
+     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
+     $scope.metabolomics_list="MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench";
+     $scope.genomics_list="ega,EGA";
      $scope.databaseUrls={
          "PRIDE":"http://www.ebi.ac.uk/pride/archive/",
          "MetaboLights":"http://www.ebi.ac.uk/metabolights/",
          "Metabolomics Workbench":"www.metabolomicsworkbench.org/",
          "PeptideAtlas":"http://www.peptideatlas.org/",
          "MassIVE":"https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-         "":"",
+         "Metabolomics Workbench":"http://www.metabolomicsworkbench.org/"
      
      }
 
@@ -1026,9 +1026,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  * Responsible for the Datasets Stastistic Lists.
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
-    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
+    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,MetabolomicsWorkbench,MetaboLights";
-    $scope.genomics_list="ega,ena";
+    $scope.genomics_list="ega,EGA";
     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
                         "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
                         "massive":"MassIVE", "MassIVE":"MassIVE",

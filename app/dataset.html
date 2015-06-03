@@ -218,7 +218,7 @@ $(function(){
 
      <div class="row" id="dataset_bottom" style="margin-top:10px"> 
      <div class="col-md-6"> 
-         Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>[As supplied by<a>{{domain}}</a>]
+         Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>  [As supplied by <a href={{databaseUrls[domain]}}>{{domain}}</a>]
      </div>
      <div class="col-md-6"> 
         <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
@@ -246,7 +246,7 @@ $(function(){
     </div>
 
      <div class="row" id="dataset_protocol_bottom" style="margin-top:10px margin-left:10px"> 
-         <p style="margin-left:10px"><b>Instruments:</b> 
+         <p style="margin-left:15px"><b>Instruments:</b> 
                <span>
                    <a ng-repeat="instrument in dataset.instruments"  title={{instrument}} class="biological" href={{instrumentPreUrl+'"'+instrument+'"'}}>
                  {{instrument}}
