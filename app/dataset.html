@@ -459,7 +459,7 @@ $(function(){
     </p>
  <ul class="list-unstyled">
   <!-- ngRepeat: dataset in result.datasets -->
-  <li  class="result animate-repeat " ng-repeat="relatedDataset in relatedDatasets" style="">
+  <li  class="result animate-repeat " ng-repeat="relatedDataset in relatedDatasets | limitTo:relatedDatasetsLimit" style="">
     <div class="project-widget  list-group-item">
         
         <div class="project-widget-accession">
@@ -493,6 +493,12 @@ $(function(){
    </div>
   </li><!-- end ngRepeat: -->
 </ul>   
+ <div class="input-btn" ng-show="loadMoreBtnShow">
+       <button type="submit" class="btn btn-default" ng-click="relatedLoadMore()" >
+          <i class="fa fa-search"></i> Load More
+       </button>
+ </div><!-- /input-group-btn -->
+ 
 </div><!-- col-md-3 rightpanel-->
 
 </div><!-- row-->

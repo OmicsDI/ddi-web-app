@@ -902,6 +902,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
 
      $scope.getdatasetfail = false;
      $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
+     $scope.relatedDatasetsLimit = 5;
+     $scope.loadMoreBtnShow = true;
 
 
      var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
@@ -1033,9 +1035,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     }
 
     /*
-     * to get the altmetric bardges
+     * to load more related datasets
      */
-
+    $scope.relatedLoadMore = function(){
+        $scope.relatedDatasetsLimit = 100; 
+        $scope.loadMoreBtnShow = false;
+    }
 
 }]);
 
