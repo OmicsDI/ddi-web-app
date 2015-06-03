@@ -17,16 +17,14 @@
         <link type="text/css" href="css/prider.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
         <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
         -->
 
         <link rel="stylesheet" href="//europepmc.org/css_min/min/jquery-ui-min.css">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="css/ebi-visual.css" type="text/css" media="screen">
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
-        <link type="text/css" href="css/ddi2.css" rel="stylesheet">
 
      <!-- favico -->
        <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
@@ -101,7 +99,7 @@ $(function(){
          <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
             <fieldset>
                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                  <div class="input-group">
+                  <div class="input-group input-group-sm">
                          <input type="text" style="background-color:#fff; width:99%"
                          placeholder="organism, repository, gene, tissue, accession"
                          class="form-control"
@@ -194,12 +192,12 @@ $(function(){
 
 <div class="col-md-8" id="centerpanel"style="margin-left:-15px" >
 
-<div id="error-row" class="row" ng-show="getdatasetfail===true">
+<div id="error-row" class="row" ng-hide="getdatasetfail===false">
     <p>
     We can't access this dataset:{{acc}} at {{domain}} right now.
     </p>
 </div>
-   <div class="panel panel-default" id="dataset_upper"  ng-hide="getdatasetfail===true"> 
+    <div class="panel panel-default" id="dataset_upper"  ng-hide="getdatasetfail===true"> 
     <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
             <img src="css/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1" /> 
             <img src="css/Metabolomics.png" ng-show="metabolomics_list.indexOf(domain)>-1" />
@@ -219,14 +217,43 @@ $(function(){
     </div>
 
      <div class="row" id="dataset_bottom" style="margin-top:10px"> 
-     <div class="col-md-6"> 
-       Repository: {{acc}}[As supplied by {{domain}}]
+     <div class="col-md-5" style="margin-left:10px"> 
+         Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>  [As supplied by <a href={{databaseUrls[domain]}}>{{domain}}</a>]
      </div>
-     <div class="col-md-6"> 
+     <div class="col-md-5" style="margin-left:10px"> 
         <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
      </div>
    </div> <!--dataset_bottom--> 
+   </div> <!--dataset_upper -->                     
+   
+   
+   <div class="panel panel-default" id="dataset_protocol"> 
+   <div class = "" id="dataset_protocol_right" style="overflow:hidden">
+        <div>
+            <h4>Protocol</h4>
+        </div>
+        <hr>
+        <div>
+          <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">    
+              <p>
+              <span><u>SAMPLE PROTOCOL:</u> {{sampleProtocolDescription}}</span>
+              </p>
+              <p>
+               <span><u>DATA PROTOCOL:</u>{{dataProtocolDescription}}</span>
+              </p>
+          </div>
+       </div>
+    </div>
 
+     <div class="row" id="dataset_protocol_bottom" style="margin-top:10px margin-left:10px"> 
+         <p style="margin-left:15px"><b>Instruments:</b> 
+               <span>
+                   <a ng-repeat="instrument in dataset.instruments"  title={{instrument}} class="biological" href={{instrumentPreUrl+'"'+instrument+'"'}}>
+                 {{instrument}}
+                 </a>
+              </span>
+         </p> 
+     </div> <!--dataset_protocol_bottom--> 
    </div> <!--dataset_upper --> 
 
 
@@ -258,7 +285,7 @@ $(function(){
      </div> 
        
      <div class="row" id="dataset_middle_bottom" style="margin-top:10px"> 
-     <div class="col-md-4"> 
+     <div class="col-md-4" style="margin-left:10px"> 
      <a ng-hide="dataset.publications === null" href={{"http://europepmc.org/abstract/MED/"+dataset.publications[currentPublication].id}}>  PMID: {{dataset.publications[currentPublication].id}}</a>
      </div>
      <div class="col-md-4"> 
@@ -266,7 +293,7 @@ $(function(){
         Publication:{{currentPublication +1}}/
         {{dataset.publications.length}}</span>
      </div>
-     <div class="col-md-4"> 
+     <div class="col-md-3"> 
         <p>{{dataset.publications[currentPublication].publicationDate}}</p>
      </div>
    </div> <!--dataset_middle_bottom--> 
@@ -341,14 +368,71 @@ $(function(){
     </script>
     
     <script type="text/ng-template" id="labdetails.tpl.html">
-        <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
+      <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
             ng-class = "currentTab !== 'labdetails.tpl.html' ? 'ui-tabs-hide' :'' "
             style="border-style:none"
         >
-            <h3>Lab Details</h3>
-            <p>In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+      <h3>Lab Details</h3>
+        <p>
+        <b>contact affiliation:</b> The Novo Nordisk Foundation Center for Protein Research, University of Copenhagen, Denmark 
+        </p>
+        <p>
+        <b>lab head:</b> Chunaram Choudhary      contact email: chuna.choudhary@cpr.ku.dk 
+        </p>
+        <p>
+        <b>dataset submitter:</b>   Shankha Satpathy   contact email: shankha@cpr.ku.dk
+        </p>
+                                                         
+     <h4> Datasets from this lab:</h4>
+
+<div id="lab-results" class="grid_22 right-column">
+<div id="lab-results-items" class="list-group">
+<ul class="list-unstyled">
+  <li class="result animate-repeat" ng-repeat="labdataset in dataset.labdatasets">
+    <div class="project-widget  list-group-item">
+        
+        <div class="project-widget-accession">
+            <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(labdataset.source)>-1" /> 
+            <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(labdataset.source)>-1" />
+            <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(labdataset.source)>-1" /> 
+            <a href={{"dataset.html#/"+labdataset.id+"*"+repositories[labdataset.source]}}>{{labdataset.title}}</a>  <span>{{test}}  </span>
         </div>
-    </script>
+
+        <div class="project-widget-paragraph">
+                <b>Project description:</b>
+            {{labdataset["description"]|limitTo:450}}{{labdataset["description"].length>450?'...':''}}
+            <span ng-show="labdataset.description===null">Not available</span>            
+        </div>
+
+        <div class="project-widget-paragraph">
+        </div>
+            
+        <div class="project-widget-paragraph" ng-show="labdataset['organisms']">
+            <b>Organism: </b><span ng-repeat="organism in labdataset['organisms']">{{organism["name"]}}  </span> <span ng-show="labdataset.organisms.length===0">Not available</span>
+        </div>
+            
+        <div class="project-widget-paragraph">
+            {{labdataset.id}} ({{repositories[labdataset.source]}})
+        </div>
+            
+        <div class="project-widget-paragraph" ng-show="labdataset.publicationDate">
+            <b>Made public: </b> {{labdataset['publicationDate'].substr(0,4)+"-"+labdataset['publicationDate'].substr(4,2)+"-"+labdataset['publicationDate'].substr(6,2)}}
+        </div>
+
+        <div class="project-widget-tag" ng-hide="labdataset.keywords[0] === 'Not available'">
+            <a ng-repeat="keyword in labdataset.keywords"  title={{keyword}} class="biological" href={{"browse.html#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
+        </div>
+    </div>
+  </li>  
+</ul>
+<small class="text-muted ng-binding ng-scope" ng-if="result.hitCount &gt; result.entries.length">Displaying 5 out of 72 datasets in this lab</small>
+<button ng-show="result.hitCount &gt; result.entries.length" ng-click="load_more_results()" class="btn btn-default load-more col-md-3" style=""><i ng-class="search_in_progress ? 'fa fa-spinner fa-spin' : 'hidden'" class="hidden"></i> Load more</button>
+</div>
+</div><!-- row -->         
+
+
+</div>
+</script>
 
 
 </div><!-- col-md-8 centerpanel-->
@@ -374,369 +458,40 @@ $(function(){
        </h4> 
     </p>
  <ul class="list-unstyled">
-  <!-- ngRepeat: dataset in result.datasets --><li  class="result animate-repeat " style="">
+  <!-- ngRepeat: dataset in result.datasets -->
+  <li  class="result animate-repeat " ng-repeat="relatedDataset in relatedDatasets" style="">
     <div class="project-widget  list-group-item">
         
         <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
+            <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(relatedDataset.source)>-1" /> 
+            <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1" />
+            <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1" /> 
+            <a href={{"dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>  <span>{{test}}  </span>
         </div>
             
 <!--         <div class="project-widget-title">
             {{dataset["title"]}}
         </div> -->
 
-        <div class="project-widget-paragraph ng-binding">
+         <div class="project-widget-paragraph">
                 <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
+            {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
+            <span ng-show="relatedDataset.description===null">Not available</span>            
         </div>
-
+ 
+         <div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">
+            <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span> <span ng-show="relatedDataset.organisms.length===0">Not available</span>
+        </div>
+            
         <div class="project-widget-paragraph">
+            {{relatedDataset.id}} ({{repositories[relatedDataset.source]}})
         </div>
             
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
+        <div class="project-widget-paragraph" ng-show="relatedDataset.publicationDate">
+            <b>Made public: </b> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}
         </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-
-<li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-  <li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-  <li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-  <li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-  <li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
- <li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets --> 
-<li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-<li  class="result animate-repeat " style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img  src="css/Proteomics2.png"> 
-            <a href="dataset.html#/PRD000103" class="ng-binding">MM differential proteome</a>  <span class="ng-binding">  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-        <div class="project-widget-paragraph ng-binding">
-                <b>Project description:</b>
-            Not available
-                        <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
-            <span  class="ng-hide">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div  class="project-widget-paragraph">
-            <b>Organism: </b><!-- ngRepeat: organism in dataset['organisms'] --><span ng-repeat="organism in dataset['organisms']" class="ng-binding ng-scope">Homo sapiens  </span><!-- end ngRepeat: organism in dataset['organisms'] --> <span ng-show="dataset.organisms.length===0" class="ng-hide">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph ng-binding">
-            PRD000103 (PRIDE)
-        </div>
-            
-        <div  class="project-widget-paragraph ng-binding">
-            <b>Made public: </b> 2009-08-08
-        </div>
-
-            
-        <div  class="project-widget-tag ng-hide">
-                    <!-- ngRepeat: keyword in dataset.keywords --><a href="{{&quot;browse.html#/search?q=&quot;+keyword&quot;" class="biological ng-binding ng-scope" title="Not available" ng-repeat="keyword in dataset.keywords">Not available</a><!-- end ngRepeat: keyword in dataset.keywords -->
-        </div>
-    </div>
-  </li><!-- end ngRepeat: dataset in result.datasets -->
-
-
+   </div>
+  </li><!-- end ngRepeat: -->
 </ul>   
 </div><!-- col-md-3 rightpanel-->
 

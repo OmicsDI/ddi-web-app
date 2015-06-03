@@ -12,7 +12,6 @@
         <title>DDI: Help</title>
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link type="text/css" href="css/ddi.css" rel="stylesheet">
         <link type="text/css" href="css/main.css" rel="stylesheet">
         <!--
         <link type="text/css" href="css/prider.css" rel="stylesheet">
@@ -24,6 +23,7 @@
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
+        <link type="text/css" href="css/ddi.css" rel="stylesheet">
 
         <!-- favico -->
        <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
@@ -99,7 +99,7 @@ $(function(){
          <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
             <fieldset>
                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                  <div class="input-group">
+                  <div class="input-group input-group-sm">
                          <input type="text" style="background-color:#fff; width:99%"
                          placeholder="organism, repository, gene, tissue, accession"
                          class="form-control"

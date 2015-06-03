@@ -521,9 +521,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.pages=[0,0];
     $scope.maxpageno= 1;
 
-    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
+    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,metabolome_workbench,MetaboLights";
-    $scope.genomics_list="ega,ena";
+    $scope.genomics_list="ega,EGA";
     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
                         "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
                         "massive":"MassIVE", "MassIVE":"MassIVE",
@@ -881,11 +881,28 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      $scope.pubmedabstractshowfull = "false";
      $scope.dataprotocolshowfull = "false";
      $scope.sampleprotocolshowfull = "false";
-     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
-     $scope.metabolomics_list=" MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench";
-     $scope.genomics_list="ega,ena";
+     $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
+     $scope.metabolomics_list="MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench";
+     $scope.genomics_list="ega,EGA";
+     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
+                        "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
+                        "massive":"MassIVE", "MassIVE":"MassIVE",
+                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
+                         "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
+                         "ega":"EGA", "EGA":"EGA",  };
+     $scope.databaseUrls={
+         "PRIDE":"http://www.ebi.ac.uk/pride/archive/",
+         "MetaboLights":"http://www.ebi.ac.uk/metabolights/",
+         "Metabolomics Workbench":"www.metabolomicsworkbench.org/",
+         "PeptideAtlas":"http://www.peptideatlas.org/",
+         "MassIVE":"https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
+         "Metabolomics Workbench":"http://www.metabolomicsworkbench.org/"
+     
+     }
 
-     $scope.getdatasetfail = true;
+     $scope.getdatasetfail = false;
+     $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
+
 
      var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
      $http({
@@ -893,11 +910,23 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 method: 'GET'
             }).success(function(data) {
       $scope.dataset = data;
-      $scope.getdatasetfail = false;
+      $scope.sampleProtocolDescription = $scope.dataset.protocols[0].description;
+      $scope.dataProtocolDescription = $scope.dataset.protocols[1].description;
             }).error(function(){
-    console.log("GET error:" + url);
+      $scope.getdatasetfail = true;
+      console.log("GET error:" + url);
             });
-                     
+     var relateDataUrl = "http://localhost:9091/dataset/moreLikeThis?acc="+acc+"&database="+domain;
+     $http({
+                url: relateDataUrl,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.relatedDatasets = data.datasets;
+            }).error(function(){
+      console.log("GET error:" + url);
+            });                                                                                                                        
+
+
      $scope.altmetricEntities = [];
      $scope.publicationIndex = {};
      var arr = [];
@@ -957,9 +986,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      * for tab control
      */
     $scope.tabs = [{
+    /*
         title: 'Protocols',
         url: 'protocols.tpl.html'
     }, {
+    */
         title: 'Bioentities',
         url: 'bioentities.tpl.html'
     }, {
@@ -967,7 +998,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
         url: 'labdetails.tpl.html'
     }]; 
 
-    $scope.currentTab = 'protocols.tpl.html';
+    $scope.currentTab = 'bioentities.tpl.html';
 
     $scope.onClickTab = function (tab) {
     $scope.currentTab = tab.url;
@@ -1013,9 +1044,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  * Responsible for the Datasets Stastistic Lists.
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function($scope, $http ) {
-    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
+    $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
     $scope.metabolomics_list="metabolights,metabolights_dataset,MetabolomicsWorkbench,MetaboLights";
-    $scope.genomics_list="ega,ena";
+    $scope.genomics_list="ega,EGA";
     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
                         "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
                         "massive":"MassIVE", "MassIVE":"MassIVE",

@@ -2,21 +2,21 @@ var drawHotwords = function (){
 
 queue()
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=pride&field=description') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptideatlas&field=description') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=description') // geojson points
+    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptide_atlas&field=description') // geojson points
+    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=description') // geojson points
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=description') // geojson points
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolome_workbench&field=description') // geojson points
 //    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=ega&field=description') // geojson points
 
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=pride&field=data_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptideatlas&field=data_protocol') // geojson points
+//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptide_atlas&field=data_protocol') // geojson points
 //    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=data_protocol') // geojson points
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=data_protocol') // geojson points
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolome_workbench&field=data_protocol') // geojson points
 //    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=ega&field=data_protocol') // geojson points
 
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=pride&field=sample_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptideatlas&field=sample_protocol') // geojson points
+//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptide_atlas&field=sample_protocol') // geojson points
 //    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=sample_protocol') // geojson points
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=sample_protocol') // geojson points
     .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=sample_protocol') // geojson points
@@ -25,9 +25,10 @@ queue()
     .await(draw_word_cloud); // function that uses files
 
 function draw_word_cloud(error,
-        pride_des,metabol_des,metabow_des,
+        pride_des,pepatlas_des,massive_des,metabol_des,metabow_des,
         pride_datap,metabol_datap,metabow_datap,
-        pride_samp,metabol_samp,metabow_samp){
+        pride_samp,metabol_samp,metabow_samp
+        ){
     if (error) {
         outputerrorinfo();
         return;
@@ -38,11 +39,29 @@ function draw_word_cloud(error,
    metabow_samp = [
             {"label":"<Null>","frequent":"1"}
    ];
+   pepatlas_samp = [
+            {"label":"<Null>","frequent":"1"}
+   ];
+   pepatlas_datap = [
+            {"label":"<Null>","frequent":"1"}
+   ];
+   massive_samp = [
+            {"label":"<Null>","frequent":"1"}
+   ];
+   massive_datap = [
+            {"label":"<Null>","frequent":"1"}
+   ];
 
   var terms={
   "PRIDE_description":pride_des,
   "PRIDE_data_protocol":pride_datap,
   "PRIDE_sample_protocol":pride_samp,
+  "PeptideAtlas_description":pepatlas_des,
+  "PeptideAtlas_data_protocol":pepatlas_datap,
+  "PeptideAtlas_sample_protocol":pepatlas_samp,
+  "MassIVE_description":massive_des,
+  "MassIVE_data_protocol":massive_datap,
+  "MassIVE_sample_protocol":massive_samp,
   "MetaboLights_description":metabol_des,
   "MetaboLights_data_protocol":metabol_datap,
   "MetaboLights_sample_protocol":metabol_samp,
@@ -55,6 +74,8 @@ function draw_word_cloud(error,
  
   var repoList = [
      "PRIDE",
+     "PeptideAtlas",
+     "MassIVE",
      "MetaboLights",
      "Metabolomics_Workbench"
   ];
@@ -106,6 +127,8 @@ function change(){
   var value = this.value; 
   
   if(value === "PRIDE" || 
+     value === "PeptideAtlas" ||
+     value === "MassIVE" ||
      value === "MetaboLights" ||
      value === "Metabolomics_Workbench")
    old_r = value;  
