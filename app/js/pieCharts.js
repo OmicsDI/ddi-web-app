@@ -83,7 +83,13 @@ var svg = body.append("svg")
     .attr("height", diameter)
     .attr("class", "bubble");
    
-var radioform = body.append('form');
+var formdiv = body.append('div');
+    formdiv
+        .attr("class","center")
+        .attr("style","width:280px")
+        ;
+
+var radioform = formdiv.append('form');
 
   radioform
   .attr("id",bubchartname+"_form")
@@ -340,11 +346,18 @@ svg.append("circle")
 //     .attr('name','dataset')
 //     .attr('value',function (d) { return d; })
 //     .text(function (d) { return d; })
- var radioform = body.append('form');
+var formdiv = body.append('div');
+    formdiv
+        .attr("class","center")
+        .attr("style","width:150px")
+        ;
+
+var radioform = formdiv.append('form');
+ 
   radioform
   .attr("id",piechartname+"_form")
   .attr("class","center")
-  .attr("style","margin-bottom:8px; width:40%")
+  .attr("style","margin-bottom:8px; ")
   .append('input')
     .attr('type','radio')
     .attr('name','dataset')
