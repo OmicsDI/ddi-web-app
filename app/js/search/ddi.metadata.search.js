@@ -903,7 +903,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      $scope.getdatasetfail = false;
      $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
      $scope.relatedDatasetsLimit = 5;
-     $scope.loadMoreBtnShow = true;
+     $scope.loadMoreBtnShow = "Load More";
 
 
      var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
@@ -914,6 +914,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
       $scope.dataset = data;
       $scope.sampleProtocolDescription = $scope.dataset.protocols[0].description;
       $scope.dataProtocolDescription = $scope.dataset.protocols[1].description;
+      $scope.dataset.instruments = squash($scope.dataset.instruments);
+
             }).error(function(){
       $scope.getdatasetfail = true;
       console.log("GET error:" + url);
@@ -1038,9 +1040,30 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      * to load more related datasets
      */
     $scope.relatedLoadMore = function(){
-        $scope.relatedDatasetsLimit = 100; 
-        $scope.loadMoreBtnShow = false;
+        if($scope.relatedDatasetsLimit == 100)  {$scope.relatedDatasetsLimit = 5} 
+        else {
+            if($scope.relatedDatasetsLimit == 5)    $scope.relatedDatasetsLimit = 100; 
+        }
+
+        if($scope.loadMoreBtnShow === "Go Back") {alert("click on go back");$scope.loadMoreBtnShow = "Load More"}
+        else {
+            if($scope.loadMoreBtnShow === "Load More") $scope.loadMoreBtnShow = "Go Back";
+        }
     }
+
+    /*
+     *for unique elements in array
+     **/
+    function squash(arr){
+       var tmp = [];
+       for(var i = 0; i < arr.length; i++){
+           if(tmp.indexOf(arr[i]) == -1){
+               tmp.push(arr[i]);
+           }
+       }
+       return tmp;
+    }
+
 
 }]);
 
