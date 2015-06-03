@@ -884,6 +884,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
      $scope.metabolomics_list="MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench";
      $scope.genomics_list="ega,EGA";
+     $scope.repositories={"pride":"PRIDE","PRIDE":"PRIDE", 
+                        "peptideatlas":"PeptideAtlas","peptide_atlas":"PeptideAtlas", "PeptideAtlas":"PeptideAtlas",
+                        "massive":"MassIVE", "MassIVE":"MassIVE",
+                         "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
+                         "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
+                         "ega":"EGA", "EGA":"EGA",  };
      $scope.databaseUrls={
          "PRIDE":"http://www.ebi.ac.uk/pride/archive/",
          "MetaboLights":"http://www.ebi.ac.uk/metabolights/",
@@ -896,6 +902,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
 
      $scope.getdatasetfail = false;
      $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
+
+
      var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
      $http({
                 url: url,
@@ -908,7 +916,17 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
       $scope.getdatasetfail = true;
       console.log("GET error:" + url);
             });
-                     
+     var relateDataUrl = "http://localhost:9091/dataset/moreLikeThis?acc="+acc+"&database="+domain;
+     $http({
+                url: relateDataUrl,
+                method: 'GET'
+            }).success(function(data) {
+      $scope.relatedDatasets = data.datasets;
+            }).error(function(){
+      console.log("GET error:" + url);
+            });                                                                                                                        
+
+
      $scope.altmetricEntities = [];
      $scope.publicationIndex = {};
      var arr = [];
