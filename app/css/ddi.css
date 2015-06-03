@@ -534,9 +534,17 @@ background-position: -158px -18px;
 }
 .no-margin {
 margin: 0;
+}
 
-#tablink{
+#tablink {
     border-bottom-style:red;
 }
 
-
+form fieldset {
+    background-color: #f7f7f7;
+    border: 0px solid #eee;
+    color: inherit;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 0.5em 0.5em 0em 1em;
+}

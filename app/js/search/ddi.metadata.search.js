@@ -884,18 +884,29 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      $scope.proteomics_list="pride,peptideatlas,peptide_atlas,massive,PRIDE";
      $scope.metabolomics_list=" MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench";
      $scope.genomics_list="ega,ena";
+     $scope.databaseUrls={
+         "PRIDE":"http://www.ebi.ac.uk/pride/archive/",
+         "MetaboLights":"http://www.ebi.ac.uk/metabolights/",
+         "Metabolomics Workbench":"www.metabolomicsworkbench.org/",
+         "PeptideAtlas":"http://www.peptideatlas.org/",
+         "MassIVE":"https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
+         "":"",
+     
+     }
 
-     $scope.getdatasetfail = true;
-
+     $scope.getdatasetfail = false;
+     $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
      var url = "http://localhost:9091/dataset/get?acc="+acc+"&database="+domain;
      $http({
                 url: url,
                 method: 'GET'
             }).success(function(data) {
       $scope.dataset = data;
-      $scope.getdatasetfail = false;
+      $scope.sampleProtocolDescription = $scope.dataset.protocols[0].description;
+      $scope.dataProtocolDescription = $scope.dataset.protocols[1].description;
             }).error(function(){
-    console.log("GET error:" + url);
+      $scope.getdatasetfail = true;
+      console.log("GET error:" + url);
             });
                      
      $scope.altmetricEntities = [];
@@ -957,9 +968,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      * for tab control
      */
     $scope.tabs = [{
+    /*
         title: 'Protocols',
         url: 'protocols.tpl.html'
     }, {
+    */
         title: 'Bioentities',
         url: 'bioentities.tpl.html'
     }, {
@@ -967,7 +980,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
         url: 'labdetails.tpl.html'
     }]; 
 
-    $scope.currentTab = 'protocols.tpl.html';
+    $scope.currentTab = 'bioentities.tpl.html';
 
     $scope.onClickTab = function (tab) {
     $scope.currentTab = tab.url;
