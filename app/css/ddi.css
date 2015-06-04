@@ -548,3 +548,7 @@ form fieldset {
     margin-top: 1em;
     padding: 0.5em 0.5em 0em 1em;
 }
+
+.nobullet{
+        list-style-type: none;
+}

@@ -207,7 +207,7 @@ $(function(){
         <div>
             <h4>{{dataset.name}}</h4>
         </div>
-        <hr>
+        <hr style="margin-right:10px">
         <div>
                 <div ng-show="dataset.description!=='Not available'">    
                <p ng-show="descriptionshowfull=='true'"> {{dataset.description}}<span ng-click="descriptionshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
@@ -224,15 +224,9 @@ $(function(){
         <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
      </div>
    </div> <!--dataset_bottom--> 
-   </div> <!--dataset_upper -->                     
-   
-   
-   <div class="panel panel-default" id="dataset_protocol"> 
-   <div class = "" id="dataset_protocol_right" style="overflow:hidden">
         <div>
             <h4>Protocol</h4>
         </div>
-        <hr>
         <div>
           <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">    
               <p>
@@ -243,10 +237,9 @@ $(function(){
               </p>
           </div>
        </div>
-    </div>
 
-     <div class="row" id="dataset_protocol_bottom" style="margin-top:10px margin-left:10px"> 
-         <p style="margin-left:15px"><b>Instruments:</b> 
+       <div class="row" id="dataset_protocol_bottom" style="margin-top:10px margin-left:10px"> 
+         <p style="margin-left:15px"><u>INSTRUMENTS:</u> 
                <span>
                    <a ng-repeat="instrument in dataset.instruments"  title={{instrument}} class="biological" href={{instrumentPreUrl+'"'+instrument+'"'}}>
                  {{instrument}}
@@ -254,9 +247,9 @@ $(function(){
               </span>
          </p> 
      </div> <!--dataset_protocol_bottom--> 
-   </div> <!--dataset_upper --> 
 
-
+   </div> <!--dataset_upper -->                     
+   
 
    <div class="panel panel-default" id="dataset_middle" style="position:relative" ng-hide="dataset.publications===null || getdatasetfail===true "> 
         <span ng-hide="currentPublication===0 || dataset.publications === null" 
@@ -439,22 +432,10 @@ $(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="col-md-3 panel panel-default" id="rightpanel">
     <p>
        <h4> 
-        Related Datasets
+        Similar Datasets
        </h4> 
     </p>
  <ul class="list-unstyled">
@@ -466,7 +447,7 @@ $(function(){
             <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(relatedDataset.source)>-1" /> 
             <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1" />
             <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1" /> 
-            <a href={{"dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>  <span>{{test}}  </span>
+            <a href={{"http://localhost:8000/app/dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>  <span>{{test}}  </span>
         </div>
             
 <!--         <div class="project-widget-title">

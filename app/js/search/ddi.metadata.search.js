@@ -46,7 +46,7 @@ angular.module('ddiApp').config(['cfpLoadingBarProvider', function(cfpLoadingBar
  */
 angular.module('ddiApp').config(['$locationProvider', function($locationProvider) {
     if (window.history && window.history.pushState) {
-        $locationProvider.html5Mode(false);
+        $locationProvider.html5Mode(true);
     }
 }]);
 
