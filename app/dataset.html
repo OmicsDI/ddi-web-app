@@ -209,9 +209,10 @@ $(function(){
         </div>
         <hr style="margin-right:10px">
         <div>
-                <div ng-show="dataset.description!=='Not available'">    
-               <p ng-show="descriptionshowfull=='true'"> {{dataset.description}}<span ng-click="descriptionshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
-               <p ng-show="descriptionshowfull=='false'"> {{dataset.description|limitTo:500}} <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span></p>
+                <div ng-show="dataset.description!=='Not available'">
+                
+               <p ng-show="descriptionshowfull=='true'">ABSTRACT: {{dataset.description}}<span ng-click="descriptionshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
+               <p ng-show="descriptionshowfull=='false'">ABSTRACT: {{dataset.description|limitTo:500}} <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span></p>
                 </div>
         </div>
     </div>
