@@ -1046,7 +1046,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
             if($scope.relatedDatasetsLimit == 5)    $scope.relatedDatasetsLimit = 100; 
         }
 
-        if($scope.loadMoreBtnShow === "Go Back") {alert("click on go back");$scope.loadMoreBtnShow = "Load More"}
+        if($scope.loadMoreBtnShow === "Go Back") {$scope.loadMoreBtnShow = "Load More"}
         else {
             if($scope.loadMoreBtnShow === "Load More") $scope.loadMoreBtnShow = "Go Back";
         }
