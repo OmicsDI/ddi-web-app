@@ -106,13 +106,17 @@ var divfield = select_form.append("div").attr("style","display:block");
 divfield.append("span").text("  Field: ");
 var select_field = divfield.append("select");
 
-select_repo.selectAll("option").data(d3.values(repoList)).enter().append("option").text(function(d) {
-    return d;
-});
+select_repo.selectAll("option").data(d3.values(repoList)).enter()
+    .append("option").text(function(d) {
+    return d;})
+    .attr("id",function(d){return d;})
+    ;
 
-select_field.selectAll("option").data(d3.values(fieldList)).enter().append("option").text(function(d) {
-    return d;
-});
+select_field.selectAll("option").data(d3.values(fieldList)).enter()
+    .append("option").text(function(d) {
+    return d;})
+    .attr("id",function(d){return d;})
+    ;
 
 
 select_repo.on('change',change);
@@ -137,6 +141,65 @@ function change(){
      value === "data_protocol" ||
      value === "sample_protocol")
    old_s = value;  
+
+
+
+
+   if(
+     value === "PeptideAtlas" ||
+     value === "MassIVE") 
+     {
+        select_field.select("#data_protocol").attr("disabled","disabled");
+        select_field.select("#sample_protocol").attr("disabled","disabled");
+     }
+    if(
+     value === "Metabolomics_Workbench"
+     )
+     {
+        select_field.select("#data_protocol").attr("disabled",null);
+        select_field.select("#sample_protocol").attr("disabled","disabled");
+     }
+     
+    if(
+     value === "PRIDE" ||
+     value === "MetaboLights" 
+     )
+     {
+        alert("here");
+        select_field.select("#data_protocol").attr("disabled",null);
+        select_field.select("#sample_protocol").attr("disabled",null);
+     }
+
+
+
+
+  if(
+     value === "data_protocol" 
+     )
+  {
+      select_repo.select("#PeptideAtlas").attr("disabled","disabled");
+      select_repo.select("#MassIVE").attr("disabled","disabled");
+  }
+
+
+  if(
+     value === "sample_protocol" 
+     )
+  {
+      select_repo.select("#PeptideAtlas").attr("disabled","disabled");
+      select_repo.select("#MassIVE").attr("disabled","disabled");
+      select_repo.select("#Metabolomics_Workbench").attr("disabled","disabled");
+  }
+
+
+  if(
+     value === "description" 
+     )
+  {
+      select_repo.select("#PeptideAtlas").attr("disabled",null);
+      select_repo.select("#MassIVE").attr("disabled",null);
+      select_repo.select("#Metabolomics_Workbench").attr("disabled",null);
+  }
 
   var hotwordss = terms[old_r+"_"+old_s];
   var maxfrequent = getmax(hotwordss);
