@@ -483,6 +483,7 @@ angular.module('ddiApp').controller('MainContent', ['$scope', '$anchorScroll', '
      */
     $scope.scrollTo = function(id) {
         $location.hash(id);
+        console.log($location);
         $anchorScroll();
     };
 
