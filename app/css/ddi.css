@@ -563,3 +563,9 @@ form fieldset {
    border-bottom-style: none;
    border-bottom-width: none;
 }
+
+.domain {
+   fill: none;
+   stroke: black;
+   stroke-width; 1;
+} 

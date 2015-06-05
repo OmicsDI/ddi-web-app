@@ -644,7 +644,7 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
   year.selectAll("rect")
       .data(function(d) { return d.omics; })
     .enter().append("rect")
-      .attr("width", x1.rangeBand()*0.6)
+      .attr("width", x1.rangeBand()*0.8)
       .attr("x", function(d) { return x1(d.name); })
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); })
@@ -655,10 +655,11 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
        }) 
       ;
 
+
 d3.select('.x.axis')
   .selectAll('.tick')
   .attr("class","hotword")
-    .on('click',clickMe);
+  .on('click',clickMe);
 function clickMe(d){
     location.href = "browse.html#/search?q=*:* AND publication_date:\""+d+"\"";
 };
