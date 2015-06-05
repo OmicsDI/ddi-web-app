@@ -165,7 +165,6 @@ function change(){
      value === "MetaboLights" 
      )
      {
-        alert("here");
         select_field.select("#data_protocol").attr("disabled",null);
         select_field.select("#sample_protocol").attr("disabled",null);
      }
