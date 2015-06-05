@@ -349,7 +349,7 @@ svg.append("circle")
 var formdiv = body.append('div');
     formdiv
         .attr("class","center")
-        .attr("style","width:150px")
+        .attr("style","width:150px;margin-top:15px")
         ;
 
 var radioform = formdiv.append('form');
@@ -570,7 +570,7 @@ var divwidth_px= body.style("width");
 var divwidth= parseInt(divwidth_px.substr(0,divwidth_px.length-2));  
 var margin = {top: 20, right: 2, bottom: 20, left: 60},
     width = divwidth - margin.left - margin.right,
-    height = 280 - margin.top - margin.bottom;
+    height = 290 - margin.top - margin.bottom;
 var x0 = d3.scale.ordinal()
     .rangeRoundBands([0, width], .1);
 
@@ -644,7 +644,7 @@ var svg = d3.select("#barchart_omicstype_annual").append("svg")
   year.selectAll("rect")
       .data(function(d) { return d.omics; })
     .enter().append("rect")
-      .attr("width", x1.rangeBand())
+      .attr("width", x1.rangeBand()*0.6)
       .attr("x", function(d) { return x1(d.name); })
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return height - y(d.value); })
