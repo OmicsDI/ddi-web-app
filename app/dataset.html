@@ -215,21 +215,8 @@ $(function(){
                <p ng-show="descriptionshowfull=='false'">ABSTRACT: {{dataset.description|limitTo:500}} <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span></p>
                 </div>
         </div>
-    </div>
 
-     <div class="row" id="dataset_bottom" style="margin-top:10px"> 
-     <div class="col-md-5" style="margin-left:10px"> 
-         Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>  [As supplied by <a href={{databaseUrls[domain]}}>{{domain}}</a>]
-     </div>
-     <div class="col-md-5" style="margin-left:10px"> 
-        <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
-     </div>
-   </div> <!--dataset_bottom--> 
-        <div>
-            <h4>Protocol</h4>
-        </div>
-        <div>
-          <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">    
+                  <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">    
               <p>
               <span><u>SAMPLE PROTOCOL:</u> </span>
                <span ng-show="sampleprotocolshowfull=='true'">{{sampleProtocolDescription}}<span ng-click="sampleprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></span>
@@ -241,7 +228,6 @@ $(function(){
                <span ng-show="dataprotocolshowfull=='false'">{{dataProtocolDescription|limitTo:500}}<span ng-click="dataprotocolshowfull='true'" class="hotword"><b>{{dataProtocolDescription.length>500?"...more":""}}</b></span></p>
               </span>
           </div>
-       </div>
 
        <div class="row" id="dataset_protocol_bottom" style="margin-top:10px margin-left:10px"> 
          <p style="margin-left:15px"><u>INSTRUMENTS:</u> 
@@ -252,6 +238,22 @@ $(function(){
               </span>
          </p> 
      </div> <!--dataset_protocol_bottom--> 
+
+     <div class="row" id="dataset_bottom" style="margin-top:10px"> 
+     <div class="col-md-5" style="margin-left:10px"> 
+         Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>  [As supplied by <a href={{databaseUrls[domain]}}>{{domain}}</a>]
+     </div>
+     <div class="col-md-5" style="margin-left:10px"> 
+        <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
+     </div>
+   </div> <!--dataset_bottom--> 
+
+    </div>
+
+
+
+
+
 
    </div> <!--dataset_upper -->                     
    
