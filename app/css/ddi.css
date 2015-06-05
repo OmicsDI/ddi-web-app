@@ -556,3 +556,10 @@ form fieldset {
 #content p{
     font-size:16px;
 }
+
+
+.image_a:link, .image_a:visited {
+   border-bottom-color: none;
+   border-bottom-style: none;
+   border-bottom-width: none;
+}
