@@ -263,37 +263,11 @@ margin-top: 0;
  }
 
 
- .fa {
- -x-system-font: none;
- display: inline-block;
- font-family: FontAwesome;
- font-feature-settings: normal;
- font-kerning: auto;
- font-language-override: normal;
- font-size: inherit;
- font-size-adjust: none;
- font-stretch: normal;
- font-style: normal;
- font-synthesis: weight style;
- font-variant-alternates: normal;
- font-variant-caps: normal;
- font-variant-east-asian: normal;
- font-variant-ligatures: normal;
- font-variant-numeric: normal;
- font-variant-position: normal;
- font-weight: normal;
- line-height: 1;
- text-rendering: auto;
- transform: translate(0px, 0px);
- }
+ 
 
  h3.panel-title {
  color: black;
  }
-
-.fa-bar-chart-o:before,.fa-bar-chart:before{
-content:"\f080";
-}
 
 
 .list-group-item {
@@ -569,3 +543,29 @@ form fieldset {
    stroke: black;
    stroke-width; 1;
 } 
+
+
+.ddi-prev {
+    position: absolute; 
+    width: 15px; 
+    height: 23px; 
+    top: 120px; 
+    left: -10px;
+    font-size: 3em; 
+    color:grey;
+    cursor: pointer;
+    cursor: hand;
+}                                                                    
+
+
+.ddi-next {
+    position: absolute;
+    width: 15px; 
+    height: 23px;
+    top: 120px; 
+    right: 8px; 
+    font-size: 3em; 
+    color:grey;
+    cursor: pointer;
+    cursor: hand;
+}

@@ -24,6 +24,8 @@
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
         <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
 
      <!-- favico -->
@@ -57,18 +59,9 @@ $(function(){
 
 <body class="level2">
 
-<div id="skip-to">
-    <ul>
-        <li><a href="#content">Skip to main content</a></li>
-        <li><a href="#local-nav">Skip to local navigation</a></li>
-        <li><a href="#global-nav">Skip to EBI global navigation menu</a></li>
-        <li><a href="#global-nav-expanded">Skip to expanded EBI global navigation menu (includes all sub-sections)</a></li>
-    </ul>
-</div>
-
 <div id="wrapper" class="container_24">
 <header>
-   <div id="global-masthead" class="masthead grid_24">
+   <div id="global-masthead" class="masthead grid_24 hidden">
    <!--This has to be one line and no newline characters-->
      <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute"></a>
      <nav>
@@ -198,6 +191,9 @@ $(function(){
     </p>
 </div>
     <div class="panel panel-default" id="dataset_upper"  ng-hide="getdatasetfail===true"> 
+      <div class="panel-footer ">
+        <h3>Dataset Information</h3> 
+      </div>
     <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
             <img src="css/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1" /> 
             <img src="css/Metabolomics.png" ng-show="metabolomics_list.indexOf(domain)>-1" />
@@ -259,14 +255,15 @@ $(function(){
    
 
    <div class="panel panel-default" id="dataset_middle" style="position:relative" ng-hide="dataset.publications===null || getdatasetfail===true "> 
+        <div class="panel-footer ">
+              <h3>Publications</h3> 
+        </div>
         <span ng-hide="currentPublication===0 || dataset.publications === null" 
-            style="position: absolute; width: 15px; height: 23px; top: 70px; left: 2px;" 
-            class="jssora13l" u="arrowleft"
+            class="fa fa-chevron-circle-left ddi-prev" 
             ng-click="onClickPublicationLeft()">
         </span>
         <span ng-hide="currentPublication===dataset.publications.length-1 || dataset.publications === null" 
-            style="position: absolute; width: 15px; height: 23px; top: 70px; right: 2px;"
-            class="jssora13r" u="arrowright"
+            class="fa fa-chevron-circle-right ddi-next" 
             ng-click="onClickPublicationRight()">
         </span>
     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
