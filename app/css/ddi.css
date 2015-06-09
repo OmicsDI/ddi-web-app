@@ -8,7 +8,8 @@ width:100%;
 }
 
 div#local-masthead {
-        background-color: #70bdbd;
+//        background-color: #70bdbd;
+        background-color: rgba(188, 216, 224, 1);
 }
 
 
@@ -569,3 +570,21 @@ form fieldset {
     cursor: pointer;
     cursor: hand;
 }
+
+
+a, a:hover, a:focus{
+text-decoration: none;
+}
+
+
+div#local-masthead ul{
+    background-color: #3F7D97;
+}
+
+
+ul#local-nav li.functional {
+    background-color: transparent;
+    float: right;
+}
+
+

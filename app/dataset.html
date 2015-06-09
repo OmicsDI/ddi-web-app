@@ -84,7 +84,7 @@ $(function(){
     <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
       <div class="grid_12 alpha logo-title" id="local-title">
         <a href="/app" title="Back to DDI homepage"><img src="/app/static/img/logo/DDI-icon-3.png" alt="logo" width="200" height="100"></a>
-        <span><h1><a href="/app" title="Back to DDI homepage">Datasets Discovery Index</a></h1></span>
+        <span><h1><a href="/app" title="Back to DDI homepage" class="">Datasets Discovery Index</a></h1></span>
       </div>
     <!-- /local-title -->
 
@@ -187,9 +187,9 @@ $(function(){
 
 <div class="col-md-8" id="centerpanel"style="margin-left:-15px" >
 
-<div id="error-row" class="row" ng-hide="getdatasetfail===false">
+    <div id="error-row" class="row" ng-hide="getdatasetfail.length<1">
     <p>
-    We can't access this dataset:{{acc}} at {{domain}} right now.
+    {{getdatasetfail}}
     </p>
 </div>
     <div class="panel panel-default" id="dataset_upper"  ng-hide="getdatasetfail===true"> 

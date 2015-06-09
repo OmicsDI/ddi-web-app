@@ -905,7 +905,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      
      }
 
-     $scope.getdatasetfail = false;
+     $scope.getdatasetfail = "";
      $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
      $scope.relatedDatasetsLimit = 5;
      $scope.loadMoreBtnShow = "Load More";
@@ -917,12 +917,13 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
                 method: 'GET'
             }).success(function(data) {
       $scope.dataset = data;
+      console.log(data);
       $scope.sampleProtocolDescription = $scope.dataset.protocols[0].description;
       $scope.dataProtocolDescription = $scope.dataset.protocols[1].description;
       $scope.dataset.instruments = squash($scope.dataset.instruments);
-
+      if(data===null){$scope.getdatasetfail =  "We can't access this dataset: " + acc + " at " + domain + " right now."; }
             }).error(function(){
-      $scope.getdatasetfail = true;
+      $scope.getdatasetfail = "We can't access this dataset: " + acc + " at " + domain + " right now.";
       console.log("GET error:" + url);
             });
      var relateDataUrl = "http://localhost:9091/dataset/moreLikeThis?acc="+acc+"&database="+domain;
@@ -932,7 +933,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             }).success(function(data) {
       $scope.relatedDatasets = data.datasets;
             }).error(function(){
-      console.log("GET error:" + url);
+      console.log("GET error:" + relateDataUrl);
             });                                                                                                                        
 
 
