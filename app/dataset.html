@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
         <link type="text/css" href="css/ddi.css" rel="stylesheet">
+        <base href="/app/">
 
      <!-- favico -->
        <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
@@ -47,6 +48,7 @@
        <meta name="msapplication-TileImage" content="/app/static/img/favico/ms-icon-144x144.png">
        <meta name="theme-color" content="#ffffff">
        <!--favico end -->
+       <base href='/app/'>
 
  <script src="js/vendor/jquery-1.10.1.min.js"></script>
 </head>
@@ -247,10 +249,6 @@ $(function(){
     </div>
 
 
-
-
-
-
    </div> <!--dataset_upper -->                     
    
 
@@ -427,7 +425,6 @@ $(function(){
 </div>
 </div><!-- row -->         
 
-
 </div>
 </script>
 
@@ -451,7 +448,7 @@ $(function(){
             <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(relatedDataset.source)>-1" /> 
             <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1" />
             <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1" /> 
-            <a href={{"http://localhost:8000/app/dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>  <span>{{test}}  </span>
+            <a target="_blank" href={{"http://localhost:8000/app/dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>  <span>{{test}}  </span>
         </div>
             
 <!--         <div class="project-widget-title">
@@ -491,12 +488,13 @@ $(function(){
 
 
 <footer>
-    <div id="footer"></div>
+    <div id="footer" class="container"></div>
 </footer>
         
 
     
  <script src="js/vendor/angular/angular.min.js"></script>
+ <script src="js/vendor/angular/angular-route.js"></script>
  <script src="js/vendor/angular/angular-animate.min.js"></script>
  <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
  <script src="js/vendor/underscore/underscore-min.js"></script>
