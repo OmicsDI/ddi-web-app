@@ -29,7 +29,7 @@ underscore.factory('_', function() {
 /**
  * Create DDI app.
  */
-angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate','ngRoute']);
+angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate']);
 
 // hide spinning wheel
 angular.module('ddiApp').config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
@@ -119,7 +119,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     var search_config = {
         ebeye_base_url: 'http://localhost:9091/dataset/search',
         ddi_base_url: get_base_url(),
-        // fields: ['name','description', 'keywords', 'publication','species'],
+        // fields: ['name','description', 'keywords', 'pdataset.descriptionublication','species'],
         // facetfields: [
             // 'TAXONOMY',
             // 'experiment_type',
@@ -918,8 +918,10 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             }).success(function(data) {
       $scope.dataset = data;
       console.log(data);
+      if($scope.dataset.protocols.length > 0){
       $scope.sampleProtocolDescription = $scope.dataset.protocols[0].description;
       $scope.dataProtocolDescription = $scope.dataset.protocols[1].description;
+      }
       $scope.dataset.instruments = squash($scope.dataset.instruments);
       if(data===null){$scope.getdatasetfail =  "We can't access this dataset: " + acc + " at " + domain + " right now."; }
             }).error(function(){
@@ -939,6 +941,8 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
 
      $scope.altmetricEntities = [];
      $scope.publicationIndex = {};
+     $scope.publicationIndexInfo = {};
+     $scope.publicationInfo = [];
      var arr = [];
      var altmetricUrls = [];
 //     for (var a = 0; a < subs.length; ++a) {
@@ -960,11 +964,27 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             altmetricEntity ={"pubmedid":insideId,"detailUrl":data.details_url,"imageUrl":data.images.small};
             $scope.altmetricEntities.push(altmetricEntity);
             $scope.publicationIndex[insideId] = $scope.altmetricEntities.indexOf(altmetricEntity);
-            console.log(insideId+":"+$scope.altmetricEntities.indexOf(altmetricEntity));
-            console.log($scope.publicationIndex);
-            console.log($scope.publicationIndex["12665801"]);
         }).error(function(){
         });
+
+	var ebiSearchUrl = "http://www.ebi.ac.uk/ebisearch/ws/rest/pubmed?query=id:" + pubmedid+ "&fields=id,display_author,journal,publication_date,volume,issue,pagination&format=json";
+        $http.get(ebiSearchUrl).success(function(pubmed_data){
+	var publicationInfoEntity = {};
+	console.log(pubmed_data);
+	var entry = pubmed_data.entries[0];
+        var insideId = entry.id;
+	var fields = entry.fields;
+	console.log("pmid"+insideId);
+        publicationInfoEntity={
+		"pubmedid":insideId,
+		"citation":fields.journal[0]+ ". "+ fields.publication_date[0]+" "+ fields.volume[0]+"("+fields.issue[0]+"): "+fields.pagination[0]+".",
+		"authorString":fields.display_author.join(', ')
+	};
+        $scope.publicationInfo.push(publicationInfoEntity);
+        $scope.publicationIndexInfo[insideId] = $scope.publicationInfo.indexOf(publicationInfoEntity);
+	console.log($scope.publicationInfo);
+        }).error(function(){
+        }); 	
 
      }
 
