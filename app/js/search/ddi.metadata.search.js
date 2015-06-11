@@ -907,6 +907,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
 
      $scope.getdatasetfail = "";
      $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:"
+     $scope.organismPreUrl= "browse.html#/search?q=*:* AND TAXONOMY:"
      $scope.relatedDatasetsLimit = 5;
      $scope.loadMoreBtnShow = "Load More";
 
@@ -954,6 +955,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
              // ret[1] contains the second response
              // etc.
      var dataset2 = ret[0].data;
+/*
      for(var i=0; i<dataset2.publications.length; i++){
         var pubmedid = dataset2.publications[i].id;
         altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmedid;
@@ -987,7 +989,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         }); 	
 
      }
-
+*/
 
      }); //outside $q
 
@@ -1110,14 +1112,30 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
                          "metabolights":"MetaboLights","metabolights_dataset":"MetaboLights","MetaboLights":"MetaboLights",
                          "metabolome_workbench":"Metabolomics Workbench", "Metabolomics Workbench":"Metabolomics Workbench","MetabolomicsWorkbench":"Metabolomics Workbench",
                          "ega":"EGA", "EGA":"EGA",  };
+     $scope.getLatestDatasetsFail = ''; 
+     $scope.getMostaccessDatasetsFail = ''; 
+     $scope.$root.webServiceFail= 'false'; 
+     var mainUrl = "http://localhost:9091/";
+      $http({
+                url: mainUrl,
+                method: 'GET'
+            }).success(function(data) {
+     $scope.$root.webServiceFail= 'false'; 
+            }).error(function(){
+     $scope.$root.webServiceFail= 'true'; 
+            });
+
+      
      var url = "http://localhost:9091/dataset/latest?size=10";
      $http({
                 url: url,
                 method: 'GET'
             }).success(function(data) {
       $scope.latestList = data["datasets"];
+      if(data===null){$scope.getLatestDatasetsFail =  "Sorry, the accessing to  this datasets list was temporally failed."; }
             }).error(function(){
     console.log("GET error:" + url);
+      $scope.getLatestDatasetsFail =  "Sorry, the accessing to  this datasets list was temporally failed."; 
 
             });
 //
@@ -1128,8 +1146,10 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
                 method: 'GET'
             }).success(function(data) {
       $scope.mostAccessedList = data["datasets"];
+      if(data===null){$scope.getMostaccessDatasetsFail = "Sorry, the accessing to  this datasets list was temporally failed."; }
             }).error(function(){
-    console.log("GET error:" + url);
+      console.log("GET error:" + url);
+      $scope.getMostaccessDatasetsFail = "Sorry, the accessing to  this datasets list was temporally failed."; 
 
             });
 

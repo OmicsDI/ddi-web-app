@@ -251,8 +251,8 @@ function change(){
   }
 
 function outputerrorinfo(){
-    d3.select("#error-row").select("p")
-        .html("We are sorry about that the webservice is temporarily inaccessible now");
+    d3.select("#hotwords").append("p").attr("class","error-info")
+        .html("Sorry, accessing to the word cloud web service was temporally failed.");
 }
 
 

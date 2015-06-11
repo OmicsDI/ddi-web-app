@@ -144,18 +144,27 @@ $(function(){
 </div>
 </header>
 
-<div class="container">
+<div ng-show="webServiceFail==='true'" id="error-row" class="container">
+    <div class="row" >
+    <p class="error-info" style="text-align:center;font-size:200%">
+	Oops; a 500 error...
+    </p>
+    <p class="error-info" style="text-align:center;font-size:100%">
+	We cannot ge to the web service now, and we are working on this issue too.
+    </p>
+    </div>
+</div>                        
+
+<div ng-show="webServiceFail==='false'" class="container">
 
 
-<div id="" class="row" >
-</div>
-
-<div id="error-row" class="row">
+<div id="" class="row" style="margin:20px">
     <p>
     </p>
 </div>
 
-<div class="row" >
+
+<div  class="row" >
 
       <div class="col-md-8" >
       <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="">
@@ -265,6 +274,9 @@ $(function(){
         </div>
         <div class="panel-body ">
             <ul class="nobullet">
+	      <li ng-show="getLatestDatasetsFail.length > 1" class="error-info">
+		{{getLatestDatasetsFail}}
+	      </li>
               <li ng-repeat="dataset in latestList"> 
                 <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" /> 
                 <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 
@@ -284,6 +296,9 @@ $(function(){
         </div>
         <div class="panel-body ">
             <ul class="nobullet">
+	      <li ng-show="getMostaccessDatasetsFail.length > 1" class="error-info">
+		{{getMostaccessDatasetsFail}}
+	      </li>
               <li ng-repeat="dataset in mostAccessedList"> 
                 <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" /> 
                 <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px"/> 

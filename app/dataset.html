@@ -236,7 +236,16 @@ $(function(){
               </span>
          </p> 
      </div> <!--dataset_protocol_bottom--> 
-
+                                                                                                                                                    
+         <p style="margin-left:15px"><u>Organisms:</u> 
+               <span>
+                   <a ng-repeat="organism in dataset.organisms"  title={{organnism.name}} class="biological" href={{organismPreUrl+'"'+organism.acc+'"'}}>
+                 {{organism.name}}
+                 </a>
+              </span>
+         </p> 
+     </div> <!--dataset_protocol_bottom--> 
+                                                                                                                                                    
      <div class="row" id="dataset_bottom" style="margin-top:10px"> 
      <div class="col-md-5" style="margin-left:10px"> 
          Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>  [As supplied by <a href={{databaseUrls[domain]}}>{{domain}}</a>]

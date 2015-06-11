@@ -43,8 +43,10 @@ margin-right: auto;
 
 
 .center {
+display:block;
 margin-left: auto;
 margin-right: auto;
+//width:auto;
 //width: 50%;
 //background-color: #b0e0e6;
 }
@@ -365,6 +367,10 @@ div.tooltip {
 #error-row p{
     color:red;
     font-size:300%;
+}
+.error-info{
+    color:blue;
+    font-size:130%;
 }
 
  .date-box {

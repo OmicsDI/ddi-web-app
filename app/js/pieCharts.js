@@ -12,7 +12,7 @@ queue()
 
 function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
     if (error) {
-        outputerrorinfo();
+        outputerrorinfo("chart_tissues_organisms");
         return;
     }
 
@@ -264,7 +264,7 @@ queue()
 function draw_chart_Repos_Omics(error, domains, omicstype) {
     
     if (error) {
-        outputerrorinfo();
+        outputerrorinfo("chart_repos_omics");
         return;
     }
 
@@ -561,7 +561,7 @@ function draw_chart_omicstype_annual(error, annalData) {
   // console.log(proteomics);
   //
     if (error) {
-        outputerrorinfo();
+        outputerrorinfo("barchart_omicstype_annual");
         return;
     }
   
@@ -687,8 +687,8 @@ function clickMe(d){
 }
 }
 
-function outputerrorinfo(){
-    d3.select("#error-row").select("p")
-        .html("We are sorry about that the webservice is temporarily inaccessible now");
+function outputerrorinfo(errordiv){
+    d3.select("#"+errordiv).append("p").attr("class","error-info")
+        .html("Sorry, accessing to this web service was temporally failed.");
 }
 
