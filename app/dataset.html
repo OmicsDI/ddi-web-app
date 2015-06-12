@@ -1,123 +1,143 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org"
+      class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 <head>
-    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
+    <style type="text/css">@charset "UTF-8";
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+        display: none !important;
+    }
+
+    ng\:form {
+        display: block;
+    }
     </style>
-        <meta charset="utf-8">
-        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width" name="viewport">
-        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width" name="viewport">
+    <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
+          name="description">
 
 
-        <title>DDI: Dataset</title>
+    <title>DDI: Dataset</title>
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link type="text/css" href="css/main.css" rel="stylesheet">
-        <!--
-        <link type="text/css" href="css/prider.css" rel="stylesheet">
-        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
-        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
-        -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" href="css/main.css" rel="stylesheet">
+    <!--
+    <link type="text/css" href="css/prider.css" rel="stylesheet">
+    <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+    <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+    -->
 
-        <link rel="stylesheet" href="//europepmc.org/css_min/min/jquery-ui-min.css">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//europepmc.org/css_min/min/jquery-ui-min.css">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css"
+          media="screen">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css"
+          media="screen">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"
+          type="text/css" media="screen">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-        <link type="text/css" href="css/ddi.css" rel="stylesheet">
-        <base href="/app/">
+    <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <base href="/app/">
 
-     <!-- favico -->
-       <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
-       <link rel="apple-touch-icon" sizes="60x60" href="/app/static/img/favico/apple-icon-60x60.png">
-       <link rel="apple-touch-icon" sizes="72x72" href="/app/static/img/favico/apple-icon-72x72.png">
-       <link rel="apple-touch-icon" sizes="76x76" href="/app/static/img/favico/apple-icon-76x76.png">
-       <link rel="apple-touch-icon" sizes="114x114" href="/app/static/img/favico/apple-icon-114x114.png">
-       <link rel="apple-touch-icon" sizes="120x120" href="/app/static/img/favico/apple-icon-120x120.png">
-       <link rel="apple-touch-icon" sizes="144x144" href="/app/static/img/favico/apple-icon-144x144.png">
-       <link rel="apple-touch-icon" sizes="152x152" href="/app/static/img/favico/apple-icon-152x152.png">
-       <link rel="apple-touch-icon" sizes="180x180" href="/app/static/img/favico/apple-icon-180x180.png">
-       <link rel="icon" type="image/png" sizes="192x192"  href="/app/static/img/favico/android-icon-192x192.png">
-       <link rel="icon" type="image/png" sizes="32x32" href="/app/static/img/favico/favicon-32x32.png">
-       <link rel="icon" type="image/png" sizes="96x96" href="/app/static/img/favico/favicon-96x96.png">
-       <link rel="icon" type="image/png" sizes="16x16" href="/app/static/img/favico/favicon-16x16.png">
-       <link rel="manifest" href="/app/static/img/favico/manifest.json">
-       <meta name="msapplication-TileColor" content="#ffffff">
-       <meta name="msapplication-TileImage" content="/app/static/img/favico/ms-icon-144x144.png">
-       <meta name="theme-color" content="#ffffff">
-       <!--favico end -->
-       <base href='/app/'>
+    <!-- favico -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/app/static/img/favico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/app/static/img/favico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/app/static/img/favico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/app/static/img/favico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/app/static/img/favico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/app/static/img/favico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/app/static/img/favico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/app/static/img/favico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/app/static/img/favico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/app/static/img/favico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/app/static/img/favico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/app/static/img/favico/favicon-16x16.png">
+    <link rel="manifest" href="/app/static/img/favico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/app/static/img/favico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--favico end -->
+    <base href='/app/'>
 
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
+    <script src="js/vendor/jquery-1.10.1.min.js"></script>
 </head>
 
-<script> 
-$(function(){
-  $("#footer").load("footer.html"); 
-});
-</script> 
+<script>
+    $(function () {
+        $("#footer").load("footer.html");
+    });
+</script>
 
 <body class="level2">
 
 <div id="wrapper" class="container_24">
-<header>
-   <div id="global-masthead" class="masthead grid_24 hidden">
-   <!--This has to be one line and no newline characters-->
-     <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png" alt="EMBL European Bioinformatics Institute"></a>
-     <nav>
-     <ul id="global-nav">
-     <!-- set active class as appropriate -->
-       <li id="services" class=" first active"><a href="//www.ebi.ac.uk/services" title="Services">Services</a></li>
-       <li id="research" class=""><a href="//www.ebi.ac.uk/research" title="Research">Research</a></li>
-       <li id="training" class=""><a href="//www.ebi.ac.uk/training" title="Training">Training</a></li>
-       <li id="industry" class=""><a href="//www.ebi.ac.uk/industry" title="Industry">Industry</a></li>
-       <li id="about" class=" last"><a href="//www.ebi.ac.uk/about" title="About us">About us</a></li>
-     </ul>
-     </nav>
-  </div>
+    <header>
+        <div id="global-masthead" class="masthead grid_24 hidden">
+            <!--This has to be one line and no newline characters-->
+            <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
+                    src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
+                    alt="EMBL European Bioinformatics Institute"></a>
+            <nav>
+                <ul id="global-nav">
+                    <!-- set active class as appropriate -->
+                    <li id="services" class=" first active"><a href="//www.ebi.ac.uk/services"
+                                                               title="Services">Services</a></li>
+                    <li id="research" class=""><a href="//www.ebi.ac.uk/research" title="Research">Research</a></li>
+                    <li id="training" class=""><a href="//www.ebi.ac.uk/training" title="Training">Training</a></li>
+                    <li id="industry" class=""><a href="//www.ebi.ac.uk/industry" title="Industry">Industry</a></li>
+                    <li id="about" class=" last"><a href="//www.ebi.ac.uk/about" title="About us">About us</a></li>
+                </ul>
+            </nav>
+        </div>
 
 
-  <div id="local-masthead" class="masthead grid_24 nomenu">
-    <!-- local-title -->
-    <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-      <div class="grid_12 alpha logo-title" id="local-title">
-        <a href="/app" title="Back to DDI homepage"><img src="/app/static/img/logo/DDI-icon-3.png" alt="logo" width="200" height="100"></a>
-        <span><h1><a href="/app" title="Back to DDI homepage" class="">Datasets Discovery Index</a></h1></span>
-      </div>
-    <!-- /local-title -->
+        <div id="local-masthead" class="masthead grid_24 nomenu">
+            <!-- local-title -->
+            <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+            <div class="grid_12 alpha logo-title" id="local-title">
+                <a href="/app" title="Back to DDI homepage"><img src="/app/static/img/logo/DDI-icon-3.png" alt="logo"
+                                                                 width="200" height="100"></a>
+                <span><h1><a href="/app" title="Back to DDI homepage" class="">Datasets Discovery Index</a></h1></span>
+            </div>
+            <!-- /local-title -->
 
-    <!-- local-search -->
-    <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-      <div ng-controller="QueryCtrl" class="grid_12 omega">
-         <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-            <fieldset>
-               <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                  <div class="input-group input-group-sm">
-                         <input type="text" style="background-color:#fff; width:99%"
-                         placeholder="organism, repository, gene, tissue, accession"
-                         class="form-control"
-                         id="query-text"
-                         name="text"
-                         tabindex="1"
-                         ng-model="query.text"
-                         ng-minlength="2"
-                         ng-maxlength="1000"
-                         autocomplete="off"
-                         required>
-                         <div class="input-group-btn">
-                             <button type="submit" class="btn btn-primary">
-                                 <i class="fa fa-search"></i> Search
-                             </button>
-                         </div><!-- /input-group-btn -->
-                  </div><!--input-group -->
+            <!-- local-search -->
+            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
+            <div ng-controller="QueryCtrl" class="grid_12 omega">
+                <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                    <fieldset>
+                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                            <div class="input-group input-group-sm">
+                                <input type="text" style="background-color:#fff; width:99%"
+                                       placeholder="organism, repository, gene, tissue, accession"
+                                       class="form-control"
+                                       id="query-text"
+                                       name="text"
+                                       tabindex="1"
+                                       ng-model="query.text"
+                                       ng-minlength="2"
+                                       ng-maxlength="1000"
+                                       autocomplete="off"
+                                       required>
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                                <!-- /input-group-btn -->
+                            </div>
+                            <!--input-group -->
                      <span class="help-block example-searches">
                          <small>
                              <i>
                                  Examples:
                                  <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
+                                     sapiens</a>,
                                  <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
                                  <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
                                  <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
@@ -125,414 +145,518 @@ $(function(){
                              </i>
                          </small>
                      </span>
-                     <label class="control-label ng-cloak has-error"
-                            for="query-text" 
-                            ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                            ng-cloak>
-                     Your query is too short
-                     </label>
-                     <label class="control-label ng-cloak"
-                            for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                            ng-cloak>
-                     Your query is too long
-                     </label>
-                 </div><!-- /form-group -->
-             </fieldset>
-            </form>
+                            <label class="control-label ng-cloak has-error"
+                                   for="query-text"
+                                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                                   ng-cloak>
+                                Your query is too short
+                            </label>
+                            <label class="control-label ng-cloak"
+                                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                                   ng-cloak>
+                                Your query is too long
+                            </label>
+                        </div>
+                        <!-- /form-group -->
+                    </fieldset>
+                </form>
+            </div>
+            <!-- /local-search -->
+
+
+            <!-- local-nav -->
+            <nav>
+                <ul class="grid_24" id="local-nav">
+                    <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
+                    <li class="" id="browse-menu"><a title="Browse"
+                                                     href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a>
+                    </li>
+                    <li class="" id="api-menu"><a title="DDI API" href="http://localhost:8000/app/api.html#/overview">API</a>
+                    </li>
+                    <li class=" last" id="about-prider-menu"><a title="Databases"
+                                                                href="http://localhost:8000/app/databases.html">Databases</a>
+                    </li>
+                    <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                    add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                    whichever one will show up last...
+                    For example: -->
+                    <li class="functional last"><a data-icon="\" class="icon icon-static"
+                                                   href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a>
+                    </li>
+                    <li class="functional"><a class="" href="about.html">About</a></li>
+                    <li class="functional"><a class="" href="help.html#/Overview">Help</a></li>
+                    <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l"
+                                                                            class="icon icon-functional"
+                                                                            href="http://www.ebi.ac.uk/pride/archive/login">Login</a>
+                    </li>
+                    <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5"
+                                                                                     class="icon icon-functional"
+                                                                                     href="http://www.ebi.ac.uk/pride/archive/register">Register</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- /local-nav -->
         </div>
-        <!-- /local-search -->
+    </header>
 
-
-        <!-- local-nav -->
-        <nav>
-            <ul class="grid_24" id="local-nav">
-            <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
-            <li class="" id="api-menu"><a title="DDI API" href="http://localhost:8000/app/api.html">API</a></li>
-            <li class=" last" id="about-prider-menu"><a title="Databases" href="http://localhost:8000/app/databases.html">Databases</a></li>
-            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-            whichever one will show up last...
-            For example: -->
-            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
-            <li class="functional"><a class="" href="about.html">About</a></li>
-            <li class="functional"><a class="" href="help.html#/Overview">Help</a></li>
-            <li class="functional" id="login-menu" hidden="true" ><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
-            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
-            </ul>
-        </nav>
-
-        <!-- /local-nav -->
-</div>
-</header>
-
-<div class="container" ng-controller="DatasetCtrl">
-<div id="" class="row" >
-</div>
-<div id="error-row" class="row">
-    <p>
-    </p>
-</div>
-<div class="row" style="">
-
-<div class="col-md-1" id="socialnetworks" style="margin-left:-15px" >
-<!-- <g:plusone></g:plusone> -->
-<a href=""><img src="static/img/socialnetwork/email.png"  class="socialnetwork"    ng-click="clicksharethis('email')"/> </a>
-<a href=""><img src="static/img/socialnetwork/twitter.png"  class="socialnetwork"  ng-click="clicksharethis('twitter')"/> </a>
-<a href=""><img src="static/img/socialnetwork/facebook.png"  class="socialnetwork" ng-click="clicksharethis('facebook')"/></a> 
-<a href=""><img src="static/img/socialnetwork/google.png"  class="socialnetwork"   ng-click="clicksharethis('google')"/> </a>
-<a href=""><img src="static/img/socialnetwork/tumblr.png"  class="socialnetwork"   ng-click="clicksharethis('tumblr')"/> </a>
-<a href=""><img src="static/img/socialnetwork/linkedin.png" class="socialnetwork"  ng-click="clicksharethis('linkedin')"/> </a>
-</div><!-- col-md-1-->
-
-<div class="col-md-8" id="centerpanel"style="margin-left:-15px" >
-
-    <div id="error-row" class="row" ng-hide="getdatasetfail.length<1">
-    <p>
-    {{getdatasetfail}}
-    </p>
-</div>
-    <div class="panel panel-default" id="dataset_upper"  ng-hide="getdatasetfail===true"> 
-      <div class="panel-footer ">
-        <h3>Dataset Information</h3> 
-      </div>
-    <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-            <img src="css/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1" /> 
-            <img src="css/Metabolomics.png" ng-show="metabolomics_list.indexOf(domain)>-1" />
-            <img src="css/Genomics.png" ng-show="genomics_list.indexOf(domain)>-1" /> 
-    </div>
-    <div class = "" id="dataset_upper_right" style="overflow:hidden">
-        <div>
-            <h4>{{dataset.name}}</h4>
+    <div class="container" ng-controller="DatasetCtrl">
+        <div id="" class="row">
         </div>
-        <hr style="margin-right:10px">
-        <div>
-                <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
-                
-               <p ng-show="descriptionshowfull=='true'">ABSTRACT: {{dataset.description}}<span ng-click="descriptionshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
-               <p ng-show="descriptionshowfull=='false'">ABSTRACT: {{dataset.description|limitTo:500}} <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span></p>
+        <div id="error-row" class="row">
+            <p>
+            </p>
+        </div>
+        <div class="row" style="">
+
+            <div class="col-md-1" id="socialnetworks" style="margin-left:-15px">
+                <!-- <g:plusone></g:plusone> -->
+                <a href=""><img src="static/img/socialnetwork/email.png" class="socialnetwork"
+                                ng-click="clicksharethis('email')"/> </a>
+                <a href=""><img src="static/img/socialnetwork/twitter.png" class="socialnetwork"
+                                ng-click="clicksharethis('twitter')"/> </a>
+                <a href=""><img src="static/img/socialnetwork/facebook.png" class="socialnetwork"
+                                ng-click="clicksharethis('facebook')"/></a>
+                <a href=""><img src="static/img/socialnetwork/google.png" class="socialnetwork"
+                                ng-click="clicksharethis('google')"/> </a>
+                <a href=""><img src="static/img/socialnetwork/tumblr.png" class="socialnetwork"
+                                ng-click="clicksharethis('tumblr')"/> </a>
+                <a href=""><img src="static/img/socialnetwork/linkedin.png" class="socialnetwork"
+                                ng-click="clicksharethis('linkedin')"/> </a>
+            </div>
+            <!-- col-md-1-->
+
+            <div class="col-md-8" id="centerpanel" style="margin-left:-15px">
+
+                <div id="dataset-error-row" class="row error-info" ng-hide="getdatasetfail.length<1">
+                    <p>
+                        {{getdatasetfail}}
+                    </p>
                 </div>
-        </div>
+                <div class="panel panel-default" id="dataset_upper" ng-hide="getdatasetfail.length>0">
+                    <div class="panel-footer ">
+                        <h3>Dataset Information</h3>
+                    </div>
+                    <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
+                        <img src="css/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1"/>
+                        <img src="css/Metabolomics.png" ng-show="metabolomics_list.indexOf(domain)>-1"/>
+                        <img src="css/Genomics.png" ng-show="genomics_list.indexOf(domain)>-1"/>
+                    </div>
+                    <div class="" id="dataset_upper_right" style="overflow:hidden">
+                        <div>
+                            <h4>{{dataset.name}}</h4>
+                        </div>
+                        <hr style="margin-right:10px">
+                        <div>
+                            <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
 
-                  <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">    
-              <p ng-show="sampleProtocolDescription.length > 1 && sampleProtocolDescription!=='Not available'">
-              <span><u>SAMPLE PROTOCOL:</u> </span>
-               <span ng-show="sampleprotocolshowfull=='true'">{{sampleProtocolDescription}}<span ng-click="sampleprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></span>
-               <span ng-show="sampleprotocolshowfull=='false'">{{sampleProtocolDescription|limitTo:500}} <span ng-click="sampleprotocolshowfull='true'" class="hotword"><b>{{sampleProtocolDescription.length>500?"...more":""}}</b></span></p>
-              </span>
-              <p ng-show="dataProtocolDescription.length > 1 && dataProtocolDescription!=='Not available'">
-               <span><u>DATA PROTOCOL:</u></span>
-               <span ng-show="dataprotocolshowfull=='true'">{{dataProtocolDescription}}<span ng-click="dataprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></span>
-               <span ng-show="dataprotocolshowfull=='false'">{{dataProtocolDescription|limitTo:500}}<span ng-click="dataprotocolshowfull='true'" class="hotword"><b>{{dataProtocolDescription.length>500?"...more":""}}</b></span></p>
-              </span>
-          </div>
+                                <p ng-show="descriptionshowfull=='true'" class="align-justify">ABSTRACT: {{dataset.description}}<span
+                                        ng-click="descriptionshowfull='false'" class="hotword"><b>click to
+                                    cllapse</b></span></p>
 
-       <div class="row" ng-show="dataset.instruments.length > 0" id="dataset_protocol_bottom" style="margin-top:10px margin-left:10px"> 
-         <p style="margin-left:15px"><u>INSTRUMENTS:</u> 
+                                <p ng-show="descriptionshowfull=='false'" class="align-justify">ABSTRACT: {{dataset.description|limitTo:500}}
+                                    <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">
+                            <p ng-show="sampleProtocolDescription.length > 1 && sampleProtocolDescription!=='Not available'" class="align-justify">
+                                <span><u>SAMPLE PROTOCOL:</u> </span>
+                                <span ng-show="sampleprotocolshowfull=='true'">{{sampleProtocolDescription}}<span
+                                        ng-click="sampleprotocolshowfull='false'" class="hotword"><b>click to
+                                    cllapse</b></span></span>
+                                <span ng-show="sampleprotocolshowfull=='false'">{{sampleProtocolDescription|limitTo:500}} <span
+                                        ng-click="sampleprotocolshowfull='true'" class="hotword"><b>{{sampleProtocolDescription.length>500?"...more":""}}</b></span>
+                            </p>
+                            </span>
+                            <p ng-show="dataProtocolDescription.length > 1 && dataProtocolDescription!=='Not available'" class="align-justify">
+                                <span><u>DATA PROTOCOL:</u></span>
+                                <span ng-show="dataprotocolshowfull=='true'">{{dataProtocolDescription}}<span
+                                        ng-click="dataprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></span>
+                                <span ng-show="dataprotocolshowfull=='false'">{{dataProtocolDescription|limitTo:500}}<span
+                                        ng-click="dataprotocolshowfull='true'" class="hotword"><b>{{dataProtocolDescription.length>500?"...more":""}}</b></span>
+                            </p>
+                            </span>
+                        </div>
+
+                        <div class="row" ng-show="dataset.instruments.length > 0" id="dataset_protocol_bottom"
+                             style="margin-top:10px margin-left:10px">
+                            <p style="margin-left:15px" class="align-justify"><u>INSTRUMENTS:</u>
                <span>
-                   <a ng-repeat="instrument in dataset.instruments"  title={{instrument}} class="biological" href={{instrumentPreUrl+'"'+instrument+'"'}}>
-                 {{instrument}}
-                 </a>
+                   <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
+                      href={{instrumentPreUrl+'"'+instrument+'"'}}>
+                       {{instrument}}
+                   </a>
               </span>
-         </p> 
-     </div> <!--dataset_protocol_bottom--> 
-                                                                                                                                                    
-         <p style="margin-left:15px"><u>Organisms:</u> 
+                            </p>
+                         <p style="margin-left:15px" class="align-justify"><u>ORGANISMS:</u>
                <span>
-                   <a ng-repeat="organism in dataset.organisms"  title={{organnism.name}} class="biological" href={{organismPreUrl+'"'+organism.acc+'"'}}>
-                 {{organism.name}}
-                 </a>
+                   <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
+                      href={{organismPreUrl+'"'+organism.acc+'"'}}>
+                       {{organism.name}}
+                   </a>
               </span>
-         </p> 
-     </div> <!--dataset_protocol_bottom--> 
-                                                                                                                                                    
-     <div class="row" id="dataset_bottom" style="margin-top:10px"> 
-     <div class="col-md-5" style="margin-left:10px"> 
-         Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a>  [As supplied by <a href={{databaseUrls[domain]}}>{{domain}}</a>]
-     </div>
-     <div class="col-md-5" style="margin-left:10px"> 
-        <p>Date: {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
-     </div>
-   </div> <!--dataset_bottom--> 
+                        </p>
+                        </div>
+                        <!--dataset_protocol_bottom-->
+                    </div>
+                    <!--dataset_protocol_bottom-->
 
-    </div>
+                    <div class="row" id="dataset_bottom" style="margin-top:10px">
+                        <div class="col-md-5" style="margin-left:10px">
+                            Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a> [As supplied by <a
+                                href={{databaseUrls[domain]}}>{{domain}}</a>]
+                        </div>
+                        <div class="col-md-5" style="margin-left:10px">
+                            <p>Date:
+                                {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
+                        </div>
+                    </div>
+                    <!--dataset_bottom-->
 
 
-   </div> <!--dataset_upper -->                     
-   
+                </div>
+                <!--dataset_upper -->
 
-   <div class="panel panel-default" id="dataset_middle" style="position:relative" ng-hide="dataset.publications===null || getdatasetfail===true "> 
-        <div class="panel-footer ">
-              <h3>Publications</h3> 
-        </div>
-        <span ng-hide="currentPublication===0 || dataset.publications === null" 
-            class="fa fa-chevron-circle-left ddi-prev" 
-            ng-click="onClickPublicationLeft()">
+
+                <div class="panel panel-default" id="dataset_middle" style="position:relative"
+                 ng-hide="dataset.publicationIds===null || getdatasetfail.length > 0">
+                    <div class="panel-footer ">
+                        <h3>Publications</h3>
+                    </div>
+        <span ng-hide="currentPublication===0 || dataset.publicationIds === null"
+              class="fa fa-chevron-circle-left ddi-prev"
+              ng-click="onClickPublicationLeft()">
         </span>
-        <span ng-hide="currentPublication===dataset.publications.length-1 || dataset.publications === null" 
-            class="fa fa-chevron-circle-right ddi-next" 
-            ng-click="onClickPublicationRight()">
+        <span ng-hide="currentPublication===dataset.publicationIds.length-1 || dataset.publicationIds === null"
+              class="fa fa-chevron-circle-right ddi-next"
+              ng-click="onClickPublicationRight()">
         </span>
-    <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
-        <img ng-show="altmetricEntities[publicationIndex[dataset.publications[currentPublication].id]]==null" src='static/img/altmetric/altmetric_unknown.png'></img>
-        <a href={{altmetricEntities[publicationIndex[dataset.publications[currentPublication].id]].detailUrl}} style="border-bottom-style:none"> <img ng-hide="altmetricEntities[publicationIndex[dataset.publications[currentPublication].id]]==null" src= {{altmetricEntities[publicationIndex[dataset.publications[currentPublication].id]].imageUrl}}></img></a>
-    </div>
-    <div class = "" id="dataset_middle" style="overflow:hidden;margin-right:20px">
-        <div>
-            <p style="margin:1px">{{publicationInfo[publicationIndexInfo[dataset.publications[currentPublication].id]].citation}}</p>
-            <h4 style="margin:2px">{{dataset.publications[currentPublication].title}}</h4>
-            <p style="margin:1px">{{publicationInfo[publicationIndexInfo[dataset.publications[currentPublication].id]].authorString}}</p>
-        </div>
-        <hr>
-        <div style="margin-right:20px" >
-               <p ng-show="pubmedabstractshowfull=='true'"> {{dataset.publications[currentPublication].pubabstract}}<span ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to cllapse</b></span></p>
-               <p ng-show="pubmedabstractshowfull=='false'"> {{dataset.publications[currentPublication].pubabstract|limitTo:500}} <span ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{dataset.publications[currentPublication].pubabstract.length>500?"...more":""}}</b></span></p>
-        </div>
-     </div> 
-       
-     <div class="row" id="dataset_middle_bottom" style="margin-top:10px"> 
-     <div class="col-md-4" style="margin-left:10px"> 
-     <a ng-hide="dataset.publications === null" href={{"http://europepmc.org/abstract/MED/"+dataset.publications[currentPublication].id}}>  PMID: {{dataset.publications[currentPublication].id}}</a>
-     </div>
-     <div class="col-md-4"> 
+
+                    <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
+                        <img ng-show="altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]]==null"
+                             src='static/img/altmetric/altmetric_unknown.png'></img>
+                        <a href={{altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]].detailUrl}}
+                           style="border-bottom-style:none"> <img
+                                ng-hide="altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]]==null"
+                                src={{altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]].imageUrl}}></img></a>
+                    </div>
+                    <div class="" id="dataset_middle" style="overflow:hidden;margin-right:20px">
+                        <div>
+                            <p style="margin:1px" class="align-justify">
+                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].citation}}</p>
+                            <h4 style="margin:2px">{{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].title}}</h4>
+
+                            <p style="margin:1px" class="align-justify">
+                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].authorString}}</p>
+                        </div>
+                        <hr>
+                        <div style="margin-right:20px">
+                            <p ng-show="pubmedabstractshowfull=='true'"  class="align-justify">
+                            {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]}} 
+                            {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[1]}} 
+                                <span
+                                    ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to
+                                cllapse</b>
+                                </span>
+                            </p>
+
+                            <p ng-show="pubmedabstractshowfull=='false'"  class="align-justify">
+                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]|limitTo:500}} 
+                                <span
+                                    ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0].length>500?"...more":""}}</b></span>
+                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[1]}} 
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row" id="dataset_middle_bottom" style="margin-top:10px">
+                        <div class="col-md-4" style="margin-left:10px">
+                            <a ng-hide="dataset.publications === null"
+                               href={{"http://europepmc.org/abstract/MED/"+dataset.publications[currentPublication].id}}>
+                                PMID: {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pmid}}</a>
+                        </div>
+                        <div class="col-md-4">
          <span ng-hide="dataset.publications === null">
         Publication:{{currentPublication +1}}/
-        {{dataset.publications.length}}</span>
-     </div>
-     <div class="col-md-3"> 
-        <p>{{dataset.publications[currentPublication].publicationDate}}</p>
-     </div>
-   </div> <!--dataset_middle_bottom--> 
+        {{dataset.publicationIds.length}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{dataset.publicationIds[currentPublication].publicationDate}}</p>
+                        </div>
+                    </div>
+                    <!--dataset_middle_bottom-->
 
-   </div> <!--dataset_middle_panel--> 
+                </div>
+                <!--dataset_middle_panel-->
 
-   <div class="panel panel-default" id="dataset_bottom" ng-hide="getdatasetfail===true || 1"> 
-   
+                <div class="panel panel-default" id="dataset_bottom" ng-hide="getdatasetfail===true || 1">
 
-    <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" >
-      <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist" >
-           <li class="ui-corner-top hotword" style="border-style:solid; border-width:1px;border-top-left-radius:1em; margin-left:-1px" 
-                ng-repeat="tab in tabs" 
-                ng-class="{tabactive:isActiveTab(tab.url)}" 
-                ng-click="onClickTab(tab)">
-                <span style="font-size:18px;margin:4px;font-weight:300">{{tab.title}}<img border="1" src="css/mark.png" style=""></span>     
-           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
-                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>     
-           </li>
-           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
-                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>     
-           </li>
-           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
-                <span style="font-size:16px">&nbsp; <img border="1" src="css/mark.png" style=""></span>     
-           </li>
-           <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" 
-                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>     
-           </li>
-        </ul>
-  
-    </div> 
 
-        <div id="mainView" style="position:relative; border-style:none">
-        <span ng-hide="currentTab!=='protocols.tpl.html' " 
-            style="position: absolute; width: 15px; height: 23px; top: 30px; left: 2px;" 
-            class="jssora13l" u="arrowleft"
-            ng-click="onClickProtocol()">
+                    <div class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+                        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"
+                            role="tablist">
+                            <li class="ui-corner-top hotword"
+                                style="border-style:solid; border-width:1px;border-top-left-radius:1em; margin-left:-1px"
+                                ng-repeat="tab in tabs"
+                                ng-class="{tabactive:isActiveTab(tab.url)}"
+                                ng-click="onClickTab(tab)">
+                                <span style="font-size:18px;margin:4px;font-weight:300">{{tab.title}}<img border="1"
+                                                                                                          src="css/mark.png"
+                                                                                                          style=""></span>
+                            <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px"
+                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
+                            </li>
+                            <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px"
+                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
+                            </li>
+                            <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px"
+                            <span style="font-size:16px">&nbsp; <img border="1" src="css/mark.png" style=""></span>
+                            </li>
+                            <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px"
+                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <div id="mainView" style="position:relative; border-style:none">
+        <span ng-hide="currentTab!=='protocols.tpl.html' "
+              style="position: absolute; width: 15px; height: 23px; top: 30px; left: 2px;"
+              class="jssora13l" u="arrowleft"
+              ng-click="onClickProtocol()">
         </span>
         <span ng-hide="currentTab!=='protocols.tpl.html' "
-            style="position: absolute; width: 15px; height: 23px; top: 30px; right: 2px;"
-            class="jssora13r" u="arrowright"
-            ng-click="onClickProtocol()">
+              style="position: absolute; width: 15px; height: 23px; top: 30px; right: 2px;"
+              class="jssora13r" u="arrowright"
+              ng-click="onClickProtocol()">
         </span>
-            <div ng-include="currentTab"></div>
-        </div>
-   </div> <!--dataset_bottom_panel--> 
 
-    <script type="text/ng-template" id="protocols.tpl.html">
-        <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom "
-            ng-class = "currentTab !== 'protocols.tpl.html' ? 'ui-tabs-hide' :'' "
-        style="border-style:none"
-        >
+                        <div ng-include="currentTab"></div>
+                    </div>
+                </div>
+                <!--dataset_bottom_panel-->
 
-            <div style="margin-left:30px" >
-            <h3>{{protocols[currentProtocol]}}</h3>
-            <p>{{dataset[currentProtocol]}}</p>
+                <script type="text/ng-template" id="protocols.tpl.html">
+                    <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom "
+                         ng-class="currentTab !== 'protocols.tpl.html' ? 'ui-tabs-hide' :'' "
+                         style="border-style:none"
+                            >
+
+                        <div style="margin-left:30px">
+                            <h3>{{protocols[currentProtocol]}}</h3>
+
+                            <p>{{dataset[currentProtocol]}}</p>
+                        </div>
+
+                    </div>
+
+                    </div>
+                </script>
+
+                <script type="text/ng-template" id="bioentities.tpl.html">
+                    <div id="viewTwo" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
+                         ng-class="currentTab !== 'bioentities.tpl.html' ? 'ui-tabs-hide' :'' "
+                         style="border-style:none"
+                            >
+                        <h3>BioEntities</h3>
+
+                        <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas
+                            est urna sit amet arcu. Class aptent taciti sociosqu.</p>
+                    </div>
+                </script>
+
+                <script type="text/ng-template" id="labdetails.tpl.html">
+                    <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
+                         ng-class="currentTab !== 'labdetails.tpl.html' ? 'ui-tabs-hide' :'' "
+                         style="border-style:none"
+                            >
+                        <h3>Lab Details</h3>
+
+                        <p>
+                            <b>contact affiliation:</b> The Novo Nordisk Foundation Center for Protein Research,
+                            University of Copenhagen, Denmark
+                        </p>
+
+                        <p>
+                            <b>lab head:</b> Chunaram Choudhary contact email: chuna.choudhary@cpr.ku.dk
+                        </p>
+
+                        <p>
+                            <b>dataset submitter:</b> Shankha Satpathy contact email: shankha@cpr.ku.dk
+                        </p>
+
+                        <h4> Datasets from this lab:</h4>
+
+                        <div id="lab-results" class="grid_22 right-column">
+                            <div id="lab-results-items" class="list-group">
+                                <ul class="list-unstyled">
+                                    <li class="result animate-repeat" ng-repeat="labdataset in dataset.labdatasets">
+                                        <div class="project-widget  list-group-item">
+
+                                            <div class="project-widget-accession">
+                                                <img src="css/Proteomics2.png"
+                                                     ng-show="proteomics_list.indexOf(labdataset.source)>-1"/>
+                                                <img src="css/Metabolomics2.png"
+                                                     ng-show="metabolomics_list.indexOf(labdataset.source)>-1"/>
+                                                <img src="css/Genomics2.png"
+                                                     ng-show="genomics_list.indexOf(labdataset.source)>-1"/>
+                                                <a href={{"dataset.html#/"+labdataset.id+"*"+repositories[labdataset.source]}}>{{labdataset.title}}</a>
+                                                <span>{{test}}  </span>
+                                            </div>
+
+                                            <div class="project-widget-paragraph">
+                                                <b>Project description:</b>
+                                                {{labdataset["description"]|limitTo:450}}{{labdataset["description"].length>450?'...':''}}
+                                                <span ng-show="labdataset.description===null">Not available</span>
+                                            </div>
+
+                                            <div class="project-widget-paragraph">
+                                            </div>
+
+                                            <div class="project-widget-paragraph" ng-show="labdataset['organisms']">
+                                                <b>Organism: </b><span ng-repeat="organism in labdataset['organisms']">{{organism["name"]}}  </span>
+                                                <span ng-show="labdataset.organisms.length===0">Not available</span>
+                                            </div>
+
+                                            <div class="project-widget-paragraph">
+                                                {{labdataset.id}} ({{repositories[labdataset.source]}})
+                                            </div>
+
+                                            <div class="project-widget-paragraph" ng-show="labdataset.publicationDate">
+                                                <b>Made public: </b>
+                                                {{labdataset['publicationDate'].substr(0,4)+"-"+labdataset['publicationDate'].substr(4,2)+"-"+labdataset['publicationDate'].substr(6,2)}}
+                                            </div>
+
+                                            <div class="project-widget-tag"
+                                                 ng-hide="labdataset.keywords[0] === 'Not available'">
+                                                <a ng-repeat="keyword in labdataset.keywords" title={{keyword}}
+                                                   class="biological"
+                                                   href={{"browse.html#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <small class="text-muted ng-binding ng-scope"
+                                       ng-if="result.hitCount &gt; result.entries.length">Displaying 5 out of 72
+                                    datasets in this lab
+                                </small>
+                                <button ng-show="result.hitCount &gt; result.entries.length"
+                                        ng-click="load_more_results()" class="btn btn-default load-more col-md-3"
+                                        style=""><i ng-class="search_in_progress ? 'fa fa-spinner fa-spin' : 'hidden'"
+                                                    class="hidden"></i> Load more
+                                </button>
+                            </div>
+                        </div>
+                        <!-- row -->
+
+                    </div>
+                </script>
+
+
             </div>
+            <!-- col-md-8 centerpanel-->
+
+
+            <div class="col-md-3 panel panel-default" id="rightpanel"
+             ng-hide="getsimilardatasetfail.length > 0 || getdatasetfail.length > 0">
+                <p>
+                <h4>
+                    Similar Datasets
+                </h4>
+                </p>
+                <ul class="list-unstyled">
+                    <!-- ngRepeat: dataset in result.datasets -->
+                    <li class="result animate-repeat "
+                        ng-repeat="relatedDataset in relatedDatasets | limitTo:relatedDatasetsLimit" style="">
+                        <div class="project-widget  list-group-item">
+
+                            <div class="project-widget-accession">
+                                <img src="css/Proteomics2.png"
+                                     ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
+                                <img src="css/Metabolomics2.png"
+                                     ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
+                                <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
+                                <a target="_blank" class="align-justify"
+                                   href={{"http://localhost:8000/app/dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>
+                            </div>
+
+                            <div class="project-widget-paragraph hidden">
+                                <b>Project description:</b>
+                                {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
+                                <span ng-show="relatedDataset.description===null">Not available</span>
+                            </div>
+
+                            <div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">
+                                <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>
+                                <span ng-show="relatedDataset.organisms.length===0">Not available</span>
+                            </div>
+
+                            <div class="project-widget-paragraph">
+                                {{relatedDataset.id}} ({{repositories[relatedDataset.source]}})
+                            </div>
+
+                            <div class="project-widget-paragraph" ng-show="relatedDataset.publicationDate">
+                                <b>Made public: </b>
+                                {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}
+                            </div>
+                        </div>
+                    </li>
+                    <!-- end ngRepeat: -->
+                </ul>
+                <div class="input-btn center" style="width:102px; margin-bottom:10px">
+                    <button type="submit" class="btn btn-default " ng-click="relatedLoadMore()">
+                        <i class="fa fa-search"></i> {{loadMoreBtnShow}}
+                    </button>
+                </div>
+                <!-- /input-group-btn -->
+
+            </div>
+            <!-- col-md-3 rightpanel-->
 
         </div>
-
-        </div>
-    </script>
-    
-    <script type="text/ng-template" id="bioentities.tpl.html">
-        <div id="viewTwo" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
-            ng-class = "currentTab !== 'bioentities.tpl.html' ? 'ui-tabs-hide' :'' "
-            style="border-style:none"
-        >
-            <h3>BioEntities</h3>
-            <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.</p>
-        </div>
-    </script>
-    
-    <script type="text/ng-template" id="labdetails.tpl.html">
-      <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
-            ng-class = "currentTab !== 'labdetails.tpl.html' ? 'ui-tabs-hide' :'' "
-            style="border-style:none"
-        >
-      <h3>Lab Details</h3>
-        <p>
-        <b>contact affiliation:</b> The Novo Nordisk Foundation Center for Protein Research, University of Copenhagen, Denmark 
-        </p>
-        <p>
-        <b>lab head:</b> Chunaram Choudhary      contact email: chuna.choudhary@cpr.ku.dk 
-        </p>
-        <p>
-        <b>dataset submitter:</b>   Shankha Satpathy   contact email: shankha@cpr.ku.dk
-        </p>
-                                                         
-     <h4> Datasets from this lab:</h4>
-
-<div id="lab-results" class="grid_22 right-column">
-<div id="lab-results-items" class="list-group">
-<ul class="list-unstyled">
-  <li class="result animate-repeat" ng-repeat="labdataset in dataset.labdatasets">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(labdataset.source)>-1" /> 
-            <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(labdataset.source)>-1" />
-            <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(labdataset.source)>-1" /> 
-            <a href={{"dataset.html#/"+labdataset.id+"*"+repositories[labdataset.source]}}>{{labdataset.title}}</a>  <span>{{test}}  </span>
-        </div>
-
-        <div class="project-widget-paragraph">
-                <b>Project description:</b>
-            {{labdataset["description"]|limitTo:450}}{{labdataset["description"].length>450?'...':''}}
-            <span ng-show="labdataset.description===null">Not available</span>            
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-            
-        <div class="project-widget-paragraph" ng-show="labdataset['organisms']">
-            <b>Organism: </b><span ng-repeat="organism in labdataset['organisms']">{{organism["name"]}}  </span> <span ng-show="labdataset.organisms.length===0">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph">
-            {{labdataset.id}} ({{repositories[labdataset.source]}})
-        </div>
-            
-        <div class="project-widget-paragraph" ng-show="labdataset.publicationDate">
-            <b>Made public: </b> {{labdataset['publicationDate'].substr(0,4)+"-"+labdataset['publicationDate'].substr(4,2)+"-"+labdataset['publicationDate'].substr(6,2)}}
-        </div>
-
-        <div class="project-widget-tag" ng-hide="labdataset.keywords[0] === 'Not available'">
-            <a ng-repeat="keyword in labdataset.keywords"  title={{keyword}} class="biological" href={{"browse.html#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
-        </div>
+        <!-- row-->
     </div>
-  </li>  
-</ul>
-<small class="text-muted ng-binding ng-scope" ng-if="result.hitCount &gt; result.entries.length">Displaying 5 out of 72 datasets in this lab</small>
-<button ng-show="result.hitCount &gt; result.entries.length" ng-click="load_more_results()" class="btn btn-default load-more col-md-3" style=""><i ng-class="search_in_progress ? 'fa fa-spinner fa-spin' : 'hidden'" class="hidden"></i> Load more</button>
-</div>
-</div><!-- row -->         
-
-</div>
-</script>
+    <!-- container-->
 
 
-</div><!-- col-md-8 centerpanel-->
+    <footer>
+        <div id="footer" class="container"></div>
+    </footer>
 
 
+    <script src="js/vendor/angular/angular.min.js"></script>
+    <script src="js/vendor/angular/angular-route.js"></script>
+    <script src="js/vendor/angular/angular-animate.min.js"></script>
+    <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+    <script src="js/vendor/underscore/underscore-min.js"></script>
+    <script src="js/search/ddi.metadata.search.js"></script>
+    <!--
+     <script src="js/search/metadata.search.js"></script>
+     <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
+     <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
+     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+     <script src="js/vendor/jquery-1.10.1.min.js"></script>
+     <script src="js/search/sequence.search.js"></script>
+     <script src="js/search/export-results.search.js"></script>
+     <script src="js/vendor/query-string.js"></script>
+     <script src="js/jquery.EuropePMCAbstracts.js"></script>
+     <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
+     <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+     <script src="js/vendor/handlebars-v1.1.2.js"></script>
+     <script src="js/guidedTour.js"></script>
+     <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
+     <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
+     -->
+    <script src="js/vendor/d3/d3.min.js"></script>
+    <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+    <script src="js/d3/d3.speciesSunburst.js"></script>
+    <script src="js/d3/d3.speciesTree.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-553e418b6f105be3"
+            async="async"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
-<div class="col-md-3 panel panel-default" id="rightpanel">
-    <p>
-       <h4> 
-        Similar Datasets
-       </h4> 
-    </p>
- <ul class="list-unstyled">
-  <!-- ngRepeat: dataset in result.datasets -->
-  <li  class="result animate-repeat " ng-repeat="relatedDataset in relatedDatasets | limitTo:relatedDatasetsLimit" style="">
-    <div class="project-widget  list-group-item">
-        
-        <div class="project-widget-accession">
-            <img src="css/Proteomics2.png" ng-show="proteomics_list.indexOf(relatedDataset.source)>-1" /> 
-            <img src="css/Metabolomics2.png" ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1" />
-            <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1" /> 
-            <a target="_blank" href={{"http://localhost:8000/app/dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>  <span>{{test}}  </span>
-        </div>
-            
-<!--         <div class="project-widget-title">
-            {{dataset["title"]}}
-        </div> -->
-
-         <div class="project-widget-paragraph hidden">
-                <b>Project description:</b>
-            {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
-            <span ng-show="relatedDataset.description===null">Not available</span>            
-        </div>
- 
-         <div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">
-            <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span> <span ng-show="relatedDataset.organisms.length===0">Not available</span>
-        </div>
-            
-        <div class="project-widget-paragraph">
-            {{relatedDataset.id}} ({{repositories[relatedDataset.source]}})
-        </div>
-            
-        <div class="project-widget-paragraph" ng-show="relatedDataset.publicationDate">
-            <b>Made public: </b> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}
-        </div>
-   </div>
-  </li><!-- end ngRepeat: -->
-</ul>   
- <div class="input-btn center" style="width:102px; margin-bottom:10px" >
-       <button type="submit" class="btn btn-default " ng-click="relatedLoadMore()" >
-           <i class="fa fa-search"></i> {{loadMoreBtnShow}} 
-       </button>
- </div><!-- /input-group-btn -->
- 
-</div><!-- col-md-3 rightpanel-->
-
-</div><!-- row-->
-</div><!-- container-->
-
-
-<footer>
-    <div id="footer" class="container"></div>
-</footer>
-        
-
-    
- <script src="js/vendor/angular/angular.min.js"></script>
- <script src="js/vendor/angular/angular-route.js"></script>
- <script src="js/vendor/angular/angular-animate.min.js"></script>
- <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
- <script src="js/vendor/underscore/underscore-min.js"></script>
- <script src="js/search/ddi.metadata.search.js"></script>
-<!--
- <script src="js/search/metadata.search.js"></script>
- <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
- <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
- <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
- <script src="js/search/sequence.search.js"></script>
- <script src="js/search/export-results.search.js"></script>
- <script src="js/vendor/query-string.js"></script>
- <script src="js/jquery.EuropePMCAbstracts.js"></script>
- <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
- <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
- <script src="js/vendor/handlebars-v1.1.2.js"></script>
- <script src="js/guidedTour.js"></script>
- <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
- <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
- -->
- <script src="js/vendor/d3/d3.min.js"></script>
- <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
- <script src="js/d3/d3.speciesSunburst.js"></script>
- <script src="js/d3/d3.speciesTree.js"></script>
- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-553e418b6f105be3" async="async"></script>
- <script src="https://apis.google.com/js/platform.js" async defer></script>
- <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
-
-</body></html>
+</body>
+</html>

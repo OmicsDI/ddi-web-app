@@ -592,5 +592,9 @@ ul#local-nav li.functional {
     background-color: transparent;
     float: right;
 }
+.align-justify{
+  text-align:justify;
+ }
+
 
 
