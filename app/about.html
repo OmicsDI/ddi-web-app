@@ -1,103 +1,120 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<html xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" xmlns:ng="http://angularjs.org"
+      class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 <head>
-    <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}
+    <style type="text/css">@charset "UTF-8";
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+        display: none !important;
+    }
+
+    ng\:form {
+        display: block;
+    }
     </style>
-        <meta charset="utf-8">
-        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-        <meta content="width=device-width" name="viewport">
-        <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width" name="viewport">
+    <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
+          name="description">
 
 
-        <title>DDI: About</title>
+    <title>DDI: About</title>
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link type="text/css" href="css/main.css" rel="stylesheet">
-        <!--
-        <link type="text/css" href="css/prider.css" rel="stylesheet">
-        <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
-        <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
-        -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" href="css/main.css" rel="stylesheet">
+    <!--
+    <link type="text/css" href="css/prider.css" rel="stylesheet">
+    <link type="text/css" href="css/ebi-global.css" rel="stylesheet">
+    <link type="text/css" href="css/ebi-visual.css" rel="stylesheet">
+    -->
 
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css" media="screen">
-        <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css" type="text/css" media="screen">
-        <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-global.css" type="text/css"
+          media="screen">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/ebi-visual.css" type="text/css"
+          media="screen">
+    <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"
+          type="text/css" media="screen">
+    <link type="text/css" href="css/ddi.css" rel="stylesheet">
 
-     <!-- favico -->
-       <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
-       <link rel="apple-touch-icon" sizes="60x60" href="/app/static/img/favico/apple-icon-60x60.png">
-       <link rel="apple-touch-icon" sizes="72x72" href="/app/static/img/favico/apple-icon-72x72.png">
-       <link rel="apple-touch-icon" sizes="76x76" href="/app/static/img/favico/apple-icon-76x76.png">
-       <link rel="apple-touch-icon" sizes="114x114" href="/app/static/img/favico/apple-icon-114x114.png">
-       <link rel="apple-touch-icon" sizes="120x120" href="/app/static/img/favico/apple-icon-120x120.png">
-       <link rel="apple-touch-icon" sizes="144x144" href="/app/static/img/favico/apple-icon-144x144.png">
-       <link rel="apple-touch-icon" sizes="152x152" href="/app/static/img/favico/apple-icon-152x152.png">
-       <link rel="apple-touch-icon" sizes="180x180" href="/app/static/img/favico/apple-icon-180x180.png">
-       <link rel="icon" type="image/png" sizes="192x192"  href="/app/static/img/favico/android-icon-192x192.png">
-       <link rel="icon" type="image/png" sizes="32x32" href="/app/static/img/favico/favicon-32x32.png">
-       <link rel="icon" type="image/png" sizes="96x96" href="/app/static/img/favico/favicon-96x96.png">
-       <link rel="icon" type="image/png" sizes="16x16" href="/app/static/img/favico/favicon-16x16.png">
-       <link rel="manifest" href="/app/static/img/favico/manifest.json">
-       <meta name="msapplication-TileColor" content="#ffffff">
-       <meta name="msapplication-TileImage" content="/app/static/img/favico/ms-icon-144x144.png">
-       <meta name="theme-color" content="#ffffff">
-       <!--favico end -->
+    <!-- favico -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/app/static/img/favico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/app/static/img/favico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/app/static/img/favico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/app/static/img/favico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/app/static/img/favico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/app/static/img/favico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/app/static/img/favico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/app/static/img/favico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/app/static/img/favico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/app/static/img/favico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/app/static/img/favico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/app/static/img/favico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/app/static/img/favico/favicon-16x16.png">
+    <link rel="manifest" href="/app/static/img/favico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/app/static/img/favico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--favico end -->
 
- <script src="js/vendor/jquery-1.10.1.min.js"></script>
- <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    <script src="js/vendor/jquery-1.10.1.min.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 </head>
 
 <script>
-$(function(){
-  $("#footer").load("footer.html"); 
-});
+    $(function () {
+        $("#footer").load("footer.html");
+    });
 </script>
 
 <body class="level2">
 <div id="wrapper" class="container_24">
-<header>
+    <header>
 
-  <div id="local-masthead" class="masthead grid_24 nomenu">
-    <!-- local-title -->
-    <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-      <div class="grid_12 alpha logo-title" id="local-title">
-        <a href="/app" title="Back to DDI homepage"><img src="/app/static/img/logo/DDI-icon-3.png" alt="logo" width="64" height="64"></a>
-        <span><h1><a href="/app" title="Back to DDI homepage">Datasets Discovery Index</a></h1></span>
-      </div>
-    <!-- /local-title -->
+        <div id="local-masthead" class="masthead grid_24 nomenu">
+            <!-- local-title -->
+            <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+            <div class="grid_12 alpha logo-title" id="local-title">
+                <a href="/app" title="Back to DDI homepage"><img src="/app/static/img/logo/DDI-icon-3.png" alt="logo"
+                                                                 width="64" height="64"></a>
+                <span><h1><a href="/app" title="Back to DDI homepage">Datasets Discovery Index</a></h1></span>
+            </div>
+            <!-- /local-title -->
 
-    <!-- local-search -->
-    <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-      <div ng-controller="QueryCtrl" class="grid_12 omega">
-         <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-            <fieldset>
-               <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                  <div class="input-group input-group-sm">
-                         <input type="text" style="background-color:#fff; width:99%"
-                         placeholder="organism, repository, gene, tissue, accession"
-                         class="form-control"
-                         id="query-text"
-                         name="text"
-                         tabindex="1"
-                         ng-model="query.text"
-                         ng-minlength="2"
-                         ng-maxlength="1000"
-                         autocomplete="off"
-                         required>
-                         <div class="input-group-btn">
-                             <button type="submit" class="btn btn-primary">
-                                 <i class="fa fa-search"></i> Search
-                             </button>
-                         </div><!-- /input-group-btn -->
-                  </div><!--input-group -->
+            <!-- local-search -->
+            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
+            <div ng-controller="QueryCtrl" class="grid_12 omega">
+                <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                    <fieldset>
+                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                            <div class="input-group input-group-sm">
+                                <input type="text" style="background-color:#fff; width:99%"
+                                       placeholder="organism, repository, gene, tissue, accession"
+                                       class="form-control"
+                                       id="query-text"
+                                       name="text"
+                                       tabindex="1"
+                                       ng-model="query.text"
+                                       ng-minlength="2"
+                                       ng-maxlength="1000"
+                                       autocomplete="off"
+                                       required>
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                                <!-- /input-group-btn -->
+                            </div>
+                            <!--input-group -->
                      <span class="help-block example-searches">
                          <small>
                              <i>
                                  Examples:
                                  <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
+                                     sapiens</a>,
                                  <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
                                  <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
                                  <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
@@ -105,95 +122,114 @@ $(function(){
                              </i>
                          </small>
                      </span>
-                     <label class="control-label ng-cloak has-error"
-                            for="query-text" 
-                            ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                            ng-cloak>
-                     Your query is too short
-                     </label>
-                     <label class="control-label ng-cloak"
-                            for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                            ng-cloak>
-                     Your query is too long
-                     </label>
-                 </div><!-- /form-group -->
-             </fieldset>
-            </form>
+                            <label class="control-label ng-cloak has-error"
+                                   for="query-text"
+                                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                                   ng-cloak>
+                                Your query is too short
+                            </label>
+                            <label class="control-label ng-cloak"
+                                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                                   ng-cloak>
+                                Your query is too long
+                            </label>
+                        </div>
+                        <!-- /form-group -->
+                    </fieldset>
+                </form>
+            </div>
+            <!-- /local-search -->
+
+
+            <!-- local-nav -->
+            <nav>
+                <ul class="grid_24" id="local-nav">
+                    <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
+                    <li class="" id="browse-menu"><a title="Browse"
+                                                     href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a>
+                    </li>
+                    <li class="" id="api-menu"><a title="DDI API" href="http://localhost:8000/app/api.html#/overview">API</a>
+                    </li>
+                    <li class=" last" id="about-prider-menu"><a title="Databases"
+                                                                href="http://localhost:8000/app/databases.html">Databases</a>
+                    </li>
+                    <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                    add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                    whichever one will show up last...
+                    For example: -->
+                    <li class="functional last"><a data-icon="\" class="icon icon-static"
+                                                   href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a>
+                    </li>
+                    <li class="functional"><a class="" href="about.html">About</a></li>
+                    <li class="functional"><a class="" href="help.html#/Overview">Help</a></li>
+                    <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l"
+                                                                            class="icon icon-functional"
+                                                                            href="http://www.ebi.ac.uk/pride/archive/login">Login</a>
+                    </li>
+                    <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5"
+                                                                                     class="icon icon-functional"
+                                                                                     href="http://www.ebi.ac.uk/pride/archive/register">Register</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- /local-nav -->
         </div>
-        <!-- /local-search -->
+    </header>
 
 
-        <!-- local-nav -->
-        <nav>
-            <ul class="grid_24" id="local-nav">
-            <li class=" first" id="home-menu"><a title="Home" href="http://localhost:8000/app/">Home</a></li>
-            <li class="" id="browse-menu"><a title="Browse" href="http://localhost:8000/app/browse.html#/search?q=*:*">Browse</a></li>
-            <li class="" id="api-menu"><a title="DDI API" href="http://localhost:8000/app/api.html#/overview">API</a></li>
-            <li class=" last" id="about-prider-menu"><a title="Databases" href="http://localhost:8000/app/databases.html">Databases</a></li>
-            <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-            add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-            whichever one will show up last...
-            For example: -->
-            <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a></li>
-            <li class="functional"><a class="" href="about.html">About</a></li>
-            <li class="functional"><a class="" href="help.html#/Overview">Help</a></li>
-            <li class="functional" id="login-menu" hidden="true" ><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a></li>
-            <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a></li>
-            </ul>
-        </nav>
-
-        <!-- /local-nav -->
-</div>
-</header>
-
-
-<div class="container-main container">
-            <!--[if lt IE 10]>
-              <div class="alert alert-danger">
-                You are using an <strong>outdated browser</strong> and as a result this website may not function as intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
-              </div>
-            <![endif]-->
-
-            <noscript>
-              <div class="alert alert-danger">
-                Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full functionality.
-              </div>
-            </noscript>
-
-<div id="" class="row" >
-</div>
-<div id="" class="row" >
-    <p>   
-    </p>
-</div>
-
-<div id="content" class="row" >
-    <h2 id="rest-api" class="icon icon-generic" data-icon="i">
-            About Datasets Discovery Index
-    </h2>
-    <div class="help-content">
-            <p>
-                The Datasets Discovery Index (DDI) provides dataset discovery across a heterogeneous, distributed group of genomics, proteomics and metabolomics data resources spanning eight repositories in two continents and six organisations, including both open and controlled access data resources. The resource provides a short description of every dataset: accession, description, sample/data protocols biological evidences, publication, etc. The search capabilities offer a unique resource to search for omics datasets. This fact converts the DDI in the first resource worldwide to provide search capabilities through multi-omics experiments.
-
-            </p>
+    <div class="container-main container">
+        <!--[if lt IE 10]>
+        <div class="alert alert-danger">
+            You are using an <strong>outdated browser</strong> and as a result this website may not function as
+            intended. Please <a href="http://whatbrowser.org/">upgrade your browser</a> to improve your experience.</p>
         </div>
+        <![endif]-->
 
-        <!--<h3 id="publication">Publications / how to cite</h3>-->
-        <!--<div class="help-content">-->
+        <noscript>
+            <div class="alert alert-danger">
+                Javasript is currently disabled or is not supported by this browser. Please enable JavaScript for full
+                functionality.
+            </div>
+        </noscript>
+
+        <div id="content" class="row">
+            <h2 id="rest-api" class="icon icon-generic" data-icon="i">
+                About Datasets Discovery Index
+            </h2>
+
+            <div class="help-content">
+                <p>
+                    The Datasets Discovery Index (DDI) provides dataset discovery across a heterogeneous, distributed
+                    group of genomics, proteomics and metabolomics data resources spanning eight repositories in two
+                    continents and six organisations, including both open and controlled access data resources. The
+                    resource provides a short description of every dataset: accession, description, sample/data
+                    protocols biological evidences, publication, etc. The search capabilities offer a unique resource to
+                    search for omics datasets. This fact converts the DDI in the first resource worldwide to provide
+                    search capabilities through multi-omics experiments.
+
+                </p>
+            </div>
+
+            <!--<h3 id="publication">Publications / how to cite</h3>-->
+            <!--<div class="help-content">-->
             <!--<blockquote>-->
-                <!---->
+            <!---->
             <!--</blockquote>-->
-        <!--</div>-->
+            <!--</div>-->
 
-        <h3 id="team">The team</h3>
-        <div class="help-content">
-            <p>
-                PRIDE is part of the EMBL-EBI Proteomics Services, led by <a href="http://www.ebi.ac.uk/about/people/henning-hermjakob" target="_blank">Henning Hermjakob</a>. The PRIDE team currently consists
-                of software developers, biocurators, trainees/visitors and one project coordinator.
-            </p>
+            <h3 id="team">The team</h3>
 
-            <p>
-                The main contributors to the PRIDE Cluster project include:
+            <div class="help-content">
+                <p>
+                    PRIDE is part of the EMBL-EBI Proteomics Services, led by <a
+                        href="http://www.ebi.ac.uk/about/people/henning-hermjakob" target="_blank">Henning Hermjakob</a>.
+                    The PRIDE team currently consists
+                    of software developers, biocurators, trainees/visitors and one project coordinator.
+                </p>
+
+                <p>
+                    The main contributors to the PRIDE Cluster project include:
                 <ul>
                     <li>Mingze Bai</li>
                     <li>Rui Wang</li>
@@ -202,44 +238,50 @@ $(function(){
                     <li>Juan Antonio Vizcaino</li>
                     <li>Yasset Perez-Riverol</li>
                 </ul>
-            </p>
-        </div>
+                </p>
+            </div>
 
-        <h3 id="acknowledgement">Acknowledgement</h3>
-        <div class="help-content">
-            <p>
-                The PRIDE team would like to thank all data submitters for their contributions. The PRIDE team is funded at present by the Wellcome Trust [grant number WT101477MA], and the BBSRC grants BB/I00095X/1, BB/K01997X/1 and BB/L024225/1] and EMBL core funding.
-            </p>
-            <p>
-            </p>
+            <h3 id="acknowledgement">Acknowledgement</h3>
 
-            <p>
-                The PRIDE team would like to thank the following companies and organisations for their support through the offering of free software licenses:
+            <div class="help-content">
+                <p>
+                    The PRIDE team would like to thank all data submitters for their contributions. The PRIDE team is
+                    funded at present by the Wellcome Trust [grant number WT101477MA], and the BBSRC grants
+                    BB/I00095X/1, BB/K01997X/1 and BB/L024225/1] and EMBL core funding.
+                </p>
+
+                <p>
+                </p>
+
+                <p>
+                    The PRIDE team would like to thank the following companies and organisations for their support
+                    through the offering of free software licenses:
 
                 <ul>
-                    <li><a href="https://www.jetbrains.com/" target="_blank">JetBrains</a> for the most intelligent Java IDE - <a href="https://www.jetbrains.com/idea/index.html" target="_blank">IntelliJ IDEA</a>.</li>
+                    <li><a href="https://www.jetbrains.com/" target="_blank">JetBrains</a> for the most intelligent Java
+                        IDE - <a href="https://www.jetbrains.com/idea/index.html" target="_blank">IntelliJ IDEA</a>.
+                    </li>
                 </ul>
-            </p>
+                </p>
+            </div>
         </div>
     </div>
+</div>
+
+        <footer>
+            <div id="footer" class="container"></div>
+        </footer>
 
 
+        <script src="js/vendor/angular/angular.min.js"></script>
+        <script src="js/vendor/angular/angular-animate.min.js"></script>
+        <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+        <script src="js/vendor/underscore/underscore-min.js"></script>
+        <script src="js/search/ddi.metadata.search.js"></script>
+        <script src="js/vendor/d3/d3.min.js"></script>
+        <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+        <script src="js/d3/d3.speciesSunburst.js"></script>
+        <script src="js/d3/d3.speciesTree.js"></script>
 
-
-
-<footer>
-    <div id="footer" class="container"></div>
-</footer>
-        
-    
- <script src="js/vendor/angular/angular.min.js"></script>
- <script src="js/vendor/angular/angular-animate.min.js"></script>
- <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
- <script src="js/vendor/underscore/underscore-min.js"></script>
- <script src="js/search/ddi.metadata.search.js"></script>
- <script src="js/vendor/d3/d3.min.js"></script>
- <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
- <script src="js/d3/d3.speciesSunburst.js"></script>
- <script src="js/d3/d3.speciesTree.js"></script>
-
-</body></html>
+</body>
+</html>

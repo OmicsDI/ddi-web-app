@@ -1027,7 +1027,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
             // ret[1] contains the second response
             // etc.
             $scope.dataset = ret[0].data;
-            if (ret[0].data === null || ret[0].data.id===null) {
+            if (ret[0].data === null || ret[0].data.id === null) {
                 $scope.getdatasetfail = "We can't access this dataset: " + acc + " at " + domain + " right now.";
                 return;
             }
@@ -1056,9 +1056,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
 
                 var publicationUrl = "http://localhost:9091/publication/list?acc=" + pubmedid;
                 $http.get(publicationUrl).success(function (pubData) {
-                    var publication= {};
+                    var publication = {};
                     console.log(pubData);
-                    if(pubData.count>1 || pubData.count<1) {console.error("got wrong publication data from" + publicationUrl)}
+                    if (pubData.count > 1 || pubData.count < 1) {
+                        console.error("got wrong publication data from" + publicationUrl)
+                    }
                     var entity = pubData.publications[0];
                     var insideId = entity.id;
                     console.log("pmid" + insideId);
@@ -1067,7 +1069,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
                         "title": entity.title,
                         "authorString": entity.authors.join(', '),
-                        "pubAbstract":entity.pubAbstract    
+                        "pubAbstract": entity.pubAbstract
                     };
                     $scope.publicationInfo.push(publicationInfoEntity);
                     $scope.publicationIndexInfo[insideId] = $scope.publicationInfo.indexOf(publicationInfoEntity);
