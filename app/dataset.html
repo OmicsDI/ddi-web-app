@@ -212,17 +212,17 @@
             <div class="col-md-1" id="socialnetworks" style="margin-left:-15px">
                 <!-- <g:plusone></g:plusone> -->
                 <a href=""><img src="static/img/socialnetwork/email.png" class="socialnetwork"
-                                ng-click="clicksharethis('email')"/> </a>
+                                ng-click="click_share_this('email')"/> </a>
                 <a href=""><img src="static/img/socialnetwork/twitter.png" class="socialnetwork"
-                                ng-click="clicksharethis('twitter')"/> </a>
+                                ng-click="click_share_this('twitter')"/> </a>
                 <a href=""><img src="static/img/socialnetwork/facebook.png" class="socialnetwork"
-                                ng-click="clicksharethis('facebook')"/></a>
+                                ng-click="click_share_this('facebook')"/></a>
                 <a href=""><img src="static/img/socialnetwork/google.png" class="socialnetwork"
-                                ng-click="clicksharethis('google')"/> </a>
+                                ng-click="click_share_this('google')"/> </a>
                 <a href=""><img src="static/img/socialnetwork/tumblr.png" class="socialnetwork"
-                                ng-click="clicksharethis('tumblr')"/> </a>
+                                ng-click="click_share_this('tumblr')"/> </a>
                 <a href=""><img src="static/img/socialnetwork/linkedin.png" class="socialnetwork"
-                                ng-click="clicksharethis('linkedin')"/> </a>
+                                ng-click="click_share_this('linkedin')"/> </a>
             </div>
             <!-- col-md-1-->
 
@@ -315,7 +315,7 @@
                         </div>
                         <div class="col-md-5" style="margin-left:10px">
                             <p>Date:
-                                {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}</p>
+                            {{dataset['publicationDate'].substr(0,4)+' '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}} {{dataset['publicationDate'].substr(6,2)!=='00'?dataset['publicationDate'].substr(6,2):''}}</p>
                         </div>
                     </div>
                     <!--dataset_bottom-->
@@ -349,18 +349,20 @@
                     </div>
                     <div class="" id="dataset_middle" style="overflow:hidden;margin-right:20px">
                         <div>
-                            <p style="margin:1px" class="align-justify">
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].citation}}</p>
                             <h4 style="margin:2px">
                                 {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].title}}</h4>
-
                             <p style="margin:1px" class="align-justify">
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].authorString}}</p>
+                                <span ng-repeat="author in publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].authorString">
+                                    <a href="http://localhost:8000/app/browse.html#/search?q={{author.substr(0,author.length-2)}}"> {{author.substr(0,author.length-2)}} </a> <span ng-if="!$last">,</span> 
+                                </span>
+                            </p>
+                            <p style="margin:1px" class="align-justify">
+                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].citation}}</p>
                         </div>
                         <hr>
                         <div style="margin-right:20px">
                             <p ng-show="pubmedabstractshowfull=='true'" class="align-justify">
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]}}
+                                ABSTRACT: {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]}}
                                 {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[1]}}
                                 <span
                                         ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to
@@ -369,7 +371,7 @@
                             </p>
 
                             <p ng-show="pubmedabstractshowfull=='false'" class="align-justify">
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]|limitTo:500}} 
+                                ABSTRACT: {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]|limitTo:500}} 
                                 <span
                                         ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0].length>500?"...more":""}}</b></span>
                                 {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[1]}}
@@ -380,7 +382,7 @@
                     <div class="row" id="dataset_middle_bottom" style="margin-top:10px">
                         <div class="col-md-4" style="margin-left:10px">
                             <a ng-hide="dataset.publications === null"
-                               href={{"http://europepmc.org/abstract/MED/"+dataset.publications[currentPublication].id}}>
+                               href={{"http://europepmc.org/abstract/MED/"+publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pmid}}>
                                 PMID:
                                 {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pmid}}</a>
                         </div>

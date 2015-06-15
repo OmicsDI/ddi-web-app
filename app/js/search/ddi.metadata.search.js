@@ -577,10 +577,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             $scope.pages = results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
             $scope.maxpageno = 1 + parseInt(($scope.result.count - 1) / $scope.$root.pagesize);
             $scope.query = $location.search().q;
-            $scope.queryForShow = $scope.query;
-            prepareQueryForShow();
-            getnewindexes();
-            checkomicstypenull();
+            $scope.query_for_show = $scope.query;
+            prepare_query_for_show();
+            get_new_indexes();
+            check_omics_type_null();
         }
     });
 
@@ -664,7 +664,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     };
 
 
-    $scope.getcurrentpage = function () {
+    $scope.get_current_page = function () {
         return $scope.$root.currentpage;
     };
     /**
@@ -756,7 +756,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     });
 
 
-    function getnewindexes() {
+    function get_new_indexes() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
         $scope.indexoffacets = {
@@ -785,7 +785,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     };
 
-    function checkomicstypenull() {
+        function check_omics_type_null() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
         $scope.omicsfacetsno = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0"};
@@ -799,26 +799,25 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         //      console.log($scope.omicsfacetsindex);
     }
 
-    function prepareQueryForShow() {
-        //        console.log($scope.result.facets);
-        getnewindexes();
+    function prepare_query_for_show() {
+        get_new_indexes();
         var taxonomyRe = /TAXONOMY:"(\d+)"/g;
-        var taxonomymatches = $scope.queryForShow.match(taxonomyRe);
+        var taxonomymatches = $scope.query_for_show.match(taxonomyRe);
         if (taxonomymatches === null) return;
         for (var i = 0; i < taxonomymatches.length; i++) {
             var taxonomymatch = taxonomymatches[i];
             var taxonomyid = taxonomymatch.substr(10, taxonomymatch.length - 11);
-            var taxlabel = getLabelByTaxid(taxonomyid);
-            $scope.queryForShow = $scope.queryForShow.replace(taxonomyid, taxlabel);
+            var taxlabel = get_label_by_taxid(taxonomyid);
+            $scope.query_for_show = $scope.query_for_show.replace(taxonomyid, taxlabel);
         }
     }
 
-    function getLabelByTaxid(taxonomyid) {
+    function get_label_by_taxid(taxonomyid) {
         if (taxonomyid === undefined) return;
         if ($scope.result.facets[$scope.indexoffacets.TAXONOMY] === undefined) return;
-        var taxonomyarray = $scope.result.facets[$scope.indexoffacets.TAXONOMY].facetValues;
-        for (var i = 0; i < taxonomyarray.length; i++) {
-            if (taxonomyarray[i].value === taxonomyid) return taxonomyarray[i].label;
+        var taxonomy_array = $scope.result.facets[$scope.indexoffacets.TAXONOMY].facetValues;
+        for (var i = 0; i < taxonomy_array.length; i++) {
+            if (taxonomy_array[i].value === taxonomyid) return taxonomy_array[i].label;
         }
         console.error("find no label for the taxid");
     }
@@ -991,6 +990,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     $scope.organismPreUrl = "browse.html#/search?q=*:* AND TAXONOMY:";
     $scope.relatedDatasetsLimit = 5;
     $scope.loadMoreBtnShow = "Load More";
+    $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
     /*     $http({
@@ -1057,23 +1057,29 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 var publicationUrl = "http://localhost:9091/publication/list?acc=" + pubmedid;
                 $http.get(publicationUrl).success(function (pubData) {
                     var publication = {};
-                    console.log(pubData);
                     if (pubData.count > 1 || pubData.count < 1) {
                         console.error("got wrong publication data from" + publicationUrl)
                     }
                     var entity = pubData.publications[0];
                     var insideId = entity.id;
-                    console.log("pmid" + insideId);
+                    entity.date = entity.date.substr(0,4) + " " + 
+                        $scope.month_names_short[parseInt(entity.date.substr(4,2))-1] + " " +
+                        entity.date.substr(6,2) + ";";
+                    entity.date = entity.date.replace(/00;/,';');
                     publicationInfoEntity = {
                         "pmid": insideId,
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
                         "title": entity.title,
-                        "authorString": entity.authors.join(', '),
+                        "authorString": entity.authors,
                         "pubAbstract": entity.pubAbstract
                     };
+                    /**remove the abbreviated given name
+                    publicationInfoEntity.authorString = publicationInfoEntity.authorString.replace(/ [A-Z],/g,",") ;
+                    publicationInfoEntity.authorString = publicationInfoEntity.authorString.replace(/ [A-Z]$/,"") ;
+                    */
+
                     $scope.publicationInfo.push(publicationInfoEntity);
                     $scope.publicationIndexInfo[insideId] = $scope.publicationInfo.indexOf(publicationInfoEntity);
-                    console.log($scope.publicationInfo);
                 }).error(function () {
                 });
             }
@@ -1094,7 +1100,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
         linkedin: ["https://www.linkedin.com/shareArticle?mini=true&url=[", 520]
     };
 
-    $scope.clicksharethis = function (label) {
+    $scope.click_share_this = function (label) {
         var value = $scope.sharemethod[label];
         var c = value[0].replace("[", encodeURIComponent(location.href)).replace("]", encodeURIComponent(document.title));
         1 == value.length ? location.href = c : window.open(c, "_blank", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=500,height=" + value[1]);
@@ -1105,15 +1111,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     $scope.currentProtocol = "sample_protocol";
     $scope.protocols = {"sample_protocol": "Sample Protocol", "data_protocol": "Data Protocol"};
 
-    /**
+/**
      * for tab control
-     */
     $scope.tabs = [{
-        /*
          title: 'Protocols',
          url: 'protocols.tpl.html'
          }, {
-         */
         title: 'Bioentities',
         url: 'bioentities.tpl.html'
     }, {
@@ -1130,8 +1133,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
         return tabUrl == $scope.currentTab;
     }
 
-    /* onclick for change protocol type
-     */
     $scope.onClickProtocol = function () {
         if ($scope.currentProtocol == "sample_protocol") {
             $scope.currentProtocol = "data_protocol";
@@ -1140,6 +1141,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
             $scope.currentProtocol = "sample_protocol";
         }
     }
+*/
 
     /*
      * for the multiple publications click
@@ -1187,9 +1189,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
         return tmp;
     }
 
-    $scope.redirectToNewDataset = function () {
-        $window.location = "http://localhost:8000/app/dataset.html#/";
-    }
+
 
 }]);
 
