@@ -1,30 +1,31 @@
+var web_service_url = web_service_url+'';
 var drawHotwords = function () {
 
     queue()
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=pride&field=description') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptide_atlas&field=description') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=description') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=description') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolome_workbench&field=description') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=ega&field=description') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=omics&field=description') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=pride&field=description') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=peptide_atlas&field=description') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=massive&field=description') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolights&field=description') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolome_workbench&field=description') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=ega&field=description') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=description') // geojson points
 
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=pride&field=data_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptide_atlas&field=data_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=data_protocol') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=data_protocol') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolome_workbench&field=data_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=ega&field=data_protocol') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=omics&field=data_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=pride&field=data_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=peptide_atlas&field=data_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=massive&field=data_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolights&field=data_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolome_workbench&field=data_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=ega&field=data_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=data_protocol') // geojson points
 
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=pride&field=sample_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=peptide_atlas&field=sample_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=massive&field=sample_protocol') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=sample_protocol') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolights&field=sample_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=metabolome_workbench&field=sample_protocol') // geojson points
-//    .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=ega&field=sample_protocol') // geojson points
-        .defer(d3.json, 'http://localhost:9091/dataset/terms?size=40&domain=omics&field=sample_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=pride&field=sample_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=peptide_atlas&field=sample_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=massive&field=sample_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolights&field=sample_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolights&field=sample_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=metabolome_workbench&field=sample_protocol') // geojson points
+//    .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=ega&field=sample_protocol') // geojson points
+        .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=sample_protocol') // geojson points
         .await(draw_word_cloud); // function that uses files
 
     function draw_word_cloud(error,

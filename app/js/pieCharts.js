@@ -1,11 +1,10 @@
+var web_service_url = 'http://localhost:9091/';
 var pieCharts_Tissues_Organisms = function () {
-// var piechats_url="data/testjson.json";
-
 
     queue()
-        .defer(d3.json, 'http://localhost:9091/stats/tissues?size=100') // topojson polygons
-        .defer(d3.json, 'http://localhost:9091/stats/organisms?size=100') // geojson points
-        .defer(d3.json, 'http://localhost:9091/stats/diseases?size=100') // geojson points
+        .defer(d3.json, web_service_url+'stats/tissues?size=100') // topojson polygons
+        .defer(d3.json, web_service_url+'stats/organisms?size=100') // geojson points
+        .defer(d3.json, web_service_url+'stats/diseases?size=100') // geojson points
         .await(draw_chart_tissues_organsims); // function that uses files
 
     function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
@@ -288,8 +287,8 @@ var pieCharts_Tissues_Organisms = function () {
 var pieCharts_Repos_Omics = function () {
 
     queue()
-        .defer(d3.json, 'http://localhost:9091/stats/domains') // topojson polygons
-        .defer(d3.json, 'http://localhost:9091/stats/omicsType') // geojson points
+        .defer(d3.json, web_service_url+'stats/domains') // topojson polygons
+        .defer(d3.json, web_service_url+'stats/omicsType') // geojson points
         .await(draw_chart_Repos_Omics); // function that uses files
 
     function draw_chart_Repos_Omics(error, domains, omicstype) {
@@ -580,9 +579,9 @@ var pieCharts_Repos_Omics = function () {
 
 var barCharts_Years_Omicstypes = function () {
     queue()
-        // .defer(d3.json, 'http://localhost:9091/stats/omicsType_annual?omicstype=proteomics') // topojson polygons
-        .defer(d3.json, 'http://localhost:9091/stats/omicsType_annual') // geojson points
-        // .defer(d3.json, 'http://localhost:9091/stats/omicsType_annual?omicstype=genomics') // geojson points
+        // .defer(d3.json, web_service_url+'stats/omicsType_annual?omicstype=proteomics') // topojson polygons
+        .defer(d3.json, web_service_url+'stats/omicsType_annual') // geojson points
+        // .defer(d3.json, web_service_url+'stats/omicsType_annual?omicstype=genomics') // geojson points
         .await(draw_chart_omicstype_annual); // function that uses files
 
     function draw_chart_omicstype_annual(error, annalData) {

@@ -25,6 +25,13 @@ underscore.factory('_', function () {
     return window._;
 });
 
+
+/**
+ * web_service_url for whole app
+ */
+var web_service_url = "http://localhost:9091/";
+
+
 /**
  * Create DDI app.
  */
@@ -111,7 +118,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     };
 
     var search_config = {
-        ebeye_base_url: 'http://localhost:9091/dataset/search',
+        ebeye_base_url: web_service_url+'dataset/search',
         ddi_base_url: get_base_url(),
         // fields: ['name','description', 'keywords', 'pdataset.descriptionublication','species'],
         // facetfields: [
@@ -1002,7 +1009,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      }).error(function(){
      });
      */
-    var relateDataUrl = "http://localhost:9091/dataset/moreLikeThis?acc=" + acc + "&database=" + domain;
+    var relateDataUrl = web_service_url+"dataset/moreLikeThis?acc=" + acc + "&database=" + domain;
     $http({
         url: relateDataUrl,
         method: 'GET'
@@ -1019,7 +1026,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     $scope.publicationInfo = [];
     var altmetricUrls = [];
     var arr = [];
-    var url = "http://localhost:9091/dataset/get?acc=" + acc + "&database=" + domain;
+    var url = web_service_url+"dataset/get?acc=" + acc + "&database=" + domain;
     arr.push($http.get(url));
 
     $q.all(arr).then(function (ret) {
@@ -1054,7 +1061,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 }).error(function () {
                 });
 
-                var publicationUrl = "http://localhost:9091/publication/list?acc=" + pubmedid;
+                var publicationUrl = web_service_url+"publication/list?acc=" + pubmedid;
                 $http.get(publicationUrl).success(function (pubData) {
                     var publication = {};
                     if (pubData.count > 1 || pubData.count < 1) {
@@ -1231,9 +1238,8 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     $scope.getLatestDatasetsFail = '';
     $scope.getMostaccessDatasetsFail = '';
     $scope.$root.webServiceFail = 'false';
-    var mainUrl = "http://localhost:9091/";
     $http({
-        url: mainUrl,
+        url: web_service_url,
         method: 'GET'
     }).success(function (data) {
         $scope.$root.webServiceFail = 'false';
@@ -1242,7 +1248,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 
 
-    var url = "http://localhost:9091/dataset/latest?size=10";
+    var url = web_service_url+"dataset/latest?size=10";
     $http({
         url: url,
         method: 'GET'
@@ -1258,7 +1264,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 //
 //
-    var url = "http://localhost:9091/dataset/mostAccessed?size=10";
+    var url = web_service_url+"dataset/mostAccessed?size=10";
     $http({
         url: url,
         method: 'GET'
@@ -1274,7 +1280,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 
     //get general statistics
-    url = "http://localhost:9091/stats/general";
+    url = web_service_url+"stats/general";
 
     $http({
         url: url,
@@ -1286,7 +1292,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 
     //get datasets No. of each repository 
-    url = "http://localhost:9091/stats/domains";
+    url = web_service_url+"stats/domains";
     $scope.databases = {"test": "0"};
     $http({
         url: url,
