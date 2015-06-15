@@ -385,7 +385,7 @@
     "cycle": "testcyclehere"
     }
     ],
-    "relatedDatasets": null,
+    "related_datasets": null,
     "data_protocol": "Peak lists were extracted from the raw LC-MS/MS data files and the data were searched against the
     20265 human proteins in the 2014-04 release of the UniProt Knowledgebase (downloaded at
     ftp://ftp.uniprot.org/pub/databases/uniprot/current_releases/release-2014_04/knowledgebase/) using Maxquant
@@ -456,9 +456,9 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href="http://localhost:9091/dataset/search?query=human&sortfield=id">http://localhost:9091/dataset/search?query=human&sortfield=id</a>
+                    <li><a href="http://localhost:9091/dataset/search?query=human&sort_field=id">http://localhost:9091/dataset/search?query=human&sort_field=id</a>
                     </li>
-                    <li><a href="http://localhost:9091/dataset/search?query=human&sortfield=publication_date">http://localhost:9091/dataset/search?query=human&sortfield=publication_date</a>
+                    <li><a href="http://localhost:9091/dataset/search?query=human&sort_field=publication_date">http://localhost:9091/dataset/search?query=human&sort_field=publication_date</a>
                     </li>
                 </ul>
 
@@ -487,7 +487,7 @@
                 <h3 id="v1-filtering-by-omics-type">Filtering by omics type</h3>
 
                 <p>The omics type can be specified by adding terms in the <code>query</code> url parameter with key:
-                    "omics_type"
+                    <code>omics_type</code>
                     (possible values: <em>Proteomics</em>, <em>Metabolomics</em>, <em>Proteomics</em>).</p>
 
                 <h4>Examples</h4>
@@ -502,7 +502,7 @@
                 <h3 id="v1-filtering-by-database">Filtering by database</h3>
 
                 <p>The database can be specified by adding terms in the <code>query</code> url parameter with key:
-                    "repository"
+                    <code>repository</code>
                     (possible values: <em>MassIVE</em>, <em>Metabolights</em>, <em>PeptideAtlas</em>, <em>PRIDE</em>).
                 </p>
 
@@ -522,7 +522,7 @@
                 <h3 id="v1-filtering-by-organism">Filtering by Organism</h3>
 
                 <p>The organism can be specified by adding terms in the <code>query</code> url parameter with key:
-                    "TAXONOMY"
+                    <code>TAXONOMY</code>
                     (possible values must be the TAXONOMY id: <em>9606</em>, <em>10090</em>...).</p>
 
                 <h4>Examples</h4>
@@ -537,7 +537,7 @@
                 <h3 id="v1-filtering-by-tissue">Filtering by Tissue</h3>
 
                 <p>The tissue can be specified by adding terms in the <code>query</code> url parameter with key:
-                    "tissue"
+                    <code>tissue</code>
                     (possible values: <em>Liver</em>, <em>Cell culture</em>, <em>Brain</em>, <em>Lung</em>...).</p>
 
                 <h4>Examples</h4>
@@ -552,7 +552,7 @@
                 <h3 id="v1-filtering-by-disease">Filtering by Disease</h3>
 
                 <p>The disease can be specified by adding terms in the <code>query</code> url parameter with key:
-                    "disease"
+                    <code>disease</code>
                     (possible values: <em>Breast cancer</em>, <em>Lymphoma</em>, <em>Carcinoma</em>, <em>prostate
                         adenocarcinoma</em>...).</p>
 
@@ -571,7 +571,7 @@
                 </h3>
 
                 <p>The Modifications (in proteomics) can be specified by adding terms in the <code>query</code> url
-                    parameter with key: "disease"
+                    parameter with key: <code>disease</code>
                     (possible values: <em>Deamidated residue</em>, <em>Deamidated</em>, <em>Monohydroxylated
                         residue</em>, <em>Iodoacetamide derivatized residue</em>...).</p>
 
@@ -589,7 +589,7 @@
                 <h3 id="v1-filtering-by-instruments-platforms">Filtering by Instruments & Platforms</h3>
 
                 <p>The Instruments & Platforms can be specified by adding terms in the <code>query</code> url parameter
-                    with key: "instrument_platform"
+                    with key: <code>instrument_platform</code>
                     (possible values: <em>QSTAR</em>, <em> LTQ Orbitrap</em>, <em>Q Exactive</em>, <em>LTQ</em>...).</p>
 
                 <h4>Examples</h4>

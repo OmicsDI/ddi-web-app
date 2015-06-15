@@ -30,7 +30,35 @@ underscore.factory('_', function () {
  * web_service_url for whole app
  */
 var web_service_url = "http://localhost:9091/";
-
+var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
+var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench";
+var genomics_list = "ega,EGA";
+var repositories = {
+        "pride": "PRIDE",
+        "PRIDE": "PRIDE",
+        "peptideatlas": "PeptideAtlas",
+        "peptide_atlas": "PeptideAtlas",
+        "PeptideAtlas": "PeptideAtlas",
+        "massive": "MassIVE",
+        "MassIVE": "MassIVE",
+        "metabolights": "MetaboLights",
+        "metabolights_dataset": "MetaboLights",
+        "MetaboLights": "MetaboLights",
+        "metabolome_workbench": "Metabolomics Workbench",
+        "Metabolomics Workbench": "Metabolomics Workbench",
+        "MetabolomicsWorkbench": "Metabolomics Workbench",
+        "ega": "EGA",
+        "EGA": "EGA",
+    };
+var database_urls = {
+        "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
+        "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
+        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
+        "PeptideAtlas": "http://www.peptideatlas.org/",
+        "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
+        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
+    }
+ 
 
 /**
  * Create DDI app.
@@ -128,8 +156,8 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         // 'instrument',
         // ], // will be displayed in this order
         facetcount: 100,
-        // pagesize: 10,
-        // sortfield: 'title',
+        // page_size: 10,
+        // sort_field: 'title',
 
     };
 
@@ -140,9 +168,9 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             // '&fields=' + search_config.fields.join() +
         '&facetcount=' + search_config.facetcount +
             // '&facetfields=' + search_config.facetfields.join() +
-//                        '&size=' + search_config.pagesize +
+//                        '&size=' + search_config.page_size +
         '&size={PAGESIZE}' +
-        '&sortfield={SORTFIELD}' +
+        '&sort_field={SORTFIELD}' +
         '&start={START}',
 
         'proxy': search_config.ddi_base_url +
@@ -166,10 +194,10 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      * Launch EBeye search.
      * `start` determines the range of the results to be returned.
      */
-    this.search = function (query, start, pagesize, sortfield) {
+    this.search = function (query, start, page_size, sort_field) {
         start = start || 0;
-        pagesize = pagesize || 10;
-        sortfield = sortfield || 'id';
+        page_size = page_size || 10;
+        sort_field = sort_field || 'id';
         display_search_interface();
         display_spinner();
         update_page_title();
@@ -206,13 +234,13 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
          * Create an proxy query url which includes EBeye query url.
          */
         function get_query_url() {
-            var newSortField = sortfield;
+            var newSortField = sort_field;
             if (newSortField === "relevance") {
                 newSortField = ""
             }
             ;
 
-            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', pagesize).replace('{SORTFIELD}', newSortField);
+            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField);
 //            console.log(ebeye_url);
             //    var url = query_urls.proxy.replace('{EBEYE_URL}', encodeURIComponent(ebeye_url));
             //    return url;
@@ -418,9 +446,9 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     /**
      * Load more results starting from the last loaded index.
      */
-    this.load_more_results = function (start, pagesize, sortfield) {
+    this.load_more_results = function (start, page_size, sort_field) {
         query = $location.search().q;
-        this.search(query, start, pagesize, sortfield);
+        this.search(query, start, page_size, sort_field);
     };
 
     /**
@@ -452,16 +480,16 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     };
 
 
-    this.get_pages = function (currentpage, pagesize, hitcount) {
-        var maxpageno = parseInt((hitcount - 1) / pagesize) + 1;
+    this.get_pages = function (current_page, page_size, hitcount) {
+        var max_page_no = parseInt((hitcount - 1) / page_size) + 1;
         var startpage = 1;
         var pages = [0, 0, 0, 0];
 
-        if (maxpageno - currentpage < 5) {
-            startpage = maxpageno - 4;
+        if (max_page_no - current_page < 5) {
+            startpage = max_page_no - 4;
         }
         else {
-            startpage = currentpage - 2;
+            startpage = current_page - 2;
         }
 
         if (startpage < 1) {
@@ -474,12 +502,12 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             pages[i] = startpage;
         }
 
-        if (maxpageno === 1) pages = [1];
-        if (maxpageno === 2) pages = [1, 2];
-        if (maxpageno === 3) pages = [1, 2, 3];
-        if (maxpageno === 4) pages = [1, 2, 3, 4];
-        if (maxpageno === 5) pages = [1, 2, 3, 4, 5];
-        if (maxpageno === 6) pages = [1, 2, 3, 4, 5];
+        if (max_page_no === 1) pages = [1];
+        if (max_page_no === 2) pages = [1, 2];
+        if (max_page_no === 3) pages = [1, 2, 3];
+        if (max_page_no === 4) pages = [1, 2, 3, 4];
+        if (max_page_no === 5) pages = [1, 2, 3, 4, 5];
+        if (max_page_no === 6) pages = [1, 2, 3, 4, 5];
         return pages;
     };
 
@@ -528,50 +556,21 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         entries: [],
     };
     $scope.show_export_error = false;
-    $scope.$root.pagesize = 10;
-    $scope.$root.sortfield = 'id';
+    $scope.$root.page_size = 10;
+    $scope.$root.sort_field = 'id';
     $scope.pages = [0, 0];
-    $scope.maxpageno = 1;
+    $scope.max_page_no = 1;
 
-    $scope.proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
-    $scope.metabolomics_list = "metabolights,metabolights_dataset,metabolome_workbench,MetaboLights";
-    $scope.genomics_list = "ega,EGA";
-    $scope.repositories = {
-        "pride": "PRIDE",
-        "PRIDE": "PRIDE",
-        "peptideatlas": "PeptideAtlas",
-        "peptide_atlas": "PeptideAtlas",
-        "PeptideAtlas": "PeptideAtlas",
-        "massive": "MassIVE",
-        "MassIVE": "MassIVE",
-        "metabolights": "MetaboLights",
-        "metabolights_dataset": "MetaboLights",
-        "MetaboLights": "MetaboLights",
-        "metabolome_workbench": "Metabolomics Workbench",
-        "Metabolomics Workbench": "Metabolomics Workbench",
-        "MetabolomicsWorkbench": "Metabolomics Workbench",
-        "ega": "EGA",
-        "EGA": "EGA",
-    };
+    $scope.proteomics_list = proteomics_list;
+    $scope.metabolomics_list = metabolomics_list;
+    $scope.genomics_list = genomics_list;
+    $scope.repositories =  repositories;
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
 
 
     $scope.facetsNo = 8;
-    $scope.indexoffacets = {
-        "omics_type": "0",
-        "repository": "0",
-        "TAXONOMY": "0",
-        "tissue": "0",
-        "disease": "0",
-        "modifications": "0",
-        "instruments": "0",
-        "publicatedate": "0",
-        "technology": "0",
-        "test": "0"
-    }
-
-    $scope.omicsfacetsno = {"Proteomics": "", "Metabolomics": "", "Genomics": ""};
+    $scope.omics_facets_no = {"Proteomics": "", "Metabolomics": "", "Genomics": ""};
 
     /**
      * Watch `result` changes.
@@ -581,8 +580,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }, function (newValue, oldValue) {
         if (newValue !== null) {
             $scope.result = newValue;
-            $scope.pages = results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
-            $scope.maxpageno = 1 + parseInt(($scope.result.count - 1) / $scope.$root.pagesize);
+            $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
+            $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
             $scope.query = $location.search().q;
             $scope.query_for_show = $scope.query;
             prepare_query_for_show();
@@ -627,52 +626,52 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     /**
      * Fired when "Load more" button is clicked.
      */
-    $scope.load_more_results = function (page, pagesize, sortfield) {
-        if (pagesize !== 'default') {
-            $scope.$root.pagesize = pagesize
+    $scope.load_more_results = function (page, page_size, sort_field) {
+        if (page_size !== 'default') {
+            $scope.$root.page_size = page_size
         }
-        if (pagesize === 'default') {
-            pagesize = $scope.$root.pagesize
-        }
-
-        if (sortfield !== 'default') {
-            $scope.$root.sortfield = sortfield;
-        }
-        if (sortfield === 'default') {
-            sortfield = $scope.$root.sortfield;
+        if (page_size === 'default') {
+            page_size = $scope.$root.page_size
         }
 
-        var start = (page - 1) * pagesize;
+        if (sort_field !== 'default') {
+            $scope.$root.sort_field = sort_field;
+        }
+        if (sort_field === 'default') {
+            sort_field = $scope.$root.sort_field;
+        }
 
-        results.load_more_results(start, pagesize, sortfield);
+        var start = (page - 1) * page_size;
+
+        results.load_more_results(start, page_size, sort_field);
     };
 
-    $scope.pagination = function (currentpage, pagesize, sortfield) {
-        if (pagesize !== 'default') {
-            $scope.$root.pagesize = pagesize
+    $scope.pagination = function (current_page, page_size, sort_field) {
+        if (page_size !== 'default') {
+            $scope.$root.page_size = page_size
         }
-        if (pagesize === 'default') {
-            pagesize = $scope.$root.pagesize
-        }
-
-        if (sortfield !== 'default') {
-            $scope.$root.sortfield = sortfield;
-        }
-        if (sortfield === 'default') {
-            sortfield = $scope.$root.sortfield;
+        if (page_size === 'default') {
+            page_size = $scope.$root.page_size
         }
 
-        $scope.$root.currentpage = currentpage;
+        if (sort_field !== 'default') {
+            $scope.$root.sort_field = sort_field;
+        }
+        if (sort_field === 'default') {
+            sort_field = $scope.$root.sort_field;
+        }
 
-        var start = (currentpage - 1) * pagesize;
+        $scope.$root.current_page = current_page;
 
-        results.load_more_results(start, pagesize, sortfield);
+        var start = (current_page - 1) * page_size;
+
+        results.load_more_results(start, page_size, sort_field);
 
     };
 
 
     $scope.get_current_page = function () {
-        return $scope.$root.currentpage;
+        return $scope.$root.current_page;
     };
     /**
      * Determine if the facet has already been applied.
@@ -694,7 +693,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      */
     $scope.facet_search = function (facet_id, facet_value) {
 
-        $scope.$root.currentpage = 1;
+        $scope.$root.current_page = 1;
 
         var query = $location.search().q || '',
             facet = facet_id + ':"' + facet_value + '"',
@@ -756,9 +755,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () {
         return $location.url();
     }, function (newUrl, oldUrl) {
-        $scope.$root.currentpage = 1;
-        $scope.pages = results.get_pages($scope.$root.currentpage, $scope.$root.pagesize, $scope.result.count);
-        $scope.maxpageno = 1 + parseInt(($scope.result.count - 1) / $scope.$root.pagesize);
+        $scope.$root.current_page = 1;
+        $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
+        $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
 
     });
 
@@ -766,7 +765,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     function get_new_indexes() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
-        $scope.indexoffacets = {
+        $scope.index_of_facets = {
             "omics_type": "0",
             "repository": "0",
             "TAXONOMY": "0",
@@ -778,13 +777,13 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             "technology_type": "0",
             "test": "0"
         };
-        for (facet in $scope.indexoffacets) {
+        for (facet in $scope.index_of_facets) {
             //           console.log("facet:"+facet);
             //           console.log("results.facet length:"+$scope.result.facets.length);
             for (i = 0; i < $scope.result.facets.length; i++) {
                 //           console.log("check on:"+$scope.result.facets[i].id);
                 if (facet === $scope.result.facets[i].id) {
-                    $scope.indexoffacets[facet] = i;
+                    $scope.index_of_facets[facet] = i;
                 }
             }
         }
@@ -795,36 +794,34 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         function check_omics_type_null() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
-        $scope.omicsfacetsno = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0"};
+        $scope.omics_facets_no = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0"};
         $scope.omicsfacetsindex = {"Proteomics": "", "Metabolomics": "", "Genomics": ""};
-        //         console.log($scope.result.facets);
-        var omicsfacet = $scope.result.facets[$scope.indexoffacets.omics_type].facetValues;
+        var omicsfacet = $scope.result.facets[$scope.index_of_facets.omics_type].facetValues;
         for (omic in omicsfacet) {
-            $scope.omicsfacetsno[omicsfacet[omic].label] = omicsfacet[omic].count;
+            $scope.omics_facets_no[omicsfacet[omic].label] = omicsfacet[omic].count;
             $scope.omicsfacetsindex[omicsfacet[omic].label] = omic;
         }
-        //      console.log($scope.omicsfacetsindex);
     }
 
     function prepare_query_for_show() {
         get_new_indexes();
-        var taxonomyRe = /TAXONOMY:"(\d+)"/g;
-        var taxonomymatches = $scope.query_for_show.match(taxonomyRe);
-        if (taxonomymatches === null) return;
-        for (var i = 0; i < taxonomymatches.length; i++) {
-            var taxonomymatch = taxonomymatches[i];
-            var taxonomyid = taxonomymatch.substr(10, taxonomymatch.length - 11);
-            var taxlabel = get_label_by_taxid(taxonomyid);
-            $scope.query_for_show = $scope.query_for_show.replace(taxonomyid, taxlabel);
+        var taxonomy_reg = /TAXONOMY:"(\d+)"/g;
+        var taxonomy_matches = $scope.query_for_show.match(taxonomy_reg);
+        if (taxonomy_matches === null) return;
+        for (var i = 0; i < taxonomy_matches.length; i++) {
+            var taxonomy_match = taxonomy_matches[i];
+            var taxonomy_id = taxonomy_match.substr(10, taxonomymatch.length - 11);
+            var taxonomy_label = get_label_by_taxid(taxonomy_id);
+            $scope.query_for_show = $scope.query_for_show.replace(taxonomy_id, taxonomy_label);
         }
     }
 
-    function get_label_by_taxid(taxonomyid) {
-        if (taxonomyid === undefined) return;
-        if ($scope.result.facets[$scope.indexoffacets.TAXONOMY] === undefined) return;
-        var taxonomy_array = $scope.result.facets[$scope.indexoffacets.TAXONOMY].facetValues;
+    function get_label_by_taxid(taxonomy_id) {
+        if (taxonomy_id === undefined) return;
+        if ($scope.result.facets[$scope.index_of_facets.TAXONOMY] === undefined) return;
+        var taxonomy_array = $scope.result.facets[$scope.index_of_facets.TAXONOMY].facetValues;
         for (var i = 0; i < taxonomy_array.length; i++) {
-            if (taxonomy_array[i].value === taxonomyid) return taxonomy_array[i].label;
+            if (taxonomy_array[i].value === taxonomy_id) return taxonomy_array[i].label;
         }
         console.error("find no label for the taxid");
     }
@@ -847,7 +844,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
      * Launch a metadata search using the service.
      */
     $scope.meta_search = function (query) {
-        $scope.$root.currentpage = 1;
+        $scope.$root.current_page = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
 
@@ -899,7 +896,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
             } else {
                 // the new url is a search result page, launch that search
                 $scope.query.text = $location.search().q;
-                results.search($location.search().q, 0, $scope.$root.pagesize, $scope.$root.sortfield);
+                results.search($location.search().q, 0, $scope.$root.page_size, $scope.$root.sort_field);
                 $scope.query.submitted = false;
             }
         }
@@ -919,7 +916,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
     $scope.submit_query = function () {
         $scope.query.submitted = true;
 
-        $scope.$root.currentpage = 1;
+        $scope.$root.current_page = 1;
 
 
         if ($scope.queryForm.text.$invalid) {
@@ -957,46 +954,22 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
 
     $scope.acc = acc;
     $scope.domain = domain;
-    $scope.descriptionshowfull = "false";
-    $scope.pubmedabstractshowfull = "false";
-    $scope.dataprotocolshowfull = "false";
-    $scope.sampleprotocolshowfull = "false";
-    $scope.proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
-    $scope.metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench";
-    $scope.genomics_list = "ega,EGA";
-    $scope.repositories = {
-        "pride": "PRIDE",
-        "PRIDE": "PRIDE",
-        "peptideatlas": "PeptideAtlas",
-        "peptide_atlas": "PeptideAtlas",
-        "PeptideAtlas": "PeptideAtlas",
-        "massive": "MassIVE",
-        "MassIVE": "MassIVE",
-        "metabolights": "MetaboLights",
-        "metabolights_dataset": "MetaboLights",
-        "MetaboLights": "MetaboLights",
-        "metabolome_workbench": "Metabolomics Workbench",
-        "Metabolomics Workbench": "Metabolomics Workbench",
-        "MetabolomicsWorkbench": "Metabolomics Workbench",
-        "ega": "EGA",
-        "EGA": "EGA",
-    };
-    $scope.databaseUrls = {
-        "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
-        "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
-        "PeptideAtlas": "http://www.peptideatlas.org/",
-        "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
+    $scope.description_show_full = "false";
+    $scope.pubmed_abstract_show_full = "false";
+    $scope.data_protocol_show_full = "false";
+    $scope.sample_protocol_show_full = "false";
+    $scope.proteomics_list = proteomics_list;
+    $scope.metabolomics_list = metabolomics_list;
+    $scope.genomics_list = genomics_list;
+    $scope.repositories = repositories;
+    $scope.database_urls = database_urls;
 
-    }
-
-    $scope.getdatasetfail = "";
-    $scope.getsimilardatasetfail = "";
-    $scope.instrumentPreUrl = "browse.html#/search?q=*:* AND instrument_platform:";
-    $scope.organismPreUrl = "browse.html#/search?q=*:* AND TAXONOMY:";
-    $scope.relatedDatasetsLimit = 5;
-    $scope.loadMoreBtnShow = "Load More";
+    $scope.get_dataset_fail = "";
+    $scope.get_similar_dataset_fail = "";
+    $scope.instrument_pre_url = "browse.html#/search?q=*:* AND instrument_platform:";
+    $scope.organism_pre_url = "browse.html#/search?q=*:* AND TAXONOMY:";
+    $scope.related_datasets_limit = 5;
+    $scope.load_more_btn_show = "Load More";
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
@@ -1009,21 +982,21 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      }).error(function(){
      });
      */
-    var relateDataUrl = web_service_url+"dataset/moreLikeThis?acc=" + acc + "&database=" + domain;
+    var related_datasets_url = web_service_url+"dataset/moreLikeThis?acc=" + acc + "&database=" + domain;
     $http({
-        url: relateDataUrl,
+        url: related_datasets_url,
         method: 'GET'
     }).success(function (data) {
-        $scope.relatedDatasets = data.datasets;
+        $scope.related_datasets = data.datasets;
     }).error(function () {
-        console.log("GET error:" + relateDataUrl);
-        $scope.getsimilardatasetfail = "can not get similar dataset";
+        console.log("GET error:" + related_datasets_url);
+        $scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
-    $scope.altmetricEntities = [];
-    $scope.publicationIndex = {};
-    $scope.publicationIndexInfo = {};
-    $scope.publicationInfo = [];
+    $scope.altmetric_entities = [];
+    $scope.publication_index = {};
+    $scope.publication_index_info = {};
+    $scope.publication_info = [];
     var altmetricUrls = [];
     var arr = [];
     var url = web_service_url+"dataset/get?acc=" + acc + "&database=" + domain;
@@ -1035,40 +1008,40 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
             // etc.
             $scope.dataset = ret[0].data;
             if (ret[0].data === null || ret[0].data.id === null) {
-                $scope.getdatasetfail = "We can't access this dataset: " + acc + " at " + domain + " right now.";
+                $scope.get_dataset_fail = "We can't access this dataset: " + acc + " at " + domain + " right now.";
                 return;
             }
             if ($scope.dataset.protocols.length > 0) {
-                $scope.sampleProtocolDescription = $scope.dataset.protocols[0].description;
-                $scope.dataProtocolDescription = $scope.dataset.protocols[1].description;
+                $scope.sample_protocol_description = $scope.dataset.protocols[0].description;
+                $scope.data_protocol_description = $scope.dataset.protocols[1].description;
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
-                var pubmedid = $scope.dataset.publicationIds[i];
-                altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmedid;
+                var pubmed_id = $scope.dataset.publicationIds[i];
+                altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmed_id;
 
                 $http.get(altmetricUrl).success(function (data) {
-                    var altmetricEntity = {};
-                    var insideId = data.pmid;
-                    altmetricEntity = {
-                        "pubmedid": insideId,
-                        "detailUrl": data.details_url,
-                        "imageUrl": data.images.small
+                    var altmetric_entity = {};
+                    var inside_id = data.pmid;
+                    altmetric_entity = {
+                        "pubmed_id": inside_id,
+                        "detail_url": data.details_url,
+                        "image_url": data.images.small
                     };
-                    $scope.altmetricEntities.push(altmetricEntity);
-                    $scope.publicationIndex[insideId] = $scope.altmetricEntities.indexOf(altmetricEntity);
-                    console.log($scope.publicationIndex);
+                    $scope.altmetric_entities.push(altmetric_entity);
+                    $scope.publication_index[inside_id] = $scope.altmetric_entities.indexOf(altmetric_entity);
+                    console.log($scope.publication_index);
                 }).error(function () {
                 });
 
-                var publicationUrl = web_service_url+"publication/list?acc=" + pubmedid;
-                $http.get(publicationUrl).success(function (pubData) {
+                var publication_url = web_service_url+"publication/list?acc=" + pubmed_id;
+                $http.get(publication_url).success(function (publication_data) {
                     var publication = {};
-                    if (pubData.count > 1 || pubData.count < 1) {
-                        console.error("got wrong publication data from" + publicationUrl)
+                    if (publication_data.count > 1 || publication_data.count < 1) {
+                        console.error("got wrong publication data from" + publication_url)
                     }
-                    var entity = pubData.publications[0];
-                    var insideId = entity.id;
+                    var entity = publication_data.publications[0];
+                    var inside_id = entity.id;
 
                     var pub_year = entity.date.substr(0,4);
                     var pub_month = parseInt(entity.date.substr(4,2));
@@ -1079,7 +1052,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                     else{
                         pub_month = '';
                     }
-                    console.log(pub_day);
                     if(pub_day === '00'){
                         entity.date = pub_year + ' ' + pub_month + ';';
                     }
@@ -1087,28 +1059,28 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                         entity.date = pub_year + ' ' + pub_month + ' ' + pub_day +';';
                     }
 
-                    publicationInfoEntity = {
-                        "pmid": insideId,
+                    publication_info_entity = {
+                        "pmid": inside_id,
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
                         "title": entity.title,
-                        "authorString": entity.authors,
-                        "pubAbstract": entity.pubAbstract
+                        "authors": entity.authors,
+                        "pub_abstract": entity.pubAbstract
                     };
 
-                    $scope.publicationInfo.push(publicationInfoEntity);
-                    $scope.publicationIndexInfo[insideId] = $scope.publicationInfo.indexOf(publicationInfoEntity);
+                    $scope.publication_info.push(publication_info_entity);
+                    $scope.publication_index_info[inside_id] = $scope.publication_info.indexOf(publication_info_entity);
                 }).error(function () {
                 });
             }
 
         }, function (error) {
-            $scope.getdatasetfail = "We can't access this dataset: " + acc + " at " + domain + " right now.";
+            $scope.get_dataset_fail = "We can't access this dataset: " + acc + " at " + domain + " right now.";
             console.log("GET error:" + url);
         }
     ); //outside $q
 
 
-    $scope.sharemethod = {
+    $scope.share_methods = {
         email: ["mailto:?body=[&subject=]"],
         twitter: ["https://twitter.com/intent/tweet?url=[&text=]", 450],
         facebook: ["https://www.facebook.com/sharer.php?u=[", 330],
@@ -1118,14 +1090,14 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     };
 
     $scope.click_share_this = function (label) {
-        var value = $scope.sharemethod[label];
+        var value = $scope.share_methods[label];
         var c = value[0].replace("[", encodeURIComponent(location.href)).replace("]", encodeURIComponent(document.title));
         1 == value.length ? location.href = c : window.open(c, "_blank", "menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=500,height=" + value[1]);
         // "preventDefault"in a?a.preventDefault():event.returnValue=!1
 
     };
 
-    $scope.currentProtocol = "sample_protocol";
+    $scope.current_protocol = "sample_protocol";
     $scope.protocols = {"sample_protocol": "Sample Protocol", "data_protocol": "Data Protocol"};
 
 /**
@@ -1151,11 +1123,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     }
 
     $scope.onClickProtocol = function () {
-        if ($scope.currentProtocol == "sample_protocol") {
-            $scope.currentProtocol = "data_protocol";
+        if ($scope.current_protocol == "sample_protocol") {
+            $scope.current_protocol = "data_protocol";
         }
         else {
-            $scope.currentProtocol = "sample_protocol";
+            $scope.current_protocol = "sample_protocol";
         }
     }
 */
@@ -1164,32 +1136,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
      * for the multiple publications click
      */
 
-    $scope.currentPublication = 0;
+    $scope.current_publication = 0;
 
-    $scope.onClickPublicationLeft = function () {
-        $scope.currentPublication--;
+    $scope.onclick_publication_left = function () {
+        $scope.current_publication--;
     }
 
-    $scope.onClickPublicationRight = function () {
-        $scope.currentPublication++;
+    $scope.onclick_publication_right = function () {
+        $scope.current_publication++;
     }
 
     /*
      * to load more related datasets
      */
-    $scope.relatedLoadMore = function () {
-        if ($scope.relatedDatasetsLimit == 100) {
-            $scope.relatedDatasetsLimit = 5
+    $scope.related_load_more = function () {
+        if ($scope.related_datasets_limit == 100) {
+            $scope.related_datasets_limit = 5
         }
         else {
-            if ($scope.relatedDatasetsLimit == 5)    $scope.relatedDatasetsLimit = 100;
+            if ($scope.related_datasets_limit == 5)    $scope.related_datasets_limit = 100;
         }
 
-        if ($scope.loadMoreBtnShow === "Go Back") {
-            $scope.loadMoreBtnShow = "Load More"
+        if ($scope.load_more_btn_show === "Go Back") {
+            $scope.load_more_btn_show = "Load More"
         }
         else {
-            if ($scope.loadMoreBtnShow === "Load More") $scope.loadMoreBtnShow = "Go Back";
+            if ($scope.load_more_btn_show === "Load More") $scope.load_more_btn_show = "Go Back";
         }
     }
 
@@ -1215,36 +1187,23 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
  * Responsible for the Datasets Stastistic Lists.
  */
 angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
-    $scope.metabolomics_list = "metabolights,metabolights_dataset,MetabolomicsWorkbench,MetaboLights";
-    $scope.genomics_list = "ega,EGA";
-    $scope.repositories = {
-        "pride": "PRIDE",
-        "PRIDE": "PRIDE",
-        "peptideatlas": "PeptideAtlas",
-        "peptide_atlas": "PeptideAtlas",
-        "PeptideAtlas": "PeptideAtlas",
-        "massive": "MassIVE",
-        "MassIVE": "MassIVE",
-        "metabolights": "MetaboLights",
-        "metabolights_dataset": "MetaboLights",
-        "MetaboLights": "MetaboLights",
-        "metabolome_workbench": "Metabolomics Workbench",
-        "Metabolomics Workbench": "Metabolomics Workbench",
-        "MetabolomicsWorkbench": "Metabolomics Workbench",
-        "ega": "EGA",
-        "EGA": "EGA",
-    };
-    $scope.getLatestDatasetsFail = '';
-    $scope.getMostaccessDatasetsFail = '';
-    $scope.$root.webServiceFail = 'false';
+
+    $scope.proteomics_list = proteomics_list;
+    $scope.metabolomics_list = metabolomics_list;
+    $scope.genomics_list = genomics_list;
+    $scope.repositories = repositories;
+    $scope.get_latest_datasets_fail = '';
+    $scope.get_most_access_datasets_fail = '';
+    $scope.$root.web_service_fail = 'false';
+
+
     $http({
         url: web_service_url,
         method: 'GET'
     }).success(function (data) {
-        $scope.$root.webServiceFail = 'false';
+        $scope.$root.web_service_fail = 'false';
     }).error(function () {
-        $scope.$root.webServiceFail = 'true';
+        $scope.$root.web_service_fail = 'true';
     });
 
 
@@ -1255,11 +1214,11 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     }).success(function (data) {
         $scope.latestList = data["datasets"];
         if (data === null) {
-            $scope.getLatestDatasetsFail = "Sorry, the accessing to  this datasets list was temporally failed.";
+            $scope.get_latest_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
         }
     }).error(function () {
         console.log("GET error:" + url);
-        $scope.getLatestDatasetsFail = "Sorry, the accessing to  this datasets list was temporally failed.";
+        $scope.get_latest_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
 
     });
 //
@@ -1269,13 +1228,13 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         url: url,
         method: 'GET'
     }).success(function (data) {
-        $scope.mostAccessedList = data["datasets"];
+        $scope.most_accessed_list = data["datasets"];
         if (data === null) {
-            $scope.getMostaccessDatasetsFail = "Sorry, the accessing to  this datasets list was temporally failed.";
+            $scope.get_most_access_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
         }
     }).error(function () {
         console.log("GET error:" + url);
-        $scope.getMostaccessDatasetsFail = "Sorry, the accessing to  this datasets list was temporally failed.";
+        $scope.get_most_access_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
 
     });
 
@@ -1286,7 +1245,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         url: url,
         method: 'GET'
     }).success(function (data) {
-        $scope.statisticList = data;
+        $scope.statistic_list = data;
     }).error(function () {
         console.log("GET error:" + url);
     });

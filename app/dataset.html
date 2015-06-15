@@ -228,12 +228,12 @@
 
             <div class="col-md-8" id="centerpanel" style="margin-left:-15px">
 
-                <div id="dataset-error-row" class="row error-info" ng-hide="getdatasetfail.length<1">
+                <div id="dataset-error-row" class="row error-info" ng-hide="get_dataset_fail.length<1">
                     <p>
-                        {{getdatasetfail}}
+                        {{get_dataset_fail}}
                     </p>
                 </div>
-                <div class="panel panel-default" id="dataset_upper" ng-hide="getdatasetfail.length>0">
+                <div class="panel panel-default" id="dataset_upper" ng-hide="get_dataset_fail.length>0">
                     <div class="panel-footer ">
                         <h3>Dataset Information</h3>
                     </div>
@@ -250,36 +250,36 @@
                         <div>
                             <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
 
-                                <p ng-show="descriptionshowfull=='true'" class="align-justify">ABSTRACT:
+                                <p ng-show="description_show_full=='true'" class="align-justify">ABSTRACT:
                                     {{dataset.description}}<span
-                                            ng-click="descriptionshowfull='false'" class="hotword"><b>click to
+                                            ng-click="description_show_full='false'" class="hotword"><b>click to
                                         cllapse</b></span></p>
 
-                                <p ng-show="descriptionshowfull=='false'" class="align-justify">ABSTRACT:
+                                <p ng-show="description_show_full=='false'" class="align-justify">ABSTRACT:
                                     {{dataset.description|limitTo:500}}
-                                    <span ng-click="descriptionshowfull='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span>
+                                    <span ng-click="description_show_full='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span>
                                 </p>
                             </div>
                         </div>
 
-                        <div ng-show="sampleProtocolDescription!=='Not available' || dataProtocolDescription!=='Not available'">
-                            <p ng-show="sampleProtocolDescription.length > 1 && sampleProtocolDescription!=='Not available'"
+                        <div ng-show="sample_protocol_description!=='Not available' || data_protocol_description!=='Not available'">
+                            <p ng-show="sample_protocol_description.length > 1 && sample_protocol_description!=='Not available'"
                                class="align-justify">
                                 <span><u>SAMPLE PROTOCOL:</u> </span>
-                                <span ng-show="sampleprotocolshowfull=='true'">{{sampleProtocolDescription}}<span
-                                        ng-click="sampleprotocolshowfull='false'" class="hotword"><b>click to
+                                <span ng-show="sample_protocol_show_full=='true'">{{sample_protocol_description}}<span
+                                        ng-click="sample_protocol_show_full='false'" class="hotword"><b>click to
                                     cllapse</b></span></span>
-                                <span ng-show="sampleprotocolshowfull=='false'">{{sampleProtocolDescription|limitTo:500}}
-                                    <span ng-click="sampleprotocolshowfull='true'" class="hotword"><b>{{sampleProtocolDescription.length>500?"...more":""}}</b></span>
+                                <span ng-show="sample_protocol_show_full=='false'">{{sample_protocol_description|limitTo:500}}
+                                    <span ng-click="sample_protocol_show_full='true'" class="hotword"><b>{{sample_protocol_description.length>500?"...more":""}}</b></span>
                                 </span>
                             </p>
-                            <p ng-show="dataProtocolDescription.length > 1 && dataProtocolDescription!=='Not available'"
+                            <p ng-show="data_protocol_description.length > 1 && data_protocol_description!=='Not available'"
                                class="align-justify">
                                 <span><u>DATA PROTOCOL:</u></span>
-                                <span ng-show="dataprotocolshowfull=='true'">{{dataProtocolDescription}}<span
-                                        ng-click="dataprotocolshowfull='false'" class="hotword"><b>click to cllapse</b></span></span>
-                                <span ng-show="dataprotocolshowfull=='false'">{{dataProtocolDescription|limitTo:500}}
-                                    <span ng-click="dataprotocolshowfull='true'" class="hotword"><b>{{dataProtocolDescription.length>500?"...more":""}}</b></span>
+                                <span ng-show="data_protocol_show_full=='true'">{{data_protocol_description}}<span
+                                        ng-click="data_protocol_show_full='false'" class="hotword"><b>click to cllapse</b></span></span>
+                                <span ng-show="data_protocol_show_full=='false'">{{data_protocol_description|limitTo:500}}
+                                    <span ng-click="data_protocol_show_full='true'" class="hotword"><b>{{data_protocol_description.length>500?"...more":""}}</b></span>
                                 </span>
                             </p>
                         </div>
@@ -289,7 +289,7 @@
                             <p style="margin-left:15px" class="align-justify"><u>INSTRUMENTS:</u>
                <span>
                    <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
-                      href={{instrumentPreUrl+'"'+instrument+'"'}}>
+                      href={{instrument_pre_url+'"'+instrument+'"'}}>
                        {{instrument}}
                    </a>
               </span>
@@ -298,7 +298,7 @@
                             <p style="margin-left:15px" class="align-justify"><u>ORGANISMS:</u>
                <span>
                    <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
-                      href={{organismPreUrl+'"'+organism.acc+'"'}}>
+                      href={{organism_pre_url+'"'+organism.acc+'"'}}>
                        {{organism.name}}
                    </a>
               </span>
@@ -311,7 +311,7 @@
                     <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
                         <div class="col-md-5" style="margin-left:10px">
                             Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a> [As supplied by <a
-                                href={{databaseUrls[domain]}}>{{domain}}</a>]
+                                href={{database_urls[domain]}}>{{domain}}</a>]
                         </div>
                         <div class="col-md-5" style="margin-left:10px">
                             <p>Date:
@@ -326,55 +326,55 @@
 
 
                 <div class="panel panel-default" id="dataset_middle_publication" style="position:relative"
-                     ng-hide="dataset.publicationIds===null || getdatasetfail.length > 0">
+                     ng-hide="dataset.publicationIds===null || get_dataset_fail.length > 0">
                     <div class="panel-footer ">
                         <h3>Publications</h3>
                     </div>
-        <span ng-hide="currentPublication===0 || dataset.publicationIds === null"
+        <span ng-hide="current_publication===0 || dataset.publicationIds === null"
               class="fa fa-chevron-circle-left ddi-prev"
-              ng-click="onClickPublicationLeft()">
+              ng-click="onclick_publication_left()">
         </span>
-        <span ng-hide="currentPublication===dataset.publicationIds.length-1 || dataset.publicationIds === null"
+        <span ng-hide="current_publication===dataset.publicationIds.length-1 || dataset.publicationIds === null"
               class="fa fa-chevron-circle-right ddi-next"
-              ng-click="onClickPublicationRight()">
+              ng-click="onclick_publication_right()">
         </span>
 
                     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
-                        <img ng-show="altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]]==null"
+                        <img ng-show="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null"
                              src='static/img/altmetric/altmetric_unknown.png'>
-                        <a href={{altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]].detailUrl}}
+                        <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}
                            style="border-bottom-style:none"> <img
-                                ng-hide="altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]]==null"
-                                src={{altmetricEntities[publicationIndex[dataset.publicationIds[currentPublication]]].imageUrl}}></a>
+                                ng-hide="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null"
+                                src={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}></a>
                     </div>
                     <div class="" id="dataset_middle" style="overflow:hidden;margin-right:20px">
                         <div>
                             <h4 style="margin:2px">
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].title}}</h4>
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].title}}</h4>
                             <p style="margin:1px" class="align-justify">
-                                <span ng-repeat="author in publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].authorString">
+                                <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
                                     <a href="/app/browse.html#/search?q={{author.substr(0,author.length-2)}}"> {{author.substr(0,author.length-2)}} </a> <span ng-if="!$last">,</span> 
                                 </span>
                             </p>
                             <p style="margin:1px" class="align-justify">
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].citation}}</p>
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].citation}}</p>
                         </div>
                         <hr>
-                        <div style="margin-right:20px" ng-show="publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0].length>0">
-                            <p ng-show="pubmedabstractshowfull=='true'" class="align-justify">
-                                ABSTRACT: {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]}}
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[1]}}
+                        <div style="margin-right:20px" ng-show="publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>0">
+                            <p ng-show="pubmed_abstract_show_full=='true'" class="align-justify">
+                                ABSTRACT: {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]}}
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[1]}}
                                 <span
-                                        ng-click="pubmedabstractshowfull='false'" class="hotword"><b>click to
+                                        ng-click="pubmed_abstract_show_full='false'" class="hotword"><b>click to
                                     cllapse</b>
                                 </span>
                             </p>
 
-                            <p ng-show="pubmedabstractshowfull=='false'" class="align-justify">
-                                ABSTRACT: {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0]|limitTo:500}} 
+                            <p ng-show="pubmed_abstract_show_full=='false'" class="align-justify">
+                                ABSTRACT: {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]|limitTo:500}} 
                                 <span
-                                        ng-click="pubmedabstractshowfull='true'" class="hotword"><b>{{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[0].length>500?"...more":""}}</b></span>
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pubAbstract[1]}}
+                                        ng-click="pubmed_abstract_show_full='true'" class="hotword"><b>{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>500?"...more":""}}</b></span>
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[1]}}
                             </p>
                         </div>
                     </div>
@@ -382,17 +382,17 @@
                     <div class="row" id="dataset_middle_bottom" style="margin-top:10px">
                         <div class="col-md-4" style="margin-left:10px">
                             <a ng-hide="dataset.publications === null"
-                               href={{"http://europepmc.org/abstract/MED/"+publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pmid}}>
+                               href={{"http://europepmc.org/abstract/MED/"+publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}>
                                 PMID:
-                                {{publicationInfo[publicationIndexInfo[dataset.publicationIds[currentPublication]]].pmid}}</a>
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}</a>
                         </div>
                         <div class="col-md-4">
                             <span ng-hide="dataset.publications === null">
-                                Publication: {{currentPublication +1}}/{{dataset.publicationIds.length}}
+                                Publication: {{current_publication +1}}/{{dataset.publicationIds.length}}
                             </span>
                         </div>
                         <div class="col-md-3">
-                            <p>{{dataset.publicationIds[currentPublication].publicationDate}}</p>
+                            <p>{{dataset.publicationIds[current_publication].publicationDate}}</p>
                         </div>
                     </div>
                     <!--dataset_middle_bottom-->
@@ -400,7 +400,7 @@
                 </div>
                 <!--dataset_middle_panel-->
 
-                <div class="panel panel-default" id="dataset_bottom" ng-hide="getdatasetfail===true || 1">
+                <div class="panel panel-default" id="dataset_bottom" ng-hide="get_dataset_fail===true || 1">
 
 
                     <div class="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -456,9 +456,9 @@
                             >
 
                         <div style="margin-left:30px">
-                            <h3>{{protocols[currentProtocol]}}</h3>
+                            <h3>{{protocols[current_protocol]}}</h3>
 
-                            <p>{{dataset[currentProtocol]}}</p>
+                            <p>{{dataset[current_protocol]}}</p>
                         </div>
 
                     </div>
@@ -571,7 +571,7 @@
 
 
             <div class="col-md-3 panel panel-default" id="rightpanel"
-                 ng-hide="getsimilardatasetfail.length > 0 || getdatasetfail.length > 0">
+                 ng-hide="get_similar_dataset_fail.length > 0 || get_dataset_fail.length > 0">
                 <p>
                 <h4>
                     Similar Datasets
@@ -580,7 +580,7 @@
                 <ul class="list-unstyled">
                     <!-- ngRepeat: dataset in result.datasets -->
                     <li class="result animate-repeat "
-                        ng-repeat="relatedDataset in relatedDatasets | limitTo:relatedDatasetsLimit" style="">
+                        ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
                         <div class="project-widget  list-group-item">
 
                             <div class="project-widget-accession">
@@ -617,8 +617,8 @@
                     <!-- end ngRepeat: -->
                 </ul>
                 <div class="input-btn center" style="width:102px; margin-bottom:10px">
-                    <button type="submit" class="btn btn-default " ng-click="relatedLoadMore()">
-                        <i class="fa fa-search"></i> {{loadMoreBtnShow}}
+                    <button type="submit" class="btn btn-default " ng-click="related_load_more()">
+                        <i class="fa fa-search"></i> {{load_more_btn_show}}
                     </button>
                 </div><!-- /input-group-btn -->
             </div><!-- col-md-3 rightpanel-->

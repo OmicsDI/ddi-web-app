@@ -1,5 +1,5 @@
 var web_service_url = 'http://localhost:9091/';
-var pieCharts_Tissues_Organisms = function () {
+var pie_charts_tissues_organisms = function () {
 
     queue()
         .defer(d3.json, web_service_url+'stats/tissues?size=100') // topojson polygons
@@ -9,21 +9,11 @@ var pieCharts_Tissues_Organisms = function () {
 
     function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
         if (error) {
-            outputerrorinfo("chart_tissues_organisms");
+            output_error_info("chart_tissues_organisms");
             return;
         }
 
-//prepare the dataset of total
-
-// indexoftottiss = findElement(tissues, "name", "Total");
-// var totaltissues = tissues[indexoftottiss]; 
-
-// indexoftotorg = findElement(organisms, "name", "Total");
-// var totalorganisms= organisms[indexoftotorg]; 
-
-// console.log(indexoftottiss + totaltissues);
-// console.log(indexoftotorg + totalorganisms);
-        if (tissues[tissues.length - 1].name !== "Not available") {
+       if (tissues[tissues.length - 1].name !== "Not available") {
             alert("the last element of tissues is not total number, charts is wrong")
         }
         ;
@@ -36,9 +26,9 @@ var pieCharts_Tissues_Organisms = function () {
         }
         ;
 
-        var unavailableNoTissues = tissues.pop();
-        var unavailableNoOrganisms = organisms.pop();
-        var unavailableNoDiseases = diseases.pop();
+        var unavailabl_no_tissues = tissues.pop();
+        var unavailable_no_organisms = organisms.pop();
+        var unavailable_no_diseases = diseases.pop();
 
         if (tissues[0].name !== "Total") {
             alert("the first element of tissues is not total number, charts is wrong")
@@ -52,38 +42,17 @@ var pieCharts_Tissues_Organisms = function () {
             alert("the first element of tissues is not total number, charts is wrong")
         }
         ;
-        var totaltissues = tissues.shift();
-        var totalorganisms = organisms.shift();
-        var totaldiseases = diseases.shift();
+        var total_tissues = tissues.shift();
+        var total_organisms = organisms.shift();
+        var total_diseases = diseases.shift();
 
-        // console.log(totaltissues);
-        // console.log(totalorganisms);
-        // console.log(unavailableNoTissues);
+        var bub_chart_name = 'chart_tissues_organisms';
 
+        var body = d3.select("#" + bub_chart_name);
 
-// function findElement(arr, propName, propValue) {
-//   for (var i=0; i < arr.length; i++)
-//     if (arr[i][propName] == propValue)
-//       return i;
-
-//   // will return undefined if not found; you could return a default instead
-// }
-
-
-// function gettotal(arr) {
-// 	// var sum = 0;
-//  //  for (var i=0; i < arr.length; i++)
-//  //  	   sum += parseInt(arr[i].value);
-//  //      return sum;
-// }
-
-        var bubchartname = 'chart_tissues_organisms';
-
-        var body = d3.select("#" + bubchartname);
-
-        var divwidth_px = body.style("width");
-        var divwidth = divwidth_px.substr(0, divwidth_px.length - 2);
-        var diameter = divwidth / 1.3,
+        var div_width_px = body.style("width");
+        var div_width = div_width_px.substr(0, div_width_px.length - 2);
+        var diameter = div_width / 1.3,
             format = d3.format(",d"),
             color = d3.scale.category20c();
 
@@ -103,10 +72,10 @@ var pieCharts_Tissues_Organisms = function () {
             .attr("style", "width:280px")
         ;
 
-        var radioform = formdiv.append('form');
+        var radio_form = formdiv.append('form');
 
-        radioform
-            .attr("id", bubchartname + "_form")
+        radio_form
+            .attr("id", bub_chart_name + "_form")
             .attr("class", "center")
             .attr("style", "margin-bottom:8px")
 //  .attr("style","width:70%")
@@ -116,35 +85,35 @@ var pieCharts_Tissues_Organisms = function () {
             .attr('value', 'Tissues')
             .attr('id', 'Tissues')
             .text('Tissues');
-        radioform
+        radio_form
             .append('label')
             .text('Tissues')
             .attr('for', 'Tissues')
             .append('span')
             .append('span')
         ;
-        radioform
+        radio_form
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
             .attr('value', 'Organisms')
             .attr('id', 'Organisms')
             .text('Organisms');
-        radioform
+        radio_form
             .append('label')
             .text('Organisms')
             .attr('for', 'Organisms')
             .append('span')
             .append('span')
         ;
-        radioform
+        radio_form
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
             .attr('value', 'Diseases')
             .attr('id', 'Diseases')
             .text('Diseases');
-        radioform
+        radio_form
             .append('label')
             .text('Diseases')
             .attr('for', 'Diseases')
@@ -152,9 +121,9 @@ var pieCharts_Tissues_Organisms = function () {
             .append('span')
         ;
 
-        d3.select("#" + bubchartname + "_form").select('input[value=Tissues]').property('checked', true);
+        d3.select("#" + bub_chart_name + "_form").select('input[value=Tissues]').property('checked', true);
 
-        d3.select("#" + bubchartname + "_form").selectAll('input')
+        d3.select("#" + bub_chart_name + "_form").selectAll('input')
             .on('change', change);
 
 
@@ -176,20 +145,20 @@ var pieCharts_Tissues_Organisms = function () {
             var url_pre;
             if (value == 'Tissues') {
                 data = tissues;
-                // text_total.text("Total:"+totaltissues);
-                // text_unavail.text("Unavailable:"+unavailableNoTissues.value);
+                // text_total.text("Total:"+total_tissues);
+                // text_unavail.text("Unavailable:"+unavailabl_no_tissues.value);
                 url_pre = 'browse.html#/search?q=*:* AND tissue:"';
             }
             if (value == 'Organisms') {
                 data = organisms;
-                // text_total.text("Total:"+totalorganisms);
-                // text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
+                // text_total.text("Total:"+total_organisms);
+                // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
                 url_pre = 'browse.html#/search?q=*:* AND TAXONOMY:"';
             }
             if (value == 'Diseases') {
                 data = diseases;
-                // text_total.text("Total:"+totalorganisms);
-                // text_unavail.text("Unavailable:"+unavailableNoOrganisms.value);
+                // text_total.text("Total:"+total_organisms);
+                // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
                 url_pre = 'browse.html#/search?q=*:* AND disease:"';
             }
 
@@ -284,17 +253,17 @@ var pieCharts_Tissues_Organisms = function () {
 //--------------------------------------------------------------------------------------------//
 //--------------------------------------------------------------------------------------------//
 
-var pieCharts_Repos_Omics = function () {
+var pie_charts_repos_omics = function () {
 
     queue()
         .defer(d3.json, web_service_url+'stats/domains') // topojson polygons
         .defer(d3.json, web_service_url+'stats/omicsType') // geojson points
-        .await(draw_chart_Repos_Omics); // function that uses files
+        .await(draw_chart_repos_omics); // function that uses files
 
-    function draw_chart_Repos_Omics(error, domains, omicstype) {
+    function draw_chart_repos_omics(error, domains, omicstype) {
 
         if (error) {
-            outputerrorinfo("chart_repos_omics");
+            output_error_info("chart_repos_omics");
             return;
         }
 
@@ -302,18 +271,8 @@ var pieCharts_Repos_Omics = function () {
         omicstype.shift();
         var unavailableomics = omicstype.pop();
 
-        var totalomics = gettotal(omicstype);
-        var totalrepos = gettotal(repos);
-
-
-// function findElement(arr, propName, propValue) {
-//   for (var i=0; i < arr.length; i++)
-//     if (arr[i][propName] == propValue)
-//       return i;
-
-//   // will return undefined if not found; you could return a default instead
-// }
-
+        var total_omics = gettotal(omicstype);
+        var total_repos = gettotal(repos);
 
         function gettotal(arr) {
             var sum = 0;
@@ -338,9 +297,9 @@ var pieCharts_Repos_Omics = function () {
         var piechartname = 'chart_repos_omics';
         var body = d3.select("#" + piechartname);
 
-        var divwidth_px = body.style("width");
-        var divwidth = parseInt(divwidth_px.substr(0, divwidth_px.length - 2));
-        var width = divwidth,
+        var div_width_px = body.style("width");
+        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+        var width = div_width,
             height = 300,
             radius = Math.min(width, height) / 2;
 
@@ -381,9 +340,9 @@ var pieCharts_Repos_Omics = function () {
             .attr("style", "width:150px;margin-top:15px")
         ;
 
-        var radioform = formdiv.append('form');
+        var radio_form = formdiv.append('form');
 
-        radioform
+        radio_form
             .attr("id", piechartname + "_form")
             .attr("class", "center")
             .attr("style", "margin-bottom:8px; ")
@@ -393,7 +352,7 @@ var pieCharts_Repos_Omics = function () {
             .attr('value', 'Repos')
             .attr('id', 'Repos')
             .text('Repos');
-        radioform
+        radio_form
             .append('label')
             .text('Repos')
             .attr('for', 'Repos')
@@ -401,14 +360,14 @@ var pieCharts_Repos_Omics = function () {
             .append('span')
         ;
 
-        radioform
+        radio_form
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
             .attr('value', 'Omics')
             .attr('id', 'Omics')
             .text('Omics');
-        radioform
+        radio_form
             .append('label')
             .text('Omics')
             .attr('for', 'Omics')
@@ -494,18 +453,18 @@ var pieCharts_Repos_Omics = function () {
             var url_pre;
             if (value == 'Omics') {
                 data = omicstype;
-                text_total.text("Total:" + totalomics);
+                text_total.text("Total:" + total_omics);
                 text_unavail.text("Unavailable:" + unavailableomics.value);
                 url_pre = 'browse.html#/search?q=*:* AND omics_type:"';
-                // text_total.text("Total:"+totalomics);
+                // text_total.text("Total:"+total_omics);
 
             }
             if (value == 'Repos') {
                 data = repos;
-                text_total.text("Total:" + totalrepos);
+                text_total.text("Total:" + total_repos);
                 text_unavail.text("");
                 url_pre = 'browse.html#/search?q=*:* AND repository:"';
-                // text_total.text("Total:"+totalrepos);
+                // text_total.text("Total:"+total_repos);
 
             }
 
@@ -577,27 +536,27 @@ var pieCharts_Repos_Omics = function () {
 }
 
 
-var barCharts_Years_Omicstypes = function () {
+var barcharts_years_omics_types = function () {
     queue()
         // .defer(d3.json, web_service_url+'stats/omicsType_annual?omicstype=proteomics') // topojson polygons
         .defer(d3.json, web_service_url+'stats/omicsType_annual') // geojson points
         // .defer(d3.json, web_service_url+'stats/omicsType_annual?omicstype=genomics') // geojson points
         .await(draw_chart_omicstype_annual); // function that uses files
 
-    function draw_chart_omicstype_annual(error, annalData) {
+    function draw_chart_omicstype_annual(error, annual_data) {
 // function draw_chart_omicstype_annual(error, proteomics, metabolomics) { 
         // console.log(proteomics);
         //
         if (error) {
-            outputerrorinfo("barchart_omicstype_annual");
+            output_error_info("barchart_omicstype_annual");
             return;
         }
 
         var body = d3.select('#barchart_omicstype_annual');
-        var divwidth_px = body.style("width");
-        var divwidth = parseInt(divwidth_px.substr(0, divwidth_px.length - 2));
+        var div_width_px = body.style("width");
+        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
         var margin = {top: 20, right: 2, bottom: 20, left: 60},
-            width = divwidth - margin.left - margin.right,
+            width = div_width - margin.left - margin.right,
             height = 290 - margin.top - margin.bottom;
         var x0 = d3.scale.ordinal()
             .rangeRoundBands([0, width], .1);
@@ -624,33 +583,24 @@ var barCharts_Years_Omicstypes = function () {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// d3.csv("data.csv", function(error, data) {
 
-
-        // var omicsTypes= d3.keys(data[0]).filter(function(key) { return key !== "year"; });
-        var omicsTypes = d3.keys(annalData[0]).filter(function (key) {
+        var omics_types = d3.keys(annual_data[0]).filter(function (key) {
             return key !== "year";
         });
 
 
-        data = annalData;
+        data = annual_data;
         data.forEach(function (d) {
-            d.omics = omicsTypes.map(function (name) {
+            d.omics = omics_types.map(function (name) {
                 if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
             });
         });
-
-        // data.forEach(function(d) {
-        //   d.omics = omicsTypes.map(function(name) { return {name: name, value: +d[name]}; });
-        //   console.log(d.omics);
-        // });
 
         x0.domain(data.map(function (d) {
             return d.year;
         }));
 
-        // x0.domain(years);
-        x1.domain(omicsTypes).rangeRoundBands([0, x0.rangeBand()]);
+        x1.domain(omics_types).rangeRoundBands([0, x0.rangeBand()]);
         y.domain([0, d3.max(data, function (d) {
             return d3.max(d.omics, function (d) {
                 return d.value;
@@ -715,7 +665,7 @@ var barCharts_Years_Omicstypes = function () {
         };
 
         var legend = svg.selectAll(".legend")
-            .data(omicsTypes.slice().reverse())
+            .data(omics_types.slice().reverse())
             .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) {
@@ -736,12 +686,10 @@ var barCharts_Years_Omicstypes = function () {
             .text(function (d) {
                 return d;
             });
-
-// });
     }
 }
 
-function outputerrorinfo(errordiv) {
+function output_error_info(errordiv) {
     d3.select("#" + errordiv).append("p").attr("class", "error-info")
         .html("Sorry, accessing to this web service was temporally failed.");
 }
