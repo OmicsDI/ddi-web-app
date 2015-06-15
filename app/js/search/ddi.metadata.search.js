@@ -1062,10 +1062,24 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                     }
                     var entity = pubData.publications[0];
                     var insideId = entity.id;
-                    entity.date = entity.date.substr(0,4) + " " + 
-                        $scope.month_names_short[parseInt(entity.date.substr(4,2))-1] + " " +
-                        entity.date.substr(6,2) + ";";
-                    entity.date = entity.date.replace(/00;/,';');
+
+                    var pub_year = entity.date.substr(0,4);
+                    var pub_month = parseInt(entity.date.substr(4,2));
+                    var pub_day = entity.date.substr(6,2);
+                    if(pub_month>0 && pub_month<13) {
+                        pub_month=$scope.month_names_short[pub_month-1]
+                    }
+                    else{
+                        pub_month = '';
+                    }
+                    console.log(pub_day);
+                    if(pub_day === '00'){
+                        entity.date = pub_year + ' ' + pub_month + ';';
+                    }
+                    else{
+                        entity.date = pub_year + ' ' + pub_month + ' ' + pub_day +';';
+                    }
+
                     publicationInfoEntity = {
                         "pmid": insideId,
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
@@ -1073,10 +1087,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                         "authorString": entity.authors,
                         "pubAbstract": entity.pubAbstract
                     };
-                    /**remove the abbreviated given name
-                    publicationInfoEntity.authorString = publicationInfoEntity.authorString.replace(/ [A-Z],/g,",") ;
-                    publicationInfoEntity.authorString = publicationInfoEntity.authorString.replace(/ [A-Z]$/,"") ;
-                    */
 
                     $scope.publicationInfo.push(publicationInfoEntity);
                     $scope.publicationIndexInfo[insideId] = $scope.publicationInfo.indexOf(publicationInfoEntity);
