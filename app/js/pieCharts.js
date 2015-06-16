@@ -266,7 +266,6 @@ var pie_charts_repos_omics = function () {
             output_error_info("chart_repos_omics");
             return;
         }
-
         var repos = transformdomains(domains);
         omicstype.shift();
         var unavailableomics = omicstype.pop();
@@ -365,16 +364,17 @@ var pie_charts_repos_omics = function () {
             .attr('type', 'radio')
             .attr('name', 'dataset')
             .attr('value', 'Omics')
-            .attr('id', 'Omics')
+            .attr('id', 'Omics_radio')
             .text('Omics');
         radio_form
             .append('label')
             .text('Omics')
-            .attr('for', 'Omics')
+            .attr('for', 'Omics_radio')
             .append('span')
             .append('span')
         ;
 
+        console.log(piechartname+"_form");
         d3.select("#" + piechartname + "_form").select('input[value=Repos]').property('checked', true)
 
         d3.select("#" + piechartname + "_form").selectAll('input')
@@ -459,7 +459,7 @@ var pie_charts_repos_omics = function () {
                 // text_total.text("Total:"+total_omics);
 
             }
-            if (value == 'Repos') {
+           if (value == 'Repos') {
                 data = repos;
                 text_total.text("Total:" + total_repos);
                 text_unavail.text("");
