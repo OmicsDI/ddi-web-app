@@ -602,3 +602,7 @@ ul#local-nav li.functional {
     right:6em;
 }
 
+.tick line{
+    opacity: 0.2;
+}
+

@@ -387,7 +387,7 @@
 
                         <div class="metasearch-organism-facet force-scrollbars list-group-item">
                             <input type="text" class="form-control" ng-model="publicdate_input"
-                                   placeholder="Find your publication data">
+                                   placeholder="Find by publication year">
                             <ul class="list-unstyled metasearch-facet-values"
                                 ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
                                 <li ng-repeat="facet_value in result.facets[index_of_facets.publication_date].facetValues | filter:publicdate_input">
@@ -411,7 +411,7 @@
 
                         <div class="metasearch-organism-facet force-scrollbars list-group-item">
                             <input type="text" class="form-control" ng-model="techtype_input"
-                                   placeholder="Find your publication data">
+                                   placeholder="Find your technology type">
                             <ul class="list-unstyled metasearch-facet-values"
                                 ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
                                 <li ng-repeat="facet_value in result.facets[index_of_facets.technology_type].facetValues | filter:techtype_input">
@@ -517,7 +517,7 @@
                                                     {{dataset["title"]}}
                                                 </div> -->
 
-                                        <div class="project-widget-paragraph">
+                                        <div class="project-widget-paragraph align-justify">
                                             <b>Project description:</b>
                                             {{dataset["description"]|limitTo:450}}{{dataset["description"].length>450?'...':''}}
                                             <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->

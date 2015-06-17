@@ -665,7 +665,7 @@ a.biomedical {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #d3ceee url('../img/tag.png') no-repeat 2px 2px;
+    background: #d3ceee url('../static/img/favico/tag.png') no-repeat 2px 2px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -677,7 +677,7 @@ a.technical {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #add0fa url('../img/tag.png') no-repeat 2px 2px;
+    background: #add0fa url('../static/img/favico/tag.png') no-repeat 2px 2px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -689,7 +689,7 @@ a.biological {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #b7eeba url('../img/tag.png') no-repeat 2px 2px;
+    background: #b7eeba url('../static/img/favico/tag.png') no-repeat 2px 2px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -701,7 +701,7 @@ a.cardiovascular {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #e6a29f url('../img/tag.png') no-repeat 2px 2px;
+    background: #e6a29f url('../static/img/favico/tag.png') no-repeat 2px 2px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -713,7 +713,7 @@ a.metaproteomics {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #f4ddb7 url('../img/tag.png') no-repeat 2px 2px;
+    background: #f4ddb7 url('../static/img/favico/tag.png') no-repeat 2px 2px;
     /*background-image:*/
     /*linear-gradient(*/
     /*to right,*/
@@ -733,7 +733,7 @@ a.other {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #EEE url('../img/tag.png') no-repeat 2px 2px;
+    background: #EEE url('../static/img/favico/tag.png') no-repeat 2px 2px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -745,7 +745,7 @@ a.highlighted {
     font-style: italic;
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
-    background: #f2f2c5 url('../img/tag.png') no-repeat 2px 2px;
+    background: #f2f2c5 url('../static/img/favico/tag.png') no-repeat 2px 2px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
