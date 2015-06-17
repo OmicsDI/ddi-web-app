@@ -324,8 +324,9 @@
                                      style="width:15px;height:15px"/>
                                 <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                      style="width:15px;height:15px"/>
-                                <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title
-                                    |limitTo:40}} {{dataset.title.length>40?'...':''}}</a>
+                                     <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}  title={{dataset.title}}>
+                                         {{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}
+                                     </a>
                             </li>
                         </ul>
                     </div>
@@ -350,8 +351,9 @@
                                      style="width:15px;height:15px"/>
                                 <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                      style="width:15px;height:15px"/>
-                                <a href={{"dataset.html#/"+dataset.id+"*"+dataset.source}}>{{dataset.title |limitTo:40}}
-                                    {{dataset.title.length>40?'...':''}}</a>
+                                     <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}} title={{dataset.title}}>
+                                         {{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}
+                                     </a>
                             </li>
                         </ul>
                     </div>

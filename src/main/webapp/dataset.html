@@ -209,7 +209,9 @@
         </div>
         <div class="row" style="">
 
-            <div class="col-md-1" id="socialnetworks" style="margin-left:-15px">
+            <div class="col-md-1" >
+            </div>
+                <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:0px; width:50px">
                 <!-- <g:plusone></g:plusone> -->
                 <a href=""><img src="static/img/socialnetwork/email.png" class="socialnetwork"
                                 ng-click="click_share_this('email')"/> </a>
@@ -223,7 +225,7 @@
                                 ng-click="click_share_this('tumblr')"/> </a>
                 <a href=""><img src="static/img/socialnetwork/linkedin.png" class="socialnetwork"
                                 ng-click="click_share_this('linkedin')"/> </a>
-            </div>
+               </div>
             <!-- col-md-1-->
 
             <div class="col-md-8" id="centerpanel" style="margin-left:-15px">
@@ -242,7 +244,7 @@
                         <img src="css/Metabolomics.png" ng-show="metabolomics_list.indexOf(domain)>-1"/>
                         <img src="css/Genomics.png" ng-show="genomics_list.indexOf(domain)>-1"/>
                     </div>
-                    <div class="" id="dataset_upper_right" style="overflow:hidden">
+                    <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
                         <div>
                             <h4>{{dataset.name}}</h4>
                         </div>
@@ -325,19 +327,19 @@
                 <!--dataset_upper -->
 
 
-                <div class="panel panel-default" id="dataset_middle_publication" style="position:relative"
+                <div class="panel panel-default" id="dataset_middle_publication" style=""
                      ng-hide="dataset.publicationIds===null || get_dataset_fail.length > 0">
                     <div class="panel-footer ">
                         <h3>Publications</h3>
                     </div>
-        <span ng-hide="current_publication===0 || dataset.publicationIds === null"
-              class="fa fa-chevron-circle-left ddi-prev"
-              ng-click="onclick_publication_left()">
-        </span>
-        <span ng-hide="current_publication===dataset.publicationIds.length-1 || dataset.publicationIds === null"
-              class="fa fa-chevron-circle-right ddi-next"
-              ng-click="onclick_publication_right()">
-        </span>
+                    <span ng-hide="current_publication===0 || dataset.publicationIds === null"
+                      class="fa fa-chevron-circle-left ddi-prev"
+                      ng-click="onclick_publication_left()">
+                    </span>
+                    <span ng-hide="current_publication===dataset.publicationIds.length-1 || dataset.publicationIds === null"
+                      class="fa fa-chevron-circle-right ddi-next"
+                      ng-click="onclick_publication_right()">
+                    </span>
 
                     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
                         <img ng-show="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null"
@@ -345,21 +347,22 @@
                         <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}
                            style="border-bottom-style:none"> <img
                                 ng-hide="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null"
-                                src={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}></a>
+                                src={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}>
+                        </a>
                     </div>
-                    <div class="" id="dataset_middle" style="overflow:hidden;margin-right:20px">
+                    <div class="" id="dataset_middle" style="overflow:hidden;">
                         <div>
-                            <h4 style="margin:2px">
+                            <h4 style="margin-right:20px">
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].title}}</h4>
-                            <p style="margin:1px" class="align-justify">
+                            <p style="margin-right:20px" class="align-justify">
                                 <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
                                     <a href="/ddi/browse.html#/search?q={{author.substr(0,author.length-2)}}"> {{author.substr(0,author.length-2)}} </a> <span ng-if="!$last">,</span>
                                 </span>
                             </p>
-                            <p style="margin:1px" class="align-justify">
+                            <p style="margin-right:20px" class="align-justify">
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].citation}}</p>
                         </div>
-                        <hr>
+                        <hr style="margin-right:30px">
                         <div style="margin-right:20px" ng-show="publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>0">
                             <p ng-show="pubmed_abstract_show_full=='true'" class="align-justify">
                                 ABSTRACT: {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]}}
