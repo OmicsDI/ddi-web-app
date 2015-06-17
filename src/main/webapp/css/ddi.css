@@ -596,5 +596,9 @@ ul#local-nav li.functional {
   text-align:justify;
  }
 
-
+.nav_float{
+    position:fixed;
+    top:10em;
+    right:6em;
+}
 

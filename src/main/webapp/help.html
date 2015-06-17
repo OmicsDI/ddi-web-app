@@ -508,13 +508,14 @@
 
 
             </div>
-            <nav id="affix-nav" class="sidebar col-md-3 hidden-print visible-lg" role="complementary">
+            <div class="col-md-3 nav-float" style="position:fixed;right:6em">
+            <nav id="affix-nav" class="sidebar  hidden-print visible-lg " role="complementary" style=position:fixed">
                 <ul style="width: 272px;" class="nav sidenav affix-top" data-spy="affix" id="affix-ul">
                     <li>
                         <a href="" ng-click="scrollTo('Overview')">Overview</a>
                     </li>
                     <li>
-                        <a ng-click="scrollTo('MajorPartner')">Major Partners</a>
+                        <a href="" ng-click="scrollTo('MajorPartner')">Major Partners</a>
                         <ul class="nav">
                             <li>
                                 <a href="" ng-click="scrollTo('ProteomeXchange')">ProteomeXchange</a>
@@ -550,6 +551,7 @@
                     </li>
                 </ul>
             </nav>
+            </div>
         </div>
     </div><!--container-->
 
