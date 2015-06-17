@@ -46,6 +46,19 @@ var pie_charts_tissues_organisms = function () {
         var total_organisms = organisms.shift();
         var total_diseases = diseases.shift();
 
+        organisms = organisms.sort(function(a, b){
+             return parseInt(a.value) > parseInt(b.value);
+        });
+
+        tissues = tissues.sort(function(a, b){
+             return parseInt(a.value) > parseInt(b.value);
+        });
+
+        diseases = diseases.sort(function(a, b){
+             return parseInt(a.value) > parseInt(b.value);
+        });
+
+
         var bub_chart_name = 'chart_tissues_organisms';
 
         var body = d3.select("#" + bub_chart_name);
@@ -272,6 +285,13 @@ var pie_charts_repos_omics = function () {
 
         var total_omics = gettotal(omicstype);
         var total_repos = gettotal(repos);
+
+        omicstype = omicstype.sort(function(a, b){
+             return parseInt(a.value) > parseInt(b.value);
+        });
+        repos = repos.sort(function(a, b){
+             return parseInt(a.value) > parseInt(b.value);
+        });
 
         function gettotal(arr) {
             var sum = 0;
