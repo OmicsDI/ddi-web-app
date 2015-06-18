@@ -313,6 +313,54 @@ var pie_charts_repos_omics = function () {
             return newarry;
         }
 
+
+    
+        /*
+         * prepare the treemap data
+         */
+        console.log(repos);
+        var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
+        var metabolomics_list = "MetaboLights Dataset,MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, Metabolome Workbench";
+        var genomics_list = "ega,EGA";
+
+        var proteomics_child, metabolomics_child, genomics_child;
+        var treemap_data = {
+                "name": "Omics",
+                "children": [
+                    {
+                    "name": "Proteomics",
+                    "children": []
+                    },
+                    {
+                    "name": "Genomics",
+                    "children": []
+                    },
+                    {
+                    "name": "Metabolomics",
+                    "children": []
+                    }
+                ]
+             };
+
+        for(var i=0; i<repos.length; i++){
+            if(proteomics_list.indexOf(repos[i].name)>-1) {
+                proteomics_child = {"name":repos[i].name, "size":repos[i].value};
+                treemap_data.children[0].children.push(proteomics_child);
+                continue;
+            }
+            if(genomics_list.indexOf(repos[i].name)>-1) {
+                genomics_child = {"name":repos[i].name, "size":repos[i].value};
+                treemap_data.children[1].children.push(genomics_child);
+                continue;
+            }
+            if(metabolomics_list.indexOf(repos[i].name)>-1) {
+                metabolomics_child = {"name":repos[i].name, "size":repos[i].value};
+                treemap_data.children[2].children.push(metabolomics_child);
+                continue;
+            }       
+        }
+
+
         var piechartname = 'chart_repos_omics';
         var body = d3.select("#" + piechartname);
 
@@ -323,6 +371,7 @@ var pie_charts_repos_omics = function () {
             radius = Math.min(width, height) / 2;
 
 
+        body.attr("position","relative");
         var svg = d3.select("#" + piechartname)
             .append("svg")
             .attr("style", "height:" + height)
@@ -393,8 +442,21 @@ var pie_charts_repos_omics = function () {
             .append('span')
             .append('span')
         ;
-
-        console.log(piechartname+"_form");
+        radio_form
+            .append('input')
+            .attr('type', 'radio')
+            .attr('name', 'dataset')
+            .attr('value', 'Treemap')
+            .attr('id', 'Treemap')
+            .text('Treemap');
+        radio_form
+            .append('label')
+            .text('Treemap')
+            .attr('for', 'Treemap')
+            .append('span')
+            .append('span')
+        ;
+ 
         d3.select("#" + piechartname + "_form").select('input[value=Repos]').property('checked', true)
 
         d3.select("#" + piechartname + "_form").selectAll('input')
@@ -460,14 +522,38 @@ var pie_charts_repos_omics = function () {
 
 
         var color = d3.scale.category20();
+        var treemap_color = {"Proteomics":"lightgreen","Metabolomics":"#FF6666", "Genomics":"#9966FF"};
 
+        /*
+         * draw the treemap
+         */
+        var margin = {top: 40, right: 10, bottom: 10, left: 10};
+        treemap_width = width - margin.left - margin.right;
+        treemap_height = height - margin.top - margin.bottom;
+        var treemap = d3.layout.treemap()
+            .size([treemap_width, treemap_height])
+            .sticky(true)
+            .value(function(d) { return d.size; });
 
+        var treemap_div = body.append("div")
+            .style("position", "absolute")
+            .style("width", (treemap_width + margin.left + margin.right -40 ) + "px")
+            .style("height", (treemap_height + margin.top + margin.bottom) + "px")
+            .style("margin-left", (margin.left) + "px")
+            .style("top", margin.top + "px");
+
+        var treemap_node = treemap_div.datum(treemap_data).selectAll(".treemap_node")
+            .data(treemap.nodes)
+            .enter().append("div")
+            .attr("class", "treemap_node")
+            .call(position)
+            .style("background", function(d) { return d.children ? treemap_color[d.name] : null; })
+            .text(function(d) { return d.children ? null : d.name; });
+        
         change();
 
 
         function change() {
-
-
             var value = this.value || 'Repos';
             var data;
             var url_pre;
@@ -477,7 +563,8 @@ var pie_charts_repos_omics = function () {
                 text_unavail.text("Unavailable:" + unavailableomics.value);
                 url_pre = 'browse.html#/search?q=*:* AND omics_type:"';
                 // text_total.text("Total:"+total_omics);
-
+                svg.attr("visibility", null);
+                treemap_div.selectAll(".treemap_node").attr("visibility", "hidden");
             }
            if (value == 'Repos') {
                 data = repos;
@@ -485,9 +572,16 @@ var pie_charts_repos_omics = function () {
                 text_unavail.text("");
                 url_pre = 'browse.html#/search?q=*:* AND repository:"';
                 // text_total.text("Total:"+total_repos);
-
+                svg.attr("visibility", null);
+                treemap_div.attr("visibility", "hidden");
+                treemap_div.selectAll(".treemap_node").attr("visibility", "hidden");
             }
-
+           if (value == 'Treemap') {
+                svg.attr("visibility", "hidden");
+                treemap_div.attr("visibility", null);
+                treemap_div.selectAll(".treemap_node").attr("visibility", null);
+            }
+ 
 
             text_name.text("");
             text_value.text("");
@@ -551,6 +645,13 @@ var pie_charts_repos_omics = function () {
             slice.exit()
                 .remove();
         };
+        function position() {
+            this.style("left", function(d) { return d.x + "px"; })
+                .style("top", function(d) { return d.y + "px"; })
+                .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+                .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+        }
+
     }
 
 }

@@ -603,6 +603,18 @@ ul#local-nav li.functional {
 }
 
 .tick line{
-    opacity: 0.2;
+    opacity:0.2;
 }
+
+
+/*for the treemap*/
+.treemap_node {
+  border: solid 1px grey;
+  font: 10px sans-serif;
+  line-height: 12px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 2px;
+}
+ 
 
