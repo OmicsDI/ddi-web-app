@@ -54,7 +54,6 @@ var drawHotwords = function () {
         massive_datap = [
             {"label": "<Null>", "frequent": "1"}
         ];
-
         var terms = {
             "PRIDE_description": pride_des,
             "PRIDE_data_protocol": pride_datap,
@@ -218,6 +217,7 @@ var drawHotwords = function () {
                     return d.label;
                 }) // THE SOLUTION
                 .fontSize(function (d) {
+                    if(old_r=="PeptideAtlas")return d.frequent / maxfrequent * 20;
                     return d.frequent / maxfrequent * 50;
                 })
                 .on("end", draw)
@@ -234,6 +234,7 @@ var drawHotwords = function () {
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) {
+                    if(old_r=="PeptideAtlas")return d.frequent / maxfrequent * 20 +"px";
                     return d.frequent / maxfrequent * 40 + "px";
                 })
                 .style("font-family", "Impact")
