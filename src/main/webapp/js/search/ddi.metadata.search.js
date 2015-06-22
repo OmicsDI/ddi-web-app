@@ -203,7 +203,6 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         update_page_title();
         query = preprocess_query(query);
         query_url = get_query_url(query, start);
-        console.log("wget" + query_url);
 //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
         /**
@@ -567,6 +566,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.repositories =  repositories;
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
+    $scope.highlight_terms = ["a","b"];
 
 
     $scope.facetsNo = 8;
@@ -815,6 +815,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         get_new_indexes();
         var taxonomy_reg = /TAXONOMY:"(\d+)"/g;
         var taxonomy_matches = $scope.query_for_show.match(taxonomy_reg);
+        $scope.query_for_show = $scope.query_for_show.replace(/pride/g, "PRIDE");
         if (taxonomy_matches === null) return;
         for (var i = 0; i < taxonomy_matches.length; i++) {
             var taxonomy_match = taxonomy_matches[i];
@@ -822,10 +823,27 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             var taxonomy_label = get_label_by_taxid(taxonomy_id);
             $scope.query_for_show = $scope.query_for_show.replace(taxonomy_id, taxonomy_label);
         }
+        console.log($scope.query_for_show);
     }
 
     function prepare_highlight_show(){
-//        alert($scope.query_for_show.match(/\c/g));
+        $scope.highlight_terms = $scope.query_for_show.match( /".*?"/g );
+
+        if ($scope.highlight_terms===null) $scope.highlight_terms=[""]
+        if($scope.query_for_show.indexOf("AND")>-1) {
+            var search_term = $scope.query_for_show.match(/.*?AND/);
+            search_term = search_term[0].replace( /AND/, "");
+        }
+        else{
+            search_term = $scope.query_for_show;
+        }
+        search_term = search_term.replace( /\*:\*/, "");
+        search_term = search_term.split(" ");
+        $scope.highlight_terms.push.apply($scope.highlight_terms,search_term);
+
+        for(var i=0; i<$scope.highlight_terms.length; i++){
+            $scope.highlight_terms[i] = $scope.highlight_terms[i].replace( /"/g, '');
+        }
     }
 
     function get_label_by_taxid(taxonomy_id) {
@@ -840,12 +858,18 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
 }])
 .filter('highlight', function($sce) {
-    return function(text, phrase) {
-              if (phrase) text = text.replace(new RegExp('('+phrase+')', 'gi'),
-              '<span class="highlighted">$1</span>')
+  return function(str, termsToHighlight) {
+          //Sort terms by length
+          if(str===null || str===undefined || str.length<1)return;
+          if(termsToHighlight.length<1) return ;
+          termsToHighlight.sort(function(a, b) {
+          return b.length - a.length;
+          });
+          // Regex to simultaneously replace terms
+          var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'g');
+          return $sce.trustAsHtml(str.replace(regex, '<span class="highlighted">$&</span>'));
+  };
 
-              return $sce.trustAsHtml(text)
-            }
 });
 
 

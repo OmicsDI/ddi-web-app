@@ -509,8 +509,7 @@
                                                  ng-show="metabolomics_list.indexOf(dataset.source)>-1"/>
                                             <img src="css/Genomics2.png"
                                                  ng-show="genomics_list.indexOf(dataset.source)>-1"/>
-                                            <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title}}</a>
-                                            <span>{{test}}  </span>
+                                                 <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title}}</a> 
                                         </div>
                                         <!--         <div class="project-widget-title">
                                                     {{dataset["title"]}}
@@ -518,7 +517,7 @@
 
                                         <div class="project-widget-paragraph align-justify">
                                             <b>Project description:</b>
-                                            <span ng-bind-html="dataset['description']|limitTo:450|highlight:''"></span>
+                                            <span ng-bind-html="dataset['description']|limitTo:450|highlight:highlight_terms"></span>
                                             {{dataset["description"].length>450?'...':''}}
                                             <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
                                             <span ng-show="dataset.description===null">Not available</span>
@@ -527,25 +526,25 @@
                                         <div class="project-widget-paragraph">
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['organisms']">
-                                            <b>Organism: </b><span ng-repeat="organism in dataset['organisms']" ng-bind-html="organism.name | highlight:''"> </span>
+                                            <b>Organism: </b><span ng-repeat="organism in dataset['organisms']" ng-bind-html="organism.name | highlight:highlight_terms"> </span> 
                                             <span ng-show="dataset.organisms.length===0">Not available</span>
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['tissues']">
-                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']" ng-bind-html="tissue.name | highlight:''" ></span>
+                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']" ng-bind-html="tissue.name | highlight:highlight_terms" ></span>
                                             <span ng-show="dataset.tissues.length===0">Not available</span>
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['diseases']">
-                                            <b>Disease: </b><span ng-repeat="disease in dataset['diseases']"  ng-bind-html="disease.name | highlight:''"></span>
+                                            <b>Disease: </b><span ng-repeat="disease in dataset['diseases']"  ng-bind-html="disease.name | highlight:highlight_terms"></span>
                                             <span ng-show="dataset.diseases.length===0">Not available</span>
                                         </div>
 
                                         <div class="project-widget-paragraph">
-                                            <span ng-bind-html="dataset.id | highlight:''"></span> (<span ng-bind-html = "repositories[dataset.source]|highlight:''"> </span> )
+                                            <span ng-bind-html="dataset.id | highlight:highlight_terms"></span> (<span ng-bind-html = "repositories[dataset.source]|highlight:highlight_terms"> </span> )
                                         </div>
 
                                         <div class="project-widget-paragraph" ng-show="dataset.publicationDate">
                                             <b>Made public: </b>
-                                            <span ng-bind-html = "dataset['publicationDate'].substr(0,4)|highlight:''"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
+                                            <span ng-bind-html = "dataset['publicationDate'].substr(0,4)|highlight:highlight_terms"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
                                         </div>
 
                                         <div class="project-widget-tag"
@@ -569,30 +568,11 @@
 
 
         <script src="js/vendor/angular/angular.min.js"></script>
-        <script src="js/vendor/angular/angular-route.js"></script>
         <script src="js/vendor/angular/angular-animate.min.js"></script>
         <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
         <script src="js/vendor/underscore/underscore-min.js"></script>
         <script src="js/search/ddi.metadata.search.js"></script>
-        <!--
-         <script src="js/search/metadata.search.js"></script>
-         <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
-         <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
-         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-         <script src="js/vendor/jquery-1.10.1.min.js"></script>
-         <script src="js/search/sequence.search.js"></script>
-         <script src="js/search/export-results.search.js"></script>
-         <script src="js/vendor/query-string.js"></script>
-         <script src="js/jquery.EuropePMCAbstracts.js"></script>
-         <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
-         <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-         <script src="js/vendor/handlebars-v1.1.2.js"></script>
-         <script src="js/guidedTour.js"></script>
-         <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
-         <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
-         -->
         <script src="js/vendor/d3/d3.min.js"></script>
-        <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
         <script src="js/d3/d3.speciesSunburst.js"></script>
         <script src="js/d3/d3.speciesTree.js"></script>
 
