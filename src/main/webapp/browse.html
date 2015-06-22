@@ -518,7 +518,7 @@
 
                                         <div class="project-widget-paragraph align-justify">
                                             <b>Project description:</b>
-                                            <span ng-bind-html="dataset['description']|limitTo:450|highlight:'a'"></span>
+                                            <span ng-bind-html="dataset['description']|limitTo:450|highlight:''"></span>
                                             {{dataset["description"].length>450?'...':''}}
                                             <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
                                             <span ng-show="dataset.description===null">Not available</span>
@@ -527,25 +527,25 @@
                                         <div class="project-widget-paragraph">
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['organisms']">
-                                            <b>Organism: </b><span ng-repeat="organism in dataset['organisms']" ng-bind-html="organism.name | highlight:'a'"> </span>
+                                            <b>Organism: </b><span ng-repeat="organism in dataset['organisms']" ng-bind-html="organism.name | highlight:''"> </span>
                                             <span ng-show="dataset.organisms.length===0">Not available</span>
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['tissues']">
-                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']" ng-bind-html="tissue.name | highlight:'a'" ></span>
+                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']" ng-bind-html="tissue.name | highlight:''" ></span>
                                             <span ng-show="dataset.tissues.length===0">Not available</span>
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['diseases']">
-                                            <b>Disease: </b><span ng-repeat="disease in dataset['diseases']"  ng-bind-html="disease.name | highlight:'a'"></span>
+                                            <b>Disease: </b><span ng-repeat="disease in dataset['diseases']"  ng-bind-html="disease.name | highlight:''"></span>
                                             <span ng-show="dataset.diseases.length===0">Not available</span>
                                         </div>
 
                                         <div class="project-widget-paragraph">
-                                            <span ng-bind-html="dataset.id | highlight:'PXD'"></span> (<span ng-bind-html = "repositories[dataset.source]|highlight:'i'"> </span> )
+                                            <span ng-bind-html="dataset.id | highlight:''"></span> (<span ng-bind-html = "repositories[dataset.source]|highlight:''"> </span> )
                                         </div>
 
                                         <div class="project-widget-paragraph" ng-show="dataset.publicationDate">
                                             <b>Made public: </b>
-                                            <span ng-bind-html = "dataset['publicationDate'].substr(0,4)|highlight:'2015'"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
+                                            <span ng-bind-html = "dataset['publicationDate'].substr(0,4)|highlight:''"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
                                         </div>
 
                                         <div class="project-widget-tag"

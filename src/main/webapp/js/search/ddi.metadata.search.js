@@ -585,6 +585,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             $scope.query = $location.search().q;
             $scope.query_for_show = $scope.query;
             prepare_query_for_show();
+            prepare_highlight_show();
             get_new_indexes();
             check_omics_type_null();
         }
@@ -817,14 +818,14 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         if (taxonomy_matches === null) return;
         for (var i = 0; i < taxonomy_matches.length; i++) {
             var taxonomy_match = taxonomy_matches[i];
-            var taxonomy_id = taxonomy_match.substr(10, taxonomymatch.length - 11);
+            var taxonomy_id = taxonomy_match.substr(10, taxonomy_match.length - 11);
             var taxonomy_label = get_label_by_taxid(taxonomy_id);
             $scope.query_for_show = $scope.query_for_show.replace(taxonomy_id, taxonomy_label);
         }
     }
 
     function prepare_highlight_show(){
-        alert($scope.query_for_show.match(/a/g));
+        alert($scope.query_for_show.match(/\c/g));
     }
 
     function get_label_by_taxid(taxonomy_id) {
