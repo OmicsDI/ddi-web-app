@@ -824,8 +824,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }
 
     function prepare_highlight_show(){
-        alert($scope.query_for_show.match(//g));
-    
+        alert($scope.query_for_show.match(/a/g));
     }
 
     function get_label_by_taxid(taxonomy_id) {
