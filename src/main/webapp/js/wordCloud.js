@@ -1,4 +1,4 @@
-var web_service_url = 'http://ves-ebi-4d.ebi.ac.uk:8100/ddi/ws/';
+var web_service_url = 'http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/';
 var drawHotwords = function () {
 
     queue()
