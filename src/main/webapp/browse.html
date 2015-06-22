@@ -209,25 +209,25 @@
                     <div class="metasearch-organism-facet force-scrollbars"> <!-- Omic types -->
                         <h3 class="ng-binding">Show results for</h3>
                         <ul class="list-unstyled metasearch-facet-values">
-                            <li><a href="" ng-class="{'disabled':omics_facets_no.Proteomics==='0'}"
+                            <li><a href="" ng-class="{'disabled':omics_facets_no.Proteomics==='0'||is_omic_clicked('Proteomics')==='true'}"
                                    ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Proteomics].value)"><img
                                     src="css/Proteomics2.png" style="vertical-align: top"/><span>  </span><span
                                     style="font-size:15px; font-weight:bold">Proteomics</span>
                                 <small>
                                     ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Proteomics].count||0
-                                    | number}})
+                                    | number}})                                                    
                                 </small>
                             </a></li>
-                            <li><a href="" ng-class="{'disabled':omics_facets_no.Metabolomics==='0'}"
+                            <li><a href="" ng-class="{'disabled':omics_facets_no.Metabolomics==='0'||is_omic_clicked('Metabolomics')==='true'}"
                                    ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Metabolomics].value)"><img
                                     src="css/Metabolomics2.png" style="vertical-align: top"/><span>  </span><span
                                     style="font-size:15px; font-weight:bold">Metabolomics</span>
                                 <small>
                                     ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Metabolomics].count||0
-                                    | number}})
+                                    | number}})                                                     
                                 </small>
                             </a></li>
-                            <li><a href="" ng-class="{'disabled':omics_facets_no.Genomics==='0'}"
+                            <li><a href="" ng-class="{'disabled':omics_facets_no.Genomics==='0'||is_omic_clicked('Genomics')==='true'}"
                                    ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img
                                     src="css/Genomics2.png" style="vertical-align: top"/><span>  </span><span
                                     style="font-size:15px; font-weight:bold">Genomics</span>
@@ -518,7 +518,8 @@
 
                                         <div class="project-widget-paragraph align-justify">
                                             <b>Project description:</b>
-                                            {{dataset["description"]|limitTo:450}}{{dataset["description"].length>450?'...':''}}
+                                            <span ng-bind-html="dataset['description']|limitTo:450|highlight:'a'"></span>
+                                            {{dataset["description"].length>450?'...':''}}
                                             <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
                                             <span ng-show="dataset.description===null">Not available</span>
                                         </div>
@@ -526,25 +527,25 @@
                                         <div class="project-widget-paragraph">
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['organisms']">
-                                            <b>Organism: </b><span ng-repeat="organism in dataset['organisms']">{{organism["name"]}}  </span>
+                                            <b>Organism: </b><span ng-repeat="organism in dataset['organisms']" ng-bind-html="organism.name | highlight:'a'"> </span>
                                             <span ng-show="dataset.organisms.length===0">Not available</span>
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['tissues']">
-                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']">{{tissue["name"]}}  </span>
+                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']" ng-bind-html="tissue.name | highlight:'a'" ></span>
                                             <span ng-show="dataset.tissues.length===0">Not available</span>
                                         </div>
                                         <div class="project-widget-paragraph" ng-show="dataset['diseases']">
-                                            <b>Disease: </b><span ng-repeat="diseases in dataset['diseases']">{{diseases["name"]}}  </span>
+                                            <b>Disease: </b><span ng-repeat="disease in dataset['diseases']"  ng-bind-html="disease.name | highlight:'a'"></span>
                                             <span ng-show="dataset.diseases.length===0">Not available</span>
                                         </div>
 
                                         <div class="project-widget-paragraph">
-                                            {{dataset.id}} ({{repositories[dataset.source]}})
+                                            <span ng-bind-html="dataset.id | highlight:'PXD'"></span> (<span ng-bind-html = "repositories[dataset.source]|highlight:'i'"> </span> )
                                         </div>
 
                                         <div class="project-widget-paragraph" ng-show="dataset.publicationDate">
                                             <b>Made public: </b>
-                                            {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
+                                            <span ng-bind-html = "dataset['publicationDate'].substr(0,4)|highlight:'2015'"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
                                         </div>
 
                                         <div class="project-widget-tag"

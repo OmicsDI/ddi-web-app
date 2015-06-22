@@ -613,4 +613,9 @@ ul#local-nav li.functional {
   text-indent: 2px;
 }
  
+.highlighted {
+    background: yellow;
+}
+
+
 

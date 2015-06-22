@@ -761,6 +761,13 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     });
 
+    /*
+     * find out is the omic be clicked or not
+     */
+    $scope.is_omic_clicked = function(thisomic){
+        if($scope.query_for_show.indexOf('omics_type:"'+thisomic+'"')>-1) return "true";
+        return "false";
+    }
 
     function get_new_indexes() {
         if ($scope.result.count == '0') return;
@@ -816,6 +823,11 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         }
     }
 
+    function prepare_highlight_show(){
+        alert($scope.query_for_show.match(//g));
+    
+    }
+
     function get_label_by_taxid(taxonomy_id) {
         if (taxonomy_id === undefined) return;
         if ($scope.result.facets[$scope.index_of_facets.TAXONOMY] === undefined) return;
@@ -826,7 +838,16 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         console.error("find no label for the taxid");
     }
 
-}]);
+}])
+.filter('highlight', function($sce) {
+    return function(text, phrase) {
+              if (phrase) text = text.replace(new RegExp('('+phrase+')', 'gi'),
+              '<span class="highlighted">$1</span>')
+
+              return $sce.trustAsHtml(text)
+            }
+});
+
 
 /**
  * Query controller
