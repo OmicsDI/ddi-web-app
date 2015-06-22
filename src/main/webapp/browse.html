@@ -445,13 +445,13 @@
                             <div class="pr-pager">
                                 Page
                                 <a href="" ng-click="pagination(1,'default','default')"
-                                   ng-show="current_page>3 && maxpageno>5">{{1+"<<"}}</a>
+                                   ng-show="current_page>3 && max_page_no>5">{{1+"<<"}}</a>
                                 <!-- <li><a href="" class="btn " ng-repeat="page in pages" ng-click="pagination(page,'default','default')" ng-disabled="current_page===page">{{page}}</a></li> -->
                                 <a href="" class="" ng-repeat="page in pages"
                                    ng-click="pagination(page,'default','default')"
                                    ng-class="{'disabled':current_page===page}">{{page}}</a>
-                                <a href="" ng-click="pagination(maxpageno,'default','default')"
-                                   ng-show="current_page<=maxpageno-3 && maxpageno>5">{{">>"+maxpageno}}</a>
+                                <a href="" ng-click="pagination(max_page_no,'default','default')"
+                                   ng-show="current_page<=max_page_no-3 && max_page_no>5">{{">>"+max_page_no}}</a>
                             </div>
                             <div class="pr-page-size">
 
@@ -512,7 +512,6 @@
                                             <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title}}</a>
                                             <span>{{test}}  </span>
                                         </div>
-
                                         <!--         <div class="project-widget-title">
                                                     {{dataset["title"]}}
                                                 </div> -->
@@ -526,10 +525,17 @@
 
                                         <div class="project-widget-paragraph">
                                         </div>
-
                                         <div class="project-widget-paragraph" ng-show="dataset['organisms']">
                                             <b>Organism: </b><span ng-repeat="organism in dataset['organisms']">{{organism["name"]}}  </span>
                                             <span ng-show="dataset.organisms.length===0">Not available</span>
+                                        </div>
+                                        <div class="project-widget-paragraph" ng-show="dataset['tissues']">
+                                            <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']">{{tissue["name"]}}  </span>
+                                            <span ng-show="dataset.tissues.length===0">Not available</span>
+                                        </div>
+                                        <div class="project-widget-paragraph" ng-show="dataset['diseases']">
+                                            <b>Disease: </b><span ng-repeat="diseases in dataset['diseases']">{{diseases["name"]}}  </span>
+                                            <span ng-show="dataset.diseases.length===0">Not available</span>
                                         </div>
 
                                         <div class="project-widget-paragraph">

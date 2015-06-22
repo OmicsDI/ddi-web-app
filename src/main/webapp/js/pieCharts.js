@@ -67,7 +67,7 @@ var pie_charts_tissues_organisms = function () {
         var div_width = div_width_px.substr(0, div_width_px.length - 2);
         var diameter = div_width / 1.3,
             format = d3.format(",d"),
-            color = d3.scale.category20c();
+            color = d3.scale.category20b();
 
         var bubble = d3.layout.pack()
             .sort(null)
@@ -217,14 +217,17 @@ var pie_charts_tissues_organisms = function () {
                     return d.r / d.className.length < 2.5 ? '' : d.className;
                 });
 
-            node.on("mouseover", function (d) {
+            node.on("mousemove", function (d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
-                tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong>")
-                    .style("left", (d3.event.pageX + 20) + "px")
-                    .style("top", (d3.event.pageY - 20) + "px")
-                    .style("width", d.className.length * 10 + "px");
+                var mouse_coords = d3.mouse(
+                        tooltip.node().parentElement);
+                
+                tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets")
+                    .style("left", (mouse_coords[0]+180) + "px")
+                    .style("top", (mouse_coords[1]-10) + "px")
+                    .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
             })
                 .on("mouseout", function (d) {
                     tooltip.transition()
@@ -405,7 +408,7 @@ var pie_charts_repos_omics = function () {
         var formdiv = body.append('div');
         formdiv
             .attr("class", "center")
-            .attr("style", "width:150px;margin-top:15px")
+            .attr("style", "width:250px;margin-top:15px")
         ;
 
         var radio_form = formdiv.append('form');
@@ -534,22 +537,11 @@ var pie_charts_repos_omics = function () {
             .size([treemap_width, treemap_height])
             .sticky(true)
             .value(function(d) { return d.size; });
+        var treemap_tooltip = d3.select('body').append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);   
 
-        var treemap_div = body.append("div")
-            .style("position", "absolute")
-            .style("width", (treemap_width + margin.left + margin.right -40 ) + "px")
-            .style("height", (treemap_height + margin.top + margin.bottom) + "px")
-            .style("margin-left", (margin.left) + "px")
-            .style("top", margin.top + "px");
 
-        var treemap_node = treemap_div.datum(treemap_data).selectAll(".treemap_node")
-            .data(treemap.nodes)
-            .enter().append("div")
-            .attr("class", "treemap_node")
-            .call(position)
-            .style("background", function(d) { return d.children ? treemap_color[d.name] : null; })
-            .text(function(d) { return d.children ? null : d.name; });
-        
         change();
 
 
@@ -564,7 +556,7 @@ var pie_charts_repos_omics = function () {
                 url_pre = 'browse.html#/search?q=*:* AND omics_type:"';
                 // text_total.text("Total:"+total_omics);
                 svg.attr("visibility", null);
-                treemap_div.selectAll(".treemap_node").attr("visibility", "hidden");
+                d3.select("#treemap_div").remove();
             }
            if (value == 'Repos') {
                 data = repos;
@@ -573,13 +565,12 @@ var pie_charts_repos_omics = function () {
                 url_pre = 'browse.html#/search?q=*:* AND repository:"';
                 // text_total.text("Total:"+total_repos);
                 svg.attr("visibility", null);
-                treemap_div.attr("visibility", "hidden");
-                treemap_div.selectAll(".treemap_node").attr("visibility", "hidden");
+                d3.select("#treemap_div").remove();
             }
            if (value == 'Treemap') {
                 svg.attr("visibility", "hidden");
-                treemap_div.attr("visibility", null);
-                treemap_div.selectAll(".treemap_node").attr("visibility", null);
+                draw_treemap();
+                return;
             }
  
 
@@ -645,6 +636,52 @@ var pie_charts_repos_omics = function () {
             slice.exit()
                 .remove();
         };
+
+        function draw_treemap(){
+        var treemap_url_pre = 'browse.html#/search?q=*:* AND repository:"';
+        var treemap_div = body.append("div")
+            .attr("id", "treemap_div")
+            .style("position", "absolute")
+            .style("width", (treemap_width + margin.left + margin.right -40 ) + "px")
+            .style("height", (treemap_height + margin.top + margin.bottom) + "px")
+            .style("margin-left", (margin.left) + "px")
+            .style("top", margin.top + "px");
+
+        var treemap_node = treemap_div.datum(treemap_data).selectAll(".treemap_node")
+            .data(treemap.nodes)
+            .enter().append("div")
+            .attr("class", "treemap_node")
+            .call(position)
+            .style("background", function(d) { return d.children ? treemap_color[d.name] : null; })
+            .text(function(d) { return d.children ? null : d.name; })
+            .on("click", function (d, i) {
+                location.href = treemap_url_pre + d.name + '"';
+
+                if (d.name == "MetaboLights Dataset")
+                    location.href = treemap_url_pre + "MetaboLights" + '"';
+                if (d.name == "Metabolome Workbench")
+                    location.href = treemap_url_pre + "MetabolomicsWorkbench" + '"';
+            })  
+            .on("mousemove", function (d, i) {
+                treemap_tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+
+                var mouse_coords = d3.mouse(
+                        treemap_tooltip.node().parentElement);
+                
+                treemap_tooltip.html("<strong>" + d.name+ ": <br>" + d.value + "</strong> datasets")
+                    .style("left", (mouse_coords[0]+180) + "px")
+                    .style("top", (mouse_coords[1]-10) + "px")
+                    .style("width", d.name.length * 5 + d.value.toString().length * 5 + 80 + "px");
+            })
+            .on("mouseout", function (d, i) {
+                treemap_tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })   
+} 
+
         function position() {
             this.style("left", function(d) { return d.x + "px"; })
                 .style("top", function(d) { return d.y + "px"; })

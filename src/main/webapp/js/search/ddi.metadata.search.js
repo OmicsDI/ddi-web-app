@@ -31,7 +31,7 @@ underscore.factory('_', function () {
  */
 var web_service_url = "http://ves-ebi-4d.ebi.ac.uk:8100/ddi/ws/";
 var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
-var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench";
+var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolome_workbench";
 var genomics_list = "ega,EGA";
 var repositories = {
         "pride": "PRIDE",
@@ -1246,9 +1246,20 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         method: 'GET'
     }).success(function (data) {
         $scope.statistic_list = data;
+    for(var i = 0; i<$scope.statistic_list.length; i++){
+        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Different /g, '');
+        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Repositories\/Databases/g, 'repositories');
+        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Species\/Organisms/g, 'species');
+        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/D/g, 'd');
+        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/T/g, 't');
+    };
+
     }).error(function () {
         console.log("GET error:" + url);
     });
+
+
+
 
     //get datasets No. of each repository 
     url = web_service_url+"stats/domains";

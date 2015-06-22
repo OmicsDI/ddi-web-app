@@ -199,11 +199,11 @@
         <div class="row">
 
             <div class="col-md-8">
-                <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="">
+                <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="height:199px">
                     <!--      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">   -->
-                    <h4>
+                    <h3 style="margin-top:30px">
                         Datasets Discovery Index is an integrated multiple Omics Data Discovery site.
-                    </h4>
+                    </h3>
 
                     <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
                         <!-- <fieldset> -->
@@ -271,8 +271,8 @@
                     </div>
                     <div class="panel-body ">
                         <ul>
-                            <li ng-repeat="statisticdata in statistic_list "><strong>{{statisticdata.value|number
-                                }} </strong> <span style="padding-left:2px"> {{statisticdata.name}}</span></li>
+                            <li ng-repeat="statisticdata in statistic_list ">{{statisticdata.value|number
+                                }}<span style="padding-left:2px"> {{statisticdata.name}}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -482,7 +482,7 @@
 <script src="js/search/ddi.metadata.search.js"></script>
 <script src="js/getTweets.js"></script>
 <script src="js/pieCharts.js"></script>
-<script src="js/drawHotwords.js"></script>
+<script src="js/wordCloud.js"></script>
 <script src="js/queue.v1.min.js"></script>
 <!--
  <script src="js/vendor/angular/angular.min.js"></script>
