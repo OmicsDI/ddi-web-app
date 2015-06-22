@@ -485,7 +485,7 @@ background-color: #fff;
 background-color: #555555;
 }
 .jssora13l, .jssora13r, .jssora13ldn, .jssora13rdn {
-background: rgba(0, 0, 0, 0) url("/ddi/css/a13.png") no-repeat scroll 0 0;
+background: rgba(0, 0, 0, 0) url("/Tools/ddi/css/a13.png") no-repeat scroll 0 0;
 cursor: pointer;
 display: block;
 overflow: hidden;
