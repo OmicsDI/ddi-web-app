@@ -528,6 +528,7 @@ form fieldset {
 
 .nobullet{
         list-style-type: none;
+        margin-left:-30px;
 }
 
 #content p{
@@ -617,5 +618,7 @@ ul#local-nav li.functional {
     background: yellow;
 }
 
-
+.img_at_footer {
+margin:9px 0 0;
+}
 

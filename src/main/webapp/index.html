@@ -264,19 +264,7 @@
             </div>
 
             <div class="col-md-4">
-                <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl">
-
-                    <div class="">
-                        <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
-                    </div>
-                    <div class="panel-body ">
-                        <ul>
-                            <li ng-repeat="statisticdata in statistic_list ">{{statisticdata.value|number
-                                }}<span style="padding-left:2px"> {{statisticdata.name}}</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+           </div>
 
 
         </div>
@@ -351,9 +339,10 @@
                                      style="width:15px;height:15px" title="Metabolomics"/>
                                 <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                      style="width:15px;height:15px" title="Genomics"/>
-                                     <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}} title={{dataset.title}}>
+                                <span class="date-box" style="width:15px">{{dataset.visitCount|megaNumber}}</span>
+                                <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}} title={{dataset.title}}>
                                          {{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}
-                                     </a>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -383,6 +372,20 @@
         <hr>
 
         <div class="row">
+             <div class="col-md-4">
+                 <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl">
+
+                    <div class="">
+                        <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
+                    </div>
+                    <div ng-repeat="statisticdata in statistic_list " >
+                        <blockquote style="margin-bottom:0px;margin-top:0px;padding:0px"><span style="padding-left:6px"> {{statisticdata.value|number
+                                }}  {{statisticdata.name}}</span>
+                        </blockquote>
+                        <br>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="panel panel-default" style="height:260px">
                     <div id="tweets-of-the-month" class="">
@@ -399,34 +402,6 @@
             </div>
 
 
-            <div class="col-md-4">
-                <div class="panel panel-default" style="height:260px">
-                    <div id="related-tools" class="">
-                        <h4 data-icon="N" class="icon icon-generic">
-                            Related Tools
-                        </h4>
-                        <blockquote class="small callout-info">DDI project has been developed on <a
-                                href="https://github.com/BD2K-DDI/" target="_blank">GitHub</a>, you can check or
-                            contribute to our development at (<a href="https://github.com/BD2K-DDI/" target="_blank">here</a>)
-                        </blockquote>
-                        <br/>
-                        <blockquote class="small callout-info">The Datatsets Discovery Index can be accessed
-                            programmatically using a <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/" target="_blank">RESTful API</a>
-                            allowing for integration with other resources.
-                            The API implementation is based on the <a href="https://spring.io/guides/gs/rest-service/"
-                                                                      target="_blank">Spring Rest Framework</a>
-                        </blockquote>
-                        <br/>
-                        <blockquote class="small callout-info">The frontend page is based on the 
-                            <a href="https://angularjs.org/">Angular JS</a>; 
-                            <a href="d3js.org/">D3.js</a>
-                        </blockquote>
-                        </ul>
-                    </div>
-                    <div>
-                    </div>
-                </div>
-            </div>
 
             <div class="col-md-4">
                 <div class="panel panel-default" style="height:260px">
@@ -435,22 +410,21 @@
                             About
                         </h4>
                         <blockquote class="small callout-info">The Datasets Discovery Index (DDI) provides a Knowleage
-                            Discovery framework across a heterogeneous data (genomics, proteomics and metabolomics)
-                            including datasets from eight repositories from two continents and six organizations (<a
-                                    href="help.html#/Overview">Read More</a>).
+                            Discovery framework across a heterogeneous data (genomics, proteomics and metabolomics).
+                            <a href="help.html#/Overview">Read More</a>).
                         </blockquote>
                         <br/>
-                        <blockquote class="small callout-info">
-                            <strong>Major Consortiums:</strong>
-                            <br/><br/>
-                            <a class="image_a" href="http://metabolomexchange.org/" target="_blank"><img
-                                    src="/Tools/ddi/static/img/home/metabolome.png" style="width:150px"/></a>
-                            <a class="image_a" href="http://www.proteomexchange.org/" target="_blank"><img
-                                    src="/Tools/ddi/static/img/home/proteome.png"/></a>
-                            <a class="image_a" href="https://www.ebi.ac.uk/ega/" target="_blank"><img
-                                    src="/Tools/ddi/static/img/db-logos/ega_phenome_logo.jpg" style="width:80px"/></a>
+                        <blockquote class="small callout-info">DDI project has been developed on <a
+                                href="https://github.com/BD2K-DDI/" target="_blank">GitHub</a>, you can check or
+                            contribute to our development at (<a href="https://github.com/BD2K-DDI/" target="_blank">here</a>)
                         </blockquote>
-
+                        <br/>
+                       </blockquote>
+                       <blockquote class="small callout-info">The frontend page is based on the 
+                            <a href="https://angularjs.org/">Angular JS</a>; 
+                            <a href="d3js.org/">D3.js</a>
+                       </blockquote>
+ 
                     </div>
                     <div>
                     </div>
