@@ -868,7 +868,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
           return b.length - a.length;
           });
           // Regex to simultaneously replace terms
-          var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'g');
+          var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'gi');
           return $sce.trustAsHtml(str.replace(regex, '<span class="highlighted">$&</span>'));
   };
 

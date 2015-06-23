@@ -509,7 +509,7 @@
                                                  ng-show="metabolomics_list.indexOf(dataset.source)>-1"/>
                                             <img src="css/Genomics2.png"
                                                  ng-show="genomics_list.indexOf(dataset.source)>-1"/>
-                                                 <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}>{{dataset.title}}</a> 
+                                                 <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}><span ng-bind-html="dataset['title']|highlight:highlight_terms"></span></a>
                                         </div>
                                         <!--         <div class="project-widget-title">
                                                     {{dataset["title"]}}
