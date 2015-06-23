@@ -826,6 +826,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         console.log($scope.query_for_show);
     }
 
+
     function prepare_highlight_show(){
         $scope.highlight_terms = $scope.query_for_show.match( /".*?"/g );
 
@@ -845,6 +846,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             $scope.highlight_terms[i] = $scope.highlight_terms[i].replace( /"/g, '');
         }
     }
+
 
     function get_label_by_taxid(taxonomy_id) {
         if (taxonomy_id === undefined) return;
