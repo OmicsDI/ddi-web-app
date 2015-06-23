@@ -171,6 +171,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
 //                        '&size=' + search_config.page_size +
         '&size={PAGESIZE}' +
         '&sort_field={SORTFIELD}' +
+        '&order={ORDER}' +
         '&start={START}',
 
         'proxy': search_config.ddi_base_url +
@@ -194,10 +195,11 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      * Launch EBeye search.
      * `start` determines the range of the results to be returned.
      */
-    this.search = function (query, start, page_size, sort_field) {
+    this.search = function (query, start, page_size, sort_field, sort_order) {
         start = start || 0;
         page_size = page_size || 10;
         sort_field = sort_field || 'id';
+        sort_order = sort_order || 'ascending';
         display_search_interface();
         display_spinner();
         update_page_title();
@@ -205,6 +207,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         query_url = get_query_url(query, start);
 //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
+        console.log("get"+query_url);
         /**
          * Display search spinner if not a "load more" request.
          */
@@ -239,7 +242,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             }
             ;
 
-            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField);
+            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField).replace('{ORDER}',sort_order);
 //            console.log(ebeye_url);
             //    var url = query_urls.proxy.replace('{EBEYE_URL}', encodeURIComponent(ebeye_url));
             //    return url;
@@ -445,9 +448,9 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     /**
      * Load more results starting from the last loaded index.
      */
-    this.load_more_results = function (start, page_size, sort_field) {
+    this.load_more_results = function (start, page_size, sort_field, sort_order) {
         query = $location.search().q;
-        this.search(query, start, page_size, sort_field);
+        this.search(query, start, page_size, sort_field, sort_order);
     };
 
     /**
@@ -557,6 +560,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.show_export_error = false;
     $scope.$root.page_size = 10;
     $scope.$root.sort_field = 'id';
+    $scope.$root.sort_order = 'ascending';
     $scope.pages = [0, 0];
     $scope.max_page_no = 1;
 
@@ -626,7 +630,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     /**
      * Fired when "Load more" button is clicked.
-     */
     $scope.load_more_results = function (page, page_size, sort_field) {
         if (page_size !== 'default') {
             $scope.$root.page_size = page_size
@@ -646,8 +649,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
         results.load_more_results(start, page_size, sort_field);
     };
+     */
 
-    $scope.pagination = function (current_page, page_size, sort_field) {
+    $scope.pagination = function (current_page, page_size, sort_field, sort_order) {
         if (page_size !== 'default') {
             $scope.$root.page_size = page_size
         }
@@ -662,11 +666,18 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             sort_field = $scope.$root.sort_field;
         }
 
+        if (sort_order !== 'default') {
+            $scope.$root.sort_order = sort_order;
+        }
+        if (sort_order === 'default') {
+            sort_order = $scope.$root.sort_order;
+        }
+
         $scope.$root.current_page = current_page;
 
         var start = (current_page - 1) * page_size;
 
-        results.load_more_results(start, page_size, sort_field);
+        results.load_more_results(start, page_size, sort_field, sort_order);
 
     };
 
@@ -943,7 +954,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
             } else {
                 // the new url is a search result page, launch that search
                 $scope.query.text = $location.search().q;
-                results.search($location.search().q, 0, $scope.$root.page_size, $scope.$root.sort_field);
+                results.search($location.search().q, 0, $scope.$root.page_size, $scope.$root.sort_field, $scope.$root.sort_order);
                 $scope.query.submitted = false;
             }
         }

@@ -34,6 +34,7 @@
           media="screen">
     <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"
           type="text/css" media="screen">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link type="text/css" href="css/prider.css" rel="stylesheet">
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
 
@@ -444,22 +445,22 @@
                         <div class="col_pager">
                             <div class="pr-pager">
                                 Page
-                                <a href="" ng-click="pagination(1,'default','default')"
+                                <a href="" ng-click="pagination(1,'default','default','default')"
                                    ng-show="current_page>3 && max_page_no>5">{{1+"<<"}}</a>
-                                <!-- <li><a href="" class="btn " ng-repeat="page in pages" ng-click="pagination(page,'default','default')" ng-disabled="current_page===page">{{page}}</a></li> -->
+                                <!-- <li><a href="" class="btn " ng-repeat="page in pages" ng-click="pagination(page,'default','default','default')" ng-disabled="current_page===page">{{page}}</a></li> -->
                                 <a href="" class="" ng-repeat="page in pages"
-                                   ng-click="pagination(page,'default','default')"
+                                   ng-click="pagination(page,'default','default','default')"
                                    ng-class="{'disabled':current_page===page}">{{page}}</a>
-                                <a href="" ng-click="pagination(max_page_no,'default','default')"
+                                <a href="" ng-click="pagination(max_page_no,'default','default','default')"
                                    ng-show="current_page<=max_page_no-3 && max_page_no>5">{{">>"+max_page_no}}</a>
                             </div>
                             <div class="pr-page-size">
 
                                 Page size
-                                <a href="" ng-click="pagination(1,'10','default')" ng-class="{'disabled':page_size==10}">10</a>
-                                <a href="" ng-click="pagination(1,'20','default')" ng-class="{'disabled':page_size==20}">20</a>
-                                <a href="" ng-click="pagination(1,'50','default')" ng-class="{'disabled':page_size==50}">50</a>
-                                <a href="" ng-click="pagination(1,'100','default')"
+                                <a href="" ng-click="pagination(1,'10','default','default')" ng-class="{'disabled':page_size==10}">10</a>
+                                <a href="" ng-click="pagination(1,'20','default','default')" ng-class="{'disabled':page_size==20}">20</a>
+                                <a href="" ng-click="pagination(1,'50','default','default')" ng-class="{'disabled':page_size==50}">50</a>
+                                <a href="" ng-click="pagination(1,'100','default','default')"
                                    ng-class="{'disabled':page_size==100}">100</a>
 
                             </div>
@@ -476,22 +477,29 @@
                             <ul class="search-header" id="sort-by-menu">
                                 <li>Sort by:</li>
                                 <li>
-                                    <a href="" ng-click="pagination(1,'default','name')"
-                                       ng-class="{'disabled':sort_field==='name'}">Title</a>
-                                </li>
-                                <li>
-                                    <a href="" ng-click="pagination(1,'default','id')"
+                                    <a href="" ng-click="pagination(1,'default','id','default')"
                                        ng-class="{'disabled':sort_field==='id'}">Accession</a>
                                 </li>
                                 <li>
-                                    <a href="" ng-click="pagination(1,'default','relevance')"
+                                    <a href="" ng-click="pagination(1,'default','relevance','default')"
                                        ng-class="{'disabled':sort_field==='relevance'}">Relevance</a>
                                 </li>
                                 <li>
-                                    <a href="" ng-click="pagination(1,'default','publication_date')"
+                                    <a href="" ng-click="pagination(1,'default','publication_date','default')"
                                        ng-class="{'disabled':sort_field==='publication_date'}">Publication date</a>
                                 </li>
-
+                                <li>
+                                    <a href="" ng-click="pagination(1,'default','default','ascending')"
+                                         ng-class="{'disabled':sort_order==='ascending'}">
+                                        <i class="fa fa-arrow-circle-o-down " style="font-size:19px;"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="pagination(1,'default','default','descending')"
+                                         ng-class="{'disabled':sort_order==='descending'}">
+                                        <i class="fa fa-arrow-circle-o-up" style="font-size:19px"></i>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -509,11 +517,8 @@
                                                  ng-show="metabolomics_list.indexOf(dataset.source)>-1"/>
                                             <img src="css/Genomics2.png"
                                                  ng-show="genomics_list.indexOf(dataset.source)>-1"/>
-                                                 <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}}><span ng-bind-html="dataset['title']|highlight:highlight_terms"></span></a>
+                                                 <a href={{"dataset.html#/"+dataset.id+"*"+dataset.source}}><span ng-bind-html="dataset['title']|highlight:highlight_terms"></span></a>
                                         </div>
-                                        <!--         <div class="project-widget-title">
-                                                    {{dataset["title"]}}
-                                                </div> -->
 
                                         <div class="project-widget-paragraph align-justify">
                                             <b>Project description:</b>
@@ -539,11 +544,11 @@
                                         </div>
 
                                         <div class="project-widget-paragraph">
-                                            <span ng-bind-html="dataset.id | highlight:highlight_terms"></span> (<span ng-bind-html = "repositories[dataset.source]|highlight:highlight_terms"> </span> )
+                                            <span ng-bind-html="dataset.id | highlight:highlight_terms"></span> (<span style="font-weight:bold" ng-bind-html = "repositories[dataset.source]|highlight:highlight_terms"> </span> )
                                         </div>
 
                                         <div class="project-widget-paragraph" ng-show="dataset.publicationDate">
-                                            <b>Made public: </b>
+                                            <b>Publication date: </b>
                                             <span ng-bind-html = "dataset['publicationDate'].substr(0,4)|highlight:highlight_terms"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
                                         </div>
 

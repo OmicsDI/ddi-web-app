@@ -311,11 +311,11 @@
                     <!--dataset_protocol_bottom-->
 
                     <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
-                        <div class="col-md-5" style="margin-left:10px">
+                        <div class="col-md-6" style="margin-left:10px">
                             Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a> [As supplied by <a
-                                href={{database_urls[domain]}}>{{domain}}</a>]
+                                href={{database_urls[domain]}}>{{repositories[domain]}}</a>]
                         </div>
-                        <div class="col-md-5" style="margin-left:10px">
+                        <div class="col-md-4" style="margin-left:10px">
                             <p>Date:
                             {{dataset['publicationDate'].substr(0,4)+' '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}} {{dataset['publicationDate'].substr(6,2)!=='00'?dataset['publicationDate'].substr(6,2):''}}</p>
                         </div>
@@ -612,7 +612,7 @@
                             </div>
 
                             <div class="project-widget-paragraph" ng-show="relatedDataset.publicationDate">
-                                <b>Made public: </b>
+                                <b>publication date: </b>
                                 {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}
                             </div>
                         </div>
