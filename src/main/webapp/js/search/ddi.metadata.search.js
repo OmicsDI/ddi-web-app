@@ -202,7 +202,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         sort_order = sort_order || 'ascending';
         display_search_interface();
         display_spinner();
-        update_page_title();
+//        update_page_title();
         query = preprocess_query(query);
         query_url = get_query_url(query, start);
 //        execute_ebeye_search(query_url, start === 0);
@@ -1155,14 +1155,36 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                         entity.date = pub_year + ' ' + pub_month + ' ' + pub_day +';';
                     }
 
+
+                    entity.volume = entity.volume || "";
+                    entity.issue = entity.issue || "";
+                    entity.pagination = entity.pagination || "";
+
+                    var authors = [];
+                    for(var i=0; i<entity.authors.length; i++){
+                        var surname = entity.authors[i].substr(entity.authors[i].length-1,1);
+                        var reg = new RegExp(surname+"[a-z]{0,100} " + surname + "$","")
+                        var have_reg = entity.authors[i].search(reg) >= 0;
+                        if(have_reg){
+                            author_for_searching = entity.authors[i].replace(reg," "+surname);
+                        }
+                        else{
+                            author_for_searching = entity.authors[i].replace(surname,"");
+                        } 
+                        var author = {"fullname":entity.authors[i],"name_for_searching": author_for_searching};
+                        authors.push(author);
+                    }
+
                     publication_info_entity = {
                         "pmid": inside_id,
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
                         "title": entity.title,
-                        "authors": entity.authors,
+                        "authors":authors,  
                         "pub_abstract": entity.pubAbstract
                     };
+                    publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
 
+                    console.log(publication_info_entity.authors);
                     $scope.publication_info.push(publication_info_entity);
                     $scope.publication_index_info[inside_id] = $scope.publication_info.indexOf(publication_info_entity);
                 }).error(function () {

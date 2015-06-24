@@ -4,7 +4,7 @@
 <head>
     <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
-        display: none !important;
+         display: none !important;
     }
 
     ng\:form {
@@ -100,7 +100,7 @@
             <div class="grid_12 alpha logo-title" id="local-title">
                 <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png" alt="logo"
                                                                  width="200" height="100"></a>
-                <span><h1><a href="/app" title="Back to DDI homepage" class="">Datasets Discovery Index</a></h1></span>
+                <span><h1><a href="/app" title="Back to DDI homepage" class="">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
@@ -356,7 +356,7 @@
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].title}}</h4>
                             <p style="margin-right:20px" class="align-justify">
                                 <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
-                                    <a href="/Tools/ddi/browse.html#/search?q={{author.substr(0,author.length-2)}}"> {{author.substr(0,author.length-2)}} </a> <span ng-if="!$last">,</span>
+                                    <a href="/Tools/ddi/browse.html#/search?q='{{author.name_for_searching}}'"> {{author.fullname.substr(0,author.fullname.length-2)}} </a> <span ng-if="!$last">,</span>
                                 </span>
                             </p>
                             <p style="margin-right:20px" class="align-justify">
@@ -656,15 +656,15 @@
      <script src="js/guidedTour.js"></script>
      <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
      <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
-     -->
-    <script src="js/vendor/d3/d3.min.js"></script>
     <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
     <script src="js/d3/d3.speciesSunburst.js"></script>
     <script src="js/d3/d3.speciesTree.js"></script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-553e418b6f105be3"
+     -->
+    <script src="js/vendor/d3/d3.min.js"></script>
             async="async"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
 </body>
 </html>

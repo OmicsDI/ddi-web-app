@@ -9,8 +9,9 @@ var pie_charts_tissues_organisms = function () {
 
     function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
         if (error) {
-            output_error_info("chart_tissues_organisms");
-            return;
+//            output_error_info("chart_tissues_organisms");
+            pie_charts_tissues_organisms();
+//            return;
         }
 
        if (tissues[tissues.length - 1].name !== "Not available") {
@@ -279,8 +280,9 @@ var pie_charts_repos_omics = function () {
     function draw_chart_repos_omics(error, domains, omicstype) {
 
         if (error) {
-            output_error_info("chart_repos_omics");
-            return;
+//            output_error_info("chart_repos_omics");
+            pie_charts_repos_omics(); 
+//            return;
         }
         var repos = transformdomains(domains);
         omicstype.shift();
@@ -709,8 +711,9 @@ var barcharts_years_omics_types = function () {
         // console.log(proteomics);
         //
         if (error) {
-            output_error_info("barchart_omicstype_annual");
-            return;
+//            output_error_info("barchart_omicstype_annual");
+//            return;
+         barcharts_years_omics_types(); 
         }
 
         var body = d3.select('#barchart_omicstype_annual');

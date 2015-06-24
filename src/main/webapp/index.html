@@ -75,7 +75,7 @@
             <div class="grid_12 alpha logo-title" id="local-title">
                 <a href="/app" title="Back to DDI homepage"><img src="./static/img/logo/DDI-icon-3.png" alt="logo"
                                                                  width="64" height="64"></a>
-                <span><h1><a href="/app" title="Back to DDI homepage">Datasets Discovery Index</a></h1></span>
+                <span><h1><a href="/app" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
@@ -198,11 +198,10 @@
 
         <div class="row">
 
-            <div class="col-md-8">
-                <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="height:199px">
+            <div class="col-md-12">
+                <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="">
                     <!--      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">   -->
-                    <h3 style="margin-top:30px">
-                        Datasets Discovery Index is an integrated multiple Omics Data Discovery site.
+                    <h3 style="margin-top:10px">
                     </h3>
 
                     <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
@@ -273,18 +272,18 @@
         <div class="row">
 
             <div class="col-md-4">
-                <div id="hotwords" class="panel panel-default" style="height:380px">
+                <div id="hotwords" class="panel panel-default" style="height:360px">
                 </div>
             </div>
 
 
             <div class="col-md-4">
-                <div id="chart_tissues_organisms" class="panel panel-default" style="height:380px">
+                <div id="chart_tissues_organisms" class="panel panel-default" style="height:360px">
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div id="chart_repos_omics" class="panel panel-default" style="height:380px">
+                <div id="chart_repos_omics" class="panel panel-default" style="height:360px">
                 </div>
             </div>
 
@@ -339,10 +338,10 @@
                                      style="width:15px;height:15px" title="Metabolomics"/>
                                 <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                      style="width:15px;height:15px" title="Genomics"/>
-                                <span class="date-box" style="width:15px">{{dataset.visitCount|megaNumber}}</span>
                                 <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}} title={{dataset.title}}>
                                          {{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}
                                 </a>
+                                <span class="num_notifs" >{{dataset.visitCount|megaNumber}}</span>
                             </li>
                         </ul>
                     </div>
@@ -372,21 +371,7 @@
         <hr>
 
         <div class="row">
-             <div class="col-md-4">
-                 <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl">
-
-                    <div class="">
-                        <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
-                    </div>
-                    <div ng-repeat="statisticdata in statistic_list " >
-                        <blockquote style="margin-bottom:0px;margin-top:0px;padding:0px"><span style="padding-left:6px"> {{statisticdata.value|number
-                                }}  {{statisticdata.name}}</span>
-                        </blockquote>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
+           <div class="col-md-4">
                 <div class="panel panel-default" style="height:260px">
                     <div id="tweets-of-the-month" class="">
                         <h4 data-icon="N" class="icon icon-generic">
@@ -400,7 +385,20 @@
                     </div>
                 </div>
             </div>
+              <div class="col-md-4">
+                 <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl" style="height:260px">
 
+                    <div class="">
+                        <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
+                    </div>
+                    <blockquote> 
+                    <p ng-repeat="statisticdata in statistic_list " style="margin:8px" >
+                       {{statisticdata.value|number}}  {{statisticdata.name}}
+                    </p>
+                    </blockquote>
+                </div>
+            </div>
+ 
 
 
             <div class="col-md-4">
@@ -409,7 +407,7 @@
                         <h4 data-icon="N" class="icon icon-generic">
                             About
                         </h4>
-                        <blockquote class="small callout-info">The Datasets Discovery Index (DDI) provides a Knowleage
+                        <blockquote class="small callout-info">The Data Discovery Index (DDI) provides a Knowleage
                             Discovery framework across a heterogeneous data (genomics, proteomics and metabolomics).
                             <a href="help.html#/Overview">Read More</a>).
                         </blockquote>
