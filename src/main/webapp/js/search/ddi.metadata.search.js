@@ -884,8 +884,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
   };
 
 })
-.filter("megaNumber", () => {
-    return (number, fractionSize) => {
+.filter("megaNumber", function() {
+    return function(number, fractionSize) {
  
         if(number === null) return null;
         if(number === 0) return "0";
