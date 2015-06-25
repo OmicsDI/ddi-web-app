@@ -341,7 +341,7 @@
                                 <a href={{"dataset.html#/"+dataset.id+"*"+repositories[dataset.source]}} title={{dataset.title}}>
                                          {{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}
                                 </a>
-                                <span class="num_notifs" >{{dataset.visitCount|megaNumber}}</span>
+                                <a class="icon icon-functional" data-icon="4" >{{dataset.visitCount|megaNumber}}</a>
                             </li>
                         </ul>
                     </div>
