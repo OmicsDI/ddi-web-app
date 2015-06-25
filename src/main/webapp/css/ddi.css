@@ -639,3 +639,83 @@ margin:9px 0 0;
     text-decoration: none;
     font-weight: none;
 }
+/*
+ * for the socialnetwork sharing
+ * */
+.simple-skinnyleft {
+    color: #ddd;
+    float: left;
+    font-size: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 90px;
+}
+.simple-skinnyleft i {
+    display: block;
+    margin: 30px 0 0;
+}
+.simple-skinnyleft a {
+    color: #ccc;
+}
+.simple-skinnyleft a.tweetcountwrapper:hover {
+    color: #55acee;
+}
+.simple-skinnyleft a.facebookcountwrapper:hover {
+    color: #46629e;
+}
+.simple-skinnyleft a.emailcountwrapper:hover {
+    color: #333;
+}
+.simple-skinnyleft a.tumblrcountwrapper:hover {
+    color: #304e67;
+}
+.simple-skinnyleft a.linkedincountwrapper:hover {
+    color: #007bb6;
+}
+.simple-skinnyleft a.whatsappcountwrapper:hover {
+    color: #34af23;
+}
+.simple-skinnyleft a.googlepluscountwrapper:hover {
+    color: #dd4b39;
+}
+.simple-skinnyleft a, .simple-skinnyleft a:hover {
+}
+.simple-skinnyleft a:hover {
+    text-decoration: none;
+}
+.simple-skinnyleft .fa-envelope {
+    font-size: 26px;
+}
+.simple-skinnyleft .fa-facebook {
+    padding-left: 0;
+}
+.simple-skinnyleft .tweetcount {
+    color: #ccc;
+    display: block;
+    font-family: freight-sans-pro,helvetica;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+.simple-skinnyleft .facebookcount {
+    color: #ccc;
+    display: block;
+    font-family: freight-sans-pro,helvetica;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+/*
+.simple-skinnyleft .tumblrcountwrapper {
+    display: block;
+    margin-top: 40px;
+}
+.simple-skinnyleft .linkedincountwrapper {
+    display: block;
+    margin-top: 40px;
+}
+.simple-skinnyleft .whatsappcountwrapper {
+    display: block;
+    margin-top: 40px;
+}
+*/

@@ -211,25 +211,28 @@
 
             <div class="col-md-1" >
             </div>
-                <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:0px; width:50px">
+            <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px">
                 <!-- <g:plusone></g:plusone> -->
-                <a href=""><img src="static/img/socialnetwork/email.png" class="socialnetwork"
-                                ng-click="click_share_this('email')"/> </a>
-                <a href=""><img src="static/img/socialnetwork/twitter.png" class="socialnetwork"
-                                ng-click="click_share_this('twitter')"/> </a>
-                <a href=""><img src="static/img/socialnetwork/facebook.png" class="socialnetwork"
-                                ng-click="click_share_this('facebook')"/></a>
-                <a href=""><img src="static/img/socialnetwork/google.png" class="socialnetwork"
-                                ng-click="click_share_this('google')"/> </a>
-                <a href=""><img src="static/img/socialnetwork/tumblr.png" class="socialnetwork"
-                                ng-click="click_share_this('tumblr')"/> </a>
-                <a href=""><img src="static/img/socialnetwork/linkedin.png" class="socialnetwork"
-                                ng-click="click_share_this('linkedin')"/> </a>
-               </div>
+
+                <div class="simple-skinnyleft">
+                    <a href="" class="tweetcountwrapper" ng-click="click_share_this('twitter')"><i class="fa fa-twitter"></i> <!-- <div class="simple-skinnyleft tweetcount">1,421</div> --> 
+                                </a>
+                    <a href="" class="facebookcountwrapper" ng-click="click_share_this('facebook')"><i class="fa fa-facebook"></i>
+                                </a>
+                    <a href="" class="emailcountwrapper" ng-click="click_share_this('email')"><i class="fa fa-envelope"></i>
+                                </a>
+                    <a href="" class="tumblrcountwrapper" ng-click="click_share_this('tumblr')"><i class="fa fa-tumblr"></i>
+                                </a>
+                    <a href="" class="linkedincountwrapper" ng-click="click_share_this('linkedin')"><i class="fa fa-linkedin"></i>
+                                </a>
+                    <a href="" class="googlepluscountwrapper" ng-click="click_share_this('google')"> <i class="fa fa-google-plus"></i>
+                                 </a>
+                </div>
+
+              </div>
             <!-- col-md-1-->
 
             <div class="col-md-8" id="centerpanel" style="margin-left:-15px">
-
                 <div id="dataset-error-row" class="row error-info" ng-hide="get_dataset_fail.length<1">
                     <p>
                         {{get_dataset_fail}}
