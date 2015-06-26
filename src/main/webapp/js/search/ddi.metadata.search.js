@@ -1064,6 +1064,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     $scope.get_similar_dataset_fail = "";
     $scope.instrument_pre_url = "browse.html#/search?q=*:* AND instrument_platform:";
     $scope.organism_pre_url = "browse.html#/search?q=*:* AND TAXONOMY:";
+    $scope.tissue_pre_url = "browse.html#/search?q=*:* AND tissue:";
+    $scope.disease_pre_url = "browse.html#/search?q=*:* AND disease:";
     $scope.related_datasets_limit = 5;
     $scope.load_more_btn_show = "Load More";
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1112,6 +1114,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 $scope.data_protocol_description = $scope.dataset.protocols[1].description;
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
+            console.log($scope.dataset);
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
                 var pubmed_id = $scope.dataset.publicationIds[i];
                 altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmed_id;

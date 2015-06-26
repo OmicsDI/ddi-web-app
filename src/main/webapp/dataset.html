@@ -291,7 +291,7 @@
 
                         <div class="row" ng-show="dataset.instruments.length > 0" id="dataset_protocol_bottom"
                              style="margin-top:10px margin-left:10px">
-                            <p style="margin-left:15px" class="align-justify"><u>INSTRUMENTS:</u>
+                            <p style="margin-left:15px" class="align-justify"><u>INSTRUMENT(S):</u>
                <span>
                    <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
                       href={{instrument_pre_url+'"'+instrument+'"'}}>
@@ -300,7 +300,7 @@
               </span>
                             </p>
 
-                            <p style="margin-left:15px" class="align-justify"><u>ORGANISMS:</u>
+                            <p style="margin-left:15px" class="align-justify"><u>ORGANISM(S):</u>
                <span>
                    <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
                       href={{organism_pre_url+'"'+organism.acc+'"'}}>
@@ -308,6 +308,22 @@
                    </a>
               </span>
                             </p>
+                             <p style="margin-left:15px" class="align-justify" ng-show="dataset.tissues[0]!=='Not available'"><u>TISSUE(S):</u>
+               <span>
+                   <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
+                      href={{tissue_pre_url+'"'+tissue+'"'}}>
+                       {{tissue}}
+                   </a>
+              </span>
+                            </p>                                
+                              <p style="margin-left:15px" class="align-justify" ng-show="dataset.diseases[0]!=='Not available'" ><u>DISEASE(S):</u>
+               <span>
+                   <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
+                      href={{disease_pre_url+'"'+disease+'"'}}>
+                       <span> {{disease}}</span>
+                   </a>
+              </span>
+                            </p>  
                         </div>
                         <!--dataset_protocol_bottom-->
                     </div>
