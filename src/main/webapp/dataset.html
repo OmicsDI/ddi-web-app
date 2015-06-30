@@ -4,7 +4,7 @@
 <head>
     <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
-         display: none !important;
+        display: none !important;
     }
 
     ng\:form {
@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
     <base href="/Tools/ddi/">
 
     <!-- favico -->
@@ -75,97 +76,26 @@
 
 <div id="wrapper" class="container_24">
     <header>
-        <div id="global-masthead" class="masthead grid_24 hidden">
-            <!--This has to be one line and no newline characters-->
-            <a href="//www.ebi.ac.uk/" title="Go to the EMBL-EBI homepage"><img
-                    src="//www.ebi.ac.uk/web_guidelines/images/logos/EMBL-EBI/EMBL_EBI_Logo_white.png"
-                    alt="EMBL European Bioinformatics Institute"></a>
-            <nav>
-                <ul id="global-nav">
-                    <!-- set active class as appropriate -->
-                    <li id="services" class=" first active"><a href="//www.ebi.ac.uk/services"
-                                                               title="Services">Services</a></li>
-                    <li id="research" class=""><a href="//www.ebi.ac.uk/research" title="Research">Research</a></li>
-                    <li id="training" class=""><a href="//www.ebi.ac.uk/training" title="Training">Training</a></li>
-                    <li id="industry" class=""><a href="//www.ebi.ac.uk/industry" title="Industry">Industry</a></li>
-                    <li id="about" class=" last"><a href="//www.ebi.ac.uk/about" title="About us">About us</a></li>
-                </ul>
-            </nav>
-        </div>
-
-
-        <div id="local-masthead" class="masthead grid_24 nomenu">
+        <div id="local-masthead" class="masthead grid_24 nomenu" style="height:132px">
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
             <div class="grid_12 alpha logo-title" id="local-title">
-                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png" alt="logo"
-                                                                 width="200" height="100"></a>
-                <span><h1><a href="/app" title="Back to DDI homepage" class="">Data Discovery Index</a></h1></span>
+                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
+                                                                 alt="logo"
+                                                                 width="64" height="64"></a>
+                <span><h1><a href="/app" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
             <!-- local-search -->
-            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-            <div ng-controller="QueryCtrl" class="grid_12 omega">
-                <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-                    <fieldset>
-                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                            <div class="input-group input-group-sm">
-                                <input type="text" style="background-color:#fff; width:99%"
-                                       placeholder="organism, repository, gene, tissue, accession"
-                                       class="form-control"
-                                       id="query-text"
-                                       name="text"
-                                       tabindex="1"
-                                       ng-model="query.text"
-                                       ng-minlength="2"
-                                       ng-maxlength="1000"
-                                       autocomplete="off"
-                                       required>
-
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-search"></i> Search
-                                    </button>
-                                </div>
-                                <!-- /input-group-btn -->
-                            </div>
-                            <!--input-group -->
-                     <span class="help-block example-searches">
-                         <small>
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
-                                     sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
-                             </i>
-                         </small>
-                     </span>
-                            <label class="control-label ng-cloak has-error"
-                                   for="query-text"
-                                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                                   ng-cloak>
-                                Your query is too short
-                            </label>
-                            <label class="control-label ng-cloak"
-                                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                                   ng-cloak>
-                                Your query is too long
-                            </label>
-                        </div>
-                        <!-- /form-group -->
-                    </fieldset>
-                </form>
+            <div style="height:105px">
             </div>
+            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
             <!-- /local-search -->
 
 
             <!-- local-nav -->
-            <nav>
+            <nav style="float:bottom">
                 <ul class="grid_24" id="local-nav">
                     <li class=" first" id="home-menu"><a title="Home" href="/Tools/ddi/">Home</a></li>
                     <li class="" id="browse-menu"><a title="Browse"
@@ -199,6 +129,69 @@
             <!-- /local-nav -->
         </div>
     </header>
+    <div ng-controller="QueryCtrl" class="grid_12 omega "
+         style="height:105px; float:right; margin-top:-140px; z-index:1">
+        <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+            <fieldset>
+                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                    <div class="input-group input-group-sm">
+                        <autocomplete ng-model="query.text"
+                                      attr-placeholder="organism, repository, gene, tissue, accession"
+                                      click-activation="true" data="words" on-type="get_suggestions"
+                                      on-select="do_query"></autocomplete>
+                        <!--
+                                                        <input type="text" style="background-color:#fff; width:99%"
+                                                               placeholder="organism, repository, gene, tissue, accession"
+                                                               class="form-control"
+                                                               id="query-text"
+                                                               name="text"
+                                                               tabindex="1"
+                                                               ng-model="query.text"
+                                                               ng-minlength="2"
+                                                               ng-maxlength="1000"
+                                                               autocomplete="off"
+                                                               required>
+                        -->
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                        <!-- /input-group-btn -->
+                    </div>
+                    <!--input-group -->
+                     <span class="help-block example-searches">
+                         <small>
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
+                                     sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
+                             </i>
+                         </small>
+                     </span>
+                    <!--
+                    <label class="control-label ng-cloak has-error"
+                           for="query-text"
+                           ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                           ng-cloak>
+                        Your query is too short
+                    </label>
+                    <label class="control-label ng-cloak"
+                           for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                           ng-cloak>
+                        Your query is too long
+                    </label>
+                    -->
+                </div>
+                <!-- /form-group -->
+            </fieldset>
+        </form>
+    </div>
 
     <div class="container" ng-controller="DatasetCtrl">
         <div id="" class="row">
@@ -209,27 +202,33 @@
         </div>
         <div class="row" style="">
 
-            <div class="col-md-1" >
+            <div class="col-md-1">
             </div>
             <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px">
                 <!-- <g:plusone></g:plusone> -->
 
                 <div class="simple-skinnyleft">
-                    <a href="" class="tweetcountwrapper" ng-click="click_share_this('twitter')"><i class="fa fa-twitter"></i> <!-- <div class="simple-skinnyleft tweetcount">1,421</div> --> 
-                                </a>
-                    <a href="" class="facebookcountwrapper" ng-click="click_share_this('facebook')"><i class="fa fa-facebook"></i>
-                                </a>
-                    <a href="" class="emailcountwrapper" ng-click="click_share_this('email')"><i class="fa fa-envelope"></i>
-                                </a>
-                    <a href="" class="tumblrcountwrapper" ng-click="click_share_this('tumblr')"><i class="fa fa-tumblr"></i>
-                                </a>
-                    <a href="" class="linkedincountwrapper" ng-click="click_share_this('linkedin')"><i class="fa fa-linkedin"></i>
-                                </a>
-                    <a href="" class="googlepluscountwrapper" ng-click="click_share_this('google')"> <i class="fa fa-google-plus"></i>
-                                 </a>
+                    <a href="" class="tweetcountwrapper" ng-click="click_share_this('twitter')"><i
+                            class="fa fa-twitter"></i> <!-- <div class="simple-skinnyleft tweetcount">1,421</div> -->
+                    </a>
+                    <a href="" class="facebookcountwrapper" ng-click="click_share_this('facebook')"><i
+                            class="fa fa-facebook"></i>
+                    </a>
+                    <a href="" class="emailcountwrapper" ng-click="click_share_this('email')"><i
+                            class="fa fa-envelope"></i>
+                    </a>
+                    <a href="" class="tumblrcountwrapper" ng-click="click_share_this('tumblr')"><i
+                            class="fa fa-tumblr"></i>
+                    </a>
+                    <a href="" class="linkedincountwrapper" ng-click="click_share_this('linkedin')"><i
+                            class="fa fa-linkedin"></i>
+                    </a>
+                    <a href="" class="googlepluscountwrapper" ng-click="click_share_this('google')"> <i
+                            class="fa fa-google-plus"></i>
+                    </a>
                 </div>
 
-              </div>
+            </div>
             <!-- col-md-1-->
 
             <div class="col-md-8" id="centerpanel" style="margin-left:-15px">
@@ -278,11 +277,13 @@
                                     <span ng-click="sample_protocol_show_full='true'" class="hotword"><b>{{sample_protocol_description.length>500?"...more":""}}</b></span>
                                 </span>
                             </p>
+
                             <p ng-show="data_protocol_description.length > 1 && data_protocol_description!=='Not available'"
                                class="align-justify">
                                 <span><u>DATA PROTOCOL:</u></span>
                                 <span ng-show="data_protocol_show_full=='true'">{{data_protocol_description}}<span
-                                        ng-click="data_protocol_show_full='false'" class="hotword"><b>click to cllapse</b></span></span>
+                                        ng-click="data_protocol_show_full='false'" class="hotword"><b>click to
+                                    cllapse</b></span></span>
                                 <span ng-show="data_protocol_show_full=='false'">{{data_protocol_description|limitTo:500}}
                                     <span ng-click="data_protocol_show_full='true'" class="hotword"><b>{{data_protocol_description.length>500?"...more":""}}</b></span>
                                 </span>
@@ -308,22 +309,26 @@
                    </a>
               </span>
                             </p>
-                             <p style="margin-left:15px" class="align-justify" ng-show="dataset.tissues[0]!=='Not available'"><u>TISSUE(S):</u>
+
+                            <p style="margin-left:15px" class="align-justify"
+                               ng-show="dataset.tissues[0]!=='Not available'"><u>TISSUE(S):</u>
                <span>
                    <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
                       href={{tissue_pre_url+'"'+tissue+'"'}}>
                        {{tissue}}
                    </a>
               </span>
-                            </p>                                
-                              <p style="margin-left:15px" class="align-justify" ng-show="dataset.diseases[0]!=='Not available'" ><u>DISEASE(S):</u>
+                            </p>
+
+                            <p style="margin-left:15px" class="align-justify"
+                               ng-show="dataset.diseases[0]!=='Not available'"><u>DISEASE(S):</u>
                <span>
                    <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
                       href={{disease_pre_url+'"'+disease+'"'}}>
                        <span> {{disease}}</span>
                    </a>
               </span>
-                            </p>  
+                            </p>
                         </div>
                         <!--dataset_protocol_bottom-->
                     </div>
@@ -336,7 +341,9 @@
                         </div>
                         <div class="col-md-4" style="margin-left:10px">
                             <p>Date:
-                            {{dataset['publicationDate'].substr(0,4)+' '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}} {{dataset['publicationDate'].substr(6,2)!=='00'?dataset['publicationDate'].substr(6,2):''}}</p>
+                                {{dataset['publicationDate'].substr(0,4)+'
+                                '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}}
+                                {{dataset['publicationDate'].substr(6,2)!=='00'?dataset['publicationDate'].substr(6,2):''}}</p>
                         </div>
                     </div>
                     <!--dataset_bottom-->
@@ -352,12 +359,12 @@
                         <h3>Publications</h3>
                     </div>
                     <span ng-hide="current_publication===0 || dataset.publicationIds === null"
-                      class="fa fa-chevron-circle-left ddi-prev"
-                      ng-click="onclick_publication_left()">
+                          class="fa fa-chevron-circle-left ddi-prev"
+                          ng-click="onclick_publication_left()">
                     </span>
                     <span ng-hide="current_publication===dataset.publicationIds.length-1 || dataset.publicationIds === null"
-                      class="fa fa-chevron-circle-right ddi-next"
-                      ng-click="onclick_publication_right()">
+                          class="fa fa-chevron-circle-right ddi-next"
+                          ng-click="onclick_publication_right()">
                     </span>
 
                     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
@@ -373,18 +380,24 @@
                         <div>
                             <h4 style="margin-right:20px">
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].title}}</h4>
+
                             <p style="margin-right:20px" class="align-justify">
                                 <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
-                                    <a href="/Tools/ddi/browse.html#/search?q='{{author.name_for_searching}}'"> {{author.fullname.substr(0,author.fullname.length-2)}} </a> <span ng-if="!$last">,</span>
+                                    <a href="/Tools/ddi/browse.html#/search?q='{{author.name_for_searching}}'">
+                                        {{author.fullname.substr(0,author.fullname.length-2)}} </a> <span
+                                        ng-if="!$last">,</span>
                                 </span>
                             </p>
+
                             <p style="margin-right:20px" class="align-justify">
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].citation}}</p>
                         </div>
                         <hr style="margin-right:30px">
-                        <div style="margin-right:20px" ng-show="publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>0">
+                        <div style="margin-right:20px"
+                             ng-show="publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>0">
                             <p ng-show="pubmed_abstract_show_full=='true'" class="align-justify">
-                                ABSTRACT: {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]}}
+                                ABSTRACT:
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]}}
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[1]}}
                                 <span
                                         ng-click="pubmed_abstract_show_full='false'" class="hotword"><b>click to
@@ -393,7 +406,8 @@
                             </p>
 
                             <p ng-show="pubmed_abstract_show_full=='false'" class="align-justify">
-                                ABSTRACT: {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]|limitTo:500}} 
+                                ABSTRACT:
+                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]|limitTo:500}}
                                 <span
                                         ng-click="pubmed_abstract_show_full='true'" class="hotword"><b>{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>500?"...more":""}}</b></span>
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[1]}}
@@ -435,20 +449,20 @@
                                 ng-click="onClickTab(tab)">
                                 <span style="font-size:18px;margin:4px;font-weight:300">{{tab.title}}
                                     <img border="1"
-                                     src="css/mark.png"
-                                     style="">
+                                         src="css/mark.png"
+                                         style="">
                                 </span>
                             <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
-                            </li>
-                            <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px" >
-                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
+                                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
                             </li>
                             <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp; <img border="1" src="css/mark.png" style=""></span>
+                                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
                             </li>
                             <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
+                                <span style="font-size:16px">&nbsp; <img border="1" src="css/mark.png" style=""></span>
+                            </li>
+                            <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
+                                <span style="font-size:16px">&nbsp;  <img border="1" src="css/mark.png" style=""></span>
                             </li>
                         </ul>
 
@@ -642,48 +656,29 @@
                     <button type="submit" class="btn btn-default " ng-click="related_load_more()">
                         <i class="fa fa-search"></i> {{load_more_btn_show}}
                     </button>
-                </div><!-- /input-group-btn -->
-            </div><!-- col-md-3 rightpanel-->
-        </div><!-- row-->
-    </div> <!-- container-->
+                </div>
+                <!-- /input-group-btn -->
+            </div>
+            <!-- col-md-3 rightpanel-->
+        </div>
+        <!-- row-->
+    </div>
+    <!-- container-->
 </div>
 
-    <footer>
-        <div id="footer" class="container"></div>
-    </footer>
+<footer>
+    <div id="footer" class="container"></div>
+</footer>
 
 
-    <script src="js/vendor/angular/angular.min.js"></script>
-    <script src="js/vendor/angular/angular-route.js"></script>
-    <script src="js/vendor/angular/angular-animate.min.js"></script>
-    <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
-    <script src="js/vendor/underscore/underscore-min.js"></script>
-    <script src="js/search/ddi.metadata.search.js"></script>
-    <!--
-     <script src="js/search/metadata.search.js"></script>
-     <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
-     <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
-     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-     <script src="js/vendor/jquery-1.10.1.min.js"></script>
-     <script src="js/search/sequence.search.js"></script>
-     <script src="js/search/export-results.search.js"></script>
-     <script src="js/vendor/query-string.js"></script>
-     <script src="js/jquery.EuropePMCAbstracts.js"></script>
-     <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
-     <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-     <script src="js/vendor/handlebars-v1.1.2.js"></script>
-     <script src="js/guidedTour.js"></script>
-     <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
-     <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
-    <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
-    <script src="js/d3/d3.speciesSunburst.js"></script>
-    <script src="js/d3/d3.speciesTree.js"></script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-553e418b6f105be3"
-     -->
-    <script src="js/vendor/d3/d3.min.js"></script>
-            async="async"></script>
+<script src="js/vendor/angular/angular.min.js"></script>
+<script src="js/vendor/angular/angular-route.js"></script>
+<script src="js/vendor/angular/angular-animate.min.js"></script>
+<script src="js/autocomplete.js"></script>
+<script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+<script src="js/vendor/underscore/underscore-min.js"></script>
+<script src="js/search/ddi.metadata.search.js"></script>
+<script src="js/vendor/d3/d3.min.js"></script>
 
 </body>
 </html>

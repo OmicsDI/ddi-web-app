@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"
           type="text/css" media="screen">
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
 
     <!-- favico -->
     <link rel="apple-touch-icon" sizes="57x57" href="/Tools/ddi/static/img/favico/apple-icon-57x57.png">
@@ -69,79 +70,26 @@
 <body class="level2">
 <div id="wrapper" class="container_24">
     <header>
-
-        <div id="local-masthead" class="masthead grid_24 nomenu">
+        <div id="local-masthead" class="masthead grid_24 nomenu" style="height:132px">
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
             <div class="grid_12 alpha logo-title" id="local-title">
-                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png" alt="logo"
+                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
+                                                                 alt="logo"
                                                                  width="64" height="64"></a>
                 <span><h1><a href="/app" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
             <!-- local-search -->
-            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-            <div ng-controller="QueryCtrl" class="grid_12 omega " style="height:105px">
-                <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-                    <fieldset>
-                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                            <div class="input-group input-group-sm">
-                                <input type="text" style="background-color:#fff; width:99%"
-                                       placeholder="organism, repository, gene, tissue, accession"
-                                       class="form-control"
-                                       id="query-text"
-                                       name="text"
-                                       tabindex="1"
-                                       ng-model="query.text"
-                                       ng-minlength="2"
-                                       ng-maxlength="1000"
-                                       autocomplete="off"
-                                       required>
-
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-search"></i> Search
-                                    </button>
-                                </div>
-                                <!-- /input-group-btn -->
-                            </div>
-                            <!--input-group -->
-                     <span class="help-block example-searches">
-                         <small>
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
-                                     sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
-                             </i>
-                         </small>
-                     </span>
-                            <label class="control-label ng-cloak has-error"
-                                   for="query-text"
-                                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                                   ng-cloak>
-                                Your query is too short
-                            </label>
-                            <label class="control-label ng-cloak"
-                                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                                   ng-cloak>
-                                Your query is too long
-                            </label>
-                        </div>
-                        <!-- /form-group -->
-                    </fieldset>
-                </form>
+            <div style="height:105px">
             </div>
+            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
             <!-- /local-search -->
 
 
             <!-- local-nav -->
-            <nav>
+            <nav style="float:bottom">
                 <ul class="grid_24" id="local-nav">
                     <li class=" first" id="home-menu"><a title="Home" href="/Tools/ddi/">Home</a></li>
                     <li class="" id="browse-menu"><a title="Browse"
@@ -175,6 +123,69 @@
             <!-- /local-nav -->
         </div>
     </header>
+    <div ng-controller="QueryCtrl" class="grid_12 omega "
+         style="height:105px; float:right; margin-top:-140px; z-index:1">
+        <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+            <fieldset>
+                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                    <div class="input-group input-group-sm">
+                        <autocomplete ng-model="query.text"
+                                      attr-placeholder="organism, repository, gene, tissue, accession"
+                                      click-activation="true" data="words" on-type="get_suggestions"
+                                      on-select="do_query"></autocomplete>
+                        <!--
+                                                        <input type="text" style="background-color:#fff; width:99%"
+                                                               placeholder="organism, repository, gene, tissue, accession"
+                                                               class="form-control"
+                                                               id="query-text"
+                                                               name="text"
+                                                               tabindex="1"
+                                                               ng-model="query.text"
+                                                               ng-minlength="2"
+                                                               ng-maxlength="1000"
+                                                               autocomplete="off"
+                                                               required>
+                        -->
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                        <!-- /input-group-btn -->
+                    </div>
+                    <!--input-group -->
+                     <span class="help-block example-searches">
+                         <small>
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
+                                     sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
+                             </i>
+                         </small>
+                     </span>
+                    <!--
+                    <label class="control-label ng-cloak has-error"
+                           for="query-text"
+                           ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                           ng-cloak>
+                        Your query is too short
+                    </label>
+                    <label class="control-label ng-cloak"
+                           for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                           ng-cloak>
+                        Your query is too long
+                    </label>
+                    -->
+                </div>
+                <!-- /form-group -->
+            </fieldset>
+        </form>
+    </div>
 
     <div class="container-main container" ng-controller="DatasetListsCtrl">
         <!--[if lt IE 10]>
@@ -281,7 +292,8 @@
                         </div>
 
                         <div class="panel-footer small">
-                            <a rel="nofollow" href='browse.html#/search?q=*:* AND repository:"MetaboLights"'><em>{{databases["MetaboLights Dataset"]}}</em> datasets</a>
+                            <a rel="nofollow" href='browse.html#/search?q=*:* AND repository:"MetaboLights"'><em>{{databases["MetaboLights
+                                Dataset"]}}</em> datasets</a>
                         </div>
 
                     </div>
@@ -371,45 +383,29 @@
 
                         <div class="panel-footer small">
                             <a rel="nofollow"
-                               href='browse.html#/search?q=*:* AND repository:"MetabolomicsWorkbench"'><em>{{databases["Metabolome Workbench"]}}</em> datasets</a>
+                               href='browse.html#/search?q=*:* AND repository:"MetabolomicsWorkbench"'><em>{{databases["Metabolome
+                                Workbench"]}}</em> datasets</a>
                         </div>
                     </div>
                 </div>
-            </div><!--row-->
+            </div>
+            <!--row-->
         </div>
 
         <footer>
             <div id="footer" class="container"></div>
         </footer>
     </div>
-</div>    <!-- wrapper-->
+</div>
+<!-- wrapper-->
 
-    <script src="js/vendor/angular/angular.min.js"></script>
-    <script src="js/vendor/angular/angular-animate.min.js"></script>
-    <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
-    <script src="js/vendor/underscore/underscore-min.js"></script>
-    <script src="js/search/ddi.metadata.search.js"></script>
-    <!--
-     <script src="js/search/metadata.search.js"></script>
-     <script src="js/vendor/hopscotch/js/hopscotch.js"></script>
-     <script src="js/vendor/bootstrap/js/bootstrap.min.js"></script>
-     <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-     <script src="js/vendor/jquery-1.10.1.min.js"></script>
-     <script src="js/search/sequence.search.js"></script>
-     <script src="js/search/export-results.search.js"></script>
-     <script src="js/vendor/query-string.js"></script>
-     <script src="js/jquery.EuropePMCAbstracts.js"></script>
-     <script src="js/vendor/DataTables-1.9.4/media/js/jquery.dataTables.min.js"></script>
-     <script src="js/vendor/DataTables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-     <script src="js/vendor/handlebars-v1.1.2.js"></script>
-     <script src="js/guidedTour.js"></script>
-     <script src="js/vendor/Genoverse/js/genomes/grch38.js"></script>
-     <script src="js/vendor/Genoverse/js/genoverse.combined.js"></script>
-     -->
-    <script src="js/vendor/d3/d3.min.js"></script>
-    <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
-    <script src="js/d3/d3.speciesSunburst.js"></script>
-    <script src="js/d3/d3.speciesTree.js"></script>
+<script src="js/vendor/angular/angular.min.js"></script>
+<script src="js/vendor/angular/angular-animate.min.js"></script>
+<script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+<script src="js/autocomplete.js"></script>
+<script src="js/vendor/underscore/underscore-min.js"></script>
+<script src="js/search/ddi.metadata.search.js"></script>
+<script src="js/vendor/d3/d3.min.js"></script>
 
 </body>
 </html>

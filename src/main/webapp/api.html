@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"
           type="text/css" media="screen">
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
     <!-- favico -->
     <link rel="apple-touch-icon" sizes="57x57" href="/Tools/ddi/static/img/favico/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/Tools/ddi/static/img/favico/apple-icon-60x60.png">
@@ -70,79 +71,26 @@
 
 <div id="wrapper" class="container_24">
     <header>
-
-        <div id="local-masthead" class="masthead grid_24 nomenu">
+        <div id="local-masthead" class="masthead grid_24 nomenu" style="height:132px">
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
             <div class="grid_12 alpha logo-title" id="local-title">
-                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png" alt="logo"
+                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
+                                                                 alt="logo"
                                                                  width="64" height="64"></a>
                 <span><h1><a href="/app" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
             <!-- local-search -->
-            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-            <div ng-controller="QueryCtrl" class="grid_12 omega " style="height:105px">
-                <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-                    <fieldset>
-                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                            <div class="input-group input-group-sm">
-                                <input type="text" style="background-color:#fff; width:99%"
-                                       placeholder="organism, repository, gene, tissue, accession"
-                                       class="form-control"
-                                       id="query-text"
-                                       name="text"
-                                       tabindex="1"
-                                       ng-model="query.text"
-                                       ng-minlength="2"
-                                       ng-maxlength="1000"
-                                       autocomplete="off"
-                                       required>
-
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fa fa-search"></i> Search
-                                    </button>
-                                </div>
-                                <!-- /input-group-btn -->
-                            </div>
-                            <!--input-group -->
-                     <span class="help-block example-searches">
-                         <small>
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
-                                     sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
-                             </i>
-                         </small>
-                     </span>
-                            <label class="control-label ng-cloak has-error"
-                                   for="query-text"
-                                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                                   ng-cloak>
-                                Your query is too short
-                            </label>
-                            <label class="control-label ng-cloak"
-                                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                                   ng-cloak>
-                                Your query is too long
-                            </label>
-                        </div>
-                        <!-- /form-group -->
-                    </fieldset>
-                </form>
+            <div style="height:105px">
             </div>
+            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
             <!-- /local-search -->
 
 
             <!-- local-nav -->
-            <nav>
+            <nav style="float:bottom">
                 <ul class="grid_24" id="local-nav">
                     <li class=" first" id="home-menu"><a title="Home" href="/Tools/ddi/">Home</a></li>
                     <li class="" id="browse-menu"><a title="Browse"
@@ -176,6 +124,69 @@
             <!-- /local-nav -->
         </div>
     </header>
+    <div ng-controller="QueryCtrl" class="grid_12 omega "
+         style="height:105px; float:right; margin-top:-140px; z-index:1">
+        <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+            <fieldset>
+                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                    <div class="input-group input-group-sm">
+                        <autocomplete ng-model="query.text"
+                                      attr-placeholder="organism, repository, gene, tissue, accession"
+                                      click-activation="true" data="words" on-type="get_suggestions"
+                                      on-select="do_query"></autocomplete>
+                        <!--
+                                                        <input type="text" style="background-color:#fff; width:99%"
+                                                               placeholder="organism, repository, gene, tissue, accession"
+                                                               class="form-control"
+                                                               id="query-text"
+                                                               name="text"
+                                                               tabindex="1"
+                                                               ng-model="query.text"
+                                                               ng-minlength="2"
+                                                               ng-maxlength="1000"
+                                                               autocomplete="off"
+                                                               required>
+                        -->
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                        <!-- /input-group-btn -->
+                    </div>
+                    <!--input-group -->
+                     <span class="help-block example-searches">
+                         <small>
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="meta_search('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('TAXONOMY:&quot;9606&quot;')">Homo
+                                     sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Orbitrap')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Q9HAU5')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Phospho')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="meta_search('Hela')">Hela</a>
+                             </i>
+                         </small>
+                     </span>
+                    <!--
+                    <label class="control-label ng-cloak has-error"
+                           for="query-text"
+                           ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                           ng-cloak>
+                        Your query is too short
+                    </label>
+                    <label class="control-label ng-cloak"
+                           for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                           ng-cloak>
+                        Your query is too long
+                    </label>
+                    -->
+                </div>
+                <!-- /form-group -->
+            </fieldset>
+        </form>
+    </div>
 
 
     <div class="container-main container">
@@ -195,7 +206,7 @@
 
         <div class="row">
         </div>
-        <div  class="row">
+        <div class="row">
             <p>
             </p>
         </div>
@@ -223,7 +234,8 @@
                                                                                      target="_blank">JSON</a>format.
                         This ensures that they can be viewed by human and accessed programmatically by computer.</p>
                     </li>
-                    <li>The main <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/" target="_blank">RESTful API</a> page provides a simple
+                    <li>The main <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/" target="_blank">RESTful
+                        API</a> page provides a simple
                         web-based user interface, which allows developers can familiarise themselves with the API and
                         get a better sense of the DDI data before writing single line of code.
                     </li>
@@ -235,7 +247,8 @@
                     data.</p>
 
 
-                <p><a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/" class="btn btn-primary" role="button" target="_blank">Browse the
+                <p><a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/" class="btn btn-primary" role="button"
+                      target="_blank">Browse the
                     API</a></p>
 
                 <h2 id="versioning">Versioning</h2>
@@ -246,12 +259,14 @@
                 </p>
 
                 <p>
-                    For example, the current API is at Version 1 and is available at http://www.ebi.ac.uk/Tools/ddi/ws/v1, and
+                    For example, the current API is at Version 1 and is available at
+                    http://www.ebi.ac.uk/Tools/ddi/ws/v1, and
                     the next version will be available at http://www.ebi.ac.uk/Tools/ddi/ws/v2.
                 </p>
 
                 <p>
-                    The latest version of the API can be accessed at http://www.ebi.ac.uk/Tools/ddi/ws/current, but it's not
+                    The latest version of the API can be accessed at http://www.ebi.ac.uk/Tools/ddi/ws/current, but it's
+                    not
                     recommended to use this endpoint for long-term development as the underlying data model may change.
                 </p>
 
@@ -441,9 +456,11 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=50">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=50</a>
+                    <li>
+                        <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=50">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=50</a>
                     </li>
-                    <li><a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=50">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=20</a>
+                    <li>
+                        <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=50">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&start=0&size=20</a>
                     </li>
                 </ul>
 
@@ -456,9 +473,11 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=id">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=id</a>
+                    <li>
+                        <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=id">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=id</a>
                     </li>
-                    <li><a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=publication_date">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=publication_date</a>
+                    <li>
+                        <a href="http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=publication_date">http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human&sort_field=publication_date</a>
                     </li>
                 </ul>
 
@@ -493,10 +512,12 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND omics_type: "Proteomics"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND omics_type:"Proteomics"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND omics_type: "Metabolomics"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND omics_type:"Metabolomics"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND omics_type: "Proteomics"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND omics_type:"Proteomics"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND omics_type: "Metabolomics"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND omics_type:"Metabolomics"</a></li>
                 </ul>
 
                 <h3 id="v1-filtering-by-database">Filtering by database</h3>
@@ -509,14 +530,18 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"MassIVE"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND repository:"MassIVE"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"Metabolights"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND repository:"Metabolights"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"PeptideAtlas"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND repository:"PeptideAtlas"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"PRIDE"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND repository:"PRIDE"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"MassIVE"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND repository:"MassIVE"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"Metabolights"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND repository:"Metabolights"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"PeptideAtlas"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND repository:"PeptideAtlas"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND repository:"PRIDE"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND repository:"PRIDE"</a></li>
                 </ul>
 
                 <h3 id="v1-filtering-by-organism">Filtering by Organism</h3>
@@ -528,10 +553,12 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND TAXONOMY:"9606"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND TAXONOMY:"9606"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND TAXONOMY:"10090"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND TAXONOMY:"10090"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND TAXONOMY:"9606"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND TAXONOMY:"9606"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND TAXONOMY:"10090"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND TAXONOMY:"10090"</a></li>
                 </ul>
 
                 <h3 id="v1-filtering-by-tissue">Filtering by Tissue</h3>
@@ -543,10 +570,12 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND tissue:"Brain"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND tissue:"Brain"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND tissue:"Cell culture"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND tissue:"Cell culture"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND tissue:"Brain"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND tissue:"Brain"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND tissue:"Cell culture"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND tissue:"Cell culture"</a></li>
                 </ul>
 
                 <h3 id="v1-filtering-by-disease">Filtering by Disease</h3>
@@ -559,10 +588,12 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND disease:"Breast cancer"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND tissue:"Breast cancer"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND disease:"Lymphoma"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND tissue:"Lymphoma"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND disease:"Breast cancer"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND tissue:"Breast cancer"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND disease:"Lymphoma"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND tissue:"Lymphoma"</a></li>
                 </ul>
 
 
@@ -595,10 +626,12 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND instrument_platform:"LTQ"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND instrument_platform:"LTQ"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND instrument_platform:"Q Exactive"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND instrument_platform:"Q Exactive"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND instrument_platform:"LTQ"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND instrument_platform:"LTQ"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND instrument_platform:"Q Exactive"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND instrument_platform:"Q Exactive"</a></li>
                 </ul>
 
 
@@ -611,10 +644,12 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND publication_date:"2015"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND publication_date:"2015"</a></li>
-                    <li><a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND publication_date:"2014"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
-                        AND publication_date:"2014"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND publication_date:"2015"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND publication_date:"2015"</a></li>
+                    <li>
+                        <a href='http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human AND publication_date:"2014"'>http://ves-ebi-4d.ebi.ac.uk:8100/Tools/ddi/ws/dataset/search?query=human
+                            AND publication_date:"2014"</a></li>
                 </ul>
 
 
@@ -658,73 +693,76 @@
 
 
             <div class="col-md-3 nav-float" style="position:fixed;right:6em">
-            <nav id="affix-nav" class="sidebar hidden-print visible-lg" role="complementary">
-                <ul style="width: 272px;" class="nav sidenav affix-top" data-spy="affix" id="affix-ul">
-                    <li>
-                        <a href="" ng-click="scrollTo('overview')">API Overview</a>
-                        <ul class="nav">
-                            <li><a href="" ng-click="scrollTo('web-browsable-api')">Web browsable API</a></li>
-                            <li><a href="" ng-click="scrollTo('versioning')">Versioning</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="" ng-click="scrollTo('v1')">API v1 documentation</a>
-                        <ul class="nav">
-                            <li>
-                                <a href="" ng-click="scrollTo('v1-example-responses')">Example responses</a>
-                                <ul class="nav hide">
-                                    <li><a href="" ng-click="scrollTo('v1-hyperlinked-vs-flat-responses')">Hyperlinked
-                                        vs flat responses</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="" ng-click="scrollTo('v1-pagination')">Pagination</a></li>
-                            <li><a href="" ng-click="scrollTo('v1-sort')">Sort</a></li>
-                            <li><a href="" ng-click="scrollTo('v1-output-formats')">Output formats</a></li>
-                            <li>
-                                <a href="" ng-click="scrollTo('v1-filtering')">Filtering</a>
-                                <ul class="nav">
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-database')">Filtering by
-                                        database</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-organism')">Filtering by
-                                        Organism</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-tissue')">Filtering by Tissue</a>
-                                    </li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-disease')">Filtering by
-                                        Disease</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-modification')">Filtering by
-                                        Modification</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-instruments-platform')">Filtering
-                                        by Instruments & Platforms</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-publicationdate')">Filtering by
-                                        Publication Date</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-filtering-by-technologytype')">Filtering by
-                                        Technology Type</a></li>
-                                    <li><a href="" ng-click="scrollTo('v1-combined-filters')">Combined filters</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
+                <nav id="affix-nav" class="sidebar hidden-print visible-lg" role="complementary">
+                    <ul style="width: 272px;" class="nav sidenav affix-top" data-spy="affix" id="affix-ul">
+                        <li>
+                            <a href="" ng-click="scrollTo('overview')">API Overview</a>
+                            <ul class="nav">
+                                <li><a href="" ng-click="scrollTo('web-browsable-api')">Web browsable API</a></li>
+                                <li><a href="" ng-click="scrollTo('versioning')">Versioning</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="" ng-click="scrollTo('v1')">API v1 documentation</a>
+                            <ul class="nav">
+                                <li>
+                                    <a href="" ng-click="scrollTo('v1-example-responses')">Example responses</a>
+                                    <ul class="nav hide">
+                                        <li><a href="" ng-click="scrollTo('v1-hyperlinked-vs-flat-responses')">Hyperlinked
+                                            vs flat responses</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="" ng-click="scrollTo('v1-pagination')">Pagination</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-sort')">Sort</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-output-formats')">Output formats</a></li>
+                                <li>
+                                    <a href="" ng-click="scrollTo('v1-filtering')">Filtering</a>
+                                    <ul class="nav">
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-database')">Filtering by
+                                            database</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-organism')">Filtering by
+                                            Organism</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-tissue')">Filtering by
+                                            Tissue</a>
+                                        </li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-disease')">Filtering by
+                                            Disease</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-modification')">Filtering by
+                                            Modification</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-instruments-platform')">Filtering
+                                            by Instruments & Platforms</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-publicationdate')">Filtering
+                                            by
+                                            Publication Date</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-filtering-by-technologytype')">Filtering
+                                            by
+                                            Technology Type</a></li>
+                                        <li><a href="" ng-click="scrollTo('v1-combined-filters')">Combined filters</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
-</div> <!--wrapper-->
+</div>
+<!--wrapper-->
 
-        <footer>
-            <div id="footer" class="container"></div>
-        </footer>
+<footer>
+    <div id="footer" class="container"></div>
+</footer>
 
 
-        <script src="js/vendor/angular/angular.min.js"></script>
-        <script src="js/vendor/angular/angular-animate.min.js"></script>
-        <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
-        <script src="js/vendor/underscore/underscore-min.js"></script>
-        <script src="js/search/ddi.metadata.search.js"></script>
-        <script src="js/vendor/d3/d3.min.js"></script>
-        <script src="js/d3/d3.ExpertDatabaseSequenceDistribution.js"></script>
-        <script src="js/d3/d3.speciesSunburst.js"></script>
-        <script src="js/d3/d3.speciesTree.js"></script>
+<script src="js/vendor/angular/angular.min.js"></script>
+<script src="js/vendor/angular/angular-animate.min.js"></script>
+<script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+<script src="js/autocomplete.js"></script>
+<script src="js/vendor/underscore/underscore-min.js"></script>
+<script src="js/search/ddi.metadata.search.js"></script>
+<script src="js/vendor/d3/d3.min.js"></script>
 
 </body>
 </html>
