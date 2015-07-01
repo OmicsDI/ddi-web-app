@@ -113,7 +113,7 @@ ddiApp.factory('WordRetriever', function($http, $q, $timeout){
 
       WordRetriever.getwords = function(i) {
            var worddata = $q.defer();
-           $http.get('http://localhost:9091/dataset/words?q=' + i)
+           $http.get(web_service_url + 'dataset/words?q=' + i)
                 .success(function(data) {
                     var words=[];
                     for(var i=0; i<data.items.length; i++){
