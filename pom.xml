@@ -23,7 +23,7 @@
                 <version>6.1.26</version>
                 <configuration>
                 <webAppConfig>
-                    <contextPath>/ddi</contextPath>
+                    <contextPath>/Tools/ddi</contextPath>
                 </webAppConfig>
                 <connectors>
                     <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">

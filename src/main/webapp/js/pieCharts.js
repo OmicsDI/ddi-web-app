@@ -9,8 +9,9 @@ var pie_charts_tissues_organisms = function () {
 
     function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
         if (error) {
-            output_error_info("chart_tissues_organisms");
-            return;
+//            output_error_info("chart_tissues_organisms");
+            pie_charts_tissues_organisms();
+//            return;
         }
 
        if (tissues[tissues.length - 1].name !== "Not available") {
@@ -279,8 +280,9 @@ var pie_charts_repos_omics = function () {
     function draw_chart_repos_omics(error, domains, omicstype) {
 
         if (error) {
-            output_error_info("chart_repos_omics");
-            return;
+//            output_error_info("chart_repos_omics");
+            pie_charts_repos_omics(); 
+//            return;
         }
         var repos = transformdomains(domains);
         omicstype.shift();
@@ -321,7 +323,6 @@ var pie_charts_repos_omics = function () {
         /*
          * prepare the treemap data
          */
-        console.log(repos);
         var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
         var metabolomics_list = "MetaboLights Dataset,MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, Metabolome Workbench";
         var genomics_list = "ega,EGA";
@@ -408,7 +409,7 @@ var pie_charts_repos_omics = function () {
         var formdiv = body.append('div');
         formdiv
             .attr("class", "center")
-            .attr("style", "width:250px;margin-top:15px")
+            .attr("style", "width:150px;margin-top:15px")
         ;
 
         var radio_form = formdiv.append('form');
@@ -445,6 +446,7 @@ var pie_charts_repos_omics = function () {
             .append('span')
             .append('span')
         ;
+        /*
         radio_form
             .append('input')
             .attr('type', 'radio')
@@ -459,7 +461,7 @@ var pie_charts_repos_omics = function () {
             .append('span')
             .append('span')
         ;
- 
+         */
         d3.select("#" + piechartname + "_form").select('input[value=Repos]').property('checked', true)
 
         d3.select("#" + piechartname + "_form").selectAll('input')
@@ -525,11 +527,10 @@ var pie_charts_repos_omics = function () {
 
 
         var color = d3.scale.category20();
-        var treemap_color = {"Proteomics":"lightgreen","Metabolomics":"#FF6666", "Genomics":"#9966FF"};
+        var treemap_color = {"Proteomics":"#2CA02C","Metabolomics":"#FF7F0E", "Genomics":"#1f77b4"};
 
         /*
          * draw the treemap
-         */
         var margin = {top: 40, right: 10, bottom: 10, left: 10};
         treemap_width = width - margin.left - margin.right;
         treemap_height = height - margin.top - margin.bottom;
@@ -541,6 +542,7 @@ var pie_charts_repos_omics = function () {
             .attr("class", "tooltip")
             .style("opacity", 0);   
 
+         */
 
         change();
 
@@ -552,27 +554,27 @@ var pie_charts_repos_omics = function () {
             if (value == 'Omics') {
                 data = omicstype;
                 text_total.text("Total:" + total_omics);
-                text_unavail.text("Unavailable:" + unavailableomics.value);
+//                text_unavail.text("Unavailable:" + unavailableomics.value);
                 url_pre = 'browse.html#/search?q=*:* AND omics_type:"';
                 // text_total.text("Total:"+total_omics);
                 svg.attr("visibility", null);
-                d3.select("#treemap_div").remove();
+//                d3.select("#treemap_div").remove();
             }
            if (value == 'Repos') {
                 data = repos;
                 text_total.text("Total:" + total_repos);
-                text_unavail.text("");
+//                text_unavail.text("");
                 url_pre = 'browse.html#/search?q=*:* AND repository:"';
                 // text_total.text("Total:"+total_repos);
                 svg.attr("visibility", null);
-                d3.select("#treemap_div").remove();
+//                d3.select("#treemap_div").remove();
             }
-           if (value == 'Treemap') {
+/*           if (value == 'Treemap') {
                 svg.attr("visibility", "hidden");
                 draw_treemap();
                 return;
             }
- 
+*/ 
 
             text_name.text("");
             text_value.text("");
@@ -587,6 +589,7 @@ var pie_charts_repos_omics = function () {
             slice.enter()
                 .insert("path")
                 .style("fill", function (d, i) {
+                    if (value === 'Omics') return treemap_color[d.data.name];
                     return color(i);
                 })
                 .attr("class", "slice")
@@ -604,6 +607,7 @@ var pie_charts_repos_omics = function () {
                     var temptext1 = d.data.name;
                     var temptext2 = d.data.value;
                     colorinside = color(i);
+                    if (value === 'Omics') colorinside = treemap_color[d.data.name];
                     svg.select("#insidecycle")
                         .style("fill", colorinside)
                         .style("opacity", ".8");
@@ -614,6 +618,7 @@ var pie_charts_repos_omics = function () {
                 })
                 .on("mouseout", function (d, i) {
                     colorinside = color(i);
+                    if (value === 'Omics') colorinside = treemap_color[d.data.name];
                     svg.select("#insidecycle")
                         .style("fill", colorinside)
                         .style("opacity", ".95");
@@ -706,8 +711,9 @@ var barcharts_years_omics_types = function () {
         // console.log(proteomics);
         //
         if (error) {
-            output_error_info("barchart_omicstype_annual");
-            return;
+//            output_error_info("barchart_omicstype_annual");
+//            return;
+         barcharts_years_omics_types(); 
         }
 
         var body = d3.select('#barchart_omicstype_annual');

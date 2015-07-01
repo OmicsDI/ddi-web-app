@@ -528,6 +528,7 @@ form fieldset {
 
 .nobullet{
         list-style-type: none;
+        margin-left:-30px;
 }
 
 #content p{
@@ -617,5 +618,104 @@ ul#local-nav li.functional {
     background: yellow;
 }
 
+.img_at_footer {
+margin:9px 0 0;
+}
 
-
+.num_notifs {
+    border-radius: 5px;
+    width: 50%;
+    margin-top: 2px;
+    background: #00b7ea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #00b7ea 0%, #0052bf 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#00b7ea), color-stop(100%,#0052bf)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #00b7ea 0%,#0052bf 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #00b7ea 0%,#0052bf 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #00b7ea 0%,#0052bf 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #00b7ea 0%,#0052bf 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b7ea', endColorstr='#0052bf',GradientType=0 ); /* IE6-9 */
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-weight: none;
+}
+/*
+ * for the socialnetwork sharing
+ * */
+.simple-skinnyleft {
+    color: #ddd;
+    float: left;
+    font-size: 30px;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 90px;
+}
+.simple-skinnyleft i {
+    display: block;
+    margin: 30px 0 0;
+}
+.simple-skinnyleft a {
+    color: #ccc;
+}
+.simple-skinnyleft a.tweetcountwrapper:hover {
+    color: #55acee;
+}
+.simple-skinnyleft a.facebookcountwrapper:hover {
+    color: #46629e;
+}
+.simple-skinnyleft a.emailcountwrapper:hover {
+    color: #333;
+}
+.simple-skinnyleft a.tumblrcountwrapper:hover {
+    color: #304e67;
+}
+.simple-skinnyleft a.linkedincountwrapper:hover {
+    color: #007bb6;
+}
+.simple-skinnyleft a.whatsappcountwrapper:hover {
+    color: #34af23;
+}
+.simple-skinnyleft a.googlepluscountwrapper:hover {
+    color: #dd4b39;
+}
+.simple-skinnyleft a, .simple-skinnyleft a:hover {
+}
+.simple-skinnyleft a:hover {
+    text-decoration: none;
+}
+.simple-skinnyleft .fa-envelope {
+    font-size: 26px;
+}
+.simple-skinnyleft .fa-facebook {
+    padding-left: 0;
+}
+.simple-skinnyleft .tweetcount {
+    color: #ccc;
+    display: block;
+    font-family: freight-sans-pro,helvetica;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+.simple-skinnyleft .facebookcount {
+    color: #ccc;
+    display: block;
+    font-family: freight-sans-pro,helvetica;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+/*
+.simple-skinnyleft .tumblrcountwrapper {
+    display: block;
+    margin-top: 40px;
+}
+.simple-skinnyleft .linkedincountwrapper {
+    display: block;
+    margin-top: 40px;
+}
+.simple-skinnyleft .whatsappcountwrapper {
+    display: block;
+    margin-top: 40px;
+}
+*/

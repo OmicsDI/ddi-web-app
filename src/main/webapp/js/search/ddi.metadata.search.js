@@ -63,7 +63,7 @@ var database_urls = {
 /**
  * Create DDI app.
  */
-angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate']);
+var ddiApp = angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate', 'autocomplete']);
 
 // hide spinning wheel
 angular.module('ddiApp').config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
@@ -105,6 +105,31 @@ angular.module('ddiApp').config(['$locationProvider', function ($locationProvide
   }]);
  */
 
+ /**
+ * auto completion / suggestion words 
+ */
+ddiApp.factory('WordRetriever', function($http, $q, $timeout){
+      var WordRetriever = new Object();
+
+      WordRetriever.getwords = function(i) {
+           var worddata = $q.defer();
+           $http.get(web_service_url + 'dataset/words?q=' + i)
+                .success(function(data) {
+                    var words=[];
+                    for(var i=0; i<data.items.length; i++){
+                        words.push(data.items[i].name);
+                    }
+                    worddata.resolve(words);
+                })
+                .error(worddata.reject);
+                                    
+         return worddata.promise;
+      }
+
+      return WordRetriever;
+});
+
+ 
 
 /**
  * Service for launching a metadata search.
@@ -171,6 +196,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
 //                        '&size=' + search_config.page_size +
         '&size={PAGESIZE}' +
         '&sort_field={SORTFIELD}' +
+        '&order={ORDER}' +
         '&start={START}',
 
         'proxy': search_config.ddi_base_url +
@@ -194,18 +220,19 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      * Launch EBeye search.
      * `start` determines the range of the results to be returned.
      */
-    this.search = function (query, start, page_size, sort_field) {
+    this.search = function (query, start, page_size, sort_field, sort_order) {
         start = start || 0;
         page_size = page_size || 10;
         sort_field = sort_field || 'id';
+        sort_order = sort_order || 'ascending';
         display_search_interface();
         display_spinner();
-        update_page_title();
+//        update_page_title();
         query = preprocess_query(query);
         query_url = get_query_url(query, start);
-        console.log("wget" + query_url);
 //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
+        console.log("get"+query_url);
         /**
          * Display search spinner if not a "load more" request.
          */
@@ -240,7 +267,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             }
             ;
 
-            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField);
+            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField).replace('{ORDER}',sort_order);
 //            console.log(ebeye_url);
             //    var url = query_urls.proxy.replace('{EBEYE_URL}', encodeURIComponent(ebeye_url));
             //    return url;
@@ -446,9 +473,9 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     /**
      * Load more results starting from the last loaded index.
      */
-    this.load_more_results = function (start, page_size, sort_field) {
+    this.load_more_results = function (start, page_size, sort_field, sort_order) {
         query = $location.search().q;
-        this.search(query, start, page_size, sort_field);
+        this.search(query, start, page_size, sort_field, sort_order);
     };
 
     /**
@@ -558,6 +585,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.show_export_error = false;
     $scope.$root.page_size = 10;
     $scope.$root.sort_field = 'id';
+    $scope.$root.sort_order = 'ascending';
     $scope.pages = [0, 0];
     $scope.max_page_no = 1;
 
@@ -567,6 +595,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.repositories =  repositories;
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
+    $scope.highlight_terms = ["a","b"];
 
 
     $scope.facetsNo = 8;
@@ -626,7 +655,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     /**
      * Fired when "Load more" button is clicked.
-     */
     $scope.load_more_results = function (page, page_size, sort_field) {
         if (page_size !== 'default') {
             $scope.$root.page_size = page_size
@@ -646,8 +674,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
         results.load_more_results(start, page_size, sort_field);
     };
+     */
 
-    $scope.pagination = function (current_page, page_size, sort_field) {
+    $scope.pagination = function (current_page, page_size, sort_field, sort_order) {
         if (page_size !== 'default') {
             $scope.$root.page_size = page_size
         }
@@ -662,11 +691,18 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             sort_field = $scope.$root.sort_field;
         }
 
+        if (sort_order !== 'default') {
+            $scope.$root.sort_order = sort_order;
+        }
+        if (sort_order === 'default') {
+            sort_order = $scope.$root.sort_order;
+        }
+
         $scope.$root.current_page = current_page;
 
         var start = (current_page - 1) * page_size;
 
-        results.load_more_results(start, page_size, sort_field);
+        results.load_more_results(start, page_size, sort_field, sort_order);
 
     };
 
@@ -815,6 +851,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         get_new_indexes();
         var taxonomy_reg = /TAXONOMY:"(\d+)"/g;
         var taxonomy_matches = $scope.query_for_show.match(taxonomy_reg);
+        $scope.query_for_show = $scope.query_for_show.replace(/pride/g, "PRIDE");
         if (taxonomy_matches === null) return;
         for (var i = 0; i < taxonomy_matches.length; i++) {
             var taxonomy_match = taxonomy_matches[i];
@@ -822,11 +859,28 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             var taxonomy_label = get_label_by_taxid(taxonomy_id);
             $scope.query_for_show = $scope.query_for_show.replace(taxonomy_id, taxonomy_label);
         }
+        console.log($scope.query_for_show);
     }
 
 
     function prepare_highlight_show(){
-//        alert($scope.query_for_show.match(/\c/g));
+        $scope.highlight_terms = $scope.query_for_show.match( /".*?"/g );
+
+        if ($scope.highlight_terms===null) $scope.highlight_terms=[""]
+        if($scope.query_for_show.indexOf("AND")>-1) {
+            var search_term = $scope.query_for_show.match(/.*?AND/);
+            search_term = search_term[0].replace( /AND/, "");
+        }
+        else{
+            search_term = $scope.query_for_show;
+        }
+        search_term = search_term.replace( /\*:\*/, "");
+        search_term = search_term.split(" ");
+        $scope.highlight_terms.push.apply($scope.highlight_terms,search_term);
+
+        for(var i=0; i<$scope.highlight_terms.length; i++){
+            $scope.highlight_terms[i] = $scope.highlight_terms[i].replace( /"/g, '');
+        }
     }
 
 
@@ -841,21 +895,65 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }
 
 }])
-.filter('highlight', function($sce) {
-    return function(text, phrase) {
-              if (phrase) text = text.replace(new RegExp('('+phrase+')', 'gi'),
-              '<span class="highlighted">$1</span>')
+.filter('browsehighlight', function($sce) {
+  return function(str, termsToHighlight) {
+          //Sort terms by length
+          if(str===null || str===undefined || str.length<1)return;
+          if(termsToHighlight.length<1) return ;
+          termsToHighlight.sort(function(a, b) {
+          return b.length - a.length;
+          });
+          // Regex to simultaneously replace terms
+          var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'gi');
+          return $sce.trustAsHtml(str.replace(regex, '<span class="highlighted">$&</span>'));
+  };
 
-              return $sce.trustAsHtml(text)
+})
+.filter("megaNumber", function() {
+    return function(number, fractionSize) {
+ 
+        if(number === null) return null;
+        if(number === 0) return "0";
+ 
+        if(!fractionSize || fractionSize < 0)
+            fractionSize = 1;
+ 
+        var abs = Math.abs(number);
+        var rounder = Math.pow(10,fractionSize);
+        var isNegative = number < 0;
+        var key = '';
+        var powers = [
+            {key: "Q", value: Math.pow(10,15)},
+            {key: "T", value: Math.pow(10,12)},
+            {key: "B", value: Math.pow(10,9)},
+            {key: "M", value: Math.pow(10,6)},
+            {key: "K", value: 1000}
+        ];
+ 
+        for(var i = 0; i < powers.length; i++) {
+ 
+            var reduced = abs / powers[i].value;
+ 
+            reduced = Math.round(reduced * rounder) / rounder;
+ 
+            if(reduced >= 1){
+                abs = reduced;
+                key = powers[i].key;
+                break;
             }
-});
+        }
+ 
+        return (isNegative ? '-' : '') + abs + key;
+    };
+})
+;
 
 
 /**
  * Query controller
  * Responsible for the search box in the header.
  */
-angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$window', '$timeout', 'results', 'search', function ($scope, $location, $window, $timeout, results, search) {
+ddiApp.controller('QueryCtrl', ['$scope', '$http','$location', '$window', '$timeout', 'results', 'search','WordRetriever',  '$q', function ($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
 
     $scope.query = {
         text: '',
@@ -885,6 +983,12 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
         }
         if (current_abs_url.match("databases.html")) {
             $window.location = current_abs_url.replace("databases.html", "browse.html");
+        }
+        if (current_abs_url.match("help.html")) {
+            $window.location = current_abs_url.replace("help.html", "browse.html");
+        }
+        if (current_abs_url.match("about.html")) {
+            $window.location = current_abs_url.replace("about.html", "browse.html");
         }
     };
 
@@ -919,7 +1023,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
             } else {
                 // the new url is a search result page, launch that search
                 $scope.query.text = $location.search().q;
-                results.search($location.search().q, 0, $scope.$root.page_size, $scope.$root.sort_field);
+                results.search($location.search().q, 0, $scope.$root.page_size, $scope.$root.sort_field, $scope.$root.sort_order);
                 $scope.query.submitted = false;
             }
         }
@@ -942,10 +1046,10 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
         $scope.$root.current_page = 1;
 
 
-        if ($scope.queryForm.text.$invalid) {
-            return;
+//        if ($scope.queryForm.text.$invalid) {
+//            return;
             // console.log("submitted invalid" + $scope.queryForm);
-        }
+//        }
         $scope.meta_search($scope.query.text);
     };
 
@@ -961,6 +1065,30 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
         }
     })();
 
+    /**
+     * 
+     * get suggestion words
+     */                
+
+  $scope.getwords = function(){
+    return $scope.words;
+  }
+
+  $scope.get_suggestions= function(typedthings){
+//    console.log("Do something like reload data with this: " + typedthings );
+    $scope.newwords = WordRetriever.getwords(typedthings);
+    $scope.newwords.then(function(data){
+      $scope.words = data;
+    });
+  }
+
+  $scope.do_query= function(suggestion){
+        $scope.query.text = suggestion;
+        $scope.meta_search($scope.query.text);
+  }
+
+
+
 }]);
 
 
@@ -968,7 +1096,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$location', '$windo
  * Dataset controller
  * Responsible for the Dataset fetching.
  */
-angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$window', '$timeout', '$http', '$q', function ($scope, $location, $window, $timeout, $http, $q) {
+angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location', '$window', '$timeout',  '$q', function ($scope, $http,$location, $window, $timeout,  $q) {
 
     var input = $location.url().replace("/", "");
     var inputs = input.split("*");
@@ -991,6 +1119,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
     $scope.get_similar_dataset_fail = "";
     $scope.instrument_pre_url = "browse.html#/search?q=*:* AND instrument_platform:";
     $scope.organism_pre_url = "browse.html#/search?q=*:* AND TAXONOMY:";
+    $scope.tissue_pre_url = "browse.html#/search?q=*:* AND tissue:";
+    $scope.disease_pre_url = "browse.html#/search?q=*:* AND disease:";
     $scope.related_datasets_limit = 5;
     $scope.load_more_btn_show = "Load More";
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1039,6 +1169,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                 $scope.data_protocol_description = $scope.dataset.protocols[1].description;
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
+            console.log($scope.dataset);
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
                 var pubmed_id = $scope.dataset.publicationIds[i];
                 altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmed_id;
@@ -1082,14 +1213,36 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$location', '$win
                         entity.date = pub_year + ' ' + pub_month + ' ' + pub_day +';';
                     }
 
+
+                    entity.volume = entity.volume || "";
+                    entity.issue = entity.issue || "";
+                    entity.pagination = entity.pagination || "";
+
+                    var authors = [];
+                    for(var i=0; i<entity.authors.length; i++){
+                        var surname = entity.authors[i].substr(entity.authors[i].length-1,1);
+                        var reg = new RegExp(surname+"[a-z]{0,100} " + surname + "$","")
+                        var have_reg = entity.authors[i].search(reg) >= 0;
+                        if(have_reg){
+                            author_for_searching = entity.authors[i].replace(reg," "+surname);
+                        }
+                        else{
+                            author_for_searching = entity.authors[i].replace(surname,"");
+                        } 
+                        var author = {"fullname":entity.authors[i],"name_for_searching": author_for_searching};
+                        authors.push(author);
+                    }
+
                     publication_info_entity = {
                         "pmid": inside_id,
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
                         "title": entity.title,
-                        "authors": entity.authors,
+                        "authors":authors,  
                         "pub_abstract": entity.pubAbstract
                     };
+                    publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
 
+                    console.log(publication_info_entity.authors);
                     $scope.publication_info.push(publication_info_entity);
                     $scope.publication_index_info[inside_id] = $scope.publication_info.indexOf(publication_info_entity);
                 }).error(function () {
@@ -1310,3 +1463,8 @@ function keyboard_shortcuts(e) {
     }
 }
 document.addEventListener('keyup', keyboard_shortcuts);
+
+
+
+
+
