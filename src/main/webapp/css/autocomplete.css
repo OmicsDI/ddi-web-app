@@ -6,8 +6,9 @@
 }
 
 .autocomplete input{
+  margin-left:2px;
   font-size: 1.2em;
-  width: 99%;
+  width: 99.1%;
   padding:0.4em;
 }
 
@@ -18,9 +19,11 @@
   margin-left:0.5%;
   margin-top:-6px;
   width: 98.7%;
+  /*
   border-left: 1px solid darkgrey;
   border-right: 1px solid darkgrey;
   border-bottom: 1px solid darkgrey;
+  */
   z-index: 1;
   background:white;
 }
@@ -41,11 +44,11 @@
 }
 
 .autocomplete .highlight {
-  background-color: #E2E2E2;
-  margin-right:0;
+  color: darkblue;
+  margin-right: 0;
 }
 
 .autocomplete li.active .highlight {
-  background: #666;
+/*  background: #666;*/
   color: #fff;
 }

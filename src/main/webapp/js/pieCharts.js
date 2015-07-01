@@ -64,8 +64,9 @@ var pie_charts_tissues_organisms = function () {
 
         var body = d3.select("#" + bub_chart_name);
 
-        var div_width_px = body.style("width");
-        var div_width = div_width_px.substr(0, div_width_px.length - 2);
+//        var div_width_px = body.style("width");
+//        var div_width = div_width_px.substr(0, div_width_px.length - 2);
+        var div_width = 420;
         var diameter = div_width / 1.3,
             format = d3.format(",d"),
             color = d3.scale.category20b();
@@ -368,8 +369,9 @@ var pie_charts_repos_omics = function () {
         var piechartname = 'chart_repos_omics';
         var body = d3.select("#" + piechartname);
 
-        var div_width_px = body.style("width");
-        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+//        var div_width_px = body.style("width");
+//        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+        var div_width = 420;
         var width = div_width,
             height = 300,
             radius = Math.min(width, height) / 2;
@@ -717,8 +719,9 @@ var barcharts_years_omics_types = function () {
         }
 
         var body = d3.select('#barchart_omicstype_annual');
-        var div_width_px = body.style("width");
-        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+//        var div_width_px = body.style("width");
+//        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+        var div_width = 420;
         var margin = {top: 20, right: 2, bottom: 20, left: 60},
             width = div_width - margin.left - margin.right,
             height = 290 - margin.top - margin.bottom;
