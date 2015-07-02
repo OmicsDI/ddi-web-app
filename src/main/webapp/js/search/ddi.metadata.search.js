@@ -1256,6 +1256,22 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
     ); //outside $q
 
 
+    $scope.file_links = [];
+    var get_file_links_url = web_service_url+"dataset/getFileLinks?acc=" + acc + "&database=" + domain;
+    $http({
+        url: get_file_links_url,
+        method: 'GET'
+    }).success(function (data) {
+        for(var i=0; i<data.length; i++){
+            var name = data[i].replace(/.*\//, '');
+            var link = data[i];
+            $scope.file_links.push({'name':name,'link':link});
+        }
+    }).error(function () {
+        console.error("GET error: " + get_file_links_url);
+    });
+ 
+
     $scope.share_methods = {
         email: ["mailto:?body=[&subject=]"],
         twitter: ["https://twitter.com/intent/tweet?url=[&text=]", 450],
@@ -1273,23 +1289,22 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
 
     };
 
-    $scope.current_protocol = "sample_protocol";
-    $scope.protocols = {"sample_protocol": "Sample Protocol", "data_protocol": "Data Protocol"};
 
-/**
-     * for tab control
+    /**
+    * for tab control
+    */
     $scope.tabs = [{
-         title: 'Protocols',
-         url: 'protocols.tpl.html'
+         title: 'Filelist',
+         url: 'filelist.tpl.html'
          }, {
-        title: 'Bioentities',
-        url: 'bioentities.tpl.html'
-    }, {
-        title: 'Lab Details',
-        url: 'labdetails.tpl.html'
+         title: 'Bioentities',
+         url: 'bioentities.tpl.html'
+         }, {
+         title: 'Lab Details',
+         url: 'labdetails.tpl.html'
     }];
 
-    $scope.currentTab = 'bioentities.tpl.html';
+    $scope.currentTab = 'filelist.tpl.html';
 
     $scope.onClickTab = function (tab) {
         $scope.currentTab = tab.url;
@@ -1298,15 +1313,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
         return tabUrl == $scope.currentTab;
     }
 
-    $scope.onClickProtocol = function () {
-        if ($scope.current_protocol == "sample_protocol") {
-            $scope.current_protocol = "data_protocol";
-        }
-        else {
-            $scope.current_protocol = "sample_protocol";
-        }
-    }
-*/
 
     /*
      * for the multiple publications click

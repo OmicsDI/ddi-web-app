@@ -203,8 +203,8 @@
         <div class="row" style="">
 
             <div class="col-md-1">
-            </div>
-            <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px">
+            <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px"
+                 ng-show="get_dataset_fail.length<1">
                 <!-- <g:plusone></g:plusone> -->
 
                 <div class="simple-skinnyleft">
@@ -228,6 +228,7 @@
                     </a>
                 </div>
 
+            </div>
             </div>
             <!-- col-md-1-->
 
@@ -353,7 +354,7 @@
                 <!--dataset_upper -->
 
 
-                <div class="panel panel-default" id="dataset_middle_publication" style=""
+                <div class="panel panel-default" id="dataset_middle_publication" style="position:relative"
                      ng-hide="dataset.publicationIds===null || get_dataset_fail.length > 0">
                     <div class="panel-footer ">
                         <h3>Publications</h3>
@@ -436,7 +437,7 @@
                 </div>
                 <!--dataset_middle_panel-->
 
-                <div class="panel panel-default" id="dataset_bottom" ng-hide="get_dataset_fail===true || 1">
+                <div class="panel panel-default" id="dataset_bottom" ng-hide="get_dataset_fail===true ">
 
 
                     <div class="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -468,34 +469,19 @@
 
                     </div>
                     <div id="mainView" style="position:relative; border-style:none">
-        <span ng-hide="currentTab!=='protocols.tpl.html' "
-              style="position: absolute; width: 15px; height: 23px; top: 30px; left: 2px;"
-              class="jssora13l" u="arrowleft"
-              ng-click="onClickProtocol()">
-        </span>
-        <span ng-hide="currentTab!=='protocols.tpl.html' "
-              style="position: absolute; width: 15px; height: 23px; top: 30px; right: 2px;"
-              class="jssora13r" u="arrowright"
-              ng-click="onClickProtocol()">
-        </span>
-
-                        <div ng-include="currentTab"></div>
+                       <div ng-include="currentTab"></div>
                     </div>
                 </div>
                 <!--dataset_bottom_panel-->
 
-                <script type="text/ng-template" id="protocols.tpl.html">
+                <script type="text/ng-template" id="filelist.tpl.html">
                     <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom "
-                         ng-class="currentTab !== 'protocols.tpl.html' ? 'ui-tabs-hide' :'' "
+                         ng-class="currentTab !== 'filelist.tpl.html' ? 'ui-tabs-hide' :'' "
                          style="border-style:none"
                             >
-
-                        <div style="margin-left:30px">
-                            <h3>{{protocols[current_protocol]}}</h3>
-
-                            <p>{{dataset[current_protocol]}}</p>
-                        </div>
-
+                            <ul>
+                                <li ng-repeat="file_link in file_links"><a href="{{file_link.link}}">{{file_link.name}}</a> </li>
+                            </ur>
                     </div>
 
                     </div>
