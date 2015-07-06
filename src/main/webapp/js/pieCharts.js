@@ -61,7 +61,6 @@ var pie_charts_tissues_organisms = function () {
             tissues = tissues.sort(function (a, b) {
                 return (parseInt(a.value) > parseInt(b.value));
             });
-            console.log(tissues);
 
             diseases = diseases.sort(function (a, b) {
                 return parseInt(a.value) > parseInt(b.value);
@@ -360,7 +359,6 @@ var pie_charts_repos_omics = function () {
                 }
             }
 
-
             var piechartname = 'chart_repos_omics';
             var body = d3.select("#" + piechartname);
 
@@ -655,11 +653,14 @@ var pie_charts_repos_omics = function () {
              return;
              }
              */
-
-            text_name.text("");
-            text_value.text("");
+            /*init the inside cycle*/
+            text_name.text(data[data.length-1].name);
+            text_value.text(data[data.length-1].value);
+            var colorinside = color(data.length-1);
+            if (value === 'Omics') colorinside = treemap_color[data[data.length-1].name];
             svg.select("#insidecycle")
-                .style("fill", "white");
+                .style("fill", colorinside)
+                .style("opacity", ".95");
 
             /* ------- PIE SLICES -------*/
             var slice = svg.select(".slices").selectAll("path.slice")
@@ -853,9 +854,6 @@ var barcharts_years_omics_types = function () {
                 .selectAll('.tick')
                 .attr("class", "hotword")
                 .on('click', clickMe);
-            function clickMe(d) {
-                location.href = "browse.html#/search?q=*:* AND publication_date:\"" + d + "\"";
-            };
 
             var legend = svg.selectAll(".legend")
                 .data(omics_types.slice().reverse())
@@ -880,7 +878,13 @@ var barcharts_years_omics_types = function () {
                     return d;
                 });
         }
+
     }
+    function clickMe(d) {
+        location.href = "browse.html#/search?q=*:* AND publication_date:\"" + d + "\"";
+    };
+
+
 }
 
 function output_error_info(errordiv) {

@@ -1414,6 +1414,10 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         if (data === null) {
             $scope.get_most_access_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
         }
+
+        $scope.most_accessed_list.sort(function (a, b) {
+                return parseInt(a.visitCount) < parseInt(b.visitCount);
+            });
     }).error(function () {
         console.log("GET error:" + url);
         $scope.get_most_access_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
