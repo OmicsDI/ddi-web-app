@@ -471,14 +471,14 @@ var pie_charts_repos_omics = function () {
 
             var arc = d3.svg.arc()
                 .outerRadius(radius * 0.95)
-                .innerRadius(radius * 0.5);
+                .innerRadius(radius * 0.6);
 
 // var outerArc = d3.svg.arc()
 // 	.innerRadius(radius * 0.9)
 // 	.outerRadius(radius * 0.9);
 
             svg.select("#insidecycle")
-                .attr("r", radius * 0.5)
+                .attr("r", radius * 0.6)
                 .style("fill", "white")
                 .attr("cx", 0)
                 .attr("cy", 0);
@@ -654,8 +654,8 @@ var pie_charts_repos_omics = function () {
              }
              */
             /*init the inside cycle*/
-            text_name.text(data[data.length-1].name);
-            text_value.text(data[data.length-1].value);
+            text_name.text(data[data.length-1].name).style("font-size","14px");
+            text_value.text(data[data.length-1].value + " datasets").style("font-size","12px");
             var colorinside = color(data.length-1);
             if (value === 'Omics') colorinside = treemap_color[data[data.length-1].name];
             svg.select("#insidecycle")
@@ -695,7 +695,7 @@ var pie_charts_repos_omics = function () {
                     text_name
                         .text(temptext1);
                     text_value
-                        .text(temptext2);
+                        .text(temptext2 + " datasets");
                 })
                 .on("mouseout", function (d, i) {
                     colorinside = color(i);
