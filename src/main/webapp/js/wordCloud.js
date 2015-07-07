@@ -2,10 +2,10 @@ var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
 var drawHotwords = function () {
 
     queue()
-       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=description') 
-       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=data_protocol') 
-       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=sample_protocol') 
-       .await(draw_word_cloud); 
+       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=description')
+       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=data_protocol')
+       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=sample_protocol')
+       .await(draw_word_cloud);
 
     function draw_word_cloud(error,
                              omics_des,
@@ -59,7 +59,7 @@ var drawHotwords = function () {
             .text('description');
         radio_form
             .append('label')
-            .text('descrition')
+            .text('description')
             .attr('for', 'description')
             .append('span')
             .append('span')
@@ -97,12 +97,12 @@ var drawHotwords = function () {
 
         d3.select("#hotwords_form").selectAll('input')
             .on('change', change);
- 
+
 
 
         var wordcloud_tooltip = d3.select('body').append("div")
             .attr("class", "tooltip")
-            .style("opacity", 0);   
+            .style("opacity", 0);
 
 
         var field = "";
@@ -179,7 +179,7 @@ var drawHotwords = function () {
                     wordcloud_tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
-                })                                        
+                })
                 ;
         }
 
