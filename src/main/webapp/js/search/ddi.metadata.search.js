@@ -195,7 +195,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             // '&facetfields=' + search_config.facetfields.join() +
 //                        '&size=' + search_config.page_size +
         '&size={PAGESIZE}' +
-        '&sort_field={SORTFIELD}' +
+        '&sortfield={SORTFIELD}' +
         '&order={ORDER}' +
         '&start={START}',
 
@@ -224,7 +224,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         start = start || 0;
         page_size = page_size || 10;
         sort_field = sort_field || 'id';
-        sort_order = sort_order || 'ascending';
+        sort_order = sort_order || 'descending';
         display_search_interface();
         display_spinner();
 //        update_page_title();
@@ -585,7 +585,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.show_export_error = false;
     $scope.$root.page_size = 10;
     $scope.$root.sort_field = 'id';
-    $scope.$root.sort_order = 'ascending';
+    $scope.$root.sort_order = 'descending';
     $scope.pages = [0, 0];
     $scope.max_page_no = 1;
 
