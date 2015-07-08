@@ -72,9 +72,9 @@
     });
 </script>
 
-<body class="level2">
+<body class="level2 ng-cloak" ng-controller="BodyController">
 
-<div id="wrapper" class="container_24">
+<div id="wrapper" class="container_24 ng-cloak" ng-show="loggedin">
     <header>
         <div id="local-masthead" class="masthead grid_24 nomenu" style="height:132px">
             <!-- local-title -->
@@ -203,32 +203,33 @@
         <div class="row" style="">
 
             <div class="col-md-1">
-            <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px"
-                 ng-show="get_dataset_fail.length<1">
-                <!-- <g:plusone></g:plusone> -->
+                <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px"
+                     ng-show="get_dataset_fail.length<1">
+                    <!-- <g:plusone></g:plusone> -->
 
-                <div class="simple-skinnyleft">
-                    <a href="" class="tweetcountwrapper" ng-click="click_share_this('twitter')"><i
-                            class="fa fa-twitter"></i> <!-- <div class="simple-skinnyleft tweetcount">1,421</div> -->
-                    </a>
-                    <a href="" class="facebookcountwrapper" ng-click="click_share_this('facebook')"><i
-                            class="fa fa-facebook"></i>
-                    </a>
-                    <a href="" class="emailcountwrapper" ng-click="click_share_this('email')"><i
-                            class="fa fa-envelope"></i>
-                    </a>
-                    <a href="" class="tumblrcountwrapper" ng-click="click_share_this('tumblr')"><i
-                            class="fa fa-tumblr"></i>
-                    </a>
-                    <a href="" class="linkedincountwrapper" ng-click="click_share_this('linkedin')"><i
-                            class="fa fa-linkedin"></i>
-                    </a>
-                    <a href="" class="googlepluscountwrapper" ng-click="click_share_this('google')"> <i
-                            class="fa fa-google-plus"></i>
-                    </a>
+                    <div class="simple-skinnyleft">
+                        <a href="" class="tweetcountwrapper" ng-click="click_share_this('twitter')"><i
+                                class="fa fa-twitter"></i>
+                            <!-- <div class="simple-skinnyleft tweetcount">1,421</div> -->
+                        </a>
+                        <a href="" class="facebookcountwrapper" ng-click="click_share_this('facebook')"><i
+                                class="fa fa-facebook"></i>
+                        </a>
+                        <a href="" class="emailcountwrapper" ng-click="click_share_this('email')"><i
+                                class="fa fa-envelope"></i>
+                        </a>
+                        <a href="" class="tumblrcountwrapper" ng-click="click_share_this('tumblr')"><i
+                                class="fa fa-tumblr"></i>
+                        </a>
+                        <a href="" class="linkedincountwrapper" ng-click="click_share_this('linkedin')"><i
+                                class="fa fa-linkedin"></i>
+                        </a>
+                        <a href="" class="googlepluscountwrapper" ng-click="click_share_this('google')"> <i
+                                class="fa fa-google-plus"></i>
+                        </a>
+                    </div>
+
                 </div>
-
-            </div>
             </div>
             <!-- col-md-1-->
 
@@ -469,7 +470,7 @@
 
                     </div>
                     <div id="mainView" style="position:relative; border-style:none">
-                       <div ng-include="currentTab"></div>
+                        <div ng-include="currentTab"></div>
                     </div>
                 </div>
                 <!--dataset_bottom_panel-->
@@ -479,9 +480,10 @@
                          ng-class="currentTab !== 'filelist.tpl.html' ? 'ui-tabs-hide' :'' "
                          style="border-style:none"
                             >
-                            <ul>
-                                <li ng-repeat="file_link in file_links"><a href="{{file_link.link}}">{{file_link.name}}</a> </li>
-                            </ur>
+                        <ul>
+                            <li ng-repeat="file_link in file_links"><a href="{{file_link.link}}">{{file_link.name}}</a>
+                            </li>
+                        </ul>
                     </div>
 
                     </div>
@@ -657,6 +659,7 @@
 
 
 <script src="js/vendor/angular/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
 <script src="js/vendor/angular/angular-route.js"></script>
 <script src="js/vendor/angular/angular-animate.min.js"></script>
 <script src="js/autocomplete.js"></script>

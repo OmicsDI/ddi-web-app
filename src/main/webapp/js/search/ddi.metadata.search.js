@@ -34,36 +34,35 @@ var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtl
 var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolome_workbench";
 var genomics_list = "ega,EGA";
 var repositories = {
-        "pride": "PRIDE",
-        "PRIDE": "PRIDE",
-        "peptideatlas": "PeptideAtlas",
-        "peptide_atlas": "PeptideAtlas",
-        "PeptideAtlas": "PeptideAtlas",
-        "massive": "MassIVE",
-        "MassIVE": "MassIVE",
-        "metabolights": "MetaboLights",
-        "metabolights_dataset": "MetaboLights",
-        "MetaboLights": "MetaboLights",
-        "metabolome_workbench": "Metabolomics Workbench",
-        "Metabolomics Workbench": "Metabolomics Workbench",
-        "MetabolomicsWorkbench": "Metabolomics Workbench",
-        "ega": "EGA",
-        "EGA": "EGA",
-    };
+    "pride": "PRIDE",
+    "PRIDE": "PRIDE",
+    "peptideatlas": "PeptideAtlas",
+    "peptide_atlas": "PeptideAtlas",
+    "PeptideAtlas": "PeptideAtlas",
+    "massive": "MassIVE",
+    "MassIVE": "MassIVE",
+    "metabolights": "MetaboLights",
+    "metabolights_dataset": "MetaboLights",
+    "MetaboLights": "MetaboLights",
+    "metabolome_workbench": "Metabolomics Workbench",
+    "Metabolomics Workbench": "Metabolomics Workbench",
+    "MetabolomicsWorkbench": "Metabolomics Workbench",
+    "ega": "EGA",
+    "EGA": "EGA",
+};
 var database_urls = {
-        "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
-        "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
-        "PeptideAtlas": "http://www.peptideatlas.org/",
-        "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
-    }
- 
+    "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
+    "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
+    "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
+    "PeptideAtlas": "http://www.peptideatlas.org/",
+    "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
+    "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
+}
 
 /**
  * Create DDI app.
  */
-var ddiApp = angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate', 'autocomplete']);
+var ddiApp = angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate', 'autocomplete', 'ngCookies']);
 
 // hide spinning wheel
 angular.module('ddiApp').config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
@@ -105,31 +104,30 @@ angular.module('ddiApp').config(['$locationProvider', function ($locationProvide
   }]);
  */
 
- /**
- * auto completion / suggestion words 
+/**
+ * auto completion / suggestion words
  */
-ddiApp.factory('WordRetriever', function($http, $q, $timeout){
-      var WordRetriever = new Object();
+ddiApp.factory('WordRetriever', function ($http, $q, $timeout) {
+    var WordRetriever = new Object();
 
-      WordRetriever.getwords = function(i) {
-           var worddata = $q.defer();
-           $http.get(web_service_url + 'dataset/words?q=' + i + '&size=10')
-                .success(function(data) {
-                    var words=[];
-                    for(var i=0; i<data.items.length; i++){
-                        words.push(data.items[i].name);
-                    }
-                    worddata.resolve(words);
-                })
-                .error(worddata.reject);
-                                    
-         return worddata.promise;
-      }
+    WordRetriever.getwords = function (i) {
+        var worddata = $q.defer();
+        $http.get(web_service_url + 'dataset/words?q=' + i + '&size=10')
+            .success(function (data) {
+                var words = [];
+                for (var i = 0; i < data.items.length; i++) {
+                    words.push(data.items[i].name);
+                }
+                worddata.resolve(words);
+            })
+            .error(worddata.reject);
 
-      return WordRetriever;
+        return worddata.promise;
+    }
+
+    return WordRetriever;
 });
 
- 
 
 /**
  * Service for launching a metadata search.
@@ -171,7 +169,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
     };
 
     var search_config = {
-        ebeye_base_url: web_service_url+'dataset/search',
+        ebeye_base_url: web_service_url + 'dataset/search',
         ddi_base_url: get_base_url(),
         // fields: ['name','description', 'keywords', 'pdataset.descriptionublication','species'],
         // facetfields: [
@@ -232,7 +230,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         query_url = get_query_url(query, start);
 //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
-        console.log("get"+query_url);
+        console.log("get" + query_url);
         /**
          * Display search spinner if not a "load more" request.
          */
@@ -267,7 +265,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
             }
             ;
 
-            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField).replace('{ORDER}',sort_order);
+            var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField).replace('{ORDER}', sort_order);
 //            console.log(ebeye_url);
             //    var url = query_urls.proxy.replace('{EBEYE_URL}', encodeURIComponent(ebeye_url));
             //    return url;
@@ -592,10 +590,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.proteomics_list = proteomics_list;
     $scope.metabolomics_list = metabolomics_list;
     $scope.genomics_list = genomics_list;
-    $scope.repositories =  repositories;
+    $scope.repositories = repositories;
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
-    $scope.highlight_terms = ["a","b"];
+    $scope.highlight_terms = ["a", "b"];
 
 
     $scope.facetsNo = 8;
@@ -655,7 +653,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     /**
      * Fired when "Load more" button is clicked.
-    $scope.load_more_results = function (page, page_size, sort_field) {
+     $scope.load_more_results = function (page, page_size, sort_field) {
         if (page_size !== 'default') {
             $scope.$root.page_size = page_size
         }
@@ -801,8 +799,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     /*
      * find out is the omic be clicked or not
      */
-    $scope.is_omic_clicked = function(thisomic){
-        if($scope.query_for_show.indexOf('omics_type:"'+thisomic+'"')>-1) return "true";
+    $scope.is_omic_clicked = function (thisomic) {
+        if ($scope.query_for_show.indexOf('omics_type:"' + thisomic + '"') > -1) return "true";
         return "false";
     }
 
@@ -835,7 +833,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
     };
 
-        function check_omics_type_null() {
+    function check_omics_type_null() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
         $scope.omics_facets_no = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0"};
@@ -863,23 +861,23 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }
 
 
-    function prepare_highlight_show(){
-        $scope.highlight_terms = $scope.query_for_show.match( /".*?"/g );
+    function prepare_highlight_show() {
+        $scope.highlight_terms = $scope.query_for_show.match(/".*?"/g);
 
-        if ($scope.highlight_terms===null) $scope.highlight_terms=[""]
-        if($scope.query_for_show.indexOf("AND")>-1) {
+        if ($scope.highlight_terms === null) $scope.highlight_terms = [""]
+        if ($scope.query_for_show.indexOf("AND") > -1) {
             var search_term = $scope.query_for_show.match(/.*?AND/);
-            search_term = search_term[0].replace( /AND/, "");
+            search_term = search_term[0].replace(/AND/, "");
         }
-        else{
+        else {
             search_term = $scope.query_for_show;
         }
-        search_term = search_term.replace( /\*:\*/, "");
+        search_term = search_term.replace(/\*:\*/, "");
         search_term = search_term.split(" ");
-        $scope.highlight_terms.push.apply($scope.highlight_terms,search_term);
+        $scope.highlight_terms.push.apply($scope.highlight_terms, search_term);
 
-        for(var i=0; i<$scope.highlight_terms.length; i++){
-            $scope.highlight_terms[i] = $scope.highlight_terms[i].replace( /"/g, '');
+        for (var i = 0; i < $scope.highlight_terms.length; i++) {
+            $scope.highlight_terms[i] = $scope.highlight_terms[i].replace(/"/g, '');
         }
     }
 
@@ -895,57 +893,57 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }
 
 }])
-.filter('browsehighlight', function($sce) {
-  return function(str, termsToHighlight) {
-          //Sort terms by length
-          if(str===null || str===undefined || str.length<1)return;
-          if(termsToHighlight.length<1) return ;
-          termsToHighlight.sort(function(a, b) {
-          return b.length - a.length;
-          });
-          // Regex to simultaneously replace terms
-          var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'gi');
-          return $sce.trustAsHtml(str.replace(regex, '<span class="highlighted">$&</span>'));
-  };
+    .filter('browsehighlight', function ($sce) {
+        return function (str, termsToHighlight) {
+            //Sort terms by length
+            if (str === null || str === undefined || str.length < 1)return;
+            if (termsToHighlight.length < 1) return;
+            termsToHighlight.sort(function (a, b) {
+                return b.length - a.length;
+            });
+            // Regex to simultaneously replace terms
+            var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'gi');
+            return $sce.trustAsHtml(str.replace(regex, '<span class="highlighted">$&</span>'));
+        };
 
-})
-.filter("megaNumber", function() {
-    return function(number, fractionSize) {
- 
-        if(number === null) return null;
-        if(number === 0) return "0";
- 
-        if(!fractionSize || fractionSize < 0)
-            fractionSize = 1;
- 
-        var abs = Math.abs(number);
-        var rounder = Math.pow(10,fractionSize);
-        var isNegative = number < 0;
-        var key = '';
-        var powers = [
-            {key: "Q", value: Math.pow(10,15)},
-            {key: "T", value: Math.pow(10,12)},
-            {key: "B", value: Math.pow(10,9)},
-            {key: "M", value: Math.pow(10,6)},
-            {key: "K", value: 1000}
-        ];
- 
-        for(var i = 0; i < powers.length; i++) {
- 
-            var reduced = abs / powers[i].value;
- 
-            reduced = Math.round(reduced * rounder) / rounder;
- 
-            if(reduced >= 1){
-                abs = reduced;
-                key = powers[i].key;
-                break;
+    })
+    .filter("megaNumber", function () {
+        return function (number, fractionSize) {
+
+            if (number === null) return null;
+            if (number === 0) return "0";
+
+            if (!fractionSize || fractionSize < 0)
+                fractionSize = 1;
+
+            var abs = Math.abs(number);
+            var rounder = Math.pow(10, fractionSize);
+            var isNegative = number < 0;
+            var key = '';
+            var powers = [
+                {key: "Q", value: Math.pow(10, 15)},
+                {key: "T", value: Math.pow(10, 12)},
+                {key: "B", value: Math.pow(10, 9)},
+                {key: "M", value: Math.pow(10, 6)},
+                {key: "K", value: 1000}
+            ];
+
+            for (var i = 0; i < powers.length; i++) {
+
+                var reduced = abs / powers[i].value;
+
+                reduced = Math.round(reduced * rounder) / rounder;
+
+                if (reduced >= 1) {
+                    abs = reduced;
+                    key = powers[i].key;
+                    break;
+                }
             }
-        }
- 
-        return (isNegative ? '-' : '') + abs + key;
-    };
-})
+
+            return (isNegative ? '-' : '') + abs + key;
+        };
+    })
 ;
 
 
@@ -953,7 +951,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
  * Query controller
  * Responsible for the search box in the header.
  */
-ddiApp.controller('QueryCtrl', ['$scope', '$http','$location', '$window', '$timeout', 'results', 'search','WordRetriever',  '$q', function ($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
+ddiApp.controller('QueryCtrl', ['$scope', '$http', '$location', '$window', '$timeout', 'results', 'search', 'WordRetriever', '$q', function ($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
 
     $scope.query = {
         text: '',
@@ -1048,7 +1046,7 @@ ddiApp.controller('QueryCtrl', ['$scope', '$http','$location', '$window', '$time
 
 //        if ($scope.queryForm.text.$invalid) {
 //            return;
-            // console.log("submitted invalid" + $scope.queryForm);
+        // console.log("submitted invalid" + $scope.queryForm);
 //        }
         $scope.meta_search($scope.query.text);
     };
@@ -1066,27 +1064,26 @@ ddiApp.controller('QueryCtrl', ['$scope', '$http','$location', '$window', '$time
     })();
 
     /**
-     * 
+     *
      * get suggestion words
-     */                
+     */
 
-  $scope.getwords = function(){
-    return $scope.words;
-  }
+    $scope.getwords = function () {
+        return $scope.words;
+    }
 
-  $scope.get_suggestions= function(typedthings){
+    $scope.get_suggestions = function (typedthings) {
 //    console.log("Do something like reload data with this: " + typedthings );
-    $scope.newwords = WordRetriever.getwords(typedthings);
-    $scope.newwords.then(function(data){
-      $scope.words = data;
-    });
-  }
+        $scope.newwords = WordRetriever.getwords(typedthings);
+        $scope.newwords.then(function (data) {
+            $scope.words = data;
+        });
+    }
 
-  $scope.do_query= function(suggestion){
+    $scope.do_query = function (suggestion) {
         $scope.query.text = suggestion;
         $scope.meta_search($scope.query.text);
-  }
-
+    }
 
 
 }]);
@@ -1096,7 +1093,7 @@ ddiApp.controller('QueryCtrl', ['$scope', '$http','$location', '$window', '$time
  * Dataset controller
  * Responsible for the Dataset fetching.
  */
-angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location', '$window', '$timeout',  '$q', function ($scope, $http,$location, $window, $timeout,  $q) {
+angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$location', '$window', '$timeout', '$q', function ($scope, $http, $location, $window, $timeout, $q) {
 
     var input = $location.url().replace("/", "");
     var inputs = input.split("*");
@@ -1135,7 +1132,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
      }).error(function(){
      });
      */
-    var related_datasets_url = web_service_url+"dataset/moreLikeThis?acc=" + acc + "&database=" + domain;
+    var related_datasets_url = web_service_url + "dataset/moreLikeThis?acc=" + acc + "&database=" + domain;
     $http({
         url: related_datasets_url,
         method: 'GET'
@@ -1152,7 +1149,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
     $scope.publication_info = [];
     var altmetricUrls = [];
     var arr = [];
-    var url = web_service_url+"dataset/get?acc=" + acc + "&database=" + domain;
+    var url = web_service_url + "dataset/get?acc=" + acc + "&database=" + domain;
     arr.push($http.get(url));
 
     $q.all(arr).then(function (ret) {
@@ -1188,7 +1185,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
                 }).error(function () {
                 });
 
-                var publication_url = web_service_url+"publication/list?acc=" + pubmed_id;
+                var publication_url = web_service_url + "publication/list?acc=" + pubmed_id;
                 $http.get(publication_url).success(function (publication_data) {
                     var publication = {};
                     if (publication_data.count > 1 || publication_data.count < 1) {
@@ -1197,20 +1194,20 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
                     var entity = publication_data.publications[0];
                     var inside_id = entity.id;
 
-                    var pub_year = entity.date.substr(0,4);
-                    var pub_month = parseInt(entity.date.substr(4,2));
-                    var pub_day = entity.date.substr(6,2);
-                    if(pub_month>0 && pub_month<13) {
-                        pub_month=$scope.month_names_short[pub_month-1]
+                    var pub_year = entity.date.substr(0, 4);
+                    var pub_month = parseInt(entity.date.substr(4, 2));
+                    var pub_day = entity.date.substr(6, 2);
+                    if (pub_month > 0 && pub_month < 13) {
+                        pub_month = $scope.month_names_short[pub_month - 1]
                     }
-                    else{
+                    else {
                         pub_month = '';
                     }
-                    if(pub_day === '00'){
+                    if (pub_day === '00') {
                         entity.date = pub_year + ' ' + pub_month + ';';
                     }
-                    else{
-                        entity.date = pub_year + ' ' + pub_month + ' ' + pub_day +';';
+                    else {
+                        entity.date = pub_year + ' ' + pub_month + ' ' + pub_day + ';';
                     }
 
 
@@ -1219,17 +1216,17 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
                     entity.pagination = entity.pagination || "";
 
                     var authors = [];
-                    for(var i=0; i<entity.authors.length; i++){
-                        var surname = entity.authors[i].substr(entity.authors[i].length-1,1);
-                        var reg = new RegExp(surname+"[a-z]{0,100} " + surname + "$","")
+                    for (var i = 0; i < entity.authors.length; i++) {
+                        var surname = entity.authors[i].substr(entity.authors[i].length - 1, 1);
+                        var reg = new RegExp(surname + "[a-z]{0,100} " + surname + "$", "")
                         var have_reg = entity.authors[i].search(reg) >= 0;
-                        if(have_reg){
-                            author_for_searching = entity.authors[i].replace(reg," "+surname);
+                        if (have_reg) {
+                            author_for_searching = entity.authors[i].replace(reg, " " + surname);
                         }
-                        else{
-                            author_for_searching = entity.authors[i].replace(surname,"");
-                        } 
-                        var author = {"fullname":entity.authors[i],"name_for_searching": author_for_searching};
+                        else {
+                            author_for_searching = entity.authors[i].replace(surname, "");
+                        }
+                        var author = {"fullname": entity.authors[i], "name_for_searching": author_for_searching};
                         authors.push(author);
                     }
 
@@ -1237,7 +1234,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
                         "pmid": inside_id,
                         "citation": entity.journal + ". " + entity.date + " " + entity.volume + "(" + entity.issue + "): " + entity.pagination + ".",
                         "title": entity.title,
-                        "authors":authors,  
+                        "authors": authors,
                         "pub_abstract": entity.pubAbstract
                     };
                     publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
@@ -1257,20 +1254,20 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
 
 
     $scope.file_links = [];
-    var get_file_links_url = web_service_url+"dataset/getFileLinks?acc=" + acc + "&database=" + domain;
+    var get_file_links_url = web_service_url + "dataset/getFileLinks?acc=" + acc + "&database=" + domain;
     $http({
         url: get_file_links_url,
         method: 'GET'
     }).success(function (data) {
-        for(var i=0; i<data.length; i++){
+        for (var i = 0; i < data.length; i++) {
             var name = data[i].replace(/.*\//, '');
             var link = data[i];
-            $scope.file_links.push({'name':name,'link':link});
+            $scope.file_links.push({'name': name, 'link': link});
         }
     }).error(function () {
         console.error("GET error: " + get_file_links_url);
     });
- 
+
 
     $scope.share_methods = {
         email: ["mailto:?body=[&subject=]"],
@@ -1291,17 +1288,17 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
 
 
     /**
-    * for tab control
-    */
+     * for tab control
+     */
     $scope.tabs = [{
-         title: 'Filelist',
-         url: 'filelist.tpl.html'
-         }, {
-         title: 'Bioentities',
-         url: 'bioentities.tpl.html'
-         }, {
-         title: 'Lab Details',
-         url: 'labdetails.tpl.html'
+        title: 'Filelist',
+        url: 'filelist.tpl.html'
+    }, {
+        title: 'Bioentities',
+        url: 'bioentities.tpl.html'
+    }, {
+        title: 'Lab Details',
+        url: 'labdetails.tpl.html'
     }];
 
     $scope.currentTab = 'filelist.tpl.html';
@@ -1361,7 +1358,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http','$location
     }
 
 
-
 }]);
 
 /**
@@ -1389,7 +1385,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 
 
-    var url = web_service_url+"dataset/latest?size=10";
+    var url = web_service_url + "dataset/latest?size=10";
     $http({
         url: url,
         method: 'GET'
@@ -1405,7 +1401,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 //
 //
-    var url = web_service_url+"dataset/mostAccessed?size=10";
+    var url = web_service_url + "dataset/mostAccessed?size=10";
     $http({
         url: url,
         method: 'GET'
@@ -1416,8 +1412,8 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         }
 
         $scope.most_accessed_list.sort(function (a, b) {
-                return parseInt(a.visitCount) < parseInt(b.visitCount);
-            });
+            return parseInt(a.visitCount) < parseInt(b.visitCount);
+        });
     }).error(function () {
         console.log("GET error:" + url);
         $scope.get_most_access_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
@@ -1425,30 +1421,29 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 
     //get general statistics
-    url = web_service_url+"stats/general";
+    url = web_service_url + "stats/general";
 
     $http({
         url: url,
         method: 'GET'
     }).success(function (data) {
         $scope.statistic_list = data;
-    for(var i = 0; i<$scope.statistic_list.length; i++){
-        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Different /g, '');
-        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Repositories\/Databases/g, 'repositories');
-        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Species\/Organisms/g, 'species');
-        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/D/g, 'd');
-        $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/T/g, 't');
-    };
+        for (var i = 0; i < $scope.statistic_list.length; i++) {
+            $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Different /g, '');
+            $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Repositories\/Databases/g, 'repositories');
+            $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/Species\/Organisms/g, 'species');
+            $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/D/g, 'd');
+            $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/T/g, 't');
+        }
+        ;
 
     }).error(function () {
         console.log("GET error:" + url);
     });
 
 
-
-
-    //get datasets No. of each repository 
-    url = web_service_url+"stats/domains";
+    //get datasets No. of each repository
+    url = web_service_url + "stats/domains";
     $scope.databases = {"test": "0"};
     $http({
         url: url,
@@ -1464,6 +1459,30 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
 
 }]);
 
+
+/**
+ * set the login status in cookie.
+ */
+angular.module('ddiApp').controller('LoginController', ['$scope', '$http', '$location','$cookieStore', function ($scope, $http, $location, $cookieStore) {
+    $scope.login = function (credentials) {
+        if(credentials.username === 'ddi'
+           && credentials.password === 'ebi'){
+            $cookieStore.put('loggedin', 'true');
+            $location.path('/Tools/ddi/');
+        }
+        else{
+            alert("Not correct, please input again");
+        }
+    }
+}]);
+
+/**
+ * get the login status in body.
+ */
+angular.module('ddiApp').controller('BodyController', ['$scope', '$cookieStore', function ($scope, $cookieStore) {
+    $scope.loggedin = $cookieStore.get('loggedin');
+}]);
+
 /**
  * Create a keyboard shortcut for quickly accessing the search box.
  */
@@ -1473,8 +1492,5 @@ function keyboard_shortcuts(e) {
     }
 }
 document.addEventListener('keyup', keyboard_shortcuts);
-
-
-
 
 

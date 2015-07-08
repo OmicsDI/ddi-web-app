@@ -69,9 +69,9 @@
     });
 </script>
 
-<body class="level2 ng-cloak">
+<body class="level2 ng-cloak" ng-controller="BodyController">
 
-<div id="wrapper" class="container_24 ng-cloak">
+<div id="wrapper" class="container_24 ng-cloak" ng-show="loggedin">
     <header>
         <div id="local-masthead" class="masthead grid_24 nomenu" style="height:132px">
             <!-- local-title -->
@@ -561,7 +561,8 @@
                                     </div>
 
                                     <div class="project-widget-paragraph">
-                                        <b>Accession: </b><span ng-bind-html="dataset.id |browsehighlight:highlight_terms"></span> (<span
+                                        <b>Accession: </b><span
+                                            ng-bind-html="dataset.id |browsehighlight:highlight_terms"></span> (<span
                                             style=""
                                             ng-bind-html="repositories[dataset.source]|browsehighlight:highlight_terms"> </span>
                                         )
@@ -598,6 +599,7 @@
 
 
 <script src="js/vendor/angular/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
 <script src="js/vendor/angular/angular-animate.min.js"></script>
 <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
 <script src="js/autocomplete.js"></script>

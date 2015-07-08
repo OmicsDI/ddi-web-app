@@ -68,16 +68,16 @@
     });
 </script>
 
-<body class="level2">
-<div id="wrapper" class="container_24">
+<body class="level2 ng-cloak" ng-controller="BodyController">
+<div id="wrapper" class="container_24 ng-cloak" ng-show="loggedin">
     <header>
         <div id="local-masthead" class="masthead grid_24 nomenu" style="height:132px">
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
             <div class="grid_12 alpha logo-title" id="local-title">
                 <a href="/Tools/ddi/" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
-                                                                 alt="logo"
-                                                                 width="64" height="64"></a>
+                                                                        alt="logo"
+                                                                        width="64" height="64"></a>
                 <span><h1><a href="/Tools/ddi/" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
@@ -286,6 +286,7 @@
 
 
 <script src="js/vendor/angular/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
 <script src="js/vendor/angular/angular-animate.min.js"></script>
 <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
 <script src="js/autocomplete.js"></script>

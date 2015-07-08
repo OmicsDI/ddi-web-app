@@ -32,7 +32,7 @@ var drawHotwords = function () {
 
         var body = d3.select("#hotwords");
 
-        var divwidth = body.style("width");
+        var divwidth = 420;
 
         var svg = body.append("svg")
             .attr("width", divwidth)
