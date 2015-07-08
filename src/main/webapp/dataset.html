@@ -134,7 +134,7 @@
         <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
             <fieldset>
                 <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                    <div class="input-group input-group-sm">
+                    <div class="input-group ">
                         <autocomplete ng-model="query.text"
                                       attr-placeholder="organism, repository, gene, tissue, accession"
                                       click-activation="true" data="words" on-type="get_suggestions"
@@ -153,7 +153,7 @@
                                                                required>
                         -->
                         <div class="input-group-btn">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary ddi-btn">
                                 <i class="fa fa-search"></i> Search
                             </button>
                         </div>

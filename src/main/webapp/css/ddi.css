@@ -514,7 +514,7 @@ margin: 0;
 }
 
 #tablink {
-    border-bottom-style:red;
+    border-bottom-style:inherit;
 }
 
 form fieldset {
@@ -537,15 +537,15 @@ form fieldset {
 
 
 .image_a:link, .image_a:visited {
-   border-bottom-color: none;
+   border-bottom-color: inherit;
    border-bottom-style: none;
-   border-bottom-width: none;
+   border-bottom-width: inherit;
 }
 
 .domain {
    fill: none;
    stroke: black;
-   stroke-width; 1;
+   stroke-width: 1;
 } 
 
 
@@ -637,7 +637,7 @@ margin:9px 0 0;
     text-align: center;
     color: white;
     text-decoration: none;
-    font-weight: none;
+    font-weight: inherit;
 }
 /*
  * for the socialnetwork sharing
@@ -719,3 +719,105 @@ margin:9px 0 0;
     margin-top: 40px;
 }
 */
+
+
+@font-face{
+    src:url(http://lab.web-gate.fr/fonts/proxima-nova/ProximaNova-Light.ttf);
+    font-family:proximaNova;
+}
+#card {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    font-family: "proximaNova", helvetica Neue;
+    font-weight: 600;
+    -webkit-appearance: none;
+    border-radius: 0;
+    width: 220px;
+    margin: auto;
+    margin-top: 120px;
+}
+#card h2 {
+    text-shadow: 0 1px 0 #27ae60;
+    font-size: 1.62em;
+    color: #2ecc71;
+    display: block;
+    width: 100%;
+    padding-bottom: .4em;
+    margin-bottom: .6em;
+    border-bottom: 2px solid #2ecc71;
+    /*box-shadow*/
+    -webkit-box-shadow: 0 1px 0 #27ae60;
+    -moz-box-shadow: 0 1px 0 #27ae60;
+    box-shadow: 0 1px 0 #27ae60;
+}
+#card a { color: #27ae60 }
+#card label {
+    font-size: 10px;
+    display: block;
+    float: right;
+    clear: left;
+    line-height: 2.4;
+    margin: -30px 0 0;
+    padding: 0;
+    width: 190px;
+    height: 20px;
+}
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    clear: both;
+    float: left;
+    display: block;
+    border: 1px solid #ccc;
+    background: #ebebeb;
+    margin: 0;
+    padding: 6px 10px;
+    width: 99%;
+    height: 32px;
+    outline: 0;
+    color: #34495e;
+    font-size: 1.2em;
+}
+input[type=submit] {
+    background: #27ae60;
+    color: #ecf0f1;
+    border: 0;
+    border-bottom: 2px solid #2ecc71;
+    margin: 10px 0 0;
+}
+
+input[type=text]:not([value*=" "]):active,
+input[type=text]:not([value*=" "]):focus {
+    /*box-shadow*/
+    -webkit-box-shadow: inset 4px 0px 0  #2ecc71;
+    -moz-box-shadow: inset 4px 0px 0  #2ecc71;
+    box-shadow: inset 4px 0px 0  #2ecc71;
+    padding-left: 10px;
+    border-color: #00b7ea;
+    background-color: white;
+: x;
+}
+input[type=password]:not([value*=" "]):active,
+input[type=password]:not([value*=" "]):focus {
+    /*box-shadow*/
+    -webkit-box-shadow: inset 4px 0px 0  #2ecc71;
+    -moz-box-shadow: inset 4px 0px 0  #2ecc71;
+    box-shadow: inset 4px 0px 0  #2ecc71;
+    padding-left: 10px;
+    border-color: #00b7ea;
+: x;
+}
+
+input[type=submit]:active,
+input[type=submit]:focus {
+    background: #2ecc71;
+    color: #ecf0f1;
+    border: 0;
+    position: relative;
+    top: 1px;
+    border-bottom: 1px solid;
+}
+
+.ddi-btn {
+   height: 32px;
+}

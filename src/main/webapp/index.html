@@ -70,20 +70,13 @@
 
 <body class="level2 ng-cloak" ng-controller="BodyController">
 
-<div id="login" class="container_24 ng-cloak" ng-if="!loggedin">
+<div id="card" class="container_24 ng-cloak" ng-if="!loggedin"  >
+    <h2>Sign-up  </h2>
     <form name="loginForm" ng-controller="LoginController"
-          ng-submit="login(credentials)" novalidate>
-
-        <label for="username">Username:</label>
-        <input type="text" id="username"
-               ng-model="credentials.username">
-
-        <label for="password">Password:</label>
-        <input type="password" id="password"
-               ng-model="credentials.password">
-
-        <button type="submit">Login</button>
-
+          ng-submit="login(credentials)" novalidate >
+    <input type="text" id="name" ng-model="credentials.username" placeholder="Name.."/>
+    <input type="password" id="password" ng-model="credentials.password"  placeholder="Password.." />
+    <input type="submit" id="submit" name="submit"/>
     </form>
 </div>
 
@@ -192,8 +185,8 @@
                                                                        autocomplete="off"
                                                                        required>
                                 -->
-                                <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="input-group-btn" >
+                                    <button type="submit" class="btn btn-primary ddi-btn">
                                         <i class="fa fa-search"></i> Search
                                     </button>
                                 </div>
