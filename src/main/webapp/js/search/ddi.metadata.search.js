@@ -800,7 +800,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      * find out is the omic be clicked or not
      */
     $scope.is_omic_clicked = function (thisomic) {
-        if ($scope.query_for_show.indexOf('omics_type:"' + thisomic + '"') > -1) return "true";
+        thisomic = thisomic.toLowerCase();
+        if ($scope.query_for_show.toLowerCase().indexOf('omics_type:"' + thisomic + '"') > -1) return "true";
         return "false";
     }
 

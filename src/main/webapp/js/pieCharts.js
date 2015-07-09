@@ -362,8 +362,6 @@ var pie_charts_repos_omics = function () {
             var piechartname = 'chart_repos_omics';
             var body = d3.select("#" + piechartname);
 
-//        var div_width_px = body.style("width");
-//        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
             var div_width = 420;
             var width = div_width,
                 height = 300,
@@ -380,27 +378,10 @@ var pie_charts_repos_omics = function () {
 
             svg.append("g")
                 .attr("class", "slices");
-// svg.append("g")
-// 	.attr("class", "labels");
-// svg.append("g")
-// 	.attr("class", "lines");
             svg.append("circle")
                 .attr("id", "insidecycle")
                 .attr("style", "stroke:none");
 
-// body.append('form')
-//   .attr("id",piechartname+"_form")
-//   .attr("class","center")
-//   .attr("style","margin-bottom:8px")
-//   .selectAll('label')
-//   .data(label_data).enter()
-//   .append('label')
-//     .text(function (d) { return d;})
-//   .append('input')
-//     .attr('type','radio')
-//     .attr('name','dataset')
-//     .attr('value',function (d) { return d; })
-//     .text(function (d) { return d; })
             var formdiv = body.append('div');
             formdiv
                 .attr("class", "center")
@@ -441,22 +422,7 @@ var pie_charts_repos_omics = function () {
                 .append('span')
                 .append('span')
             ;
-            /*
-             radio_form
-             .append('input')
-             .attr('type', 'radio')
-             .attr('name', 'dataset')
-             .attr('value', 'Treemap')
-             .attr('id', 'Treemap')
-             .text('Treemap');
-             radio_form
-             .append('label')
-             .text('Treemap')
-             .attr('for', 'Treemap')
-             .append('span')
-             .append('span')
-             ;
-             */
+
             d3.select("#" + piechartname + "_form").select('input[value=Repos]').property('checked', true)
 
             d3.select("#" + piechartname + "_form").selectAll('input')
@@ -472,10 +438,6 @@ var pie_charts_repos_omics = function () {
             var arc = d3.svg.arc()
                 .outerRadius(radius * 0.95)
                 .innerRadius(radius * 0.6);
-
-// var outerArc = d3.svg.arc()
-// 	.innerRadius(radius * 0.9)
-// 	.outerRadius(radius * 0.9);
 
             svg.select("#insidecycle")
                 .attr("r", radius * 0.6)
@@ -654,10 +616,10 @@ var pie_charts_repos_omics = function () {
              }
              */
             /*init the inside cycle*/
-            text_name.text(data[data.length-1].name).style("font-size","14px");
-            text_value.text(data[data.length-1].value + " datasets").style("font-size","12px");
-            var colorinside = color(data.length-1);
-            if (value === 'Omics') colorinside = treemap_color[data[data.length-1].name];
+            text_name.text(data[data.length - 1].name).style("font-size", "14px");
+            text_value.text(data[data.length - 1].value + " datasets").style("font-size", "12px");
+            var colorinside = color(data.length - 1);
+            if (value === 'Omics') colorinside = treemap_color[data[data.length - 1].name];
             svg.select("#insidecycle")
                 .style("fill", colorinside)
                 .style("opacity", ".95");
@@ -801,6 +763,10 @@ var barcharts_years_omics_types = function () {
                 });
             })]);
 
+            var tooltip = d3.select('body').append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
@@ -847,6 +813,24 @@ var barcharts_years_omics_types = function () {
                 .on("click", function (d) {
                     location.href = "browse.html#/search?q=*:* AND omics_type:\"" + d.name + "\" AND publication_date:\"" + d.year + "\"";
                 })
+                .on("mouseover", function (d) {
+                    var current_g_x = parseInt(d3.transform(d3.select(this.parentNode).attr("transform")).translate[0]);
+                    var current_rect_x = parseInt(d3.select(this).attr("x"));
+                    console.log(parseInt(d3.select(this).attr("y")));
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html( d.value + " datasets" )
+                        .style("left", (1095 + current_g_x + current_rect_x) + "px")
+                        .style("top", (parseInt(d3.select(this).attr("y"))+635) + "px")
+                        .style("height",  "20px")
+                        .style("width", d.value.toString().length * 5 + 80 + "px");
+                })
+                .on("mouseout", function (d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
             ;
 
 
@@ -861,6 +845,9 @@ var barcharts_years_omics_types = function () {
                 .attr("class", "legend")
                 .attr("transform", function (d, i) {
                     return "translate(0," + i * 20 + ")";
+                })
+                .on("click", function (d) {
+                    location.href = "browse.html#/search?q=*:* AND omics_type:\"" + d + "\"";
                 });
 
             legend.append("rect")
@@ -880,6 +867,7 @@ var barcharts_years_omics_types = function () {
         }
 
     }
+
     function clickMe(d) {
         location.href = "browse.html#/search?q=*:* AND publication_date:\"" + d + "\"";
     };

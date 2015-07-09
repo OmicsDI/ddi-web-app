@@ -766,7 +766,7 @@ input[type="text"],
 input[type="password"],
 input[type="submit"] {
     clear: both;
-    float: left;
+/*    float: left;*/
     display: block;
     border: 1px solid #ccc;
     background: #ebebeb;
@@ -820,4 +820,8 @@ input[type=submit]:focus {
 
 .ddi-btn {
    height: 32px;
+}
+
+.input-block{
+    display: block;
 }
