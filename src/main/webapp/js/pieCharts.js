@@ -2,7 +2,7 @@ var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
 var retry_limit_time = 10;
 
 
-var pie_charts_tissues_organisms = function () {
+var bub_charts_tissues_organisms = function () {
     queue()
         .defer(d3.json, web_service_url + 'stats/tissues?size=100') // topojson polygons
         .defer(d3.json, web_service_url + 'stats/organisms?size=100') // geojson points
@@ -13,13 +13,14 @@ var pie_charts_tissues_organisms = function () {
         if (error) {
             retry_limit_time--;
             if (retry_limit_time <= 0) {
-                output_error_info(chart_tissues_organisms);
+                output_error_info('chart_tissues_organisms');
                 return;
             }
-            output_getting_info(chart_tissues_organisms);
+            output_getting_info('chart_tissues_organisms');
             pie_charts_tissues_organisms();
         }
         else {
+            remove_getting_info('chart_tissues_organisms');
 
             if (tissues[tissues.length - 1].name !== "Not available") {
                 alert("the last element of tissues is not total number, charts is wrong")
@@ -55,15 +56,15 @@ var pie_charts_tissues_organisms = function () {
             var total_diseases = diseases.shift();
 
             organisms = organisms.sort(function (a, b) {
-                return parseInt(a.value) > parseInt(b.value);
+                return parseInt(a.value) - parseInt(b.value);
             });
 
             tissues = tissues.sort(function (a, b) {
-                return (parseInt(a.value) > parseInt(b.value));
+                return (parseInt(a.value) - parseInt(b.value));
             });
 
             diseases = diseases.sort(function (a, b) {
-                return parseInt(a.value) > parseInt(b.value);
+                return parseInt(a.value) - parseInt(b.value);
             });
 
 
@@ -300,6 +301,7 @@ var pie_charts_repos_omics = function () {
             pie_charts_repos_omics();
         }
         else {
+            remove_getting_info('chart_repos_omics');
             var repos = transformdomains(domains);
             omicstype.shift();
             var unavailableomics = omicstype.pop();
@@ -308,10 +310,10 @@ var pie_charts_repos_omics = function () {
             var total_repos = gettotal(repos);
 
             omicstype = omicstype.sort(function (a, b) {
-                return parseInt(a.value) > parseInt(b.value);
+                return parseInt(a.value) - parseInt(b.value);
             });
             repos = repos.sort(function (a, b) {
-                return parseInt(a.value) > parseInt(b.value);
+                return parseInt(a.value) - parseInt(b.value);
             });
 
 
@@ -707,6 +709,7 @@ var barcharts_years_omics_types = function () {
             barcharts_years_omics_types();
         }
         else {
+            remove_getting_info('barchart_omicstype_annual');
             var body = d3.select('#barchart_omicstype_annual');
 //        var div_width_px = body.style("width");
 //        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
@@ -887,4 +890,8 @@ function output_getting_info(errordiv) {
     var tempdiv = d3.select("#" + errordiv);
     tempdiv.select("i").remove();
     tempdiv.append("i").attr("class", "fa fa-spinner fa-spin");
+}
+function remove_getting_info(errordiv) {
+    var tempdiv = d3.select("#" + errordiv);
+    tempdiv.select("i").remove();
 }

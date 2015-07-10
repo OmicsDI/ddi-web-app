@@ -40,7 +40,6 @@
 
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
     <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
-    <base href="/Tools/ddi/">
 
     <!-- favico -->
     <link rel="apple-touch-icon" sizes="57x57" href="/Tools/ddi/static/img/favico/apple-icon-57x57.png">
@@ -80,10 +79,10 @@
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
             <div class="grid_12 alpha logo-title" id="local-title">
-                <a href="/app" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
+                <a href="/Tools/ddi/" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
                                                                  alt="logo"
                                                                  width="64" height="64"></a>
-                <span><h1><a href="/app" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
+                <span><h1><a href="/Tools/ddi/" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
@@ -374,8 +373,8 @@
                              src='static/img/altmetric/altmetric_unknown.png'>
                         <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}
                            style="border-bottom-style:none"> <img
-                                ng-hide="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null"
-                                src={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}>
+                                ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]"
+                                src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
                         </a>
                     </div>
                     <div class="" id="dataset_middle" style="overflow:hidden;">
@@ -660,7 +659,6 @@
 
 <script src="js/vendor/angular/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
-<script src="js/vendor/angular/angular-route.js"></script>
 <script src="js/vendor/angular/angular-animate.min.js"></script>
 <script src="js/autocomplete.js"></script>
 <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>

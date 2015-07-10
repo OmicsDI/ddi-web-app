@@ -1167,7 +1167,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 $scope.data_protocol_description = $scope.dataset.protocols[1].description;
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
-            console.log($scope.dataset);
+            if($scope.dataset.publicationIds === null) return;
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
                 var pubmed_id = $scope.dataset.publicationIds[i];
                 altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmed_id;
@@ -1182,7 +1182,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     };
                     $scope.altmetric_entities.push(altmetric_entity);
                     $scope.publication_index[inside_id] = $scope.altmetric_entities.indexOf(altmetric_entity);
-                    console.log($scope.publication_index);
                 }).error(function () {
                 });
 
@@ -1240,7 +1239,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     };
                     publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
 
-                    console.log(publication_info_entity.authors);
                     $scope.publication_info.push(publication_info_entity);
                     $scope.publication_index_info[inside_id] = $scope.publication_info.indexOf(publication_info_entity);
                 }).error(function () {
