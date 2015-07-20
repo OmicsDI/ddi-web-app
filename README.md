@@ -1,9 +1,9 @@
 ![](https://travis-ci.org/PRIDE-Cluster/cluster-web-app.svg?branch=master)
 
-Data Discovery Index web-app
+Omics Discovery Index web-app
 =====================
 
-A web application for the *Data Discovery Index* resource. We use mostly [`AngularJS`](https://angularjs.org/) as
+A web application for the *Omics Discovery Index* resource. We use mostly [`AngularJS`](https://angularjs.org/) as
 a framework for a *JavaEE* container-based web app. For visualisation [NVD3](https://github.com/novus/nvd3) and
 [Angularjs-nvd3-directives](http://cmaurer.github.io/angularjs-nvd3-directives/) are used.
 

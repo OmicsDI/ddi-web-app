@@ -14,11 +14,11 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta content="width=device-width" name="viewport">
-    <meta content="DDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
+    <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
           name="description">
 
 
-    <title>DDI: API</title>
+    <title>OmicsDI: API</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link type="text/css" href="css/main.css" rel="stylesheet">
@@ -36,25 +36,25 @@
     <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/984-24-col-fluid.css"
           type="text/css" media="screen">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="css/omicsdi.css" rel="stylesheet">
     <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
     <!-- favico -->
-    <link rel="apple-touch-icon" sizes="57x57" href="/Tools/ddi/static/img/favico/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/Tools/ddi/static/img/favico/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/Tools/ddi/static/img/favico/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/Tools/ddi/static/img/favico/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/Tools/ddi/static/img/favico/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/Tools/ddi/static/img/favico/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/Tools/ddi/static/img/favico/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/Tools/ddi/static/img/favico/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/Tools/ddi/static/img/favico/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/Tools/ddi/static/img/favico/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/Tools/ddi/static/img/favico/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/Tools/ddi/static/img/favico/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/Tools/ddi/static/img/favico/favicon-16x16.png">
-    <link rel="manifest" href="/Tools/ddi/static/img/favico/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="/Tools/omicsdi/static/img/favico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/Tools/omicsdi/static/img/favico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Tools/omicsdi/static/img/favico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Tools/omicsdi/static/img/favico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Tools/omicsdi/static/img/favico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Tools/omicsdi/static/img/favico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Tools/omicsdi/static/img/favico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Tools/omicsdi/static/img/favico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Tools/omicsdi/static/img/favico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Tools/omicsdi/static/img/favico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Tools/omicsdi/static/img/favico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Tools/omicsdi/static/img/favico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Tools/omicsdi/static/img/favico/favicon-16x16.png">
+    <link rel="manifest" href="/Tools/omicsdi/static/img/favico/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/Tools/ddi/static/img/favico/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="/Tools/omicsdi/static/img/favico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <!--favico end -->
 
@@ -76,10 +76,10 @@
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
             <div class="grid_12 alpha logo-title" id="local-title">
-                <a href="/Tools/ddi/" title="Back to DDI homepage"><img src="/Tools/ddi/static/img/logo/DDI-icon-3.png"
+                <a href="/Tools/omicsdi/" title="Back to OmicsDI homepage"><img src="/Tools/omicsdi/static/img/logo/OmicsDI-icon-3.png"
                                                                  alt="logo"
                                                                  width="64" height="64"></a>
-                <span><h1><a href="/Tools/ddi/" title="Back to DDI homepage">Data Discovery Index</a></h1></span>
+                <span><h1><a href="/Tools/omicsdi/" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
             </div>
             <!-- /local-title -->
 
@@ -93,14 +93,14 @@
             <!-- local-nav -->
             <nav style="float:bottom">
                 <ul class="grid_24" id="local-nav">
-                    <li class=" first" id="home-menu"><a title="Home" href="/Tools/ddi/">Home</a></li>
+                    <li class=" first" id="home-menu"><a title="Home" href="/Tools/omicsdi/">Home</a></li>
                     <li class="" id="browse-menu"><a title="Browse"
-                                                     href="/Tools/ddi/browse.html#/search?q=*:*">Browse</a>
+                                                     href="/Tools/omicsdi/browse.html#/search?q=*:*">Browse</a>
                     </li>
-                    <li class="" id="api-menu"><a title="DDI API" href="/Tools/ddi/api.html#/overview">API</a>
+                    <li class="" id="api-menu"><a title="OmicsDI API" href="/Tools/omicsdi/api.html#/overview">API</a>
                     </li>
                     <li class=" last" id="about-prider-menu"><a title="Databases"
-                                                                href="/Tools/ddi/databases.html">Databases</a>
+                                                                href="/Tools/omicsdi/databases.html">Databases</a>
                     </li>
                     <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
                     add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
@@ -222,14 +222,14 @@
                 </h1>
 
                 <p>Most data in the Datatsets Discovery Index can be accessed programmatically using a <a
-                        href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/">RESTful API</a>
+                        href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/">RESTful API</a>
                     allowing for integration with other resources. The API implementation is based on the
                     <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.
                 </p>
 
                 <h2 id="web-browsable-api">Web browsable API</h2>
 
-                <p>The DDI API is <strong>web browsable</strong>, which means that:</p>
+                <p>The OmicsDI API is <strong>web browsable</strong>, which means that:</p>
 
                 <ul>
                     <li><p>The query results returned by the API are available in <a href="http://json.org/"
@@ -238,37 +238,37 @@
                     </li>
 
                     <li>
-                        <p>The main <a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/" target="_blank">RESTful API</a> page
+                        <p>The main <a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/" target="_blank">RESTful API</a> page
                             provides a simple web-based user interface, which allows developers can familiarise
-                            themselves with the API and get a better sense of the DDI data before writing single line of
+                            themselves with the API and get a better sense of the OmicsDI data before writing single line of
                             code. </p>
                     </li>
                     <li><p>many resources are <strong>hyperlinked</strong> so that it's possible to navigate the API in
                         the browser.</p></li>
                 </ul>
 
-                <p>As a result, developers can familiarise themselves with the API and get a better sense of the DDI
+                <p>As a result, developers can familiarise themselves with the API and get a better sense of the OmicsDI
                     data.</p>
 
 
-                <p><a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/" class="btn btn-primary" role="button"
+                <p><a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/" class="btn btn-primary" role="button"
                       target="_blank">Browse the API</a></p>
 
                 <h2 id="versioning">Versioning</h2>
 
                 <p>
-                    To ensure that changes in the DDI API don't break the applications relying on it, the API is
+                    To ensure that changes in the OmicsDI API don't break the applications relying on it, the API is
                     versioned, and the version is included in the API's URL.
                 </p>
 
                 <p>
                     For example, the current API is at Version 1 and is available at
-                    http://www.ebi.ac.uk/Tools/ddi/ws/v1, and
-                    the next version will be available at http://www.ebi.ac.uk/Tools/ddi/ws/v2.
+                    http://www.ebi.ac.uk/Tools/omicsdi/ws/v1, and
+                    the next version will be available at http://www.ebi.ac.uk/Tools/omicsdi/ws/v2.
                 </p>
 
                 <p>
-                    The latest version of the API can be accessed at http://www.ebi.ac.uk/Tools/ddi/ws/current, but it's
+                    The latest version of the API can be accessed at http://www.ebi.ac.uk/Tools/omicsdi/ws/current, but it's
                     not
                     recommended to use this endpoint for long-term development as the underlying data model may change.
                 </p>
@@ -292,7 +292,7 @@
                 </ul>
                 <p>
                     An advance notice will be given before obsoleting an API version. To stay up to date, please
-                    consider signing up for the PRIDE <a href="https://twitter.com/DDIndex">Twitter</a> account.
+                    consider signing up for the PRIDE <a href="https://twitter.com/OmicsDIndex">Twitter</a> account.
                 </p>
 
 
@@ -313,7 +313,7 @@
                 <h4>Example</h4>
 <pre>
 <code class="prettyprint">
-    http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+    http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
     {
     "count": 733,
     "datasets": [
@@ -363,7 +363,7 @@
 
 <pre>
 <code class="prettyprint">
-    http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/get?acc=PXD001848&database=PRIDE
+    http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/get?acc=PXD001848&database=PRIDE
     {
     "id": "PXD001848",
     "name": "Global Analysis of Protein Folding Thermodynamics for Disease State Characterization, MCF7 vs MDAMB231",
@@ -460,9 +460,9 @@
 
                 <ul>
 
-                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&start=0&size=50">http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&start=0&size=50</a>
+                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&start=0&size=50">http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&start=0&size=50</a>
                     </li>
-                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&start=0&size=50">http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&start=0&size=20</a>
+                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&start=0&size=50">http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&start=0&size=20</a>
                 </ul>
 
 
@@ -474,10 +474,10 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&sort_field=id">http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&sort_field=id</a>
+                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&sort_field=id">http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&sort_field=id</a>
                     </li>
                     <li>
-                        <a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&sort_field=publication_date">http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human&sort_field=publication_date</a>
+                        <a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&sort_field=publication_date">http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human&sort_field=publication_date</a>
                     </li>
                 </ul>
 
@@ -488,7 +488,7 @@
 
                 <h2 id="v1-filtering">Filtering</h2>
 
-                <p>The API supports several filtering operations that complement the main DDI search functionality.</p>
+                <p>The API supports several filtering operations that complement the main OmicsDI search functionality.</p>
 
                 <h3 id="v1-filtering-by-search-term">Filtering by search term</h3>
 
@@ -497,9 +497,9 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human">http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human</a>
+                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human">http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human</a>
                     </li>
-                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=cancer">http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=cancer</a>
+                    <li><a href="http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=cancer">http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=cancer</a>
                     </li>
                 </ul>
 
@@ -514,10 +514,10 @@
                 <ul>
 
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND omics_type: "Proteomics"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND omics_type: "Proteomics"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND omics_type:"Proteomics"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND omics_type: "Metabolomics"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND omics_type: "Metabolomics"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND omics_type:"Metabolomics"</a></li>
                 </ul>
 
@@ -533,16 +533,16 @@
                 <ul>
 
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND repository:"MassIVE"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND repository:"MassIVE"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND repository:"MassIVE"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND repository:"Metabolights"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND repository:"Metabolights"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND repository:"Metabolights"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND repository:"PeptideAtlas"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND repository:"PeptideAtlas"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND repository:"PeptideAtlas"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND repository:"PRIDE"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND repository:"PRIDE"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND repository:"PRIDE"</a></li>
                 </ul>
 
@@ -555,9 +555,9 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND TAXONOMY:"9606"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                    <li><a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND TAXONOMY:"9606"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                         AND TAXONOMY:"9606"</a></li>
-                    <li><a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND TAXONOMY:"10090"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                    <li><a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND TAXONOMY:"10090"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                         AND TAXONOMY:"10090"</a></li>
                 </ul>
 
@@ -570,10 +570,10 @@
                 <h4>Examples</h4>
 
                 <ul>
-                    <li><a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND tissue:"Brain"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                    <li><a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND tissue:"Brain"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                         AND tissue:"Brain"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND tissue:"Cell culture"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND tissue:"Cell culture"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND tissue:"Cell culture"</a></li>
                 </ul>
 
@@ -589,10 +589,10 @@
                 <ul>
 
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND disease:"Breast cancer"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND disease:"Breast cancer"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND tissue:"Breast cancer"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND disease:"Lymphoma"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND disease:"Lymphoma"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND tissue:"Lymphoma"</a></li>
                 </ul>
 
@@ -610,10 +610,10 @@
 
                 <ul>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND modification:"iodoacetamide derivatized residue"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND modification:"iodoacetamide derivatized residue"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND modification:"iodoacetamide derivatized residue"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND modification:"monohydroxylated residue"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND modification:"monohydroxylated residue"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND modification:"monohydroxylated residue"</a></li>
                 </ul>
 
@@ -627,10 +627,10 @@
 
                 <ul>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND instrument_platform:"LTQ"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND instrument_platform:"LTQ"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND instrument_platform:"LTQ"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND instrument_platform:"Q Exactive"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND instrument_platform:"Q Exactive"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND instrument_platform:"Q Exactive"</a></li>
                 </ul>
 
@@ -645,10 +645,10 @@
 
                 <ul>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND publication_date:"2015"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND publication_date:"2015"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND publication_date:"2015"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND publication_date:"2014"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND publication_date:"2014"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND publication_date:"2014"</a></li>
                 </ul>
 
@@ -664,10 +664,10 @@
 
                 <ul>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND technology_type:"Mass Spectrometry"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND technology_type:"Shotgun proteomics"</a></li>
                 </ul>
 
@@ -681,10 +681,10 @@
 
                 <ul>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry" AND publication_date:"2015"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry" AND publication_date:"2015"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND technology_type:"Mass Spectrometry" AND publication_date:"2015"</a></li>
                     <li>
-                        <a href='http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics" AND modification:"monohydroxylated residue"'>http://wwwdev.ebi.ac.uk/Tools/ddi/ws/dataset/search?query=human
+                        <a href='http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics" AND modification:"monohydroxylated residue"'>http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/dataset/search?query=human
                             AND technology_type:"Shotgun proteomics" and AND modification:"monohydroxylated residue"</a>
                     </li>
                 </ul>
@@ -762,7 +762,7 @@
 <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
 <script src="js/autocomplete.js"></script>
 <script src="js/vendor/underscore/underscore-min.js"></script>
-<script src="js/search/ddi.metadata.search.js"></script>
+<script src="js/search/omicsdi.metadata.search.js"></script>
 <script src="js/vendor/d3/d3.min.js"></script>
 
 </body>
