@@ -612,7 +612,7 @@
                                      ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
                                 <img src="css/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
                                 <a target="_blank" class="align-justify"
-                                   href={{"/Tools/ddi/dataset.html#/"+relatedDataset.id+"*"+repositories[relatedDataset.source]}}>{{relatedDataset.title}}</a>
+                                   href={{"/Tools/ddi/dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}>{{relatedDataset.title}}</a>
                             </div>
 
                             <div class="project-widget-paragraph hidden">
