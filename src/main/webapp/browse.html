@@ -551,17 +551,17 @@
                                     <div class="project-widget-paragraph">
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['organisms']">
-                                        Organism: <span ng-repeat="organism in dataset['organisms']"
+                                        ORGANISM: <span ng-repeat="organism in dataset['organisms']"
                                                                ng-bind-html="organism.name |browsehighlight:highlight_terms"> </span>
                                         <span ng-show="dataset.organisms.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['tissues']">
-                                        Tissue: <span ng-repeat="tissue in dataset['tissues']"
+                                        TISSUE: <span ng-repeat="tissue in dataset['tissues']"
                                                              ng-bind-html="tissue.name |browsehighlight:highlight_terms"></span>
                                         <span ng-show="dataset.tissues.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['diseases']">
-                                        Disease: <span ng-repeat="disease in dataset['diseases']"
+                                        DISEASE: <span ng-repeat="disease in dataset['diseases']"
                                                               ng-bind-html="disease.name |browsehighlight:highlight_terms"></span>
                                         <span ng-show="dataset.diseases.length===0">Not available</span>
                                     </div>

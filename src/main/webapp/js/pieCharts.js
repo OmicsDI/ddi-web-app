@@ -1,5 +1,5 @@
 var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
-var retry_limit_time = 10;
+var retry_limit_time = 100;
 
 
 var bub_charts_tissues_organisms = function () {

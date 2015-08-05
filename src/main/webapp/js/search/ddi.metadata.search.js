@@ -639,6 +639,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      * progress bar
      */
     $scope.progressbar = ngProgressFactory.createInstance();
+    $scope.progressStyle = {'width':'10%'};
     /**
      * Watch `search_in_progress` changes.
      */
@@ -655,7 +656,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 //        alert($scope.search_in_progress);
         if($scope.search_in_progress) {
             $scope.progressbar.start();
-            $scope.progressbar.set(40);
+            $scope.progressbar.set(45);
 //            alert("start search " + $scope.progressbar.status());
         }
         else{
@@ -1188,6 +1189,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
             if ($scope.dataset.protocols.length > 0) {
                 $scope.sample_protocol_description = $scope.dataset.protocols[0].description;
+            }
+            if ($scope.dataset.protocols.length > 1) {
                 $scope.data_protocol_description = $scope.dataset.protocols[1].description;
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);

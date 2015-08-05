@@ -604,7 +604,7 @@
                     <!-- ngRepeat: dataset in result.datasets -->
                     <li class="result animate-repeat "
                         ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-                        <div class="project-widget  list-group-item">
+                        <div class="project-widget  list-group-item ddi-card-panel">
 
                             <div class="project-widget-accession">
                                 <img src="css/Proteomics2.png"
@@ -615,7 +615,6 @@
                                 <a target="_blank" class="align-justify"
                                    href={{"/Tools/ddi/dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}>{{relatedDataset.title}}</a>
                             </div>
-
                             <div class="project-widget-paragraph hidden">
                                 <b>Project description:</b>
                                 {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
@@ -626,15 +625,12 @@
                                 <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>
                                 <span ng-show="relatedDataset.organisms.length===0">Not available</span>
                             </div>
-
-                            <div class="project-widget-paragraph">
-                                {{relatedDataset.id}} ({{repositories[relatedDataset.source]}})
+                            <div class="project-widget-paragraph" >
+                                <span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>
+                                        <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->{{relatedDataset.id}}</a> |
+                                        <!--a href={{database_urls[repositories[relatedDataset.source]]}}--> {{repositories[relatedDataset.source]}} </a> 
                             </div>
-
-                            <div class="project-widget-paragraph" ng-show="relatedDataset.publicationDate">
-                                <b>publication date: </b>
-                                {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}
-                            </div>
+ 
                         </div>
                     </li>
                     <!-- end ngRepeat: -->
