@@ -36,7 +36,7 @@
           type="text/css" media="screen">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link type="text/css" href="css/prider.css" rel="stylesheet">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/ngProgress.css">
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
     <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
 
@@ -522,7 +522,7 @@
                     <div id="search-results-items" class="list-group">
                         <ul class="list-unstyled">
                             <li class="result animate-repeat" ng-repeat="dataset in result.datasets">
-                                <div class="project-widget  list-group-item">
+                                <div class="ddi-card-panel  list-group-item">
 
                                     <div class="project-widget-accession">
                                         <img src="css/Proteomics2.png"
@@ -534,9 +534,11 @@
                                         <a href={{"dataset.html#/"+dataset.id+"*"+dataset.source}}><span
                                                 ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                     </div>
-
+                                    <blockquote class="ddi-blockquote">
                                     <div class="project-widget-paragraph align-justify">
+                                    <!--
                                         <b>Project description:</b>
+                                    -->
                                         <span ng-bind-html="dataset['description']|limitTo:450|browsehighlight:highlight_terms"></span>
                                         {{dataset["description"].length>450?'...':''}}
                                         <!-- <a href={{"dataset.html#/"+dataset["id"]}}>(More)</a> -->
@@ -546,21 +548,21 @@
                                     <div class="project-widget-paragraph">
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['organisms']">
-                                        <b>Organism: </b><span ng-repeat="organism in dataset['organisms']"
+                                        Organism: <span ng-repeat="organism in dataset['organisms']"
                                                                ng-bind-html="organism.name |browsehighlight:highlight_terms"> </span>
                                         <span ng-show="dataset.organisms.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['tissues']">
-                                        <b>Tissue: </b><span ng-repeat="tissue in dataset['tissues']"
+                                        Tissue: <span ng-repeat="tissue in dataset['tissues']"
                                                              ng-bind-html="tissue.name |browsehighlight:highlight_terms"></span>
                                         <span ng-show="dataset.tissues.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['diseases']">
-                                        <b>Disease: </b><span ng-repeat="disease in dataset['diseases']"
+                                        Disease: <span ng-repeat="disease in dataset['diseases']"
                                                               ng-bind-html="disease.name |browsehighlight:highlight_terms"></span>
                                         <span ng-show="dataset.diseases.length===0">Not available</span>
                                     </div>
-
+                                    <!--
                                     <div class="project-widget-paragraph">
                                         <b>Accession: </b><span
                                             ng-bind-html="dataset.id |browsehighlight:highlight_terms"></span> (<span
@@ -568,12 +570,14 @@
                                             ng-bind-html="repositories[dataset.source]|browsehighlight:highlight_terms"> </span>
                                         )
                                     </div>
+                                    -->
+                                    </blockquote>
 
-                                    <div class="project-widget-paragraph" ng-show="dataset.publicationDate">
-                                        <b>Publication date: </b>
-                                        <span ng-bind-html="dataset['publicationDate'].substr(0,4)|browsehighlight:highlight_terms"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
+                                    <div class="project-widget-paragraph" >
+                                        <span ng-show="dataset.publicationDate"><span ng-bind-html="dataset['publicationDate'].substr(0,4)|browsehighlight:highlight_terms"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}} | </span>
+                                        <a href={{"dataset.html#/"+dataset.id+"*"+dataset.source}}><span ng-bind-html="dataset.id |browsehighlight:highlight_terms"></span></a> |
+                                        <a href={{database_urls[repositories[dataset.source]]}}> <span ng-bind-html="repositories[dataset.source]|browsehighlight:highlight_terms"> </span> </a> 
                                     </div>
-
                                     <div class="project-widget-tag"
                                          ng-hide="dataset.keywords[0] === 'Not available'">
                                         <a ng-repeat="keyword in dataset.keywords" title={{keyword}}
@@ -600,6 +604,7 @@
 
 
 <script src="js/vendor/angular/angular.min.js"></script>
+<script src="js/vendor/angular/ngprogress.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
 <script src="js/vendor/angular/angular-animate.min.js"></script>
 <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>

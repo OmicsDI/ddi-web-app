@@ -62,7 +62,7 @@ var database_urls = {
 /**
  * Create OmicsDI app.
  */
-var ddiApp = angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate', 'autocomplete', 'ngCookies']);
+var ddiApp = angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress']);
 
 // hide spinning wheel
 angular.module('ddiApp').config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
@@ -576,7 +576,7 @@ angular.module('ddiApp').controller('MainContent', ['$scope', '$anchorScroll', '
  * Results display controller
  * Responsible for visualising search results.
  */
-angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', function ($scope, $location, $http, results) {
+angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results','ngProgressFactory', function ($scope, $location, $http, results, ngProgressFactory) {
 
     $scope.result = {
         entries: [],
@@ -592,6 +592,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.metabolomics_list = metabolomics_list;
     $scope.genomics_list = genomics_list;
     $scope.repositories = repositories;
+    $scope.database_urls= database_urls;
     $scope.search_in_progress = results.get_search_in_progress();
     $scope.show_error = results.get_show_error();
     $scope.highlight_terms = ["a", "b"];
@@ -630,6 +631,11 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         }
     });
 
+
+    /**
+     * progress bar
+     */
+    $scope.progressbar = ngProgressFactory.createInstance();
     /**
      * Watch `search_in_progress` changes.
      */
@@ -638,6 +644,21 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }, function (newValue, oldValue) {
         if (newValue != oldValue) {
             $scope.search_in_progress = newValue;
+        }
+    });
+
+
+    $scope.$watch('search_in_progress', function(newValue, oldValue) {
+//        alert($scope.search_in_progress);
+        if($scope.search_in_progress) {
+            $scope.progressbar.start();
+            $scope.progressbar.set(50);
+            $scope.progressbar.set(80);
+//            alert("start search " + $scope.progressbar.status());
+        }
+        else{
+//            alert("end search");
+            $scope.progressbar.complete();
         }
     });
 

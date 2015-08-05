@@ -338,7 +338,8 @@
                     <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
                         <div class="col-md-6" style="margin-left:10px">
                             Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a> [As supplied by <a
-                                href={{database_urls[domain]}}>{{repositories[domain]}}</a>]
+                                href={{database_urls[repositories[domain]]}}>{{repositories[domain]}}</a>]
+                            {{database_urls[domain]}}
                         </div>
                         <div class="col-md-4" style="margin-left:10px">
                             <p>Date:
@@ -662,6 +663,7 @@
 <script src="js/vendor/angular/angular-animate.min.js"></script>
 <script src="js/autocomplete.js"></script>
 <script src="js/vendor/angular/loading-bar/loading-bar.js"></script>
+<script src="js/vendor/angular/ngprogress.min.js"></script>
 <script src="js/vendor/underscore/underscore-min.js"></script>
 <script src="js/search/ddi.metadata.search.js"></script>
 <script src="js/vendor/d3/d3.min.js"></script>
