@@ -62,12 +62,15 @@ var database_urls = {
 /**
  * Create OmicsDI app.
  */
-var ddiApp = angular.module('ddiApp', ['chieffancypants.loadingBar', 'underscore', 'ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress']);
+var ddiApp = angular.module('ddiApp', ['underscore', 'ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress']);
 
 // hide spinning wheel
+/*
 angular.module('ddiApp').config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 }]);
+*/
+
 
 /**
  * Turn on html5mode only in modern browsers because
@@ -652,8 +655,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 //        alert($scope.search_in_progress);
         if($scope.search_in_progress) {
             $scope.progressbar.start();
-            $scope.progressbar.set(50);
-            $scope.progressbar.set(80);
+            $scope.progressbar.set(40);
 //            alert("start search " + $scope.progressbar.status());
         }
         else{
