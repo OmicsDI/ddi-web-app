@@ -833,15 +833,15 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
         $scope.index_of_facets = {
-            "omics_type": "0",
-            "repository": "0",
-            "TAXONOMY": "0",
-            "tissue": "0",
-            "disease": "0",
-            "modification": "0",
-            "instrument_platform": "0",
-            "publication_date": "0",
-            "technology_type": "0",
+            "omics_type": "-1",
+            "repository": "-1",
+            "TAXONOMY": "-1",
+            "tissue": "-1",
+            "disease": "-1",
+            "modification": "-1",
+            "instrument_platform": "-1",
+            "publication_date": "-1",
+            "technology_type": "-1",
             "test": "0"
         };
         for (facet in $scope.index_of_facets) {
