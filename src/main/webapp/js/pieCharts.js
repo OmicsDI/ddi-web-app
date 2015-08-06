@@ -250,9 +250,9 @@ var bub_charts_tissues_organisms = function () {
                 var mouse_coords = d3.mouse(
                     tooltip.node().parentElement);
 
-                tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets")
-                    .style("left", (mouse_coords[0] + 180) + "px")
-                    .style("top", (mouse_coords[1] - 10) + "px")
+                tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets" )
+                    .style("left", (mouse_coords[0] +screen.width/11 ) + "px")
+                    .style("top", (mouse_coords[1] - 30) + "px")
                     .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
             })
                 .on("mouseout", function (d) {
@@ -543,9 +543,9 @@ var pie_charts_repos_omics = function () {
                         var mouse_coords = d3.mouse(
                             treemap_tooltip.node().parentElement);
 
-                        treemap_tooltip.html("<strong>" + d.name + ": <br>" + d.value + "</strong> datasets")
-                            .style("left", (mouse_coords[0] + 180) + "px")
-                            .style("top", (mouse_coords[1] - 10) + "px")
+                        treemap_tooltip.html("<strong>" + d.name + ": <br>" + d.value + "</strong> datasets" )
+                            .style("left", (mouse_coords[0] + screen.width/11) + "px")
+                            .style("top", (mouse_coords[1] - 30) + "px")
                             .style("width", d.name.length * 5 + d.value.toString().length * 5 + 80 + "px");
                     })
                     .on("mouseout", function (d, i) {

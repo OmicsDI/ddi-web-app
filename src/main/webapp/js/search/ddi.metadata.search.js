@@ -656,7 +656,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 //        alert($scope.search_in_progress);
         if($scope.search_in_progress) {
             $scope.progressbar.start();
-            $scope.progressbar.set(45);
+            $scope.progressbar.set(35);
 //            alert("start search " + $scope.progressbar.status());
         }
         else{

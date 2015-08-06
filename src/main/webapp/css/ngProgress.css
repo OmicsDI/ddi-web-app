@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     z-index: 99998;
-    background-color: green;
+    background-color: firebrick;
     color: green;
     box-shadow: 0 0 10px 0; /* Inherits the font color */
     height: 2px;

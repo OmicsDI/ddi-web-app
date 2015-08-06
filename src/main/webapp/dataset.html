@@ -291,9 +291,9 @@
                             </p>
                         </div>
 
-                        <div class="row" ng-show="dataset.instruments.length > 0" id="dataset_protocol_bottom"
+                        <div class="row"  id="dataset_protocol_bottom"
                              style="margin-top:10px margin-left:10px">
-                            <p style="margin-left:15px" class="align-justify"><u>INSTRUMENT(S):</u>
+                            <p style="margin-left:15px" ng-show="dataset.instruments" class="align-justify"><u>INSTRUMENT(S):</u>
                <span>
                    <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
                       href={{instrument_pre_url+'"'+instrument+'"'}}>
@@ -312,7 +312,8 @@
                             </p>
 
                             <p style="margin-left:15px" class="align-justify"
-                               ng-show="dataset.tissues[0]!=='Not available'"><u>TISSUE(S):</u>
+                               ng-show="dataset.tissues!==null"><u>TISSUE(S):</u>
+
                <span>
                    <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
                       href={{tissue_pre_url+'"'+tissue+'"'}}>
@@ -322,7 +323,7 @@
                             </p>
 
                             <p style="margin-left:15px" class="align-justify"
-                               ng-show="dataset.diseases[0]!=='Not available'"><u>DISEASE(S):</u>
+                               ng-show="dataset.diseases!==null"><u>DISEASE(S):</u>
                <span>
                    <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
                       href={{disease_pre_url+'"'+disease+'"'}}>
@@ -341,7 +342,7 @@
                                 href={{database_urls[repositories[domain]]}}>{{repositories[domain]}}</a>]
                             {{database_urls[domain]}}
                         </div>
-                        <div class="col-md-4" style="margin-left:10px">
+                        <div class="col-md-4" style="marginleft:10px" ng-show="dataset.publicationDate">
                             <p>Date:
                                 {{dataset['publicationDate'].substr(0,4)+'
                                 '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}}

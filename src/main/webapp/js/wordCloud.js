@@ -169,9 +169,9 @@ var drawHotwords = function () {
                         .duration(200)
                         .style("opacity", .9);
 
-                    wordcloud_tooltip.html("<strong>" + d.frequent + "</strong> datasets")
-                        .style("left", (mouse_coords[0]+180) + "px")
-                        .style("top", (mouse_coords[1]-10) + "px")
+                    wordcloud_tooltip.html("<strong>" + d.frequent + "</strong> datasets"  )
+                        .style("left", (mouse_coords[0] + screen.width/11) + "px")
+                        .style("top", (mouse_coords[1]-30) + "px")
                         .style("height", "20px")
                         .style("width", d.frequent.toString().length * 10 + 70 + "px");
                 })
