@@ -1,0 +1,194 @@
+
+<script >
+    document.title = "OmicsDI Databases";
+</script>
+
+        <div id="databases" style="margin: 20px"  ng-controller="DatasetListsCtrl">
+
+            <div class="row">
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="PRIDE Database" href="http://www.ebi.ac.uk/pride/archive/"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="PRIDE logo" src="img/db-logos/pride_logo.jpg"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            is a centralized, standards compliant, public data repository for proteomics data, including
+                            protein and peptide identifications, post-translational modifications and supporting
+                            spectral evidence.
+                        </div>
+
+                        <div class="panel-footer small">
+                            <a rel="nofollow" href='#/browse/search?q=*:* AND repository:"pride"'><em>{{databases.PRIDE}}</em>
+                                datasets</a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="https://www.ebi.ac.uk/ega/">EGA</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="EGA Database" href="https://www.ebi.ac.uk/ega/"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="EGA logo" src="img/db-logos/ega_phenome_logo.jpg"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            allows you to explore datasets from genomic studies, provided by a range of data providers.
+                            Access to datasets must be approved by the specified Data Access Committee (DAC).
+                        </div>
+
+                        <div class="panel-footer small">
+                            <a rel="nofollow" href='#/browse/search?q=*:* AND repository:"ega"'><em>{{databases.EGA}}</em>
+                                datasets</a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="http://www.ebi.ac.uk/metabolights/">MetaboLights</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="MetaboLights Database" href="http://www.ebi.ac.uk/metabolights/"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="MetaboLignts logo" src="img/db-logos/MetaboLightsLogo.png"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            is a database for Metabolomics experiments and derived information.
+                        </div>
+
+                        <div class="panel-footer small">
+                            <a rel="nofollow" href='#/browse/search?q=*:* AND repository:"MetaboLights"'><em>{{databases["MetaboLights
+                                Dataset"]}}</em> datasets</a>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="http://www.peptideatlas.org/">PeptideAtlas</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="PeptideAtlas Database" href="http://www.peptideatlas.org/"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="RefSeq logo" src="img/db-logos/PeptideAtlas_Logo.png"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            is a multi-organism, publicly accessible compendium of peptides identified in a large set of
+                            tandem mass spectrometry proteomics experiments.
+                        </div>
+
+                        <div class="panel-footer small">
+                            <a rel="nofollow" href='#/browse/search?q=*:* AND repository:"PeptideAtlas"'><em>{{databases.PeptideAtlas}}</em>
+                                datasets</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp">MassIVE</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="MassIVE Database" href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="MassIVE logo" src="img/db-logos/MassIVE_logo.png"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            is a community resource developed by the NIH-funded Center for Computational Mass
+                            Spectrometry to promote the global, free exchange of mass spectrometry data.
+                        </div>
+
+                        <div class="panel-footer small">
+                            <a rel="nofollow" href='#/browse/search?q=*:* AND repository:"MassIVE"'><em>{{databases.MassIVE}}</em>
+                                datasets</a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="http://www.metabolomicsworkbench.org/">Metabolomics Workbench</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="Metabolomics Workbench Database" href="http://www.metabolomicsworkbench.org/"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="Metabolomics Workbench logo"
+                                     src="img/db-logos/Metabolomics_Workbench_logo.png"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            is a scalable and extensible informatics infrastructure which will serve as a national
+                            metabolomics resource.
+                        </div>
+
+                        <div class="panel-footer small">
+                            <a rel="nofollow"
+                               href='#/browse/search?q=*:* AND repository:"MetabolomicsWorkbench"'><em>{{databases["Metabolome
+                                Workbench"]}}</em> datasets</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--row-->
+        </div>
+
+        <footer>
+            <div id="footer" class="container"></div>
+        </footer>
+    </div>
+</div>
+<!-- wrapper-->
