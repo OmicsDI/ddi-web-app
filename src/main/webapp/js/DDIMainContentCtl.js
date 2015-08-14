@@ -18,7 +18,7 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
          */
         if ($location.path() === '/about'
             ||$location.path() === '/api'
-            ||$location.path() === '/browse/search'
+            ||$location.path() === '/search'
             ||$location.path() === '/databases'
             ||$location.path() === '/dataset'
             ||$location.path() === '/help'

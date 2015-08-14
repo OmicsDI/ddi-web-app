@@ -20,6 +20,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.repositories = repositories;
     $scope.database_urls= database_urls;
     $scope.search_in_progress = results.get_search_in_progress();
+    console.log("get progress status 1" +$scope.search_in_progress  );
     $scope.show_error = results.get_show_error();
     $scope.highlight_terms = ["a", "b"];
 
@@ -80,7 +81,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () {
         return results.get_search_in_progress();
     }, function (newValue, oldValue) {
-        if (newValue != oldValue) {
+        if (true || newValue != oldValue) {
             $scope.search_in_progress = newValue;
         }
     });

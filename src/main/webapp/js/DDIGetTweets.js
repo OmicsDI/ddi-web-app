@@ -84,7 +84,7 @@ publishtweets = function (data) {
         .each(function () {
             var entrydiv = d3.select(this);
             entrydiv.attr("class", "row")
-                .attr("style", "margin-left:3px; width:96%")
+                .attr("style", "margin-left:8px; width:96%")
             var datebox = entrydiv.append("div").attr("class", "date-box");
             datebox.append("span").attr("class", "month")
                 .text(function (d) {

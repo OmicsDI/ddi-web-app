@@ -45,7 +45,7 @@ ddiApp.config(function($routeProvider) {
     when('/', { templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' }).
     when('/home', { templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' }).
     //when('/search', { templateUrl: 'app/views/search.html', controller: 'MainContentCtrl' }).
-    when('/browse/:searchstring', { templateUrl: 'app/views/browse.html', controller: 'MainContentCtrl' }).
+    when('/search?:searchstring', { templateUrl: 'app/views/browse.html', controller: 'MainContentCtrl' }).
     //when('/search/:search', { templateUrl: 'app/views/search.html', controller: 'MainContentCtrl' }).
     when('/dataset/:domain/:acc', { templateUrl: 'app/views/dataset.html', controller: 'MainContentCtrl' })
     .
