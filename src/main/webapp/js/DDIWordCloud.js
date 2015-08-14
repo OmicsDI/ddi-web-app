@@ -34,11 +34,13 @@ var drawHotwords = function () {
 
         var divwidth = 420;
 
+        body.selectAll("svg").remove();
         var svg = body.append("svg")
             .attr("width", divwidth)
             .attr("height", 325)
             .attr("class", "wordcloud");
 
+        body.selectAll("div").remove();
         var formdiv = body.append('div');
         formdiv
             .attr("class", "center")

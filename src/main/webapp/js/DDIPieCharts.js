@@ -1,5 +1,5 @@
 var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
-var retry_limit_time = 100;
+var retry_limit_time = 50;
 
 
 var bub_charts_tissues_organisms = function () {
@@ -83,12 +83,13 @@ var bub_charts_tissues_organisms = function () {
                 .sort(null)
                 .size([diameter * 1.3, diameter])
                 .padding(1.5);
-
+            body.selectAll("svg").remove();
             var svg = body.append("svg")
                 .attr("width", diameter * 1.3)
                 .attr("height", diameter)
                 .attr("class", "bubble");
 
+            body.selectAll("div").remove();
             var formdiv = body.append('div');
             formdiv
                 .attr("class", "center")
@@ -371,6 +372,7 @@ var pie_charts_repos_omics = function () {
 
 
             body.attr("position", "relative");
+            d3.select("#" + piechartname).selectAll("svg").remove();
             var svg = d3.select("#" + piechartname)
                 .append("svg")
                 .attr("style", "height:" + height)
@@ -383,7 +385,7 @@ var pie_charts_repos_omics = function () {
             svg.append("circle")
                 .attr("id", "insidecycle")
                 .attr("style", "stroke:none");
-
+            body.selectAll("div").remove();
             var formdiv = body.append('div');
             formdiv
                 .attr("class", "center")
@@ -736,6 +738,7 @@ var barcharts_years_omics_types = function () {
                 .orient("left")
                 .tickFormat(d3.format(".2s"));
 
+            d3.select("#barchart_omicstype_annual").selectAll("svg").remove();
             var svg = d3.select("#barchart_omicstype_annual").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -882,14 +885,16 @@ function output_error_info(errordiv) {
     var tempdiv = d3.select("#" + errordiv);
 
     tempdiv.selectAll("i").remove();
+    tempdiv.selectAll("p").remove();
     tempdiv.append("p").attr("class", "error-info")
         .html("Sorry, accessing to this web service was temporally failed.");
 }
 
 function output_getting_info(errordiv) {
     var tempdiv = d3.select("#" + errordiv);
-    tempdiv.select("i").remove();
-    tempdiv.append("i").attr("class", "fa fa-spinner fa-spin");
+    if(tempdiv.select("i")[0][0]===null){
+        tempdiv.append("i").attr("class", "fa fa-spinner fa-spin");
+    }
 }
 function remove_getting_info(errordiv) {
     var tempdiv = d3.select("#" + errordiv);

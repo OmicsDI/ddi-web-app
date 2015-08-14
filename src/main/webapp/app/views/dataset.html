@@ -153,9 +153,9 @@
                         </div>
                         <div class="col-md-4" style="marginleft:10px" ng-show="dataset.publicationDate">
                             <p>Date:
-                                {{dataset['publicationDate'].substr(0,4)+'
-                                '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}}
-                                {{dataset['publicationDate'].substr(6,2)!=='00'?dataset['publicationDate'].substr(6,2):''}}</p>
+                                {{dataset['publicationDate'].substr(0,4)+'-'+dataset['publicationDate'].substr(4,2)}}
+<!--                                '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}}-->
+                               {{dataset['publicationDate'].substr(6,2)!=='00'?'-'+dataset['publicationDate'].substr(6,2):''}}</p>
                         </div>
                     </div>
                     <!--dataset_bottom-->
@@ -184,7 +184,7 @@
                              src='img/altmetric/altmetric_unknown.png'>
                         <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}
                            style="border-bottom-style:none"> <img
-                                ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]"
+                                ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url"
                                 src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
                         </a>
                     </div>
@@ -243,6 +243,7 @@
                             <p>{{dataset.publicationIds[current_publication].publicationDate}}</p>
                         </div>
                     </div>
+                    <br>
                     <!--dataset_middle_bottom-->
 
                 </div>
