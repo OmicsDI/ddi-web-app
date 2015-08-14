@@ -40,7 +40,7 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
         //    $window.document.title = "OmicsDI API";
         //}
         //
-        //if ($location.path() === '/browse/search'){
+        //if ($location.path() === '/search'){
         //    $window.document.title = "OmicsDI Browse";
         //}
         //

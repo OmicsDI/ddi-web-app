@@ -187,19 +187,19 @@ var bub_charts_tissues_organisms = function () {
                 data = tissues;
                 // text_total.text("Total:"+total_tissues);
                 // text_unavail.text("Unavailable:"+unavailabl_no_tissues.value);
-                url_pre = '#/browse/search?q=*:* AND tissue:"';
+                url_pre = '#/search?q=*:* AND tissue:"';
             }
             if (value == 'Organisms') {
                 data = organisms;
                 // text_total.text("Total:"+total_organisms);
                 // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
-                url_pre = '#/browse/search?q=*:* AND TAXONOMY:"';
+                url_pre = '#/search?q=*:* AND TAXONOMY:"';
             }
             if (value == 'Diseases') {
                 data = diseases;
                 // text_total.text("Total:"+total_organisms);
                 // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
-                url_pre = '#/browse/search?q=*:* AND disease:"';
+                url_pre = '#/search?q=*:* AND disease:"';
             }
 
             svg.selectAll(".node").remove();
@@ -509,7 +509,7 @@ var pie_charts_repos_omics = function () {
 
 
             function draw_treemap() {
-                var treemap_url_pre = '#/browse/search?q=*:* AND repository:"';
+                var treemap_url_pre = '#/search?q=*:* AND repository:"';
                 var treemap_div = body.append("div")
                     .attr("id", "treemap_div")
                     .style("position", "absolute")
@@ -599,7 +599,7 @@ var pie_charts_repos_omics = function () {
                 data = omicstype;
                 text_total.text("Total:" + total_omics);
 //                text_unavail.text("Unavailable:" + unavailableomics.value);
-                url_pre = '#/browse/search?q=*:* AND omics_type:"';
+                url_pre = '#/search?q=*:* AND omics_type:"';
                 // text_total.text("Total:"+total_omics);
                 svg.attr("visibility", null);
 //                d3.select("#treemap_div").remove();
@@ -608,7 +608,7 @@ var pie_charts_repos_omics = function () {
                 data = repos;
                 text_total.text("Total:" + total_repos);
 //                text_unavail.text("");
-                url_pre = '#/browse/search?q=*:* AND repository:"';
+                url_pre = '#/search?q=*:* AND repository:"';
                 // text_total.text("Total:"+total_repos);
                 svg.attr("visibility", null);
 //                d3.select("#treemap_div").remove();
@@ -817,7 +817,7 @@ var barcharts_years_omics_types = function () {
                 })
                 .attr("class", "bar")
                 .on("click", function (d) {
-                    location.href = "#/browse/search?q=*:* AND omics_type:\"" + d.name + "\" AND publication_date:\"" + d.year + "\"";
+                    location.href = "#/search?q=*:* AND omics_type:\"" + d.name + "\" AND publication_date:\"" + d.year + "\"";
                 })
                 .on("mouseover", function (d) {
                     var current_g_x = parseInt(d3.transform(d3.select(this.parentNode).attr("transform")).translate[0]);
@@ -853,7 +853,7 @@ var barcharts_years_omics_types = function () {
                     return "translate(0," + i * 20 + ")";
                 })
                 .on("click", function (d) {
-                    location.href = "#/browse/search?q=*:* AND omics_type:\"" + d + "\"";
+                    location.href = "#/search?q=*:* AND omics_type:\"" + d + "\"";
                 });
 
             legend.append("rect")
@@ -875,7 +875,7 @@ var barcharts_years_omics_types = function () {
     }
 
     function clickMe(d) {
-        location.href = "#/browse/search?q=*:* AND publication_date:\"" + d + "\"";
+        location.href = "#/search?q=*:* AND publication_date:\"" + d + "\"";
     };
 
 

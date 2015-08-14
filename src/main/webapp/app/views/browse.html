@@ -11,14 +11,14 @@
                 <i class="fa fa-spinner fa-spin"></i>
             </small>
             <small ng-class="search_in_progress ? 'animated flash infinite' : 'hidden'"
-                   id="metadata-search-status" class="hidden">
+                   id="metadata-search-status" class="">
                 Searching...
             </small>
-                    <span ng-show="search_in_progress===false" class="" style="">
-                        <span id="metasearch-results-count" class="ng-binding ng-scope">{{result.count}}</span>
-                        <i class="fa fa-search"></i> Results for search term:
-                        <b ng-bind="query_for_show"></b>
-                    </span>
+            <span ng-show="search_in_progress===false" class="" style="">
+                <span id="metasearch-results-count" class="ng-binding ng-scope">{{result.count}}</span>
+                <i class="fa fa-search"></i> Results for search term:
+                <b ng-bind="query_for_show"></b>
+            </span>
         </h3>
     </div>
     <div ng-show="result.count &gt; 0" class="row" style="">
@@ -380,7 +380,7 @@
                                 <div class="project-widget-tag"
                                      ng-hide="dataset.keywords[0] === 'Not available'">
                                     <a ng-repeat="keyword in dataset.keywords" title={{keyword}}
-                                       class="keywords" href={{"#/browse/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
+                                       class="keywords" href={{"#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
                                 </div>
                             </div>
                         </li>

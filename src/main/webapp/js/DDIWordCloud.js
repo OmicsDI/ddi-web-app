@@ -159,7 +159,7 @@ var drawHotwords = function () {
                 .attr("class", "hotword")
                 .on("click", function (d, i) {
                     // alert("you have clicked"+d.label);
-                    location.href = "#/browse/search?q=" + d.label;
+                    location.href = "#/search?q=" + d.label;
                     // window.open("browse.html#/search?q="+d.label);
                 })
 

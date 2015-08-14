@@ -17,26 +17,26 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         var current_abs_url = $location.absUrl();
         console.log(current_abs_url);
         //if (current_abs_url.match("/#/home")) {
-        //    $window.location = current_abs_url.replace("/#/home", "/#/browse");
+        //    $window.location = current_abs_url.replace("/#/home", "/#");
         //}
         //if (current_abs_url.match("/#/search")) {
         //    current_abs_url = current_abs_url.replace("/#/search", "/#/search");
         //    $window.location = current_abs_url;
         //}
         //if (current_abs_url.match("/#/dataset")) {
-        //    $window.location = current_abs_url.replace("/#/dataset", "/#/browse");
+        //    $window.location = current_abs_url.replace("/#/dataset", "/#");
         //}
         //if (current_abs_url.match("/#/api")) {
-        //    $window.location = current_abs_url.replace("/#/api", "/#/browse");
+        //    $window.location = current_abs_url.replace("/#/api", "/#");
         //}
         //if (current_abs_url.match("/#/databases")) {
-        //    $window.location = current_abs_url.replace("/#/databases", "/#/browse");
+        //    $window.location = current_abs_url.replace("/#/databases", "/#");
         //}
         //if (current_abs_url.match("/#/help")) {
-        //    $window.location = current_abs_url.replace("/#/help", "/#/browse");
+        //    $window.location = current_abs_url.replace("/#/help", "/#");
         //}
         //if (current_abs_url.match("/#/about")) {
-        //    $window.location = current_abs_url.replace("/#/about", "/#/browse");
+        //    $window.location = current_abs_url.replace("/#/about", "/#");
         //}
     };
 
