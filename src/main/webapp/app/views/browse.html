@@ -21,7 +21,7 @@
             </span>
         </h3>
     </div>
-    <div ng-show="result.count &gt; 0" class="row" style="">
+    <div ng-show="true" class="row" style="">
 
         <!-- facets column -->
         <div class="col-md-3 col-sm-4 hidden-xs metasearch-facets">
@@ -289,7 +289,7 @@
 
                     </div>
                     <div class="pr-stats col-md-3  ">
-                        Showing <span>{{(current_page-1)*page_size+1}} - {{current_page*page_size<=result.count? current_page*page_size : result.count}}</span>
+                        Showing <span><span ng-show="result.count &gt; 0">{{(current_page-1)*page_size+1}} -</span> {{current_page*page_size<=result.count? current_page*page_size : result.count}}</span>
                         of <span> {{result.count}}</span>
                     </div>
                 </div>

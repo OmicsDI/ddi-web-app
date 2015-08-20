@@ -8,6 +8,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         text: '',
         submitted: false
     };
+    $scope.$is_example= false;
     /**
      * Launch a metadata search using the service.
      */
@@ -103,6 +104,16 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
     };
 
     /**
+    * Called when the example link is clicked.
+    */
+    $scope.example_query = function (example_input) {
+        $scope.$is_example = true;
+        $scope.meta_search(example_input);
+    };
+
+
+
+    /**
      * Check if the url contains a query when the controller is first created
      * and initiate a search if necessary.
      */
@@ -126,6 +137,10 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
 
     $scope.get_suggestions = function (typedthings) {
 //    console.log("Do something like reload data with this: " + typedthings );
+        if($scope.$is_example) {
+          $scope.$is_example = false;
+         return;
+        }
         $scope.newwords = WordRetriever.getwords(typedthings);
         $scope.newwords.then(function (data) {
             $scope.words = data;
