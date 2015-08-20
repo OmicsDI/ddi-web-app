@@ -192,7 +192,6 @@
                         <div>
                             <h4 style="margin-right:20px">
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].title}}</h4>
-
                             <p style="margin-right:20px" class="align-justify">
                                 <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
                                     <a href="#/search?q='{{author.name_for_searching}}'">
@@ -205,8 +204,17 @@
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].citation}}</p>
                         </div>
                         <hr style="margin-right:30px">
+                        <p ng-show="publication_info.length<1" class="align-justify">
+                                Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to the
+                                <a href="{{'http://www.ncbi.nlm.nih.gov/pubmed/?term='+dataset.publicationIds[current_publication]}}">
+                                    PUBMED
+                                </a> or the
+                                <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}>Altmetric</a>.
+                        </p>
+
                         <div style="margin-right:20px"
                              ng-show="publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>0">
+
                             <p ng-show="pubmed_abstract_show_full=='true'" class="align-justify">
                                 ABSTRACT:
                                 {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]}}
@@ -232,7 +240,7 @@
                             <a ng-hide="dataset.publications === null"
                                href={{"http://europepmc.org/abstract/MED/"+publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}>
                                 PMID:
-                                {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}</a>
+                                {{dataset.publicationIds[current_publication]}}</a>
                         </div>
                         <div class="col-md-4">
                             <span ng-hide="dataset.publications === null">
