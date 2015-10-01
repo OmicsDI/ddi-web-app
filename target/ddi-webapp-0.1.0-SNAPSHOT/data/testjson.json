@@ -1,0 +1,20 @@
+{	"Tissue": [
+	{ "label":"tissue1" , "value":"10" },
+	{ "label":"tissue2" , "value":"20" },
+	{ "label":"tissue3" , "value":"30" },
+	{ "label":"tissue4" , "value":"25" },
+	{ "label":"tissue5" , "value":"15" }
+	],
+
+	"Species": [
+	{ "label":"homosapiens" , "value":"20" },
+	{ "label":"panda" , "value":"15" },
+	{ "label":"firefox" , "value":"30" },
+	{ "label":"elephant" , "value":"35" },
+	{ "label":"fish" , "value":"15" },
+	{ "label":"frog" , "value":"15" }
+	]
+}
+
+
+
