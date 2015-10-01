@@ -59,7 +59,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 
     //get general statistics
-    url = web_service_url + "stats/general";
+    url = web_service_url + "statistics/general";
 
     $http({
         url: url,
@@ -81,7 +81,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
 
 
     //get datasets No. of each repository
-    url = web_service_url + "stats/domains";
+    url = web_service_url + "statistics/domains";
     $scope.databases = {"test": "0"};
     $http({
         url: url,

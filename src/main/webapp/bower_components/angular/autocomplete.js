@@ -39,6 +39,7 @@ app.directive('autocomplete', function() {
 
       // autocompleting drop down on/off
       $scope.completing = false;
+      //console.log($scope.completing);
 
       // starts autocompleting on typing in something
       $scope.$watch('searchParam', function(newValue, oldValue){

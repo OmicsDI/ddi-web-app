@@ -249,6 +249,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () {
         return $location.url();
     }, function (newUrl, oldUrl) {
+        console.log(oldUrl + "-->" + newUrl);
         $scope.$root.current_page = 1;
         $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
         $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);

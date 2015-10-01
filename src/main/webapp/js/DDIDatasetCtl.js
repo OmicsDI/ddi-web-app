@@ -32,7 +32,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      }).error(function(){
      });
      */
-    var related_datasets_url = web_service_url + "dataset/moreLikeThis?acc=" + $scope.acc + "&database=" + $scope.domain;
+    var related_datasets_url = web_service_url + "dataset/getSimilar?acc=" + $scope.acc + "&database=" + $scope.domain;
     $http({
         url: related_datasets_url,
         method: 'GET'

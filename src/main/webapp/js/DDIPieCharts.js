@@ -4,9 +4,9 @@ var retry_limit_time = 50;
 
 var bub_charts_tissues_organisms = function () {
     queue()
-        .defer(d3.json, web_service_url + 'stats/tissues?size=100') // topojson polygons
-        .defer(d3.json, web_service_url + 'stats/organisms?size=100') // geojson points
-        .defer(d3.json, web_service_url + 'stats/diseases?size=100') // geojson points
+        .defer(d3.json, web_service_url + 'statistics/tissues?size=100') // topojson polygons
+        .defer(d3.json, web_service_url + 'statistics/organisms?size=100') // geojson points
+        .defer(d3.json, web_service_url + 'statistics/diseases?size=100') // geojson points
         .await(draw_chart_tissues_organsims); // function that uses files
 
     function draw_chart_tissues_organsims(error, tissues, organisms, diseases) {
@@ -72,9 +72,9 @@ var bub_charts_tissues_organisms = function () {
 
             var body = d3.select("#" + bub_chart_name);
 
-//        var div_width_px = body.style("width");
-//        var div_width = div_width_px.substr(0, div_width_px.length - 2);
-            var div_width = 420;
+        var div_width_px = body.style("width");
+        var div_width = div_width_px.substr(0, div_width_px.length - 2);
+            //var div_width = 420;
             var diameter = div_width / 1.3,
                 format = d3.format(",d"),
                 color = d3.scale.category20b();
@@ -289,8 +289,8 @@ var bub_charts_tissues_organisms = function () {
 var pie_charts_repos_omics = function () {
 
     queue()
-        .defer(d3.json, web_service_url + 'stats/domains') // topojson polygons
-        .defer(d3.json, web_service_url + 'stats/omicsType') // geojson points
+        .defer(d3.json, web_service_url + 'statistics/domains') // topojson polygons
+        .defer(d3.json, web_service_url + 'statistics/omics') // geojson points
         .await(draw_chart_repos_omics); // function that uses files
 
     function draw_chart_repos_omics(error, domains, omicstype) {
@@ -368,7 +368,9 @@ var pie_charts_repos_omics = function () {
             var piechartname = 'chart_repos_omics';
             var body = d3.select("#" + piechartname);
 
-            var div_width = 420;
+            var div_width_px = body.style("width");
+            var div_width = div_width_px.substr(0, div_width_px.length - 2);
+            //var div_width = 420;
             var width = div_width,
                 height = 300,
                 radius = Math.min(width, height) / 2;
@@ -699,7 +701,7 @@ var pie_charts_repos_omics = function () {
 
 var barcharts_years_omics_types = function () {
     queue()
-        .defer(d3.json, web_service_url + 'stats/omicsType_annual') // geojson points
+        .defer(d3.json, web_service_url + 'statistics/omicsByYear') // geojson points
         .await(draw_chart_omicstype_annual); // function that uses files
 
     function draw_chart_omicstype_annual(error, annual_data) {
@@ -716,9 +718,9 @@ var barcharts_years_omics_types = function () {
         else {
             remove_getting_info('barchart_omicstype_annual');
             var body = d3.select('#barchart_omicstype_annual');
-//        var div_width_px = body.style("width");
-//        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
-            var div_width = 420;
+        var div_width_px = body.style("width");
+        var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+            //var div_width = 420;
             var margin = {top: 20, right: 20, bottom: 20, left: 60},
                 width = div_width - margin.left - margin.right,
                 height = 290 - margin.top - margin.bottom;

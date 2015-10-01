@@ -24,7 +24,7 @@ angular.module('ddiApp').factory('WordRetriever', function ($http, $q, $timeout)
 
     WordRetriever.getwords = function (i) {
         var worddata = $q.defer();
-        $http.get(web_service_url + 'dataset/words?q=' + i + '&size=10')
+        $http.get(web_service_url + 'term/getTermByPattern?q=' + i + '&size=10')
             .success(function (data) {
                 var words = [];
                 for (var i = 0; i < data.items.length; i++) {

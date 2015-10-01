@@ -2,9 +2,9 @@ var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
 var drawHotwords = function () {
 
     queue()
-       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=description')
-       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=data_protocol')
-       .defer(d3.json, web_service_url+'dataset/terms?size=40&domain=omics&field=sample_protocol')
+       .defer(d3.json, web_service_url+'term/frequentlyTerm/list?size=40&domain=omics&field=description')
+       .defer(d3.json, web_service_url+'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol')
+       .defer(d3.json, web_service_url+'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol')
        .await(draw_word_cloud);
 
     function draw_word_cloud(error,
@@ -32,11 +32,13 @@ var drawHotwords = function () {
 
         var body = d3.select("#hotwords");
 
-        var divwidth = 420;
+        var div_width_px = body.style("width");
+        var div_width = div_width_px.substr(0, div_width_px.length - 2);
+        //var divwidth = 420;
 
         body.selectAll("svg").remove();
         var svg = body.append("svg")
-            .attr("width", divwidth)
+            .attr("width", div_width)
             .attr("height", 325)
             .attr("class", "wordcloud");
 
@@ -164,8 +166,8 @@ var drawHotwords = function () {
                         .duration(500)
                         .style("opacity", 0);
 
-                    location.href = "#/search?q=" + "\""+ d.label + "\"";
-                    // window.open("browse.html#/search?q="+d.label);
+                    //location.href = "#/search?q=" + "\""+ d.label + "\"";
+                     location.href = ("#/search?q=" + d.label);
                 })
 
                 .on("mousemove", function (d, i) {
