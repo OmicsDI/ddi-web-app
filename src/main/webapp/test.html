@@ -1,0 +1,187 @@
+<html ng-app="hackathonApp">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.js"></script>
+    <script src="http://cmaurer.github.io/angularjs-nvd3-directives/lib/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+    <script src="hackathon.js"></script>
+
+
+    <style>
+        text {
+            font: 12px sans-serif;
+        }
+        svg {
+            display: block;
+        }
+        html, body, #test1, svg {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+
+</head>
+<body ng-controller="HackathonCtrl">
+
+
+<button id="btn-prev" class="btn" >prev</button>
+
+<select id="selectform" ng-model = "selectedValue">
+    <option ng-repeat = "accession in accessions" value={{accession}} ng-class="{'selected':$first || selectform.selected}">{{accession}}</option>
+</select>
+
+<button id="btn-next" class="btn" >next</button>
+
+<div id="chart" class='with-3d-shadow with-transitions' style="height:500px; width: 650px">
+    <svg></svg>
+</div>
+
+<script>
+    nv.addGraph(function() {
+        var chart = nv.models.scatterChart()
+                .showDistX(true)
+                .showDistY(true)
+                .color(d3.scale.category10().range());
+
+        chart.xAxis.tickFormat(d3.format('.02f'));
+        chart.yAxis.tickFormat(d3.format('.02f'));
+        chart.pointRange([600,900]);
+
+        d3.select('#chart111 svg')
+                .datum(randomData(4,40))
+                .transition().duration(500)
+                .call(chart);
+
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
+
+    /**************************************
+     * Simple test data generator
+     */
+    function randomData(groups, points) { //# groups,# points per group
+        var data = [],
+                shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+                random = d3.random.normal();
+
+        for (i = 0; i < groups; i++) {
+            data.push({
+                key: 'Group ' + i,
+                values: []
+            });
+
+            for (j = 0; j < points; j++) {
+                data[i].values.push({
+                    x: random()
+                    , y: random()
+                    , size: Math.random() +100  //Configure the size of each scatter point
+                    , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
+                });
+            }
+        }
+
+        return data;
+    }
+</script>
+
+
+<script>
+
+    d3.select("#btn-next")
+            .on('click', btnNext);
+
+    d3.select("#btn-prev")
+            .on('click', btnPrev);
+
+    d3.select("#selectform")
+            .on('change', change);
+
+    function btnNext(){
+        var sel = document.getElementById('selectform');
+        sel.selectedIndex = sel.selectedIndex + 1 ;
+        if(sel.selectedIndex >=sel.options.length ) {
+            sel.selectedIndex = 1;
+        }
+        change();
+    }
+
+    function btnPrev(){
+        var sel = document.getElementById('selectform');
+        sel.selectedIndex = sel.selectedIndex - 1 ;
+        if(sel.selectedIndex < 0) {
+            sel.selectedIndex = sel.options.length -1;
+        }
+        change();
+    }
+
+    function change() {
+        var sel = document.getElementById('selectform');
+        var value = sel.options[sel.selectedIndex].value || sel.options[0].value ;
+        getAndShowSimilarityBar(value);
+    };
+    function getAndShowSimilarityBar(accession){
+    d3.json("http://localhost:3500/test/enrichment.expOutputDataset?query={\"accession\":\"" + accession + "\"}", function(json) {
+        data = json;
+//        console.log(data[0].intersectionInfos);
+        drawThegraph(accession,data[0].intersectionInfos);
+    });
+    }
+    var drawThegraph = function(accession, intersectionInfos){
+
+    var sortedIntersectionInfos = intersectionInfos.sort(function(a, b){
+        if(a.cosineScore < b.cosineScore) return 1;
+        if(a.cosineScore > b.cosineScore) return -1;
+        return 0;
+    });
+
+    nv.addGraph(function() {
+        var chart = nv.models.multiBarChart();
+
+        chart.xAxis
+                .tickFormat(d3.format(',f'));
+
+        chart.yAxis
+                .tickFormat(d3.format(',.1f'));
+
+        var data2 = negative_test_data;
+
+        chart.yDomain([0,1])
+                .showYAxis(true)        //Show the y-axis
+                .showXAxis(true)        //Show the x-axis
+        ;
+        d3.select('#chart svg')
+                .datum(data2)
+                .transition().duration(500)
+                .call(chart)
+
+        ;
+        nv.utils.windowResize(chart.update);
+
+        return chart;
+    });
+
+    var negative_test_data = new d3.range(0,1).map(function(d,i) {
+        return {
+            key: accession, // + i,
+            values: new d3.range(0,intersectionInfos.length).map( function(f,j) {
+//                console.log(intersectionInfos[j].cosineScore);
+                return {
+                    y: intersectionInfos[j].cosineScore,
+                    x: j
+//                    label: intersectionInfos[j].relatedDatasetAcc
+                }
+            })
+        };
+    });
+}
+
+
+
+</script>
+
+</body>
+</html>

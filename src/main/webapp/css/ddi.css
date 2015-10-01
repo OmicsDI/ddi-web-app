@@ -415,9 +415,19 @@ div.tooltip {
     margin-left:-10px;
 }
 
-a.biological{
+a.keywords{
     margin-left:2px;
     margin-right:2px;
+    font-style: italic;
+    font-size: 0.9em;
+    padding: 2px 8px 2px 17px;
+/*    background: #b7eeba url('../img/favico/tag.png') no-repeat 2px 2px;*/
+    background: lightskyblue url('../img/favico/tag.png') no-repeat 2px 2px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: inline;
 }
 
 .tabactive{
@@ -446,69 +456,6 @@ a.biological{
    left: 90%;
 }
 
-
-/**slider
- */
-.jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
-    background: rgba(0, 0, 0, 0) url("./img/b05.png") no-repeat scroll 0 0;
-    cursor: pointer;
-    overflow: hidden;
-}
-.jssorb05 div {
-    background-position: -7px -7px;
-}
-.jssorb05 div:hover, .jssorb05 .av:hover {
-    background-position: -37px -7px;
-}
-.jssorb05 .av {
-    background-position: -67px -7px;
-}
-.jssorb05 .dn, .jssorb05 .dn:hover {
-background-position: -97px -7px;
-}
-.jssorb01 div, .jssorb01 div:hover, .jssorb01 .av {
-border: 1px solid #000;
-cursor: pointer;
-opacity: 0.7;
-overflow: hidden;
-}
-.jssorb01 div {
-background-color: #6e8b8d;
-}
-.jssorb01 div:hover, .jssorb01 .av:hover {
-background-color: #a3d3c6;
-}
-.jssorb01 .av {
-background-color: #fff;
-}
-.jssorb01 .dn, .jssorb01 .dn:hover {
-background-color: #555555;
-}
-.jssora13l, .jssora13r, .jssora13ldn, .jssora13rdn {
-background: rgba(0, 0, 0, 0) url("/Tools/ddi/css/a13.png") no-repeat scroll 0 0;
-cursor: pointer;
-display: block;
-overflow: hidden;
-position: absolute;
-}
-.jssora13l {
-background-position: -8px -18px;
-}
-.jssora13r {
-background-position: -37px -18px;
-}
-.jssora13l:hover {
-background-position: -68px -18px;
-}
-.jssora13r:hover {
-background-position: -97px -18px;
-}
-.jssora13ldn {
-background-position: -128px -18px;
-}
-.jssora13rdn {
-background-position: -158px -18px;
-}
 .no-margin {
 margin: 0;
 }
@@ -825,3 +772,265 @@ input[type=submit]:focus {
 .input-block{
     display: block;
 }
+
+.ddi-card-panel{
+    background-color: #fff;
+    border-radius: 2px;
+    margin: 0.5rem 0 1rem;
+    padding: 10px;
+}
+
+.ddi-card-panel{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.ddi-blockquote{ 
+    margin:6px 6px 6px 10px; 
+    padding:5px;
+}
+
+/*------------------------------------------------------------------
+[5.6 Angular.js]
+*/
+/* required to hide Angular templates before they are rendered */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  -webkit-transition: 0.75s ease-out all;
+  -moz-transition: 0.75s ease-out all;
+  -o-transition: 0.75s ease-out all;
+  transition: 0.75s ease-out all;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+    opacity: 0;
+}
+
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+/*------------------------------------------------------------------
+[5.7 Metadata search]
+*/
+.metasearch-facets {
+  font-size: smaller;
+  padding-left: 20px;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.metasearch-facet-values li {
+  margin: 3px 0px;
+}
+
+.metasearch-organism-facet {
+  overflow: auto;
+  max-height: 200px;
+}
+
+.metasearch-results {
+  border-left: 1px solid #eeeeee;
+}
+
+.metasearch-results h4, .metasearch-results ul li ul li, .metasearch-facets h3 {
+  padding-left: 0;
+}
+
+button.load-more {
+  margin: 20px 0px;
+}
+
+.metasearch-facets hr {
+  margin-bottom: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+/*------------------------------------------------------------------
+[5.12. Databaeses page]
+*/
+
+/* Grow. Based on Hover: http://ianlunn.github.io/Hover/ */
+.hvr-grow {
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.expert-db-card:hover img,
+.hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+/* do not hide links on mobile devices */
+@media (min-width: 992px) {
+  /* hide the links */
+  .expert-db-card a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* style links on hover */
+  .expert-db-card:hover a {
+    color: #428bca;
+    text-decoration: underline;
+  }
+
+  .expert-db-card:hover a:hover {
+    color: #2a6496;
+  }
+
+  /* make text less prominent */
+  .expert-db-card .panel-body {
+    color: #767676;
+  }
+
+  /* make text more prominent on hover */
+  .expert-db-card:hover .panel-body {
+    color: #333;
+  }
+
+  /* adjust panel height for large screen sizes */
+  .expert-db-card .panel-body {
+    min-height: 110px;
+  }
+}
+
+/* adjust panel height for medium screen sizes */
+@media (max-width: 992px) {
+  .expert-db-card .panel-body {
+    min-height: 90px;
+  }
+}
+
+/* adjust panel height for small screen sizes */
+@media (max-width: 768px) {
+  .expert-db-card .panel-body {
+    min-height: 30px;
+  }
+}
+
+.expert-db-card-header {
+  margin-left: 10px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.expert-db-card-header a {
+  font-size: 18px;
+}
+
+.expert-db-card-logo {
+  display: inline;
+}
+
+.expert-db-logo img {
+  max-width: 130px;
+  max-height: 100px;
+  margin-top: 3px;
+  margin-right: 3px;
+}
+
+.expert-db-card .panel-body {
+  padding: 10px;
+}
+
+.expert-db-card .panel-footer {
+  padding: 6px 10px;
+  font-size: 78%;
+}
+
+.homepage-panel .panel-body {
+  padding: 10px;
+}
+
+.homepage-panel .panel {
+  margin-bottom: 10px;
+}
+
+.homepage-callout {
+  font-size: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/*------------------------------------------------------------------
+[5.4 API docs affix]
+*/
+
+ul.affix {
+  position: fixed;
+  top: 50px;
+  width: 260px;
+}
+
+ul.affix-top {
+  position: static;
+}
+
+ul.affix-bottom {
+  position: absolute;
+}
+
+/* First level of nav */
+.sidenav {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #F5F5F5;
+  border-radius: 5px;
+}
+
+/* All levels of nav */
+.sidebar .nav > li > a {
+  display: block;
+  padding: 5px 20px;
+/*  color: #BF8E3E;*/
+  color:#5bc0de;
+}
+
+.sidebar .nav > li > a:hover,
+.sidebar .nav > li > a:focus {
+  text-decoration: none;
+}
+
+.sidebar .nav > .active > a,
+.sidebar .nav > .active:hover > a,
+.sidebar .nav > .active:focus > a {
+  font-weight: bold;
+  background-color: transparent;
+}
+
+/* Nav: second level */
+.sidebar .nav .nav {
+  margin-bottom: 8px;
+}
+
+.sidebar .nav .nav > li > a {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 30px;
+  font-size: 90%;
+}
+
+.sidebar .nav .nav .nav > li > a {
+  padding-left: 40px;
+  font-size: 85%;
+}
+
