@@ -83,10 +83,10 @@
                     </ul>
                 </div>
             </div>
-            <h2>Refine by</h2>
+            <h2 style="margin-left: -10px; margin-top:20px">Refine by:</h2>
 
             <div><!-- organisms -->
-                <h3 class="ng-binding">Organisms</h3>
+                <h3 class="ng-binding">Organism</h3>
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="species_input"
@@ -157,7 +157,7 @@
             </div>
 
             <div><!-- Modification -->
-                <h3 class="ng-binding">Modifications
+                <h3 class="ng-binding">Modification
                     <small>in Proteomics</small>
                 </h3>
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
@@ -181,7 +181,7 @@
                 </div>
             </div>
             <div><!-- Instruments & Platforms -->
-                <h3 class="ng-binding">Instruments & Platforms</h3>
+                <h3 class="ng-binding">Instrument/Platforms</h3>
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="instr_input"
@@ -348,17 +348,17 @@
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['organisms']">
                                         ORGANISM: <span ng-repeat="organism in dataset['organisms']"
-                                                        ng-bind-html="organism.name |browsehighlight:highlight_terms"> </span>
+                                                        ng-bind-html="organism.name+'&nbsp; &nbsp;' |browsehighlight:highlight_terms"> </span>
                                         <span ng-show="dataset.organisms.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['tissues']">
                                         TISSUE: <span ng-repeat="tissue in dataset['tissues']"
-                                                      ng-bind-html="tissue.name |browsehighlight:highlight_terms"></span>
+                                                      ng-bind-html="tissue.name+'&nbsp; &nbsp;' |browsehighlight:highlight_terms"></span>
                                         <span ng-show="dataset.tissues.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['diseases']">
                                         DISEASE: <span ng-repeat="disease in dataset['diseases']"
-                                                       ng-bind-html="disease.name |browsehighlight:highlight_terms"></span>
+                                                       ng-bind-html="disease.name +'&nbsp; &nbsp;'|browsehighlight:highlight_terms"></span>
                                         <span ng-show="dataset.diseases.length===0">Not available</span>
                                     </div>
                                     <!--

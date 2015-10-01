@@ -2,6 +2,43 @@
  * ANGLULAR APP
  **/
 
+    /**
+     * web_service_url for whole app
+     */
+    var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
+    var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
+    var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolome_workbench";
+    var genomics_list = "ega,EGA";
+    var repositories = {
+        "pride": "PRIDE",
+        "PRIDE": "PRIDE",
+        "peptideatlas": "PeptideAtlas",
+        "peptide_atlas": "PeptideAtlas",
+        "PeptideAtlas": "PeptideAtlas",
+        "massive": "MassIVE",
+        "MassIVE": "MassIVE",
+        "metabolights": "MetaboLights",
+        "metabolights_dataset": "MetaboLights",
+        "MetaboLights": "MetaboLights",
+        "metabolome_workbench": "Metabolomics Workbench",
+        "Metabolomics Workbench": "Metabolomics Workbench",
+        "MetabolomicsWorkbench": "Metabolomics Workbench",
+        "ega": "EGA",
+        "EGA": "EGA",
+    };
+    var database_urls = {
+        "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
+        "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
+        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
+        "PeptideAtlas": "http://www.peptideatlas.org/",
+        "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
+        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
+    }
+
+
+
+
+
 /**
  * Make it possible to include underscore as a dependency.
  */

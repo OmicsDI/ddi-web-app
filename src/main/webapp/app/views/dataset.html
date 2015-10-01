@@ -107,7 +107,7 @@
                <span>
                    <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
                       href={{instrument_pre_url+'"'+instrument+'"'}}>
-                       {{instrument}}
+                       {{instrument+'&nbsp; &nbsp;'}}
                    </a>
               </span>
                             </p>
@@ -116,7 +116,7 @@
                <span>
                    <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
                       href={{organism_pre_url+'"'+organism.acc+'"'}}>
-                       {{organism.name}}
+                       {{organism.name+'&nbsp; &nbsp;'}}
                    </a>
               </span>
                             </p>
@@ -127,7 +127,7 @@
                <span>
                    <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
                       href={{tissue_pre_url+'"'+tissue+'"'}}>
-                       {{tissue}}
+                       {{tissue+'&nbsp; &nbsp;'}}
                    </a>
               </span>
                             </p>
@@ -137,26 +137,38 @@
                <span>
                    <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
                       href={{disease_pre_url+'"'+disease+'"'}}>
-                       <span> {{disease}}</span>
+                       <span> {{disease+'&nbsp; &nbsp;'}}</span>
                    </a>
               </span>
                             </p>
+
+
+                            <p style="margin-left:15px" class="align-justify">
+                            <span ng-show="dataset.publicationDate"> {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}| </span>
+                            <a href={{dataset.full_dataset_link}}>{{acc}}</a> |
+                            <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>
+                            </p>
+
+
                         </div>
                         <!--dataset_protocol_bottom-->
                     </div>
                     <!--dataset_protocol_bottom-->
 
                     <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
-                        <div class="col-md-6" style="margin-left:10px">
-                            Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a> [As supplied by <a
-                                href={{database_urls[repositories[domain]]}}>{{repositories[domain]}}</a>]
-                        </div>
-                        <div class="col-md-4" style="marginleft:10px" ng-show="dataset.publicationDate">
-                            <p>Date:
-                                {{dataset['publicationDate'].substr(0,4)+'-'+dataset['publicationDate'].substr(4,2)}}
-<!--                                '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}}-->
-                               {{dataset['publicationDate'].substr(6,2)!=='00'?'-'+dataset['publicationDate'].substr(6,2):''}}</p>
-                        </div>
+
+
+
+                        <!--<div class="col-md-6" style="margin-left:10px">-->
+                            <!--Repository:<a href={{dataset.full_dataset_link}}>{{acc}}</a> [As supplied by <a-->
+                                <!--href={{database_urls[repositories[domain]]}}>{{repositories[domain]}}</a>]-->
+                        <!--</div>-->
+                        <!--<div class="col-md-4" style="marginleft:10px" ng-show="dataset.publicationDate">-->
+                            <!--<p>Date:-->
+                                <!--{{dataset['publicationDate'].substr(0,4)+'-'+dataset['publicationDate'].substr(4,2)}}-->
+<!--&lt;!&ndash;                                '+month_names_short[dataset['publicationDate'].substr(4,2)-1]+' '}}&ndash;&gt;-->
+                               <!--{{dataset['publicationDate'].substr(6,2)!=='00'?'-'+dataset['publicationDate'].substr(6,2):''}}</p>-->
+                        <!--</div>-->
                     </div>
                     <!--dataset_bottom-->
 
@@ -235,7 +247,7 @@
                         </div>
                     </div>
 
-                    <div class="row" id="dataset_middle_bottom" style="margin-top:10px">
+                    <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
                         <div class="col-md-4" style="margin-left:10px">
                             <a ng-hide="dataset.publications === null"
                                href={{"http://europepmc.org/abstract/MED/"+publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}>
@@ -431,7 +443,7 @@
                                 <img src="img/omics/Metabolomics2.png"
                                      ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
                                 <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
-                                <a target="_blank" class="align-justify"
+                                <a target="" class="align-justify"
                                     href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
                             </div>
                             <div class="project-widget-paragraph hidden">

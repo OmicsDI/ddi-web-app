@@ -54,7 +54,6 @@
     <meta name="theme-color" content="#ffffff">
     <!--favico end -->
     <base href="/Tools/ddi/">
-    <script src="bower_components/jquery/jquery-1.10.1.min.js"></script>
 </head>
 
 <body class="level2 ng-cloak">
@@ -159,13 +158,13 @@
                          <small>
                              <i>
                                  Examples:
-                                 <a href="" rel="nofollow" ng-click="example_query('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('&quot;cancer&quot;')">cancer</a>,
                                  <a href="" rel="nofollow" ng-click="example_query('TAXONOMY:&quot;9606&quot;')">Homo
                                      sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Hela')">Hela</a>
+                                 <a href="" rel="nofollow" ng-click="example_query('&quot;Orbitrap&quot;')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('&quot;Q9HAU5&quot;')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('&quot;Phospho&quot;')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('&quot;Hela&quot;')">Hela</a>
                              </i>
                          </small>
                      </span>
@@ -288,41 +287,9 @@
 
 </div>
 <!--wraper of page -->
-<script type='text/javascript'>
-    /**
-     * web_service_url for whole app
-     */
-    var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
-    var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
-    var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolome_workbench";
-    var genomics_list = "ega,EGA";
-    var repositories = {
-        "pride": "PRIDE",
-        "PRIDE": "PRIDE",
-        "peptideatlas": "PeptideAtlas",
-        "peptide_atlas": "PeptideAtlas",
-        "PeptideAtlas": "PeptideAtlas",
-        "massive": "MassIVE",
-        "MassIVE": "MassIVE",
-        "metabolights": "MetaboLights",
-        "metabolights_dataset": "MetaboLights",
-        "MetaboLights": "MetaboLights",
-        "metabolome_workbench": "Metabolomics Workbench",
-        "Metabolomics Workbench": "Metabolomics Workbench",
-        "MetabolomicsWorkbench": "Metabolomics Workbench",
-        "ega": "EGA",
-        "EGA": "EGA",
-    };
-    var database_urls = {
-        "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
-        "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
-        "PeptideAtlas": "http://www.peptideatlas.org/",
-        "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
-    }
-</script>
 
+
+<script src="bower_components/jquery/jquery-1.10.1.min.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/underscore/underscore-min.js"></script>
 <script src="bower_components/angular-route/angular-route.min.js"></script>

@@ -219,6 +219,9 @@ var bub_charts_tissues_organisms = function () {
                 .on("click", function (d, i) {
                     // alert("you have clicked"+d.data.name);
                     // window.open("browse.html#/search?q="+d.name);
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
                     location.href = url_pre + d.className + '"';
                     if (value == 'Organisms') {
                         location.href = url_pre + d.taxonomyid + '"';
@@ -817,6 +820,9 @@ var barcharts_years_omics_types = function () {
                 })
                 .attr("class", "bar")
                 .on("click", function (d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
                     location.href = "#/search?q=*:* AND omics_type:\"" + d.name + "\" AND publication_date:\"" + d.year + "\"";
                 })
                 .on("mouseover", function (d) {
