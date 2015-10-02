@@ -112,7 +112,7 @@
         <!-- /local-nav -->
     </div>
 </header>
-    <div ng-controller="QueryCtrl" class=""  ng-show="show_top_search"
+    <div ng-controller="QueryCtrl" id="queryCtrl" class=""  ng-show="show_top_search"
          style="height:105px; float:right; margin-top:-140px; z-index:1; width:45%">
         <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
             <fieldset>
@@ -247,7 +247,6 @@
                             <li><a target="_blank" href="http://www.metabolomicsworkbench.org/" class="no-icon">Metabolomics
                                 Workbench</a></li>
 
-
                         </ul>
                     </div>
 
@@ -279,11 +278,11 @@
 
 
 <script src="bower_components/jquery/jquery-1.10.1.min.js"></script>
-<script src="bower_components/angular/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
 <script src="bower_components/underscore/underscore-min.js"></script>
-<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="https://code.angularjs.org/1.4.7/angular-route.min.js"></script>
 <script src="bower_components/angular/angular-cookies.js"></script>
-<script src="bower_components/angular/angular-animate.min.js"></script>
+<script src="https://code.angularjs.org/1.4.7/angular-animate.min.js"></script>
 <script src="bower_components/angular/ngprogress.min.js"></script>
 <script src="bower_components/angular/autocomplete.js"></script>
 

@@ -5,7 +5,7 @@
 angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results','ngProgressFactory', function ($scope, $location, $http, results, ngProgressFactory) {
 
     $scope.result = {
-        entries: [],
+        entries: []
     };
     $scope.show_export_error = false;
     $scope.$root.page_size = 10;
@@ -219,26 +219,27 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         });
     };
 
-    /**
-     * Launch results export.
-     * - submit export job
-     * - open the results page in a new window.
-     */
-    $scope.export_results = function (format) {
-        var submit_query_url = '/export/submit-query',
-            results_page_url = '/export/results';
-        $scope.show_export_error = false;
-        $http({
-            url: submit_query_url +
-            '?q=' + $scope.result._query +
-            '&format=' + format,
-            method: 'GET'
-        }).success(function (data) {
-            window.location.href = results_page_url + '?job=' + data.job_id;
-        }).error(function () {
-            $scope.show_export_error = true;
-        });
-    };
+    ///**
+    // * Launch results export.
+    // * - submit export job
+    // * - open the results page in a new window.
+    // */
+    //$scope.export_results = function (format) {
+    //    var submit_query_url = '/export/submit-query',
+    //        results_page_url = '/export/results';
+    //    $scope.show_export_error = false;
+    //    $http({
+    //        url: submit_query_url +
+    //        '?q=' + $scope.result._query +
+    //        '&format=' + format,
+    //        method: 'GET'
+    //    }).success(function (data) {
+    //        window.location.href = results_page_url + '?job=' + data.job_id;
+    //    }).error(function () {
+    //        $scope.show_export_error = true;
+    //    });
+    //};
+
 
     /**
      * Watch the reload/refresh event
@@ -249,7 +250,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () {
         return $location.url();
     }, function (newUrl, oldUrl) {
-        console.log(oldUrl + "-->" + newUrl);
         $scope.$root.current_page = 1;
         $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
         $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);

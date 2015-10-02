@@ -16,7 +16,16 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         $scope.$root.current_page = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
-        console.log(current_abs_url);
+        redirect($location.url());
+
+        function redirect(newUrl) {
+            $timeout(function () {
+                // wrapping in $timeout to avoid "digest in progress" errors
+                $window.location = $window.location.pathname +'#' + newUrl;
+            });
+        }
+
+
         //if (current_abs_url.match("/#/home")) {
         //    $window.location = current_abs_url.replace("/#/home", "/#");
         //}
@@ -49,7 +58,6 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         return $location.url();
     }, function (newUrl, oldUrl) {
         // ignore url hash
-        console.log(oldUrl+"-->"+newUrl);
         newUrl = newUrl.replace(/#.+$/, '');
         oldUrl = oldUrl.replace(/#.+$/, '');
         // url has changed

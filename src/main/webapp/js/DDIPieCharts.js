@@ -182,24 +182,24 @@ var bub_charts_tissues_organisms = function () {
 
             var value = this.value || 'Tissues';
             var data = [];
-            var url_pre;
+            var searchWord_pre;
             if (value == 'Tissues') {
                 data = tissues;
                 // text_total.text("Total:"+total_tissues);
                 // text_unavail.text("Unavailable:"+unavailabl_no_tissues.value);
-                url_pre = '#/search?q=*:* AND tissue:"';
+                searchWord_pre = '*:* AND tissue:"';
             }
             if (value == 'Organisms') {
                 data = organisms;
                 // text_total.text("Total:"+total_organisms);
                 // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
-                url_pre = '#/search?q=*:* AND TAXONOMY:"';
+                searchWord_pre = '*:* AND TAXONOMY:"';
             }
             if (value == 'Diseases') {
                 data = diseases;
                 // text_total.text("Total:"+total_organisms);
                 // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
-                url_pre = '#/search?q=*:* AND disease:"';
+                searchWord_pre = '*:* AND disease:"';
             }
 
             svg.selectAll(".node").remove();
@@ -217,15 +217,14 @@ var bub_charts_tissues_organisms = function () {
                     return "translate(" + d.x + "," + d.y + ")";
                 })
                 .on("click", function (d, i) {
-                    // alert("you have clicked"+d.data.name);
-                    // window.open("browse.html#/search?q="+d.name);
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
-                    location.href = url_pre + d.className + '"';
+                    var searchWord = searchWord_pre + d.className + '"';
                     if (value == 'Organisms') {
-                        location.href = url_pre + d.taxonomyid + '"';
+                        searchWord = searchWord_pre + d.taxonomyid + '"';
                     }
+                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 });
 
 //  node.append("title")
@@ -514,7 +513,7 @@ var pie_charts_repos_omics = function () {
 
 
             function draw_treemap() {
-                var treemap_url_pre = '#/search?q=*:* AND repository:"';
+                var treemap_searchWord_pre = '*:* AND repository:"';
                 var treemap_div = body.append("div")
                     .attr("id", "treemap_div")
                     .style("position", "absolute")
@@ -535,12 +534,12 @@ var pie_charts_repos_omics = function () {
                         return d.children ? null : d.name;
                     })
                     .on("click", function (d, i) {
-                        location.href = treemap_url_pre + d.name + '"';
-
-                        if (d.name == "MetaboLights Dataset")
-                            location.href = treemap_url_pre + "MetaboLights" + '"';
-                        if (d.name == "Metabolome Workbench")
-                            location.href = treemap_url_pre + "MetabolomicsWorkbench" + '"';
+                        //location.href = treemap_searchWord_pre + d.name + '"';
+                        //
+                        //if (d.name == "MetaboLights Dataset")
+                        //    location.href = treemap_searchWord_pre + "MetaboLights" + '"';
+                        //if (d.name == "Metabolome Workbench")
+                        //    location.href = treemap_searchWord_pre + "MetabolomicsWorkbench" + '"';
                     })
                     .on("mousemove", function (d, i) {
                         treemap_tooltip.transition()
@@ -599,12 +598,12 @@ var pie_charts_repos_omics = function () {
         function change() {
             var value = this.value || 'Repos';
             var data;
-            var url_pre;
+            var searchWord_pre;
             if (value == 'Omics') {
                 data = omicstype;
                 text_total.text("Total:" + total_omics);
 //                text_unavail.text("Unavailable:" + unavailableomics.value);
-                url_pre = '#/search?q=*:* AND omics_type:"';
+                searchWord_pre = '*:* AND omics_type:"';
                 // text_total.text("Total:"+total_omics);
                 svg.attr("visibility", null);
 //                d3.select("#treemap_div").remove();
@@ -613,7 +612,7 @@ var pie_charts_repos_omics = function () {
                 data = repos;
                 text_total.text("Total:" + total_repos);
 //                text_unavail.text("");
-                url_pre = '#/search?q=*:* AND repository:"';
+                searchWord_pre = '*:* AND repository:"';
                 // text_total.text("Total:"+total_repos);
                 svg.attr("visibility", null);
 //                d3.select("#treemap_div").remove();
@@ -646,14 +645,12 @@ var pie_charts_repos_omics = function () {
                 })
                 .attr("class", "slice")
                 .on("click", function (d, i) {
-                    // alert("you have clicked"+d.data.name);
-                    // window.open("browse.html#/search?q="+d.data.name);
-                    location.href = url_pre + d.data.name + '"';
-
+                    var searchWord = searchWord_pre + d.data.name + '"';
                     if (d.data.name == "MetaboLights Dataset")
-                        location.href = url_pre + "MetaboLights" + '"';
+                        searchWord = searchWord_pre + "MetaboLights" + '"';
                     if (d.data.name == "Metabolome Workbench")
-                        location.href = url_pre + "MetabolomicsWorkbench" + '"';
+                        searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
+                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 })
                 .on("mouseover", function (d, i) {
                     var temptext1 = d.data.name;
@@ -825,7 +822,9 @@ var barcharts_years_omics_types = function () {
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
-                    location.href = "#/search?q=*:* AND omics_type:\"" + d.name + "\" AND publication_date:\"" + d.year + "\"";
+
+                    var searchWord = "*:* AND omics_type:\"" + d.name + "\" AND publication_date:\"" + d.year + "\"";
+                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 })
                 .on("mouseover", function (d) {
                     var current_g_x = parseInt(d3.transform(d3.select(this.parentNode).attr("transform")).translate[0]);
@@ -861,7 +860,8 @@ var barcharts_years_omics_types = function () {
                     return "translate(0," + i * 20 + ")";
                 })
                 .on("click", function (d) {
-                    location.href = "#/search?q=*:* AND omics_type:\"" + d + "\"";
+                    var searchWord = "*:* AND omics_type:\"" + d + "\"";
+                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 });
 
             legend.append("rect")
@@ -883,7 +883,8 @@ var barcharts_years_omics_types = function () {
     }
 
     function clickMe(d) {
-        location.href = "#/search?q=*:* AND publication_date:\"" + d + "\"";
+        var searchWord = "*:* AND publication_date:\"" + d + "\"";
+        angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
     };
 
 

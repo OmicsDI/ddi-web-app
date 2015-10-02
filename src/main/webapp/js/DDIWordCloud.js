@@ -167,7 +167,10 @@ var drawHotwords = function () {
                         .style("opacity", 0);
 
                     //location.href = "#/search?q=" + "\""+ d.label + "\"";
-                     location.href = ("#/search?q=" + d.label);
+                    // location.href = ("#/search?q=" + d.label);
+                    var searchWord = "\"" + d.label + "\"";
+                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+
                 })
 
                 .on("mousemove", function (d, i) {
