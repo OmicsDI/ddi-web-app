@@ -349,7 +349,7 @@ display: block;
 
 div.tooltip {   
   position: absolute;           
-  border: 1px solid #000;           
+  /*border: 1px solid #000;           */
   text-align: left;           
   width: 60px;                  
   height: 32px;                 
@@ -1034,3 +1034,6 @@ ul.affix-bottom {
   font-size: 85%;
 }
 
+.enrichedWords{
+    color:greenyellow;
+}

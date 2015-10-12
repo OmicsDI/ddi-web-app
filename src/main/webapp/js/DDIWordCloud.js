@@ -169,6 +169,7 @@ var drawHotwords = function () {
                     //location.href = "#/search?q=" + "\""+ d.label + "\"";
                     // location.href = ("#/search?q=" + d.label);
                     var searchWord = "\"" + d.label + "\"";
+                    console.log("clicked here");
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
 
                 })
