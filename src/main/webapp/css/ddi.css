@@ -97,7 +97,7 @@ cursor: hand;
 opacity: .8 !important; }
 
 
-.node:hover,.slice:hover, .bar:hover, .legend:hover, .treemap_node:hover{ 
+.node:hover,.slice:hover, .bar:hover, .legend:hover, .treemap_node, .arc path:hover{
 cursor: pointer;
 cursor: hand;
 opacity: .8 !important; }
@@ -1037,3 +1037,24 @@ ul.affix-bottom {
 .enrichedWords{
     color:greenyellow;
 }
+
+.tooltip-inner {
+    background-color: #00acd6;
+    color: #fff;
+}
+
+/*.tooltip.top .tooltip-arrow {*/
+    /*border-top-color: #00acd6;*/
+/*}*/
+
+/*.tooltip.right .tooltip-arrow {*/
+    /*border-right-color: #00acd6;*/
+/*}*/
+
+/*.tooltip.bottom .tooltip-arrow {*/
+    /*border-bottom-color: #00acd6;*/
+/*}*/
+
+/*.tooltip.left .tooltip-arrow {*/
+    /*border-left-color: #00acd6;*/
+/*}*/

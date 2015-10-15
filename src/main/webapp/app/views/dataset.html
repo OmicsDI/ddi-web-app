@@ -50,7 +50,12 @@
             </div>
             <div class="panel panel-default" id="dataset_upper" ng-hide="get_dataset_fail.length>0">
                 <div class="panel-footer ">
-                    <h3>Dataset Information</h3>
+                    <h3>Dataset Information
+                    <button ng-show="true"
+                            ng-click="enrich_click()" class="btn btn-default"
+                            style="">{{enrich_button_label}}
+                    </button>
+                        </h3>
                 </div>
                 <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
                     <img src="img/omics/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1"/>
@@ -59,15 +64,10 @@
                     <br>
                     <br>
                     <br>
-                    <button ng-show="true"
-                            ng-click="enrich_click()" class="btn btn-default"
-                            style="">{{enrich_button_label}}
-                    </button>
 
                 </div>
                 <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
                     <div>
-                        <h4>{{dataset.name}}</h4>
                         <h4>
                             <span ng-repeat="section in title_sections" style="">
                                 <span ng-if="section.synonyms.length == 0 ">{{section.text}}</span>
@@ -297,155 +297,21 @@
             </div>
             <!--dataset_middle_panel-->
 
-            <div class="panel panel-default" id="dataset_bottom" ng-if="false">
-
-
-                <div class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-                    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all"
-                        role="tablist">
-                        <li class="ui-corner-top hotword"
-                            style="border-style:solid; border-width:1px;border-top-left-radius:1em; margin-left:-1px"
-                            ng-repeat="tab in tabs"
-                            ng-class="{tabactive:isActiveTab(tab.url)}"
-                            ng-click="onClickTab(tab)">
-                                <span style="font-size:18px;margin:4px;font-weight:300">{{tab.title}}
-                                    <img border="1"
-                                         src="css/img/mark.png"
-                                         style="">
-                                </span>
-                        <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/img/mark.png" style=""></span>
-                        </li>
-                        <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/img/mark.png" style=""></span>
-                        </li>
-                        <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp; <img border="1" src="css/img/mark.png" style=""></span>
-                        </li>
-                        <li class="ui-corner-top" style="border-bottom-style:dotted; border-bottom-width:1px">
-                            <span style="font-size:16px">&nbsp;  <img border="1" src="css/img/mark.png" style=""></span>
-                        </li>
-                    </ul>
-
+            <div class="panel panel-default" id="dataset_bottom" >
+                <div class="panel-footer ">
+                    <h3>Similarity status</h3>
                 </div>
-                <div id="mainView" style="position:relative; border-style:none">
-                    <div ng-include="currentTab"></div>
+
+                <script>
+                    drawChordDiagram();
+                </script>
+                <div id="chord_diagram">
+                    <input id="slider1" type="range" min="100" max="500" step="10" />
                 </div>
+
             </div>
             <!--dataset_bottom_panel-->
 
-            <script type="text/ng-template" id="filelist.tpl.html">
-                <div id="viewOne" class="ui-tabs-panel ui-widget-content ui-corner-bottom "
-                     ng-class="currentTab !== 'filelist.tpl.html' ? 'ui-tabs-hide' :'' "
-                     style="border-style:none"
-                        >
-                    <ul>
-                        <li ng-repeat="file_link in file_links"><a href="{{file_link.link}}">{{file_link.name}}</a>
-                        </li>
-                    </ul>
-                </div>
-
-                </div>
-            </script>
-
-            <script type="text/ng-template" id="bioentities.tpl.html">
-                <div id="viewTwo" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
-                     ng-class="currentTab !== 'bioentities.tpl.html' ? 'ui-tabs-hide' :'' "
-                     style="border-style:none"
-                        >
-                    <h3>BioEntities</h3>
-
-                    <p>Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas
-                        est urna sit amet arcu. Class aptent taciti sociosqu.</p>
-                </div>
-            </script>
-
-            <script type="text/ng-template" id="labdetails.tpl.html">
-                <div id="viewThree" class="ui-tabs-panel ui-widget-content ui-corner-bottom"
-                     ng-class="currentTab !== 'labdetails.tpl.html' ? 'ui-tabs-hide' :'' "
-                     style="border-style:none"
-                        >
-                    <h3>Lab Details</h3>
-
-                    <p>
-                        <b>contact affiliation:</b> The Novo Nordisk Foundation Center for Protein Research,
-                        University of Copenhagen, Denimg/mark
-                    </p>
-
-                    <p>
-                        <b>lab head:</b> Chunaram Choudhary contact email: chuna.choudhary@cpr.ku.dk
-                    </p>
-
-                    <p>
-                        <b>dataset submitter:</b> Shankha Satpathy contact email: shankha@cpr.ku.dk
-                    </p>
-
-                    <h4> Datasets from this lab:</h4>
-
-                    <div id="lab-results" class="grid_22 right-column">
-                        <div id="lab-results-items" class="list-group">
-                            <ul class="list-unstyled">
-                                <li class="result animate-repeat" ng-repeat="labdataset in dataset.labdatasets">
-                                    <div class="project-widget  list-group-item">
-
-                                        <div class="project-widget-accession">
-                                            <img src="img/omics/Proteomics2.png"
-                                                 ng-show="proteomics_list.indexOf(labdataset.source)>-1"/>
-                                            <img src="img/omics/Metabolomics2.png"
-                                                 ng-show="metabolomics_list.indexOf(labdataset.source)>-1"/>
-                                            <img src="img/omics/Genomics2.png"
-                                                 ng-show="genomics_list.indexOf(labdataset.source)>-1"/>
-                                            <a href={{"#/dataset/"+repositories[labdataset.source]+"/"+labdataset.id}}>{{labdataset.title}}</a>
-
-                                        </div>
-
-                                        <div class="project-widget-paragraph">
-                                            <b>Project description:</b>
-                                            {{labdataset["description"]|limitTo:450}}{{labdataset["description"].length>450?'...':''}}
-                                            <span ng-show="labdataset.description===null">Not available</span>
-                                        </div>
-
-                                        <div class="project-widget-paragraph">
-                                        </div>
-
-                                        <div class="project-widget-paragraph" ng-show="labdataset['organisms']">
-                                            <b>Organism: </b><span ng-repeat="organism in labdataset['organisms']">{{organism["name"]}}  </span>
-                                            <span ng-show="labdataset.organisms.length===0">Not available</span>
-                                        </div>
-
-                                        <div class="project-widget-paragraph">
-                                            {{labdataset.id}} ({{repositories[labdataset.source]}})
-                                        </div>
-
-                                        <div class="project-widget-paragraph" ng-show="labdataset.publicationDate">
-                                            <b>Made public: </b>
-                                            {{labdataset['publicationDate'].substr(0,4)+"-"+labdataset['publicationDate'].substr(4,2)+"-"+labdataset['publicationDate'].substr(6,2)}}
-                                        </div>
-
-                                        <div class="project-widget-tag"
-                                             ng-hide="labdataset.keywords[0] === 'Not available'">
-                                            <a ng-repeat="keyword in labdataset.keywords" title={{keyword}}
-                                               class="biological"
-                                               href={{"#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <small class="text-muted ng-binding ng-scope"
-                                   ng-if="result.hitCount &gt; result.entries.length">Displaying 5 out of 72
-                                datasets in this lab
-                            </small>
-                            <button ng-show="result.hitCount &gt; result.entries.length"
-                                    ng-click="load_more_results()" class="btn btn-default load-more col-md-3"
-                                    style=""><i ng-class="search_in_progress ? 'fa fa-spinner fa-spin' : 'hidden'"
-                                                class="hidden"></i> Load more
-                            </button>
-                        </div>
-                    </div>
-                    <!-- row -->
-
-                </div>
-            </script>
 
 
         </div>

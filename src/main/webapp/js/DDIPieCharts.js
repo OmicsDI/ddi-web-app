@@ -17,7 +17,7 @@ var bub_charts_tissues_organisms = function () {
                 return;
             }
             output_getting_info('chart_tissues_organisms');
-            pie_charts_tissues_organisms();
+            bub_charts_tissues_organisms();
         }
         else {
             remove_getting_info('chart_tissues_organisms');
