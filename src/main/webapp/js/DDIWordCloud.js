@@ -105,7 +105,7 @@ var drawHotwords = function () {
 
 
         var wordcloud_tooltip = d3.select('body').append("div")
-            .attr("class", "tooltip")
+            .attr("class", "chart_tooltip")
             .style("opacity", 0);
 
 

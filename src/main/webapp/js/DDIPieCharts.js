@@ -154,7 +154,7 @@ var bub_charts_tissues_organisms = function () {
             d3.select(self.frameElement).style("height", diameter + "px");
 
             var tooltip = d3.select('body').append("div")
-                .attr("class", "tooltip")
+                .attr("class", "chart_tooltip")
                 .style("opacity", 0);
 
 
@@ -772,7 +772,7 @@ var barcharts_years_omics_types = function () {
             })]);
 
             var tooltip = d3.select('body').append("div")
-                .attr("class", "tooltip")
+                .attr("class", "chart_tooltip")
                 .style("opacity", 0);
 
             svg.append("g")

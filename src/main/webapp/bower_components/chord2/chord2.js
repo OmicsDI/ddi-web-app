@@ -16,7 +16,7 @@
             innerRadius = Math.min(width, height) * .30,
             outerRadius = innerRadius * 1.1,
             fontsize = 15,
-            colorschemeArcs = ["#d9d9d9"]
+            colorschemeArcs = ["#000000", "#FFDD89", "#957244", "#F26223", "#d9d9d9"]
 
         function chord2(selection) {
 
@@ -32,10 +32,14 @@
                     .data(chord2.groups)
                     .enter().append("path")
                     .style("fill",
-                    function (d) {
-                        return fillArcs(colorschemeArcs)(d.index %
-                            colorschemeArcs.length);
+                     function (d) {
+                        return fillChords(d.index %
+                            fillChords.range().length);
                     })
+                    //function (d) {
+                    //    return fillArcs(colorschemeArcs)(d.index %
+                    //        colorschemeArcs.length);
+                    //})
                     .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
                     .on("click", function(){alert("here?");})

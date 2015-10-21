@@ -355,10 +355,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * To control the enrichment info show
      */
-    $scope.enrich_button_label = "Enrich";
+    $scope.enrich_button_label = "Enrich it";
     $scope.enrich_click = function(){
-        if ($scope.enrich_button_label == "Enrich") {$scope.enrich_button_label = "Enriched"}
-        else if($scope.enrich_button_label == "Enriched") {$scope.enrich_button_label = "Enrich"}
+        if ($scope.enrich_button_label == "Enrich it") {$scope.enrich_button_label = "Enriched"}
+        else if($scope.enrich_button_label == "Enriched") {$scope.enrich_button_label = "Enrich it"}
     }
 
     /*
@@ -397,6 +397,21 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.highlight_terms = [];
     $scope.highlight_terms[0] = " on ";
     $scope.highlight_terms[1] = " off ";
+
+
+    /**
+     * For similar datasets tabs control
+     */
+    $scope.tabs = [
+        { title:'Dynamic Title 1', content:'Dynamic content 1' },
+        { title:'Dynamic Title 2', content:'Dynamic content 2' }
+    ];
+
+    $scope.alertMe = function() {
+        setTimeout(function() {
+            $window.alert('You\'ve selected the alert tab!');
+        });
+    };
 
 }])
     .filter('datasethighlight', function ($sce) {

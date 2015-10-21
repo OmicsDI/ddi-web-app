@@ -347,17 +347,17 @@ background-image : linear-gradient(rgb(179,217,140),rgb(153,204,102));
 display: block;
 }
 
-div.tooltip {   
-  position: absolute;           
+.chart_tooltip {
+  position: absolute;
   /*border: 1px solid #000;           */
-  text-align: left;           
-  width: 60px;                  
-  height: 32px;                 
-  padding-left: 5px;             
-  font: 12px sans-serif;        
-  background: white;   
-  border-radius: 4px;           
-  pointer-events: none;         
+  text-align: left;
+  width: 60px;
+  height: 32px;
+  padding-left: 5px;
+  font: 12px sans-serif;
+  background: white;
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 #error-row p{
