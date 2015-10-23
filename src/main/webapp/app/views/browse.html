@@ -347,18 +347,21 @@
                                     <div class="project-widget-paragraph">
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['organisms']">
-                                        ORGANISM: <span ng-repeat="organism in dataset['organisms']"
+                                        |ORGANISM(S)|: <span ng-repeat="organism in dataset['organisms']|limitTo:5"
                                                         ng-bind-html="organism.name+'&nbsp; &nbsp;' |browsehighlight:highlight_terms"> </span>
+                                        <span ng-show="dataset.organisms.length>5">...</span>
                                         <span ng-show="dataset.organisms.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['tissues']">
-                                        TISSUE: <span ng-repeat="tissue in dataset['tissues']"
+                                        |TISSUE(S)|: <span ng-repeat="tissue in dataset['tissues']|limitTo:5"
                                                       ng-bind-html="tissue.name+'&nbsp; &nbsp;' |browsehighlight:highlight_terms"></span>
+                                        <span ng-show="dataset.tissues.length>5">...</span>
                                         <span ng-show="dataset.tissues.length===0">Not available</span>
                                     </div>
                                     <div class="project-widget-paragraph" ng-show="dataset['diseases']">
-                                        DISEASE: <span ng-repeat="disease in dataset['diseases']"
+                                        |DISEASE(S)|: <span ng-repeat="disease in dataset['diseases']|limitTo:5"
                                                        ng-bind-html="disease.name +'&nbsp; &nbsp;'|browsehighlight:highlight_terms"></span>
+                                        <span ng-show="dataset.diseases.length>5">...</span>
                                         <span ng-show="dataset.diseases.length===0">Not available</span>
                                     </div>
                                     <!--

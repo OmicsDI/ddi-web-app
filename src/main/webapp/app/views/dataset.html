@@ -10,9 +10,8 @@
         </p>
     </div>
     <div class="row" style="">
-
-        <div class="col-md-1">
-            <div id="socialnetworks" style="position:fixed;top:13em; z-index:100;margin-left:20px; width:50px"
+        <div class="col-md-1" style="display: block;" >
+            <div id="socialnetworks" style="top:13em; z-index:100;margin-left:20px; width:50px"
                  ng-show="get_dataset_fail.length<1">
                 <!-- <g:plusone></g:plusone> -->
 
@@ -90,7 +89,7 @@
                                 <!--<span ng-click="description_show_full='true'" class="hotword"><b>{{dataset.description.length>500?"...more":""}}</b></span>-->
                             <!--</p>-->
 
-                            <p class="align-justify">ABSTRACT:
+                            <p class="align-justify">|ABSTRACT|:
 
                                     <span ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.synonyms.length == 0" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" >{{section.text}}</span>
@@ -108,7 +107,7 @@
                     <div ng-show="sample_protocol_description!=='Not available' || data_protocol_description!=='Not available'">
                         <p ng-show="sample_protocol_description.length > 1 && sample_protocol_description!=='Not available'"
                            class="align-justify">
-                            <span><u>SAMPLE PROTOCOL:</u> </span>
+                            <span><u>|SAMPLE PROTOCOL|:</u> </span>
                                 <span ng-show="sample_protocol_show_full=='true'" ng-bind-html="sample_protocol_description|datasethighlight:highlight_terms"><span
                                         ng-click="sample_protocol_show_full='false'" class="hotword"><b>click to
                                     cllapse</b></span></span>
@@ -119,7 +118,7 @@
 
                         <p ng-show="data_protocol_description.length > 1 && data_protocol_description!=='Not available'"
                            class="align-justify">
-                            <span><u>DATA PROTOCOL:</u></span>
+                            <span><u>|DATA PROTOCOL|:</u></span>
                                 <span ng-show="data_protocol_show_full=='true'">{{data_protocol_description}}<span
                                         ng-click="data_protocol_show_full='false'" class="hotword"><b>click to
                                     cllapse</b></span></span>
@@ -131,7 +130,7 @@
 
                     <div class="row" id="dataset_protocol_bottom"
                          style="margin-top:10px margin-left:10px">
-                        <p style="margin-left:15px" ng-show="dataset.instruments" class="align-justify"><u>INSTRUMENT(S):</u>
+                        <p style="margin-left:15px" ng-show="dataset.instruments" class="align-justify"><u>|INSTRUMENT(S)|:</u>
                <span>
                    <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
                       href={{instrument_pre_url+'"'+instrument+'"'}}>
@@ -140,7 +139,7 @@
               </span>
                         </p>
 
-                        <p style="margin-left:15px" class="align-justify"><u>ORGANISM(S):</u>
+                        <p style="margin-left:15px" class="align-justify"><u>|ORGANISM(S)|:</u>
                <span>
                    <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
                       href={{organism_pre_url+'"'+organism.acc+'"'}}>
@@ -150,7 +149,7 @@
                         </p>
 
                         <p style="margin-left:15px" class="align-justify"
-                           ng-show="dataset.tissues!==null"><u>TISSUE(S):</u>
+                           ng-show="dataset.tissues!==null"><u>|TISSUE(S)|:</u>
 
                <span>
                    <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
@@ -161,7 +160,7 @@
                         </p>
 
                         <p style="margin-left:15px" class="align-justify"
-                           ng-show="dataset.diseases!==null"><u>DISEASE(S):</u>
+                           ng-show="dataset.diseases!==null"><u>|DISEASE(S)|:</u>
                <span>
                    <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
                       href={{disease_pre_url+'"'+disease+'"'}}>
@@ -297,7 +296,7 @@
             </div>
             <!--dataset_middle_panel-->
 
-            <div class="panel panel-default" id="dataset_bottom" >
+            <div class="panel panel-default" id="dataset_bottom" ng-hide="true">
                 <div class="panel-footer ">
                     <h3>Similarity status</h3>
                 </div>
