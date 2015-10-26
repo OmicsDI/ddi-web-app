@@ -118,7 +118,7 @@ var drawHotwords = function () {
             var hotwordss = terms["Omics" + "_" + field];
             var maxfrequent = getmax(hotwordss);
             svg.selectAll(".cloud").remove();
-            d3.layout.cloud().size([425, 320])
+            d3.layout.cloud().size([div_width-10, 320])
                 .words(hotwordss)
                 .padding(1)
                 .rotate(0)
@@ -139,7 +139,7 @@ var drawHotwords = function () {
             var maxfrequent = getmax(words);
             svg.append("g")
                 .attr("class", "cloud")
-                .attr("transform", "translate(200,180)")
+                .attr("transform", "translate(" + div_width/2.2 + ",180)")
                 .selectAll("text")
                 .data(words)
                 .enter().append("text")
@@ -183,8 +183,8 @@ var drawHotwords = function () {
                         .style("opacity", .9);
 
                     wordcloud_tooltip.html("<strong>" + d.frequent + "</strong> datasets"  )
-                        .style("left", (mouse_coords[0] + screen.width/11) + "px")
-                        .style("top", (mouse_coords[1]-30) + "px")
+                        .style("left", (mouse_coords[0] + div_width/5) + "px")
+                        .style("top", (mouse_coords[1]-25) + "px")
                         .style("height", "20px")
                         .style("width", d.frequent.toString().length * 10 + 70 + "px");
                 })

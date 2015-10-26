@@ -74,6 +74,8 @@ var bub_charts_tissues_organisms = function () {
 
         var div_width_px = body.style("width");
         var div_width = div_width_px.substr(0, div_width_px.length - 2);
+        var div_height_px = body.style("height");
+        var div_height= div_width_px.substr(0, div_width_px.length - 2);
             //var div_width = 420;
             var diameter = div_width / 1.3,
                 format = d3.format(",d"),
@@ -86,14 +88,16 @@ var bub_charts_tissues_organisms = function () {
             body.selectAll("svg").remove();
             var svg = body.append("svg")
                 .attr("width", diameter * 1.3)
-                .attr("height", diameter)
-                .attr("class", "bubble");
+                .attr("height", div_height)
+                .attr("class", "bubble")
+                .attr("style", "position:relative")
+                ;
 
             body.selectAll("div").remove();
             var formdiv = body.append('div');
             formdiv
                 .attr("class", "center")
-                .attr("style", "width:280px")
+                .attr("style", "width:266px; position:absolute; bottom: 15px; left:" + (div_width-266)/2 + "px")
             ;
 
             var radio_form = formdiv.append('form');
@@ -254,8 +258,8 @@ var bub_charts_tissues_organisms = function () {
                     tooltip.node().parentElement);
 
                 tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets" )
-                    .style("left", (mouse_coords[0] +screen.width/11 ) + "px")
-                    .style("top", (mouse_coords[1] - 30) + "px")
+                    .style("left", (mouse_coords[0] +div_width/5 ) + "px")
+                    .style("top", (mouse_coords[1] - 35) + "px")
                     .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
             })
                 .on("mouseout", function (d) {
@@ -372,15 +376,15 @@ var pie_charts_repos_omics = function () {
             //var div_width = 420;
             var width = div_width,
                 height = 300,
-                radius = Math.min(width, height) / 2;
+                radius = Math.min(width, height) / 2.3;
 
 
             body.attr("position", "relative");
             d3.select("#" + piechartname).selectAll("svg").remove();
             var svg = d3.select("#" + piechartname)
                 .append("svg")
-                .attr("style", "height:" + height)
-                .attr("style", "width:" + width)
+                .attr("style", "height:" + height )
+                .attr("style", "width:" + width )
                 .attr("class", "piesvg")
                 .append("g");
 
@@ -827,14 +831,14 @@ var barcharts_years_omics_types = function () {
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 })
                 .on("mouseover", function (d) {
-                    var current_g_x = parseInt(d3.transform(d3.select(this.parentNode).attr("transform")).translate[0]);
-                    var current_rect_x = parseInt(d3.select(this).attr("x"));
+                    var mouse_coords = d3.mouse(
+                        tooltip.node().parentElement);
 //                    console.log(parseInt(d3.select(this).attr("y")));
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", .9);
                     tooltip.html( d.value + " datasets" )
-                        .style("left", (1095 + current_g_x + current_rect_x) + "px")
+                        .style("left", (mouse_coords[0] + div_width/5 - 40) + "px")
                         .style("top", (parseInt(d3.select(this).attr("y"))+635) + "px")
                         .style("height",  "20px")
                         .style("width", d.value.toString().length * 5 + 80 + "px");
