@@ -38,18 +38,18 @@ app.directive('autocomplete', function() {
       var watching = true;
 
       // autocompleting drop down on/off
-      $scope.completing = false;
-      //console.log($scope.completing);
+      $scope.$root.completing = false;
+      //console.log($scope.$root.completing);
 
       // starts autocompleting on typing in something
       $scope.$watch('searchParam', function(newValue, oldValue){
 
-        if (oldValue === newValue || (!oldValue && $scope.initLock)) {
+        if (oldValue === newValue || (!oldValue && $scope.initLock) || oldValue===null || oldValue==="") {
           return;
         }
 
         if(watching && typeof $scope.searchParam !== 'undefined' && $scope.searchParam !== null) {
-          $scope.completing = true;
+          $scope.$root.completing = true;
           $scope.searchFilter = $scope.searchParam;
           $scope.selectedIndex = -1;
         }
@@ -90,7 +90,7 @@ app.directive('autocomplete', function() {
             $scope.onSelect(suggestion);
         }
         watching = false;
-        $scope.completing = false;
+        $scope.$root.completing = false;
         setTimeout(function(){watching = true;},1000);
         $scope.setIndex(-1);
       };
@@ -128,7 +128,7 @@ app.directive('autocomplete', function() {
         element[0].onclick = function(e){
           if(!scope.searchParam){
             setTimeout(function() {
-              scope.completing = true;
+              scope.$root.completing = true;
               scope.$apply();
             }, 200);
           }
@@ -166,7 +166,7 @@ app.directive('autocomplete', function() {
         var l = angular.element(this).find('li').length;
 
         // this allows submitting forms by pressing Enter in the autocompleted field
-        if(!scope.completing || l == 0) return;
+        if(!scope.$root.completing || l == 0) return;
 
         // implementation of the up and down movement in the list of suggestions
         switch (keycode){
@@ -250,7 +250,7 @@ app.directive('autocomplete', function() {
             class="{{ attrs.inputclass }}"\
             id="{{ attrs.inputid }}"\
             ng-required="{{ autocompleteRequired }}" />\
-          <ul ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
+          <ul ng-show="$root.completing && (suggestions | filter:searchFilter).length > 0">\
             <li\
               suggestion\
               ng-repeat="suggestion in suggestions | filter:searchFilter | orderBy:\'toString()\' track by $index"\
