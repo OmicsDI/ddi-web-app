@@ -129,7 +129,7 @@
                             "rotate(180)translate(-16)" : null;
                     })
                     .style("fill", "#000")
-                    .style("font-size", fontsize)
+                    .style("font-size", fontsize/1.5)
                     .style("text-anchor",
                     function (d) {
                         return d.angle > Math.PI ?
