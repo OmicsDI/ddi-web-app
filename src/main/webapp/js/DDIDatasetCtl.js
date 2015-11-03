@@ -147,6 +147,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
 
             get_enrichment_info();    // For enriched synonyms tooltip
+            get_synonyms();
         }, function (error) {
             $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
             console.log("GET error:" + url);
@@ -194,12 +195,14 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * Get enrhciment info by type
      */
     function get_enrichment_info() {
-        var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
+        //var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
+        var enrichment_info_url= "http://localhost:9091/enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
         $http({
             url: enrichment_info_url,
             method: 'GET'
         }).success(function (data) {
-            var enrichment_info = data[0];
+            var enrichment_info = data;
+            console.log(enrichment_info);
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
             console.log("GET error:" + enrichment_info_url);
