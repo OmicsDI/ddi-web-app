@@ -32,7 +32,7 @@
                     .data(chord2.groups)
                     .enter().append("path")
                     .style("fill",
-                     function (d) {
+                    function (d) {
                         return fillChords(d.index %
                             fillChords.range().length);
                     })
@@ -42,7 +42,6 @@
                     //})
                     .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-                    .on("click", function(){alert("here?");})
                     .on("mouseover", fade(selection, .1))
                     .on("mouseout", fade(selection, 1))
                 ;
@@ -129,21 +128,44 @@
                             "rotate(180)translate(-16)" : null;
                     })
                     .style("fill", "#000")
-                    .style("font-size", fontsize/1.5)
+                    .style("font-size", fontsize / 1.5)
                     .style("text-anchor",
                     function (d) {
                         return d.angle > Math.PI ?
                             "end" : null;
                     })
+                    //.text(function (d) {
                     .text(function (d) {
-                        return d.label;
-                    });
+                        var acc = d.label.replace(/@.*/, "")
+                        return acc;
+                    })
+                    .append("tspan")
+                    .attr("x", 10)
+                    .attr("dy", ".99em")
+                    .style("fill", "#000")
+                    .style("font-size", fontsize / 1.5)
+                    .style("text-anchor",
+                    function (d) {
+                        return d.angle > Math.PI ?
+                            "end" : null;
+                    })
+                    //.text(function (d) {
+                    .html(function (d) {
+                        var domain = d.label.replace(/.*@/, "")
+                        return "@" + domain;
+                    })
+                ;
 
             });
         };
 
         function fade(selection, opacity) {
             return function (g, i) {
+
+                selection.selectAll(".chord path")
+                    .transition()
+                    .style("opacity", 1);
+
                 selection.selectAll(".chord path")
                     .filter(function (d) {
                         return !((i + '') in d.groups);
@@ -152,6 +174,7 @@
                     .style("opacity", opacity);
             };
         }
+
 
         function relayout() {
             var subgroups = [],
