@@ -40,8 +40,20 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.related_datasets = data.datasets;
     }).error(function () {
         console.log("GET error:" + related_datasets_url);
-        $scope.get_similar_dataset_fail = "can not get similar dataset";
+        //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
+
+    var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    $http({
+        url: related_datasets_by_exp_url,
+        method: 'GET'
+    }).success(function (data) {
+        $scope.related_datasets_by_exp = data.datasets;
+    }).error(function () {
+        console.log("GET error:" + related_datasets_by_exp_url);
+        //$scope.get_similar_dataset_fail = "can not get similar dataset";
+    });
+
 
     $scope.altmetric_entities = [];
     $scope.publication_index = {};
@@ -61,11 +73,14 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
                 return;
             }
-            if ($scope.dataset.protocols.length > 0) {
-                $scope.sample_protocol_description = $scope.dataset.protocols[0].description;
-            }
-            if ($scope.dataset.protocols.length > 1) {
-                $scope.data_protocol_description = $scope.dataset.protocols[1].description;
+            for (var i = 0; i < $scope.dataset.protocols.length; i++) {
+                if ($scope.dataset.protocols[i].name ==  "sample_protocol") {
+                    $scope.sample_protocol_description = $scope.dataset.protocols[i].description;
+                }
+
+                if ($scope.dataset.protocols[i].name ==  "data_protocol") {
+                    $scope.data_protocol_description = $scope.dataset.protocols[i].description;
+                }
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
             if ($scope.dataset.publicationIds === null) return;
@@ -218,6 +233,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var sampleProtocolEnrichInfo = enrichment_info.sampleProtocol;
         var dataProtocolEnrichInfo = enrichment_info.dataProtocol;
 
+        console.log(enrichment_info);
+        console.log(sampleProtocolEnrichInfo);
+
         var title_section_positions = get_section_position(titleEnrichInfo);
         var abstract_section_positions = get_section_position(abstractEnrichInfo);
         var sample_protocol_section_positions = get_section_position(sampleProtocolEnrichInfo);
@@ -225,6 +243,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.title_sections = get_section_content($scope.dataset.name, title_section_positions);
         $scope.abstract_sections = get_section_content($scope.dataset.description, abstract_section_positions);
         $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description, sample_protocol_section_positions);
+        console.log($scope.sample_protocol_description);
+        console.log(sample_protocol_section_positions);
         $scope.data_protocol_sections = get_section_content($scope.data_protocol_description, data_protocol_section_positions);
 
         console.log($scope.abstract_sections);
@@ -284,6 +304,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * @returns {Array}
      */
     function get_section_position(enrichInfo){
+        console.log(enrichInfo);
         var sections = [];
         var sectionStart = 0;
         var sectionEnd = 0;
