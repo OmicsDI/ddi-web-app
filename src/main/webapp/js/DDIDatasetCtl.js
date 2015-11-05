@@ -39,18 +39,20 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     }).success(function (data) {
         $scope.related_datasets = data.datasets;
     }).error(function () {
-        console.log("GET error:" + related_datasets_url);
+        console.error("GET error:" + related_datasets_url);
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
-    var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    //var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    var related_datasets_by_exp_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
     $http({
         url: related_datasets_by_exp_url,
         method: 'GET'
     }).success(function (data) {
         $scope.related_datasets_by_exp = data.datasets;
+        console.log($scope.related_datasets_by_exp);
     }).error(function () {
-        console.log("GET error:" + related_datasets_by_exp_url);
+        console.error("GET error:" + related_datasets_by_exp_url);
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
@@ -62,7 +64,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     var altmetricUrls = [];
     var arr = [];
     var url = web_service_url + "dataset/get?acc=" + $scope.acc + "&database=" + $scope.domain;
+    var get_synonyms_url = "http://localhost:9091/enrichment/getSynonymsForDataset?accession=" + $scope.acc + "&database=" + $scope.domain;
     arr.push($http.get(url));
+    arr.push($http.get(get_synonyms_url));
 
     $q.all(arr).then(function (ret) {
             // ret[0] contains the response of the first call
@@ -133,15 +137,22 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
                     var authors = [];
                     for (var i = 0; i < entity.authors.length; i++) {
-                        var surname = entity.authors[i].substr(entity.authors[i].length - 1, 1);
-                        var reg = new RegExp(surname + "[a-z]{0,100} " + surname + "$", "")
-                        var have_reg = entity.authors[i].search(reg) >= 0;
-                        if (have_reg) {
-                            author_for_searching = entity.authors[i].replace(reg, " " + surname);
-                        }
-                        else {
-                            author_for_searching = entity.authors[i].replace(surname, "");
-                        }
+                        var reg_surname = new RegExp(" [A-Z]{1,2}$", "")
+                        var surname = reg_surname.exec(entity.authors[i])[0];
+
+                        var reg_firstname = new RegExp("^.*? ", "")
+                        var firstname = reg_firstname.exec(entity.authors[i])[0];
+
+                        var author_for_searching = firstname + " " + surname;
+
+                        //var reg = new RegExp(surname + "[a-z]{0,100} " + surname + "$", "")
+                        //var have_reg = entity.authors[i].search(reg) >= 0;
+                        //if (have_reg) {
+                        //    author_for_searching = entity.authors[i].replace(reg, " " + surname);
+                        //}
+                        //else {
+                        //    author_for_searching = entity.authors[i].replace(surname, "");
+                        //}
                         var author = {"fullname": entity.authors[i], "name_for_searching": author_for_searching};
                         authors.push(author);
                     }
@@ -161,11 +172,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 });
             }
 
+            prepare_synonyms(ret[1].data);
             get_enrichment_info();    // For enriched synonyms tooltip
-            get_synonyms();
         }, function (error) {
             $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
-            console.log("GET error:" + url);
+            console.error("GET error:" + url);
         }
     ); //outside $q
 
@@ -217,10 +228,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             method: 'GET'
         }).success(function (data) {
             var enrichment_info = data;
-            console.log(enrichment_info);
+            prepare_synonyms();
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
-            console.log("GET error:" + enrichment_info_url);
+            console.error("GET error:" + enrichment_info_url);
         });
     }
 
@@ -233,8 +244,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var sampleProtocolEnrichInfo = enrichment_info.sampleProtocol;
         var dataProtocolEnrichInfo = enrichment_info.dataProtocol;
 
-        console.log(enrichment_info);
-        console.log(sampleProtocolEnrichInfo);
 
         var title_section_positions = get_section_position(titleEnrichInfo);
         var abstract_section_positions = get_section_position(abstractEnrichInfo);
@@ -243,60 +252,67 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.title_sections = get_section_content($scope.dataset.name, title_section_positions);
         $scope.abstract_sections = get_section_content($scope.dataset.description, abstract_section_positions);
         $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description, sample_protocol_section_positions);
-        console.log($scope.sample_protocol_description);
-        console.log(sample_protocol_section_positions);
         $scope.data_protocol_sections = get_section_content($scope.data_protocol_description, data_protocol_section_positions);
 
-        console.log($scope.abstract_sections);
     }
 
     /**
      * Get the words who have synonyms or sections who do not have synonyms
      */
     function get_section_content(wholetext,section_positions){
+
+        if(wholetext == null || section_positions == null) {
+            return null;
+        }
+
         var sections = [];
         for(var i=0; i<section_positions.length; i++) {
             var start = section_positions[i].from;
             var end = section_positions[i].to;
-            var hasSynonyms = section_positions[i].hasSynonyms;
+            var beAnnotated = section_positions[i].beAnnotated;
             var sectionWord = wholetext.substring(start, end + 1);
             var synonyms = [];
-            if(hasSynonyms == "true")  {synonyms = get_synonyms(sectionWord);}
+            if(beAnnotated == "true")  {synonyms = get_synonyms(sectionWord);}
             if(start>500) {tobeReduced = "true"}
                 else{tobeReduced = "false"}
-            var section = {"text":sectionWord,"hasSynonyms":hasSynonyms, "synonyms":synonyms, "tobeReduced":tobeReduced};
+            var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms, "tobeReduced":tobeReduced};
             sections.push(section);
         }
         var start = section_positions[section_positions.length-1].to + 1; //the last section
-        var hasSynonyms = "false";
+        var beAnnotated = "false";
         var synonyms = [];
         var sectionWord = wholetext.substring(start, wholetext.length);
-        var section = {"text":sectionWord,"hasSynonyms":hasSynonyms, "synonyms":synonyms};
+        var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms};
         sections.push(section);
-        console.log(sections);
         return sections;
     }
 
-    /**
-     * Get Synonyms from web service
+     /**
+     * Get and store synonyms from web service
      */
-     function get_synonyms(word) {
-        //var get_synonyms_url= word ;//"http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"accession\":\"" + $scope.acc + "\"}";
-        //$http({
-        //    url: get_synonyms_url,
-        //    method: 'GET'
-        //}).success(function (data) {
-        //    var synonyms = data;
-        //    return synonyms;
-        //}).error(function () {
-        //    console.log("GET error:" + enrichment_info_url);
-        //    return null;
-        //});
-        var synonyms = ["synonym1", "synonym2", "synonym3", "synonym4"];
-        return synonyms;
+     function prepare_synonyms(data) {
+            if(data==null) return;
+            $scope.synonymsList = data['synonymsList'];
      }
 
 
+    /**
+     * Get Synonyms of a word from local storage
+     */
+     function get_synonyms(word) {
+        if($scope.synonymsList == null || word == null)
+        {return null;}
+
+        word = word.toLowerCase();
+        var synonyms = null;
+        for(var i = 0; i<$scope.synonymsList.length; i++){
+            if(word == $scope.synonymsList[i].wordLabel) {
+                synonyms = $scope.synonymsList[i].synonyms;
+                break;
+            }
+        }
+        return synonyms;
+     }
 
     /**
      * Get the section positions in each field
@@ -304,7 +320,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * @returns {Array}
      */
     function get_section_position(enrichInfo){
-        console.log(enrichInfo);
+
+        if(enrichInfo==null) {
+            return null;
+        }
+
         var sections = [];
         var sectionStart = 0;
         var sectionEnd = 0;
@@ -314,17 +334,17 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
             if(sectionStart < wordStart) {
                 sectionEnd = wordStart - 1;
-                var section = {"from": sectionStart, "to": sectionEnd, "hasSynonyms":"false"};
+                var section = {"from": sectionStart, "to": sectionEnd, "beAnnotated":"false"};
                 sections.push(section);
 
-                var section = {"from": wordStart, "to": wordEnd, "hasSynonyms":"true"};
+                var section = {"from": wordStart, "to": wordEnd, "beAnnotated":"true"};
                 sections.push(section);
 
                 sectionStart = wordEnd + 1;
                 sectionEnd = wordEnd + 1;
 
             } else if(sectionStart == wordStart){
-                var section = {"from": wordStart, "to": wordEnd, "hasSynonyms":"true"};
+                var section = {"from": wordStart, "to": wordEnd, "beAnnotated":"true"};
                 sections.push(section);
 
                 sectionStart = wordEnd + 1;

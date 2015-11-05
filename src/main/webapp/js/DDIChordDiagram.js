@@ -5,9 +5,7 @@ function drawChordDiagram(acc, domain) {
     var urlString = window.location.hash;
     var urlWords = urlString.split("/");
     var acc = urlWords[3];
-    acc = "PXD000002";
     var domain = urlWords[2];
-    domain = "PRIDE";
     queue()
         //.defer(d3.json, web_service_url + 'enrichment/getSimilarityInfo?accession=' + acc+ '&database=' + domain) // topojson polygons
         .defer(d3.json, 'http://localhost:9091/' + 'enrichment/getSimilarityInfo?accession=' + acc + '&database=' + domain) // topojson polygons
@@ -37,7 +35,7 @@ function drawChordDiagram(acc, domain) {
             prepare_inputdata(threshold);
 
             data = [inputdata];
-            var width = 680, height = 650, padding = .09;
+            var width = 650, height = 650, padding = .09;
 
             chart = d3.chord2()
                 .width(width)
@@ -75,7 +73,6 @@ function drawChordDiagram(acc, domain) {
 
                 //remove the connections which are less than threashold
                 if (score.value < threshold) {
-                    console.log(score.value + "<" + threshold)
                     continue;
                 }
 

@@ -127,6 +127,7 @@
                         return d.angle > Math.PI ?
                             "rotate(180)translate(-16)" : null;
                     })
+                    .attr("class", "hotword")
                     .style("fill", "#000")
                     .style("font-size", fontsize / 1.5)
                     .style("text-anchor",
@@ -134,10 +135,14 @@
                         return d.angle > Math.PI ?
                             "end" : null;
                     })
-                    //.text(function (d) {
                     .text(function (d) {
                         var acc = d.label.replace(/@.*/, "")
                         return acc;
+                    })
+                    .on("click",function(d){
+                        var acc = d.label.replace(/@.*/, "");
+                        var domain = d.label.replace(/.*@/, "");
+                        location.href = "http://localhost:8000/Tools/ddi/#/dataset/" + domain + "/" + acc;
                     })
                     .append("tspan")
                     .attr("x", 10)
