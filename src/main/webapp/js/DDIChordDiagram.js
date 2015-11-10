@@ -21,6 +21,9 @@ function drawChordDiagram(acc, domain) {
         d3.select("#" + "chord_diagram").selectAll('input')
             .on('change', redraw);
 
+        d3.select("#" + "chord_diagram").selectAll('button')
+            .on('click', redraw);
+
         redraw();
 
 
@@ -30,9 +33,13 @@ function drawChordDiagram(acc, domain) {
                 .remove();
 
 
+            //if(this.id == "slider1"){
+            //    threshold = this.value || "0.01";
+            //}
 
-            threshold = this.value || "0.01";
-            prepare_inputdata(threshold);
+            var scope_threshold = angular.element(document.getElementById("datasetCtrl")).scope().threshold;
+
+            prepare_inputdata(scope_threshold);
 
             data = [inputdata];
             var width = 650, height = 650, padding = .09;
@@ -97,8 +104,6 @@ function drawChordDiagram(acc, domain) {
 
                 inputdata.connections.push(connection);
             }
-            console.log(inputdata.connections);
-            console.log(inputdata.labels);
         }
     }
 }

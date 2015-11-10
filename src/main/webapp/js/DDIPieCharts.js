@@ -259,7 +259,7 @@ var bub_charts_tissues_organisms = function () {
 
                 tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets" )
                     .style("left", (mouse_coords[0] +div_width/5 ) + "px")
-                    .style("top", (mouse_coords[1] - 35) + "px")
+                    .style("top", (mouse_coords[1] - 40) + "px")
                     .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
             })
                 .on("mouseout", function (d) {
@@ -838,7 +838,7 @@ var barcharts_years_omics_types = function () {
                         .duration(200)
                         .style("opacity", .9);
                     tooltip.html( d.value + " datasets" )
-                        .style("left", (mouse_coords[0] + div_width/5 - 40) + "px")
+                        .style("left", (mouse_coords[0] + div_width/4 ) + "px")
                         .style("top", (parseInt(d3.select(this).attr("y"))+635) + "px")
                         .style("height",  "20px")
                         .style("width", d.value.toString().length * 5 + 80 + "px");

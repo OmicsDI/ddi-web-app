@@ -23,6 +23,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.load_more_btn_show = "Load More";
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+    $scope.threshold = 0.01;
     /*     $http({
      url: url,
      method: 'GET'
@@ -260,12 +261,17 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * Get the words who have synonyms or sections who do not have synonyms
      */
     function get_section_content(wholetext,section_positions){
+        var sections = [];
 
-        if(wholetext == null || section_positions == null) {
+        if(wholetext == null && section_positions == null) {
             return null;
         }
+        else if(wholetext != null && section_positions == null) {
+            var section = {"text":wholetext,"beAnnotated":"false", "synonyms":null};
+            sections.push(section);
+            return sections;
+        }
 
-        var sections = [];
         for(var i=0; i<section_positions.length; i++) {
             var start = section_positions[i].from;
             var end = section_positions[i].to;
@@ -423,6 +429,25 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             if ($scope.load_more_btn_show === "Load More") $scope.load_more_btn_show = "Go Back";
         }
     }
+
+    /**
+     * For change the value in slider
+     */
+    $scope.threshold_change = function (step_value){
+        $scope.threshold = ($scope.threshold*100 + step_value*100)/100;
+
+        if($scope.threshold < 0.1){
+            $scope.threshold = $scope.threshold.toPrecision(1);
+        }
+        else{
+            $scope.threshold = $scope.threshold.toPrecision(2);
+        }
+
+        if($scope.threshold > 1) {$scope.threshold = 1}
+        if($scope.threshold < 0) {$scope.threshold = 0}
+    }
+
+
 
     /*
      *for unique elements in array
