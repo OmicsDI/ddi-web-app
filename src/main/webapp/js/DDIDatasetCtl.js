@@ -5,6 +5,7 @@
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$location', '$window', '$routeParams', '$timeout', '$q', function ($scope, $http, $location, $window, $routeParams, $timeout, $q) {
 
 
+    var long_text_length = 500;
     $scope.acc = $routeParams.acc;
     $scope.domain = $routeParams.domain;
     $scope.description_show_full = "false";
@@ -51,7 +52,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         method: 'GET'
     }).success(function (data) {
         $scope.related_datasets_by_exp = data.datasets;
-        console.log($scope.related_datasets_by_exp);
     }).error(function () {
         console.error("GET error:" + related_datasets_by_exp_url);
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
@@ -89,6 +89,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
             if ($scope.dataset.publicationIds === null) return;
+            //get and prepare each publication's data
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
                 var pubmed_id = $scope.dataset.publicationIds[i];
                 altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmed_id;
@@ -137,6 +138,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     entity.pagination = entity.pagination || "";
 
                     var authors = [];
+                    //get the name for searching
                     for (var i = 0; i < entity.authors.length; i++) {
                         var reg_surname = new RegExp(" [A-Z]{1,2}$", "")
                         var surname = reg_surname.exec(entity.authors[i])[0];
@@ -146,14 +148,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
                         var author_for_searching = firstname + " " + surname;
 
-                        //var reg = new RegExp(surname + "[a-z]{0,100} " + surname + "$", "")
-                        //var have_reg = entity.authors[i].search(reg) >= 0;
-                        //if (have_reg) {
-                        //    author_for_searching = entity.authors[i].replace(reg, " " + surname);
-                        //}
-                        //else {
-                        //    author_for_searching = entity.authors[i].replace(surname, "");
-                        //}
                         var author = {"fullname": entity.authors[i], "name_for_searching": author_for_searching};
                         authors.push(author);
                     }
@@ -266,9 +260,22 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         if(wholetext == null && section_positions == null) {
             return null;
         }
+        //For the fields which have no enrichment data
         else if(wholetext != null && section_positions == null) {
-            var section = {"text":wholetext,"beAnnotated":"false", "synonyms":null};
+
+            //Find a space to split the whole text
+            while(wholetext.substr(long_text_length, 1)!=' ' && long_text_length < wholetext.length){
+                long_text_length++;
+            }
+
+            var section = {"text":wholetext.substring(0,long_text_length),"beAnnotated":"false", "synonyms":null, "tobeReduced":'false'};
             sections.push(section);
+
+            if(wholetext.length > long_text_length){
+                section = {"text":wholetext.substring(long_text_length, wholetext.length-1),"beAnnotated":"false", "synonyms":null, "tobeReduced":'true'};
+                sections.push(section);
+            }
+
             return sections;
         }
 
@@ -279,7 +286,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             var sectionWord = wholetext.substring(start, end + 1);
             var synonyms = [];
             if(beAnnotated == "true")  {synonyms = get_synonyms(sectionWord);}
-            if(start>500) {tobeReduced = "true"}
+            if(start > long_text_length) {tobeReduced = "true"}
                 else{tobeReduced = "false"}
             var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms, "tobeReduced":tobeReduced};
             sections.push(section);
@@ -288,7 +295,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var beAnnotated = "false";
         var synonyms = [];
         var sectionWord = wholetext.substring(start, wholetext.length);
-        var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms};
+        var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms, "tobeReduced":'true'};
         sections.push(section);
         return sections;
     }
@@ -364,32 +371,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
 
 
+    ///**
+    // * for tab control
+    // */
+    //$scope.tabs = [{
+    //    title: 'Filelist',
+    //    url: 'filelist.tpl.html'
+    //}, {
+    //    title: 'Bioentities',
+    //    url: 'bioentities.tpl.html'
+    //}, {
+    //    title: 'Lab Details',
+    //    url: 'labdetails.tpl.html'
+    //}];
+    //
+    //$scope.currentTab = 'filelist.tpl.html';
+    //
+    //$scope.onClickTab = function (tab) {
+    //    $scope.currentTab = tab.url;
+    //}
+    //$scope.isActiveTab = function (tabUrl) {
+    //    return tabUrl == $scope.currentTab;
+    //}
+
+
     /**
-     * for tab control
-     */
-    $scope.tabs = [{
-        title: 'Filelist',
-        url: 'filelist.tpl.html'
-    }, {
-        title: 'Bioentities',
-        url: 'bioentities.tpl.html'
-    }, {
-        title: 'Lab Details',
-        url: 'labdetails.tpl.html'
-    }];
-
-    $scope.currentTab = 'filelist.tpl.html';
-
-    $scope.onClickTab = function (tab) {
-        $scope.currentTab = tab.url;
-    }
-    $scope.isActiveTab = function (tabUrl) {
-        return tabUrl == $scope.currentTab;
-    }
-
-
-    /*
-     * for the multiple publications click
+     * For the multiple publications click
      */
 
     $scope.current_publication = 0;
@@ -412,7 +419,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     }
 
     /*
-     * to load more related datasets
+     * To load more related datasets
      */
     $scope.related_load_more = function () {
         if ($scope.related_datasets_limit == 100) {
@@ -431,7 +438,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     }
 
     /**
-     * For change the value in slider
+     * To change the value in slider by botton
      */
     $scope.threshold_change = function (step_value){
         $scope.threshold = ($scope.threshold*100 + step_value*100)/100;
@@ -471,18 +478,21 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * For similar datasets tabs control
      */
-    $scope.tabs = [
-        { title:'Dynamic Title 1', content:'Dynamic content 1' },
-        { title:'Dynamic Title 2', content:'Dynamic content 2' }
-    ];
-
-    $scope.alertMe = function() {
-        setTimeout(function() {
-            $window.alert('You\'ve selected the alert tab!');
-        });
-    };
+    //$scope.tabs = [
+    //    { title:'Dynamic Title 1', content:'Dynamic content 1' },
+    //    { title:'Dynamic Title 2', content:'Dynamic content 2' }
+    //];
+    //
+    //$scope.alertMe = function() {
+    //    setTimeout(function() {
+    //        $window.alert('You\'ve selected the alert tab!');
+    //    });
+    //};
 
 }])
+/**
+ * to highlight the searching terms
+ */
     .filter('datasethighlight', function ($sce) {
         return function (str, termsToHighlight) {
             //Sort terms by length

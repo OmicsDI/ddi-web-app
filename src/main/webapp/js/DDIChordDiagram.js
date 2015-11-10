@@ -59,6 +59,10 @@ function drawChordDiagram(acc, domain) {
                 .call(chart);
         }
 
+        /**
+         * To prepare the data for the new Chord Diagram, following the change of threshold
+         * @param threshold
+         */
         function prepare_inputdata(threshold) {
 
             inputdata = {
@@ -68,8 +72,6 @@ function drawChordDiagram(acc, domain) {
 
             var indexOfLabels = 0;
             var labels = [];
-            //inputdata.labels[0] = acc + "@" + domain;
-            //labels[0] = acc + "@" + domain;
 
             for (var i = 0; i < similarityData.scores.length; i++) {
                 var connection = [], bend1 = {}, bend2 = {};
@@ -78,7 +80,7 @@ function drawChordDiagram(acc, domain) {
                 var key2 = score.key2;
                 var intScore = Math.ceil(score.value * 100);
 
-                //remove the connections which are less than threashold
+                //remove the connections which are less than threshold
                 if (score.value < threshold) {
                     continue;
                 }

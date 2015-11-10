@@ -1075,3 +1075,11 @@ ul.affix-bottom {
     margin-bottom: -10px;
     color: #234979;
 }
+
+.synonym_even{
+    color: wheat;
+}
+
+.synonym_odd{
+    color: white;
+}

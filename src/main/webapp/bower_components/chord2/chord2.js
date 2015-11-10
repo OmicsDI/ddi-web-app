@@ -142,7 +142,7 @@
                     .on("click",function(d){
                         var acc = d.label.replace(/@.*/, "");
                         var domain = d.label.replace(/.*@/, "");
-                        location.href = "http://localhost:8000/Tools/ddi/#/dataset/" + domain + "/" + acc;
+                        location.href = "#/dataset/" + domain + "/" + acc;
                     })
                     .append("tspan")
                     .attr("x", 10)
@@ -217,7 +217,7 @@
 
 
 //----added by mingze----------------------------------
-            k = 100 * ngroups; //added by mingze
+            k = 100 * ngroups; //added by mingze, give 100 space for each group
             for (i = 0; i < ngroups; i++) {
                 groupSums[i] = 100;
             }
@@ -328,7 +328,7 @@
                     // take numerical ID as subgroup key
                         v = subgroups[di][dj].basevalue,
                     //a0 = x,
-                    //   a1 = x += v * k;
+                    //   a1 = x += v * k;  //modified by Mingze, for get the rignt start point of each group??? not sure
                         a1 = v * k;
                     //console.log(x);
                     // here you should directly modify the "edges",
@@ -351,7 +351,7 @@
                         pt['geometry'] = {
                             index: di,
                             subindex: dj,
-                            //startAngle: a0,
+                            //startAngle: a0, //modified by Mingze, to make each bend start from same point, 0 of this group
                             startAngle: x0,
                             endAngle: x0 + a1,
                             value: v
@@ -370,6 +370,7 @@
             }
 
             // Generate chords for each (non-empty) subgroup-subgroup link.
+            // We only use one-one(two) style polygon here --by Mingze
             i = -1;
             while (++i < polygons.length) {
                 j = -1;
