@@ -724,7 +724,7 @@ var barcharts_years_omics_types = function () {
             //var div_width = 420;
             var margin = {top: 20, right: 20, bottom: 20, left: 60},
                 width = div_width - margin.left - margin.right,
-                height = 306 - margin.top - margin.bottom;
+                height = 294 - margin.top - margin.bottom;
             var x0 = d3.scale.ordinal()
                 .rangeRoundBands([0, width], .1);
 

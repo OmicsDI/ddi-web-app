@@ -256,7 +256,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_section_content(wholetext,section_positions){
         var sections = [];
-
         if(wholetext == null && section_positions == null) {
             return null;
         }
