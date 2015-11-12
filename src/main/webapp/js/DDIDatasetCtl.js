@@ -74,6 +74,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             // ret[1] contains the second response
             // etc.
             $scope.dataset = ret[0].data;
+            prepare_synonyms(ret[1].data);
+            get_enrichment_info();    // For enriched synonyms tooltip
+
             if (ret[0].data === null || ret[0].data.id === null) {
                 $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
                 return;
@@ -166,9 +169,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 }).error(function () {
                 });
             }
-
-            prepare_synonyms(ret[1].data);
-            get_enrichment_info();    // For enriched synonyms tooltip
         }, function (error) {
             $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
             console.error("GET error:" + url);
@@ -274,7 +274,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 section = {"text":wholetext.substring(long_text_length, wholetext.length-1),"beAnnotated":"false", "synonyms":null, "tobeReduced":'true'};
                 sections.push(section);
             }
-
             return sections;
         }
 

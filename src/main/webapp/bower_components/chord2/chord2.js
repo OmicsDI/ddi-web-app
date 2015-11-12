@@ -21,6 +21,10 @@
         function chord2(selection) {
 
 
+            var tooltip = d3.select('#chord_diagram').append("div")
+                .attr("class", "chart_tooltip")
+                .style("opacity", 0);
+
             selection.each(function (d, i) {
                 var selection = d3.select(this);
 
@@ -52,6 +56,7 @@
                     .selectAll("path")
                     .data(chord2.chords)
                     .enter().append("path")
+                    .attr("class", "hotword")
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
                     .attr("d", d3.svg.chord().radius(innerRadius))
                     .style("fill",
@@ -62,7 +67,27 @@
                     .style("opacity", 1)
                     .style("fill-opacity", .67)
                     .style("stroke", "#000")
-                    .style("stroke-width", ".5px");
+                    .style("stroke-width", ".5px")
+                    .on("mouseover", function(d){
+                        var mouse_coords = d3.mouse(
+                            tooltip.node().parentElement);
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        tooltip.html( d.source.value/100)
+                        //.style("left", (mouse_coords[0]  ) + "px")
+                        .style("left", (mouse_coords[0]*1 +  "px"))
+                        .style("top", ((mouse_coords[1]*1 + 400) + "px"))
+                        .style("height",  "20px")
+                        .style("width", "60px");
+                    })
+                    .on("mouseout", function(d) {
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .0);
+
+                    })
+                    ;
 
                 var ticks = selection.append("g")
                     .attr("class", "ticks")
@@ -162,6 +187,8 @@
                 ;
 
             });
+
+
         };
 
         function fade(selection, opacity) {
@@ -377,7 +404,7 @@
                 while (++j < polygons[i].edges.length) {
                     var source = polygons[i].edges[j].source.geometry,
                         target = polygons[i].edges[j].target.geometry;
-                    if (source.value || target.value) {
+                    if (source && target && (source.value || target.value)) {
                         chords.push(source.value < target.value
                             ? {
                             source: target,

@@ -32,6 +32,9 @@ function drawChordDiagram(acc, domain) {
                 .selectAll("svg")
                 .remove();
 
+            var chord_diagram = d3.select("#chord_diagram")
+                .selectAll("div")
+                .remove();
 
             //if(this.id == "slider1"){
             //    threshold = this.value || "0.01";
@@ -73,15 +76,44 @@ function drawChordDiagram(acc, domain) {
             var indexOfLabels = 0;
             var labels = [];
 
+            var main_key = acc + "@" + domain;
+            //labels[indexOfLabels] = acc + "@" + domain;
+            //indexOfLabels++;
+
             for (var i = 0; i < similarityData.scores.length; i++) {
                 var connection = [], bend1 = {}, bend2 = {};
                 var score = similarityData.scores[i];
                 var key1 = score.key1;
                 var key2 = score.key2;
-                var intScore = Math.ceil(score.value * 100);
+                var intScore = Math.round(score.value * 100);
 
                 //remove the connections which are less than threshold
                 if (score.value < threshold) {
+                    if (key1 == main_key || key2 == main_key) { //this is always true
+
+                        if (labels.indexOf(key1) < 0) {
+                            inputdata.labels[indexOfLabels] = key1;
+                            labels[indexOfLabels] = key1;
+                            indexOfLabels++;
+                        }
+                        if (labels.indexOf(key2) < 0) {
+                            inputdata.labels[indexOfLabels] = key2;
+                            labels[indexOfLabels] = key2;
+                            indexOfLabels++;
+                        }
+
+                        bend1["group"] = labels.indexOf(key1);
+                        bend1["value"] = 0;
+                        bend2["group"] = labels.indexOf(key2);
+                        bend2["value"] = 0;
+
+                        connection[0] = bend1;
+                        connection[1] = bend2;
+
+                        inputdata.connections.push(connection);
+
+                    }
+
                     continue;
                 }
 
@@ -106,6 +138,7 @@ function drawChordDiagram(acc, domain) {
 
                 inputdata.connections.push(connection);
             }
+
         }
     }
 }

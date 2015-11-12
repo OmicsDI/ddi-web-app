@@ -724,7 +724,7 @@ var barcharts_years_omics_types = function () {
             //var div_width = 420;
             var margin = {top: 20, right: 20, bottom: 20, left: 60},
                 width = div_width - margin.left - margin.right,
-                height = 294 - margin.top - margin.bottom;
+                height = 300 - margin.top - margin.bottom;
             var x0 = d3.scale.ordinal()
                 .rangeRoundBands([0, width], .1);
 
@@ -843,7 +843,6 @@ var barcharts_years_omics_types = function () {
                         .style("top", (parseInt(d3.select(this).attr("y"))+635) + "px")
                         .style("height",  "20px")
                         .style("width", d.value.toString().length * 5 + 80 + "px");
-                    console.log(mouse_coords[0]);
                 })
                 .on("mouseout", function (d) {
                     tooltip.transition()
