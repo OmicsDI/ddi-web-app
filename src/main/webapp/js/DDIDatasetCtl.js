@@ -45,8 +45,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
-    //var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
-    var related_datasets_by_exp_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    //var related_datasets_by_exp_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
     $http({
         url: related_datasets_by_exp_url,
         method: 'GET'
@@ -65,7 +65,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     var altmetricUrls = [];
     var arr = [];
     var url = web_service_url + "dataset/get?acc=" + $scope.acc + "&database=" + $scope.domain;
-    var get_synonyms_url = "http://localhost:9091/enrichment/getSynonymsForDataset?accession=" + $scope.acc + "&database=" + $scope.domain;
+    var get_synonyms_url = web_service_url + "enrichment/getSynonymsForDataset?accession=" + $scope.acc + "&database=" + $scope.domain;
+    console.log(get_synonyms_url);
     arr.push($http.get(url));
     arr.push($http.get(get_synonyms_url));
 
@@ -226,7 +227,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_enrichment_info() {
         //var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
-        var enrichment_info_url = "http://localhost:9091/enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
+        var enrichment_info_url = web_service_url + "enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
+        console.log(enrichment_info_url);
         $http({
             url: enrichment_info_url,
             method: 'GET'
