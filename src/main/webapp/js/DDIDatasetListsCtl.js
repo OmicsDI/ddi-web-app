@@ -17,9 +17,10 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         url: web_service_url,
         method: 'GET'
     }).success(function (data) {
-        $scope.$root.web_service_fail = 'false';
+        if($scope.$root.web_service_fail) $scope.$root.web_service_fail = 'false';
     }).error(function () {
-        $scope.$root.web_service_fail = 'true';
+        if($scope.$root.web_service_fail) $scope.$root.web_service_fail = 'true';
+        //$scope.$root.web_service_fail = 'true';
     });
 
 

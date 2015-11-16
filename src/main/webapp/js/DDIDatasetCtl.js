@@ -228,7 +228,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     function get_enrichment_info() {
         //var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
         var enrichment_info_url = web_service_url + "enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
-        console.log(enrichment_info_url);
         $http({
             url: enrichment_info_url,
             method: 'GET'
@@ -251,10 +250,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var dataProtocolEnrichInfo = enrichment_info.dataProtocol;
 
 
-        var title_section_positions = get_section_position(titleEnrichInfo);
-        var abstract_section_positions = get_section_position(abstractEnrichInfo);
-        var sample_protocol_section_positions = get_section_position(sampleProtocolEnrichInfo);
-        var data_protocol_section_positions = get_section_position(dataProtocolEnrichInfo);
+        var title_section_positions = get_section_position($scope.dataset.name,titleEnrichInfo);
+        var abstract_section_positions = get_section_position($scope.dataset.description,abstractEnrichInfo);
+        var sample_protocol_section_positions = get_section_position($scope.sample_protocol_description,sampleProtocolEnrichInfo);
+        var data_protocol_section_positions = get_section_position($scope.data_protocol_description,dataProtocolEnrichInfo);
         $scope.title_sections = get_section_content($scope.dataset.name, title_section_positions);
         $scope.abstract_sections = get_section_content($scope.dataset.description, abstract_section_positions);
         $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description, sample_protocol_section_positions);
@@ -267,7 +266,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_section_content(wholetext, section_positions) {
         var sections = [];
-        if (wholetext == null && section_positions == null) {
+        if (wholetext == null ) {
             return null;
         }
         //For the fields which have no enrichment data
@@ -297,6 +296,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
             return sections;
         }
+
 
         for (var i = 0; i < section_positions.length; i++) {
             var start = section_positions[i].from;
@@ -355,7 +355,19 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 break;
             }
         }
-        return synonyms;
+
+        if(synonyms==null || synonyms.length < 1)
+            return null;
+
+        //to make synonyms unique
+        var unique_synonyms = [];
+        for(var i = 0; i< synonyms.length; i++){
+            var synonym = synonyms[i];
+            if(unique_synonyms.indexOf(synonym) < 0){
+                unique_synonyms.push(synonym);
+            }
+        }
+        return unique_synonyms;
     }
 
     /**
@@ -363,32 +375,42 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * @param enrichInfo
      * @returns {Array}
      */
-    function get_section_position(enrichInfo) {
+    function get_section_position(wholetext, enrichInfo) {
 
-        if (enrichInfo == null) {
+        if (enrichInfo == null || wholetext ==null) {
             return null;
         }
-
         var sections = [];
         var sectionStart = 0;
         var sectionEnd = 0;
+
+        var offset = 0;//some times the enrhiched position is not perfect matched, need offset to adjust the position
+
         for (var i = 0; i < enrichInfo.length; i++) {
             var wordStart = enrichInfo[i].from - 1;
             var wordEnd = enrichInfo[i].to - 1;
 
+            for(var j=0; j<10; j++){
+                if(enrichInfo[i].text == wholetext.substring(wordStart+offset+j, wordEnd+offset+j+1).toLowerCase()){
+                    foundWordFlag=true;
+                    break;
+                }
+            }
+            offset = offset + j;
+
             if (sectionStart < wordStart) {
                 sectionEnd = wordStart - 1;
-                var section = {"from": sectionStart, "to": sectionEnd, "beAnnotated": "false"};
+                var section = {"from": sectionStart + offset, "to": sectionEnd + offset, "beAnnotated": "false"};
                 sections.push(section);
 
-                var section = {"from": wordStart, "to": wordEnd, "beAnnotated": "true"};
+                var section = {"from": wordStart + offset, "to": wordEnd + offset, "beAnnotated": "true"};
                 sections.push(section);
 
                 sectionStart = wordEnd + 1;
                 sectionEnd = wordEnd + 1;
 
             } else if (sectionStart == wordStart) {
-                var section = {"from": wordStart, "to": wordEnd, "beAnnotated": "true"};
+                var section = {"from": wordStart + offset, "to": wordEnd + offset, "beAnnotated": "true"};
                 sections.push(section);
 
                 sectionStart = wordEnd + 1;
