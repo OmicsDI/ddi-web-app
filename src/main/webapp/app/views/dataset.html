@@ -305,7 +305,7 @@
             </div>
             <!--dataset_middle_panel-->
 
-            <div class="panel panel-default" id="dataset_bottom" ng-hide="">
+            <div class="panel panel-default" id="dataset_bottom" ng-hide="true">
                 <div class="panel-footer ">
                     <h3>Similarity statistics</h3>
                 </div>
@@ -340,8 +340,8 @@
             </h4>
             </p>
 
-            <uib-tabset>
-                <uib-tab heading="By MetaData">
+            <!--<uib-tabset>-->
+                <!--<uib-tab heading="By MetaData">-->
                     <ul class="list-unstyled">
                         <!-- ngRepeat: dataset in result.datasets -->
                         <li class="result animate-repeat "
@@ -382,50 +382,50 @@
                             <i class="fa fa-search"></i> {{load_more_btn_show}}
                         </button>
                     </div>
-                </uib-tab>
-                <uib-tab heading="By Experiment Data">
-                    <ul class="list-unstyled">
-                        <!-- ngRepeat: dataset in result.datasets -->
-                        <li class="result animate-repeat "
-                            ng-repeat="relatedDataset in related_datasets_by_exp | limitTo:related_datasets_limit" style="">
-                            <div class="project-widget  list-group-item ddi-card-panel">
+                <!--</uib-tab>-->
+                <!--<uib-tab heading="By Experiment Data">-->
+                    <!--<ul class="list-unstyled">-->
+                        <!--&lt;!&ndash; ngRepeat: dataset in result.datasets &ndash;&gt;-->
+                        <!--<li class="result animate-repeat "-->
+                            <!--ng-repeat="relatedDataset in related_datasets_by_exp | limitTo:related_datasets_limit" style="">-->
+                            <!--<div class="project-widget  list-group-item ddi-card-panel">-->
 
-                                <div class="project-widget-accession">
-                                    <img src="img/omics/Proteomics2.png"
-                                         ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
-                                    <img src="img/omics/Metabolomics2.png"
-                                         ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
-                                    <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
-                                    <a target="" class="align-justify"
-                                       href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
-                                </div>
-                                <div class="project-widget-paragraph hidden">
-                                    <b>Project description:</b>
-                                    {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
-                                    <span ng-show="relatedDataset.description===null">Not available</span>
-                                </div>
+                                <!--<div class="project-widget-accession">-->
+                                    <!--<img src="img/omics/Proteomics2.png"-->
+                                         <!--ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>-->
+                                    <!--<img src="img/omics/Metabolomics2.png"-->
+                                         <!--ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>-->
+                                    <!--<img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>-->
+                                    <!--<a target="" class="align-justify"-->
+                                       <!--href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>-->
+                                <!--</div>-->
+                                <!--<div class="project-widget-paragraph hidden">-->
+                                    <!--<b>Project description:</b>-->
+                                    <!--{{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}-->
+                                    <!--<span ng-show="relatedDataset.description===null">Not available</span>-->
+                                <!--</div>-->
 
-                                <div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">
-                                    <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>
-                                    <span ng-show="relatedDataset.organisms.length===0">Not available</span>
-                                </div>
-                                <div class="project-widget-paragraph">
-                                    <span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>
-                                    <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->{{relatedDataset.id}}</a> |
-                                    <!--a href={{database_urls[repositories[relatedDataset.source]]}}--> {{repositories[relatedDataset.source]}} </a>
-                                </div>
+                                <!--<div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">-->
+                                    <!--<b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>-->
+                                    <!--<span ng-show="relatedDataset.organisms.length===0">Not available</span>-->
+                                <!--</div>-->
+                                <!--<div class="project-widget-paragraph">-->
+                                    <!--<span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>-->
+                                    <!--&lt;!&ndash;a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}&ndash;&gt;{{relatedDataset.id}}</a> |-->
+                                    <!--&lt;!&ndash;a href={{database_urls[repositories[relatedDataset.source]]}}&ndash;&gt; {{repositories[relatedDataset.source]}} </a>-->
+                                <!--</div>-->
 
-                            </div>
-                        </li>
-                        <!-- end ngRepeat: -->
-                    </ul>
-                    <div class="input-btn center" style="width:102px; margin-bottom:10px">
-                        <button type="submit" class="btn btn-default " ng-click="related_load_more()">
-                            <i class="fa fa-search"></i> {{load_more_btn_show}}
-                        </button>
-                    </div>
-                </uib-tab>
-            </uib-tabset>
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--&lt;!&ndash; end ngRepeat: &ndash;&gt;-->
+                    <!--</ul>-->
+                    <!--<div class="input-btn center" style="width:102px; margin-bottom:10px">-->
+                        <!--<button type="submit" class="btn btn-default " ng-click="related_load_more()">-->
+                            <!--<i class="fa fa-search"></i> {{load_more_btn_show}}-->
+                        <!--</button>-->
+                    <!--</div>-->
+                <!--</uib-tab>-->
+            <!--</uib-tabset>-->
 
 
             <!-- /input-group-btn -->

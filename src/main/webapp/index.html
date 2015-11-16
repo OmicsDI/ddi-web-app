@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app"
       class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
-<head>
+<head ng-controller="MainContentCtrl">
     <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
         display: none !important;
@@ -17,6 +17,9 @@
     <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
           name="description">
 
+    <meta content="{{meta_dataset_title}}" name="dataset_title">
+    <meta content="{{meta_dataset_abstract}}" name="dataset_abstract">
+    <meta content="{{meta_dataset_identifier}}" name="dataset_identifier">
 
     <title>OmicsDI: Home</title>
 

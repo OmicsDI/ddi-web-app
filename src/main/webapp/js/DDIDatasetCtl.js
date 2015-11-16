@@ -82,16 +82,27 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 return;
             }
             for (var i = 0; i < $scope.dataset.protocols.length; i++) {
-                if ($scope.dataset.protocols[i].name ==  "sample_protocol") {
+                if ($scope.dataset.protocols[i].name == "sample_protocol") {
                     $scope.sample_protocol_description = $scope.dataset.protocols[i].description;
                 }
 
-                if ($scope.dataset.protocols[i].name ==  "data_protocol") {
+                if ($scope.dataset.protocols[i].name == "data_protocol") {
                     $scope.data_protocol_description = $scope.dataset.protocols[i].description;
                 }
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
             if ($scope.dataset.publicationIds === null) return;
+
+            /**
+             * Fill the meta info to SEO
+             */
+            if (!$location.path().match('/dataset')) {
+                $scope.$root.meta_dataset_title = $scope.dataset.name;
+                $scope.$root.meta_dataset_abstract = $scope.dataset.description;
+                $scope.$root.meta_dataset_identifier = $scope.acc;
+            }
+
+
             //get and prepare each publication's data
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
                 var pubmed_id = $scope.dataset.publicationIds[i];
@@ -210,14 +221,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     };
 
 
-
-
     /**
      * Get enrhciment info by type
      */
     function get_enrichment_info() {
         //var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
-        var enrichment_info_url= "http://localhost:9091/enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
+        var enrichment_info_url = "http://localhost:9091/enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
         $http({
             url: enrichment_info_url,
             method: 'GET'
@@ -233,7 +242,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * Split the field in to multiple sentences, with synonyms or without
      */
-    function split_by_enrichment_info(enrichment_info){
+    function split_by_enrichment_info(enrichment_info) {
         var titleEnrichInfo = enrichment_info.title;
         var abstractEnrichInfo = enrichment_info.abstractDescription;
         var sampleProtocolEnrichInfo = enrichment_info.sampleProtocol;
@@ -254,119 +263,140 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * Get the words who have synonyms or sections who do not have synonyms
      */
-    function get_section_content(wholetext,section_positions){
+    function get_section_content(wholetext, section_positions) {
         var sections = [];
-        if(wholetext == null && section_positions == null) {
+        if (wholetext == null && section_positions == null) {
             return null;
         }
         //For the fields which have no enrichment data
-        else if(wholetext != null && section_positions == null) {
+        else if (wholetext != null && section_positions == null) {
 
             //Find a space to split the whole text
-            while(wholetext.substr(long_text_length, 1)!=' ' && long_text_length < wholetext.length){
+            while (wholetext.substr(long_text_length, 1) != ' ' && long_text_length < wholetext.length) {
                 long_text_length++;
             }
 
-            var section = {"text":wholetext.substring(0,long_text_length),"beAnnotated":"false", "synonyms":null, "tobeReduced":'false'};
+            var section = {
+                "text": wholetext.substring(0, long_text_length),
+                "beAnnotated": "false",
+                "synonyms": null,
+                "tobeReduced": 'false'
+            };
             sections.push(section);
 
-            if(wholetext.length > long_text_length){
-                section = {"text":wholetext.substring(long_text_length, wholetext.length-1),"beAnnotated":"false", "synonyms":null, "tobeReduced":'true'};
+            if (wholetext.length > long_text_length) {
+                section = {
+                    "text": wholetext.substring(long_text_length, wholetext.length - 1),
+                    "beAnnotated": "false",
+                    "synonyms": null,
+                    "tobeReduced": 'true'
+                };
                 sections.push(section);
             }
             return sections;
         }
 
-        for(var i=0; i<section_positions.length; i++) {
+        for (var i = 0; i < section_positions.length; i++) {
             var start = section_positions[i].from;
             var end = section_positions[i].to;
             var beAnnotated = section_positions[i].beAnnotated;
             var sectionWord = wholetext.substring(start, end + 1);
             var synonyms = [];
-            if(beAnnotated == "true")  {synonyms = get_synonyms(sectionWord);}
-            if(start > long_text_length) {tobeReduced = "true"}
-                else{tobeReduced = "false"}
-            var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms, "tobeReduced":tobeReduced};
+            if (beAnnotated == "true") {
+                synonyms = get_synonyms(sectionWord);
+            }
+            if (start > long_text_length) {
+                tobeReduced = "true"
+            }
+            else {
+                tobeReduced = "false"
+            }
+            var section = {
+                "text": sectionWord,
+                "beAnnotated": beAnnotated,
+                "synonyms": synonyms,
+                "tobeReduced": tobeReduced
+            };
             sections.push(section);
         }
-        var start = section_positions[section_positions.length-1].to + 1; //the last section
+        var start = section_positions[section_positions.length - 1].to + 1; //the last section
         var beAnnotated = "false";
         var synonyms = [];
         var sectionWord = wholetext.substring(start, wholetext.length);
-        var section = {"text":sectionWord,"beAnnotated":beAnnotated, "synonyms":synonyms, "tobeReduced":'true'};
+        var section = {"text": sectionWord, "beAnnotated": beAnnotated, "synonyms": synonyms, "tobeReduced": 'true'};
         sections.push(section);
         return sections;
     }
 
-     /**
+    /**
      * Get and store synonyms from web service
      */
-     function prepare_synonyms(data) {
-            if(data==null) return;
-            $scope.synonymsList = data['synonymsList'];
-     }
+    function prepare_synonyms(data) {
+        if (data == null) return;
+        $scope.synonymsList = data['synonymsList'];
+    }
 
 
     /**
      * Get Synonyms of a word from local storage
      */
-     function get_synonyms(word) {
-        if($scope.synonymsList == null || word == null)
-        {return null;}
+    function get_synonyms(word) {
+        if ($scope.synonymsList == null || word == null) {
+            return null;
+        }
 
         word = word.toLowerCase();
         var synonyms = null;
-        for(var i = 0; i<$scope.synonymsList.length; i++){
-            if(word == $scope.synonymsList[i].wordLabel) {
+        for (var i = 0; i < $scope.synonymsList.length; i++) {
+            if (word == $scope.synonymsList[i].wordLabel) {
                 synonyms = $scope.synonymsList[i].synonyms;
                 break;
             }
         }
         return synonyms;
-     }
+    }
 
     /**
      * Get the section positions in each field
      * @param enrichInfo
      * @returns {Array}
      */
-    function get_section_position(enrichInfo){
+    function get_section_position(enrichInfo) {
 
-        if(enrichInfo==null) {
+        if (enrichInfo == null) {
             return null;
         }
 
         var sections = [];
         var sectionStart = 0;
         var sectionEnd = 0;
-        for(var i=0; i<enrichInfo.length; i++) {
+        for (var i = 0; i < enrichInfo.length; i++) {
             var wordStart = enrichInfo[i].from - 1;
             var wordEnd = enrichInfo[i].to - 1;
 
-            if(sectionStart < wordStart) {
+            if (sectionStart < wordStart) {
                 sectionEnd = wordStart - 1;
-                var section = {"from": sectionStart, "to": sectionEnd, "beAnnotated":"false"};
+                var section = {"from": sectionStart, "to": sectionEnd, "beAnnotated": "false"};
                 sections.push(section);
 
-                var section = {"from": wordStart, "to": wordEnd, "beAnnotated":"true"};
-                sections.push(section);
-
-                sectionStart = wordEnd + 1;
-                sectionEnd = wordEnd + 1;
-
-            } else if(sectionStart == wordStart){
-                var section = {"from": wordStart, "to": wordEnd, "beAnnotated":"true"};
+                var section = {"from": wordStart, "to": wordEnd, "beAnnotated": "true"};
                 sections.push(section);
 
                 sectionStart = wordEnd + 1;
                 sectionEnd = wordEnd + 1;
-            } else if(sectionStart > wordStart){
+
+            } else if (sectionStart == wordStart) {
+                var section = {"from": wordStart, "to": wordEnd, "beAnnotated": "true"};
+                sections.push(section);
+
+                sectionStart = wordEnd + 1;
+                sectionEnd = wordEnd + 1;
+            } else if (sectionStart > wordStart) {
                 console.error("someThing wrong, sectionStart: " + sectionStart + "is bigger than wordStart: " + wordStart);
             }
         }
         return sections;
-}
-
+    }
 
 
     ///**
@@ -411,9 +441,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * To control the enrichment info show
      */
     $scope.enrich_button_label = "Enrich it";
-    $scope.enrich_click = function(){
-        if ($scope.enrich_button_label == "Enrich it") {$scope.enrich_button_label = "Enriched"}
-        else if($scope.enrich_button_label == "Enriched") {$scope.enrich_button_label = "Enrich it"}
+    $scope.enrich_click = function () {
+        if ($scope.enrich_button_label == "Enrich it") {
+            $scope.enrich_button_label = "Enriched"
+        }
+        else if ($scope.enrich_button_label == "Enriched") {
+            $scope.enrich_button_label = "Enrich it"
+        }
     }
 
     /*
@@ -438,20 +472,23 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * To change the value in slider by botton
      */
-    $scope.threshold_change = function (step_value){
-        $scope.threshold = ($scope.threshold*100 + step_value*100)/100;
+    $scope.threshold_change = function (step_value) {
+        $scope.threshold = ($scope.threshold * 100 + step_value * 100) / 100;
 
-        if($scope.threshold < 0.1){
+        if ($scope.threshold < 0.1) {
             $scope.threshold = $scope.threshold.toPrecision(1);
         }
-        else{
+        else {
             $scope.threshold = $scope.threshold.toPrecision(2);
         }
 
-        if($scope.threshold > 1) {$scope.threshold = 1}
-        if($scope.threshold < 0) {$scope.threshold = 0}
+        if ($scope.threshold > 1) {
+            $scope.threshold = 1
+        }
+        if ($scope.threshold < 0) {
+            $scope.threshold = 0
+        }
     }
-
 
 
     /*
@@ -507,11 +544,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     })
 ;
 
-angular.module('ddiApp').directive('ngInitial', function() {
+angular.module('ddiApp').directive('ngInitial', function () {
     return {
         restrict: 'A',
         controller: [
-            '$scope', '$element', '$attrs', '$parse', function($scope, $element, $attrs, $parse) {
+            '$scope', '$element', '$attrs', '$parse', function ($scope, $element, $attrs, $parse) {
                 var getter, setter, val;
                 val = $attrs.ngInitial || $attrs.value;
                 getter = $parse($attrs.ngModel);

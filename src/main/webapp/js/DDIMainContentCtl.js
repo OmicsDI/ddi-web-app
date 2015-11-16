@@ -13,6 +13,8 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
             }
         };
 
+        $scope.$root.meta_dataset_title = '';
+
         /**
          * Show search form in top banner or in main page
          */
@@ -29,6 +31,11 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
             $scope.$root.show_top_search = false
         }
 
+        if (!$location.path().match('/dataset')){
+            $scope.$root.meta_dataset_title = '';
+            $scope.$root.meta_dataset_abstract= '';
+            $scope.$root.meta_dataset_identifier= '';
+        }
         ///**
         // * set title of each page
         // */
