@@ -2,7 +2,7 @@
     document.title = "OmicsDI Browse";
 </script>
 
-<div id="content" ng-controller="ResultsListCtrl" class="ng-scope" ng-show="display_search_interface" style="margin: 10px">
+<div id="content" ng-controller="ResultsListCtrl" class="ng-scope ng-cloak" ng-show="display_search_interface" style="margin: 10px">
 
 
     <div id="searching">
@@ -320,7 +320,7 @@
             <div id="search-results" class="grid_22  " style="width:90%">
                 <div id="search-results-items" class="list-group">
                     <ul class="list-unstyled">
-                        <li class="result animate-repeat" ng-repeat="dataset in result.datasets">
+                        <li class="result animate-repeat fade-in" ng-repeat="dataset in result.datasets">
                             <div class="ddi-card-panel  list-group-item">
 
                                 <div class="project-widget-accession">
