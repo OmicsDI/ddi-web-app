@@ -1077,6 +1077,8 @@ ul.affix-bottom {
     display: block;
     margin-top: -15px;
     margin-bottom: -10px;
+}
+.ontology-highlight-on{
     color: #234979;
 }
 

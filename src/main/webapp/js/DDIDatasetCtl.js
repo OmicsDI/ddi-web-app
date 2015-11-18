@@ -488,13 +488,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * To control the enrichment info show
      */
-    $scope.enrich_button_label = "Enrich it";
+    if($scope.$root.enrich_button_label == null){
+        $scope.$root.enrich_button_label = "Enrich";
+    }
     $scope.enrich_click = function () {
-        if ($scope.enrich_button_label == "Enrich it") {
-            $scope.enrich_button_label = "Enriched"
+        if ($scope.$root.enrich_button_label == "Enrich") {
+            $scope.$root.enrich_button_label = "Enriched"
         }
-        else if ($scope.enrich_button_label == "Enriched") {
-            $scope.enrich_button_label = "Enrich it"
+        else if ($scope.$root.enrich_button_label == "Enriched") {
+            $scope.$root.enrich_button_label = "Enrich"
         }
     }
 
