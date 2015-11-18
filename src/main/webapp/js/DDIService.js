@@ -75,7 +75,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
         // 'instrument',
         // ], // will be displayed in this order
         facetcount: 100,
-        // page_size: 10,
+        // page_size: 15,
         // sort_field: 'title',
 
     };
@@ -117,7 +117,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
      */
     this.search = function (query, start, page_size, sort_field, sort_order) {
         start = start || 0;
-        page_size = page_size || 10;
+        page_size = page_size || 15;
         sort_field = sort_field || 'id';
         sort_order = sort_order || 'descending';
         display_search_interface();

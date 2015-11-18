@@ -783,7 +783,7 @@ input[type=submit]:focus {
 .ddi-card-panel {
     background-color: #fff;
     border-radius: 2px;
-    margin: 0.5rem 0 1rem;
+    margin: 1rem 0rem 0.8rem 1rem;
     padding: 10px;
 }
 
@@ -794,6 +794,10 @@ input[type=submit]:focus {
 .ddi-blockquote {
     margin: 6px 6px 6px 10px;
     padding: 5px;
+}
+
+.ddi-pagination{
+    margin-left:1.5rem;
 }
 
 /*------------------------------------------------------------------
@@ -1082,4 +1086,8 @@ ul.affix-bottom {
 
 .synonym_odd{
     color: white;
+}
+
+a.biological{
+    margin-right:10px;
 }

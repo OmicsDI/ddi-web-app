@@ -8,7 +8,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         entries: []
     };
     $scope.show_export_error = false;
-    $scope.$root.page_size = 10;
+    $scope.$root.page_size = 15;
     $scope.$root.sort_field = 'id';
     $scope.$root.sort_order = 'descending';
     $scope.pages = [0, 0];

@@ -255,11 +255,25 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var sampleProtocolEnrichInfo = enrichment_info.sampleProtocol;
         var dataProtocolEnrichInfo = enrichment_info.dataProtocol;
 
+        //use the enrichment version as finnal version
+        if (enrichment_info.titleString != undefined && enrichment_info.titleString.length >= 1) {
+            $scope.dataset.name = enrichment_info.titleString;
+        }
+        if (enrichment_info.abstractString != undefined && enrichment_info.abstractString.length >= 1) {
+            $scope.dataset.description = enrichment_info.abstractString;
+        }
+        if (enrichment_info.sampleProtocolString != undefined && enrichment_info.sampleProtocolString.length >= 1) {
+            $scope.sample_protocol_description = enrichment_info.sampleProtocolString;
+        }
+        if (enrichment_info.dataProtocolString != undefined && enrichment_info.dataProtocolString.length >= 1) {
+            $scope.data_protocol_description = enrichment_info.dataProtocolString;
+        }
+        console.log($scope.dataset.name);
 
-        var title_section_positions = get_section_position($scope.dataset.name,titleEnrichInfo);
-        var abstract_section_positions = get_section_position($scope.dataset.description,abstractEnrichInfo);
-        var sample_protocol_section_positions = get_section_position($scope.sample_protocol_description,sampleProtocolEnrichInfo);
-        var data_protocol_section_positions = get_section_position($scope.data_protocol_description,dataProtocolEnrichInfo);
+        var title_section_positions = get_section_position($scope.dataset.name, titleEnrichInfo);
+        var abstract_section_positions = get_section_position($scope.dataset.description, abstractEnrichInfo);
+        var sample_protocol_section_positions = get_section_position($scope.sample_protocol_description, sampleProtocolEnrichInfo);
+        var data_protocol_section_positions = get_section_position($scope.data_protocol_description, dataProtocolEnrichInfo);
         $scope.title_sections = get_section_content($scope.dataset.name, title_section_positions);
         $scope.abstract_sections = get_section_content($scope.dataset.description, abstract_section_positions);
         $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description, sample_protocol_section_positions);
@@ -272,11 +286,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_section_content(wholetext, section_positions) {
         var sections = [];
-        if (wholetext == null ) {
+        if (wholetext == null || wholetext.length < 1) {
             return null;
         }
         //For the fields which have no enrichment data
-        else if (wholetext != null && section_positions == null) {
+        else if (section_positions == null || section_positions.length < 1) {
 
             //Find a space to split the whole text
             while (wholetext.substr(long_text_length, 1) != ' ' && long_text_length < wholetext.length) {
@@ -329,9 +343,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
         var start = section_positions[section_positions.length - 1].to + 1; //the last section
         var beAnnotated = "false";
+        var tobeReduced = "false"
+        if (wholetext.length > long_text_length) {
+            tobeReduced = "true"
+        }
         var synonyms = [];
         var sectionWord = wholetext.substring(start, wholetext.length);
-        var section = {"text": sectionWord, "beAnnotated": beAnnotated, "synonyms": synonyms, "tobeReduced": 'true'};
+        var section = {"text": sectionWord, "beAnnotated": beAnnotated, "synonyms": synonyms, "tobeReduced": tobeReduced};
         sections.push(section);
         return sections;
     }
@@ -362,14 +380,14 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
         }
 
-        if(synonyms==null || synonyms.length < 1)
+        if (synonyms == null || synonyms.length < 1)
             return null;
 
         //to make synonyms unique
         var unique_synonyms = [];
-        for(var i = 0; i< synonyms.length; i++){
+        for (var i = 0; i < synonyms.length; i++) {
             var synonym = synonyms[i];
-            if(unique_synonyms.indexOf(synonym) < 0){
+            if (unique_synonyms.indexOf(synonym) < 0) {
                 unique_synonyms.push(synonym);
             }
         }
@@ -383,7 +401,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_section_position(wholetext, enrichInfo) {
 
-        if (enrichInfo == null || wholetext ==null) {
+        if (enrichInfo == null || wholetext == null) {
             return null;
         }
         var sections = [];
@@ -396,9 +414,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             var wordStart = enrichInfo[i].from - 1;
             var wordEnd = enrichInfo[i].to - 1;
 
-            for(var j=0; j<10; j++){
-                if(enrichInfo[i].text == wholetext.substring(wordStart+offset+j, wordEnd+offset+j+1).toLowerCase()){
-                    foundWordFlag=true;
+            for (var j = 0; j < 10; j++) {
+                if (enrichInfo[i].text == wholetext.substring(wordStart + offset + j, wordEnd + offset + j + 1).toLowerCase()) {
+                    foundWordFlag = true;
                     break;
                 }
             }

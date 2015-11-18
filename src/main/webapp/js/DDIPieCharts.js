@@ -758,6 +758,7 @@ var barcharts_years_omics_types = function () {
 
 
             data = annual_data;
+            console.log(annual_data);
             data.forEach(function (d) {
                 d.omics = omics_types.map(function (name) {
                     if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
