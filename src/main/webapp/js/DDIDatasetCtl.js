@@ -439,9 +439,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
                 sectionStart = wordEnd + 1;
                 sectionEnd = wordEnd + 1;
-            } else if (sectionStart > wordStart) {
-                console.error("someThing wrong, sectionStart: " + sectionStart + "is bigger than wordStart: " + wordStart);
-            }
+            } //else if (sectionStart > wordStart) {
+                //console.error("someThing wrong, sectionStart: " + sectionStart + "is bigger than wordStart: " + wordStart);
+           // }
         }
         return sections;
     }
