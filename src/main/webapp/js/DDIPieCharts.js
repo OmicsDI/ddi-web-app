@@ -832,6 +832,7 @@ var barcharts_years_omics_types = function () {
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 })
                 .on("mouseover", function (d) {
+                    var chart_div_left = document.getElementById('barchart_omicstype_annual').getBoundingClientRect().left;
                     var mouse_coords = d3.mouse(
                         tooltip.node().parentElement);
 //                    console.log(parseInt(d3.select(this).attr("y")));
@@ -840,10 +841,12 @@ var barcharts_years_omics_types = function () {
                         .style("opacity", .9);
                     tooltip.html( d.value + " datasets" )
                         //.style("left", (mouse_coords[0]  ) + "px")
-                        .style("left", (mouse_coords[0]*1 +  "px"))
+                        .style("left", (mouse_coords[0]* chart_div_left/950 +  "px"))
                         .style("top", (parseInt(d3.select(this).attr("y"))+635) + "px")
                         .style("height",  "20px")
                         .style("width", d.value.toString().length * 5 + 80 + "px");
+
+                    console.log();
                 })
                 .on("mouseout", function (d) {
                     tooltip.transition()
