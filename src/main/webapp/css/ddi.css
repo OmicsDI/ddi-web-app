@@ -1093,3 +1093,24 @@ ul.affix-bottom {
 a.biological{
     margin-right:10px;
 }
+
+input[type=range][orient=vertical]
+{
+    writing-mode: vertical-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    margin-top: 20px;
+    margin-left: 5px;
+    width: 8px;
+    height: 250px;
+    padding: 0 5px;
+}
+
+.result-enter {
+    opacity:0;
+    -webkit-transition-property: all;
+    -webkit-transition-timing-function: ease-in-out;
+    -webkit-transition-duration: 100ms;
+}
+.result-enter.result-enter-active {
+    opacity: 1;
+}

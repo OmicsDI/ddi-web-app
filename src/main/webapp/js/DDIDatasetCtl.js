@@ -30,7 +30,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.organism_pre_url = '#/search?q=*:* AND TAXONOMY:';
     $scope.disease_pre_url = '#/search?q=*:* AND disease:';
 
-    $scope.threshold = 0.01;
+    $scope.threshold = 0.10;
     /*     $http({
      url: url,
      method: 'GET'
@@ -534,8 +534,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         if ($scope.threshold > 1) {
             $scope.threshold = 1
         }
-        if ($scope.threshold < 0) {
-            $scope.threshold = 0
+        if ($scope.threshold < 0.1) {
+            $scope.threshold = 0.1
         }
     }
 

@@ -10,7 +10,7 @@
         </p>
     </div>
     <div class="row" style="">
-        <div class="col-md-1" style="display: block;" >
+        <div class="col-md-1" style="display: block;">
             <div id="socialnetworks" style="top:13em; z-index:100;margin-left:20px; width:50px"
                  ng-show="get_dataset_fail.length<1">
                 <!-- <g:plusone></g:plusone> -->
@@ -50,7 +50,7 @@
             <div class="panel panel-default" id="dataset_upper" ng-hide="get_dataset_fail.length>0">
                 <div class="panel-footer ">
                     <h3>Dataset Information
-                        </h3>
+                    </h3>
                 </div>
                 <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
                     <img src="img/omics/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1"/>
@@ -65,17 +65,18 @@
                     <div>
                         <h4>
                             <span ng-if="title_sections!=null" ng-repeat="section in title_sections" style="">
-                                <span ng-if="section.beAnnotated == 'false'" >{{section.text}}</span>
-                                <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'" >{{section.text}}</span>
+                                <span ng-if="section.beAnnotated == 'false'">{{section.text}}</span>
+                                <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'">{{section.text}}</span>
                                 <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                             </span>
-                            <span ng-if="title_sections == null" >
+                            <span ng-if="title_sections == null">
                                 {{dataset.name}}
                             </span>
 
                         </h4>
+
                         <p id="ontology_highlight" ng-click="enrich_click()" class="hotword" ng-class="{'ontology-highlight-on': enrich_button_label == 'Enriched' }" style="">
-                           Ontology highlight
+                            Ontology highlight
                         </p>
                     </div>
                     <hr style="margin-right:10px">
@@ -83,9 +84,9 @@
                         <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
                             <p class="align-justify"><b>ABSTRACT</b>:
                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
-                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" >{{section.text}}</span>
-                                        <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" >{{section.text}}</span>
-                                        <a ng-if=" section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'"  ng-hide="section.tobeReduced=='true' && description_show_full=='false'"   href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
+                                        <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
+                                        <a ng-if=" section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
                                 <span ng-click="description_show_full='true'" ng-hide="description_show_full=='true'" class="hotword"><b>{{abstract_sections[abstract_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
                                 <span ng-click="description_show_full='false'" ng-hide="description_show_full=='false'" class="hotword"><b>close</b></span>
@@ -95,33 +96,34 @@
                         </div>
                     </div>
 
-                        <p ng-show="sample_protocol_description.length > 0 && sample_protocol_description!=='Not available'"
-                           class="align-justify">
-                            <span><b>SAMPLE PROTOCOL:</b></span>
-                                     <span  ng-if="sample_protocol_sections != null"  ng-repeat="section in sample_protocol_sections" style="">
-                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" >{{section.text}}</span>
-                                        <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" >{{section.text}}</span>
-                                        <a ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enriched'"  ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'"   href="#/search?q={{section.text}}"tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                    <p ng-show="sample_protocol_description.length > 0 && sample_protocol_description!=='Not available'"
+                       class="align-justify">
+                        <span><b>SAMPLE PROTOCOL:</b></span>
+                                     <span ng-if="sample_protocol_sections != null" ng-repeat="section in sample_protocol_sections" style="">
+                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
+                                        <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
+                                        <a ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
 
-                                    <!--<span ng-if="title_sections == null" >-->
-                                        <!--{{dataset.sample_protocol_description}}-->
-                                    <!--</span>-->
+                        <!--<span ng-if="title_sections == null" >-->
+                        <!--{{dataset.sample_protocol_description}}-->
+                        <!--</span>-->
 
-                                <span ng-click="sample_protocol_show_full='true'" ng-hide="sample_protocol_show_full=='true'" class="hotword"><b>{{sample_protocol_sections[sample_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
-                                <span ng-click="sample_protocol_show_full='false'" ng-hide="sample_protocol_show_full=='false'" class="hotword"><b>close</b></span>
-                        </p>
-                        <p ng-show="data_protocol_description.length > 0 && data_protocol_description !== 'Not available'"
-                           class="align-justify">
-                            <span><b>DATA PROTOCOL:</b></span>
-                                      <span  ng-if="data_protocol_sections != null" ng-repeat="section in data_protocol_sections" style="">
-                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" >{{section.text}}</span>
-                                        <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" >{{section.text}}</span>
-                                        <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'"  ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'"   href="#/search?q={{section.text}}"  tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                        <span ng-click="sample_protocol_show_full='true'" ng-hide="sample_protocol_show_full=='true'" class="hotword"><b>{{sample_protocol_sections[sample_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
+                        <span ng-click="sample_protocol_show_full='false'" ng-hide="sample_protocol_show_full=='false'" class="hotword"><b>close</b></span>
+                    </p>
+
+                    <p ng-show="data_protocol_description.length > 0 && data_protocol_description !== 'Not available'"
+                       class="align-justify">
+                        <span><b>DATA PROTOCOL:</b></span>
+                                      <span ng-if="data_protocol_sections != null" ng-repeat="section in data_protocol_sections" style="">
+                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
+                                        <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
+                                        <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
-                                <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
-                                <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b>close</b></span>
-                        </p>
+                        <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
+                        <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b>close</b></span>
+                    </p>
 
                     <div class="row" id="dataset_protocol_bottom"
                          style="margin-top:10px margin-left:10px">
@@ -139,14 +141,14 @@
                             <b>ORGANISM(S):</b>
                <span>
                    <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
-                      href={{organism_pre_url+'"'+organism.acc+'"'}} >
+                      href={{organism_pre_url+'"'+organism.acc+'"'}}>
                        {{organism.name + ';'}}
                    </a>
               </span>
                         </p>
 
                         <p ng-show="dataset.tissues.length > 0 && dataset.tissues[0] != 'Not available'" style="margin-left:15px" class="align-justify"
-                           ><b>TISSUE(S):</b>
+                                ><b>TISSUE(S):</b>
 
                <span>
                    <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
@@ -157,7 +159,7 @@
                         </p>
 
                         <p ng-show="dataset.diseases.length > 0 && dataset.diseases[0] != 'Not available'" style="margin-left:15px" class="align-justify"
-                           ><b>DISEASE(S):</b>
+                                ><b>DISEASE(S):</b>
                <span>
                    <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
                       href={{disease_pre_url+'"'+disease+'"'}}>
@@ -293,7 +295,7 @@
             </div>
             <!--dataset_middle_panel-->
 
-            <div class="panel panel-default" id="dataset_bottom" ng-hide="true">
+            <div class="panel panel-default" id="dataset_bottom" ng-hide="">
                 <div class="panel-footer ">
                     <h3>Similarity statistics</h3>
                 </div>
@@ -301,19 +303,24 @@
                 <script>
                     drawChordDiagram();
                 </script>
-                <div id="chord_diagram"  style="text-align:center;">
-                    <h4> Only show the datasets with similarity scores above: <span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span> </h4>
-                    <button ng-click="threshold_change(-0.1)"  class="threshold_botton fa fa-angle-double-left">   </button>
-                    <button ng-click="threshold_change(-0.01)" class="threshold_botton fa fa-angle-left">   </button>
-                    <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
-                    <button ng-click="threshold_change(0.01)" class="threshold_botton fa fa-angle-right">   </button>
-                    <button ng-click="threshold_change(0.1)" class="threshold_botton fa fa-angle-double-right">   </button>
-                    <input style="width: 80%;" class="center" id="slider1" type="range" min="0" max="1" step=".01" value="0.01" ng-model="threshold" ng-initial/>
-                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <h4 style="margin-top: 100px"> Threshold:<br> <span id="threshold_text2" style="color:darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h4>
+                        <input style="width: 80%;" class="center" id="slider1" type="range" orient="vertical" min="0.10" max="1" step=".01" value="0.10" ng-model="threshold" ng-initial/>
+                    </div>
+                    <div class="col-md-10" id="chord_diagram" style="text-align:center;">
+                        <h4 > Only show the datasets with similarity scores above:<span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span></h4>
+                        <button ng-click="threshold_change(-0.1)" class="threshold_botton fa fa-angle-double-left"></button>
+                        <button ng-click="threshold_change(-0.01)" class="threshold_botton fa fa-angle-left"></button>
+                        <span> &nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        <button ng-click="threshold_change(0.01)" class="threshold_botton fa fa-angle-right"></button>
+                        <button ng-click="threshold_change(0.1)" class="threshold_botton fa fa-angle-double-right"></button>
+                    </div>
 
+                </div>
+                <!--row-->
             </div>
             <!--dataset_bottom_panel-->
-
 
 
         </div>
@@ -329,90 +336,90 @@
             </p>
 
             <!--<uib-tabset>-->
-                <!--<uib-tab heading="By MetaData">-->
-                    <ul class="list-unstyled">
-                        <!-- ngRepeat: dataset in result.datasets -->
-                        <li class="result animate-repeat "
-                            ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-                            <div class="project-widget  list-group-item ddi-card-panel">
+            <!--<uib-tab heading="By MetaData">-->
+            <ul class="list-unstyled">
+                <!-- ngRepeat: dataset in result.datasets -->
+                <li class="result animate-repeat "
+                    ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
+                    <div class="project-widget  list-group-item ddi-card-panel">
 
-                                <div class="project-widget-accession">
-                                    <img src="img/omics/Proteomics2.png"
-                                         ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
-                                    <img src="img/omics/Metabolomics2.png"
-                                         ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
-                                    <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
-                                    <a target="" class="align-justify"
-                                       href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
-                                </div>
-                                <div class="project-widget-paragraph hidden">
-                                    <b>Project description:</b>
-                                    {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
-                                    <span ng-show="relatedDataset.description===null">Not available</span>
-                                </div>
+                        <div class="project-widget-accession">
+                            <img src="img/omics/Proteomics2.png"
+                                 ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
+                            <img src="img/omics/Metabolomics2.png"
+                                 ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
+                            <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
+                            <a target="" class="align-justify"
+                               href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
+                        </div>
+                        <div class="project-widget-paragraph hidden">
+                            <b>Project description:</b>
+                            {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
+                            <span ng-show="relatedDataset.description===null">Not available</span>
+                        </div>
 
-                                <div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">
-                                    <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>
-                                    <span ng-show="relatedDataset.organisms.length===0">Not available</span>
-                                </div>
-                                <div class="project-widget-paragraph">
-                                    <span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>
-                                    <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->{{relatedDataset.id}}</a> |
-                                    <!--a href={{database_urls[repositories[relatedDataset.source]]}}--> {{repositories[relatedDataset.source]}} </a>
-                                </div>
+                        <div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">
+                            <b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>
+                            <span ng-show="relatedDataset.organisms.length===0">Not available</span>
+                        </div>
+                        <div class="project-widget-paragraph">
+                            <span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>
+                            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->{{relatedDataset.id}}</a> |
+                            <!--a href={{database_urls[repositories[relatedDataset.source]]}}--> {{repositories[relatedDataset.source]}} </a>
+                        </div>
 
-                            </div>
-                        </li>
-                        <!-- end ngRepeat: -->
-                    </ul>
-                    <div class="input-btn center" style="width:102px; margin-bottom:10px">
-                        <button type="submit" class="btn btn-default " ng-click="related_load_more()">
-                            <i class="fa fa-search"></i> {{load_more_btn_show}}
-                        </button>
                     </div>
-                <!--</uib-tab>-->
-                <!--<uib-tab heading="By Experiment Data">-->
-                    <!--<ul class="list-unstyled">-->
-                        <!--&lt;!&ndash; ngRepeat: dataset in result.datasets &ndash;&gt;-->
-                        <!--<li class="result animate-repeat "-->
-                            <!--ng-repeat="relatedDataset in related_datasets_by_exp | limitTo:related_datasets_limit" style="">-->
-                            <!--<div class="project-widget  list-group-item ddi-card-panel">-->
+                </li>
+                <!-- end ngRepeat: -->
+            </ul>
+            <div class="input-btn center" style="width:102px; margin-bottom:10px">
+                <button type="submit" class="btn btn-default " ng-click="related_load_more()">
+                    <i class="fa fa-search"></i> {{load_more_btn_show}}
+                </button>
+            </div>
+            <!--</uib-tab>-->
+            <!--<uib-tab heading="By Experiment Data">-->
+            <!--<ul class="list-unstyled">-->
+            <!--&lt;!&ndash; ngRepeat: dataset in result.datasets &ndash;&gt;-->
+            <!--<li class="result animate-repeat "-->
+            <!--ng-repeat="relatedDataset in related_datasets_by_exp | limitTo:related_datasets_limit" style="">-->
+            <!--<div class="project-widget  list-group-item ddi-card-panel">-->
 
-                                <!--<div class="project-widget-accession">-->
-                                    <!--<img src="img/omics/Proteomics2.png"-->
-                                         <!--ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>-->
-                                    <!--<img src="img/omics/Metabolomics2.png"-->
-                                         <!--ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>-->
-                                    <!--<img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>-->
-                                    <!--<a target="" class="align-justify"-->
-                                       <!--href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>-->
-                                <!--</div>-->
-                                <!--<div class="project-widget-paragraph hidden">-->
-                                    <!--<b>Project description:</b>-->
-                                    <!--{{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}-->
-                                    <!--<span ng-show="relatedDataset.description===null">Not available</span>-->
-                                <!--</div>-->
+            <!--<div class="project-widget-accession">-->
+            <!--<img src="img/omics/Proteomics2.png"-->
+            <!--ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>-->
+            <!--<img src="img/omics/Metabolomics2.png"-->
+            <!--ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>-->
+            <!--<img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>-->
+            <!--<a target="" class="align-justify"-->
+            <!--href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>-->
+            <!--</div>-->
+            <!--<div class="project-widget-paragraph hidden">-->
+            <!--<b>Project description:</b>-->
+            <!--{{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}-->
+            <!--<span ng-show="relatedDataset.description===null">Not available</span>-->
+            <!--</div>-->
 
-                                <!--<div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">-->
-                                    <!--<b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>-->
-                                    <!--<span ng-show="relatedDataset.organisms.length===0">Not available</span>-->
-                                <!--</div>-->
-                                <!--<div class="project-widget-paragraph">-->
-                                    <!--<span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>-->
-                                    <!--&lt;!&ndash;a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}&ndash;&gt;{{relatedDataset.id}}</a> |-->
-                                    <!--&lt;!&ndash;a href={{database_urls[repositories[relatedDataset.source]]}}&ndash;&gt; {{repositories[relatedDataset.source]}} </a>-->
-                                <!--</div>-->
+            <!--<div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">-->
+            <!--<b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>-->
+            <!--<span ng-show="relatedDataset.organisms.length===0">Not available</span>-->
+            <!--</div>-->
+            <!--<div class="project-widget-paragraph">-->
+            <!--<span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>-->
+            <!--&lt;!&ndash;a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}&ndash;&gt;{{relatedDataset.id}}</a> |-->
+            <!--&lt;!&ndash;a href={{database_urls[repositories[relatedDataset.source]]}}&ndash;&gt; {{repositories[relatedDataset.source]}} </a>-->
+            <!--</div>-->
 
-                            <!--</div>-->
-                        <!--</li>-->
-                        <!--&lt;!&ndash; end ngRepeat: &ndash;&gt;-->
-                    <!--</ul>-->
-                    <!--<div class="input-btn center" style="width:102px; margin-bottom:10px">-->
-                        <!--<button type="submit" class="btn btn-default " ng-click="related_load_more()">-->
-                            <!--<i class="fa fa-search"></i> {{load_more_btn_show}}-->
-                        <!--</button>-->
-                    <!--</div>-->
-                <!--</uib-tab>-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--&lt;!&ndash; end ngRepeat: &ndash;&gt;-->
+            <!--</ul>-->
+            <!--<div class="input-btn center" style="width:102px; margin-bottom:10px">-->
+            <!--<button type="submit" class="btn btn-default " ng-click="related_load_more()">-->
+            <!--<i class="fa fa-search"></i> {{load_more_btn_show}}-->
+            <!--</button>-->
+            <!--</div>-->
+            <!--</uib-tab>-->
             <!--</uib-tabset>-->
 
 
@@ -429,11 +436,9 @@
     <h5>Synonyms
     </h5>
     <p>
-    <span ng-repeat="synonym in section.synonyms" ng-class-odd="'synonym_odd'" ng-class-even="'synonym_even'" >{{synonym}}<br></span>
+        <span ng-repeat="synonym in section.synonyms" ng-class-odd="'synonym_odd'" ng-class-even="'synonym_even'">{{synonym}}<br></span>
     </p>
 </script>
-
-
 
 
 </div>

@@ -5,9 +5,9 @@
 <div id="content" ng-controller="ResultsListCtrl" class="ng-scope ng-cloak" ng-show="display_search_interface" style="margin: 10px">
 
 
-    <div id="searching">
+    <div id="searching" class="ng-cloak" style="height: 30px;">
         <h3>
-            <small ng-show="search_in_progress" class="ng-hide" style="">
+            <small ng-show="search_in_progress" class="ng-hide ng-cloak" style="">
                 <i class="fa fa-spinner fa-spin"></i>
             </small>
             <small ng-class="search_in_progress ? 'animated flash infinite' : 'hidden'"
@@ -320,7 +320,7 @@
             <div id="search-results" class="grid_22  " style="width:90%">
                 <div id="search-results-items" class="list-group">
                     <ul class="list-unstyled">
-                        <li class="result animate-repeat fade-in" ng-repeat="dataset in result.datasets">
+                        <li class="result animate-repeat" ng-repeat="dataset in result.datasets" ng-animate="{enter: 'result-enter'}" style="transition-delay:{{$index * 300}}ms">
                             <div class="ddi-card-panel  list-group-item">
 
                                 <div class="project-widget-accession">
