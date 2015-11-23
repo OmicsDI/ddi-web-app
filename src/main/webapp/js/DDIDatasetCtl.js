@@ -268,7 +268,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         if (enrichment_info.dataProtocolString != undefined && enrichment_info.dataProtocolString.length >= 1) {
             $scope.data_protocol_description = enrichment_info.dataProtocolString;
         }
-        console.log($scope.dataset.name);
 
         var title_section_positions = get_section_position($scope.dataset.name, titleEnrichInfo);
         var abstract_section_positions = get_section_position($scope.dataset.description, abstractEnrichInfo);
