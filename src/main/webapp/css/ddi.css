@@ -1105,12 +1105,3 @@ input[type=range][orient=vertical]
     padding: 0 5px;
 }
 
-.result-enter {
-    opacity:0;
-    -webkit-transition-property: all;
-    -webkit-transition-timing-function: ease-in-out;
-    -webkit-transition-duration: 100ms;
-}
-.result-enter.result-enter-active {
-    opacity: 1;
-}
