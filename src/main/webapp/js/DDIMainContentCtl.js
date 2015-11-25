@@ -22,9 +22,8 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
             ||$location.path() === '/api'
             ||$location.path() === '/search'
             ||$location.path() === '/databases'
-            ||$location.path() === '/dataset'
+            ||$location.path().match(/\/dataset/)
             ||$location.path() === '/help'
-            ||$location.path() === '/api'
         ) {
             $scope.$root.show_top_search = true
         } else {

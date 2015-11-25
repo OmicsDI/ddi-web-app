@@ -157,9 +157,13 @@ var bub_charts_tissues_organisms = function () {
 
             d3.select(self.frameElement).style("height", diameter + "px");
 
-            var tooltip = d3.select('body').append("div")
-                .attr("class", "chart_tooltip")
-                .style("opacity", 0);
+            var tooltip = document.getElementById("tissue_organism_chart_tooltip");
+            if( tooltip == null){
+                tooltip = d3.select('body').append("div")
+                    .attr("class", "chart_tooltip")
+                    .attr("id", "tissue_organism_chart_tooltip")
+                    .style("opacity", 0);
+            }
 
 
             change();
@@ -758,7 +762,6 @@ var barcharts_years_omics_types = function () {
 
 
             data = annual_data;
-            console.log(annual_data);
             data.forEach(function (d) {
                 d.omics = omics_types.map(function (name) {
                     if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
@@ -776,9 +779,13 @@ var barcharts_years_omics_types = function () {
                 });
             })]);
 
-            var tooltip = d3.select('body').append("div")
-                .attr("class", "chart_tooltip")
-                .style("opacity", 0);
+            var tooltip = document.getElementById("annual_bar_chart_tooltip");
+            if( tooltip == null) {
+                tooltip = d3.select('body').append("div")
+                    .attr("class", "chart_tooltip")
+                    .attr("id", "annual_bar_chart_tooltip")
+                    .style("opacity", 0);
+            }
 
             svg.append("g")
                 .attr("class", "x axis")
@@ -846,7 +853,6 @@ var barcharts_years_omics_types = function () {
                         .style("height",  "20px")
                         .style("width", d.value.toString().length * 5 + 80 + "px");
 
-                    console.log();
                 })
                 .on("mouseout", function (d) {
                     tooltip.transition()
@@ -888,15 +894,12 @@ var barcharts_years_omics_types = function () {
                     return d;
                 });
         }
-
     }
 
     function clickMe(d) {
         var searchWord = "*:* AND publication_date:\"" + d + "\"";
         angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
     };
-
-
 }
 
 function output_error_info(errordiv) {

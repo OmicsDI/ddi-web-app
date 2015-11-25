@@ -203,7 +203,7 @@
 
 
             <div class="panel panel-default" id="dataset_middle_publication" style="position:relative"
-                 ng-hide="dataset.publicationIds===null || get_dataset_fail.length > 0">
+                 ng-hide="dataset.publicationIds ==null || dataset.publicationIds.length < 1 || get_dataset_fail.length > 0">
                 <div class="panel-footer ">
                     <h3>Publications</h3>
                 </div>
@@ -242,7 +242,7 @@
                             {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].citation}}</p>
                     </div>
                     <hr style="margin-right:30px">
-                    <p ng-show="publication_info.length<1" class="align-justify">
+                    <p ng-show="publication_info.length < 1 && dataset.publicationIds.length > 0" class="align-justify">
                         Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to the
                         <a href="{{'http://www.ncbi.nlm.nih.gov/pubmed/?term='+dataset.publicationIds[current_publication]}}">
                             PUBMED
