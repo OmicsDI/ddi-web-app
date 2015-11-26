@@ -98,6 +98,10 @@ body {
     opacity: .8 !important;
 }
 
+.host_dataset{
+    font-weight:bold;
+}
+
 .node:hover, .slice:hover, .bar:hover, .legend:hover, .treemap_node, .arc path:hover {
     cursor: pointer;
     cursor: hand;

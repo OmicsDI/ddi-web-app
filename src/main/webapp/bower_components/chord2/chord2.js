@@ -21,10 +21,13 @@
         function chord2(selection) {
 
 
-            var tooltip = d3.select('#chord_diagram').append("div")
-                .attr("class", "chart_tooltip")
-                .style("opacity", 0);
-
+            var tooltip = document.getElementById("chord_diagram_tooltip");
+            if( tooltip == null) {
+                tooltip = d3.select('#chord_diagram').append("div")
+                    .attr("id", "chord_diagram_tooltip")
+                    .attr("class", "chart_tooltip")
+                    .style("opacity", 1);
+            }
             selection.each(function (d, i) {
                 var selection = d3.select(this);
 
@@ -46,8 +49,9 @@
                     //})
                     .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+                    .on("onclick", fade(selection, .1))
                     .on("mouseover", fade(selection, .1))
-                    .on("mouseout", fade(selection, 1))
+                    //.on("mouseout", fade(selection, 1))
                 ;
 
 
@@ -68,27 +72,27 @@
                     .style("fill-opacity", .67)
                     .style("stroke", "#000")
                     .style("stroke-width", ".5px")
-                    .on("mouseover", function(d){
+                    .on("mousemove", function(d){
                         var mouse_coords = d3.mouse(
                             tooltip.node().parentElement);
                         tooltip.transition()
                             .duration(200)
                             .style("opacity", .9);
-                        tooltip.html( d.source.value/100)
+                        tooltip.html( "similarity score:"+d.source.value/100 )
                         //.style("left", (mouse_coords[0]  ) + "px")
                         .style("left", (mouse_coords[0]*1 +  "px"))
-                        .style("top", ((mouse_coords[1]*1 + 400) + "px"))
-                        .style("height",  "20px")
+                        .style("top", ((mouse_coords[1] -30) + "px"))
+                        .style("height",  "30px")
                         .style("width", "60px");
                     })
                     .on("mouseout", function(d) {
                         tooltip.transition()
                             .duration(200)
                             .style("opacity", .0);
-
                     })
                     ;
 
+                groupsNo = chord2.groups().length;
                 var ticks = selection.append("g")
                     .attr("class", "ticks")
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
@@ -134,6 +138,7 @@
                     };
                 };
 
+
                 selection.append("g").selectAll("g")
                     .data(chord2.groups().map(groupLabels))
                     .enter()
@@ -153,7 +158,14 @@
                             "rotate(180)translate(-16)" : null;
                     })
                     .attr("class", "hotword")
-                    .style("fill", "#000")
+                    .style("fill", function(d){
+                         if(inputdata.labelArray.indexOf(d.label) == 0){
+                            return "red";
+                        }
+                        else{
+                            return "black";
+                        }
+                    })
                     .style("font-size", fontsize / 1.5)
                     .style("text-anchor",
                     function (d) {
@@ -529,11 +541,31 @@
     }
 
     function groupTicks(d) {
+        var ticksPerEach = 50/groupsNo;
+        if(ticksPerEach >= 10) {
+            ticksPerEach = 10;
+        }
+
+        if(ticksPerEach >= 5 && ticksPerEach < 10) {
+            ticksPerEach = 5;
+        }
+
+        if(ticksPerEach >= 2 && ticksPerEach < 5) {
+            ticksPerEach = 2;
+        }
+
+        if(ticksPerEach >= 0 && ticksPerEach < 2) {
+            ticksPerEach = 1;
+        }
+
+
         var k = (d.endAngle - d.startAngle) / d.value;
-        return d3.range(0, d.value, 5).map(function (v, i) {
+        return d3.range(0, d.value, 50/ticksPerEach).map(function (v, i) {
+
             return {
                 angle: v * k + d.startAngle,
-                label: i % 2 ? null : v / 100 + ""
+                //label: i % 2 ? null : v / 100 + ""
+                label:  ""
             };
         });
     }

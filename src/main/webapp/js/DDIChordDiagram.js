@@ -18,7 +18,7 @@ function drawChordDiagram(acc, domain) {
             labels: {}
         };
 
-        d3.select("#" + "chord_diagram").selectAll('input')
+        d3.select("#" + "chord_diagram_input").selectAll('input')
             .on('change', redraw);
 
         d3.select("#" + "chord_diagram").selectAll('button')
@@ -41,7 +41,7 @@ function drawChordDiagram(acc, domain) {
             //}
 
             var scope_threshold = angular.element(document.getElementById("datasetCtrl")).scope().threshold;
-
+            console.log(scope_threshold);
             prepare_inputdata(scope_threshold);
 
             data = [inputdata];
@@ -70,16 +70,66 @@ function drawChordDiagram(acc, domain) {
 
             inputdata = {
                 connections: [],
-                labels: {}
+                labels: {},
+                labelArray:[]
             };
 
-            var indexOfLabels = 0;
+
             var labels = [];
 
+            //always put the "host" dataset into the ChordDiagram
             var main_key = acc + "@" + domain;
-            //labels[indexOfLabels] = acc + "@" + domain;
-            //indexOfLabels++;
+            inputdata.labels[0] = main_key;
+            labels[0] = main_key;
+            var connection = [], bend1 = {}, bend2 = {};
+            bend1["group"] = 0;
+            bend1["value"] = 0;
+            bend2["group"] = 0;
+            bend2["value"] = 0;
+            connection[0] = bend1;
+            connection[1] = bend2;
+            inputdata.connections.push(connection);
 
+            for (var i = 0, indexOfLabels = 1; i < similarityData.scores.length; i++) {
+
+                var score = similarityData.scores[i];
+                var key1 = score.key1;
+                var key2 = score.key2;
+                var intScore = Math.round(score.value * 100);
+
+                if (score.value < threshold) {
+                    continue;
+                }
+
+                if(key1 == main_key || key2 == main_key) {
+                    if(labels.indexOf(key1) < 0){
+                        inputdata.labels[indexOfLabels] = key1;
+                        labels[indexOfLabels] = key1;
+                        indexOfLabels++;
+                    }
+                    if(labels.indexOf(key2) < 0){
+                        inputdata.labels[indexOfLabels] = key2;
+                        labels[indexOfLabels] = key2;
+                        indexOfLabels++;
+                    }
+                }
+
+            }
+
+            //always put the "host" dataset into the ChordDiagram
+            //inputdata.labels[indexOfLabels] = main_key;
+            //labels[indexOfLabels] = main_key;
+            //indexOfLabels++;
+            //var connection = [], bend1 = {}, bend2 = {};
+            //bend1["group"] = 0;
+            //bend1["value"] = 0;
+            //bend2["group"] = 0;
+            //bend2["value"] = 0;
+            //connection[0] = bend1;
+            //connection[1] = bend2;
+            //inputdata.connections.push(connection);
+
+            //select the connections above the threshold
             for (var i = 0; i < similarityData.scores.length; i++) {
                 var connection = [], bend1 = {}, bend2 = {};
                 var score = similarityData.scores[i];
@@ -88,44 +138,8 @@ function drawChordDiagram(acc, domain) {
                 var intScore = Math.round(score.value * 100);
 
                 //remove the connections which are less than threshold
-                if (score.value < threshold) {
-                    if (key1 == main_key || key2 == main_key) { //this is always true
-
-                        if (labels.indexOf(key1) < 0) {
-                            inputdata.labels[indexOfLabels] = key1;
-                            labels[indexOfLabels] = key1;
-                            indexOfLabels++;
-                        }
-                        if (labels.indexOf(key2) < 0) {
-                            inputdata.labels[indexOfLabels] = key2;
-                            labels[indexOfLabels] = key2;
-                            indexOfLabels++;
-                        }
-
-                        bend1["group"] = labels.indexOf(key1);
-                        bend1["value"] = 0;
-                        bend2["group"] = labels.indexOf(key2);
-                        bend2["value"] = 0;
-
-                        connection[0] = bend1;
-                        connection[1] = bend2;
-
-                        inputdata.connections.push(connection);
-
-                    }
-
+                if (score.value < threshold || labels.indexOf(key1) < 0 || labels.indexOf(key2) < 0) {
                     continue;
-                }
-
-                if (labels.indexOf(key1) < 0) {
-                    inputdata.labels[indexOfLabels] = key1;
-                    labels[indexOfLabels] = key1;
-                    indexOfLabels++;
-                }
-                if (labels.indexOf(key2) < 0) {
-                    inputdata.labels[indexOfLabels] = key2;
-                    labels[indexOfLabels] = key2;
-                    indexOfLabels++;
                 }
 
                 bend1["group"] = labels.indexOf(key1);
@@ -138,7 +152,8 @@ function drawChordDiagram(acc, domain) {
 
                 inputdata.connections.push(connection);
             }
-
+            inputdata.labelArray = labels;
+            console.log(inputdata);
         }
     }
 }
