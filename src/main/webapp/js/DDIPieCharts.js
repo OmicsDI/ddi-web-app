@@ -262,7 +262,7 @@ var bub_charts_tissues_organisms = function () {
                     tooltip.node().parentElement);
 
                 tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets" )
-                    .style("left", mouse_coords[0] + "px")
+                    .style("left", (mouse_coords[0] + 25) + "px")
                     .style("top", (mouse_coords[1] - 40) + "px")
                     .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
             })
@@ -781,7 +781,7 @@ var barcharts_years_omics_types = function () {
 
             var tooltip = document.getElementById("annual_bar_chart_tooltip");
             if( tooltip == null) {
-                tooltip = d3.select('body').append("div")
+                tooltip = body.append("div")
                     .attr("class", "chart_tooltip")
                     .attr("id", "annual_bar_chart_tooltip")
                     .style("opacity", 0);
@@ -848,8 +848,8 @@ var barcharts_years_omics_types = function () {
                         .style("opacity", .9);
                     tooltip.html( d.value + " datasets" )
                         //.style("left", (mouse_coords[0]  ) + "px")
-                        .style("left", (mouse_coords[0]* chart_div_left/950 +  "px"))
-                        .style("top", (parseInt(d3.select(this).attr("y"))+635) + "px")
+                        .style("left", (mouse_coords[0])+  "px")
+                        .style("top", (parseInt(d3.select(this).attr("y"))) + "px")
                         .style("height",  "20px")
                         .style("width", d.value.toString().length * 5 + 80 + "px");
 
