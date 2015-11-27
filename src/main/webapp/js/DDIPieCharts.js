@@ -159,7 +159,7 @@ var bub_charts_tissues_organisms = function () {
 
             var tooltip = document.getElementById("tissue_organism_chart_tooltip");
             if( tooltip == null){
-                tooltip = d3.select('body').append("div")
+                tooltip = body.append("div")
                     .attr("class", "chart_tooltip")
                     .attr("id", "tissue_organism_chart_tooltip")
                     .style("opacity", 0);
@@ -262,7 +262,7 @@ var bub_charts_tissues_organisms = function () {
                     tooltip.node().parentElement);
 
                 tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets" )
-                    .style("left", (mouse_coords[0] +div_width/5 ) + "px")
+                    .style("left", mouse_coords[0] + "px")
                     .style("top", (mouse_coords[1] - 40) + "px")
                     .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
             })

@@ -104,7 +104,7 @@ var drawHotwords = function () {
 
         var wordcloud_tooltip = document.getElementById("word_cloud_chart_tooltip");
         if( wordcloud_tooltip == null) {
-             wordcloud_tooltip = d3.select('body').append("div")
+             wordcloud_tooltip = body.append("div")
                 .attr("class", "chart_tooltip")
                 .attr("id", "word_cloud_chart_tooltip")
                 .style("opacity", 0);
@@ -186,7 +186,7 @@ var drawHotwords = function () {
                         .style("opacity", .9);
 
                     wordcloud_tooltip.html("<strong>" + d.frequent + "</strong> datasets"  )
-                        .style("left", (mouse_coords[0] + div_width/5) + "px")
+                        .style("left", mouse_coords[0] + "px")
                         .style("top", (mouse_coords[1]-25) + "px")
                         .style("height", "20px")
                         .style("width", d.frequent.toString().length * 10 + 70 + "px");

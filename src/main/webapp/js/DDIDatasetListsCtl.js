@@ -40,12 +40,13 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
     });
 //
 //
-    var url = web_service_url + "dataset/mostAccessed?size=10";
+    var url = web_service_url + "dataset/mostAccessed?size=20";
     $http({
         url: url,
         method: 'GET'
     }).success(function (data) {
         $scope.most_accessed_list = data["datasets"];
+        $scope.most_accessed_list.length = 10;
         if (data === null) {
             $scope.get_most_access_datasets_fail = "Sorry, the accessing to  this datasets list was temporally failed.";
         }
