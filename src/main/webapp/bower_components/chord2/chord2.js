@@ -28,6 +28,14 @@
                     .attr("class", "chart_tooltip")
                     .style("opacity", 1);
             }
+
+            var tooltip_click = document.getElementById("chord_diagram_tooltip_click");
+            if( tooltip_click == null) {
+                tooltip_click = d3.select('#chord_diagram').append("div")
+                    .attr("id", "chord_diagram_tooltip_click")
+                    .attr("class", "chart_tooltip")
+                    .style("opacity", 1);
+            }
             selection.each(function (d, i) {
                 var selection = d3.select(this);
 
@@ -49,9 +57,29 @@
                     //})
                     .attr("d", d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius))
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-                    .on("onclick", fade(selection, .1))
-                    .on("mouseover", fade(selection, .1))
+                    .on("click", fade(selection, .0))
+                    .on("mouseover", fade(selection, .2))
+                    .on("mousemove", function(d){
+                        var mouse_coords = d3.mouse(
+                            tooltip_click.node().parentElement);
+                            tooltip_click.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                            tooltip_click.html( "Click to hide the similarity scores between the others")
+                        //.style("left", (mouse_coords[0]  ) + "px")
+                                .style("left", (mouse_coords[0]*1 +  "px"))
+                                .style("top", ((mouse_coords[1] -30) + "px"))
+                                .style("height",  "30px")
+                                .style("width", "160px")
+                                .style("z-index", "1")
+                                ;
+                    })
                     //.on("mouseout", fade(selection, 1))
+                    .on("mouseout", function(d){
+                             tooltip_click.transition()
+                                .duration(100)
+                                .style("opacity", .0);
+                    })
                 ;
 
 
@@ -147,7 +175,7 @@
                     .append("g")
                     .attr("transform", function (d) {
                         return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-                            + "translate(" + (outerRadius + 30) + ",0)";
+                            + "translate(" + (outerRadius + 10) + ",0)";
                     })
                     .append("text")
                     .attr("x", 8)
@@ -184,7 +212,7 @@
                     .append("tspan")
                     .attr("x", 10)
                     .attr("dy", ".99em")
-                    .style("fill", "#000")
+                    //.style("fill", "#000")
                     .style("font-size", fontsize / 1.5)
                     .style("text-anchor",
                     function (d) {
@@ -205,7 +233,6 @@
 
         function fade(selection, opacity) {
             return function (g, i) {
-
                 selection.selectAll(".chord path")
                     .transition()
                     .style("opacity", 1);
@@ -409,9 +436,11 @@
             }
 
             // Generate chords for each (non-empty) subgroup-subgroup link.
-            // We only use one-one(two) style polygon here --by Mingze
-            i = -1;
-            while (++i < polygons.length) {
+            // We only use one-one(a pair) style polygon here --by Mingze
+            //i = -1;
+            //while (++i < polygons.length) { //to make the host dataset's chords in the uppest position
+            i = polygons.length;
+            while (--i > 0) {
                 j = -1;
                 while (++j < polygons[i].edges.length) {
                     var source = polygons[i].edges[j].source.geometry,
@@ -560,8 +589,7 @@
 
 
         var k = (d.endAngle - d.startAngle) / d.value;
-        return d3.range(0, d.value, 50/ticksPerEach).map(function (v, i) {
-
+        return d3.range(0, parseInt(d.value + 50/ticksPerEach), parseInt(50/ticksPerEach)).map(function (v, i) {
             return {
                 angle: v * k + d.startAngle,
                 //label: i % 2 ? null : v / 100 + ""

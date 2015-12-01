@@ -847,7 +847,6 @@ var barcharts_years_omics_types = function () {
                         .duration(200)
                         .style("opacity", .9);
                     tooltip.html( d.value + " datasets" )
-                        //.style("left", (mouse_coords[0]  ) + "px")
                         .style("left", (mouse_coords[0])+  "px")
                         .style("top", (parseInt(d3.select(this).attr("y"))) + "px")
                         .style("height",  "20px")

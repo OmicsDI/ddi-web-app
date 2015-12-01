@@ -11,6 +11,7 @@ function drawChordDiagram(acc, domain) {
         //.defer(d3.json, 'http://localhost:9091/' + 'enrichment/getSimilarityInfo?accession=' + acc + '&database=' + domain) // topojson polygons
         .await(drawTheChord); // function that uses files
 
+
     function drawTheChord(error, similarityData) {
 
         inputdata = {
@@ -41,7 +42,6 @@ function drawChordDiagram(acc, domain) {
             //}
 
             var scope_threshold = angular.element(document.getElementById("datasetCtrl")).scope().threshold;
-            console.log(scope_threshold);
             prepare_inputdata(scope_threshold);
 
             data = [inputdata];
@@ -90,6 +90,7 @@ function drawChordDiagram(acc, domain) {
             connection[1] = bend2;
             inputdata.connections.push(connection);
 
+            sortSimilarityScores(similarityData.scores);
             for (var i = 0, indexOfLabels = 1; i < similarityData.scores.length; i++) {
 
                 var score = similarityData.scores[i];
@@ -153,7 +154,21 @@ function drawChordDiagram(acc, domain) {
                 inputdata.connections.push(connection);
             }
             inputdata.labelArray = labels;
-            console.log(inputdata);
+        }
+        function sortSimilarityScores(scores) {
+            for(var i=0; i<scores.length; i++) {
+                var tempScore = scores[i]
+                var minScoreValue = 1;
+                var minIndex= 0;
+                for(var j=scores.length-1; j>=i; j--) {
+                    if (scores[j].value < minScoreValue){
+                        minIndex =j;
+                        minScoreValue = scores[j].value;
+                    }
+                }
+                scores[i] = scores[minIndex];
+                scores[minIndex] = tempScore;
+            }
         }
     }
 }
