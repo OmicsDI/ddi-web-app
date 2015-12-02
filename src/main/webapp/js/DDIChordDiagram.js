@@ -60,7 +60,7 @@ function drawChordDiagram() {
             prepare_inputdata(scope_threshold);
 
             data = [inputdata];
-            var width = 650, height = 650, padding = .09;
+            var width = 350, height = 650, padding = .09;
 
             chart = d3.chord2()
                 .width(width)

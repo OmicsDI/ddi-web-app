@@ -20,7 +20,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
     $scope.get_dataset_fail = "";
     $scope.get_similar_dataset_fail = "";
+    $scope.biological_related_datasets = [];
     $scope.related_datasets_limit = 5;
+    $scope.biological_related_datasets_limit = 5;
     $scope.load_more_btn_show = "Load More";
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
