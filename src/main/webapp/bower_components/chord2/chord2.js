@@ -207,23 +207,26 @@
                     .on("click",function(d){
                         var acc = d.label.replace(/@.*/, "");
                         var domain = d.label.replace(/.*@/, "");
+                            if(domain  == 'MetabolomicsWorkbench'){
+                                domain ='metabolomics_workbench';
+                            }
                         location.href = "#/dataset/" + domain + "/" + acc;
                     })
-                    .append("tspan")
-                    .attr("x", 10)
-                    .attr("dy", ".99em")
-                    //.style("fill", "#000")
-                    .style("font-size", fontsize / 1.5)
-                    .style("text-anchor",
-                    function (d) {
-                        return d.angle > Math.PI ?
-                            "end" : null;
-                    })
-                    //.text(function (d) {
-                    .html(function (d) {
-                        var domain = d.label.replace(/.*@/, "")
-                        return "@" + domain;
-                    })
+                    //.append("tspan")
+                    //.attr("x", 10)
+                    //.attr("dy", ".99em")
+                    ////.style("fill", "#000")
+                    //.style("font-size", fontsize / 1.5)
+                    //.style("text-anchor",
+                    //function (d) {
+                    //    return d.angle > Math.PI ?
+                    //        "end" : null;
+                    //})
+                    ////.text(function (d) {
+                    //.html(function (d) {
+                    //    var domain = d.label.replace(/.*@/, "")
+                    //    return "@" + domain;
+                    //})
                 ;
 
             });
