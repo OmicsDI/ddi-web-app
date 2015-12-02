@@ -6,6 +6,9 @@ function drawChordDiagram(acc, domain) {
     var urlWords = urlString.split("/");
     var acc = urlWords[3];
     var domain = urlWords[2];
+    if(domain  == 'metabolomics_workbench'){
+        domain ='MetabolomicsWorkbench';
+    }
     queue()
         .defer(d3.json, web_service_url + 'enrichment/getSimilarityInfo?accession=' + acc+ '&database=' + domain) // topojson polygons
         //.defer(d3.json, 'http://localhost:9091/' + 'enrichment/getSimilarityInfo?accession=' + acc + '&database=' + domain) // topojson polygons
