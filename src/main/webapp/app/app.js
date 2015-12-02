@@ -20,11 +20,12 @@
         "metabolights": "MetaboLights",
         "metabolights_dataset": "MetaboLights",
         "MetaboLights": "MetaboLights",
-        "metabolome_workbench": "Metabolomics Workbench",
-        "Metabolomics Workbench": "Metabolomics Workbench",
-        "MetabolomicsWorkbench": "Metabolomics Workbench",
+        "metabolome_workbench": "MetabolomicsWorkbench",
+        "metabolomics_workbench": "MetabolomicsWorkbench",
+        "Metabolomics Workbench": "MetabolomicsWorkbench",
+        "MetabolomicsWorkbench": "MetabolomicsWorkbench",
         "ega": "EGA",
-        "EGA": "EGA",
+        "EGA": "EGA"
     };
     var database_urls = {
         "PRIDE": "http://www.ebi.ac.uk/pride/archive/",

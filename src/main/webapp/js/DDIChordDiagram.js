@@ -17,6 +17,12 @@ function drawChordDiagram(acc, domain) {
 
     function drawTheChord(error, similarityData) {
 
+        if(similarityData.scores.length < 1 ){
+            return;
+        };
+
+        document.getElementById("dataset_bottom_chord_diagram").style.visibility = "visible";
+
         inputdata = {
             connections: [],
             labels: {}

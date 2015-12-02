@@ -170,6 +170,7 @@
 
 
                         <p style="margin-left:15px" class="align-justify">
+                            {{dataset['publicationDate']}}
                             <span ng-show="dataset.publicationDate"> {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}| </span>
                             <a href={{dataset.full_dataset_link}}>{{acc}}</a> |
                             <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>
@@ -295,7 +296,7 @@
             </div>
             <!--dataset_middle_panel-->
 
-            <div class="panel panel-default" id="dataset_bottom" ng-hide="">
+            <div class="panel panel-default" id="dataset_bottom_chord_diagram" style="visibility: hidden" >
                 <div class="panel-footer ">
                     <h3>Biological similarity</h3>
                 </div>
