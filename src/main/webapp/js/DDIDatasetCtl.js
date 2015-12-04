@@ -18,7 +18,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.repositories = repositories;
     $scope.database_urls = database_urls;
 
-    console.log(web_service_url);
     $scope.get_dataset_fail = "";
     $scope.get_similar_dataset_fail = "";
     $scope.biological_related_datasets = null;
@@ -83,7 +82,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         method: 'GET'
     }).success(function (data) {
         $scope.biological_similarity_info = data;
-        console.log($scope.biological_similarity_info )
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
         }
@@ -101,7 +99,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     var url = web_service_url + "dataset/get?acc=" + $scope.acc + "&database=" + $scope.domain;
     //var get_synonyms_url = web_service_url + "enrichment/getSynonymsForDataset?accession=" + $scope.acc + "&database=" + $scope.domain;
     var get_synonyms_url = web_service_url + "enrichment/getSynonymsForDataset?accession=" + $scope.acc + "&database=" + tempDomainName;
-    console.log(get_synonyms_url);
     arr.push($http.get(url));
     arr.push($http.get(get_synonyms_url));
 
@@ -575,10 +572,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             $scope.threshold = 0.5
         }
         if($scope.biological_similarity_info != null){
-            console.log($scope.biological_similarity_info)
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
         }
-        console.log($scope.related_datasets_by_biological_limit);
         //$scope.related_datasets_by_biological_limit ++;
 
     }
@@ -598,15 +593,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
             return limit;
    }
-    $scope.$watch(function(scope) { return scope.related_datasets_by_biological_limit},
-        function(newValue, oldValue) {
-            $scope.threshold_change(0.0);
-            console.log("changed from" + oldValue + "to" + newValue);
-
-            //document.getElementById("").innerHTML =
-            //    "" + newValue + "";
-        }
-    );
+    //$scope.$watch(function(scope) { return scope.related_datasets_by_biological_limit},
+    //    function(newValue, oldValue) {
+    //        $scope.threshold_change(0.0);
+    //        console.log("changed from" + oldValue + "to" + newValue);
+    //
+    //        //document.getElementById("").innerHTML =
+    //        //    "" + newValue + "";
+    //    }
+    //);
 
 
     /*

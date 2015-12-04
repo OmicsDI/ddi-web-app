@@ -194,7 +194,7 @@
                             return "black";
                         }
                     })
-                    .style("font-size", fontsize/1.8)
+                    .style("font-size", Math.ceil(fontsize/1.8)+"px")
                     .style("text-anchor",
                     function (d) {
                         return d.angle > Math.PI ?
