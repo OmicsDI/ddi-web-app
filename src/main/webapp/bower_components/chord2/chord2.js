@@ -440,10 +440,10 @@
 
             // Generate chords for each (non-empty) subgroup-subgroup link.
             // We only use one-one(a pair) style polygon here --by Mingze
-            //i = -1;
-            //while (++i < polygons.length) { //to make the host dataset's chords in the uppest position
-            i = polygons.length;
-            while (--i > 0) {
+            i = -1;
+            while (++i < polygons.length) { //to make the host dataset's chords in the uppest position
+            //i = polygons.length;
+            //while (--i > 0) {
                 j = -1;
                 while (++j < polygons[i].edges.length) {
                     var source = polygons[i].edges[j].source.geometry,

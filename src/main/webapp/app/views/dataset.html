@@ -304,12 +304,12 @@
                     drawChordDiagram();
                 </script>
                 <div class="row">
-                    <div class="col-md-2" id="chord_diagram_input" >
+                    <div class="col-md-1" id="chord_diagram_input" >
                         <h4 style="margin-top: 100px"> Threshold:<br> <span id="threshold_text2" style="color:darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h4>
-                        <input style="width: 80%;" class="center" id="slider1" type="range" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-initial/>
+                        <!--<input style="width: 80%;" class="center" id="slider1" type="range" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-initial/>-->
+                        <input id="slider1" type="range"  class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-change="threshold_change(0)"/>
                     </div>
-                    <div class="col-md-10" id="" style="text-align:center;">
-                        <div class = "row">
+                    <div class="col-md-6" id="chord_diagram" style="text-align:center;">
                         <h4 > Only show the datasets with similarity scores above:<span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span></h4>
                         <button ng-click="threshold_change(-0.1)" class="threshold_botton fa fa-angle-double-left"></button>
                         <button ng-click="threshold_change(-0.01)" class="threshold_botton fa fa-angle-left"></button>
@@ -318,42 +318,27 @@
                         <span>&nbsp;&nbsp; </span>
                         <button ng-click="threshold_change(0.01)" class="threshold_botton fa fa-angle-right"></button>
                         <button ng-click="threshold_change(0.1)" class="threshold_botton fa fa-angle-double-right"></button>
-                        </div>
-                        <div class="row"  style="text-align:center;">
-                            <div class="col-md-6"  id="chord_diagram" style="text-align:center;">
-                            </div>
-                            <div class="col-md-6"  style="text-align:center;">
-                <ul class="list-unstyled">
-                <!-- ngRepeat: dataset in result.datasets -->
-                <li class="result animate-repeat "
-                    ng-repeat="relatedDataset in biological_related_datasets | limitTo:biological_related_datasets_limit" style="">
-                    <div class="project-widget  list-group-item ddi-card-panel">
-
-                        <div class="project-widget-accession">
-                            <img src="img/omics/Proteomics2.png"
-                                 ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
-                            <img src="img/omics/Metabolomics2.png"
-                                 ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
-                            <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
-                            <a target="" class="align-justify"
-                               href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
-                        </div>
-                        <div class="project-widget-paragraph">
-                            <span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>
-                            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->{{relatedDataset.id}}</a> |
-                            <!--a href={{database_urls[repositories[relatedDataset.source]]}}--> {{repositories[relatedDataset.source]}} </a>
-                        </div>
-
                     </div>
-                </li>
-                <!-- end ngRepeat: -->
-            </ul>
-                            </div>
-
-                        </div>>
-
+                    <div class="col-md-5"  style="text-align:center;" ng-if="related_datasets_by_biological_limit != null">
+                        <div class="panel-body ">
+                            <ul class="nobullet">
+                            <!-- ngRepeat: dataset in result.datasets -->
+                            <h4>{{related_datasets_by_biological_limit}} Similar Datasets on biological evidencies</h4>
+                            <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit" style="">
+                                        <img src="img/omics/Proteomics2.png"
+                                             ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
+                                        <img src="img/omics/Metabolomics2.png"
+                                             ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
+                                        <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
+                                        <a target="" class="align-justify"
+                                           href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
+                                            {{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}
+                                        </a>
+                            </li>
+                            <!-- end ngRepeat: -->
+                        </ul>
+                        </div>
                     </div>
-
                 </div>
                 <!--row-->
             </div>

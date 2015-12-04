@@ -60,7 +60,7 @@ function drawChordDiagram() {
             prepare_inputdata(scope_threshold);
 
             data = [inputdata];
-            var width = 350, height = 650, padding = .09;
+            var width = 350, height = 350, padding = .09;
 
             chart = d3.chord2()
                 .width(width)
@@ -173,16 +173,16 @@ function drawChordDiagram() {
         function sortSimilarityScores(scores) {
             for(var i=0; i<scores.length; i++) {
                 var tempScore = scores[i]
-                var minScoreValue = 1;
-                var minIndex= 0;
+                var maxScoreValue = 0;
+                var maxIndex= 0;
                 for(var j=scores.length-1; j>=i; j--) {
-                    if (scores[j].value < minScoreValue){
-                        minIndex =j;
-                        minScoreValue = scores[j].value;
+                    if (scores[j].value > maxScoreValue){
+                        maxIndex =j;
+                        maxScoreValue = scores[j].value;
                     }
                 }
-                scores[i] = scores[minIndex];
-                scores[minIndex] = tempScore;
+                scores[i] = scores[maxIndex];
+                scores[maxIndex] = tempScore;
             }
         }
 

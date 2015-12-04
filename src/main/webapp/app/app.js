@@ -5,7 +5,6 @@
     /**
      * web_service_url for whole app
      */
-    var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
     var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
     var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench";
     var genomics_list = "ega,EGA";

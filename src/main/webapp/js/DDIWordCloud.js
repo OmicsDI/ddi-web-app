@@ -1,4 +1,4 @@
-var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
+//var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
 var drawHotwords = function () {
 
     queue()

@@ -1,4 +1,5 @@
 var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
+//var web_service_url = 'http://localhost:9091/';
 var retry_limit_time = 50;
 
 

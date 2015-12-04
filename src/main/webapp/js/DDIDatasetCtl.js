@@ -18,11 +18,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.repositories = repositories;
     $scope.database_urls = database_urls;
 
+    console.log(web_service_url);
     $scope.get_dataset_fail = "";
     $scope.get_similar_dataset_fail = "";
-    $scope.biological_related_datasets = [];
+    $scope.biological_related_datasets = null;
     $scope.related_datasets_limit = 5;
-    $scope.biological_related_datasets_limit = 5;
+    $scope.related_datasets_by_biological_limit = 0;
+    $scope.biological_similarity_info = null;
     $scope.load_more_btn_show = "Load More";
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -57,19 +59,37 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     if(tempDomainName == 'metabolomics_workbench'){
         tempDomainName ='MetabolomicsWorkbench';
     }
-    //var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
-    var related_datasets_by_exp_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + tempDomainName;
-    //var related_datasets_by_exp_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    //var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+    //var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
+    var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
+    //var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
     $http({
-        url: related_datasets_by_exp_url,
+        url: related_datasets_by_biological_url,
         method: 'GET'
     }).success(function (data) {
-        $scope.related_datasets_by_exp = data.datasets;
+        $scope.related_datasets_by_biological = data.datasets;
     }).error(function () {
-        console.error("GET error:" + related_datasets_by_exp_url);
+        console.error("GET error:" + related_datasets_by_biological_url);
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
+     /**
+     * To get the similarity info
+     */
+    var biological_similarity_info_url = "http://localhost:9091/" + "enrichment/getSimilarityInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
+    $http({
+        url: biological_similarity_info_url,
+        method: 'GET'
+    }).success(function (data) {
+        $scope.biological_similarity_info = data;
+        console.log($scope.biological_similarity_info )
+        if($scope.biological_similarity_info != null){
+            $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
+        }
+    }).error(function () {
+        console.error("GET error:" + related_datasets_by_biological_url);
+        //$scope.get_similar_dataset_fail = "can not get similar dataset";
+    });
 
     $scope.altmetric_entities = [];
     $scope.publication_index = {};
@@ -89,7 +109,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             // ret[1] contains the second response
             // etc.
             $scope.dataset = ret[0].data;
-            console.log($scope.dataset);
             prepare_synonyms(ret[1].data);
             get_enrichment_info();    // For enriched synonyms tooltip
 
@@ -532,9 +551,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
     }
 
+
+
     /**
      * To change the value in slider by botton
      */
+   var main_key = $scope.acc + "@" + tempDomainName;
     $scope.threshold_change = function (step_value) {
         $scope.threshold = ($scope.threshold * 100 + step_value * 100) / 100;
 
@@ -551,7 +573,39 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         if ($scope.threshold < 0.5) {
             $scope.threshold = 0.5
         }
+        if($scope.biological_similarity_info != null){
+            console.log($scope.biological_similarity_info)
+            $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
+        }
+        console.log($scope.related_datasets_by_biological_limit);
+        //$scope.related_datasets_by_biological_limit ++;
+
     }
+   function find_similarity_limit(scores, threshold) {
+            var limit = 0;
+            for (var i = 0; i < scores.length; i++) {
+                var score = scores[i];
+                var key1 = score.key1;
+                var key2 = score.key2;
+                if (score.value < threshold) {
+                    continue;
+                }
+                if(key1 == main_key || key2 == main_key) {
+                   limit++;
+                }
+
+            }
+            return limit;
+   }
+    $scope.$watch(function(scope) { return scope.related_datasets_by_biological_limit},
+        function(newValue, oldValue) {
+            $scope.threshold_change(0.0);
+            console.log("changed from" + oldValue + "to" + newValue);
+
+            //document.getElementById("").innerHTML =
+            //    "" + newValue + "";
+        }
+    );
 
 
     /*
@@ -571,7 +625,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.highlight_terms = [];
     $scope.highlight_terms[0] = " on ";
     $scope.highlight_terms[1] = " off ";
-
 
     /**
      * For similar datasets tabs control
@@ -607,17 +660,44 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     })
 ;
 
-angular.module('ddiApp').directive('ngInitial', function () {
-    return {
-        restrict: 'A',
-        controller: [
-            '$scope', '$element', '$attrs', '$parse', function ($scope, $element, $attrs, $parse) {
-                var getter, setter, val;
-                val = $attrs.ngInitial || $attrs.value;
-                getter = $parse($attrs.ngModel);
-                setter = getter.assign;
-                setter($scope, val);
-            }
-        ]
-    };
-});
+//angular.module('ddiApp')
+//    .directive('ngInitial', function () {
+//    return {
+//        restrict: 'A',
+//        controller: [
+//            '$scope', '$element', '$attrs', '$parse', function ($scope, $element, $attrs, $parse) {
+//                var getter, setter, val;
+//                val = $attrs.ngInitial || $attrs.value;
+//                getter = $parse($attrs.ngModel);
+//                setter = getter.assign;
+//                setter($scope, val);
+//            }
+//        ]
+//    };
+//    })
+//    .derective('slider', function() {
+//    return {
+//        require: '?ngModel',
+//        link: function(scope, elem, attrs,ngModel) {
+//            if (!ngModel) return;
+//            //slider settings, .noUiSlider is the method to initialize the slider
+//            elem.noUiSlider({
+//                //range: [0.5,1.0],
+//                //start: [0.5,1.0],
+//                step: 0.01,
+//                connect: true
+//            }).change(function(){
+//                scope.$apply(function () {
+//                    // update the underlying model's property when slider changes
+//                    ngModel.$setViewValue(elem.val());
+//                });
+//                $scope.threshold_change(0.0);
+//            });
+//            ngModel.$render = function() {
+//                //update the slider when the underlying model changes.
+//                elem.val(ngModel.$viewValue || []);
+//            };
+//        }
+//    };
+//    });
+
