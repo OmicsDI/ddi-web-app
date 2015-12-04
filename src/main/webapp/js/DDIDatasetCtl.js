@@ -60,8 +60,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         tempDomainName ='MetabolomicsWorkbench';
     }
     //var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
-    //var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
-    var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
+    var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
+    //var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
     //var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
     $http({
         url: related_datasets_by_biological_url,
@@ -76,7 +76,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      /**
      * To get the similarity info
      */
-    var biological_similarity_info_url = "http://localhost:9091/" + "enrichment/getSimilarityInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
+    //var biological_similarity_info_url = "http://localhost:9091/" + "enrichment/getSimilarityInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
+    var biological_similarity_info_url = web_service_url + "enrichment/getSimilarityInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
     $http({
         url: biological_similarity_info_url,
         method: 'GET'
