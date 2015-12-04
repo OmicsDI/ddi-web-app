@@ -323,7 +323,10 @@
                         <div class="panel-body ">
                             <ul class="nobullet">
                             <!-- ngRepeat: dataset in result.datasets -->
-                            <h4>{{related_datasets_by_biological_limit}} Similar Datasets on biological evidencies</h4>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
                             <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit" style="">
                                         <img src="img/omics/Proteomics2.png"
                                              ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
