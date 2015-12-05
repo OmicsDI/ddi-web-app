@@ -303,6 +303,7 @@
                 <script>
                     drawChordDiagram();
                 </script>
+                <h4 > Only show the datasets with similarity scores above:<span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span></h4>
                 <div class="row">
                     <div class="col-md-1" id="chord_diagram_input" >
                         <h4 style="margin-top: 100px"> Threshold:<br> <span id="threshold_text2" style="color:darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h4>
@@ -310,7 +311,6 @@
                         <input id="slider1" type="range"  class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-change="threshold_change(0)"/>
                     </div>
                     <div class="col-md-6" id="chord_diagram" style="text-align:center;">
-                        <h4 > Only show the datasets with similarity scores above:<span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span></h4>
                         <button ng-click="threshold_change(-0.1)" class="threshold_botton fa fa-angle-double-left"></button>
                         <button ng-click="threshold_change(-0.01)" class="threshold_botton fa fa-angle-left"></button>
                         <span>&nbsp;&nbsp; </span>
