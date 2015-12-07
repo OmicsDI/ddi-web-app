@@ -53,7 +53,6 @@
                     </h3>
                 </div>
                 <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-                    {{dataset.omics_type}}
                     <img src="img/omics/Proteomics.png" ng-show="dataset.omics_type == 'Proteomics' "/>
                     <img src="img/omics/Metabolomics.png" ng-show="dataset.omics_type == 'Metabolomics' "/>
                     <img src="img/omics/Genomics.png" ng-show="dataset.omics_type == 'Genomics' "/>
@@ -304,12 +303,12 @@
                 <script>
                     drawChordDiagram();
                 </script>
-                <h4 > Only show the datasets with similarity scores above:<span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span></h4>
+                <h4 style="text-align: center"> Only show the datasets with similarity scores above:<span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span></h4>
                 <div class="row">
                     <div class="col-md-1" id="chord_diagram_input" >
-                        <h4 style="margin-top: 100px"> Threshold:<br> <span id="threshold_text2" style="color:darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h4>
+                        <h5 style="margin-top: 100px"> Threshold:<br> <span id="threshold_text2" style="color:darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h5>
                         <!--<input style="width: 80%;" class="center" id="slider1" type="range" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-initial/>-->
-                        <input id="slider1" type="range"  class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-change="threshold_change(0)"/>
+                        <input id="slider1" style="margin-left: 30px" type="range"  class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-change="threshold_change(0)"/>
                     </div>
                     <div class="col-md-6" id="chord_diagram" style="text-align:center;">
                         <button ng-click="threshold_change(-0.1)" class="threshold_botton fa fa-angle-double-left"></button>
@@ -330,10 +329,11 @@
                                 <br>
                             <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit" style="">
                                         <img src="img/omics/Proteomics2.png"
-                                             ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
+                                             ng-show="relatedDataset.omicsType == 'Proteomics' "/>
                                         <img src="img/omics/Metabolomics2.png"
-                                             ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
-                                        <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
+                                             ng-show="relatedDataset.omicsType == 'Metabolomics' "/>
+                                        <img src="img/omics/Genomics2.png"
+                                             ng-show="relatedDataset.omicsType == 'Genomics' "/>
                                         <a target="" class="align-justify"
                                            href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
                                             {{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}
@@ -368,13 +368,13 @@
                 <li class="result animate-repeat "
                     ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
                     <div class="project-widget  list-group-item ddi-card-panel">
-                        {{relatedDataset.omics_type}}
                         <div class="project-widget-accession">
                             <img src="img/omics/Proteomics2.png"
-                                 ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
+                                 ng-show="relatedDataset.omicsType == 'Proteomics' "/>
                             <img src="img/omics/Metabolomics2.png"
-                                 ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>
-                            <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>
+                                 ng-show="relatedDataset.omicsType == 'Metabolomics' "/>
+                            <img src="img/omics/Genomics2.png"
+                                 ng-show="relatedDataset.omicsType == 'Genomics' "/>
                             <a target="" class="align-justify"
                                href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
                         </div>

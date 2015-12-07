@@ -321,15 +321,15 @@
                 <div id="search-results-items" class="list-group">
                     <ul class="list-unstyled">
                         <li class="repeated-item" ng-repeat="dataset in result.datasets" >
+                            {{dataset}}
                             <div class="ddi-card-panel  list-group-item">
-                                {{dataset}}
                                 <div class="project-widget-accession">
                                     <img src="img/omics/Proteomics2.png"
-                                         ng-show="proteomics_list.indexOf(dataset.source)>-1"/>
+                                         ng-show="dataset.omicsType == 'Proteomics'"/>
                                     <img src="img/omics/Metabolomics2.png"
-                                         ng-show="metabolomics_list.indexOf(dataset.source)>-1"/>
+                                         ng-show="dataset.omicsType == 'Metabolomics'"/>
                                     <img src="img/omics/Genomics2.png"
-                                         ng-show="genomics_list.indexOf(dataset.source)>-1"/>
+                                         ng-show="dataset.omicsType == 'Genomics'"/>
                                     <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}><span
                                             ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                 </div>
