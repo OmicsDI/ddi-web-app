@@ -53,9 +53,10 @@
                     </h3>
                 </div>
                 <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-                    <img src="img/omics/Proteomics.png" ng-show="proteomics_list.indexOf(domain)>-1"/>
-                    <img src="img/omics/Metabolomics.png" ng-show="metabolomics_list.indexOf(domain)>-1"/>
-                    <img src="img/omics/Genomics.png" ng-show="genomics_list.indexOf(domain)>-1"/>
+                    {{dataset.omics_type}}
+                    <img src="img/omics/Proteomics.png" ng-show="dataset.omics_type == 'Proteomics' "/>
+                    <img src="img/omics/Metabolomics.png" ng-show="dataset.omics_type == 'Metabolomics' "/>
+                    <img src="img/omics/Genomics.png" ng-show="dataset.omics_type == 'Genomics' "/>
                     <br>
                     <br>
                     <br>
@@ -367,7 +368,7 @@
                 <li class="result animate-repeat "
                     ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
                     <div class="project-widget  list-group-item ddi-card-panel">
-
+                        {{relatedDataset.omics_type}}
                         <div class="project-widget-accession">
                             <img src="img/omics/Proteomics2.png"
                                  ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>
