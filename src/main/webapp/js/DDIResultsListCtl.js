@@ -310,6 +310,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     }
 
 
+    /**
+     * Prepare the terms which is highlighted in the result's contents
+     *
+     */
     function prepare_highlight_show() {
         $scope.highlight_terms = $scope.query_for_show.match(/".*?"/g);
 

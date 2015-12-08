@@ -24,7 +24,9 @@
         "Metabolomics Workbench": "MetabolomicsWorkbench",
         "MetabolomicsWorkbench": "MetabolomicsWorkbench",
         "ega": "EGA",
-        "EGA": "EGA"
+        "EGA": "EGA",
+        "GPMDB": "GPMDB",
+        "gpmdb": "GPMDB"
     };
     var database_urls = {
         "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
