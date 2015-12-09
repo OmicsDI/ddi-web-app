@@ -34,6 +34,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.disease_pre_url = '#/search?q=*:* AND disease:';
 
     $scope.threshold = 0.50;
+
+    $scope.domain_enrichedDatabase_map = {
+           'metabolomics_workbench' : 'MetabolomicsWorkbench',
+            'gpmdb' : 'GPMDB',
+            'ega' : 'EGA',
+    };
     /*     $http({
      url: url,
      method: 'GET'
@@ -54,9 +60,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
+    //change the domain name to the real name in enrichment data in MongoDB
     var tempDomainName = $scope.domain;
-    if(tempDomainName == 'metabolomics_workbench'){
-        tempDomainName ='MetabolomicsWorkbench';
+    if ($scope.domain_enrichedDatabase_map[$scope.domain] == null){
+        tempDomainName = $scope.domain;
+    }
+    else{
+        tempDomainName = $scope.domain_enrichedDatabase_map[$scope.domain];
     }
     //var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
     var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
@@ -259,10 +269,16 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_enrichment_info() {
         //var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
-        var tempDomainName = $scope.domain;
-        if(tempDomainName == 'metabolomics_workbench'){
-            tempDomainName ='MetabolomicsWorkbench';
-        }
+
+    //change the domain name to the real name in enrichment data in MongoDB
+    var tempDomainName = $scope.domain;
+    if ($scope.domain_enrichedDatabase_map[$scope.domain] == null){
+        tempDomainName = $scope.domain;
+    }
+    else{
+        tempDomainName = $scope.domain_enrichedDatabase_map[$scope.domain];
+    }
+
         //var enrichment_info_url = web_service_url + "enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
         var enrichment_info_url = web_service_url + "enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
         $http({
