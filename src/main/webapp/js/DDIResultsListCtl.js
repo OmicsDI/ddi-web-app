@@ -354,6 +354,12 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             termsToHighlight.sort(function (a, b) {
                 return b.length - a.length;
             });
+
+            //remove the asterisk symbols from the Regexp
+            for(var i = 0; i<termsToHighlight.length; i++){
+                termsToHighlight[i] = termsToHighlight[i].replace(/\*/g,"");
+            }
+
             // Regex to simultaneously replace terms
             var regex = new RegExp('(' + termsToHighlight.join('|') + ')', 'gi');
             return $sce.trustAsHtml(str.replace(regex, '<span class="highlighted">$&</span>'));

@@ -34,6 +34,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.disease_pre_url = '#/search?q=*:* AND disease:';
 
     $scope.threshold = 0.50;
+    $scope.threshold = $scope.threshold.toPrecision(2);
 
     $scope.domain_enrichedDatabase_map = {
            'metabolomics_workbench' : 'MetabolomicsWorkbench',
@@ -55,6 +56,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         method: 'GET'
     }).success(function (data) {
         $scope.related_datasets = data.datasets;
+        console.log(data.datasets);
+        FilterRelatedDatasets();
     }).error(function () {
         console.error("GET error:" + related_datasets_url);
         //$scope.get_similar_dataset_fail = "can not get similar dataset";
@@ -565,27 +568,45 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
     }
 
+    /**
+     * filter the related datasets by threshold in different omics type
+     */
 
+    function FilterRelatedDatasets(){
+        if($scope.related_datasets.length < 1) return;
+        var FilterThresholds = {
+            'Proteomics':3.1,
+            'Metabolomics':3.8,
+            'Genomics':6.5
+        }
+
+        var temp_datasets = $scope.related_datasets;
+        var index = 0;
+        $scope.related_datasets = [];
+        for(var i = 0; i<temp_datasets.length; i++) {
+            var omics_type = temp_datasets[i]['omicsType'];
+            var threshold = FilterThresholds[omics_type];
+            if(temp_datasets[i]['score'] >= threshold) {
+                $scope.related_datasets[index++] = temp_datasets[i];
+            }
+        }
+    }
 
     /**
      * To change the value in slider by botton
      */
    var main_key = $scope.acc + "@" + tempDomainName;
     $scope.threshold_change = function (step_value) {
-        $scope.threshold = ($scope.threshold * 100 + step_value * 100) / 100;
+        $scope.threshold = ($scope.threshold * 100 + step_value * 100) / 100 * 1.00;
+        $scope.threshold = $scope.threshold.toPrecision(2);
 
-        if ($scope.threshold < 0.1) {
-            $scope.threshold = $scope.threshold.toPrecision(1);
-        }
-        else {
-            $scope.threshold = $scope.threshold.toPrecision(2);
-        }
-
-        if ($scope.threshold > 1) {
-            $scope.threshold = 1
+        if ($scope.threshold >= 1) {
+            $scope.threshold = 1.00
+            $scope.threshold = $scope.threshold.toPrecision(3);
         }
         if ($scope.threshold < 0.5) {
-            $scope.threshold = 0.5
+            $scope.threshold = 0.50
+            $scope.threshold = $scope.threshold.toPrecision(2);
         }
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);

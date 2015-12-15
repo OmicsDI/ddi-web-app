@@ -10,7 +10,8 @@
 
 div#local-masthead {
 / / background-color : #70bdbd;
-    background-color: rgba(188, 216, 224, 1);
+    background-color: #0099cc;
+    /*background-color: rgba(188, 216, 224, 1);*/
 }
 
 input:invalid, textarea:invalid {
@@ -76,8 +77,14 @@ a.disabled {
     text-decoration: none;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: "brandon-grotesque", "Brandon Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.1;
+}
+
 body {
-    font-family: "Lucida Grande", "Droid Sans", Arial, Helvetica, sans-serif;
+    /*font-family: "Lucida Grande", "Droid Sans", Arial, Helvetica, sans-serif;*/
+    font-family: "proxima-nova", "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .legend {
@@ -515,7 +522,19 @@ a, a:hover, a:focus {
 }
 
 div#local-masthead ul {
-    background-color: #3F7D97;
+    background-color:#0099cc;
+    /*background-color: #3F7D97;*/
+}
+
+div#local-masthead ul li {
+    border-right: hidden;
+}
+
+div#local-masthead ul li a:hover, div#local-masthead ul li a:focus, div#local-masthead ul li a:active {
+    border-bottom: 3px solid #71b360;
+    color: #fff;
+    background-color:#0099cc;
+    opacity: 0.8;
 }
 
 ul#local-nav li.functional {
@@ -524,8 +543,7 @@ ul#local-nav li.functional {
 }
 
 .align-justify {
-    text-align: justify;
-}
+    text-align: justify;  }
 
 .nav_float {
     position: fixed;
@@ -1168,4 +1186,43 @@ input[type=range][orient=vertical]
 @-o-keyframes my_animation {
     from { opacity:1; }
     to { opacity:0; }
+}
+
+/*
+$font-size: 26px;
+$line-height: 1.4;
+$lines-to-show: 3;
+*/
+.tweet_two_lines
+{
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    max-width: 400px;
+    height: 35px; /* Fallback for non-webkit */
+    margin: 0 auto;
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.title_one_line
+{
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    max-width: 400px;
+    height: 20px; /* Fallback for non-webkit */
+    margin: 0 auto;
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ddi-transparent-button{
+    border: hidden;
+    background: transparent;
 }

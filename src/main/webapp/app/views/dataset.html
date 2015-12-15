@@ -295,7 +295,7 @@
             </div>
             <!--dataset_middle_panel-->
 
-            <div class="panel panel-default" id="dataset_bottom_chord_diagram" style="visibility: hidden" >
+            <div class="panel panel-default" id="dataset_bottom_chord_diagram" style="visibility:visible" >
                 <div class="panel-footer ">
                     <h3>Shared Molecules</h3>
                 </div>
@@ -311,13 +311,15 @@
                         <input id="slider1" style="margin-left: 30px" type="range"  class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" ng-model="threshold" ng-change="threshold_change(0)"/>
                     </div>
                     <div class="col-md-6" id="chord_diagram" style="text-align:center;">
-                        <button ng-click="threshold_change(-0.1)" class="threshold_botton fa fa-angle-double-left"></button>
-                        <button ng-click="threshold_change(-0.01)" class="threshold_botton fa fa-angle-left"></button>
+                        <button ng-click="threshold_change(-0.1)" class="threshold_botton fa fa-angle-double-left fa-2x ddi-transparent-button" ></button>
+                        <button ng-click="threshold_change(-0.01)" class="threshold_botton fa fa-angle-left fa-2x ddi-transparent-button "></button>
                         <span>&nbsp;&nbsp; </span>
-                        <button ng-click="threshold_change(0)" class="threshold_botton fa fa-refresh"></button>
+                        <button ng-click="threshold_change(0)" class="threshold_botton fa fa-refresh fa-2x  ddi-transparent-button"></button>
                         <span>&nbsp;&nbsp; </span>
-                        <button ng-click="threshold_change(0.01)" class="threshold_botton fa fa-angle-right"></button>
-                        <button ng-click="threshold_change(0.1)" class="threshold_botton fa fa-angle-double-right"></button>
+                        <button ng-click="threshold_change(0.01)" class="threshold_botton fa fa-angle-right fa-2x  ddi-transparent-button "></button>
+                        <button ng-click="threshold_change(0.1)" class="threshold_botton fa fa-angle-double-right fa-2x  ddi-transparent-button "></button>
+                        <br>
+                        <i id="chord_diagram_fa-spinner" style="margin-top:50px" class="fa fa-spinner fa-spin fa-5x"></i>
                     </div>
                     <div class="col-md-5"  style="text-align:center;" ng-if="related_datasets_by_biological_limit != null">
                         <div class="panel-body ">
@@ -327,7 +329,7 @@
                                 <br>
                                 <br>
                                 <br>
-                            <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit" style="">
+                            <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit"  class="title_one_line" style="height: 2.0em">
                                         <img src="img/omics/Proteomics2.png"
                                              ng-show="relatedDataset.omicsType == 'Proteomics' "/>
                                         <img src="img/omics/Metabolomics2.png"
@@ -336,7 +338,8 @@
                                              ng-show="relatedDataset.omicsType == 'Genomics' "/>
                                         <a target="" class="align-justify"
                                            href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
-                                            {{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}
+                                            {{relatedDataset.title}}
+                                            <!--{{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}-->
                                         </a>
                             </li>
                             <!-- end ngRepeat: -->
@@ -398,7 +401,7 @@
                 </li>
                 <!-- end ngRepeat: -->
             </ul>
-            <div class="input-btn center" style="width:102px; margin-bottom:10px">
+            <div class="input-btn center" style="width:102px; margin-bottom:10px" ng-show="related_datasets.length > 5">
                 <button type="submit" class="btn btn-default " ng-click="related_load_more()">
                     <i class="fa fa-search"></i> {{load_more_btn_show}}
                 </button>

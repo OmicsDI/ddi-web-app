@@ -95,7 +95,7 @@ publishtweets = function (data) {
                     return d.time.day;
                 });
 
-            entrydiv.append("div").attr("class", "justify-body-text")
+            entrydiv.append("div").attr("class", "tweet_two_lines")
 
                 .html(function (d) {
                     return d.content;
