@@ -318,7 +318,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     function change_GNPS_domainName() {
         for(var i = 0; i < $scope.result.datasets.length; i++){
             if($scope.result.datasets[i].title.substr(0,4) == "GNPS"){
-                $scope.result.datasets[i].source = "GNPS";
+                $scope.result.datasets[i].source_title = "GNPS";
+            }
+            else{
+                $scope.result.datasets[i].source_title = $scope.result.datasets[i].source;
             }
         }
 
