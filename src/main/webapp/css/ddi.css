@@ -1,3 +1,9 @@
+body {
+    margin: 0 auto;
+    width: 98%;
+    max-width: none;
+}
+
 .socialnetwork {
     height: 50px;
     width: 50px;
@@ -1197,7 +1203,7 @@ $lines-to-show: 3;
 {
     display: block; /* Fallback for non-webkit */
     display: -webkit-box;
-    max-width: 400px;
+    max-width: 90%;
     height: 35px; /* Fallback for non-webkit */
     margin: 0 auto;
     font-size: 13px;
@@ -1211,7 +1217,7 @@ $lines-to-show: 3;
 {
     display: block; /* Fallback for non-webkit */
     display: -webkit-box;
-    max-width: 400px;
+    max-width: 95%;
     height: 20px; /* Fallback for non-webkit */
     margin: 0 auto;
     font-size: 13px;

@@ -76,12 +76,13 @@ var bub_charts_tissues_organisms = function () {
         var div_width_px = body.style("width");
         var div_width = div_width_px.substr(0, div_width_px.length - 2);
         var div_height_px = body.style("height");
-        var div_height= div_width_px.substr(0, div_width_px.length - 2);
+            console.log(div_height_px)
+        var div_height= div_height_px.substr(0, div_height_px.length - 2);
             //var div_width = 420;
-            var diameter = div_width / 1.3,
+            var diameter = Math.min(div_height, div_width)/1.15,
                 format = d3.format(",d"),
                 color = d3.scale.category20b();
-
+            console.log(div_height + "|" + div_width+ "|" +diameter)
             var bubble = d3.layout.pack()
                 .sort(null)
                 .size([diameter * 1.3, diameter])
@@ -89,8 +90,8 @@ var bub_charts_tissues_organisms = function () {
             body.selectAll("svg").remove();
             var svg = body.append("svg")
                 .attr("width", diameter * 1.3)
-                .attr("height", div_height)
-                .attr("class", "bubble")
+                .attr("height", diameter*1.3)
+                .attr("class", "bubble center")
                 .attr("style", "position:relative")
                 ;
 
