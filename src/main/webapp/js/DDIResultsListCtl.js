@@ -2,7 +2,7 @@
  * Results display controller
  * Responsible for visualising search results.
  */
-angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results','ngProgressFactory', function ($scope, $location, $http, results, ngProgressFactory) {
+angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', 'ngProgressFactory', function ($scope, $location, $http, results, ngProgressFactory) {
 
     $scope.result = {
         entries: []
@@ -18,27 +18,27 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.metabolomics_list = metabolomics_list;
     $scope.genomics_list = genomics_list;
     $scope.repositories = repositories;
-    $scope.database_urls= database_urls;
+    $scope.database_urls = database_urls;
     $scope.search_in_progress = results.get_search_in_progress();
-    console.log("get progress status 1" +$scope.search_in_progress  );
+    console.log("get progress status 1" + $scope.search_in_progress);
     $scope.show_error = results.get_show_error();
     $scope.highlight_terms = ["a", "b"];
 
 
     $scope.facetsNo = 8;
     $scope.omics_facets_no = {"Proteomics": "", "Metabolomics": "", "Genomics": ""};
-        $scope.index_of_facets = {
-            "omics_type": "-1",
-            "repository": "-1",
-            "TAXONOMY": "-1",
-            "tissue": "-1",
-            "disease": "-1",
-            "modification": "-1",
-            "instrument_platform": "-1",
-            "publication_date": "-1",
-            "technology_type": "-1",
-            "test": "0"
-        };
+    $scope.index_of_facets = {
+        "omics_type": "-1",
+        "repository": "-1",
+        "TAXONOMY": "-1",
+        "tissue": "-1",
+        "disease": "-1",
+        "modification": "-1",
+        "instrument_platform": "-1",
+        "publication_date": "-1",
+        "technology_type": "-1",
+        "test": "0"
+    };
 
     /**
      * Watch `result` changes.
@@ -57,6 +57,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             prepare_highlight_show();
             get_new_indexes();
             check_omics_type_null();
+            change_GNPS_domainName();
         }
     });
 
@@ -75,7 +76,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     /**
      * progress bar
      */
-    $scope.progressStyle = {'width':'10%'};
+    $scope.progressStyle = {'width': '10%'};
     /**
      * Watch `search_in_progress` changes.
      */
@@ -88,15 +89,17 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     });
 
 
-    $scope.$watch('search_in_progress', function(newValue, oldValue) {
-        if($scope.search_in_progress) {
-            elem=document.getElementById("ngProgress-container");
-            if(elem) {elem.parentNode.removeChild(elem);}
+    $scope.$watch('search_in_progress', function (newValue, oldValue) {
+        if ($scope.search_in_progress) {
+            elem = document.getElementById("ngProgress-container");
+            if (elem) {
+                elem.parentNode.removeChild(elem);
+            }
             $scope.progressbar = ngProgressFactory.createInstance();
             $scope.progressbar.set(35);
         }
-        else{
-            if($scope.progressbar!==undefined)$scope.progressbar.complete();
+        else {
+            if ($scope.progressbar !== undefined)$scope.progressbar.complete();
         }
     });
 
@@ -269,7 +272,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     function get_new_indexes() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
-       for (facet in $scope.index_of_facets) {
+        for (facet in $scope.index_of_facets) {
             //           console.log("facet:"+facet);
             //           console.log("results.facet length:"+$scope.result.facets.length);
             for (i = 0; i < $scope.result.facets.length; i++) {
@@ -309,6 +312,17 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         }
     }
 
+    /**
+     * Change the domainname/source of metablomics dataset in Massive to "GNPS"
+     */
+    function change_GNPS_domainName() {
+        for(var i = 0; i < $scope.result.datasets.length; i++){
+            if($scope.result.datasets[i].title.substr(0,4) == "GNPS"){
+                $scope.result.datasets[i].source = "GNPS";
+            }
+        }
+
+    }
 
     /**
      * Prepare the terms which is highlighted in the result's contents
@@ -356,8 +370,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             });
 
             //remove the asterisk symbols from the Regexp
-            for(var i = 0; i<termsToHighlight.length; i++){
-                termsToHighlight[i] = termsToHighlight[i].replace(/\*/g,"");
+            for (var i = 0; i < termsToHighlight.length; i++) {
+                termsToHighlight[i] = termsToHighlight[i].replace(/\*/g, "");
             }
 
             // Regex to simultaneously replace terms

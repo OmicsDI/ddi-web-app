@@ -26,15 +26,19 @@
         "ega": "EGA",
         "EGA": "EGA",
         "GPMDB": "GPMDB",
-        "gpmdb": "GPMDB"
+        "gpmdb": "GPMDB",
+        "GNPS":"GNPS"
     };
     var database_urls = {
         "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
         "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
+        "MetabolomicsWorkbench": "http://www.metabolomicsworkbench.org/",
         "PeptideAtlas": "http://www.peptideatlas.org/",
         "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
+        "GPMDB":"http://gpmdb.thegpm.org/",
+        "GNPS":"http://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp",
+        "EGA":"https://www.ebi.ac.uk/ega/",
+
     }
 
 

@@ -193,7 +193,7 @@
 
     function getAndShowScoreDistr() {
 //        d3.json("http://localhost:3500/test/enrichment.expOutputDataset?query={%22expDataType%22:%22MetabolomicsData%22}&fields=intersectionInfos", function (json) {
-        d3.json("http://localhost:3500/test/enrichment.expOutputDataset?query={%22expDataType%22:%22ProteomicsData%22}&fields=intersectionInfos", function (json) {
+        d3.json("http://localhost:3500/test/enrichment.DatasetStatInfo?query={%22expDataType%22:%22Metabolomics%22}&fields=intersectionInfos", function (json) {
 
             var scoreDistribution = [];
             for (var i = 0; i < 10; i++) {
