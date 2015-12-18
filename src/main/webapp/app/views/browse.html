@@ -279,13 +279,13 @@
 
                         Page size
                         <a href="" ng-click="pagination(1,'15','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==15}">15</a>
+                           ng-class="{'disabled':page_size==15}" ng-show="result.count>15" >15</a>
                         <a href="" ng-click="pagination(1,'20','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==20}">20</a>
+                           ng-class="{'disabled':page_size==20}" ng-hide="result.count<20" >20</a>
                         <a href="" ng-click="pagination(1,'50','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==50}">50</a>
+                           ng-class="{'disabled':page_size==50}" ng-hide="result.count<50" >50</a>
                         <a href="" ng-click="pagination(1,'100','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==100}">100</a>
+                           ng-class="{'disabled':page_size==100}" ng-hide="result.count<100">100</a>
 
                     </div>
                     <div class="pr-stats col-md-3  ">
@@ -405,16 +405,15 @@
                            ng-show="current_page<=max_page_no-3 && max_page_no>5">{{">>"+max_page_no}}</a>
                     </div>
                     <div class="pr-page-size col-md-3 ">
-
                         Page size
                         <a href="" ng-click="pagination(1,'15','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==15}">15</a>
+                           ng-class="{'disabled':page_size==15}" ng-hide="result.count<15" >15</a>
                         <a href="" ng-click="pagination(1,'20','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==20}">20</a>
+                           ng-class="{'disabled':page_size==20}" ng-hide="result.count<20" >20</a>
                         <a href="" ng-click="pagination(1,'50','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==50}">50</a>
+                           ng-class="{'disabled':page_size==50}" ng-hide="result.count<50" >50</a>
                         <a href="" ng-click="pagination(1,'100','default','default')"  style="margin-left:5px"
-                           ng-class="{'disabled':page_size==100}">100</a>
+                           ng-class="{'disabled':page_size==100}" ng-hide="result.count<100">100</a>
 
                     </div>
                     <div class="pr-stats col-md-3 ">

@@ -76,13 +76,11 @@ var bub_charts_tissues_organisms = function () {
         var div_width_px = body.style("width");
         var div_width = div_width_px.substr(0, div_width_px.length - 2);
         var div_height_px = body.style("height");
-            console.log(div_height_px)
         var div_height= div_height_px.substr(0, div_height_px.length - 2);
             //var div_width = 420;
             var diameter = Math.min(div_height, div_width)/1.15,
                 format = d3.format(",d"),
                 color = d3.scale.category20b();
-            console.log(div_height + "|" + div_width+ "|" +diameter)
             var bubble = d3.layout.pack()
                 .sort(null)
                 .size([diameter * 1.3, diameter])
@@ -276,7 +274,8 @@ var bub_charts_tissues_organisms = function () {
                     .duration(200)
                     .style("opacity", .9);
                 var mouse_coords = d3.mouse(
-                    tooltip.node().parentElement);
+                    document.getElementById("tissue_organism_chart_tooltip").parentElement);
+                    //tooltip.node().parentElement);
 
                 tooltip.html("<strong>" + d.className + ": <br>" + d.before_logged_value + "</strong> datasets" )
                     .style("left", (mouse_coords[0] + 25) + "px")
@@ -861,7 +860,9 @@ var barcharts_years_omics_types = function () {
                 .on("mouseover", function (d) {
                     var chart_div_left = document.getElementById('barchart_omicstype_annual').getBoundingClientRect().left;
                     var mouse_coords = d3.mouse(
-                        tooltip.node().parentElement);
+
+                        document.getElementById('annual_bar_chart_tooltip').parentElement);
+                        //tooltip.node().parentElement);
 //                    console.log(parseInt(d3.select(this).attr("y")));
                     tooltip.transition()
                         .duration(200)
@@ -870,7 +871,7 @@ var barcharts_years_omics_types = function () {
                         .style("left", (mouse_coords[0])+  "px")
                         .style("top", (parseInt(d3.select(this).attr("y"))) + "px")
                         .style("height",  "20px")
-                        .style("width", d.value.toString().length * 5 + 80 + "px");
+                        .style("width", d.value.toString().length * 5 + 65 + "px");
 
                 })
                 .on("mouseout", function (d) {

@@ -20,7 +20,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.repositories = repositories;
     $scope.database_urls = database_urls;
     $scope.search_in_progress = results.get_search_in_progress();
-    console.log("get progress status 1" + $scope.search_in_progress);
     $scope.show_error = results.get_show_error();
     $scope.highlight_terms = ["a", "b"];
 
@@ -316,6 +315,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      * Change the domainname/source of metablomics dataset in Massive to "GNPS"
      */
     function change_GNPS_domainName() {
+
+        if($scope.result.datasets == null) return;
+
         for(var i = 0; i < $scope.result.datasets.length; i++){
             if($scope.result.datasets[i].title.substr(0,4) == "GNPS"){
                 $scope.result.datasets[i].source_title = "GNPS";

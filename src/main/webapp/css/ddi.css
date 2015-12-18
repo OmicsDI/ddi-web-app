@@ -84,13 +84,13 @@ a.disabled {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "brandon-grotesque", "Brandon Grotesque", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Montserrat",  "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.1;
 }
 
 body {
     /*font-family: "Lucida Grande", "Droid Sans", Arial, Helvetica, sans-serif;*/
-    font-family: "proxima-nova", "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "proxima-nova", "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .legend {
@@ -929,7 +929,7 @@ button.load-more {
     /* style links on hover */
     .expert-db-card:hover a {
         color: #428bca;
-        text-decoration: underline;
+        /*text-decoration: underline;*/
     }
 
     .expert-db-card:hover a:hover {
@@ -993,6 +993,7 @@ button.load-more {
 
 .expert-db-card .panel-footer {
     padding: 6px 10px;
+    background-color: #DDD;
     font-size: 78%;
 }
 
