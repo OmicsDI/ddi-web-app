@@ -27,7 +27,9 @@
         "EGA": "EGA",
         "GPMDB": "GPMDB",
         "gpmdb": "GPMDB",
-        "GNPS":"GNPS"
+        "GNPS":"GNPS",
+        "metabolome_express": "MetabolomeExpress MetaPhenDB",
+        "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
     };
     var database_urls = {
         "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
@@ -38,7 +40,7 @@
         "GPMDB":"http://gpmdb.thegpm.org/",
         "GNPS":"http://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp",
         "EGA":"https://www.ebi.ac.uk/ega/",
-
+        "MetabolomeExpress":"https://www.metabolome-express.org/",
     }
 
 

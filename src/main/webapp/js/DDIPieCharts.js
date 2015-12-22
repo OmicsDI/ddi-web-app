@@ -674,6 +674,8 @@ var pie_charts_repos_omics = function () {
                         searchWord = searchWord_pre + "MetaboLights" + '"';
                     if (d.data.name == "Metabolome Workbench")
                         searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
+                    if (d.data.name == "MetabolomeExpress")
+                        searchWord = searchWord_pre + "MetabolomeExpress MetaPhenDB" + '"';
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 })
                 .on("mouseover", function (d, i) {
