@@ -1,4 +1,4 @@
-var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
+var web_service_url = 'http://www.ebi.ac.uk/Tools/omicsdi/ws/';
 //var web_service_url = 'http://localhost:9091/';
 var retry_limit_time = 50;
 
@@ -173,7 +173,6 @@ var bub_charts_tissues_organisms = function () {
 
         function classes(arr) {
             var classes = [];
-
             for (var i = 0; i < arr.length; i++){
                 var before_logged_value = arr[i].before_logged_value == null ? arr[i].value : arr[i].before_logged_value;
                 classes.push({
@@ -191,6 +190,8 @@ var bub_charts_tissues_organisms = function () {
             var newdata = [];
             for(var i = 0; i < data.length; i++){
                 var item = {
+                    id:data[i].id,
+                    label:data[i].label,
                     name:data[i].name,
                     value:1 + Math.floor(Math.log(data[i].value)),
                     before_logged_value: data[i].value
@@ -240,6 +241,7 @@ var bub_charts_tissues_organisms = function () {
                     return "translate(" + d.x + "," + d.y + ")";
                 })
                 .on("click", function (d, i) {
+                    console.log(d);
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
