@@ -674,7 +674,7 @@ var pie_charts_repos_omics = function () {
                     var searchWord = searchWord_pre + d.data.name + '"';
                     if (d.data.name == "MetaboLights Dataset")
                         searchWord = searchWord_pre + "MetaboLights" + '"';
-                    if (d.data.name == "Metabolome Workbench")
+                    if (d.data.name == "Metabolomics Workbench")
                         searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
                     if (d.data.name == "MetabolomeExpress")
                         searchWord = searchWord_pre + "MetabolomeExpress MetaPhenDB" + '"';
