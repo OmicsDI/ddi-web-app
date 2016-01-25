@@ -58,7 +58,7 @@ underscore.factory('_', function () {
 
 
 
-var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress','ui.bootstrap']);
+var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress','ui.bootstrap', 'slick']);
 
 // $.getJSON('http://api.metabolomexchange.org/providers', function(data) {
 //     for (var i in data) {
