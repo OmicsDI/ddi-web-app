@@ -26,15 +26,21 @@
         "ega": "EGA",
         "EGA": "EGA",
         "GPMDB": "GPMDB",
-        "gpmdb": "GPMDB"
+        "gpmdb": "GPMDB",
+        "GNPS":"GNPS",
+        "metabolome_express": "MetabolomeExpress MetaPhenDB",
+        "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
     };
     var database_urls = {
         "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
         "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-        "Metabolomics Workbench": "www.metabolomicsworkbench.org/",
+        "MetabolomicsWorkbench": "http://www.metabolomicsworkbench.org/",
         "PeptideAtlas": "http://www.peptideatlas.org/",
         "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-        "Metabolomics Workbench": "http://www.metabolomicsworkbench.org/"
+        "GPMDB":"http://gpmdb.thegpm.org/",
+        "GNPS":"http://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp",
+        "EGA":"https://www.ebi.ac.uk/ega/",
+        "MetabolomeExpress":"https://www.metabolome-express.org/",
     }
 
 
@@ -52,7 +58,7 @@ underscore.factory('_', function () {
 
 
 
-var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress','ui.bootstrap']);
+var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress','ui.bootstrap', 'slick']);
 
 // $.getJSON('http://api.metabolomexchange.org/providers', function(data) {
 //     for (var i in data) {

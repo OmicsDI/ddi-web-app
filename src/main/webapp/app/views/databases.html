@@ -1,9 +1,11 @@
-
-<script >
+<script>
     document.title = "OmicsDI Databases";
 </script>
 
-        <div id="databases" style="margin: 20px"  ng-controller="DatasetListsCtrl">
+<div id="databases" style="margin: 20px" ng-controller="DatasetListsCtrl">
+
+    <slick infinite=true dots=true slides-to-show=1 slides-to-scroll=1>
+        <div id="slick-page-one">
 
             <div class="row">
 
@@ -190,7 +192,7 @@
 
                         <div class="expert-db-card-logo">
                             <a title="GPMDB Database" href="http://gpmdb.thegpm.org/"
-                               class="pull-right expert-db-logo image_a">
+                               class="pull-right  image_a">
                                 <img alt="GPMDB logo"
                                      src="img/db-logos/the_gpm_db_140x105.png"
                                      class="img-rounded hvr-grow">
@@ -210,14 +212,75 @@
                     </div>
                 </div>
 
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="https://www.metabolome-express.org/">MetabolomeExpress</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="MetabolomeExpress Database" href="https://www.metabolome-express.org/"
+                               class="pull-right  image_a">
+                                <img alt="MetabolomeExpress logo"
+                                     src="img/db-logos/metabolome express logo_Mx.png"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            A public place to process, interpret and share GC/MS metabolomics datasets.
+                            <!--MetabolomeExpress houses both private and public uncurated repositories as well as a quality-controlled database of highly-annotated metabolite response statistics submitted by MetabolomeExpress users.-->
+                        </div>
+                        <div class="panel-footer small">
+                            <a rel="nofollow"
+                               href='#/search?q=*:* AND repository:"MetabolomeExpress MetaPhenDB"'><em>{{databases["MetabolomeExpress"]}}</em> datasets</a>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <!--row-->
         </div>
+        <div id="slick-page-two">
 
-        <footer>
-            <div id="footer" class="container"></div>
-        </footer>
-    </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="panel panel-default expert-db-card ">
+
+                        <div class="expert-db-card-header">
+                            <a href="https://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp">GNPS</a>
+                        </div>
+
+                        <div class="expert-db-card-logo">
+                            <a title="GNPS Database" href="https://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp"
+                               class="pull-right expert-db-logo image_a">
+                                <img alt="GNPS logo" src="img/db-logos/GNPS_logo.png"
+                                     class="img-rounded hvr-grow">
+                            </a>
+                        </div>
+
+                        <div class="panel-body small">
+                            The Global Natural Products Social Molecular Networking (GNPS) is a platform for providing an overview of the molecular features in mass spectrometry based metabolomics by comparing fragmentation patterns to identify chemical relationships.
+                        </div>
+                        <div class="panel-footer small">
+                            <a rel="nofollow" href='#/search?q=*:* AND repository:"pride"'><em>{{databases.GNPS}}</em>
+                                datasets</a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+            </div>
+        </div>
+    </slick>
+</div>
+
+<footer>
+    <div id="footer" class="container"></div>
+</footer>
+</div>
 </div>
 <!-- wrapper-->

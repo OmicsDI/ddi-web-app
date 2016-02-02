@@ -9,7 +9,10 @@ function drawChordDiagram() {
     if(domain  == 'metabolomics_workbench'){
         domain ='MetabolomicsWorkbench';
     }
-    minimumThreshold = 0.5;
+    //if(domain  == 'PRIDE'){
+    //    domain ='pride';
+    //}
+    minimumThreshold = 0.50;
     queue()
         .defer(d3.json, web_service_url + 'enrichment/getSimilarityInfo?accession=' + acc+ '&database=' + domain) // topojson polygons
         //.defer(d3.json, 'http://localhost:9091/' + 'enrichment/getSimilarityInfo?accession=' + acc + '&database=' + domain) // topojson polygons
@@ -19,15 +22,22 @@ function drawChordDiagram() {
     function drawTheChord(error, similarityData) {
 
         if(similarityData.scores.length < 1 ){
+            document.getElementById("dataset_bottom_chord_diagram").style.visibility = "hidden";
             return;
         };
 
 
         if(!findAScoreBiggerThan(similarityData.scores,minimumThreshold)){
+            document.getElementById("dataset_bottom_chord_diagram").style.visibility = "hidden";
+            var element = document.getElementById("chord_diagram_fa-spinner");
+            if(element != null) element.parentNode.removeChild(element);
             return;
         };
 
-        document.getElementById("dataset_bottom_chord_diagram").style.visibility = "visible";
+        //document.getElementById("chord_diagram_fa-spinner").class = "fa-1x";
+        //document.getElementById("chord_diagram_fa-spinner").style.visibility = "hidden";
+        var element = document.getElementById("chord_diagram_fa-spinner");
+        element.parentNode.removeChild(element);
 
         inputdata = {
             connections: [],
@@ -60,7 +70,7 @@ function drawChordDiagram() {
             prepare_inputdata(scope_threshold);
 
             data = [inputdata];
-            var width = 350, height = 350, padding = .09;
+            var width = 350, height = 430, padding = .09;
 
             chart = d3.chord2()
                 .width(width)

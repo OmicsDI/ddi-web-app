@@ -1,5 +1,6 @@
-var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/ddi/ws/';
-var web_service_url = 'http://www.ebi.ac.uk/Tools/ddi/ws/';
+
+var web_service_url = 'http://www.ebi.ac.uk/Tools/omicsdi/ws/';
+
 //var web_service_url = 'http://localhost:9091/';
 var retry_limit_time = 50;
 
@@ -77,12 +78,11 @@ var bub_charts_tissues_organisms = function () {
         var div_width_px = body.style("width");
         var div_width = div_width_px.substr(0, div_width_px.length - 2);
         var div_height_px = body.style("height");
-        var div_height= div_width_px.substr(0, div_width_px.length - 2);
+        var div_height= div_height_px.substr(0, div_height_px.length - 2);
             //var div_width = 420;
-            var diameter = div_width / 1.3,
+            var diameter = Math.min(div_height, div_width)/1.15,
                 format = d3.format(",d"),
                 color = d3.scale.category20b();
-
             var bubble = d3.layout.pack()
                 .sort(null)
                 .size([diameter * 1.3, diameter])
@@ -90,8 +90,8 @@ var bub_charts_tissues_organisms = function () {
             body.selectAll("svg").remove();
             var svg = body.append("svg")
                 .attr("width", diameter * 1.3)
-                .attr("height", div_height)
-                .attr("class", "bubble")
+                .attr("height", diameter*1.3)
+                .attr("class", "bubble center")
                 .attr("style", "position:relative")
                 ;
 
@@ -175,16 +175,32 @@ var bub_charts_tissues_organisms = function () {
 
         function classes(arr) {
             var classes = [];
-
-            for (var i = 0; i < arr.length; i++)
+            for (var i = 0; i < arr.length; i++){
+                var before_logged_value = arr[i].before_logged_value == null ? arr[i].value : arr[i].before_logged_value;
                 classes.push({
                     packageName: arr[i].name,
                     className: arr[i].name,
                     value: arr[i].value,
+                    before_logged_value: before_logged_value,
                     taxonomyid: arr[i].id
                 });
-
+            }
             return {children: classes};
+        }
+
+        function calculate_logged_value(data){
+            var newdata = [];
+            for(var i = 0; i < data.length; i++){
+                var item = {
+                    id:data[i].id,
+                    label:data[i].label,
+                    name:data[i].name,
+                    value:1 + Math.floor(Math.log(data[i].value)),
+                    before_logged_value: data[i].value
+                };
+                newdata.push(item);
+            }
+            return newdata;
         }
 
         function change() {
@@ -200,7 +216,7 @@ var bub_charts_tissues_organisms = function () {
                 searchWord_pre = '*:* AND tissue:"';
             }
             if (value == 'Organisms') {
-                data = organisms;
+                data = calculate_logged_value(organisms);
                 // text_total.text("Total:"+total_organisms);
                 // text_unavail.text("Unavailable:"+unavailable_no_organisms.value);
                 searchWord_pre = '*:* AND TAXONOMY:"';
@@ -227,6 +243,7 @@ var bub_charts_tissues_organisms = function () {
                     return "translate(" + d.x + "," + d.y + ")";
                 })
                 .on("click", function (d, i) {
+                    console.log(d);
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
@@ -261,12 +278,13 @@ var bub_charts_tissues_organisms = function () {
                     .duration(200)
                     .style("opacity", .9);
                 var mouse_coords = d3.mouse(
-                    tooltip.node().parentElement);
+                    document.getElementById("tissue_organism_chart_tooltip").parentElement);
+                    //tooltip.node().parentElement);
 
-                tooltip.html("<strong>" + d.className + ": <br>" + d.value + "</strong> datasets" )
+                tooltip.html("<strong>" + d.className + ": <br>" + d.before_logged_value + "</strong> datasets" )
                     .style("left", (mouse_coords[0] + 25) + "px")
                     .style("top", (mouse_coords[1] - 40) + "px")
-                    .style("width", d.className.length * 5 + d.value.toString().length * 5 + 80 + "px");
+                    .style("width", d.className.length * 5 + d.before_logged_value.toString().length * 5 + 80 + "px");
             })
                 .on("mouseout", function (d) {
                     tooltip.transition()
@@ -501,7 +519,7 @@ var pie_charts_repos_omics = function () {
             };
 
 
-            var color = d3.scale.category20();
+            var color = d3.scale.category20c();
             var treemap_color = {"Proteomics": "#2CA02C", "Metabolomics": "#FF7F0E", "Genomics": "#1f77b4"};
 
             /*
@@ -658,8 +676,10 @@ var pie_charts_repos_omics = function () {
                     var searchWord = searchWord_pre + d.data.name + '"';
                     if (d.data.name == "MetaboLights Dataset")
                         searchWord = searchWord_pre + "MetaboLights" + '"';
-                    if (d.data.name == "Metabolome Workbench")
+                    if (d.data.name == "Metabolomics Workbench")
                         searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
+                    if (d.data.name == "MetabolomeExpress")
+                        searchWord = searchWord_pre + "MetabolomeExpress MetaPhenDB" + '"';
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 })
                 .on("mouseover", function (d, i) {
@@ -727,10 +747,13 @@ var barcharts_years_omics_types = function () {
             var body = d3.select('#barchart_omicstype_annual');
         var div_width_px = body.style("width");
         var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+        var most_access_div_height_px = d3.select('#most_accessed_datasets').style('height');
+            console.log(most_access_div_height_px);
+        var div_height = parseInt(most_access_div_height_px.substr(0, most_access_div_height_px.length - 2));
             //var div_width = 420;
             var margin = {top: 20, right: 20, bottom: 20, left: 60},
                 width = div_width - margin.left - margin.right,
-                height = 300 - margin.top - margin.bottom;
+                height = div_height*3.05 - margin.top - margin.bottom;
             var x0 = d3.scale.ordinal()
                 .rangeRoundBands([0, width], .1);
 
@@ -843,7 +866,9 @@ var barcharts_years_omics_types = function () {
                 .on("mouseover", function (d) {
                     var chart_div_left = document.getElementById('barchart_omicstype_annual').getBoundingClientRect().left;
                     var mouse_coords = d3.mouse(
-                        tooltip.node().parentElement);
+
+                        document.getElementById('annual_bar_chart_tooltip').parentElement);
+                        //tooltip.node().parentElement);
 //                    console.log(parseInt(d3.select(this).attr("y")));
                     tooltip.transition()
                         .duration(200)
@@ -852,7 +877,7 @@ var barcharts_years_omics_types = function () {
                         .style("left", (mouse_coords[0])+  "px")
                         .style("top", (parseInt(d3.select(this).attr("y"))) + "px")
                         .style("height",  "20px")
-                        .style("width", d.value.toString().length * 5 + 80 + "px");
+                        .style("width", d.value.toString().length * 5 + 65 + "px");
 
                 })
                 .on("mouseout", function (d) {

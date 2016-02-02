@@ -137,16 +137,17 @@
                         <li ng-show="get_latest_datasets_fail.length > 1" class="error-info">
                             {{get_latest_datasets_fail}}
                         </li>
-                        <li ng-repeat="dataset in latestList">
+                        <li ng-repeat="dataset in latestList" class="title_one_line" >
                             <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Proteomics"/>
                             <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Metabolomics"/>
                             <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Gemonics"/>
-                            <a href={{"#/dataset/"+repositories[dataset.source]+"/"+dataset.id}}
+                            <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}
                                title={{dataset.title}}>
-                                {{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}
+                                {{dataset.title}}
+                                <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->
                                 <span class="icon icon-functional"
                                       data-icon=""></span>
                             </a>
@@ -167,18 +168,19 @@
                         <li ng-show="get_most_access_datasets_fail.length > 1" class="error-info">
                             {{get_most_access_datasets_fail}}
                         </li>
-                        <li ng-repeat="dataset in most_accessed_list" >
+                        <li ng-repeat="dataset in most_accessed_list" class="title_one_line">
                             <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Proteomics" />
                             <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Metabolomics"/>
                             <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Genomics"/>
-                            <a href={{"#/dataset/"+repositories[dataset.source]+"/"+dataset.id}}
-                               title={{dataset.title}}>
-                                {{dataset.title|limitTo:40}} {{dataset.title.length>40?'...':''}}
                                 <span class="icon icon-functional"
                                       data-icon="4">{{dataset.visitCount|megaNumber}}</span>
+                            <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}
+                               title={{dataset.title}}>
+                                <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->
+                                {{dataset.title}}
                             </a>
                         </li>
                     </ul>
@@ -218,7 +220,7 @@
                 </div>
 
                 <div>
-                    <a href="https://twitter.com/@OmicsDIndex" data-icon="T" style="margin-left: 8px"
+                    <a href="https://twitter.com/@DDIndex" data-icon="T" style="margin-left: 8px"
                        class="justify-body-text icon icon-socialmedia">More tweets</a>
                 </div>
             </div>
@@ -285,5 +287,5 @@
     var tf = new TweetFetcher('599190509341515776');
     tf.fetch(function (tweets) {
         publishtweets(tweets);
-    }, 3);
+    }, 4);
 </script>
