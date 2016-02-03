@@ -44,9 +44,6 @@
     }
 
 
-
-
-
 /**
  * Make it possible to include underscore as a dependency.
  */
@@ -69,7 +66,7 @@ var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autoc
 /**
  * Turn on html5mode only in modern browsers because
  * in the older ones html5mode rewrites urls with Hangbangs
- * which break normal Django pages.
+ * which break normal pages.
  * With html5mode off IE lt 10 will be able to navigate the site
  * but won't be able to open deep links to Angular pages
  * (for example, a link to a search result won't load in IE 9).
@@ -92,8 +89,8 @@ ddiApp.config(function($routeProvider) {
     //when('/search', { templateUrl: 'app/views/search.html', controller: 'MainContentCtrl' }).
     when('/search?:searchstring', { templateUrl: 'app/views/browse.html', controller: 'MainContentCtrl' }).
     //when('/search/:search', { templateUrl: 'app/views/search.html', controller: 'MainContentCtrl' }).
-    when('/dataset/:domain/:acc', { templateUrl: 'app/views/dataset.html', controller: 'MainContentCtrl' })
-    .
+    when('/dataset/:domain/:acc', { templateUrl: 'app/views/dataset.html', controller: 'MainContentCtrl' }).
+    when('/check', {templateUrl: 'app/views/check.html', controller: 'MainContentCtrl'}).
     otherwise({ templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' });
 
 });
