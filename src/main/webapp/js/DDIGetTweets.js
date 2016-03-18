@@ -18,10 +18,13 @@ TweetFetcher.prototype.fetch = function (cb, limit) {
 TweetFetcher.prototype.parse = function (res) {
     var raw = document.createElement('div');
     raw.innerHTML = res.body;
+    //console.log(res.body);
 
-    var tweets = raw.querySelectorAll('li.tweet'),
+    //var tweets = raw.querySelectorAll('li.tweet'),
+    var tweets = raw.querySelectorAll('li.timeline-TweetList-tweet'),
         limit = (tweets.length < this.limit) ? tweets.length : this.limit,
         output = [];
+    //console.log(tweets.length);    //为空
     var month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     if (tweets.length == 0) {
@@ -29,7 +32,7 @@ TweetFetcher.prototype.parse = function (res) {
     }
     for (var i = 0; i < limit; i++) {
         var tr = tweets[i], t = {};
-//        console.log("tr:  "+tr); 
+        //console.log("tr:  "+tr);
         t.id = tr.getAttribute('data-tweet-id');
         // t.author = {
         //     handle: tr.querySelector('span.p-nickname b').innerText,
@@ -42,7 +45,6 @@ TweetFetcher.prototype.parse = function (res) {
         var publishedtime = new Date(tr.querySelector('time.dt-updated').getAttribute('datetime'));
         var publishedmonth = month_names_short[publishedtime.getMonth()];
         var publishedday = publishedtime.getDate();
-
         t.time = {
             month: publishedmonth,
             day: publishedday
@@ -54,9 +56,10 @@ TweetFetcher.prototype.parse = function (res) {
 
         // delete all unnecessary tweet content tags
 
-        var content = tr.querySelector('p.e-entry-title'),
+        //var content = tr.querySelector('p.e-entry-title'),
+        //    tags = content.querySelectorAll('*');
+        var content = tr.querySelector('p.timeline-Tweet-text'),
             tags = content.querySelectorAll('*');
-
         for (var j = 0; j < tags.length; j++) {
             var tag = tags[j], k = 0, del = [];
 
