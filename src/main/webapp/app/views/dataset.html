@@ -357,7 +357,7 @@
 
 
         <div class="col-md-3 panel panel-default" id="rightpanel"
-             ng-hide="get_similar_dataset_fail.length > 0 || get_dataset_fail.length > 0">
+             ng-hide="related_datasets.length<1 || get_similar_dataset_fail.length > 0 || get_dataset_fail.length > 0">
             <p>
             <h4>
                 Similar Datasets
