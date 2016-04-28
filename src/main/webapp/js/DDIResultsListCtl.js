@@ -48,6 +48,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         if (newValue !== null) {
             $scope.$root.completing = false;
             $scope.result = newValue;
+            jump_if_has_one();
             $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
             $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
             $scope.query = $location.search().q;
@@ -362,6 +363,19 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             if (taxonomy_array[i].value === taxonomy_id) return taxonomy_array[i].label;
         }
         console.error("find no label for the taxid");
+    }
+
+    /**
+    * if the result only has one dataset, jump to the dataset web page
+    */
+    function jump_if_has_one(){
+        if($scope.result.datasets != null) {
+
+        if($scope.result.datasets.length == 1){
+            dataset1 = $scope.result.datasets[0];
+            location.href = "#/dataset/"+dataset1.source+"/"+dataset1.id;
+        }
+        }
     }
 
 }])
