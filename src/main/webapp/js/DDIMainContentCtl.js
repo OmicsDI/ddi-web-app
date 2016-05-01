@@ -30,10 +30,7 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
             $scope.$root.show_top_search = false
         }
 
-        if (!$location.path().match('/dataset')){
-            $scope.$root.meta_dataset_title = '';
-            $scope.$root.meta_dataset_abstract= '';
-            $scope.$root.meta_dataset_identifier= '';
+        if ($location.path().match('/dataset')){
         }
         ///**
         // * set title of each page

@@ -20,9 +20,12 @@
     <meta content={{meta_dataset_title}} name="dataset_title">
     <meta content={{meta_dataset_abstract}} name="dataset_abstract">
     <meta content={{meta_dataset_identifier}} name="dataset_identifier">
+    <meta ng-repeat="entry in meta_entries" name ={{entry.name}} content={{entry.content}}>
+
 
     <title>OmicsDI: Home</title>
-
+    <link rel="canonical" href={{meta_originalURL}}>
+    <link rel="canonical" href={{meta_ddiURL}}>
     <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//www.ebi.ac.uk/web_guidelines/css/compliance/develop/boilerplate-style.css">

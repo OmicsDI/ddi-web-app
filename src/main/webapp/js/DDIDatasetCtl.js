@@ -137,19 +137,20 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 }
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
-            if ($scope.dataset.publicationIds === null) return;
 
             /**
              * Fill the meta info to SEO
              */
-            if (!$location.path().match('/dataset')) {
                 $scope.$root.meta_dataset_title = $scope.dataset.name;
                 $scope.$root.meta_dataset_abstract = $scope.dataset.description;
                 $scope.$root.meta_dataset_identifier = $scope.acc;
-            }
+                $scope.$root.meta_originalURL = $scope.dataset.full_dataset_link;
+                $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
+                $scope.$root.meta_entries = [];
 
 
             //get and prepare each publication's data
+            if ($scope.dataset.publicationIds === null) return;
             for (var i = 0; i < $scope.dataset.publicationIds.length; i++) {
                 var pubmed_id = $scope.dataset.publicationIds[i];
                 altmetricUrl = "http://api.altmetric.com/v1/pmid/" + pubmed_id;
@@ -219,6 +220,36 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                         "authors": authors,
                         "pub_abstract": entity.pubAbstract
                     };
+
+                    $scope.$root.meta_entries.push(
+                        {
+                        name:"citation_title",
+                        content:entity.title
+                        }
+                    );
+
+                    for(var i=0; i<authors.length; i++){
+                        $scope.$root.meta_entries.push(
+                            {
+                            name:"citation_author",
+                            content:authors[i].fullname
+                            }
+                        );
+                    }
+
+                    $scope.$root.meta_entries.push(
+                        {
+                        name:"citation_pubdate",
+                        content:entity.date
+                        }
+                    );
+                    console.log($scope.$root.meta_entries);
+
+                    meta_publication = {
+                        "title":entity.title,
+                         "authors":authors,
+                         "pub_date": entity.date
+                    }
                     publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
 
                     $scope.publication_info.push(publication_info_entity);
@@ -654,6 +685,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
         return tmp;
     }
+
 
     $scope.highlight_terms = [];
     $scope.highlight_terms[0] = " on ";
