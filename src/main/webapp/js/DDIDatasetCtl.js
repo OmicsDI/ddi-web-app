@@ -202,7 +202,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     //get the name for searching
                     for (var i = 0; i < entity.authors.length; i++) {
                         var reg_surname = new RegExp(" [A-Z]{1,2}$", "")
-                        var surname = reg_surname.exec(entity.authors[i])[0];
+                        var reg_result = reg_surname.exec(entity.authors[i]);
+                        if(reg_result != null){
+                            var surname = reg_result[0];
+                        }
 
                         var reg_firstname = new RegExp("^.*? ", "")
                         var firstname = reg_firstname.exec(entity.authors[i])[0];
