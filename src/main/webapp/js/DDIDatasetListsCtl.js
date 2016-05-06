@@ -6,6 +6,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
 
     $scope.proteomics_list = proteomics_list;
     $scope.metabolomics_list = metabolomics_list;
+    $scope.transcriptomics_list = transcriptomics_list;
     $scope.genomics_list = genomics_list;
     $scope.repositories = repositories;
     $scope.get_latest_datasets_fail = '';

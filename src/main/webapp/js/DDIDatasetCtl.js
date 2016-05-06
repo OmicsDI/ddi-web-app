@@ -14,6 +14,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.sample_protocol_show_full = "false";
     $scope.proteomics_list = proteomics_list;
     $scope.metabolomics_list = metabolomics_list;
+    $scope.transcriptomics_list = transcriptomics_list;
     $scope.genomics_list = genomics_list;
     $scope.repositories = repositories;
     $scope.database_urls = database_urls;
@@ -41,15 +42,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             'gpmdb' : 'GPMDB',
             'ega' : 'EGA',
     };
-    /*     $http({
-     url: url,
-     method: 'GET'
-     }).success(function(data) {
-     $scope.dataset = data;
-     //     console.log(data);
-     }).error(function(){
-     });
-     */
+
     var related_datasets_url = web_service_url + "dataset/getSimilar?acc=" + $scope.acc + "&database=" + $scope.domain;
     $http({
         url: related_datasets_url,
@@ -71,18 +64,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     else{
         tempDomainName = $scope.domain_enrichedDatabase_map[$scope.domain];
     }
-    //var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
+
     var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
-    //var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
-    //var related_datasets_by_biological_url = "http://localhost:9091/" + "enrichment/getSimilarDatasetsByExpData?accession=" + $scope.acc + "&database=" + $scope.domain;
-    $http({
+        $http({
         url: related_datasets_by_biological_url,
         method: 'GET'
     }).success(function (data) {
         $scope.related_datasets_by_biological = data.datasets;
     }).error(function () {
         console.error("GET error:" + related_datasets_by_biological_url);
-        //$scope.get_similar_dataset_fail = "can not get similar dataset";
     });
 
      /**

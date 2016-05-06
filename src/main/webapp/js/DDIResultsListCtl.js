@@ -273,10 +273,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
         for (facet in $scope.index_of_facets) {
-            //           console.log("facet:"+facet);
-            //           console.log("results.facet length:"+$scope.result.facets.length);
             for (i = 0; i < $scope.result.facets.length; i++) {
-                //           console.log("check on:"+$scope.result.facets[i].id);
                 if (facet === $scope.result.facets[i].id) {
                     $scope.index_of_facets[facet] = i;
                 }
@@ -289,8 +286,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     function check_omics_type_null() {
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
-        $scope.omics_facets_no = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0"};
-        $scope.omicsfacetsindex = {"Proteomics": "", "Metabolomics": "", "Genomics": ""};
+        $scope.omics_facets_no = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0", "Transcriptomics":"0"};
+        $scope.omicsfacetsindex = {"Proteomics": "", "Metabolomics": "", "Genomics": "", "Transcriptomics":"0"};
         var omicsfacet = $scope.result.facets[$scope.index_of_facets.omics_type].facetValues;
         for (omic in omicsfacet) {
             $scope.omics_facets_no[omicsfacet[omic].label] = omicsfacet[omic].count;

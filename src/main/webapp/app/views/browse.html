@@ -49,6 +49,16 @@
                         </small>
                     </a></li>
                     <li><a href=""
+                           ng-class="{'disabled':omics_facets_no.Transcriptomics==='0'||is_omic_clicked('Transcriptomics')==='true'}"
+                           ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Transcriptomics].value)"><img
+                            src="img/omics/Transcriptomics2.png" style="vertical-align: top"/><span>  </span><span
+                            style="font-size:15px; font-weight:bold">Transcriptomics</span>
+                        <small>
+                            ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Transcriptomics].count||0
+                            | number}})
+                        </small>
+                    </a></li>
+                    <li><a href=""
                            ng-class="{'disabled':omics_facets_no.Genomics==='0'||is_omic_clicked('Genomics')==='true'}"
                            ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img
                             src="img/omics/Genomics2.png" style="vertical-align: top"/><span>  </span><span

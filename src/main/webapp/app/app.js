@@ -33,6 +33,7 @@
         "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
         "ArrayExpress":"ArrayExpress",
         "arrayexpress":"ArrayExpress",
+        "arrayexpress-repository":"ArrayExpress",
 
     };
     var database_urls = {
