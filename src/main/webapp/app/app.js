@@ -7,6 +7,7 @@
      */
     var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
     var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench";
+    var transcriptomics_list = "ArrayExpress, arrayexpress-repository";
     var genomics_list = "ega,EGA";
     var repositories = {
         "pride": "PRIDE",
@@ -30,6 +31,9 @@
         "GNPS":"GNPS",
         "metabolome_express": "MetabolomeExpress MetaPhenDB",
         "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
+        "ArrayExpress":"ArrayExpress",
+        "arrayexpress":"ArrayExpress",
+
     };
     var database_urls = {
         "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
@@ -41,6 +45,7 @@
         "GNPS":"http://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp",
         "EGA":"https://www.ebi.ac.uk/ega/",
         "MetabolomeExpress":"https://www.metabolome-express.org/",
+        "ArrayExpress":"https://www.ebi.ac.uk/arrayexpress/",
     }
 
 
