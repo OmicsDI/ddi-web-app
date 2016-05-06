@@ -353,6 +353,7 @@ var pie_charts_repos_omics = function () {
             var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
             var metabolomics_list = "MetaboLights Dataset,MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, Metabolome Workbench";
             var genomics_list = "ega,EGA";
+            var transcriptomics_list = "ArrayExpress, arrayexpress-repository";
 
             var proteomics_child, metabolomics_child, genomics_child;
             var treemap_data = {
@@ -519,22 +520,8 @@ var pie_charts_repos_omics = function () {
 
 
             var color = d3.scale.category20c();
-            var treemap_color = {"Proteomics": "#2CA02C", "Metabolomics": "#FF7F0E", "Genomics": "#1f77b4"};
+            var treemap_color = {"Proteomics": "#2CA02C", "Metabolomics": "#FF7F0E", "Genomics": "#c6f69c", "Transcriptomics":"#1f77b4"};
 
-            /*
-             * draw the treemap
-             var margin = {top: 40, right: 10, bottom: 10, left: 10};
-             treemap_width = width - margin.left - margin.right;
-             treemap_height = height - margin.top - margin.bottom;
-             var treemap = d3.layout.treemap()
-             .size([treemap_width, treemap_height])
-             .sticky(true)
-             .value(function(d) { return d.size; });
-             var treemap_tooltip = d3.select('body').append("div")
-             .attr("class", "tooltip")
-             .style("opacity", 0);
-
-             */
 
             change();
 
