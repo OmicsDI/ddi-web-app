@@ -69,6 +69,21 @@ var bub_charts_tissues_organisms = function () {
                 return parseInt(a.value) - parseInt(b.value);
             });
 
+            function isSmall(value) {
+                return value.value >= 3;
+            }
+
+            function isMedium(value) {
+                return value.value >= 7;
+            }
+
+            function isBigger(value) {
+                return value.value >= 20;
+            }
+
+            organisms = organisms.filter(isBigger);
+            tissues   = tissues.filter(isMedium)
+            diseases  = diseases.filter(isMedium)
 
             var bub_chart_name = 'chart_tissues_organisms';
 
