@@ -56,6 +56,7 @@
                     <img src="img/omics/Proteomics.png" ng-show="dataset.omics_type == 'Proteomics' "/>
                     <img src="img/omics/Metabolomics.png" ng-show="dataset.omics_type == 'Metabolomics' "/>
                     <img src="img/omics/Genomics.png" ng-show="dataset.omics_type == 'Genomics' "/>
+                    <img src="img/omics/Transcriptomics.png" ng-show="dataset.omics_type == 'Transcriptomics' "/>
                     <br>
                     <br>
                     <br>
@@ -336,6 +337,8 @@
                                              ng-show="relatedDataset.omicsType == 'Metabolomics' "/>
                                         <img src="img/omics/Genomics2.png"
                                              ng-show="relatedDataset.omicsType == 'Genomics' "/>
+                                        <img src="img/omics/Transcriptomics2.png"
+                                            ng-show="relatedDataset.omicsType == 'Transcriptomics' "/>
                                         <a target="" class="align-justify"
                                            href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
                                             {{relatedDataset.title}}
@@ -378,6 +381,8 @@
                                  ng-show="relatedDataset.omicsType == 'Metabolomics' "/>
                             <img src="img/omics/Genomics2.png"
                                  ng-show="relatedDataset.omicsType == 'Genomics' "/>
+                            <img src="img/omics/Transcriptomics2.png"
+                                 ng-show="relatedDataset.omicsType == 'Transcriptomics' "/>
                             <a target="" class="align-justify"
                                href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
                         </div>

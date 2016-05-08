@@ -287,7 +287,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         if ($scope.result.count == '0') return;
         if ($scope.result.count == null) return;
         $scope.omics_facets_no = {"Proteomics": "0", "Metabolomics": "0", "Genomics": "0", "Transcriptomics":"0"};
-        $scope.omicsfacetsindex = {"Proteomics": "", "Metabolomics": "", "Genomics": "", "Transcriptomics":"0"};
+        $scope.omicsfacetsindex = {"Proteomics": "", "Metabolomics": "", "Genomics": "", "Transcriptomics":""};
         var omicsfacet = $scope.result.facets[$scope.index_of_facets.omics_type].facetValues;
         for (omic in omicsfacet) {
             $scope.omics_facets_no[omicsfacet[omic].label] = omicsfacet[omic].count;
