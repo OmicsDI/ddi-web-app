@@ -756,7 +756,7 @@ var barcharts_years_omics_types = function () {
                 width = div_width - margin.left - margin.right,
                 height = div_height*3.05 - margin.top - margin.bottom;
             var x0 = d3.scale.ordinal()
-                .rangeRoundBands([0, width], .1);
+                .rangeRoundBands([0, width-90], .1);
 
             var x1 = d3.scale.ordinal();
 
@@ -833,7 +833,7 @@ var barcharts_years_omics_types = function () {
                 .attr("dy", "-3.9em")
                 .attr("dx", "-4.9em")
                 .style("text-anchor", "end")
-                .text("Datasets No.(Logarithm)");
+                .text("# Datasets(Log)");
 
             var year = svg.selectAll(".year")
                 .data(data)
