@@ -760,7 +760,7 @@ var barcharts_years_omics_types = function () {
 
             var x1 = d3.scale.ordinal();
 
-            var y = d3.scale.linear()
+            var y = d3.scale.sqrt()
                 .range([height, 0]);
 
             var color = d3.scale.category10();
