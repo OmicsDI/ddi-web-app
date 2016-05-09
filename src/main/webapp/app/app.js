@@ -9,6 +9,7 @@
     var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench";
     var transcriptomics_list = "ArrayExpress, arrayexpress-repository";
     var genomics_list = "ega,EGA";
+    var transcriptomics_list = "arrayexpress-repository";
     var repositories = {
         "pride": "PRIDE",
         "PRIDE": "PRIDE",

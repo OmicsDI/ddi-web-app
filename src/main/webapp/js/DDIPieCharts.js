@@ -190,12 +190,12 @@ var bub_charts_tissues_organisms = function () {
         function classes(arr) {
             var classes = [];
             for (var i = 0; i < arr.length; i++){
-                var before_logged_value = arr[i].before_logged_value == null ? arr[i].value : arr[i].before_logged_value;
+                var value_before_log_calc = arr[i].value_before_log_calc == null ? arr[i].value : arr[i].value_before_log_calc;
                 classes.push({
                     packageName: arr[i].name,
                     className: arr[i].name,
                     value: arr[i].value,
-                    before_logged_value: before_logged_value,
+                    value_before_log_calc: value_before_log_calc,
                     taxonomyid: arr[i].id
                 });
             }
@@ -210,7 +210,7 @@ var bub_charts_tissues_organisms = function () {
                     label:data[i].label,
                     name:data[i].name,
                     value:1 + Math.floor(Math.log(data[i].value)),
-                    before_logged_value: data[i].value
+                    value_before_log_calc: data[i].value
                 };
                 newdata.push(item);
             }
@@ -295,10 +295,10 @@ var bub_charts_tissues_organisms = function () {
                     document.getElementById("tissue_organism_chart_tooltip").parentElement);
                     //tooltip.node().parentElement);
 
-                tooltip.html("<strong>" + d.className + ": <br>" + d.before_logged_value + "</strong> datasets" )
+                tooltip.html("<strong>" + d.className + ": <br>" + d.value_before_log_calc + "</strong> datasets" )
                     .style("left", (mouse_coords[0] + 25) + "px")
                     .style("top", (mouse_coords[1] - 40) + "px")
-                    .style("width", d.className.length * 5 + d.before_logged_value.toString().length * 5 + 80 + "px");
+                    .style("width", d.className.length * 5 + d.value_before_log_calc.toString().length * 5 + 80 + "px");
             })
                 .on("mouseout", function (d) {
                     tooltip.transition()
@@ -792,6 +792,12 @@ var barcharts_years_omics_types = function () {
                 d.omics = omics_types.map(function (name) {
                     if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
                 });
+
+                //calculate the log value
+                for(var i = 0; i<d.omics.length; i++){
+                    d.omics[i].value_before_log_calc = d.omics[i].value;
+                    d.omics[i].value = Math.log(d.omics[i].value);
+                }
             });
 
             x0.domain(data.map(function (d) {
@@ -827,7 +833,7 @@ var barcharts_years_omics_types = function () {
                 .attr("dy", "-3.9em")
                 .attr("dx", "-4.9em")
                 .style("text-anchor", "end")
-                .text("Datasets No.");
+                .text("Datasets No.(Logarithm)");
 
             var year = svg.selectAll(".year")
                 .data(data)
@@ -874,11 +880,11 @@ var barcharts_years_omics_types = function () {
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", .9);
-                    tooltip.html( d.value + " datasets" )
+                    tooltip.html( d.value_before_log_calc + " datasets" )
                         .style("left", (mouse_coords[0])+  "px")
                         .style("top", (parseInt(d3.select(this).attr("y"))) + "px")
                         .style("height",  "20px")
-                        .style("width", d.value.toString().length * 5 + 65 + "px");
+                        .style("width", d.value_before_log_calc.toString().length * 5 + 65 + "px");
 
                 })
                 .on("mouseout", function (d) {
