@@ -177,6 +177,8 @@
                                  style="width:15px;height:15px" title="Metabolomics"/>
                             <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1"
                                  style="width:15px;height:15px" title="Genomics"/>
+                            <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(dataset.source)>-1"
+                                 style="width:15px;height:15px" title="Transcriptomics"/>
                                 <span class="icon icon-functional"
                                       data-icon="4">{{dataset.visitCount|megaNumber}}</span>
                             <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}
