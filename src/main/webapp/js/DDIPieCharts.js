@@ -749,20 +749,20 @@ var barcharts_years_omics_types = function () {
         var div_width_px = body.style("width");
         var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
         var most_access_div_height_px = d3.select('#most_accessed_datasets').style('height');
-            console.log(most_access_div_height_px);
         var div_height = parseInt(most_access_div_height_px.substr(0, most_access_div_height_px.length - 2));
+        var height_offset = 50;
             //var div_width = 420;
             var margin = {top: 20, right: 20, bottom: 20, left: 60},
                 width = div_width - margin.left - margin.right,
                 height = div_height*3.05 - margin.top - margin.bottom;
             var x0 = d3.scale.ordinal()
-                .rangeRoundBands([0, width-90], .1);
+                .rangeRoundBands([0, width], .1);
 
             var x1 = d3.scale.ordinal();
 
-            var y = d3.scale.sqrt()
-                .range([height, 0]);
-
+            var y = d3.scale.linear()
+                .range([height - height_offset, 0]);
+            
             var color = d3.scale.category10();
 
             var xAxis = d3.svg.axis()
@@ -821,7 +821,7 @@ var barcharts_years_omics_types = function () {
 
             svg.append("g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
+                .attr("transform", "translate(0," + (height - height_offset) + ")")
                 .call(xAxis);
 
             svg.append("g")
@@ -856,7 +856,7 @@ var barcharts_years_omics_types = function () {
                     return y(d.value);
                 })
                 .attr("height", function (d) {
-                    return height - y(d.value);
+                    return height - y(d.value) - height_offset;
                 })
                 .style("fill", function (d) {
                     return color(d.name);
@@ -905,24 +905,31 @@ var barcharts_years_omics_types = function () {
                 .enter().append("g")
                 .attr("class", "legend")
                 .attr("transform", function (d, i) {
-                    return "translate(0," + i * 20 + ")";
+                    return "translate(" + (i * 0) + ",200)";
                 })
                 .on("click", function (d) {
                     var searchWord = "*:* AND omics_type:\"" + d + "\"";
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 });
+            var legend_coords = {
+            "genomics":{x:38, y:25},
+            "proteomics":{x:38, y:45},
+            "metabolomics":{x:(width)/2, y:25},
+            "transcriptomics":{x:(width)/2, y:45},
 
+            };
             legend.append("rect")
-                .attr("x", width - 18)
-                .attr("width", 18)
-                .attr("height", 18)
+                .attr("x", function(d){return legend_coords[d]['x'];})
+                .attr("y", function(d){return legend_coords[d]['y']})
+                .attr("width", 14)
+                .attr("height", 14)
                 .style("fill", color);
 
             legend.append("text")
-                .attr("x", width - 24)
-                .attr("y", 9)
-                .attr("dy", ".35em")
-                .style("text-anchor", "end")
+                .attr("x", function(d){return legend_coords[d]['x'] + 20 })
+                .attr("y", function(d){return legend_coords[d]['y']})
+                .attr("dy", ".85em")
+                .style("text-anchor", "front")
                 .text(function (d) {
                     return d;
                 });
