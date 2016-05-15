@@ -349,12 +349,9 @@ var pie_charts_repos_omics = function () {
             remove_getting_info('chart_repos_omics');
             var repos = transformdomains(domains);
             omicstype.shift();
-            var unavailableomics = omicstype.pop();
+            omicstype.pop();
 
-            var total_omics = gettotal(omicstype);
-            var total_repos = gettotal(repos);
-
-            omicstype = omicstype.sort(function (a, b) {
+            omics = omicstype.sort(function (a, b) {
                 return parseInt(a.value) - parseInt(b.value);
             });
             repos = repos.sort(function (a, b) {
@@ -366,77 +363,219 @@ var pie_charts_repos_omics = function () {
              * prepare the treemap data
              */
             var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
-            var metabolomics_list = "MetaboLights Dataset,MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, Metabolome Workbench";
+            var metabolomics_list = "MetaboLights Dataset,MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, Metabolome Workbench, GNPS, MetabolomeExpress, GPMdb";
             var genomics_list = "ega,EGA";
             var transcriptomics_list = "ArrayExpress, arrayexpress-repository";
 
-            var proteomics_child, metabolomics_child, genomics_child;
-            var treemap_data = {
-                "name": "Omics",
-                "children": [
+            var repos_data = [
                     {
                         "name": "Proteomics",
+                        "size": null,
                         "children": []
                     },
                     {
                         "name": "Genomics",
+                        "size": null,
                         "children": []
                     },
                     {
                         "name": "Metabolomics",
+                        "size": null,
+                        "children": []
+                    },
+                    {
+                        "name": "Transcriptomics",
+                        "size": null,
                         "children": []
                     }
-                ]
-            };
+                ];
+
+            var repos_data_simple = [];
+            var data = [];
+            var omics_data_simple = [];
+            var omics_data_num = [];
 
             for (var i = 0; i < repos.length; i++) {
                 if (proteomics_list.indexOf(repos[i].name) > -1) {
-                    proteomics_child = {"name": repos[i].name, "size": repos[i].value};
-                    treemap_data.children[0].children.push(proteomics_child);
+                    repos_data[0].children.push({
+                        name: repos[i].name,
+                        size: repos[i].value
+                    });
                     continue;
                 }
                 if (genomics_list.indexOf(repos[i].name) > -1) {
-                    genomics_child = {"name": repos[i].name, "size": repos[i].value};
-                    treemap_data.children[1].children.push(genomics_child);
+                    repos_data[1].children.push({
+                        name: repos[i].name,
+                        size: repos[i].value
+                    });
                     continue;
                 }
                 if (metabolomics_list.indexOf(repos[i].name) > -1) {
-                    metabolomics_child = {"name": repos[i].name, "size": repos[i].value};
-                    treemap_data.children[2].children.push(metabolomics_child);
+                    repos_data[2].children.push({
+                        name: repos[i].name,
+                        size: repos[i].value
+                    });
                     continue;
                 }
+                if (transcriptomics_list.indexOf(repos[i].name) > -1) {
+                    repos_data[3].children.push({
+                        name: repos[i].name,
+                        size: repos[i].value
+                    });
+                    continue;
+                }
+            }
+            for (var i = 0; i < repos_data.length; i++) {
+
+                var total = 0;
+
+                for (var j = 0; j < repos_data[i].children.length; j++) {
+                  total += parseInt(repos_data[i].children[j].size);
+
+                  repos_data_simple.push({
+                    name: repos_data[i].children[j].name,
+                    size: repos_data[i].children[j].size
+                  });
+
+                  data.push(repos_data[i].children[j].size);
+                }
+                repos_data[i].size = total;
+            }
+
+            for (var i = 0; i < omics.length; i++) {
+                omics_data_simple.push({
+                    name: omics[i].name,
+                    size: omics[i].value
+                });
+                omics_data_num.push(omics[i].value);
             }
 
             var piechartname = 'chart_repos_omics';
             var body = d3.select("#" + piechartname);
+            var div_width = parseInt(body.style("width"));
+            var div_height = parseInt(body.style("height"));
+            var width = div_width;
 
-            var div_width_px = body.style("width");
-            var div_width = div_width_px.substr(0, div_width_px.length - 2);
-            //var div_width = 420;
-            var width = div_width,
-                height = 300,
-                radius = Math.min(width, height) / 2.3;
+            var tool_tip, svg;
+
+            function drawLineGraphy (data_now) {
+
+              body.attr("position", "relative");
 
 
-            body.attr("position", "relative");
-            d3.select("#" + piechartname).selectAll("svg").remove();
-            var svg = d3.select("#" + piechartname)
-                .append("svg")
-                .attr("style", "height:" + height )
-                .attr("style", "width:" + width )
-                .attr("class", "piesvg")
-                .append("g");
+              if (!tool_tip) {
+                  tool_tip = body.append("div")
+                    .attr("id", "chart_repos_omics_tooltip")
+                    .attr("class", "chart_tooltip")
+                    .style('opacity', 0)
+                    .attr("position", "absolute");
+              }
 
-            svg.append("g")
-                .attr("class", "slices");
-            svg.append("circle")
-                .attr("id", "insidecycle")
-                .attr("style", "stroke:none");
-            body.selectAll("div").remove();
+              var svg_height = parseInt(body.style("height")) - 60;
+              var rect_height = (parseInt(svg_height - 20*2 - 8*2))/3;     //(body - gap * 2 - paddingTopAndBotton)/3
+              var rect_width = 25;
+              var lower = d3.scale.linear().domain([0,1000]).range([rect_height*3 + 48,rect_height*2 + 48]).clamp(true),
+                  upper = d3.scale.linear().domain([1001,5000]).range([rect_height*2 + 28,rect_height + 28]).clamp(true),
+                  most  = d3.scale.linear().domain([5001, 70000]).range([rect_height + 8, 8]).clamp(true),
+                  color = d3.scale.category10();
+
+              if (!svg) {
+                svg = body.append("svg").attr("width", width).attr("height",  svg_height).attr('margin-top', 10);
+              }
+
+              if (svg.selectAll("rect")) {
+                svg.selectAll("rect").remove();
+              }
+
+              svg.selectAll("rect.lower")
+                 .data(data_now).enter()
+                 .append("rect")
+                 .attr("class", "lower")
+                 .attr("x", function(d, i) { return 70 + i * 35; })
+                 .attr("width", rect_width)
+                 .attr("y", function(d) { return lower(d); })
+                 .attr("height", function(d) { return rect_height * 3 + 48 - lower(d); })
+                 .style("fill", color);
+
+              svg.selectAll("rect.upper")
+                 .data(data_now)
+                 .enter()
+                 .append("rect")
+                 .attr("class", "upper")
+                 .attr("x", function(d, i) { return 70 + i * 35; })
+                 .attr("width", rect_width)
+                 .attr("y", function(d) { return upper(d); })
+                 .attr("height", function(d) { return d >= 1500 ? rect_height * 2 + 28 - upper(d) : 0; })
+                 .style("fill", color);
+
+              svg.selectAll("rect.most")
+                 .data(data_now).enter()
+                 .append("rect")
+                 .attr("class", "most")
+                 .attr("x", function(d, i) {return 70 + i * 35;})
+                 .attr("width", rect_width)
+                 .attr("y", function(d) {return most(d);})
+                 .attr("height", function(d) {return d >= 10000 ? rect_height + 8 - most(d): 0})
+                 .style('fill', color);
+
+
+              svg.append("g").attr("transform", "translate(60,0)")
+                 .call(d3.svg.axis().scale(lower).orient("left").ticks(4));
+
+              svg.append("g").attr("transform", "translate(60,0)")
+                 .call(d3.svg.axis().scale(upper).orient("left").ticks(4));
+
+              svg.append("g").attr("transform", 'translate(60,0)')
+                 .call(d3.svg.axis().scale(most).orient("left").ticks(4));
+            }
+
+            //mouse over tips
+            function showTip(searchWord_pre, data_add_key) {
+                body.selectAll("rect")
+                  .on("mouseover", function(d, i) {
+                      i = i % data_add_key.length;
+                      var mouse_coords = d3.mouse(document.getElementById("chart_repos_omics_tooltip").parentElement)
+                      d3.select(this).attr('cursor', 'pointer');
+
+                      tool_tip.transition()
+                              .duration(200)
+                              .style("opacity", .9);
+
+
+                      tool_tip.html(data_add_key[i].name.toString() + ": <br>" + data_add_key[i].size.toString() + " datasets"  )
+                              .style("left", (mouse_coords[0]) + "px")
+                              .style("top",  (parseInt(d3.select(this).attr("y"))) + "px")
+                              .style("height", "40px")
+                              .style("width", (data_add_key[i].name.toString().length + 10) * 4 + "px");
+                  })
+                  .on("mouseout", function () {
+                      tool_tip.transition()
+                              .duration(500)
+                              .style('opacity', '0');
+                  })
+                  .on("click", function(d, i) {
+                      tool_tip.transition()
+                              .duration(500)
+                              .style("opacity", 0);
+
+                      searchWord = searchWord_pre + data_add_key[i].name.toString() + '"';
+                      if (data_add_key[i].name.toString() == "MetaboLights Dataset")
+                           searchWord = searchWord_pre + "MetaboLights" + '"';
+                      if (data_add_key[i].name.toString() == "Metabolome Workbench")
+                           searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
+                        angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+                  })
+            }
+
+            drawLineGraphy(data);
+            showTip('*:* AND repository:"', repos_data_simple);
+
+
+//add form container
             var formdiv = body.append('div');
             formdiv
                 .attr("class", "center")
-                .attr("style", "width:150px;margin-top:15px")
+                .attr("style", "width:150px;margin-top: 24px")
             ;
 
             var radio_form = formdiv.append('form');
@@ -479,132 +618,34 @@ var pie_charts_repos_omics = function () {
             d3.select("#" + piechartname + "_form").selectAll('input')
                 .on('change', change);
 
-
-            var pie = d3.layout.pie()
-                .sort(null)
-                .value(function (d) {
-                    return d.value;
-                });
-
-            var arc = d3.svg.arc()
-                .outerRadius(radius * 0.95)
-                .innerRadius(radius * 0.6);
-
-            svg.select("#insidecycle")
-                .attr("r", radius * 0.6)
-                .style("fill", "white")
-                .attr("cx", 0)
-                .attr("cy", 0);
-
-            var text_name = svg.append('text')
-                .attr('x', 0)
-                .attr('y', 0)
-                .attr('text-anchor', 'middle')
-                .attr('alignment-baseline', 'middle')
-                .attr('font-size', '10px')
-                .attr('fill', 'white');
-
-            var text_value = svg.append('text')
-                .attr('x', 0)
-                .attr('y', 0 + radius * 0.2)
-                .attr('text-anchor', 'middle')
-                .attr('alignment-baseline', 'middle')
-                .attr('font-size', '10px')
-                .attr('fill', 'white');
-
-            var text_total = svg.append('text')
-                .attr('x', radius * 0.65)
-                .attr('y', radius * -0.75)
-                .attr('text-anchor', 'left')
-                .attr('alignment-baseline', 'middle')
-                .attr('fill', 'black');
-
-            var text_unavail = svg.append('text')
-                .attr('x', radius * 0.65)
-                .attr('y', radius * -0.85)
-                .attr('text-anchor', 'left')
-                .attr('alignment-baseline', 'middle')
-                .attr('fill', 'black');
-
-
-            svg.attr("transform", "translate(" + width / 2.0 + "," + height / 1.8 + ")");
-
-            var key = function (d) {
-                return d.data.name;
-            };
-
-
-            var color = d3.scale.category20c();
             var treemap_color = {"Proteomics": "#2CA02C", "Metabolomics": "#FF7F0E", "Genomics": "#c6f69c", "Transcriptomics":"#1f77b4"};
 
 
-            change();
+        }
 
+        function change() {
+            var value = this.value || 'Repos';
+            var d;
+            var searchWord_pre;
+            if (value == 'Omics') {
+                d = omics_data_num;
+                searchWord_pre = '*:* AND omics_type:"';
 
-            function draw_treemap() {
-                var treemap_searchWord_pre = '*:* AND repository:"';
-                var treemap_div = body.append("div")
-                    .attr("id", "treemap_div")
-                    .style("position", "absolute")
-                    .style("width", (treemap_width + margin.left + margin.right - 40 ) + "px")
-                    .style("height", (treemap_height + margin.top + margin.bottom) + "px")
-                    .style("margin-left", (margin.left) + "px")
-                    .style("top", margin.top + "px");
-
-                var treemap_node = treemap_div.datum(treemap_data).selectAll(".treemap_node")
-                    .data(treemap.nodes)
-                    .enter().append("div")
-                    .attr("class", "treemap_node")
-                    .call(position)
-                    .style("background", function (d) {
-                        return d.children ? treemap_color[d.name] : null;
-                    })
-                    .text(function (d) {
-                        return d.children ? null : d.name;
-                    })
-                    .on("click", function (d, i) {
-                        //location.href = treemap_searchWord_pre + d.name + '"';
-                        //
-                        //if (d.name == "MetaboLights Dataset")
-                        //    location.href = treemap_searchWord_pre + "MetaboLights" + '"';
-                        //if (d.name == "Metabolome Workbench")
-                        //    location.href = treemap_searchWord_pre + "MetabolomicsWorkbench" + '"';
-                    })
-                    .on("mousemove", function (d, i) {
-                        treemap_tooltip.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-
-                        var mouse_coords = d3.mouse(
-                            treemap_tooltip.node().parentElement);
-
-                        treemap_tooltip.html("<strong>" + d.name + ": <br>" + d.value + "</strong> datasets" )
-                            .style("left", (mouse_coords[0] + screen.width/11) + "px")
-                            .style("top", (mouse_coords[1] - 30) + "px")
-                            .style("width", d.name.length * 5 + d.value.toString().length * 5 + 80 + "px");
-                    })
-                    .on("mouseout", function (d, i) {
-                        treemap_tooltip.transition()
-                            .duration(500)
-                            .style("opacity", 0);
-                    })
+                drawLineGraphy(d);
+                showTip(searchWord_pre, omics_data_simple);
             }
-
-            function position() {
-                this.style("left", function (d) {
-                    return d.x + "px";
-                })
-                    .style("top", function (d) {
-                        return d.y + "px";
-                    })
-                    .style("width", function (d) {
-                        return Math.max(0, d.dx - 1) + "px";
-                    })
-                    .style("height", function (d) {
-                        return Math.max(0, d.dy - 1) + "px";
-                    });
+            if (value == 'Repos') {
+                d = data;
+                searchWord_pre = '*:* AND repository:"';
+                drawLineGraphy(d);
+                showTip(searchWord_pre, repos_data_simple);
             }
         }
+
+        var key = function (d) {
+          return d.data.name;
+        }
+
         function transformdomains(arr) {
 
             var newarry = [];
@@ -622,104 +663,6 @@ var pie_charts_repos_omics = function () {
             for (var i = 0; i < arr.length; i++)
                 sum += parseInt(arr[i].value);
             return sum;
-        };
-
-        function change() {
-            var value = this.value || 'Repos';
-            var data;
-            var searchWord_pre;
-            if (value == 'Omics') {
-                data = omicstype;
-                text_total.text("Total:" + total_omics);
-//                text_unavail.text("Unavailable:" + unavailableomics.value);
-                searchWord_pre = '*:* AND omics_type:"';
-                // text_total.text("Total:"+total_omics);
-                svg.attr("visibility", null);
-//                d3.select("#treemap_div").remove();
-            }
-            if (value == 'Repos') {
-                data = repos;
-                text_total.text("Total:" + total_repos);
-//                text_unavail.text("");
-                searchWord_pre = '*:* AND repository:"';
-                // text_total.text("Total:"+total_repos);
-                svg.attr("visibility", null);
-//                d3.select("#treemap_div").remove();
-            }
-            /*           if (value == 'Treemap') {
-             svg.attr("visibility", "hidden");
-             draw_treemap();
-             return;
-             }
-             */
-            /*init the inside cycle*/
-            text_name.text(data[data.length - 1].name).style("font-size", "14px");
-            text_value.text(data[data.length - 1].value + " datasets").style("font-size", "12px");
-            var colorinside = color(data.length - 1);
-            if (value === 'Omics') colorinside = treemap_color[data[data.length - 1].name];
-            svg.select("#insidecycle")
-                .style("fill", colorinside)
-                .style("opacity", ".95");
-
-            /* ------- PIE SLICES -------*/
-            var slice = svg.select(".slices").selectAll("path.slice")
-                .data(pie(data), key);
-
-
-            slice.enter()
-                .insert("path")
-                .style("fill", function (d, i) {
-                    if (value === 'Omics') return treemap_color[d.data.name];
-                    return color(i);
-                })
-                .attr("class", "slice")
-                .on("click", function (d, i) {
-                    var searchWord = searchWord_pre + d.data.name + '"';
-                    if (d.data.name == "MetaboLights Dataset")
-                        searchWord = searchWord_pre + "MetaboLights" + '"';
-                    if (d.data.name == "Metabolomics Workbench")
-                        searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
-                    if (d.data.name == "MetabolomeExpress")
-                        searchWord = searchWord_pre + "MetabolomeExpress MetaPhenDB" + '"';
-                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                })
-                .on("mouseover", function (d, i) {
-                    var temptext1 = d.data.name;
-                    var temptext2 = d.data.value;
-                    colorinside = color(i);
-                    if (value === 'Omics') colorinside = treemap_color[d.data.name];
-                    svg.select("#insidecycle")
-                        .style("fill", colorinside)
-                        .style("opacity", ".8");
-                    text_name
-                        .text(temptext1);
-                    text_value
-                        .text(temptext2 + " datasets");
-                })
-                .on("mouseout", function (d, i) {
-                    colorinside = color(i);
-                    if (value === 'Omics') colorinside = treemap_color[d.data.name];
-                    svg.select("#insidecycle")
-                        .style("fill", colorinside)
-                        .style("opacity", ".95");
-                })
-            ;
-
-            slice
-                .transition().duration(1000)
-                .attrTween("d", function (d) {
-                    this._current = this._current || d;
-                    var interpolate = d3.interpolate(this._current, d);
-                    this._current = interpolate(0);
-                    return function (t) {
-                        return arc(interpolate(t));
-                    };
-                })
-
-            ;
-
-            slice.exit()
-                .remove();
         };
 
     }
