@@ -473,7 +473,7 @@ var pie_charts_repos_omics = function () {
 
               var svg_height = parseInt(body.style("height")) - 60;
               var rect_height = (parseInt(svg_height - 20*2 - 8*2))/3;     //(body - gap * 2 - paddingTopAndBotton)/3
-              var rect_width = 25;
+              var rect_width = 20;
               var lower = d3.scale.linear().domain([0,1000]).range([rect_height*3 + 48,rect_height*2 + 48]).clamp(true),
                   upper = d3.scale.linear().domain([1001,5000]).range([rect_height*2 + 28,rect_height + 28]).clamp(true),
                   most  = d3.scale.linear().domain([5001, 70000]).range([rect_height + 8, 8]).clamp(true),
@@ -491,7 +491,7 @@ var pie_charts_repos_omics = function () {
                  .data(data_now).enter()
                  .append("rect")
                  .attr("class", "lower")
-                 .attr("x", function(d, i) { return 70 + i * 35; })
+                 .attr("x", function(d, i) { return 70 + i * 30; })
                  .attr("width", rect_width)
                  .attr("y", function(d) { return lower(d); })
                  .attr("height", function(d) { return rect_height * 3 + 48 - lower(d); })
@@ -502,7 +502,7 @@ var pie_charts_repos_omics = function () {
                  .enter()
                  .append("rect")
                  .attr("class", "upper")
-                 .attr("x", function(d, i) { return 70 + i * 35; })
+                 .attr("x", function(d, i) { return 70 + i * 30; })
                  .attr("width", rect_width)
                  .attr("y", function(d) { return upper(d); })
                  .attr("height", function(d) { return d >= 1500 ? rect_height * 2 + 28 - upper(d) : 0; })
@@ -512,7 +512,7 @@ var pie_charts_repos_omics = function () {
                  .data(data_now).enter()
                  .append("rect")
                  .attr("class", "most")
-                 .attr("x", function(d, i) {return 70 + i * 35;})
+                 .attr("x", function(d, i) {return 70 + i * 30;})
                  .attr("width", rect_width)
                  .attr("y", function(d) {return most(d);})
                  .attr("height", function(d) {return d >= 10000 ? rect_height + 8 - most(d): 0})
@@ -544,9 +544,9 @@ var pie_charts_repos_omics = function () {
 
                       tool_tip.html(data_add_key[i].name.toString() + ": <br>" + data_add_key[i].size.toString() + " datasets"  )
                               .style("left", (mouse_coords[0]) + "px")
-                              .style("top",  (parseInt(d3.select(this).attr("y"))) + "px")
+                              .style("top",  (parseInt(d3.select(this).attr("y") - 30)) + "px")
                               .style("height", "40px")
-                              .style("width", (data_add_key[i].name.toString().length + 10) * 4 + "px");
+                              .style("width", (data_add_key[i].name.toString().length + 10) * 6 + "px");
                   })
                   .on("mouseout", function () {
                       tool_tip.transition()
