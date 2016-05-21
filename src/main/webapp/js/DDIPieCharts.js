@@ -1,6 +1,6 @@
-//var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/';
+var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/';
 
-var web_service_url = 'http://localhost:9091/';
+//var web_service_url = 'http://localhost:9091/';
 var retry_limit_time = 50;
 
 
@@ -704,7 +704,19 @@ var barcharts_years_omics_types = function () {
                 width = div_width - margin.left - margin.right,
                 height = div_height*3.05 - margin.top - margin.bottom;
 
-            var x0 = d3.time.scale().range([0, width - 30]);
+	     body.attr("position", "relative");
+
+            var tool_tip = null;
+            if (!tool_tip) {
+              tool_tip = body.append("div")
+                             .attr("id", "bar_chart_tooltip")
+                             .attr("class", "chart_tooltip")
+                             .style("opacity", 0)
+                             .attr("position", "absolute");
+            }
+
+            //year show bug fixed here,adjust time linear to scale linear
+            var x0 = d3.scale.linear().range([0, width - 30]);
 
             var y0 = d3.scale.linear().range([height - height_offset, 0]);
             var y1 = d3.scale.linear().range([height - height_offset, 0]);
@@ -740,7 +752,9 @@ var barcharts_years_omics_types = function () {
             var genomics_list = [],
                 metabolo_list = [],
                 proteomi_list = [],
-                transcri_list = [];
+                transcri_list = [],
+            		allYearData   = [];
+                
             data.forEach(function (d) {
                 d.omics = omics_types.map(function (name) {
                     if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
@@ -780,9 +794,20 @@ var barcharts_years_omics_types = function () {
                 }
             });
 
-//            genomics_list.forEach(function (d) {
-//              console.log(d.year + " " + d.value);
-//            })
+           function prepareAllDate(priData, nameString) {
+              for(var i = 0;i < priData.length;i++) {
+                allYearData.push({
+                  name: nameString,
+                  year: priData[i].year,
+                  value: priData[i].value
+                })
+              }
+            }
+
+            prepareAllDate(genomics_list, "genomics");
+            prepareAllDate(transcri_list, "transcriptomics");
+            prepareAllDate(metabolo_list, "metabolomics");
+            prepareAllDate(proteomi_list, "proteomics");
 
             x0.domain(d3.extent(data, function (d) {
               return d.year;
@@ -837,6 +862,58 @@ var barcharts_years_omics_types = function () {
             svg.selectAll("path")
                .style('stroke-width', '2')
                .style('fill', 'none');
+
+      	    svg.selectAll("circle")
+               .data(allYearData)
+               .enter()
+               .append("circle")
+               .attr("cx", function(d, i) {
+                 return x0(d.year);
+               })
+               .attr("cy", function(d) {
+                 if (d.name == "genomics" || d.name == "transcriptomics") {
+                   return y0(d.value);
+                 }else if(d.name == "metabolomics" || d.name == "proteomics"){
+                    return y1(d.value);
+                 }
+               })
+               .attr("fill", function(d) {
+                 if (d.name == "genomics" || d.name == "transcriptomics") {
+                   return "steelblue";
+                 }else if(d.name == "metabolomics" || d.name == "proteomics"){
+                    return "red";
+                 }
+               });
+
+
+            svg.selectAll("circle")
+              .attr("r", 4)
+              .style("cursor", "pointer")
+              .on("mouseover", function(d,i){
+                   var mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
+                   tool_tip.transition()
+                           .duration(200)
+                           .style("opacity", .9);
+
+                   tool_tip.html(d.value.toString() + " datasets")
+                           .style("left", (mouse_coords[0] + "px"))
+                           .style("top", (parseInt(d3.select(this).attr("cy")) + "px"))
+                           .style("height", "20px")
+                           .style("width", ((d.year.toString().length + 10) * 8 + "px"));
+              })
+              .on("mouseout", function(){
+                   tool_tip.transition()
+                          .duration(500)
+                          .style("opacity", 0);
+              })
+              .on("click", function(d) {
+                  tool_tip.transition()
+                         .duration(500)
+                         .style("opacity", 0);
+
+                 var searchWord = "*:* AND omics_type:\"" + getName(d.year, d.value) + "\" AND publication_date:\"" + d.year + "\"";
+                 angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+              });
 
             svg.append("g")            // Add the X Axis
                 .attr("class", "x axis")
@@ -899,13 +976,18 @@ var barcharts_years_omics_types = function () {
                 .text(function (d) {
                     return d;
                 });
+      	    function getName(year, value) {
+                for(var i = 0;i < data.length;i++) {
+                   for(var j = 0;j < data[i].omics.length;j++) {
+                      if(data[i].omics[j].year == year && data[i].omics[j].value == value) {
+                        return data[i].omics[j].name;
+                      }
+                   }
+                }
+            }
+
         }
     }
-
-    function clickMe(d) {
-        var searchWord = "*:* AND publication_date:\"" + d + "\"";
-        angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-    };
 }
 
 function output_error_info(errordiv) {
