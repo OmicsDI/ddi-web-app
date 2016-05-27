@@ -458,10 +458,9 @@ var pie_charts_repos_omics = function () {
 
             var tool_tip, svg;
 
-            function drawLineGraphy (data_now) {
+            function drawBarGraphy (data_now, margin_value) {
 
               body.attr("position", "relative");
-
 
               if (!tool_tip) {
                   tool_tip = body.append("div")
@@ -487,11 +486,15 @@ var pie_charts_repos_omics = function () {
                 svg.selectAll("rect").remove();
               }
 
+              if (svg.selectAll("g")) {
+                svg.selectAll("g").remove();
+              }
+
               svg.selectAll("rect.lower")
                  .data(data_now).enter()
                  .append("rect")
                  .attr("class", "lower")
-                 .attr("x", function(d, i) { return 70 + i * 30; })
+                 .attr("x", function(d, i) { return 70 + i * margin_value; })
                  .attr("width", rect_width)
                  .attr("y", function(d) { return lower(d); })
                  .attr("height", function(d) { return rect_height * 3 + 28 - lower(d); })
@@ -502,7 +505,7 @@ var pie_charts_repos_omics = function () {
                  .enter()
                  .append("rect")
                  .attr("class", "upper")
-                 .attr("x", function(d, i) { return 70 + i * 30; })
+                 .attr("x", function(d, i) { return 70 + i * margin_value; })
                  .attr("width", rect_width)
                  .attr("y", function(d) { return upper(d); })
                  .attr("height", function(d) { return d >= 1500 ? rect_height * 2 + 18 - upper(d) : 0; })
@@ -512,7 +515,7 @@ var pie_charts_repos_omics = function () {
                  .data(data_now).enter()
                  .append("rect")
                  .attr("class", "most")
-                 .attr("x", function(d, i) {return 70 + i * 30;})
+                 .attr("x", function(d, i) {return 70 + i * margin_value;})
                  .attr("width", rect_width)
                  .attr("y", function(d) {return most(d);})
                  .attr("height", function(d) {return d >= 10000 ? rect_height + 8 - most(d): 0})
@@ -545,8 +548,10 @@ var pie_charts_repos_omics = function () {
                       tool_tip.html(data_add_key[i].name.toString() + ": <br>" + data_add_key[i].size.toString() + " datasets"  )
                               .style("left", (mouse_coords[0]) + "px")
                               .style("top",  (parseInt(d3.select(this).attr("y") - 30)) + "px")
-                              .style("height", "40px")
-                              .style("width", (data_add_key[i].name.toString().length + 10) * 6 + "px");
+                              .style("height", "2.5em")
+                              .style("width", (getLength(data_add_key[i].name,data_add_key[i].size) * 7.5) + "px")
+                              .style("padding", "3px")
+                              .style("font-size", "monospace");
                   })
                   .on("mouseout", function () {
                       tool_tip.transition()
@@ -567,7 +572,13 @@ var pie_charts_repos_omics = function () {
                   })
             }
 
-            drawLineGraphy(data);
+            function getLength(name, value) {
+              var nameLength = name.toString().length;
+              var valueLength = (value.toString() + " " + "datasets").length;
+              return nameLength > valueLength ? nameLength : valueLength;
+            }
+
+            drawBarGraphy(data, 30);
             showTip('*:* AND repository:"', repos_data_simple);
 
 
@@ -631,13 +642,13 @@ var pie_charts_repos_omics = function () {
                 d = omics_data_num;
                 searchWord_pre = '*:* AND omics_type:"';
 
-                drawLineGraphy(d);
+                drawBarGraphy(d, 45);
                 showTip(searchWord_pre, omics_data_simple);
             }
             if (value == 'Repos') {
                 d = data;
                 searchWord_pre = '*:* AND repository:"';
-                drawLineGraphy(d);
+                drawBarGraphy(d, 30);
                 showTip(searchWord_pre, repos_data_simple);
             }
         }
@@ -754,7 +765,7 @@ var barcharts_years_omics_types = function () {
                 proteomi_list = [],
                 transcri_list = [],
             		allYearData   = [];
-                
+
             data.forEach(function (d) {
                 d.omics = omics_types.map(function (name) {
                     if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
@@ -804,10 +815,10 @@ var barcharts_years_omics_types = function () {
               }
             }
 
-            prepareAllDate(genomics_list, "genomics");
-            prepareAllDate(transcri_list, "transcriptomics");
-            prepareAllDate(metabolo_list, "metabolomics");
-            prepareAllDate(proteomi_list, "proteomics");
+            prepareAllDate(genomics_list, "Genomics");
+            prepareAllDate(transcri_list, "Transcriptomics");
+            prepareAllDate(metabolo_list, "Metabolomics");
+            prepareAllDate(proteomi_list, "Proteomics");
 
             x0.domain(d3.extent(data, function (d) {
               return d.year;
@@ -871,16 +882,16 @@ var barcharts_years_omics_types = function () {
                  return x0(d.year);
                })
                .attr("cy", function(d) {
-                 if (d.name == "genomics" || d.name == "transcriptomics") {
+                 if (d.name == "Genomics" || d.name == "Transcriptomics") {
                    return y0(d.value);
-                 }else if(d.name == "metabolomics" || d.name == "proteomics"){
+                 }else if(d.name == "Metabolomics" || d.name == "Proteomics"){
                     return y1(d.value);
                  }
                })
                .attr("fill", function(d) {
-                 if (d.name == "genomics" || d.name == "transcriptomics") {
+                 if (d.name == "Genomics" || d.name == "Transcriptomics") {
                    return "steelblue";
-                 }else if(d.name == "metabolomics" || d.name == "proteomics"){
+                 }else if(d.name == "Metabolomics" || d.name == "Proteomics"){
                     return "red";
                  }
                });
@@ -895,11 +906,12 @@ var barcharts_years_omics_types = function () {
                            .duration(200)
                            .style("opacity", .9);
 
-                   tool_tip.html(d.value.toString() + " datasets")
-                           .style("left", (mouse_coords[0] + "px"))
-                           .style("top", (parseInt(d3.select(this).attr("cy")) + "px"))
-                           .style("height", "20px")
-                           .style("width", ((d.year.toString().length + 10) * 8 + "px"));
+                   tool_tip.html(d.name.toString() + ": <br>" + d.value.toString() + " datasets")
+                           .style("left", ((mouse_coords[0] + 5) + "px"))
+                           .style("top", (parseInt(d3.select(this).attr("cy") - 13) + "px"))
+                           .style("height", "2.5em")
+                           .style("width", ((d.year.toString().length + 9) * 8 + "px"))
+                           .style("padding", "5px");
               })
               .on("mouseout", function(){
                    tool_tip.transition()
@@ -974,7 +986,7 @@ var barcharts_years_omics_types = function () {
                 .attr("dy", ".85em")
                 .style("text-anchor", "front")
                 .text(function (d) {
-                    return d;
+                    return (d.substr(0,1).toUpperCase() + d.substr(1,d.length - 1));
                 });
       	    function getName(year, value) {
                 for(var i = 0;i < data.length;i++) {
