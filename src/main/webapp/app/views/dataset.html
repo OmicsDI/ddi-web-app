@@ -76,6 +76,8 @@
 
                         </h4>
 
+                        <button onclick="downloadAsJSON()" title="Download as JSON">JSON</button><a id="download" href="" download="" ></a >
+
                         <p id="ontology_highlight" ng-click="enrich_click()" class="hotword" ng-class="{'ontology-highlight-on': enrich_button_label == 'Enriched' }" style="">
                             Ontology highlight
                         </p>
@@ -473,7 +475,42 @@
         <span ng-repeat="synonym in section.synonyms" ng-class-odd="'synonym_odd'" ng-class-even="'synonym_even'">{{synonym}}<br></span>
     </p>
 </script>
+<script type="text/javascript">
+    use
+	$(function() {
+	});
+	function downloadAsJSON() {
+	    var acc_database = getAccDatabase();
+		$.getJSON("http://www.ebi.ac.uk/Tools/omicsdi/ws/dataset/get?acc=" + acc_database.acc + "&database=" + acc_database.database)
+			.then(function(data) {
+			    console.log(data);
+				$("#download").attr({
+					"download": acc_database.acc + "." + acc_database.database + ".json",
+					"href": "data:application/json;charset=utf8;base64,"
+						+ window.btoa(JSON.stringify(data))
+				}).get(0).click();
+			}, function() {
+				console.log("get JSON file failed");
+			});
+	}
+    function getAccDatabase()
+    {
+        var url = document.location.toString();
+        var arrUrl = url.split("//");
+        var start = arrUrl[1].indexOf("/");
+        var relUrl = arrUrl[1].substring(start);
+        if(relUrl.indexOf("?") != -1){
+            relUrl = relUrl.split("?")[0];
+        }
 
+        var reg_address = /(\w+)\/(\w+)$/;
+        var result_array = reg_address.exec(relUrl);
+        var acc_database = {};
+        acc_database["database"] = result_array[1];
+        acc_database["acc"] = result_array[2];
+        return acc_database;
+    }
+</script>
 
 </div>
 
