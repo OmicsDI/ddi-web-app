@@ -341,8 +341,8 @@
                                          ng-show="dataset.omicsType == 'Genomics'"/>
                                     <img src="img/omics/Transcriptomics2.png"
                                          ng-show="dataset.omicsType == 'Transcriptomics'"/>
-                                    <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}><span
-                                            ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
+                                    <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}>
+                                        <span ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                 </div>
                                 <blockquote class="ddi-blockquote">
                                     <div class="project-widget-paragraph align-justify">
@@ -394,7 +394,7 @@
                                 <div class="project-widget-tag"
                                      ng-hide="dataset.keywords[0] === 'Not available'">
                                     <a ng-repeat="keyword in dataset.keywords" title={{keyword}}
-                                       class="keywords" href={{"#/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
+                                       class="keywords" href={{"#!/search?q="+"\""+keyword+"\""}}>{{keyword}}</a>
                                 </div>
                             </div>
                         </li>

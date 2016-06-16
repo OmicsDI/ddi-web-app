@@ -2,7 +2,6 @@
  * Results display controller
  * Responsible for visualising search results.
  */
-
 angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', 'ngProgressFactory', function ($scope, $location, $http, results, ngProgressFactory) {
 
     $scope.result = {
@@ -26,7 +25,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
 
     $scope.facetsNo = 8;
-    $scope.omics_facets_no = {"Proteomics": "", "Metabolomics": "", "Genomics": "", "Transcriptomics" : ""};
+    $scope.omics_facets_no = {"Proteomics": "", "Metabolomics": "", "Genomics": ""};
     $scope.index_of_facets = {
         "omics_type": "-1",
         "repository": "-1",
@@ -371,7 +370,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
         if($scope.result.datasets.length == 1){
             dataset1 = $scope.result.datasets[0];
-            location.href = "#/dataset/"+dataset1.source+"/"+dataset1.id;
+            location.href = "#!/dataset/"+dataset1.source+"/"+dataset1.id;
         }
         }
     }
