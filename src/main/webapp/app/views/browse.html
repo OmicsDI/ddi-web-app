@@ -341,7 +341,6 @@
                                          ng-show="dataset.omicsType == 'Genomics'"/>
                                     <img src="img/omics/Transcriptomics2.png"
                                          ng-show="dataset.omicsType == 'Transcriptomics'"/>
-                                    {{dataset.omicsType}}
                                     <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}><span
                                             ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                 </div>
