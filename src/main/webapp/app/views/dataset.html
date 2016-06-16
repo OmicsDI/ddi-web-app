@@ -68,15 +68,13 @@
                             <span ng-if="title_sections!=null" ng-repeat="section in title_sections" style="">
                                 <span ng-if="section.beAnnotated == 'false'">{{section.text}}</span>
                                 <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'">{{section.text}}</span>
-                                <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#!/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                             </span>
                             <span ng-if="title_sections == null">
                                 {{dataset.name}}
                             </span>
 
                         </h4>
-
-                        <!--<button onclick="downloadAsJSON()" title="Download as JSON">JSON</button><a id="download" href="" download="" ></a >-->
 
                         <p id="ontology_highlight" ng-click="enrich_click()" class="hotword" ng-class="{'ontology-highlight-on': enrich_button_label == 'Enriched' }" style="">
                             Ontology highlight
@@ -89,7 +87,7 @@
                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
                                         <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
-                                        <a ng-if=" section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if=" section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#!/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
                                 <span ng-click="description_show_full='true'" ng-hide="description_show_full=='true'" class="hotword"><b>{{abstract_sections[abstract_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
                                 <span ng-click="description_show_full='false'" ng-hide="description_show_full=='false'" class="hotword"><b>close</b></span>
@@ -105,7 +103,7 @@
                                      <span ng-if="sample_protocol_sections != null" ng-repeat="section in sample_protocol_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
                                         <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
-                                        <a ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#!/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
 
                         <!--<span ng-if="title_sections == null" >-->
@@ -122,7 +120,7 @@
                                       <span ng-if="data_protocol_sections != null" ng-repeat="section in data_protocol_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
                                         <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
-                                        <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#!/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
                         <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
                         <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b>close</b></span>
@@ -235,7 +233,7 @@
 
                         <p style="margin-right:20px" class="align-justify">
                                 <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
-                                    <a href="#/search?q={{author.name_for_searching}}">
+                                    <a href="#!/search?q={{author.name_for_searching}}">
                                         {{author.fullname.substr(0,author.fullname.length-2)}} </a> <span
                                         ng-if="!$last">,</span>
                                 </span>
@@ -342,7 +340,7 @@
                                         <img src="img/omics/Transcriptomics2.png"
                                             ng-show="relatedDataset.omicsType == 'Transcriptomics' "/>
                                         <a target="" class="align-justify"
-                                           href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
+                                           href={{"#!/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
                                             {{relatedDataset.title}}
                                             <!--{{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}-->
                                         </a>
@@ -386,7 +384,7 @@
                             <img src="img/omics/Transcriptomics2.png"
                                  ng-show="relatedDataset.omicsType == 'Transcriptomics' "/>
                             <a target="" class="align-justify"
-                               href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
+                               href={{"#!/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
                         </div>
                         <div class="project-widget-paragraph hidden">
                             <b>Project description:</b>
@@ -428,7 +426,7 @@
             <!--ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>-->
             <!--<img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>-->
             <!--<a target="" class="align-justify"-->
-            <!--href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>-->
+            <!--href={{"#!/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>-->
             <!--</div>-->
             <!--<div class="project-widget-paragraph hidden">-->
             <!--<b>Project description:</b>-->
@@ -464,6 +462,49 @@
         <!-- col-md-3 rightpanel-->
     </div>
     <!-- row-->
+
+    <div class="row">
+        <div class="col-md-12">
+
+             <div id="disqus_thread"></div>
+
+            <!-- comment public JS code start -->
+            <script>
+              /**
+              * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+              * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+              */
+              var currentURL = window.location.href,
+                  indexDataset = currentURL.indexOf("dataset");
+
+              var disqus_config = function () {
+              this.page.url = currentURL; // Replace PAGE_URL with your page's canonical URL variable
+              this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+              };
+
+              var resetDisqus = function() {
+                  DISQUS.reset({
+                      reload: true,
+                      config: function () {
+                        this.page.identifier = currentURL.substr(indexDataset);
+                        this.page.url = currentURL;
+                      }
+                    });
+              };
+
+              (function() { // DON'T EDIT BELOW THIS LINE
+              var d = document, s = d.createElement('script');
+
+              s.src = '//omicsdi.disqus.com/embed.js';
+
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+              })();
+              </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+            <!-- comment public JS code end -->
+        </div>
+    </div>
 </div>
 <!-- container-->
 
@@ -475,7 +516,9 @@
         <span ng-repeat="synonym in section.synonyms" ng-class-odd="'synonym_odd'" ng-class-even="'synonym_even'">{{synonym}}<br></span>
     </p>
 </script>
+
 <script type="text/javascript">
+
 	$(function() {
 	});
 	function downloadAsJSON() {

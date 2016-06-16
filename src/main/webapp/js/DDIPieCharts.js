@@ -456,7 +456,9 @@ var pie_charts_repos_omics = function () {
             var div_height = parseInt(body.style("height"));
             var width = div_width;
 
-            var tool_tip, svg;
+            var tool_tip = null,
+                svg = null,
+                formdiv = null;
 
             function drawBarGraphy (data_now, data_add_key) {
 
@@ -603,11 +605,15 @@ var pie_charts_repos_omics = function () {
 
 
 //add form container
-            var formdiv = body.append('div');
-            formdiv
-                .attr("class", "center")
-                .attr("style", "width:150px;margin-top: 4px")
-            ;
+            d3.select('#' + piechartname + '_formdiv').remove();
+
+            if (!formdiv) {
+                formdiv = body.append('div');
+                formdiv
+                    .attr("id", "#" + piechartname + "_formdiv")
+                    .attr("class", "center")
+                    .attr("style", "width:150px;margin-top: 4px");
+            }
 
             var radio_form = formdiv.append('form');
 

@@ -210,7 +210,7 @@
                             if(domain  == 'MetabolomicsWorkbench'){
                                 domain ='metabolomics_workbench';
                             }
-                        location.href = "#/dataset/" + domain + "/" + acc;
+                        location.href = "#!/dataset/" + domain + "/" + acc;
                     })
                     //.append("tspan")
                     //.attr("x", 10)
