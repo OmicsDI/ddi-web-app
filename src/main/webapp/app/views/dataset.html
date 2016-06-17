@@ -478,18 +478,8 @@
                   indexDataset = currentURL.indexOf("dataset");
 
               var disqus_config = function () {
-              this.page.url = currentURL; // Replace PAGE_URL with your page's canonical URL variable
+              this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical URL variable
               this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-              };
-
-              var resetDisqus = function() {
-                  DISQUS.reset({
-                      reload: true,
-                      config: function () {
-                        this.page.identifier = currentURL.substr(indexDataset);
-                        this.page.url = currentURL;
-                      }
-                    });
               };
 
               (function() { // DON'T EDIT BELOW THIS LINE

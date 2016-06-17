@@ -78,9 +78,9 @@ var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autoc
  * but won't be able to open deep links to Angular pages
  * (for example, a link to a search result won't load in IE 9).
  */
-angular.module('ddiApp').config(['$locationProvider', function ($locationProvider) {
-      $locationProvider.html5Mode(false);
-}]);
+// angular.module('ddiApp').config(['$locationProvider', function ($locationProvider) {
+//       $locationProvider.html5Mode(false);
+// }]);
 
 /**
  * ANGLULAR CONFIG
@@ -91,7 +91,7 @@ ddiApp.config(function($routeProvider) {
     when('/api', { templateUrl: 'app/views/api.html', controller: 'MainContentCtrl' }).
     when('/databases', { templateUrl: 'app/views/databases.html', controller: 'MainContentCtrl' }).
     when('/help', {  templateUrl: 'app/views/help.html', controller: 'MainContentCtrl' }).
-    when('/', { redirectTo: { templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' }}).
+    when('/', {  templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' }).
     when('/home', { templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' }).
 //    when('/search', { templateUrl: 'app/views/search.html', controller: 'MainContentCtrl' }).
     when('/search?:searchstring', { templateUrl: 'app/views/browse.html', controller: 'MainContentCtrl' }).
@@ -99,7 +99,7 @@ ddiApp.config(function($routeProvider) {
     when('/dataset/:domain/:acc', { templateUrl: 'app/views/dataset.html', controller: 'MainContentCtrl' }).
 //    when('/check', {templateUrl: 'app/views/check.html', controller: 'MainContentCtrl'});
     when('/check', {templateUrl: 'app/views/check.html', controller: 'MainContentCtrl'}).
-    otherwise({  redirectTo: {templateUrl: 'app/views/home.html', controller: 'MainContentCtrl'} });
+    otherwise({  templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' });
 
 });
 /* ----------------------------*/
