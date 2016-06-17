@@ -370,7 +370,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
         if($scope.result.datasets.length == 1){
             dataset1 = $scope.result.datasets[0];
-            location.href = "#!/dataset/"+dataset1.source+"/"+dataset1.id;
+            location.href = "#/dataset/"+dataset1.source+"/"+dataset1.id;
         }
         }
     }

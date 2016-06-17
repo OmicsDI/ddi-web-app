@@ -29,10 +29,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
-    $scope.instrument_pre_url = '#!/search?q=*:* AND instrument_platform:';
-    $scope.tissue_pre_url = '#!/search?q=*:* AND tissue:';
-    $scope.organism_pre_url = '#!/search?q=*:* AND TAXONOMY:';
-    $scope.disease_pre_url = '#!/search?q=*:* AND disease:';
+    $scope.instrument_pre_url = '#/search?q=*:* AND instrument_platform:';
+    $scope.tissue_pre_url = '#/search?q=*:* AND tissue:';
+    $scope.organism_pre_url = '#/search?q=*:* AND TAXONOMY:';
+    $scope.disease_pre_url = '#/search?q=*:* AND disease:';
 
     $scope.threshold = 0.50;
     $scope.threshold = $scope.threshold.toPrecision(2);
@@ -135,7 +135,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 $scope.$root.meta_dataset_abstract = $scope.dataset.description;
                 $scope.$root.meta_dataset_identifier = $scope.acc;
                 $scope.$root.meta_originalURL = $scope.dataset.full_dataset_link;
-                $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#!/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
+                $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
                 $scope.$root.meta_entries = [];
 
 
