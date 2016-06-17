@@ -456,21 +456,19 @@ var pie_charts_repos_omics = function () {
             var div_height = parseInt(body.style("height"));
             var width = div_width;
 
-            var tool_tip = null,
-                svg = null,
-                formdiv = null;
 
             function drawBarGraphy (data_now, data_add_key) {
 
               body.attr("position", "relative");
 
-              if (!tool_tip) {
-                  tool_tip = body.append("div")
-                    .attr("id", "chart_repos_omics_tooltip")
+              d3.select("#" + piechartname + "_tooltip").remove();
+              d3.select("#" + piechartname + "_svg").remove();
+
+              var tool_tip = body.append("div")
+                    .attr("id", piechartname + "_tooltip")
                     .attr("class", "chart_tooltip")
                     .style('opacity', 0)
                     .attr("position", "absolute");
-              }
 
               var svg_height = parseInt(body.style("height")) - 40;
               var rect_height = (parseInt(svg_height - 20*2 - 8*2))/3;     //(body - gap * 2 - paddingTopAndBotton)/3
@@ -482,9 +480,8 @@ var pie_charts_repos_omics = function () {
                   most  = d3.scale.linear().domain([5001, 70000]).range([rect_height + 8, 8]).clamp(true),
                   color = d3.scale.category10();
 
-              if (!svg) {
-                svg = body.append("svg").attr("width", width).attr("height",  svg_height).attr('margin-top', 10);
-              }
+              var svg = body.append("svg").attr("width", width).attr("height",  svg_height).attr('margin-top', 10).attr("id", piechartname + "_svg");
+
 
               if (svg.selectAll("rect")) {
                 svg.selectAll("rect").remove();
@@ -560,7 +557,7 @@ var pie_charts_repos_omics = function () {
                 body.selectAll("rect")
                   .on("mouseover", function(d, i) {
                       i = i % data_add_key.length;
-                      var mouse_coords = d3.mouse(document.getElementById("chart_repos_omics_tooltip").parentElement)
+                      var mouse_coords = d3.mouse(document.getElementById(piechartname + "_tooltip").parentElement)
                       d3.select(this).attr('cursor', 'pointer');
 
                       tool_tip.transition()
@@ -607,13 +604,12 @@ var pie_charts_repos_omics = function () {
 //add form container
             d3.select('#' + piechartname + '_formdiv').remove();
 
-            if (!formdiv) {
-                formdiv = body.append('div');
+            var formdiv = body.append('div');
                 formdiv
                     .attr("id", "#" + piechartname + "_formdiv")
                     .attr("class", "center")
-                    .attr("style", "width:150px;margin-top: 4px");
-            }
+                    .attr("style", "width: 150px; position: absolute; bottom: 15px; left:" + (div_width/2-40) + "px");
+
 
             var radio_form = formdiv.append('form');
 
