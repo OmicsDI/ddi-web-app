@@ -5,7 +5,7 @@
     /**
      * web_service_url for whole app
      */
-    var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE";
+    var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive";
     var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench";
     var transcriptomics_list = "ArrayExpress, arrayexpress-repository";
     var genomics_list = "ega,EGA";
@@ -18,6 +18,7 @@
         "PeptideAtlas": "PeptideAtlas",
         "massive": "MassIVE",
         "MassIVE": "MassIVE",
+        "Massive": "MassIVE",
         "metabolights": "MetaboLights",
         "metabolights_dataset": "MetaboLights",
         "MetaboLights": "MetaboLights",
