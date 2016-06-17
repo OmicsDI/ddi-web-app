@@ -333,15 +333,11 @@
                         <li class="repeated-item" ng-repeat="dataset in result.datasets" >
                             <div class="ddi-card-panel  list-group-item">
                                 <div class="project-widget-accession">
-                                    <img src="img/omics/Proteomics2.png"
-                                         ng-show="dataset.omicsType == 'Proteomics'"/>
-                                    <img src="img/omics/Metabolomics2.png"
-                                         ng-show="dataset.omicsType == 'Metabolomics'"/>
-                                    <img src="img/omics/Genomics2.png"
-                                         ng-show="dataset.omicsType == 'Genomics'"/>
-                                    <img src="img/omics/Transcriptomics2.png"
-                                         ng-show="dataset.omicsType == 'Transcriptomics'"/>
-
+                                    <img src="img/omics/Multipleomics2.png" ng-show="dataset.omicsType.indexOf('Multi-Omics') != -1 || dataset.omicsType.length > 1"/>
+                                    <img src="img/omics/Proteomics2.png" ng-show="dataset.omicsType.indexOf('Proteomics') != -1 && dataset.omicsType.indexOf('Multi-Omics') == -1 && dataset.omicsType.length == 1"/>
+                                    <img src="img/omics/Metabolomics2.png" ng-show="dataset.omicsType.indexOf('Metabolomics') != -1 && dataset.omicsType.indexOf('Multi-Omics') == -1 && dataset.omicsType.length == 1"/>
+                                    <img src="img/omics/Genomics2.png" ng-show="dataset.omicsType.indexOf('Genomics') != -1 && dataset.omicsType.indexOf('Multi-Omics') == -1 && dataset.omicsType.length == 1"/>
+                                    <img src="img/omics/Transcriptomics2.png" ng-show="dataset.omicsType.indexOf('Transcriptomics') != -1 && dataset.omicsType.indexOf('Multi-Omics') == -1 && dataset.omicsType.length == 1"/>
                                     <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}>
                                         <span ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                 </div>
