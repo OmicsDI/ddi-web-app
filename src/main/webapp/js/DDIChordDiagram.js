@@ -23,12 +23,16 @@ function drawChordDiagram() {
 
         if(similarityData.scores.length < 1 ){
             document.getElementById("dataset_bottom_chord_diagram").style.visibility = "hidden";
+            var chord_diagram = document.getElementById("dataset_bottom_chord_diagram");
+            chord_diagram.parentNode.removeChild(chord_diagram);
             return;
         };
 
 
         if(!findAScoreBiggerThan(similarityData.scores,minimumThreshold)){
             document.getElementById("dataset_bottom_chord_diagram").style.visibility = "hidden";
+            var chord_diagram = document.getElementById("dataset_bottom_chord_diagram");
+            chord_diagram.parentNode.removeChild(chord_diagram);
             var element = document.getElementById("chord_diagram_fa-spinner");
             if(element != null) element.parentNode.removeChild(element);
             return;
