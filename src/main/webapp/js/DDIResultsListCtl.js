@@ -53,6 +53,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
             $scope.query = $location.search().q;
             $scope.query_for_show = $scope.query;
+            console.log($scope.query);
             prepare_query_for_show();
             prepare_highlight_show();
             get_new_indexes();
@@ -114,28 +115,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         }
     });
 
-    /**
-     * Fired when "Load more" button is clicked.
-     $scope.load_more_results = function (page, page_size, sort_field) {
-        if (page_size !== 'default') {
-            $scope.$root.page_size = page_size
-        }
-        if (page_size === 'default') {
-            page_size = $scope.$root.page_size
-        }
-
-        if (sort_field !== 'default') {
-            $scope.$root.sort_field = sort_field;
-        }
-        if (sort_field === 'default') {
-            sort_field = $scope.$root.sort_field;
-        }
-
-        var start = (page - 1) * page_size;
-
-        results.load_more_results(start, page_size, sort_field);
-    };
-     */
 
     $scope.pagination = function (current_page, page_size, sort_field, sort_order) {
         if (page_size !== 'default') {
@@ -222,27 +201,6 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             return text === "Show facets" ? "Hide facets" : "Show facets";
         });
     };
-
-    ///**
-    // * Launch results export.
-    // * - submit export job
-    // * - open the results page in a new window.
-    // */
-    //$scope.export_results = function (format) {
-    //    var submit_query_url = '/export/submit-query',
-    //        results_page_url = '/export/results';
-    //    $scope.show_export_error = false;
-    //    $http({
-    //        url: submit_query_url +
-    //        '?q=' + $scope.result._query +
-    //        '&format=' + format,
-    //        method: 'GET'
-    //    }).success(function (data) {
-    //        window.location.href = results_page_url + '?job=' + data.job_id;
-    //    }).error(function () {
-    //        $scope.show_export_error = true;
-    //    });
-    //};
 
 
     /**
@@ -333,7 +291,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      */
     function prepare_highlight_show() {
         $scope.highlight_terms = $scope.query_for_show.match(/".*?"/g);
-
+        console.log($scope.query_for_show);
         if ($scope.highlight_terms === null) $scope.highlight_terms = [""]
         if ($scope.query_for_show.indexOf("AND") > -1) {
             var search_term = $scope.query_for_show.match(/.*?AND/);

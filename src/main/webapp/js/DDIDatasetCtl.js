@@ -49,7 +49,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         method: 'GET'
     }).success(function (data) {
         $scope.related_datasets = data.datasets;
-        console.log(data.datasets);
         FilterRelatedDatasets();
     }).error(function () {
         console.error("GET error:" + related_datasets_url);
@@ -87,6 +86,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.biological_similarity_info = data;
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
+            console.log($scope.related_datasets_by_biological_limit)
         }
     }).error(function () {
         console.error("GET error:" + related_datasets_by_biological_url);
@@ -236,7 +236,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                         content:entity.date
                         }
                     );
-                    console.log($scope.$root.meta_entries);
+                    //console.log($scope.$root.meta_entries);
 
                     meta_publication = {
                         "title":entity.title,
@@ -324,10 +324,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * Split the field in to multiple sentences, with synonyms or without
      */
     function split_by_enrichment_info(enrichment_info) {
-        var titleEnrichInfo = enrichment_info.title;
-        var abstractEnrichInfo = enrichment_info.abstractDescription;
-        var sampleProtocolEnrichInfo = enrichment_info.sampleProtocol;
-        var dataProtocolEnrichInfo = enrichment_info.dataProtocol;
+        var titleEnrichInfo = enrichment_info.synonyms.title;
+        var abstractEnrichInfo = enrichment_info.synonyms.description;
+        var sampleProtocolEnrichInfo = enrichment_info.synonyms.sample_protocol;
+        var dataProtocolEnrichInfo = enrichment_info.synonyms.data_protocol;
 
         //use the enrichment version as finnal version
         if (enrichment_info.titleString != undefined && enrichment_info.titleString.length >= 1) {
@@ -634,11 +634,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
+            console.log($scope.biological_similarity_info);
         }
         //$scope.related_datasets_by_biological_limit ++;
 
     }
    function find_similarity_limit(scores, threshold) {
+       console.log(scores);
             var limit = 0;
             for (var i = 0; i < scores.length; i++) {
                 var score = scores[i];
@@ -654,15 +656,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
             return limit;
    }
-    //$scope.$watch(function(scope) { return scope.related_datasets_by_biological_limit},
-    //    function(newValue, oldValue) {
-    //        $scope.threshold_change(0.0);
-    //        console.log("changed from" + oldValue + "to" + newValue);
-    //
-    //        //document.getElementById("").innerHTML =
-    //        //    "" + newValue + "";
-    //    }
-    //);
+
 
 
     /*
