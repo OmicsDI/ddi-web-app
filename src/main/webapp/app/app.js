@@ -6,10 +6,9 @@
      * web_service_url for whole app
      */
     var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive";
-    var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench";
-    var transcriptomics_list = "ArrayExpress, arrayexpress-repository";
+    var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench, metabolome_express";
+    var transcriptomics_list = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments";
     var genomics_list = "ega,EGA";
-    var transcriptomics_list = "arrayexpress-repository";
     var repositories = {
         "pride": "PRIDE",
         "PRIDE": "PRIDE",
@@ -33,9 +32,15 @@
         "GNPS":"GNPS",
         "metabolome_express": "MetabolomeExpress MetaPhenDB",
         "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
+        "MetabolomeExpress":"MetabolomeExpress MetaPhenDB",
         "ArrayExpress":"ArrayExpress",
         "arrayexpress":"ArrayExpress",
         "arrayexpress-repository":"ArrayExpress",
+        "expression-atlas":"ExpressionAtlas",
+        "ExpressionAtlas":"ExpressionAtlas",
+        "atlas-experiments":"ExpressionAtlas",
+        "Expression Atlas Experiments": "ExpressionAtlas"
+
 
     };
     var database_urls = {
@@ -49,6 +54,7 @@
         "EGA":"https://www.ebi.ac.uk/ega/",
         "MetabolomeExpress":"https://www.metabolome-express.org/",
         "ArrayExpress":"https://www.ebi.ac.uk/arrayexpress/",
+        "ExpressionAtlas":"http://www.ebi.ac.uk/gxa/home"
     }
 
 

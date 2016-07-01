@@ -642,19 +642,21 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
    function find_similarity_limit(scores, threshold) {
        console.log(scores);
             var limit = 0;
-            for (var i = 0; i < scores.length; i++) {
-                var score = scores[i];
-                var key1 = score.key1;
-                var key2 = score.key2;
-                if (score.value < threshold) {
-                    continue;
-                }
-                if(key1 == main_key || key2 == main_key) {
+       if(scores != null){
+           for (var i = 0; i < scores.length; i++) {
+               var score = scores[i];
+               var key1 = score.key1;
+               var key2 = score.key2;
+               if (score.value < threshold) {
+                   continue;
+               }
+               if(key1 == main_key || key2 == main_key) {
                    limit++;
-                }
+               }
 
-            }
-            return limit;
+           }
+       }
+       return limit;
    }
 
 

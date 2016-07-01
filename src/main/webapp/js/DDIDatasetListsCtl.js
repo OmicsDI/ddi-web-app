@@ -93,6 +93,7 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         for (var i = 0; i < data.length; i++) {
             $scope.databases[data[i].domain.name] = data[i].domain.value;
         }
+        console.log($scope.databases)
     }).error(function () {
         console.log("GET error:" + url);
     });
