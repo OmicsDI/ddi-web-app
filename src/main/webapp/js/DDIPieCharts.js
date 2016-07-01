@@ -1,5 +1,5 @@
 //var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/';
-
+//
 var web_service_url = 'http://localhost:9091/';
 var retry_limit_time = 50;
 
@@ -461,14 +461,9 @@ var pie_charts_repos_omics = function () {
 
               body.attr("position", "relative");
 
-              d3.select("#" + piechartname + "_tooltip").remove();
               d3.select("#" + piechartname + "_svg").remove();
 
-              var tool_tip = body.append("div")
-                    .attr("id", piechartname + "_tooltip")
-                    .attr("class", "chart_tooltip")
-                    .style('opacity', 0)
-                    .attr("position", "absolute");
+
 
               var svg_height = parseInt(body.style("height")) - 40;
               var rect_height = (parseInt(svg_height - 20*2 - 8*2))/3;     //(body - gap * 2 - paddingTopAndBotton)/3
@@ -554,6 +549,12 @@ var pie_charts_repos_omics = function () {
 
             //mouse over tips
             function showTip(searchWord_pre, data_add_key) {
+                d3.select("#" + piechartname + "_tooltip").remove();
+                var tool_tip = body.append("div")
+                    .attr("id", piechartname + "_tooltip")
+                    .attr("class", "chart_tooltip")
+                    .style('opacity', 0)
+                    .attr("position", "absolute");
                 body.selectAll("rect")
                   .on("mouseover", function(d, i) {
                       i = i % data_add_key.length;
