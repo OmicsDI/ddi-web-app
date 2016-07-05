@@ -109,6 +109,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             // ret[0] contains the response of the first call
             // ret[1] contains the second response
             // etc.
+        console.log(ret)
             $scope.dataset = ret[0].data;
             prepare_synonyms(ret[1].data);
             get_enrichment_info();    // For enriched synonyms tooltip

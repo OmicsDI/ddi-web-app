@@ -337,7 +337,7 @@
                                 <img src="img/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
                                 <img src="img/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
                                 <img src="img/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                                <img src="img/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') != -1 || relatedDataset.omicsType.indexOf('transcriptomics')) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
+                                <img src="img/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') != -1 || relatedDataset.omicsType.indexOf('transcriptomics') != -1) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
                                 <a target="" class="align-justify"
                                            href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
                                             {{relatedDataset.title}}
