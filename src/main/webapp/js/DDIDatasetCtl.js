@@ -314,9 +314,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             method: 'GET'
         }).success(function (data) {
             var enrichment_info = data;
+            $scope.dataset_enriched = "true";
             prepare_synonyms();
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
+            $scope.dataset_enriched = "false";
+            $scope.title_sections = get_section_content($scope.dataset.name);
+            $scope.abstract_sections = get_section_content($scope.dataset.description);
+            $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description);
+            $scope.data_protocol_sections = get_section_content($scope.data_protocol_description);
             console.error("GET error:" + enrichment_info_url);
         });
     }
@@ -325,29 +331,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * Split the field in to multiple sentences, with synonyms or without
      */
     function split_by_enrichment_info(enrichment_info) {
-        var titleEnrichInfo = enrichment_info.synonyms.title;
-        var abstractEnrichInfo = enrichment_info.synonyms.description;
-        var sampleProtocolEnrichInfo = enrichment_info.synonyms.sample_protocol;
-        var dataProtocolEnrichInfo = enrichment_info.synonyms.data_protocol;
+        
+        if(enrichment_info != null && enrichment_info.length > 1){
+            var titleEnrichInfo = enrichment_info.synonyms.title;
+            var abstractEnrichInfo = enrichment_info.synonyms.description;
+            var sampleProtocolEnrichInfo = enrichment_info.synonyms.sample_protocol;
+            var dataProtocolEnrichInfo = enrichment_info.synonyms.data_protocol;
 
-        //use the enrichment version as finnal version
-        if (enrichment_info.titleString != undefined && enrichment_info.titleString.length >= 1) {
-            $scope.dataset.name = enrichment_info.titleString;
+            //use the enrichment version as finnal version
+            if (enrichment_info.titleString != undefined && enrichment_info.titleString.length >= 1) {
+                $scope.dataset.name = enrichment_info.titleString;
+            }
+            if (enrichment_info.abstractString != undefined && enrichment_info.abstractString.length >= 1) {
+                $scope.dataset.description = enrichment_info.abstractString;
+            }
+            if (enrichment_info.sampleProtocolString != undefined && enrichment_info.sampleProtocolString.length >= 1) {
+                $scope.sample_protocol_description = enrichment_info.sampleProtocolString;
+            }
+            if (enrichment_info.dataProtocolString != undefined && enrichment_info.dataProtocolString.length >= 1) {
+                $scope.data_protocol_description = enrichment_info.dataProtocolString;
+            }
         }
-        if (enrichment_info.abstractString != undefined && enrichment_info.abstractString.length >= 1) {
-            $scope.dataset.description = enrichment_info.abstractString;
-        }
-        if (enrichment_info.sampleProtocolString != undefined && enrichment_info.sampleProtocolString.length >= 1) {
-            $scope.sample_protocol_description = enrichment_info.sampleProtocolString;
-        }
-        if (enrichment_info.dataProtocolString != undefined && enrichment_info.dataProtocolString.length >= 1) {
-            $scope.data_protocol_description = enrichment_info.dataProtocolString;
-        }
-
         var title_section_positions = get_section_position($scope.dataset.name, titleEnrichInfo);
         var abstract_section_positions = get_section_position($scope.dataset.description, abstractEnrichInfo);
         var sample_protocol_section_positions = get_section_position($scope.sample_protocol_description, sampleProtocolEnrichInfo);
         var data_protocol_section_positions = get_section_position($scope.data_protocol_description, dataProtocolEnrichInfo);
+
         $scope.title_sections = get_section_content($scope.dataset.name, title_section_positions);
         $scope.abstract_sections = get_section_content($scope.dataset.description, abstract_section_positions);
         $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description, sample_protocol_section_positions);
