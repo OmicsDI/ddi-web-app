@@ -611,17 +611,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var FilterThresholds = {
             'Proteomics':3.1,
             'Metabolomics':3.8,
-            'Genomics':6.5
+            'Genomics':6.5,
+            'Transcriptomics':10.0
         }
 
         var temp_datasets = $scope.related_datasets;
+        console.log(temp_datasets);
         var index = 0;
         $scope.related_datasets = [];
         for(var i = 0; i<temp_datasets.length; i++) {
             var omics_type = temp_datasets[i]['omicsType'];
-            var threshold = FilterThresholds[omics_type];
+            if(omics_type instanceof Array){
+                if(omics_type.indexOf('Transcriptomics') != -1)
+                    omics_type_value = 'Trascriptomics';
+                else if(omics_type.indexOf('Genomics') != -1)
+                    omics_type_value = 'Genomics';
+                else if(omics_type.indexOf('Metabolomics') != -1)
+                    omics_type_value = 'Metabolomics';
+                else if(omics_type.indexOf('Proteomics') != -1)
+                    omics_type_value = 'Proteomics';
+            }
+            var threshold = FilterThresholds[omics_type_value];
+            if(threshold == null)
+                threshold = 3.1;
             if(temp_datasets[i]['score'] >= threshold) {
                 $scope.related_datasets[index++] = temp_datasets[i];
+                console.log(temp_datasets)
             }
         }
     }
