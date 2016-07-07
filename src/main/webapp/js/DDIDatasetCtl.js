@@ -354,14 +354,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
 
         }
-        var title_section_positions = get_section_position($scope.dataset.name, titleEnrichInfo);
-        var abstract_section_positions = get_section_position($scope.dataset.description, abstractEnrichInfo);
-        var sample_protocol_section_positions = get_section_position($scope.sample_protocol_description, sampleProtocolEnrichInfo);
-        var data_protocol_section_positions = get_section_position($scope.data_protocol_description, dataProtocolEnrichInfo);
-        $scope.title_sections = get_section_content($scope.dataset.name, title_section_positions);
-        $scope.abstract_sections = get_section_content($scope.dataset.description, abstract_section_positions);
-        $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description, sample_protocol_section_positions);
-        $scope.data_protocol_sections = get_section_content($scope.data_protocol_description, data_protocol_section_positions);
+        $scope.title_sections = get_section($scope.dataset.name, titleEnrichInfo);
+        $scope.abstract_sections = get_section($scope.dataset.description, abstractEnrichInfo);
+        $scope.sample_protocol_sections = get_section($scope.sample_protocol_description, sampleProtocolEnrichInfo);
+        $scope.data_protocol_sections = get_section($scope.data_protocol_description, dataProtocolEnrichInfo);
 
     }
 
@@ -479,11 +475,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     }
 
     /**
-     * Get the section positions in each field
+     * Get the section in each field
      * @param enrichInfo
      * @returns {Array}
      */
-    function get_section_position(wholetext, enrichInfo) {
+    function get_section(wholetext, enrichInfo) {
 
         if (enrichInfo == null || wholetext == null) {
             return null;
@@ -491,26 +487,78 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         var modifiedWholeText = wholetext.toLowerCase();
         var modifyString = "________________________________________________________________________________________________________________________________________________";
         var sections = [];
-        var previousWordEnd = -1;
+        var prevRealWordEnd = -1;
 
+        var prevWordStart = -1;
+        var prevWordEnd = -1;
         for (var i = 0; i < enrichInfo.length; i++) {
             var wordStart = enrichInfo[i].from - 1;
             var wordEnd = enrichInfo[i].to - 1;
+            if(wordStart < prevWordEnd) {continue;}
             var wordText = enrichInfo[i].text;
             var realWordStart = modifiedWholeText.indexOf(wordText);
             var realWordEnd = realWordStart + wordText.length;
+            var synonyms = [];
+            var tobeReduced;
+            
             modifiedWholeText = modifiedWholeText.substring(0,realWordStart) + modifyString.substring(0, wordText.length) + modifiedWholeText.substring(realWordEnd, modifiedWholeText.length);
             
-            if(previousWordEnd +1 < realWordStart){
-                var section = {"from":previousWordEnd+1, "to":realWordStart-1, "beAnnotated":"false"};
-                sections.push(section);
+            if(prevRealWordEnd +1 < realWordStart){
+                if (realWordStart > long_text_length) {
+                    tobeReduced = "true"
+                }
+                else {
+                    tobeReduced = "false"
+                }
+                var section = {
+                    "text": wholetext.substring(prevRealWordEnd, realWordStart-1),
+                    "beAnnotated": "false",
+                    "synonyms": null,
+                    "tobeReduced": tobeReduced
+                };
+                sections.push(section); 
             }
 
-            var section = {"from":realWordStart, "to":realWordEnd, "beAnnotated": "true"};
+            synonyms = get_synonyms(wordText);
+            if (realWordStart > long_text_length) {
+                tobeReduced = "true"
+            }
+            else {
+                tobeReduced = "false"
+            }
+            var section = {
+                "text": wordText,
+                "beAnnotated": "true",
+                "synonyms": synonyms,
+                "tobeReduced": tobeReduced
+            };
             sections.push(section);
             
-            previousWordEnd = realWordEnd;
+            prevRealWordEnd = realWordEnd;
+            prevWordStart = wordStart;
+            prevWordEnd = wordEnd;
         }
+        if(prevRealWordEnd +1 < long_text_length){
+                    tobeReduced = "false"
+                var section = {
+                    "text": wholetext.substring(prevRealWordEnd+1, long_text_length-1),
+                    "beAnnotated": "false",
+                    "synonyms": null,
+                    "tobeReduced": tobeReduced
+                };
+                sections.push(section); 
+                prevRealWordEnd = long_text_length; 
+        }
+         if(prevRealWordEnd +1 < wholetext.length){
+                    tobeReduced = "true"
+                var section = {
+                    "text": wholetext.substring(prevRealWordEnd+1, wholetext.length-1),
+                    "beAnnotated": "false",
+                    "synonyms": null,
+                    "tobeReduced": tobeReduced
+                };
+                sections.push(section); 
+            }
         return sections;
     }
 
