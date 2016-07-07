@@ -70,7 +70,8 @@
                             <span ng-if="title_sections!=null" ng-repeat="section in title_sections" style="">
                                 <span ng-if="section.beAnnotated == 'false'">{{section.text}}</span>
                                 <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'">{{section.text}}</span>
-                                <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                <a ng-if="section.synonyms.length >0 && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}"  class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                             </span>
 
                             <span ng-if="title_sections == null">
@@ -90,7 +91,8 @@
                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
                                         <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
-                                        <a ng-if=" section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.synonyms.length > 0 section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}"  class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
 
                                 <span ng-click="description_show_full='true'" ng-hide="description_show_full=='true'" class="hotword"><b>{{abstract_sections[abstract_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
@@ -107,7 +109,8 @@
                                      <span ng-if="sample_protocol_sections != null" ng-repeat="section in sample_protocol_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
                                         <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
-                                        <a ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.synonyms.length > 0 section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}"  class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
 
                         <!--<span ng-if="title_sections == null" >-->
@@ -124,7 +127,8 @@
                                       <span ng-if="data_protocol_sections != null" ng-repeat="section in data_protocol_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
                                         <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
-                                        <a ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.synonyms.length > 0 section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                        <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}"  class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
                         <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
                         <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b>close</b></span>
@@ -498,11 +502,13 @@
 
 <!--Template for the synonym tooltips in dataset page -->
 <script type="text/ng-template" id="myTooltipTemplate.html" style="color:red; width:800px">
+    <div ng-if = "section.synonyms.length > 0 || section.synonyms == null">
     <h5>Synonyms
     </h5>
     <p>
         <span ng-repeat="synonym in section.synonyms" ng-class-odd="'synonym_odd'" ng-class-even="'synonym_even'">{{synonym}}<br></span>
     </p>
+    </div>
 </script>
 
 <script type="text/javascript">

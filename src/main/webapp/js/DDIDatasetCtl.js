@@ -86,7 +86,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.biological_similarity_info = data;
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
-            console.log($scope.related_datasets_by_biological_limit)
+            // console.log($scope.related_datasets_by_biological_limit)
         }
     }).error(function () {
         console.error("GET error:" + related_datasets_by_biological_url);
@@ -332,7 +332,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function split_by_enrichment_info(enrichment_info) {
         if(enrichment_info != null && enrichment_info.accession != null){
-            var titleEnrichInfo = enrichment_info.synonyms.title;
+            var titleEnrichInfo = enrichment_info.synonyms.name;
             var abstractEnrichInfo = enrichment_info.synonyms.description;
             var sampleProtocolEnrichInfo = enrichment_info.synonyms.sample_protocol;
             var dataProtocolEnrichInfo = enrichment_info.synonyms.data_protocol;
@@ -347,7 +347,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
 
             if (enrichment_info.originalAttributes.sample_protocol!= undefined && enrichment_info.originalAttributes.sample_protocol.length >= 1) {
-                $scope.sample_protocol_description = enrichment_info.originalAttributes.sampleProtocolString;
+                $scope.sample_protocol_description = enrichment_info.originalAttributes.sample_protocol;
             }
 
             if (enrichment_info.originalAttributes.data_protocol!= undefined && enrichment_info.originalAttributes.data_protocol.length >= 1) {
@@ -489,44 +489,28 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         if (enrichInfo == null || wholetext == null) {
             return null;
         }
+        var modifiedWholeText = wholetext.toLowerCase();
+        var modifyString = "________________________________________________________________________________________________________________________________________________";
         var sections = [];
-        var sectionStart = 0;
-        var sectionEnd = 0;
-
-        var offset = 0;//some times the enrhiched position is not perfect matched, need offset to adjust the position
+        var previousWordEnd = -1;
 
         for (var i = 0; i < enrichInfo.length; i++) {
             var wordStart = enrichInfo[i].from - 1;
             var wordEnd = enrichInfo[i].to - 1;
-
-            for (var j = 0; j < 10; j++) {
-                if (enrichInfo[i].text == wholetext.substring(wordStart + offset + j, wordEnd + offset + j + 1).toLowerCase()) {
-                    foundWordFlag = true;
-                    break;
-                }
+            var wordText = enrichInfo[i].text;
+            var realWordStart = modifiedWholeText.indexOf(wordText);
+            var realWordEnd = realWordStart + wordText.length;
+            modifiedWholeText = modifiedWholeText.substring(0,realWordStart) + modifyString.substring(0, wordText.length) + modifiedWholeText.substring(realWordEnd, modifiedWholeText.length);
+            
+            if(previousWordEnd +1 < realWordStart){
+                var section = {"from":previousWordEnd+1, "to":realWordStart-1, "beAnnotated":"false"};
+                sections.push(section);
             }
-            offset = offset + j;
 
-            if (sectionStart < wordStart) {
-                sectionEnd = wordStart - 1;
-                var section = {"from": sectionStart + offset, "to": sectionEnd + offset, "beAnnotated": "false"};
-                sections.push(section);
-
-                var section = {"from": wordStart + offset, "to": wordEnd + offset, "beAnnotated": "true"};
-                sections.push(section);
-
-                sectionStart = wordEnd + 1;
-                sectionEnd = wordEnd + 1;
-
-            } else if (sectionStart == wordStart) {
-                var section = {"from": wordStart + offset, "to": wordEnd + offset, "beAnnotated": "true"};
-                sections.push(section);
-
-                sectionStart = wordEnd + 1;
-                sectionEnd = wordEnd + 1;
-            } //else if (sectionStart > wordStart) {
-                //console.error("someThing wrong, sectionStart: " + sectionStart + "is bigger than wordStart: " + wordStart);
-           // }
+            var section = {"from":realWordStart, "to":realWordEnd, "beAnnotated": "true"};
+            sections.push(section);
+            
+            previousWordEnd = realWordEnd;
         }
         return sections;
     }
@@ -661,13 +645,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
-            console.log($scope.biological_similarity_info);
+            // console.log($scope.biological_similarity_info);
         }
         //$scope.related_datasets_by_biological_limit ++;
 
     }
    function find_similarity_limit(scores, threshold) {
-       console.log(scores);
+       // console.log(scores);
             var limit = 0;
        if(scores != null){
            for (var i = 0; i < scores.length; i++) {
