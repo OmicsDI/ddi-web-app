@@ -38,9 +38,9 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.threshold = $scope.threshold.toPrecision(2);
 
     $scope.domain_enrichedDatabase_map = {
-           'metabolomics_workbench' : 'MetabolomicsWorkbench',
-            'gpmdb' : 'GPMDB',
-            'ega' : 'EGA',
+        'metabolomics_workbench': 'MetabolomicsWorkbench',
+        'gpmdb': 'GPMDB',
+        'ega': 'EGA',
     };
 
     var related_datasets_url = web_service_url + "dataset/getSimilar?acc=" + $scope.acc + "&database=" + $scope.domain;
@@ -57,15 +57,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
     //change the domain name to the real name in enrichment data in MongoDB
     var tempDomainName = $scope.domain;
-    if ($scope.domain_enrichedDatabase_map[$scope.domain] == null){
+    if ($scope.domain_enrichedDatabase_map[$scope.domain] == null) {
         tempDomainName = $scope.domain;
     }
-    else{
+    else {
         tempDomainName = $scope.domain_enrichedDatabase_map[$scope.domain];
     }
 
     var related_datasets_by_biological_url = web_service_url + "enrichment/getSimilarDatasetsByBiologicalData?accession=" + $scope.acc + "&database=" + tempDomainName;
-        $http({
+    $http({
         url: related_datasets_by_biological_url,
         method: 'GET'
     }).success(function (data) {
@@ -74,7 +74,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         console.error("GET error:" + related_datasets_by_biological_url);
     });
 
-     /**
+    /**
      * To get the similarity info
      */
     //var biological_similarity_info_url = "http://localhost:9091/" + "enrichment/getSimilarityInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
@@ -84,7 +84,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         method: 'GET'
     }).success(function (data) {
         $scope.biological_similarity_info = data;
-        if($scope.biological_similarity_info != null){
+        if ($scope.biological_similarity_info != null) {
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
             // console.log($scope.related_datasets_by_biological_limit)
         }
@@ -131,12 +131,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             /**
              * Fill the meta info to SEO
              */
-                $scope.$root.meta_dataset_title = $scope.dataset.name;
-                $scope.$root.meta_dataset_abstract = $scope.dataset.description;
-                $scope.$root.meta_dataset_identifier = $scope.acc;
-                $scope.$root.meta_originalURL = $scope.dataset.full_dataset_link;
-                $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
-                $scope.$root.meta_entries = [];
+            $scope.$root.meta_dataset_title = $scope.dataset.name;
+            $scope.$root.meta_dataset_abstract = $scope.dataset.description;
+            $scope.$root.meta_dataset_identifier = $scope.acc;
+            $scope.$root.meta_originalURL = $scope.dataset.full_dataset_link;
+            $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
+            $scope.$root.meta_entries = [];
 
 
             //get and prepare each publication's data
@@ -193,7 +193,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     for (var i = 0; i < entity.authors.length; i++) {
                         var reg_surname = new RegExp(" [A-Z]{1,2}$", "")
                         var reg_result = reg_surname.exec(entity.authors[i]);
-                        if(reg_result != null){
+                        if (reg_result != null) {
                             var surname = reg_result[0];
                         }
 
@@ -216,32 +216,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
                     $scope.$root.meta_entries.push(
                         {
-                        name:"citation_title",
-                        content:entity.title
+                            name: "citation_title",
+                            content: entity.title
                         }
                     );
 
-                    for(var i=0; i<authors.length; i++){
+                    for (var i = 0; i < authors.length; i++) {
                         $scope.$root.meta_entries.push(
                             {
-                            name:"citation_author",
-                            content:authors[i].fullname
+                                name: "citation_author",
+                                content: authors[i].fullname
                             }
                         );
                     }
 
                     $scope.$root.meta_entries.push(
                         {
-                        name:"citation_pubdate",
-                        content:entity.date
+                            name: "citation_pubdate",
+                            content: entity.date
                         }
                     );
                     //console.log($scope.$root.meta_entries);
 
                     meta_publication = {
-                        "title":entity.title,
-                         "authors":authors,
-                         "pub_date": entity.date
+                        "title": entity.title,
+                        "authors": authors,
+                        "pub_date": entity.date
                     }
                     publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
 
@@ -297,14 +297,14 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     function get_enrichment_info() {
         //var enrichment_info_url= "http://localhost:3500" + "/test/enrichment.enrichedDataset?query={\"$and\":[{\"accession\":\"" + $scope.acc + "\"},{\"status\":\"new\"}]}";
 
-    //change the domain name to the real name in enrichment data in MongoDB
-    var tempDomainName = $scope.domain;
-    if ($scope.domain_enrichedDatabase_map[$scope.domain] == null){
-        tempDomainName = $scope.domain;
-    }
-    else{
-        tempDomainName = $scope.domain_enrichedDatabase_map[$scope.domain];
-    }
+        //change the domain name to the real name in enrichment data in MongoDB
+        var tempDomainName = $scope.domain;
+        if ($scope.domain_enrichedDatabase_map[$scope.domain] == null) {
+            tempDomainName = $scope.domain;
+        }
+        else {
+            tempDomainName = $scope.domain_enrichedDatabase_map[$scope.domain];
+        }
 
         //var enrichment_info_url = web_service_url + "enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + $scope.domain;
         var enrichment_info_url = web_service_url + "enrichment/getEnrichmentInfo?accession=" + $scope.acc + "&database=" + tempDomainName;
@@ -318,10 +318,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
             $scope.dataset_enriched = "false";
-            $scope.title_sections = get_section_content($scope.dataset.name);
-            $scope.abstract_sections = get_section_content($scope.dataset.description);
-            $scope.sample_protocol_sections = get_section_content($scope.sample_protocol_description);
-            $scope.data_protocol_sections = get_section_content($scope.data_protocol_description);
+            split_by_enrichment_info(enrichment_info);
             console.error("GET error:" + enrichment_info_url);
         });
     }
@@ -330,7 +327,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * Split the field in to multiple sentences, with synonyms or without
      */
     function split_by_enrichment_info(enrichment_info) {
-        if(enrichment_info != null && enrichment_info.accession != null){
+        if (enrichment_info != null && enrichment_info.accession != null) {
             var titleEnrichInfo = enrichment_info.synonyms.name;
             var abstractEnrichInfo = enrichment_info.synonyms.description;
             var sampleProtocolEnrichInfo = enrichment_info.synonyms.sample_protocol;
@@ -340,16 +337,16 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             if (enrichment_info.originalAttributes.name != undefined && enrichment_info.originalAttributes.name.length >= 1) {
                 $scope.dataset.name = enrichment_info.originalAttributes.name;
             }
-            
+
             if (enrichment_info.originalAttributes.description != undefined && enrichment_info.originalAttributes.description.length >= 1) {
                 $scope.dataset.description = enrichment_info.originalAttributes.description;
             }
 
-            if (enrichment_info.originalAttributes.sample_protocol!= undefined && enrichment_info.originalAttributes.sample_protocol.length >= 1) {
+            if (enrichment_info.originalAttributes.sample_protocol != undefined && enrichment_info.originalAttributes.sample_protocol.length >= 1) {
                 $scope.sample_protocol_description = enrichment_info.originalAttributes.sample_protocol;
             }
 
-            if (enrichment_info.originalAttributes.data_protocol!= undefined && enrichment_info.originalAttributes.data_protocol.length >= 1) {
+            if (enrichment_info.originalAttributes.data_protocol != undefined && enrichment_info.originalAttributes.data_protocol.length >= 1) {
                 $scope.data_protocol_description = enrichment_info.originalAttributes.data_protocol;
             }
 
@@ -429,7 +426,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
         var synonyms = [];
         var sectionWord = wholetext.substring(start, wholetext.length);
-        var section = {"text": sectionWord, "beAnnotated": beAnnotated, "synonyms": synonyms, "tobeReduced": tobeReduced};
+        var section = {
+            "text": sectionWord,
+            "beAnnotated": beAnnotated,
+            "synonyms": synonyms,
+            "tobeReduced": tobeReduced
+        };
         sections.push(section);
         return sections;
     }
@@ -481,9 +483,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      */
     function get_section(wholetext, enrichInfo) {
 
-        if (enrichInfo == null || wholetext == null) {
+        if (enrichInfo == null && wholetext == null) {
             return null;
         }
+
+
         var modifiedWholeText = wholetext.toLowerCase();
         var modifyString = "________________________________________________________________________________________________________________________________________________";
         var sections = [];
@@ -491,19 +495,40 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
         var prevWordStart = -1;
         var prevWordEnd = -1;
-        for (var i = 0; i < enrichInfo.length; i++) {
-            var wordStart = enrichInfo[i].from - 1;
-            var wordEnd = enrichInfo[i].to - 1;
-            if(wordStart < prevWordEnd) {continue;}
-            var wordText = enrichInfo[i].text;
-            var realWordStart = modifiedWholeText.indexOf(wordText);
-            var realWordEnd = realWordStart + wordText.length;
-            var synonyms = [];
-            var tobeReduced;
-            
-            modifiedWholeText = modifiedWholeText.substring(0,realWordStart) + modifyString.substring(0, wordText.length) + modifiedWholeText.substring(realWordEnd, modifiedWholeText.length);
-            
-            if(prevRealWordEnd +1 < realWordStart){
+
+
+        if (enrichInfo != null && wholetext != null) {
+            for (var i = 0; i < enrichInfo.length; i++) {
+                var wordStart = enrichInfo[i].from - 1;
+                var wordEnd = enrichInfo[i].to - 1;
+                if (wordStart < prevWordEnd) {
+                    continue;
+                }
+                var wordText = enrichInfo[i].text;
+                var realWordStart = modifiedWholeText.indexOf(wordText);
+                var realWordEnd = realWordStart + wordText.length;
+                var synonyms = [];
+                var tobeReduced;
+
+                modifiedWholeText = modifiedWholeText.substring(0, realWordStart) + modifyString.substring(0, wordText.length) + modifiedWholeText.substring(realWordEnd, modifiedWholeText.length);
+
+                if (prevRealWordEnd + 1 < realWordStart) {
+                    if (realWordStart > long_text_length) {
+                        tobeReduced = "true"
+                    }
+                    else {
+                        tobeReduced = "false"
+                    }
+                    var section = {
+                        "text": wholetext.substring(prevRealWordEnd, realWordStart - 1),
+                        "beAnnotated": "false",
+                        "synonyms": null,
+                        "tobeReduced": tobeReduced
+                    };
+                    sections.push(section);
+                }
+
+                synonyms = get_synonyms(wordText);
                 if (realWordStart > long_text_length) {
                     tobeReduced = "true"
                 }
@@ -511,54 +536,42 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     tobeReduced = "false"
                 }
                 var section = {
-                    "text": wholetext.substring(prevRealWordEnd, realWordStart-1),
-                    "beAnnotated": "false",
-                    "synonyms": null,
+                    "text": wordText,
+                    "beAnnotated": "true",
+                    "synonyms": synonyms,
                     "tobeReduced": tobeReduced
                 };
-                sections.push(section); 
+                sections.push(section);
+
+                prevRealWordEnd = realWordEnd;
+                prevWordStart = wordStart;
+                prevWordEnd = wordEnd;
             }
 
-            synonyms = get_synonyms(wordText);
-            if (realWordStart > long_text_length) {
-                tobeReduced = "true"
-            }
-            else {
-                tobeReduced = "false"
-            }
+        }
+
+
+        if (prevRealWordEnd + 1 < long_text_length) {
+            tobeReduced = "false"
             var section = {
-                "text": wordText,
-                "beAnnotated": "true",
-                "synonyms": synonyms,
+                "text": wholetext.substring(prevRealWordEnd + 1, long_text_length - 1),
+                "beAnnotated": "false",
+                "synonyms": null,
                 "tobeReduced": tobeReduced
             };
             sections.push(section);
-            
-            prevRealWordEnd = realWordEnd;
-            prevWordStart = wordStart;
-            prevWordEnd = wordEnd;
+            prevRealWordEnd = long_text_length;
         }
-        if(prevRealWordEnd +1 < long_text_length){
-                    tobeReduced = "false"
-                var section = {
-                    "text": wholetext.substring(prevRealWordEnd+1, long_text_length-1),
-                    "beAnnotated": "false",
-                    "synonyms": null,
-                    "tobeReduced": tobeReduced
-                };
-                sections.push(section); 
-                prevRealWordEnd = long_text_length; 
+        if (prevRealWordEnd + 1 < wholetext.length) {
+            tobeReduced = "true"
+            var section = {
+                "text": wholetext.substring(prevRealWordEnd + 1, wholetext.length - 1),
+                "beAnnotated": "false",
+                "synonyms": null,
+                "tobeReduced": tobeReduced
+            };
+            sections.push(section);
         }
-         if(prevRealWordEnd +1 < wholetext.length){
-                    tobeReduced = "true"
-                var section = {
-                    "text": wholetext.substring(prevRealWordEnd+1, wholetext.length-1),
-                    "beAnnotated": "false",
-                    "synonyms": null,
-                    "tobeReduced": tobeReduced
-                };
-                sections.push(section); 
-            }
         return sections;
     }
 
@@ -604,7 +617,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * To control the enrichment info show
      */
-    if($scope.$root.enrich_button_label == null){
+    if ($scope.$root.enrich_button_label == null) {
         $scope.$root.enrich_button_label = "Enrich";
     }
     $scope.enrich_click = function () {
@@ -639,21 +652,21 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * filter the related datasets by threshold in different omics type
      */
 
-    function FilterRelatedDatasets(){
-        if($scope.related_datasets.length < 1) return;
+    function FilterRelatedDatasets() {
+        if ($scope.related_datasets.length < 1) return;
         var FilterThresholds = {
-            'Proteomics':3.1,
-            'Metabolomics':3.8,
-            'Genomics':6.5
+            'Proteomics': 3.1,
+            'Metabolomics': 3.8,
+            'Genomics': 6.5
         }
 
         var temp_datasets = $scope.related_datasets;
         var index = 0;
         $scope.related_datasets = [];
-        for(var i = 0; i<temp_datasets.length; i++) {
+        for (var i = 0; i < temp_datasets.length; i++) {
             var omics_type = temp_datasets[i]['omicsType'];
             var threshold = FilterThresholds[omics_type];
-            if(temp_datasets[i]['score'] >= threshold) {
+            if (temp_datasets[i]['score'] >= threshold) {
                 $scope.related_datasets[index++] = temp_datasets[i];
             }
         }
@@ -662,7 +675,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     /**
      * To change the value in slider by botton
      */
-   var main_key = $scope.acc + "@" + tempDomainName;
+    var main_key = $scope.acc + "@" + tempDomainName;
     $scope.threshold_change = function (step_value) {
         $scope.threshold = ($scope.threshold * 100 + step_value * 100) / 100 * 1.00;
         $scope.threshold = $scope.threshold.toPrecision(2);
@@ -675,33 +688,32 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             $scope.threshold = 0.50
             $scope.threshold = $scope.threshold.toPrecision(2);
         }
-        if($scope.biological_similarity_info != null){
+        if ($scope.biological_similarity_info != null) {
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
             // console.log($scope.biological_similarity_info);
         }
         //$scope.related_datasets_by_biological_limit ++;
 
     }
-   function find_similarity_limit(scores, threshold) {
-       // console.log(scores);
-            var limit = 0;
-       if(scores != null){
-           for (var i = 0; i < scores.length; i++) {
-               var score = scores[i];
-               var key1 = score.key1;
-               var key2 = score.key2;
-               if (score.value < threshold) {
-                   continue;
-               }
-               if(key1 == main_key || key2 == main_key) {
-                   limit++;
-               }
+    function find_similarity_limit(scores, threshold) {
+        // console.log(scores);
+        var limit = 0;
+        if (scores != null) {
+            for (var i = 0; i < scores.length; i++) {
+                var score = scores[i];
+                var key1 = score.key1;
+                var key2 = score.key2;
+                if (score.value < threshold) {
+                    continue;
+                }
+                if (key1 == main_key || key2 == main_key) {
+                    limit++;
+                }
 
-           }
-       }
-       return limit;
-   }
-
+            }
+        }
+        return limit;
+    }
 
 
     /*
