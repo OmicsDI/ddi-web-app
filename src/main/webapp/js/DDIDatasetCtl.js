@@ -86,7 +86,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.biological_similarity_info = data;
         if($scope.biological_similarity_info != null){
             $scope.related_datasets_by_biological_limit = find_similarity_limit($scope.biological_similarity_info.scores, $scope.threshold);
-            // console.log($scope.related_datasets_by_biological_limit)
         }
     }).error(function () {
         console.error("GET error:" + related_datasets_by_biological_url);
@@ -109,7 +108,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             // ret[0] contains the response of the first call
             // ret[1] contains the second response
             // etc.
-        console.log(ret)
             $scope.dataset = ret[0].data;
             prepare_synonyms(ret[1].data);
             get_enrichment_info();    // For enriched synonyms tooltip
@@ -237,8 +235,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                         content:entity.date
                         }
                     );
-                    //console.log($scope.$root.meta_entries);
-
+                    
                     meta_publication = {
                         "title":entity.title,
                          "authors":authors,
@@ -314,7 +311,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             method: 'GET'
         }).success(function (data) {
             var enrichment_info = data;
-            $scope.dataset_enriched = "true";
+            if(enrichment_info != null && !(enrichment_info.toString() === ''))
+                 $scope.dataset_enriched = "true";
+            else
+                $scope.dataset_enriched = "false";
+            console.log($scope.dataset_enriched)
             prepare_synonyms();
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
@@ -331,6 +332,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
      * Split the field in to multiple sentences, with synonyms or without
      */
     function split_by_enrichment_info(enrichment_info) {
+        console.log(enrichment_info)
         if(enrichment_info != null && enrichment_info.accession != null){
             var titleEnrichInfo = enrichment_info.synonyms.name;
             var abstractEnrichInfo = enrichment_info.synonyms.description;
@@ -395,6 +397,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 };
                 sections.push(section);
             }
+            console.log(wholetext);
             return sections;
         }
 
@@ -650,19 +653,18 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         }
 
         var temp_datasets = $scope.related_datasets;
-        console.log(temp_datasets);
         var index = 0;
         $scope.related_datasets = [];
         for(var i = 0; i<temp_datasets.length; i++) {
             var omics_type = temp_datasets[i]['omicsType'];
             if(omics_type instanceof Array){
-                if(omics_type.indexOf('Transcriptomics') != -1)
+                if(omics_type.toString().toLowerCase().indexOf('Transcriptomics'.toLocaleLowerCase()) > -1)
                     omics_type_value = 'Trascriptomics';
-                else if(omics_type.indexOf('Genomics') != -1)
+                else if(omics_type.toString().toLowerCase().indexOf('Genomics'.toLocaleLowerCase()) > -1)
                     omics_type_value = 'Genomics';
-                else if(omics_type.indexOf('Metabolomics') != -1)
+                else if(omics_type.toString().toLowerCase().indexOf('Metabolomics'.toLocaleLowerCase()) > -1)
                     omics_type_value = 'Metabolomics';
-                else if(omics_type.indexOf('Proteomics') != -1)
+                else if(omics_type.toString().toLowerCase().indexOf('Proteomics'.toLocaleLowerCase()) > -1)
                     omics_type_value = 'Proteomics';
             }
             var threshold = FilterThresholds[omics_type_value];
@@ -670,7 +672,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 threshold = 3.1;
             if(temp_datasets[i]['score'] >= threshold) {
                 $scope.related_datasets[index++] = temp_datasets[i];
-                console.log(temp_datasets)
             }
         }
     }
@@ -699,7 +700,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
     }
    function find_similarity_limit(scores, threshold) {
-       // console.log(scores);
             var limit = 0;
        if(scores != null){
            for (var i = 0; i < scores.length; i++) {
