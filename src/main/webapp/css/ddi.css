@@ -1115,6 +1115,12 @@ ul.affix-bottom {
     margin-top: -15px;
     margin-bottom: -10px;
 }
+
+#buttons_highlight_box{
+    margin-bottom: 10px;
+    text-align: right;
+
+}
 .ontology-highlight-on{
     color: #234979;
 }
