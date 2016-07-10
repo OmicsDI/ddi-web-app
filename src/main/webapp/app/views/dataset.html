@@ -79,10 +79,15 @@
                             </span>
 
                         </h4>
-
-                        <p id="ontology_highlight" ng-click="enrich_click()" class="hotword" ng-class="{'ontology-highlight-on': enrich_button_label == 'Enriched' }" style="">
+                        <div id="ontology_highlight_box" >
+                        <a class="hotword" style="color:red" href="{{web_service_url}}dataset/{{domain}}/{{acc}}.json" title="Download MetaData as JSON file" >{JSON}
+                        </a>
+                        <a class="hotword" style="color:dark-blue" href="{{web_service_url}}dataset/{{domain}}/{{acc}}.xml" title="Download MetaData as XML file">&ltXML&gt
+                        </a>
+                        <span  ng-click="enrich_click()" class="hotword" ng-class="{'ontology-highlight-on': enrich_button_label == 'Enriched' }" title="Switch on the Ontology Highlighting" style="">
                             Ontology highlight
-                        </p>
+                        </span>
+                        <div>
                     </div>
                     <hr style="margin-right:10px">
                     <div>

@@ -18,6 +18,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.genomics_list = genomics_list;
     $scope.repositories = repositories;
     $scope.database_urls = database_urls;
+    $scope.web_service_url = web_service_url;
 
     $scope.get_dataset_fail = "";
     $scope.get_similar_dataset_fail = "";
