@@ -4,7 +4,7 @@
  */
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$location', '$window', '$routeParams', '$timeout', '$q', function ($scope, $http, $location, $window, $routeParams, $timeout, $q) {
 
-
+    $scope.web_service_url = web_service_url;
     var long_text_length = 500;
     $scope.acc = $routeParams.acc;
     $scope.domain = $routeParams.domain;
