@@ -1233,3 +1233,51 @@ $lines-to-show: 3;
     border: hidden;
     background: transparent;
 }
+
+.json-button{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.03);
+    color: white;
+}
+
+.json-button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.json-button:hover {
+    background-color: white; /* Green */
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.xml-button{
+    background-color: #E4753D;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.03);
+    color: white;
+}
+
+.xml-button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.xml-button:hover {
+    background-color: white; /* Green */
+    color: black;
+    border:2px solid #E4753D
+}
