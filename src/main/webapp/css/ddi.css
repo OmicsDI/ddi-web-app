@@ -1101,6 +1101,14 @@ ul.affix-bottom {
 /*border-left-color: #00acd6;*/
 /*}*/
 
+.download_as_box {
+    text-align: right;
+    display: block;
+    margin-top: -15px;
+    margin-bottom: -1px;
+}
+
+
 #ontology_highlight_box {
     text-align: right;
     display: block;
