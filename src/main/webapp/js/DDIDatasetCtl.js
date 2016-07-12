@@ -34,6 +34,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.tissue_pre_url = '#/search?q=*:* AND tissue:';
     $scope.organism_pre_url = '#/search?q=*:* AND TAXONOMY:';
     $scope.disease_pre_url = '#/search?q=*:* AND disease:';
+    $scope.reanalysis_list = [];
+    $scope.reanalyzed_list = [];
 
     $scope.threshold = 0.50;
     $scope.threshold = $scope.threshold.toPrecision(2);
@@ -111,6 +113,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             // etc.
             $scope.dataset = ret[0].data;
             prepare_synonyms(ret[1].data);
+            deal_reanalysising();
             get_enrichment_info();    // For enriched synonyms tooltip
 
             if (ret[0].data === null || ret[0].data.id === null) {
@@ -580,6 +583,18 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     }
 
 
+    function deal_reanalysising(){
+        $scope.dataset.similars.forEach(function(d){
+            if(d.relationType == "Reanalysis of"){
+                $scope.reanalysis_list.push(d);
+            }
+
+            if(d.relationType == "Reanalyzed by"){
+                $scope.reanalyzed_list.push(d);
+            }
+        })
+
+    }
     ///**
     // * for tab control
     // */
