@@ -589,6 +589,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
 
     function deal_reanalysising(){
+        if($scope.datasaet.similars == null && $scope.datasaet.similars.length < 1) return;
         $scope.dataset.similars.forEach(function(d){
             if(d.relationType == "Reanalysis of"){
                 $scope.reanalysis_list.push(d);
