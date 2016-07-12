@@ -165,6 +165,22 @@
                           </span>
                         </p>
 
+                        <p ng-show="other_omics_list.length > 0" style="margin-left:15px"  class="align-justify">
+                            <b>OTHER RELATED OMICS DATASETS IN:</b>
+                           <span>
+                               <a ng-repeat="reanalysis_item in other_omics_list" class="biological"
+                                  href="#/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
+                                   <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Proteomics"/>
+                                   <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Metabolomics"/>
+                                   <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Gemonics"/>
+                                    <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Transcriptomics"/>
+
+                                   {{reanalysis_item.accession}}
+                               </a>
+                          </span>
+                        </p>
+
+
                         <p ng-show="dataset.instruments.length > 0 && dataset.instruments[0] != 'Not available'" style="margin-left:15px" ng-show="dataset.instruments" class="align-justify">
                             <b>INSTRUMENT(S):</b>
                            <span>

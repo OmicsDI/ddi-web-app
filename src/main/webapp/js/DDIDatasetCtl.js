@@ -41,6 +41,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
     $scope.disease_pre_url = '#/search?q=*:* AND disease:';
     $scope.reanalysis_list = [];
     $scope.reanalyzed_list = [];
+    $scope.other_omics_list = [];
 
     $scope.threshold = 0.50;
     $scope.threshold = $scope.threshold.toPrecision(2);
@@ -590,6 +591,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
 
     function deal_reanalysising(){
+        console.log($scope.dataset.similars);
         if($scope.dataset.similars == null || $scope.dataset.similars.length < 1) return;
         $scope.dataset.similars.forEach(function(d){
             if(d.relationType == "Reanalysis of"){
@@ -598,6 +600,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
             if(d.relationType == "Reanalyzed by"){
                 $scope.reanalyzed_list.push(d);
+            }
+
+            if(d.relationType == "Other Omics Data in:"){
+                $scope.other_omics_list.push(d);
             }
         })
 
