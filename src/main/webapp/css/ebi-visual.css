@@ -2,12 +2,12 @@
  * Copyright (c) EMBL-EBI 2016
  */
 *{font-weight:normal;font-style:normal;text-decoration:none;text-align:left;text-indent:0}body{margin:0
-auto;width:96%;max-width:1350px}body.narrow{max-width:984px}body.wide{max-width:1600px}body.full-width{max-width:none}body.level1{max-width:1200px}body{font-family:Verdana,sans-serif}@font-face{font-family:'HelveticaNeueLT Pro';src:url('/web_guidelines/fonts/helveticaneueltprolt.eot');src:url('/web_guidelines/fonts/helveticaneueltprolt.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/helveticaneueltprolt.otf') format('opentype'),
+auto;width:96%;max-width:1350px}body.narrow{max-width:984px}body.wide{max-width:1600px}body.full-width{max-width:none}body.level1{max-width:1200px}body{font-family:Verdana,sans-serif}@font-face{font-family:'HelveticaNeueLT Pro';src:url('./web_guidelines/fonts/helveticaneueltprolt.eot');src:url('./web_guidelines/fonts/helveticaneueltprolt.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/helveticaneueltprolt.otf') format('opentype'),
 local('☺'),
-url('/web_guidelines/fonts/helveticaneueltprolt.woff') format('woff'),
-url('/web_guidelines/fonts/helveticaneueltprolt.ttf') format('truetype'),
-url('/web_guidelines/fonts/helveticaneueltprolt.svg#HelveticaNeueLTPro-Lt') format('svg');font-weight:normal;font-style:normal}h1,h2,h3,h4,h5,h6{font-family:'HelveticaNeueLT Pro','Helvetica Neue',Helvetica,Arial,sans-serif;margin:9px
+url('./web_guidelines/fonts/helveticaneueltprolt.woff') format('woff'),
+url('./web_guidelines/fonts/helveticaneueltprolt.ttf') format('truetype'),
+url('./web_guidelines/fonts/helveticaneueltprolt.svg#HelveticaNeueLTPro-Lt') format('svg');font-weight:normal;font-style:normal}h1,h2,h3,h4,h5,h6{font-family:'HelveticaNeueLT Pro','Helvetica Neue',Helvetica,Arial,sans-serif;margin:9px
 0;clear:both;line-height:1.2}h1{font-size:370%;margin:20px
 0}h1.strapline{font-size:277%}h2{font-size:277%;line-height:1.11}h2.strapline{font-size:182%}body.table-layout td
 h2{font-size:277%;line-height:1.11}td h2,
@@ -149,35 +149,35 @@ th{font-weight:bold;background-color:#F2F2EC;border-bottom:3px solid #f7f7f7;col
 table{margin:0;border:none}body.table-layout th, body.table-layout
 td{padding:0;border:none;font-size:100%}table.predoc-details
 th{width:20%;background-color:#aad095}ul,ol{padding:0
-9px 0 27px}ul li>p{padding-left:0}@font-face{font-family:'EBI-Conceptual';src:url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
+9px 0 27px}ul li>p{padding-left:0}@font-face{font-family:'EBI-Conceptual';src:url('./web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot');src:url('./web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
-url('/web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Functional';src:url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
+url('./web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.svg#EBI-Conceptual') format('svg'),
+url('./web_guidelines/fonts/EBI-Conceptual/fonts/EBI-Conceptual.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Functional';src:url('./web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot');src:url('./web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
-url('/web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Generic';src:url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');src:url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
+url('./web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.svg#EBI-Functional') format('svg'),
+url('./web_guidelines/fonts/EBI-Functional/fonts/EBI-Functional.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Generic';src:url('./web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot');src:url('./web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
-url('/web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Species';src:url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),
+url('./web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.svg#EBI-Generic') format('svg'),
+url('./web_guidelines/fonts/EBI-Generic/fonts/EBI-Generic.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Species';src:url('./web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot');src:url('./web_guidelines/fonts/EBI-Species/fonts/EBI-Species.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-Species/fonts/EBI-Species.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),
-url('/web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-SocialMedia';src:url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),
+url('./web_guidelines/fonts/EBI-Species/fonts/EBI-Species.svg#EBI-Species') format('svg'),
+url('./web_guidelines/fonts/EBI-Species/fonts/EBI-Species.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-SocialMedia';src:url('./web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot');src:url('./web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-SocialMedia') format('svg'),
-url('/web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-FileFormats';src:url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.eot');src:url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.woff') format('woff'),
+url('./web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.svg#EBI-SocialMedia') format('svg'),
+url('./web_guidelines/fonts/EBI-SocialMedia/fonts/EBI-SocialMedia.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-FileFormats';src:url('./web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.eot');src:url('./web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.svg#EBI-Functional') format('svg'),
-url('/web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Chemistry';src:url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.eot');src:url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.eot?#iefix') format('embedded-opentype'),
-url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.woff') format('woff'),
+url('./web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.svg#EBI-Functional') format('svg'),
+url('./web_guidelines/fonts/EBI-FileFormats/fonts/EBI-FileFormats.ttf') format('truetype');font-weight:normal;font-style:normal}@font-face{font-family:'EBI-Chemistry';src:url('./web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.eot');src:url('./web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.eot?#iefix') format('embedded-opentype'),
+url('./web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.woff') format('woff'),
 local('☺'),
-url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.svg#EBI-Chemistry') format('svg'),
-url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.ttf') format('truetype');font-weight:normal;font-style:normal}html.fontface
+url('./web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.svg#EBI-Chemistry') format('svg'),
+url('./web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.ttf') format('truetype');font-weight:normal;font-style:normal}html.fontface
 .icon{text-decoration:none;font-style:normal}html.fontface  .icon-conceptual:before{font-family:'EBI-Conceptual';font-size:138.5%;color:#bbb;content:attr(data-icon);margin:0
 0.3em 0 0}html.fontface  .icon-functional:before{font-family:'EBI-Functional';font-size:100%;color:#bbb;content:attr(data-icon);margin:0
 0.3em 0 0}html.fontface  .icon-static:before, html.fontface  .icon-generic:before{font-family:'EBI-Generic';font-size:100%;color:#bbb;content:attr(data-icon);margin:0
@@ -185,7 +185,7 @@ url('/web_guidelines/fonts/EBI-Chemistry/fonts/EBI-Chemistry.ttf') format('truet
 0.3em 0 0}html.fontface  .icon-socialmedia:before{font-family:'EBI-SocialMedia';font-size:100%;color:#bbb;content:attr(data-icon);margin:0
 0.3em 0 0}html.fontface  .icon-fileformats:before{font-family:'EBI-FileFormats';font-size:123.1%;color:#bbb;content:attr(data-icon);margin:0
 0.3em 0 0}html.fontface  .icon-chemistry:before{font-family:'EBI-Chemistry';font-size:100%;color:#bbb;content:attr(data-icon);margin:0
-0.3em 0 0}body{background:#fff url(/web_guidelines/images/global/pale_grey_slight_texture.jpg) top left repeat}div#content{background-color:#fff}div#global-masthead{background-color:#333;color:white}div#local-masthead{}h1,h2,h3,h4,h5,h6{color:#222}h4{color:#666}a,a:link{color:#3e3e3e}a:visited{color:#666}a:hover,a:focus,a:active{color:#000}a.special{background-color:#fff}pre{background-color:#F2F2EC;border-color:#999}code{background-color:#F2F2EC;border-color:#999}kbd{-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px
+0.3em 0 0}body{background:#fff url(./web_guidelines/images/global/pale_grey_slight_texture.jpg) top left repeat}div#content{background-color:#fff}div#global-masthead{background-color:#333;color:white}div#local-masthead{}h1,h2,h3,h4,h5,h6{color:#222}h4{color:#666}a,a:link{color:#3e3e3e}a:visited{color:#666}a:hover,a:focus,a:active{color:#000}a.special{background-color:#fff}pre{background-color:#F2F2EC;border-color:#999}code{background-color:#F2F2EC;border-color:#999}kbd{-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px
 solid #777;color:#222;background-color:#ccc;background-image:-moz-linear-gradient(top, #ccc, #666);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0, #ccc),color-stop(1, #666));background-image:-webkit-linear-gradient(#ccc, #666);background-image:linear-gradient(top, #ccc, #666);filter:progid:DXImageTransform.Microsoft.gradient(startColorStr='#ccc', EndColorStr='#666');padding:0.2em 0.3em}.mute{color:#666}div.alert{border-left:3px solid #FFB3CA}h2.alert,h3.alert,h4.alert{color:#FFB3CA}html.fontface  h2.alert:before,
 html.fontface  h3.alert:before,
 html.fontface  h4.alert:before{font-family:'EBI-Generic';font-size:100%;content:"l";margin:0
@@ -213,7 +213,7 @@ object{margin:0
 div.views-field-citation a:visited{border-bottom:0 none}div.views-field-citation .biblio-title
 a{font-size:123.1%;font-weight:bold}#search-extras.expander
 #ebi_search_results{position:absolute;z-index:500;right:4px;-moz-box-shadow:5px 5px 8px #666;-webkit-box-shadow:5px 5px 8px #666;box-shadow:5px 5px 8px #666;min-width:275px}#search-extras #ebi_search_results
-h3{cursor:pointer}#search-extras #ebi_search_results h3.slideToggle:hover{background-color:#333;color:white}.loading{background:url(/web_guidelines/images/global/ajax-loader.gif) no-repeat 99%}#search-extras #ebi_search_results
+h3{cursor:pointer}#search-extras #ebi_search_results h3.slideToggle:hover{background-color:#333;color:white}.loading{background:url(./web_guidelines/images/global/ajax-loader.gif) no-repeat 99%}#search-extras #ebi_search_results
 p{margin-top:9px}#search-extras #ebi_search_results
 ul{list-style:none;padding-left:9px}#search-extras #ebi_search_results ul
 span{color:#555}#search-extras #ebi_search_results ul a:link,

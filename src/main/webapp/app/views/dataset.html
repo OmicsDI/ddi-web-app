@@ -136,6 +136,26 @@
 
                     <div class="row" id="dataset_protocol_bottom"
                          style="margin-top:10px margin-left:10px">
+                         <p ng-show="reanalysis_list.length > 0" style="margin-left:15px"  class="align-justify">
+                            <b>REANALYSIS of:</b>
+                           <span>
+                               <a ng-repeat="reanalysis_item in reanalysis_list" class="biological"
+                                  href="#/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
+                                   {{reanalysis_item.accession}}
+                               </a>
+                          </span>
+                        </p>
+
+                         <p ng-show="reanalyzed_list.length > 0" style="margin-left:15px"  class="align-justify">
+                            <b>REANALYZED by:</b>
+                           <span>
+                               <a ng-repeat="reanalyzed_item in reanalyzed_list" class="biological"
+                                  href="#/dataset/{{reanalyzed_item.database}}/{{reanalyzed_item.accession}}">
+                                   {{reanalyzed_item.accession}}
+                               </a>
+                          </span>
+                        </p>
+
                         <p ng-show="dataset.instruments.length > 0 && dataset.instruments[0] != 'Not available'" style="margin-left:15px" ng-show="dataset.instruments" class="align-justify">
                             <b>INSTRUMENT(S):</b>
                            <span>
