@@ -359,11 +359,6 @@ var pie_charts_repos_omics = function () {
             /*
              * prepare the treemap data
              */
-            var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, GPMdb";
-            var metabolomics_list = "MetaboLights Dataset,MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, Metabolome Workbench, GNPS, MetabolomeExpress";
-            var genomics_list = "ega,EGA";
-            var transcriptomics_list = "ArrayExpress, arrayexpress-repository, atlas-experiments, Expression Atlas Experiments";
-
             var repos_data = [
                     {
                         "name": "Proteomics",
