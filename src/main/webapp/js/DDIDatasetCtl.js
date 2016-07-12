@@ -116,7 +116,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             // ret[0] contains the response of the first call
             // ret[1] contains the second response
             // etc.
-            $scope.dataset = ret[0].data;
+       
+        $scope.dataset = ret[0].data;
             prepare_synonyms(ret[1].data);
             deal_reanalysising();
             get_enrichment_info();    // For enriched synonyms tooltip
@@ -324,7 +325,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                  $scope.dataset_enriched = "true";
             else
                 $scope.dataset_enriched = "false";
-            console.log($scope.dataset_enriched)
+            console.log(enrichment_info);
             prepare_synonyms();
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
