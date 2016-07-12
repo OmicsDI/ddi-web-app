@@ -1295,3 +1295,9 @@ $lines-to-show: 3;
     color: black;
     border:2px solid #E4753D
 }
+
+.ddi-icon-in-reanalysis{
+    width:15px;
+    height:10px;
+    margin-bottom:4px
+}
