@@ -141,6 +141,11 @@
                            <span>
                                <a ng-repeat="reanalysis_item in reanalysis_list" class="biological"
                                   href="#/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
+                                   <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalysis_item.database)>-1" style="width:15px;height:15px" title="Proteomics"/>
+                                   <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalysis_item.database)>-1" style="width:15px;height:15px" title="Metabolomics"/>
+                                   <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalysis_item.database)>-1" style="width:15px;height:15px" title="Gemonics"/>
+                                    <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalysis_item.database)>-1" style="width:15px;height:15px" title="Transcriptomics"/>
+
                                    {{reanalysis_item.accession}}
                                </a>
                           </span>
@@ -151,6 +156,10 @@
                            <span>
                                <a ng-repeat="reanalyzed_item in reanalyzed_list" class="biological"
                                   href="#/dataset/{{reanalyzed_item.database}}/{{reanalyzed_item.accession}}">
+                                   <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalyzed_item.database)>-1" style="width:15px;height:15px" title="Proteomics"/>
+                                   <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalyzed_item.database)>-1" style="width:15px;height:15px" title="Metabolomics"/>
+                                   <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalyzed_item.database)>-1" style="width:15px;height:15px" title="Gemonics"/>
+                                    <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalyzed_item.database)>-1" style="width:15px;height:15px" title="Transcriptomics"/>
                                    {{reanalyzed_item.accession}}
                                </a>
                           </span>
