@@ -8,7 +8,7 @@
 
     //var web_service_url = 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/';
     var web_service_url = 'http://localhost:9091/';
-    var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive";
+    var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, gpmdb";
     var metabolomics_list = "MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench, metabolome_express";
     var transcriptomics_list = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments";
     var genomics_list = "ega,EGA";

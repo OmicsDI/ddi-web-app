@@ -722,18 +722,19 @@ var barcharts_years_omics_types = function () {
             var body = d3.select('#barchart_omicstype_annual');
         var div_width_px = body.style("width");
         var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
-        var most_access_div_height_px = d3.select('#most_accessed_datasets').style('height');
-        var div_height = parseInt(most_access_div_height_px.substr(0, most_access_div_height_px.length - 2));
+        var latest_datasets_div_height_px = d3.select('#latestdatasetspanel').style('height');
+        var div_height = parseInt(latest_datasets_div_height_px.substr(0, latest_datasets_div_height_px.length - 2));
+        div_height = 288;
 
             //prepare graph data
         var body = d3.select('#barchart_omicstype_annual');
         var div_width = parseInt(body.style("width"));
-        var div_height= parseInt(d3.select('#most_accessed_datasets').style('height'));
+        // var div_height= parseInt(d3.select('#latestdatasetspanel').style('height'));
         var height_offset = 50;
             //var div_width = 420;
             var margin = {top: 20, right: 20, bottom: 20, left: 60},
                 width = div_width - margin.left - margin.right,
-                height = div_height*3.05 - margin.top - margin.bottom;
+                height = div_height - margin.top - margin.bottom;
 
 	     body.attr("position", "relative");
 
