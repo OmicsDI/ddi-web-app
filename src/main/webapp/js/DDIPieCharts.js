@@ -332,7 +332,7 @@ var pie_charts_repos_omics = function () {
         .await(draw_chart_repos_omics); // function that uses files
 
     function draw_chart_repos_omics(error, domains, omicstype) {
-
+        
         if (error) {
             retry_limit_time--;
             if (retry_limit_time <= 0) {
@@ -347,6 +347,7 @@ var pie_charts_repos_omics = function () {
             var repos = transformdomains(domains);
             omicstype.shift();
             omicstype.pop();
+            omicstype = deal_case_sensitive_ids(omicstype);
 
             omics = omicstype.sort(function (a, b) {
                 return parseInt(a.value) - parseInt(b.value);
@@ -464,7 +465,7 @@ var pie_charts_repos_omics = function () {
               var margin_value = margin_value_before > 65 ? 65 : margin_value_before;
               var lower = d3.scale.linear().domain([0,1000]).range([rect_height*3 + 28,rect_height*2 + 28]).clamp(true),
                   upper = d3.scale.linear().domain([1001,5000]).range([rect_height*2 + 18,rect_height + 18]).clamp(true),
-                  most  = d3.scale.linear().domain([5001, 70000]).range([rect_height + 8, 8]).clamp(true),
+                  most  = d3.scale.linear().domain([5001, 80000]).range([rect_height + 8, 8]).clamp(true),
                   color = d3.scale.category10();
 
               var svg = body.append("svg").attr("width", width).attr("height",  svg_height).attr('margin-top', 10).attr("id", piechartname + "_svg");
@@ -691,6 +692,36 @@ var pie_charts_repos_omics = function () {
             return sum;
         };
 
+        function deal_case_sensitive_ids(omicstype){
+           var new_omicstype = [];
+           if(omicstype==null || omicstype.length<1) return; 
+           omicstype.forEach(
+               function(d){
+                    var index = findInNewArray(d.id.toLowerCase());
+                    if(index < 0) {
+                        d.id = d.id.toLowerCase();
+                        new_omicstype.push(d);
+                    }
+                    else{
+                        new_omicstype[index].value = parseInt(new_omicstype[index].value) + parseInt(d.value);
+                    }
+                    
+                    function findInNewArray(tempid){
+                        var index = -1;
+                        for(var i=0; i<new_omicstype.length; i++){
+                            if(new_omicstype[i].id == tempid){
+                                index = i;
+                                return index;
+                            }
+                        }
+                        return index;
+                    }
+                   
+                   }
+           );
+            
+            return new_omicstype;
+        }
     }
 
 }
