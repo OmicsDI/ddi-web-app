@@ -2,7 +2,7 @@
  * Results display controller
  * Responsible for visualising search results.
  */
-angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', 'ngProgressFactory', function ($scope, $location, $http, results, ngProgressFactory) {
+angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', 'ngProgressFactory','$window',function ($scope, $location, $http, results, ngProgressFactory, $window) {
 
     $scope.result = {
         entries: []
@@ -45,10 +45,15 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () {
         return results.get_result();
     }, function (newValue, oldValue) {
-        if (newValue !== null) {
+        if (newValue !== null && newValue!=oldValue) {
             $scope.$root.completing = false;
             $scope.result = newValue;
-            jump_if_has_one();
+            
+        if($scope.result.datasets.length == 1){
+            dataset1 = $scope.result.datasets[0];
+            var new_path = "#/dataset/"+dataset1.source+"/"+dataset1.id;
+            $window.location = $window.location.pathname + new_path;
+        } else{
             $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
             $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
             $scope.query = $location.search().q;
@@ -59,6 +64,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             get_new_indexes();
             check_omics_type_null();
             change_GNPS_domainName();
+            }
         }
     });
 
@@ -68,7 +74,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     $scope.$watch(function () {
         return results.get_status();
     }, function (newValue, oldValue) {
-        if (newValue !== null) {
+        if (newValue !== null && newValue!=oldValue) {
             $scope.display_search_interface = newValue;
         }
     });
