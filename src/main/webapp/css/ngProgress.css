@@ -19,7 +19,7 @@
 
 /* Styling for the ngProgress-container */
 #ngProgress-container {
-    position: fixed;
+/*    position: fixed;*/
     margin: 0;
     padding: 0;
     top: 0;

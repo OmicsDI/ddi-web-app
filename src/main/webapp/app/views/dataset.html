@@ -53,11 +53,12 @@
                     </h3>
                 </div>
                 <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-                    <img src="img/omics/Multipleomics.png" ng-show="dataset.omics_type.indexOf('Multi-Omics') != -1 || dataset.omics_type.length > 1"/>
-                    <img src="img/omics/Proteomics.png" ng-show="dataset.omics_type.indexOf('Proteomics') != -1 && dataset.omics_type.indexOf('Multi-Omics') == -1 && dataset.omics_type.length == 1"/>
-                    <img src="img/omics/Metabolomics.png" ng-show="dataset.omics_type.indexOf('Metabolomics') != -1 && dataset.omics_type.indexOf('Multi-Omics') == -1 && dataset.omics_type.length == 1"/>
-                    <img src="img/omics/Genomics.png" ng-show="dataset.omics_type.indexOf('Genomics') != -1 && dataset.omics_type.indexOf('Multi-Omics') == -1 && dataset.omics_type.length == 1"/>
-                    <img src="img/omics/Transcriptomics.png" ng-show="(dataset.omics_type.indexOf('transcriptomics') != -1 || dataset.omics_type.indexOf('Transcriptomics') != -1) && dataset.omics_type.indexOf('Multi-Omics') == -1 && dataset.omics_type.length == 1"/>
+
+                    <img src="img/omics/Multipleomics.png" ng-show="dataset.omics_type.indexOf('Multi-Omics') != -1"/>
+                    <img src="img/omics/Proteomics.png" ng-show="dataset.omics_type.indexOf('Proteomics') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1"/>
+                    <img src="img/omics/Metabolomics.png" ng-show="dataset.omics_type.indexOf('Metabolomics') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1"/>
+                    <img src="img/omics/Genomics.png" ng-show="dataset.omics_type.indexOf('Genomics') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1 "/>
+                    <img src="img/omics/Transcriptomics.png" ng-show="(dataset.omics_type.indexOf('Transcriptomics') == 0 || dataset.omics_type.indexOf('transcriptomics') == 0) && dataset.omics_type.indexOf('Multi-Omics') == -1"/>
 
                     <br>
                     <br>
@@ -144,7 +145,7 @@
                                    <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Proteomics"/>
                                    <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Metabolomics"/>
                                    <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Gemonics"/>
-                                    <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Transcriptomics"/>
+                                   <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Transcriptomics"/>
 
                                    {{reanalysis_item.accession}}
                                </a>
@@ -159,7 +160,7 @@
                                    <img src="img/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalyzed_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Proteomics"/>
                                    <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalyzed_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Metabolomics"/>
                                    <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalyzed_item.database)>-1" class = "ddi-icon-in-reanalysis"  title="Gemonics"/>
-                                    <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalyzed_item.database)>-1" class = "ddi-icon-in-reanalysis"  title="Transcriptomics"/>
+                                   <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(reanalyzed_item.database)>-1" class = "ddi-icon-in-reanalysis"  title="Transcriptomics"/>
                                    {{reanalyzed_item.accession}}
                                </a>
                           </span>
@@ -388,11 +389,11 @@
                                 <br>
                                 <br>
                             <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit"  class="title_one_line" style="height: 2.0em">
-                                <img src="img/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1 || relatedDataset.omicsType.length > 1"/>
-                                <img src="img/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                                <img src="img/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                                <img src="img/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                                <img src="img/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') != -1 || relatedDataset.omicsType.indexOf('transcriptomics') != -1) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
+                                <img src="img/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1"/>
+                                <img src="img/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1"/>
+                                <img src="img/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1"/>
+                                <img src="img/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 "/>
+                                <img src="img/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1"/>
                                 <a target="" class="align-justify"
                                            href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>
                                             {{relatedDataset.title}}
@@ -458,11 +459,12 @@
                     ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
                     <div class="project-widget  list-group-item ddi-card-panel">
                         <div class="project-widget-accession">
-                            <img src="img/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1 || relatedDataset.omicsType.length > 1"/>
-                            <img src="img/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                            <img src="img/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                            <img src="img/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
-                            <img src="img/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') != -1 || relatedDataset.omicsType.indexOf('transcriptomics') != -1)  && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 && relatedDataset.omicsType.length == 1"/>
+
+                            <img src="img/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1"/>
+                            <img src="img/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1"/>
+                            <img src="img/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1"/>
+                            <img src="img/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 "/>
+                            <img src="img/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1"/>
                             <a target="" class="align-justify"
                                href={{"#/dataset/"+relatedDataset.source+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
                         </div>

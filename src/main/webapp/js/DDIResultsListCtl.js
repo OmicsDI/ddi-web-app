@@ -103,6 +103,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                 elem.parentNode.removeChild(elem);
             }
             $scope.progressbar = ngProgressFactory.createInstance();
+            $scope.progressbar.setParent(document.getElementById('ngProgressOutContainer'));
             $scope.progressbar.set(35);
         }
         else {
