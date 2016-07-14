@@ -1125,6 +1125,10 @@ ul.affix-bottom {
     color: #234979;
 }
 
+#ontology_highlight_box .i.fa.fa-pencil-square-o {
+    margin-right: 5px;
+}
+
 .synonym_even{
     color: wheat;
 }
