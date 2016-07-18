@@ -550,7 +550,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     tobeReduced = "false"
                 }
                 var section = {
-                    "text": wordText,
+                    "text": wholetext.substring(realWordStart, realWordEnd),
                     "beAnnotated": "true",
                     "synonyms": synonyms,
                     "tobeReduced": tobeReduced
