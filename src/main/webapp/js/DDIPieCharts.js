@@ -581,6 +581,8 @@ var pie_charts_repos_omics = function () {
                            searchWord = searchWord_pre + "MetaboLights" + '"';
                       if (data_add_key[i].name.toString() == "Metabolome Workbench")
                            searchWord = searchWord_pre + "MetabolomicsWorkbench" + '"';
+                      if (data_add_key[i].name.toString() == "Expression Atlas Experiments")
+                          searchWord = searchWord_pre + "ExpressionAtlas" + '"';
                         angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                   })
             }

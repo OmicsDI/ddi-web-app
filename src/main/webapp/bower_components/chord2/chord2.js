@@ -26,6 +26,8 @@
                 tooltip = d3.select('#chord_diagram').append("div")
                     .attr("id", "chord_diagram_tooltip")
                     .attr("class", "chart_tooltip")
+                    .style("left", "5px")
+                    .style("top",  "5px")
                     .style("opacity", 1);
             }
 
@@ -34,6 +36,8 @@
                 tooltip_click = d3.select('#chord_diagram').append("div")
                     .attr("id", "chord_diagram_tooltip_click")
                     .attr("class", "chart_tooltip")
+                    .style("left", "5px")
+                    .style("top",  "5px")
                     .style("opacity", 1);
             }
             selection.each(function (d, i) {
