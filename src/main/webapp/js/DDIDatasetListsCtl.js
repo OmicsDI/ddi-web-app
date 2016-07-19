@@ -98,6 +98,13 @@ angular.module('ddiApp').controller('DatasetListsCtrl', ['$scope', '$http', func
         console.log("GET error:" + url);
     });
 
+    $scope.getMonthDay = function (dateString){
+        var month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; 
+        var month_int = dateString.substr(4,2);
+        var day_int = dateString.substr(6,2);
+        var month = month_names_short[month_int - 1]; 
+        return month + " " + day_int;
+    }
 
 }])
     .filter("megaNumber", function () {

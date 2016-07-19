@@ -142,6 +142,7 @@
                             <img src="img/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" title="Metabolomics"/>
                             <img src="img/omics/Genomics2.png" ng-show="genomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" title="Gemonics"/>
                             <img src="img/omics/Transcriptomics2.png" ng-show="transcriptomics_list.indexOf(dataset.source)>-1" style="width:15px;height:15px" title="Transcriptomics"/>
+                            {{getMonthDay(dataset.publicationDate)}}
                             <a href={{"#/dataset/"+dataset.source+"/"+dataset.id}}
                                title={{dataset.title}}>
                                 {{dataset.title}}
