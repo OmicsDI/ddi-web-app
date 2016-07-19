@@ -148,6 +148,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
             $scope.$root.meta_entries = [];
 
+            document.title = $scope.dataset.name;
+
 
             //get and prepare each publication's data
             if ($scope.dataset.publicationIds === null) return;

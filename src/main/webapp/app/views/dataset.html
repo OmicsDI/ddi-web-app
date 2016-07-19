@@ -431,9 +431,14 @@
                   var acc_database = getAccDatabase();
                   this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical URL variable
                   this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                  this.page.title = acc_database["database"] + " - " + acc_database["acc"];
+                  this.page.title = "(" + acc_database["database"] + " - " + acc_database["acc"] + ") - " + document.title;
               };
               function getAccDatabase() {
+
+                  while(document.title == "OmicsDI Dataset"){
+                      wait(10);
+                  }
+
                   var url = document.location.toString();
                   var arrUrl = url.split("//");
                   var start = arrUrl[1].indexOf("/");
