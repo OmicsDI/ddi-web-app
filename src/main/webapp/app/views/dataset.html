@@ -406,7 +406,7 @@
                     </div>
                 </div>
                 <!--row-->
-                     <p><span data-icon="i" class="icon icon-generic"></span>The biological similarity score is the number of molecules (Proteins, Metabolites, Genes) common between two different projects.</p>
+                     <p style="font-size:11px; color:#bbb"><span data-icon="i" class="icon icon-generic"></span>The biological similarity score is calculated based on the number of molecules (Proteins, Metabolites, Genes) common between two different projects.</p>
             </div>
             <!--dataset_bottom_panel-->
     <div class="panel panel-default">
@@ -428,9 +428,27 @@
                   indexDataset = currentURL.indexOf("dataset");
 
               var disqus_config = function () {
-              this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical URL variable
-              this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                  var acc_database = getAccDatabase();
+                  this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical URL variable
+                  this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                  this.page.title = acc_database["database"] + " - " + acc_database["acc"];
               };
+              function getAccDatabase() {
+                  var url = document.location.toString();
+                  var arrUrl = url.split("//");
+                  var start = arrUrl[1].indexOf("/");
+                  var relUrl = arrUrl[1].substring(start);
+                  if(relUrl.indexOf("?") != -1){
+                          relUrl = relUrl.split("?")[0];
+                      }
+
+                  var reg_address = /(\w+)\/(\w+)$/;
+                  var result_array = reg_address.exec(relUrl);
+                  var acc_database = {};
+                  acc_database["database"] = result_array[1];
+                  acc_database["acc"] = result_array[2];
+                  return acc_database;
+               }
 
               (function() { // DON'T EDIT BELOW THIS LINE
               var d = document, s = d.createElement('script');
