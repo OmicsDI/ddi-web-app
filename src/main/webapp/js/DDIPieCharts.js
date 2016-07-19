@@ -483,20 +483,20 @@ var pie_charts_repos_omics = function () {
                 svg.selectAll("text").remove();
               }
 
-              svg.selectAll("text")
-                 .data(data_add_key).enter()
-                 .append("text")
-                 .attr("class", "xAxisText")
-                 .attr("x", function(d,i){ return 70 + i * margin_value;})
-                 .attr("y", svg_height - 17)
-                 .attr("text-anchor", "front")
-                 .attr("font-family", "sans-serif")
-                 .attr("font-size", "0.8em")
-                 .attr("font-weight", "300")
-                 .text(function(d) { return d.name.toString().length > 4 ? d.name.substr(0, 4) + ".." : d.name;})
-                 .attr("transform", function(d, i) {
-                   return "rotate(-45 " + (75 + i * margin_value) + " " + (svg_height + 10) + ")translate(0,10)";
-                 });
+              // svg.selectAll("text")
+              //    .data(data_add_key).enter()
+              //    .append("text")
+              //    .attr("class", "xAxisText")
+              //    .attr("x", function(d,i){ return 70 + i * margin_value;})
+              //    .attr("y", svg_height - 17)
+              //    .attr("text-anchor", "front")
+              //    .attr("font-family", "sans-serif")
+              //    .attr("font-size", "0.8em")
+              //    .attr("font-weight", "300")
+              //    .text(function(d) { return d.name.toString().length > 4 ? d.name.substr(0, 4) + ".." : d.name;})
+              //    .attr("transform", function(d, i) {
+              //      return "rotate(-45 " + (75 + i * margin_value) + " " + (svg_height + 10) + ")translate(0,10)";
+              //    });
 
               svg.selectAll("rect.lower")
                  .data(data_now).enter()
