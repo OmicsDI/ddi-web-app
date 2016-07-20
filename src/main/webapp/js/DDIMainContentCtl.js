@@ -30,7 +30,11 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
             $scope.$root.show_top_search = false
         }
 
-        if ($location.path().match('/dataset')){
+        if ($location.path().match('/search')){
+            $scope.$root.show_progress_bar = true;
+        }
+        else{
+            $scope.$root.show_progress_bar = false;
         }
         ///**
         // * set title of each page
