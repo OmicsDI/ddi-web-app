@@ -20,7 +20,7 @@
     <meta content={{meta_dataset_title}} name="dataset_title">
     <meta content={{meta_dataset_abstract}} name="dataset_abstract">
     <meta content={{meta_dataset_identifier}} name="dataset_identifier">
-    <meta ng-repeat="entry in meta_entries" name ={{entry.name}} content={{entry.content}}>
+    <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
 
 
     <title>OmicsDI: Home</title>
@@ -67,50 +67,50 @@
     <div id="" class="container" style="margin:0px;">
 
         <!-- local-search -->
-  <div id="ddi-local-masthead" style="height:105px;"  class="row">
-        <!-- local-title -->
-        <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-        <div class="grid_12 alpha logo-title col-md-6" id="local-title">
-            <a href="#/home" title="Back to OmicsDI homepage"><img src="img/logo/OmicsDI-icon-3.png"
-                                                                    alt="logo"
-                                                                    width="64" height="64"></a>
-            <span ><h1><a href="#/home" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
-        </div>
-        <!-- /local-title -->
+        <div id="ddi-local-masthead" style="height:105px;" class="row">
+            <!-- local-title -->
+            <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
+            <div class="grid_12 alpha logo-title col-md-6" id="local-title">
+                <a href="#/home" title="Back to OmicsDI homepage"><img src="img/logo/OmicsDI-icon-3.png"
+                                                                       alt="logo"
+                                                                       width="64" height="64"></a>
+                <span><h1><a href="#/home" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
+            </div>
+            <!-- /local-title -->
 
-        <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
-        <!-- /local-search -->
-    <div ng-controller="QueryCtrl" id="queryCtrl" class="col-md-6"  ng-show="show_top_search"
-         style="height:105px; float:right; margin-top:0px; z-index:1; width:45%">
-        <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-            <fieldset>
-                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                    <div class="input-group ">
-                        <autocomplete ng-model="query.text"
-                                      attr-placeholder="organism, repository, gene, tissue, accession"
-                                      click-activation="false" data="words" on-type="get_suggestions"
-                                      on-select="do_query"></autocomplete>
-                        <!--
-                                                        <input type="text" style="background-color:#fff; width:99%"
-                                                               placeholder="organism, repository, gene, tissue, accession"
-                                                               class="form-control"
-                                                               id="query-text"
-                                                               name="text"
-                                                               tabindex="1"
-                                                               ng-model="query.text"
-                                                               ng-minlength="2"
-                                                               ng-maxlength="1000"
-                                                               autocomplete="off"
-                                                               required>
-                        -->
-                        <div class="input-group-btn">
-                            <button type="submit" class="btn btn-primary ddi-btn">
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                        </div>
-                        <!-- /input-group-btn -->
-                    </div>
-                    <!--input-group -->
+            <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
+            <!-- /local-search -->
+            <div ng-controller="QueryCtrl" id="queryCtrl" class="col-md-6" ng-show="show_top_search"
+                 style="height:105px; float:right; margin-top:0px; z-index:1; width:45%">
+                <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                    <fieldset>
+                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                            <div class="input-group ">
+                                <autocomplete ng-model="query.text"
+                                              attr-placeholder="organism, repository, gene, tissue, accession"
+                                              click-activation="false" data="words" on-type="get_suggestions"
+                                              on-select="do_query"></autocomplete>
+                                <!--
+                                                                <input type="text" style="background-color:#fff; width:99%"
+                                                                       placeholder="organism, repository, gene, tissue, accession"
+                                                                       class="form-control"
+                                                                       id="query-text"
+                                                                       name="text"
+                                                                       tabindex="1"
+                                                                       ng-model="query.text"
+                                                                       ng-minlength="2"
+                                                                       ng-maxlength="1000"
+                                                                       autocomplete="off"
+                                                                       required>
+                                -->
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary ddi-btn">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                                <!-- /input-group-btn -->
+                            </div>
+                            <!--input-group -->
                      <span class="help-block example-searches">
                          <small>
                              <i>
@@ -125,94 +125,94 @@
                              </i>
                          </small>
                      </span>
-                    <!--
-                    <label class="control-label ng-cloak has-error"
-                           for="query-text"
-                           ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                           ng-cloak>
-                        Your query is too short
-                    </label>
-                    <label class="control-label ng-cloak"
-                           for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                           ng-cloak>
-                        Your query is too long
-                    </label>
-                    -->
-                </div>
-                <!-- /form-group -->
-            </fieldset>
-        </form>
-    </div>
+                            <!--
+                            <label class="control-label ng-cloak has-error"
+                                   for="query-text"
+                                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                                   ng-cloak>
+                                Your query is too short
+                            </label>
+                            <label class="control-label ng-cloak"
+                                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                                   ng-cloak>
+                                Your query is too long
+                            </label>
+                            -->
+                        </div>
+                        <!-- /form-group -->
+                    </fieldset>
+                </form>
+            </div>
 
- </div>
+        </div>
 
         <div id="local-masthead" class="masthead raw" style="margin-left:-15px;margin-right:-15px">
-        <!-- local-nav -->
-        <nav style="float:bottom">
-            <ul class="" id="local-nav">
-                <li class=" first" id="home-menu"><a title="Home" href="#/home/">Home</a></li>
-                <li class="" id="browse-menu"><a title="Browse"
-                                                 href="#/search?q=*:*">Browse</a>
-                </li>
-                <li class="" id="api-menu"><a title="OmicsDI API" href="#/api">API</a>
-                </li>
-                <li class=" last" id="about-prider-menu"><a title="Databases"
-                                                            href="#/databases">Databases</a>
-                </li>
-                <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-                add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-                whichever one will show up last...
-                For example: -->
-                <li class="functional last"><a data-icon="\" class="icon icon-static"
-                                               href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a>
-                </li>
-                <li class="functional"><a class="" href="#/about">About</a></li>
-                <li class="functional"><a class="" href="#/help">Help</a></li>
-                <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l"
-                                                                        class="icon icon-functional"
-                                                                        href="http://www.ebi.ac.uk/pride/archive/login">Login</a>
-                </li>
-                <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5"
-                                                                                 class="icon icon-functional"
-                                                                                 href="http://www.ebi.ac.uk/pride/archive/register">Register</a>
-                </li>
-            </ul>
-        </nav>
+            <!-- local-nav -->
+            <nav style="float:bottom">
+                <ul class="" id="local-nav">
+                    <li class=" first" id="home-menu"><a title="Home" href="#/home/">Home</a></li>
+                    <li class="" id="browse-menu"><a title="Browse"
+                                                     href="#/search?q=*:*">Browse</a>
+                    </li>
+                    <li class="" id="api-menu"><a title="OmicsDI API" href="#/api">API</a>
+                    </li>
+                    <li class=" last" id="about-prider-menu"><a title="Databases"
+                                                                href="#/databases">Databases</a>
+                    </li>
+                    <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
+                    add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
+                    whichever one will show up last...
+                    For example: -->
+                    <li class="functional last"><a data-icon="\" class="icon icon-static"
+                                                   href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a>
+                    </li>
+                    <li class="functional"><a class="" href="#/about">About</a></li>
+                    <li class="functional"><a class="" href="#/help">Help</a></li>
+                    <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l"
+                                                                            class="icon icon-functional"
+                                                                            href="http://www.ebi.ac.uk/pride/archive/login">Login</a>
+                    </li>
+                    <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5"
+                                                                                     class="icon icon-functional"
+                                                                                     href="http://www.ebi.ac.uk/pride/archive/register">Register</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <!-- /local-nav -->
     </div>
 </header>
-    <div ng-controller="QueryCtrl" id="queryCtrl" class=""  ng-show="show_top_search" ng-hide="true"
-         style="height:105px; float:right; margin-top:-140px; z-index:1; width:45%">
-        <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
-            <fieldset>
-                <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-                    <div class="input-group ">
-                        <autocomplete ng-model="query.text"
-                                      attr-placeholder="organism, repository, gene, tissue, accession"
-                                      click-activation="false" data="words" on-type="get_suggestions"
-                                      on-select="do_query"></autocomplete>
-                        <!--
-                                                        <input type="text" style="background-color:#fff; width:99%"
-                                                               placeholder="organism, repository, gene, tissue, accession"
-                                                               class="form-control"
-                                                               id="query-text"
-                                                               name="text"
-                                                               tabindex="1"
-                                                               ng-model="query.text"
-                                                               ng-minlength="2"
-                                                               ng-maxlength="1000"
-                                                               autocomplete="off"
-                                                               required>
-                        -->
-                        <div class="input-group-btn">
-                            <button type="submit" class="btn btn-primary ddi-btn">
-                                <i class="fa fa-search"></i> Search
-                            </button>
-                        </div>
-                        <!-- /input-group-btn -->
+<div ng-controller="QueryCtrl" id="queryCtrl" class="" ng-show="show_top_search" ng-hide="true"
+     style="height:105px; float:right; margin-top:-140px; z-index:1; width:45%">
+    <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+        <fieldset>
+            <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                <div class="input-group ">
+                    <autocomplete ng-model="query.text"
+                                  attr-placeholder="organism, repository, gene, tissue, accession"
+                                  click-activation="false" data="words" on-type="get_suggestions"
+                                  on-select="do_query"></autocomplete>
+                    <!--
+                                                    <input type="text" style="background-color:#fff; width:99%"
+                                                           placeholder="organism, repository, gene, tissue, accession"
+                                                           class="form-control"
+                                                           id="query-text"
+                                                           name="text"
+                                                           tabindex="1"
+                                                           ng-model="query.text"
+                                                           ng-minlength="2"
+                                                           ng-maxlength="1000"
+                                                           autocomplete="off"
+                                                           required>
+                    -->
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary ddi-btn">
+                            <i class="fa fa-search"></i> Search
+                        </button>
                     </div>
-                    <!--input-group -->
+                    <!-- /input-group-btn -->
+                </div>
+                <!--input-group -->
                      <span class="help-block example-searches">
                          <small>
                              <i>
@@ -227,30 +227,28 @@
                              </i>
                          </small>
                      </span>
-                    <!--
-                    <label class="control-label ng-cloak has-error"
-                           for="query-text"
-                           ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                           ng-cloak>
-                        Your query is too short
-                    </label>
-                    <label class="control-label ng-cloak"
-                           for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                           ng-cloak>
-                        Your query is too long
-                    </label>
-                    -->
-                </div>
-                <!-- /form-group -->
-            </fieldset>
-        </form>
-    </div>
-
-
+                <!--
+                <label class="control-label ng-cloak has-error"
+                       for="query-text"
+                       ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                       ng-cloak>
+                    Your query is too short
+                </label>
+                <label class="control-label ng-cloak"
+                       for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                       ng-cloak>
+                    Your query is too long
+                </label>
+                -->
+            </div>
+            <!-- /form-group -->
+        </fieldset>
+    </form>
+</div>
 
 
 <div id="wrapper" class="container ng-cloak" ng-show="true">
-   <div id="ngProgressOutContainer"></div>
+    <div id="ngProgressOutContainer"></div>
     <!--main container of page -->
     <div ng-view></div>
     <!-- </div> ResultsListCtrl -->
@@ -289,11 +287,14 @@
                     <div class="col-md-3 col-sm-4 col-xs-4">
                         <ul>
 
-                            <li><a target="_blank" href="http://www.ebi.ac.uk/pride/archive/" class="no-icon">PRIDE</a></li>
+                            <li><a target="_blank" href="http://www.ebi.ac.uk/pride/archive/" class="no-icon">PRIDE</a>
+                            </li>
 
-                            <li><a target="_blank" href="http://www.peptideatlas.org/" class="no-icon">PeptideAtlas</a></li>
+                            <li><a target="_blank" href="http://www.peptideatlas.org/" class="no-icon">PeptideAtlas</a>
+                            </li>
 
-                            <li><a target="_blank" href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp" class="no-icon">MassIVE</a>
+                            <li><a target="_blank" href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp"
+                                   class="no-icon">MassIVE</a>
                             <li><a target="_blank" href="http://gpmdb.thegpm.org/" class="no-icon">GPMDB</a>
                             </li>
 
@@ -326,8 +327,10 @@
                     </div>
                     <div class="col-md-3 col-sm-4 col-xs-4">
                         <ul>
-                            <li><a target="_blank" href="https://www.ebi.ac.uk/arrayexpress/" class="no-icon">ArrayExpress</a></li>
-                            <li><a target="_blank" href="http://www.ebi.ac.uk/gxa/home" class="no-icon">ExpressionAtlas</a></li>
+                            <li><a target="_blank" href="https://www.ebi.ac.uk/arrayexpress/" class="no-icon">ArrayExpress</a>
+                            </li>
+                            <li><a target="_blank" href="http://www.ebi.ac.uk/gxa/home"
+                                   class="no-icon">ExpressionAtlas</a></li>
 
                         </ul>
                     </div>
@@ -343,8 +346,10 @@
                         <li><a href="#/help#/Overview">Help</a></li>
                         <li><a href="#/api#/overview">API</a></li>
                         <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
-                        <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a></li>
-                        <li><a target="_blank" href="http://www.ebi.ac.uk/about/terms-of-use" class="no-icon">Terms of use</a>
+                        <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
+                        </li>
+                        <li><a target="_blank" href="http://www.ebi.ac.uk/about/terms-of-use" class="no-icon">Terms of
+                            use</a>
                         </li>
                     </ul>
                 </div>
@@ -358,11 +363,18 @@
 <!--wraper of page -->
 <!-- To have google analytics-->
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new
-                    Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new
+                        Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-70417662-1', 'auto');
     ga('send', 'pageview');
