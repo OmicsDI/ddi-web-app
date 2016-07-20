@@ -13,9 +13,9 @@ body {
     background: #fff;
     width: 100%;
 }
-
-div#local-masthead {
-/ / background-color : #70bdbd;
+/**/
+#ddi-local-masthead {
+/*background-color : #70bdbd;*/
     background-color: #0099cc;
     /*background-color: rgba(188, 216, 224, 1);*/
 }
