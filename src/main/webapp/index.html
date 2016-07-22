@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/ebi-global.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/ebi-visual.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/984-24-col-fluid.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css">
     <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick-theme.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
@@ -70,7 +70,7 @@
         <div id="ddi-local-masthead"  class="row">
             <!-- local-title -->
             <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-            <div class="grid_12 alpha logo-title col-md-6" id="local-title">
+            <div class="grid_12 alpha logo-title col-md-5 col-sm-12 col-xs-12" id="local-title">
                 <a href="#/home" title="Back to OmicsDI homepage"><img src="img/logo/OmicsDI-icon-3.png"
                                                                        alt="logo"
                                                                        width="64" height="64"></a>
@@ -80,15 +80,15 @@
 
             <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
             <!-- /local-search -->
-            <div  class="col-md-6" ng-hide="show_top_search"
+            <div  class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search"
                  style="height:105px; float:right; margin-top:0px; z-index:1; width:45%">
             </div>
 
-            <div ng-controller="QueryCtrl" id="queryCtrl" class="col-md-6" ng-show="show_top_search"
-                 style="height:105px; float:right; margin-top:0px; z-index:1; width:45%">
+            <div ng-controller="QueryCtrl" id="queryCtrl" class="col-md-6 col-sm-12 col-xs-12" ng-show="show_top_search"
+                 style="height:105px; float:right; margin-top:0px; z-index:1; ">
                 <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
                     <fieldset>
-                        <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                        <div class="form-group " ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
                             <div class="input-group ">
                                 <autocomplete ng-model="query.text"
                                               attr-placeholder="organism, repository, gene, tissue, accession"
@@ -150,9 +150,9 @@
 
         </div>
 
-        <div id="local-masthead" class="masthead raw" style="margin-left:-15px;margin-right:-15px">
+        <div id="local-masthead" class="masthead row" style="margin-left:-15px;margin-right:-15px">
             <!-- local-nav -->
-            <nav style="float:bottom">
+            <nav style="float:bottom" class="col-md-12 col-sm-12 col-xs-12">
                 <ul class="" id="local-nav">
                     <li class=" first" id="home-menu"><a title="Home" href="#/home/">Home</a></li>
                     <li class="" id="browse-menu"><a title="Browse"
@@ -393,7 +393,7 @@
 <script src="bower_components/angular/angular-animate.min.js"></script>
 <script src="bower_components/angular/ngprogress.min.js"></script>
 <script src="bower_components/angular/autocomplete.js"></script>
-<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.2.js"></script>
+<script src="bower_components/angular-ui/ui-bootstrap-tpls-0.14.2.js"></script>
 
 <script src="app/app.js"></script>
 <script src="js/DDIService.js"></script>

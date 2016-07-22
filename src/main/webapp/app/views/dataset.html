@@ -10,7 +10,7 @@
         </p>
     </div>
     <div class="row" style="">
-        <div class="col-md-1" style="display: block;">
+        <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
             <div id="socialnetworks" style="top:13em; z-index:100;margin-left:20px; width:50px"
                  ng-show="get_dataset_fail.length<1">
                 <!-- <g:plusone></g:plusone> -->
@@ -41,12 +41,14 @@
         </div>
         <!-- col-md-1-->
 
-        <div class="col-md-8" id="centerpanel" style="margin-left:-15px">
+        <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
             <div id="dataset-error-row" class="row error-info" ng-hide="get_dataset_fail.length<1">
                 <p>
                     {{get_dataset_fail}}
                 </p>
             </div>
+
+
             <div class="panel panel-default" id="dataset_upper" ng-hide="get_dataset_fail.length>0">
                 <div class="panel-footer ">
                     <h3>Dataset Information
@@ -472,7 +474,7 @@
         <!-- col-md-8 centerpanel-->
 
 
-        <div class="col-md-3 panel panel-default" id="rightpanel"
+        <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel"
              ng-hide="related_datasets == null || related_datasets.length<1 || get_similar_dataset_fail.length > 0 || get_dataset_fail.length > 0">
             <p>
             <h4>
