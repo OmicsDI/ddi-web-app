@@ -83,14 +83,14 @@ var bub_charts_tissues_organisms = function () {
             diseases = diseases.filter(isMedium)
 
             var bub_chart_name = 'chart_tissues_organisms';
-
+            
             var body = d3.select("#" + bub_chart_name);
-
+            //
             var div_width_px = body.style("width");
             var div_width = div_width_px.substr(0, div_width_px.length - 2);
             var div_height_px = body.style("height");
             var div_height = div_height_px.substr(0, div_height_px.length - 2);
-            //var div_width = 420;
+            // //var div_width = 420;
             var diameter = Math.min(div_height, div_width) / 1.15,
                 format = d3.format(",d"),
                 color = d3.scale.category20b();
@@ -179,8 +179,11 @@ var bub_charts_tissues_organisms = function () {
             }
 
 
-            change();
-
+             change();
+            d3.select(window).on('resize.one', resize_one);
+            function resize_one() {
+                change(); 
+            }
 
         }
 
@@ -215,7 +218,32 @@ var bub_charts_tissues_organisms = function () {
         }
 
         function change() {
+//
+            var bub_chart_name_inside = 'chart_tissues_organisms';
 
+            var body_inside = d3.select("#" + bub_chart_name);
+
+            var div_width_px_inside = body.style("width");
+            var div_width_inside = div_width_px_inside.substr(0, div_width_px_inside.length - 2);
+            var div_height_px_inside = body_inside.style("height");
+            var div_height_inside = div_height_px_inside.substr(0, div_height_px.length - 2);
+            //var div_width = 420;
+            var diameter_inside = Math.min(div_height_inside, div_width_inside) / 1.15,
+                format = d3.format(",d"),
+                color = d3.scale.category20b();
+            var bubble_inside = d3.layout.pack()
+                .sort(null)
+                .size([diameter_inside * 1.3, diameter_inside])
+                .padding(1.5);
+            body_inside.selectAll("svg").remove();
+            var svg_inside = body_inside.append("svg")
+                    .attr("width", diameter_inside * 1.3)
+                    .attr("height", diameter_inside * 1.3)
+                    .attr("class", "bubble center")
+            //         .attr("style", "position:relative")
+                ;
+
+           
 
             var value = this.value || 'Tissues';
             var data = [];
@@ -239,16 +267,16 @@ var bub_charts_tissues_organisms = function () {
                 searchWord_pre = '*:* AND disease:"';
             }
 
-            svg.selectAll(".node").remove();
+            svg_inside.selectAll(".node").remove();
 
 
-            var node = svg.selectAll(".node")
-                .data(bubble.nodes(classes(data))
+            var node_inside = svg_inside.selectAll(".node")
+                .data(bubble_inside.nodes(classes(data))
                     .filter(function (d) {
                         return !d.children;
                     }));
 
-            node.enter().append("g")
+            node_inside.enter().append("g")
                 .attr("class", "node")
                 .attr("transform", function (d) {
                     return "translate(" + d.x + "," + d.y + ")";
@@ -268,7 +296,7 @@ var bub_charts_tissues_organisms = function () {
 //  node.append("title")
 //      .text(function(d) { return d.className + ": " + format(d.value); });
 
-            node.append("circle")
+            node_inside.append("circle")
                 .attr("r", function (d) {
                     return d.r;
                 })
@@ -276,7 +304,7 @@ var bub_charts_tissues_organisms = function () {
                     return color(d.packageName);
                 });
 
-            node.append("text")
+            node_inside.append("text")
                 .attr("dy", ".3em")
                 .style("text-anchor", "middle")
                 .style("font-size", "10px")
@@ -284,7 +312,7 @@ var bub_charts_tissues_organisms = function () {
                     return d.r / d.className.length < 2.5 ? '' : d.className;
                 });
 
-            node.on("mousemove", function (d) {
+            node_inside.on("mousemove", function (d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
@@ -302,9 +330,9 @@ var bub_charts_tissues_organisms = function () {
                         .duration(500)
                         .style("opacity", 0);
                 });
-            //     .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
-            //     .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
-
+                // .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+                // .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
+//
 // Returns a flattened hierarchy containing all leaf nodes under the root.
 
 
