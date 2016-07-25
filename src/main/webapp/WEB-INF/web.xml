@@ -8,6 +8,10 @@
         <welcome-file>/index.html</welcome-file>
     </welcome-file-list>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/redirect.html</location>
+    </error-page>
     <!--&lt;!&ndash;Force UTF-8 encoding&ndash;&gt;-->
     <!--<filter>-->
         <!--<filter-name>encodingFilter</filter-name>-->
