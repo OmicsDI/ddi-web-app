@@ -441,7 +441,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             tobeReduced = "true"
         }
         var synonyms = [];
-        var sectionWord = wholetext.substring(start, wholetext.length);
+        var sectionWord = wholetext.substring(start, wholetext.length+1);
         var section = {
             "text": sectionWord,
             "beAnnotated": beAnnotated,
@@ -570,7 +570,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         if (prevRealWordEnd + 1 < long_text_length) {
             tobeReduced = "false"
             var section = {
-                "text": wholetext.substring(prevRealWordEnd + 1, long_text_length - 1),
+                "text": wholetext.substring(prevRealWordEnd + 1, long_text_length),
                 "beAnnotated": "false",
                 "synonyms": null,
                 "tobeReduced": tobeReduced
@@ -578,16 +578,17 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             sections.push(section);
             prevRealWordEnd = long_text_length;
         }
-        if (prevRealWordEnd + 1 < wholetext.length) {
+        if (prevRealWordEnd + 1<= wholetext.length) {
             tobeReduced = "true"
             var section = {
-                "text": wholetext.substring(prevRealWordEnd + 1, wholetext.length - 1),
+                "text": wholetext.substring(prevRealWordEnd, wholetext.length),
                 "beAnnotated": "false",
                 "synonyms": null,
                 "tobeReduced": tobeReduced
             };
             sections.push(section);
         }
+        console.log(wholetext);
         return sections;
     }
 

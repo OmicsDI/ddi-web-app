@@ -125,37 +125,37 @@
                     ;
 
                 groupsNo = chord2.groups().length;
-                var ticks = selection.append("g")
-                    .attr("class", "ticks")
-                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-                    .selectAll("g")
-                    .data(chord2.groups)
-                    .enter().append("g").selectAll("g")
-                    .data(groupTicks)
-                    .enter().append("g")
-                    .attr("transform", function (d) {
-                        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
-                            + "translate(" + outerRadius + ",0)";
-                    });
-                ticks.append("line")
-                    .attr("x1", 1)
-                    .attr("y1", 0)
-                    .attr("x2", 5)
-                    .attr("y2", 0)
-                    .style("stroke", "#000");
-
-                ticks.append("text")
-                    .attr("x", 8)
-                    .attr("dy", ".35em")
-                    .attr("transform", function (d) {
-                        return d.angle > Math.PI ? "rotate(180)translate(-16)" : null;
-                    })
-                    .style("text-anchor", function (d) {
-                        return d.angle > Math.PI ? "end" : null;
-                    })
-                    .text(function (d) {
-                        return d.label;
-                    });
+//                var ticks = selection.append("g")
+//                    .attr("class", "ticks")
+//                    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+//                    .selectAll("g")
+//                    .data(chord2.groups)
+//                    .enter().append("g").selectAll("g")
+//                    .data(groupTicks)
+//                    .enter().append("g")
+//                    .attr("transform", function (d) {
+//                        return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+//                            + "translate(" + outerRadius + ",0)";
+//                    });
+//                ticks.append("line")
+//                    .attr("x1", 1)
+//                    .attr("y1", 0)
+//                    .attr("x2", 5)
+//                    .attr("y2", 0)
+//                    .style("stroke", "#000");
+//
+//                ticks.append("text")
+//                    .attr("x", 8)
+//                    .attr("dy", ".35em")
+//                    .attr("transform", function (d) {
+//                        return d.angle > Math.PI ? "rotate(180)translate(-16)" : null;
+//                    })
+//                    .style("text-anchor", function (d) {
+//                        return d.angle > Math.PI ? "end" : null;
+//                    })
+//                    .text(function (d) {
+//                        return d.label;
+//                    });
 
 
                 var labels = d.labels || (d3.range(chord2.groups().length)

@@ -60,10 +60,10 @@ var drawHotwords = function () {
             .attr('name', 'dataset')
             .attr('value', 'description')
             .attr('id', 'description')
-            .text('description');
+            .text('Description');
         radio_form
             .append('label')
-            .text('description')
+            .text('Description')
             .attr('for', 'description')
             .append('span')
             .append('span')
@@ -74,10 +74,10 @@ var drawHotwords = function () {
             .attr('name', 'dataset')
             .attr('value', 'sample_protocol')
             .attr('id', 'sample')
-            .text('sample');
+            .text('Sample');
         radio_form
             .append('label')
-            .text('sample')
+            .text('Sample')
             .attr('for', 'sample')
             .append('span')
             .append('span')
@@ -88,10 +88,10 @@ var drawHotwords = function () {
             .attr('name', 'dataset')
             .attr('value', 'data_protocol')
             .attr('id', 'data')
-            .text('data');
+            .text('Data');
         radio_form
             .append('label')
-            .text('data')
+            .text('Data')
             .attr('for', 'data')
             .append('span')
             .append('span')

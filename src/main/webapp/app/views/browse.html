@@ -5,8 +5,8 @@
 <div id="content" ng-controller="ResultsListCtrl" class="ng-scope ng-cloak" ng-show="display_search_interface" style="margin: 10px">
 
 
-    <div id="searching" class="ng-cloak" style="height: 30px;">
-        <h3>
+    <div id="searching" class="ng-cloak row" style="height: 30px;">
+        <h3 class="col-md-12 col-sm-12 col-xs-12">
             <small ng-show="search_in_progress" class="ng-hide ng-cloak" style="">
                 <i class="fa fa-spinner fa-spin"></i>
             </small>
@@ -86,6 +86,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control input-block" ng-model="repos_input"
+                           ng-disabled="result.facets[index_of_facets.repository].facetValues == null"
                            placeholder="Find your repositories">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms'}">
@@ -111,6 +112,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="species_input"
+                           ng-disabled="result.facets[index_of_facets.TAXONOMY].facetValues == null"
                            placeholder="Find your species">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
@@ -134,6 +136,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="tissue_input"
+                           ng-disabled="result.facets[index_of_facets.tissue].facetValues == null"
                            placeholder="Find your Tissues">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
@@ -158,6 +161,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="disease_input"
+                           ng-disabled="result.facets[index_of_facets.disease].facetValues == null"
                            placeholder="Find your Disease">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
@@ -183,6 +187,7 @@
                 </h3>
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="modifi_input"
+                           ng-disabled="result.facets[index_of_facets.modification].facetValues == null"
                            placeholder="Find your Modifications">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
@@ -206,6 +211,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="instr_input"
+                           ng-disabled="result.facets[index_of_facets.instrument_platform].facetValues == null"
                            placeholder="Find your Instruments & Platforms">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
@@ -230,6 +236,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="publicdate_input"
+                           ng-disabled="result.facets[index_of_facets.publication_date].facetValues == null"
                            placeholder="Find by publication year">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">
@@ -254,6 +261,7 @@
 
                 <div class="metasearch-organism-facet force-scrollbars list-group-item">
                     <input type="text" class="form-control" ng-model="techtype_input"
+                           ng-disabled="result.facets[index_of_facets.technology_type].facetValues == null"
                            placeholder="Find your technology type">
                     <ul class="list-unstyled metasearch-facet-values"
                         ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Organisms' }">

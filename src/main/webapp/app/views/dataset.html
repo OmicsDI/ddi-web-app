@@ -98,8 +98,8 @@
                                         <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#/search?q={{section.text}}"  class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
 
-                                <span ng-click="description_show_full='true'" ng-hide="description_show_full=='true'" class="hotword"><b>{{abstract_sections[abstract_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
-                                <span ng-click="description_show_full='false'" ng-hide="description_show_full=='false'" class="hotword"><b>less</b></span>
+                                <span ng-click="description_show_full='true'" ng-hide="description_show_full=='true'" class="hotword"><b>{{abstract_sections[abstract_sections.length-1].tobeReduced=='true'?"... [more]":""}}</b></span>
+                                <span ng-click="description_show_full='false'" ng-hide="description_show_full=='false'" class="hotword"><b> [less]</b></span>
                             </p>
 
 
@@ -120,8 +120,8 @@
                         <!--{{dataset.sample_protocol_description}}-->
                         <!--</span>-->
 
-                        <span ng-click="sample_protocol_show_full='true'" ng-hide="sample_protocol_show_full=='true'" class="hotword"><b>{{sample_protocol_sections[sample_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
-                        <span ng-click="sample_protocol_show_full='false'" ng-hide="sample_protocol_show_full=='false'" class="hotword"><b>less</b></span>
+                        <span ng-click="sample_protocol_show_full='true'" ng-hide="sample_protocol_show_full=='true'" class="hotword"><b>{{sample_protocol_sections[sample_protocol_sections.length-1].tobeReduced=='true'?"... [more]":""}}</b></span>
+                        <span ng-click="sample_protocol_show_full='false'" ng-hide="sample_protocol_show_full=='false'" class="hotword"><b> [less]</b></span>
                     </p>
 
                     <p ng-show="data_protocol_description.length > 0 && data_protocol_description !== 'Not available'"
@@ -133,8 +133,8 @@
                                         <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                         <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}"  class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                     </span>
-                        <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"...more":""}}</b></span>
-                        <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b>less</b></span>
+                        <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"... [more]":""}}</b></span>
+                        <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b> [less]</b></span>
                     </p>
 
                     <div class="row" id="dataset_protocol_bottom"
@@ -305,10 +305,10 @@
                     </div>
                     <hr style="margin-right:30px">
                     <p ng-show="publication_info.length < 1 && dataset.publicationIds.length > 0" class="align-justify">
-                        Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to the
+                        Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to
                         <a href="{{'http://www.ncbi.nlm.nih.gov/pubmed/?term='+dataset.publicationIds[current_publication]}}">
                             PUBMED
-                        </a> or the
+                        </a> or
                         <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}>Altmetric</a>.
                     </p>
 
@@ -320,7 +320,7 @@
                             {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]}}<br>
                             {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[1]}}
                                 <span
-                                        ng-click="pubmed_abstract_show_full='false'" class="hotword"><b>less</b>
+                                        ng-click="pubmed_abstract_show_full='false'" class="hotword"><b> [less]</b>
                                 </span>
                         </p>
 
@@ -328,7 +328,7 @@
                             ABSTRACT:
                             {{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0]|limitTo:500}}
                                 <span
-                                        ng-click="pubmed_abstract_show_full='true'" class="hotword"><b>{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>500?"...more":""}}</b></span>
+                                        ng-click="pubmed_abstract_show_full='true'" class="hotword"><b>{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[0].length>500?"... [more]":""}}</b></span>
                             <!--{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pub_abstract[1]}}-->
                         </p>
                     </div>

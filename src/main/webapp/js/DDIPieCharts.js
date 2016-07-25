@@ -474,7 +474,7 @@ var pie_charts_repos_omics = function () {
             var body = d3.select("#" + piechartname);
 
             set_the_radio();
-            d3.select("#" + piechartname + "_form").select('input[value=Repos]').property('checked', true)
+            d3.select("#" + piechartname + "_radio_form").select('input[value=Resources]').property('checked', true)
 
             function drawBarGraphy(data_now, data_add_key) {
 
@@ -599,7 +599,7 @@ var pie_charts_repos_omics = function () {
                 formdiv
                     .attr("id", piechartname + "_formdiv")
                     .attr("class", "center")
-                    .attr("style", "width: 150px; position: absolute; bottom: 15px; left:" + (div_width / 2 - 40) + "px");
+                    .attr("style", "width: 180px; position: absolute; bottom: 15px; left:" + (div_width / 2 - 60) + "px");
 
 
                 var radio_form = d3.select('#' + piechartname + "_radio_form");
@@ -617,13 +617,13 @@ var pie_charts_repos_omics = function () {
                     .append('input')
                     .attr('type', 'radio')
                     .attr('name', 'dataset')
-                    .attr('value', 'Repos')
-                    .attr('id', 'Repos')
-                    .text('Repos');
+                    .attr('value', 'Resources')
+                    .attr('id', 'Resources')
+                    .text('Resources');
                 radio_form
                     .append('label')
-                    .text('Repos')
-                    .attr('for', 'Repos')
+                    .text('Resources')
+                    .attr('for', 'Resources')
                     .append('span')
                     .append('span')
                 ;
@@ -649,7 +649,7 @@ var pie_charts_repos_omics = function () {
             }
 
             function change() {
-                var value = this.value || 'Repos';
+                var value = this.value || 'Resources';
                 var d;
                 var searchWord_pre;
                 if (value == 'Omics') {
@@ -659,7 +659,7 @@ var pie_charts_repos_omics = function () {
                     drawBarGraphy(d, omics_data_simple);
                     showTip(searchWord_pre, omics_data_simple);
                 }
-                if (value == 'Repos') {
+                if (value == 'Resources') {
                     d = data;
                     searchWord_pre = '*:* AND repository:"';
                     drawBarGraphy(d, repos_data_simple);
