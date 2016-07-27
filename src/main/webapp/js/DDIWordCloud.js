@@ -28,22 +28,16 @@ var drawHotwords = function () {
             "data_protocol"
         ];
 
-        var fill = d3.scale.category20b();
 
-        var body = d3.select("#hotwords");
 
-        var div_width_px = body.style("width");
-        var div_width = div_width_px.substr(0, div_width_px.length - 2);
-        //var divwidth = 420;
+       d3.select(window).on('resize.word_cloud', change);
 
-        body.selectAll("svg").remove();
-        var svg = body.append("svg")
-            .attr("width", div_width)
-            .attr("height", 325)
-            .attr("class", "wordcloud");
+        var field = "";
+        change();
 
-        body.selectAll("div").remove();
-        var formdiv = body.append('div');
+
+        d3.select("#hotwords").selectAll("div").remove();
+        var formdiv = d3.select("#hotwords").append('div');
         formdiv
             .attr("class", "center")
             .attr("style", "width:280px")
@@ -104,7 +98,7 @@ var drawHotwords = function () {
 
         var wordcloud_tooltip = document.getElementById("word_cloud_chart_tooltip");
         if( wordcloud_tooltip == null) {
-             wordcloud_tooltip = body.append("div")
+             wordcloud_tooltip = d3.select("#hotwords").append("div")
                 .attr("class", "chart_tooltip")
                 .attr("id", "word_cloud_chart_tooltip")
                 .style("opacity", 0);
@@ -112,12 +106,43 @@ var drawHotwords = function () {
 
 
 
-        var field = "";
-        change();
 
         function change() {
 
-            field = this.value || "description";
+        var fill = d3.scale.category20b();
+
+        var body = d3.select("#hotwords");
+
+        var div_width_px = body.style("width");
+        var div_width = div_width_px.substr(0, div_width_px.length - 2);
+        //var divwidth = 420;
+
+        var svg = body.select("#word_cloud_svg");
+        if(body.select("#word_cloud_svg").empty()){
+            svg = body.append("svg")
+            .attr("id", "word_cloud_svg")
+            .attr("class", "wordcloud")
+            .attr("height", 325)
+            .attr("style", "margin-top:10px")
+            ;
+        }
+            svg
+            .attr("width", div_width);
+
+
+            var selected_radio = null;
+            var radios = d3.select("#hotwords_form").selectAll('input')[0];
+            if(radios != null){
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    selected_radio = radios[i].value;
+                    break;
+                }
+            }
+            }
+
+
+            field = this.value || selected_radio || "description";
             var hotwordss = terms["Omics" + "_" + field];
             var maxfrequent = getmax(hotwordss);
             svg.selectAll(".cloud").remove();
@@ -130,25 +155,22 @@ var drawHotwords = function () {
                     return d.label;
                 }) // THE SOLUTION
                 .fontSize(function (d) {
-                    if(field=="PeptideAtlas")return d.frequent / maxfrequent * 20;
-                    return d.frequent / maxfrequent * 50;
+                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * 60 * div_width / 500;
                 })
                 .on("end", draw)
                 .start();
-        }
 
 
         function draw(words) {
             var maxfrequent = getmax(words);
             svg.append("g")
                 .attr("class", "cloud")
-                .attr("transform", "translate(" + div_width/2.2 + ",180)")
+                .attr("transform", "translate(" + div_width/2.2 + ",170)")
                 .selectAll("text")
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) {
-                    if(field=="PeptideAtlas")return d.frequent / maxfrequent * 20 +"px";
-                    return d.frequent / maxfrequent * 40 + "px";
+                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * 45 + "px";
                 })
                 .style("font-family", "Impact")
                 .style("fill", function (d, i) {
@@ -172,7 +194,6 @@ var drawHotwords = function () {
                     //location.href = "#/search?q=" + "\""+ d.label + "\"";
                     // location.href = ("#/search?q=" + d.label);
                     var searchWord = "\"" + d.label + "\"";
-                    console.log("clicked here");
                     angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
 
                 })
@@ -198,15 +219,17 @@ var drawHotwords = function () {
                 })
                 ;
         }
+    }//change
 
 
         function getmax(arr) {
             if (arr == null) return null;
             var max = 0;
-            for (var i = 0; i < arr.length; i++)
-                if (arr[i].frequent > max) {
-                    max = arr[i].frequent;
+            for (var i = 0; i < arr.length; i++){
+                if (parseInt(arr[i].frequent) >= max) {
+                    max = parseInt(arr[i].frequent);
                 }
+            }
             return max;
         }
 

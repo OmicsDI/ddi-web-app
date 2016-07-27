@@ -105,18 +105,32 @@ var bub_charts_tissues_organisms = function () {
                     .attr("class", "bubble center")
                     .attr("style", "position:relative")
                 ;
+            reset_radio(div_width);
+            d3.select("#" + bub_chart_name + "_radio_form").select('input[value=Tissues]').property('checked', true);
 
-            body.selectAll("div").remove();
-            var formdiv = body.append('div');
+
+            function reset_radio(div_width_temp){
+
+            var formdiv = d3.select('#' + bub_chart_name + '_formdiv');
+            if(d3.select('#' + bub_chart_name + '_formdiv').empty()) {
+                    formdiv = body.append('div');
+            }
+
             formdiv
                 .attr("class", "center")
-                .attr("style", "width:266px; position:absolute; bottom: 15px; left:" + (div_width - 266) / 2 + "px")
+                .attr("id", bub_chart_name + '_formdiv')
+                .attr("style", "width:266px; position:absolute; bottom: 15px; left:" + (div_width_temp- 266) / 2 + "px")
             ;
 
-            var radio_form = formdiv.append('form');
-
+            var radio_form = formdiv.select(bub_chart_name + "_radio_form");
+            if(d3.select('#' + bub_chart_name + '_radio_form').empty()) {
+                radio_form = formdiv.append('form');
+            }
+            else{
+                return;
+            }
             radio_form
-                .attr("id", bub_chart_name + "_form")
+                .attr("id", bub_chart_name + "_radio_form")
                 .attr("class", "center")
                 .attr("style", "margin-bottom:8px")
                 //  .attr("style","width:70%")
@@ -162,11 +176,10 @@ var bub_charts_tissues_organisms = function () {
                 .append('span')
             ;
 
-            d3.select("#" + bub_chart_name + "_form").select('input[value=Tissues]').property('checked', true);
 
-            d3.select("#" + bub_chart_name + "_form").selectAll('input')
+            d3.select("#" + bub_chart_name + "_radio_form").selectAll('input')
                 .on('change', change);
-
+        }
 
             d3.select(self.frameElement).style("height", diameter + "px");
 
@@ -244,7 +257,7 @@ var bub_charts_tissues_organisms = function () {
                 ;
 
            
-
+            reset_radio(div_width_inside);
             var value = this.value || 'Tissues';
             var data = [];
             var searchWord_pre;
@@ -819,6 +832,10 @@ var barcharts_years_omics_types = function () {
         }
         else {
             remove_getting_info('barchart_omicstype_annual');
+
+            d3.select(window).on('resize.byYear', redraw_chart_by_year);
+            redraw_chart_by_year();
+            function redraw_chart_by_year(){
             var body = d3.select('#barchart_omicstype_annual');
             var div_width_px = body.style("width");
             var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
@@ -847,8 +864,9 @@ var barcharts_years_omics_types = function () {
                     .attr("position", "absolute");
             }
 
-            d3.select("#barchart_omicstype_annual").selectAll("svg").remove();
+            d3.select("#barchart_omicstype_annual_svg").remove();
             var svg = d3.select("#barchart_omicstype_annual").append("svg")
+                .attr("id", "barchart_omicstype_annual_svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
@@ -1081,55 +1099,55 @@ var barcharts_years_omics_types = function () {
                 .attr("transform", "translate(" + (width - 30) + " ,0)")
                 .call(yAxisRight);
 
-            var legend = svg.selectAll(".legend")
-                .data(omics_types.slice().reverse())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function (d, i) {
-                    return "translate(" + (i * 0) + ",200)";
-                })
-                .on("click", function (d) {
-                    var searchWord = "*:* AND omics_type:\"" + d + "\"";
-                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                });
-
+//            var legend = svg.selectAll(".legend")
+//                .data(omics_types.slice().reverse())
+//                .enter().append("g")
+//                .attr("class", "legend")
+//                .attr("transform", function (d, i) {
+//                    return "translate(" + (i * 0) + ",200)";
+//                })
+//                .on("click", function (d) {
+//                    var searchWord = "*:* AND omics_type:\"" + d + "\"";
+//                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+//                });
+//
             var legend_coords = {
                 "genomics": {x: 30, y: 25, color: "steelblue"},
                 "transcriptomics": {x: 30, y: 45, color: "steelblue"},
                 "metabolomics": {x: (width + 10) / 2, y: 25, color: "red"},
-                "proteomics": {x: (width + 10) / 2, y: 45, color: "red"},
+                "proteomics": {x: (width + 10) / 2, y: 45, color: "red"}
             };
 
-            legend.append("path")
-                .attr("class", "omics-line")
-                .style("stroke-width", "2")
-                .attr("d", function (d) {
-                    return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
-                        " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
-                })
-                .style("stroke", function (d) {
-                    return legend_coords[d]["color"];
-                })
-                .style("stroke-dasharray", function (d) {
-                    if (d === "transcriptomics" || d === "proteomics") {
-                        return ("3, 3");
-                    } else {
-                        return ("0, 0");
-                    }
-                });
-
-            legend.append("text")
-                .attr("x", function (d) {
-                    return legend_coords[d]['x'] + 20
-                })
-                .attr("y", function (d) {
-                    return legend_coords[d]['y']
-                })
-                .attr("dy", ".85em")
-                .style("text-anchor", "front")
-                .text(function (d) {
-                    return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
-                });
+//            legend.append("path")
+//                .attr("class", "omics-line")
+//                .style("stroke-width", "2")
+//                .attr("d", function (d) {
+//                    return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
+//                        " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
+//                })
+//                .style("stroke", function (d) {
+//                    return legend_coords[d]["color"];
+//                })
+//                .style("stroke-dasharray", function (d) {
+//                    if (d === "transcriptomics" || d === "proteomics") {
+//                        return ("3, 3");
+//                    } else {
+//                        return ("0, 0");
+//                    }
+//                });
+//
+//            legend.append("text")
+//                .attr("x", function (d) {
+//                    return legend_coords[d]['x'] + 20
+//                })
+//                .attr("y", function (d) {
+//                    return legend_coords[d]['y']
+//                })
+//                .attr("dy", ".85em")
+//                .style("text-anchor", "front")
+//                .text(function (d) {
+//                    return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
+//                });
             function getName(year, value) {
                 for (var i = 0; i < data.length; i++) {
                     for (var j = 0; j < data[i].omics.length; j++) {
@@ -1141,7 +1159,8 @@ var barcharts_years_omics_types = function () {
             }
 
         }
-    }
+      }//function redraw
+    }//else
 }
 
 function output_error_info(errordiv) {
