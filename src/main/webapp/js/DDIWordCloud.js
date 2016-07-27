@@ -123,7 +123,6 @@ var drawHotwords = function () {
             .attr("id", "word_cloud_svg")
             .attr("class", "wordcloud")
             .attr("height", 325)
-            .attr("style", "margin-top:10px")
             ;
         }
             svg
@@ -165,7 +164,7 @@ var drawHotwords = function () {
             var maxfrequent = getmax(words);
             svg.append("g")
                 .attr("class", "cloud")
-                .attr("transform", "translate(" + div_width/2.2 + ",170)")
+                .attr("transform", "translate(" + div_width/2.2 + ",160)")
                 .selectAll("text")
                 .data(words)
                 .enter().append("text")

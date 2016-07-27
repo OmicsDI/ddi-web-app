@@ -195,7 +195,7 @@ var bub_charts_tissues_organisms = function () {
              change();
             d3.select(window).on('resize.one', resize_one);
             function resize_one() {
-                change(); 
+                change();
             }
 
         }
@@ -833,8 +833,26 @@ var barcharts_years_omics_types = function () {
         else {
             remove_getting_info('barchart_omicstype_annual');
 
-            d3.select(window).on('resize.byYear', redraw_chart_by_year);
+//            d3.select(window).on('resize.by_year', resize_by_year);
+//            function resize_by_year(){
+//            redraw_chart_by_year();
+//            }
             redraw_chart_by_year();
+
+
+            var addEvent = function(object, type, callback) {
+                if (object == null || typeof(object) == 'undefined') return;
+                if (object.addEventListener) {
+                    object.addEventListener(type, callback, false);
+                } else if (object.attachEvent) {
+                    object.attachEvent("on" + type, callback);
+                } else {
+                    object["on"+type] = callback;
+                }
+            };
+
+            addEvent(window, "resize", redraw_chart_by_year);
+
             function redraw_chart_by_year(){
             var body = d3.select('#barchart_omicstype_annual');
             var div_width_px = body.style("width");
@@ -878,6 +896,7 @@ var barcharts_years_omics_types = function () {
                 return key !== "year";
             });
 
+            omics_types =  _.without(omics_types, "omics")
 
             data = annual_data;
             var genomics_list = [],
@@ -1098,19 +1117,18 @@ var barcharts_years_omics_types = function () {
                 .style("fill", "red")
                 .attr("transform", "translate(" + (width - 30) + " ,0)")
                 .call(yAxisRight);
+            var legend = svg.selectAll(".legend")
+                .data(omics_types.slice().reverse())
+                .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function (d, i) {
+                    return "translate(" + (i * 0) + ",200)";
+                })
+                .on("click", function (d) {
+                    var searchWord = "*:* AND omics_type:\"" + d + "\"";
+                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+                });
 
-//            var legend = svg.selectAll(".legend")
-//                .data(omics_types.slice().reverse())
-//                .enter().append("g")
-//                .attr("class", "legend")
-//                .attr("transform", function (d, i) {
-//                    return "translate(" + (i * 0) + ",200)";
-//                })
-//                .on("click", function (d) {
-//                    var searchWord = "*:* AND omics_type:\"" + d + "\"";
-//                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-//                });
-//
             var legend_coords = {
                 "genomics": {x: 30, y: 25, color: "steelblue"},
                 "transcriptomics": {x: 30, y: 45, color: "steelblue"},
@@ -1118,36 +1136,36 @@ var barcharts_years_omics_types = function () {
                 "proteomics": {x: (width + 10) / 2, y: 45, color: "red"}
             };
 
-//            legend.append("path")
-//                .attr("class", "omics-line")
-//                .style("stroke-width", "2")
-//                .attr("d", function (d) {
-//                    return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
-//                        " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
-//                })
-//                .style("stroke", function (d) {
-//                    return legend_coords[d]["color"];
-//                })
-//                .style("stroke-dasharray", function (d) {
-//                    if (d === "transcriptomics" || d === "proteomics") {
-//                        return ("3, 3");
-//                    } else {
-//                        return ("0, 0");
-//                    }
-//                });
-//
-//            legend.append("text")
-//                .attr("x", function (d) {
-//                    return legend_coords[d]['x'] + 20
-//                })
-//                .attr("y", function (d) {
-//                    return legend_coords[d]['y']
-//                })
-//                .attr("dy", ".85em")
-//                .style("text-anchor", "front")
-//                .text(function (d) {
-//                    return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
-//                });
+            legend.append("path")
+                .attr("class", "omics-line")
+                .style("stroke-width", "2")
+                .attr("d", function (d) {
+                    return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
+                        " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
+                })
+                .style("stroke", function (d) {
+                    return legend_coords[d]["color"];
+                })
+                .style("stroke-dasharray", function (d) {
+                    if (d === "transcriptomics" || d === "proteomics") {
+                        return ("3, 3");
+                    } else {
+                        return ("0, 0");
+                    }
+                });
+
+            legend.append("text")
+                .attr("x", function (d) {
+                    return legend_coords[d]['x'] + 20
+                })
+                .attr("y", function (d) {
+                    return legend_coords[d]['y']
+                })
+                .attr("dy", ".85em")
+                .style("text-anchor", "front")
+                .text(function (d) {
+                    return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
+                });
             function getName(year, value) {
                 for (var i = 0; i < data.length; i++) {
                     for (var j = 0; j < data[i].omics.length; j++) {
