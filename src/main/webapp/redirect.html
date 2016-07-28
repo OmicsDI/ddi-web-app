@@ -6,6 +6,7 @@
           var currentURL = window.location.pathname;
           if(currentURL.substr(0,2) !== '\/\#'){
                   redirectURL = '\/\#' + currentURL;
+                  window.location.replace(redirectURL);
           };
     </script>
 

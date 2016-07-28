@@ -216,6 +216,24 @@
                             }
                         location.href = "#/dataset/" + domain + "/" + acc;
                     })
+                    .on("mouseover", function(d){
+                        var acc = d.label.replace(/@.*/, "");
+                        var mouse_coords = d3.mouse(
+                            tooltip.node().parentElement);
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+                        tooltip.html( ""+ acc)
+                        .style("left", (mouse_coords[0] +  "px"))
+                        .style("top", ((mouse_coords[1] -30) + "px"))
+                        .style("height",  "16px")
+                        .style("width", acc.length * 8 + "px");
+                    })
+                    .on("mouseout", function(d){
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", 0);
+                    })
                     //.append("tspan")
                     //.attr("x", 10)
                     //.attr("dy", ".99em")
