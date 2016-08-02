@@ -13,7 +13,6 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
      * Launch a metadata search using the service.
      */
     $scope.meta_search = function (query) {
-        console.log("meta_search start here");
         $scope.$root.current_page = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
