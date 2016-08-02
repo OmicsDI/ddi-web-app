@@ -144,6 +144,12 @@ var drawHotwords = function () {
             field = this.value || selected_radio || "description";
             var hotwordss = terms["Omics" + "_" + field];
             var maxfrequent = getmax(hotwordss);
+            
+            var font_size_para = 45;
+            if(field == "description") {font_size_para = 60};
+            if(field == "sample_protocol" ) {font_size_para = 40};
+            if(field == "data_protocol") {font_size_para = 45};
+             
             svg.selectAll(".cloud").remove();
             d3.layout.cloud().size([div_width-10, 320])
                 .words(hotwordss)
@@ -154,7 +160,7 @@ var drawHotwords = function () {
                     return d.label;
                 }) // THE SOLUTION
                 .fontSize(function (d) {
-                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * 60 * div_width / 500;
+                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * font_size_para * div_width / 500;
                 })
                 .on("end", draw)
                 .start();
@@ -169,7 +175,7 @@ var drawHotwords = function () {
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) {
-                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * 45 + "px";
+                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * font_size_para + "px";
                 })
                 .style("font-family", "Impact")
                 .style("fill", function (d, i) {
