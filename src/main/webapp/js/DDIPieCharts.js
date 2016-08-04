@@ -83,7 +83,7 @@ var bub_charts_tissues_organisms = function () {
             diseases = diseases.filter(isMedium)
 
             var bub_chart_name = 'chart_tissues_organisms';
-            
+
             var body = d3.select("#" + bub_chart_name);
             //
             var div_width_px = body.style("width");
@@ -105,81 +105,82 @@ var bub_charts_tissues_organisms = function () {
                     .attr("class", "bubble center")
                     .attr("style", "position:relative")
                 ;
-            reset_radio(div_width);
             d3.select("#" + bub_chart_name + "_radio_form").select('input[value=Tissues]').property('checked', true);
 
 
-            function reset_radio(div_width_temp){
+            function reset_radio(div_width_temp) {
 
-            var formdiv = d3.select('#' + bub_chart_name + '_formdiv');
-            if(d3.select('#' + bub_chart_name + '_formdiv').empty()) {
+                var formdiv = d3.select('#' + bub_chart_name + '_formdiv');
+                if (d3.select('#' + bub_chart_name + '_formdiv').empty()) {
                     formdiv = body.append('div');
+                }
+
+                formdiv
+                    .attr("class", "center")
+                    .attr("id", bub_chart_name + '_formdiv')
+                    .attr("style", "width:266px; position:absolute; bottom: 15px; left:" + (div_width_temp - 266) / 2 + "px")
+                ;
+
+                var radio_form = formdiv.select(bub_chart_name + "_radio_form");
+                if (d3.select('#' + bub_chart_name + '_radio_form').empty()) {
+                    radio_form = formdiv.append('form');
+                }
+                else {
+                    return;
+                }
+                radio_form
+                    .attr("id", bub_chart_name + "_radio_form")
+                    .attr("class", "center")
+                    .attr("style", "margin-bottom:8px")
+                    //  .attr("style","width:70%")
+                    .append('input')
+                    .attr('type', 'radio')
+                    .attr('name', 'dataset')
+                    .attr('value', 'Tissues')
+                    .attr('id', 'Tissues')
+                    .text('Tissues');
+                radio_form
+                    .append('label')
+                    .text('Tissues')
+                    .attr('for', 'Tissues')
+                    .append('span')
+                    .append('span')
+                ;
+                radio_form
+                    .append('input')
+                    .attr('type', 'radio')
+                    .attr('name', 'dataset')
+                    .attr('value', 'Organisms')
+                    .attr('id', 'Organisms')
+                    .text('Organisms');
+                radio_form
+                    .append('label')
+                    .text('Organisms')
+                    .attr('for', 'Organisms')
+                    .append('span')
+                    .append('span')
+                ;
+                radio_form
+                    .append('input')
+                    .attr('type', 'radio')
+                    .attr('name', 'dataset')
+                    .attr('value', 'Diseases')
+                    .attr('id', 'Diseases')
+                    .text('Diseases');
+                radio_form
+                    .append('label')
+                    .text('Diseases')
+                    .attr('for', 'Diseases')
+                    .append('span')
+                    .append('span')
+                ;
+
+
+                d3.select("#" + bub_chart_name + "_radio_form").selectAll('input')
+                    .on('change', change);
             }
 
-            formdiv
-                .attr("class", "center")
-                .attr("id", bub_chart_name + '_formdiv')
-                .attr("style", "width:266px; position:absolute; bottom: 15px; left:" + (div_width_temp- 266) / 2 + "px")
-            ;
-
-            var radio_form = formdiv.select(bub_chart_name + "_radio_form");
-            if(d3.select('#' + bub_chart_name + '_radio_form').empty()) {
-                radio_form = formdiv.append('form');
-            }
-            else{
-                return;
-            }
-            radio_form
-                .attr("id", bub_chart_name + "_radio_form")
-                .attr("class", "center")
-                .attr("style", "margin-bottom:8px")
-                //  .attr("style","width:70%")
-                .append('input')
-                .attr('type', 'radio')
-                .attr('name', 'dataset')
-                .attr('value', 'Tissues')
-                .attr('id', 'Tissues')
-                .text('Tissues');
-            radio_form
-                .append('label')
-                .text('Tissues')
-                .attr('for', 'Tissues')
-                .append('span')
-                .append('span')
-            ;
-            radio_form
-                .append('input')
-                .attr('type', 'radio')
-                .attr('name', 'dataset')
-                .attr('value', 'Organisms')
-                .attr('id', 'Organisms')
-                .text('Organisms');
-            radio_form
-                .append('label')
-                .text('Organisms')
-                .attr('for', 'Organisms')
-                .append('span')
-                .append('span')
-            ;
-            radio_form
-                .append('input')
-                .attr('type', 'radio')
-                .attr('name', 'dataset')
-                .attr('value', 'Diseases')
-                .attr('id', 'Diseases')
-                .text('Diseases');
-            radio_form
-                .append('label')
-                .text('Diseases')
-                .attr('for', 'Diseases')
-                .append('span')
-                .append('span')
-            ;
-
-
-            d3.select("#" + bub_chart_name + "_radio_form").selectAll('input')
-                .on('change', change);
-        }
+            reset_radio(div_width);
 
             d3.select(self.frameElement).style("height", diameter + "px");
 
@@ -192,7 +193,7 @@ var bub_charts_tissues_organisms = function () {
             }
 
 
-             change();
+            change();
             d3.select(window).on('resize.one', resize_one);
             function resize_one() {
                 change();
@@ -256,7 +257,7 @@ var bub_charts_tissues_organisms = function () {
             //         .attr("style", "position:relative")
                 ;
 
-           
+
             reset_radio(div_width_inside);
             var value = this.value || 'Tissues';
             var data = [];
@@ -343,8 +344,8 @@ var bub_charts_tissues_organisms = function () {
                         .duration(500)
                         .style("opacity", 0);
                 });
-                // .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
-                // .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
+            // .on("mousemove", function(d){return tooltip.style("top",(d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");})
+            // .on("mouseout", function (d){return tooltip.style("visibility", "hidden");})
 //
 // Returns a flattened hierarchy containing all leaf nodes under the root.
 
@@ -486,6 +487,66 @@ var pie_charts_repos_omics = function () {
             var piechartname = 'chart_repos_omics';
             var body = d3.select("#" + piechartname);
 
+            function set_the_radio() {
+
+                var div_width = parseInt(body.style("width"));
+                // d3.select('#' + piechartname + '_formdiv').remove();
+                var formdiv = d3.select('#' + piechartname + '_formdiv');
+                if (d3.select('#' + piechartname + '_formdiv').empty()) {
+                    formdiv = body.append('div');
+                }
+                formdiv
+                    .attr("id", piechartname + "_formdiv")
+                    .attr("class", "center")
+                    .attr("style", "width: 180px; position: absolute; bottom: 15px; left:" + (div_width / 2 - 60) + "px");
+
+
+                var radio_form = d3.select('#' + piechartname + "_radio_form");
+                if (d3.select('#' + piechartname + "_radio_form").empty()) {
+                    radio_form = formdiv.append('form');
+                }
+                else {
+                    return;
+                }
+
+                radio_form
+                    .attr("id", piechartname + "_radio_form")
+                    .attr("class", "center")
+                    .attr("style", "margin-bottom:8px; ")
+                    .append('input')
+                    .attr('type', 'radio')
+                    .attr('name', 'dataset')
+                    .attr('value', 'Resources')
+                    .attr('id', 'Resources')
+                    .text('Resources');
+                radio_form
+                    .append('label')
+                    .text('Resources')
+                    .attr('for', 'Resources')
+                    .append('span')
+                    .append('span')
+                ;
+
+                radio_form
+                    .append('input')
+                    .attr('type', 'radio')
+                    .attr('name', 'dataset')
+                    .attr('value', 'Omics')
+                    .attr('id', 'Omics_radio')
+                    .text('Omics');
+                radio_form
+                    .append('label')
+                    .text('Omics')
+                    .attr('for', 'Omics_radio')
+                    .append('span')
+                    .append('span')
+                ;
+
+
+                d3.select("#" + piechartname + "_radio_form").selectAll('input')
+                    .on('change', change);
+            }
+
             set_the_radio();
             d3.select("#" + piechartname + "_radio_form").select('input[value=Resources]').property('checked', true)
 
@@ -601,65 +662,6 @@ var pie_charts_repos_omics = function () {
                 set_the_radio();
             }
 
-            function set_the_radio() {
-
-                var div_width = parseInt(body.style("width"));
-                // d3.select('#' + piechartname + '_formdiv').remove();
-                var formdiv = d3.select('#' + piechartname + '_formdiv');
-                if(d3.select('#' + piechartname + '_formdiv').empty()) {
-                    formdiv = body.append('div');
-                }
-                formdiv
-                    .attr("id", piechartname + "_formdiv")
-                    .attr("class", "center")
-                    .attr("style", "width: 180px; position: absolute; bottom: 15px; left:" + (div_width / 2 - 60) + "px");
-
-
-                var radio_form = d3.select('#' + piechartname + "_radio_form");
-                if(d3.select('#' + piechartname + "_radio_form").empty()) {
-                    radio_form = formdiv.append('form');
-                }
-                else{
-                    return;
-                }
-
-                radio_form
-                    .attr("id", piechartname + "_radio_form")
-                    .attr("class", "center")
-                    .attr("style", "margin-bottom:8px; ")
-                    .append('input')
-                    .attr('type', 'radio')
-                    .attr('name', 'dataset')
-                    .attr('value', 'Resources')
-                    .attr('id', 'Resources')
-                    .text('Resources');
-                radio_form
-                    .append('label')
-                    .text('Resources')
-                    .attr('for', 'Resources')
-                    .append('span')
-                    .append('span')
-                ;
-
-                radio_form
-                    .append('input')
-                    .attr('type', 'radio')
-                    .attr('name', 'dataset')
-                    .attr('value', 'Omics')
-                    .attr('id', 'Omics_radio')
-                    .text('Omics');
-                radio_form
-                    .append('label')
-                    .text('Omics')
-                    .attr('for', 'Omics_radio')
-                    .append('span')
-                    .append('span')
-                ;
-
-
-                d3.select("#" + piechartname + "_radio_form").selectAll('input')
-                    .on('change', change);
-            }
 
             function change() {
                 var value = this.value || 'Resources';
@@ -837,347 +839,349 @@ var barcharts_years_omics_types = function () {
 //            function resize_by_year(){
 //            redraw_chart_by_year();
 //            }
+            function redraw_chart_by_year() {
+                var body = d3.select('#barchart_omicstype_annual');
+                var div_width_px = body.style("width");
+                var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
+                var latest_datasets_div_height_px = d3.select('#latestdatasetspanel').style('height');
+                var div_height = parseInt(latest_datasets_div_height_px.substr(0, latest_datasets_div_height_px.length - 2));
+                div_height = 288;
+
+                //prepare graph data
+                var body = d3.select('#barchart_omicstype_annual');
+                var div_width = parseInt(body.style("width"));
+                // var div_height= parseInt(d3.select('#latestdatasetspanel').style('height'));
+                var height_offset = 50;
+                //var div_width = 420;
+                var margin = {top: 20, right: 20, bottom: 20, left: 60},
+                    width = div_width - margin.left - margin.right,
+                    height = div_height - margin.top - margin.bottom;
+
+                body.attr("position", "relative");
+
+                var tool_tip = null;
+                if (!tool_tip) {
+                    tool_tip = body.append("div")
+                        .attr("id", "bar_chart_tooltip")
+                        .attr("class", "chart_tooltip")
+                        .style("opacity", 0)
+                        .attr("position", "absolute");
+                }
+
+                d3.select("#barchart_omicstype_annual_svg").remove();
+                var svg = d3.select("#barchart_omicstype_annual").append("svg")
+                    .attr("id", "barchart_omicstype_annual_svg")
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+                //prepare data
+                var omics_types = d3.keys(annual_data[0]).filter(function (key) {
+                    return key !== "year";
+                });
+
+                omics_types = _.without(omics_types, "omics")
+
+                data = annual_data;
+                var genomics_list = [],
+                    metabolo_list = [],
+                    proteomi_list = [],
+                    transcri_list = [],
+                    allYearData = [];
+
+                data.forEach(function (d) {
+                    d.omics = omics_types.map(function (name) {
+                        if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
+                    });
+
+                    //calculate the log value
+                    for (var i = 0; i < d.omics.length; i++) {
+                        var currOmic = d.omics[i];
+
+                        switch (currOmic.name) {
+                            case "genomics":
+                                genomics_list.push({
+                                    year: +currOmic.year,
+                                    value: +currOmic.value
+                                })
+                                break;
+                            case "transcriptomics":
+                                transcri_list.push({
+                                    year: +currOmic.year,
+                                    value: +currOmic.value
+                                })
+                                break;
+                            case "metabolomics":
+                                metabolo_list.push({
+                                    year: +currOmic.year,
+                                    value: +currOmic.value
+                                })
+                                break;
+                            case "proteomics":
+                                proteomi_list.push({
+                                    year: +currOmic.year,
+                                    value: +currOmic.value
+                                })
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+                function prepareAllDate(priData, nameString) {
+                    for (var i = 0; i < priData.length; i++) {
+                        allYearData.push({
+                            name: nameString,
+                            year: priData[i].year,
+                            value: priData[i].value
+                        })
+                    }
+                }
+
+                prepareAllDate(genomics_list, "Genomics");
+                prepareAllDate(transcri_list, "Transcriptomics");
+                prepareAllDate(metabolo_list, "Metabolomics");
+                prepareAllDate(proteomi_list, "Proteomics");
+
+                //year show bug fixed here,adjust time linear to scale linear
+                // var x0 = d3.scale.linear().range([0, width - 30]);
+                var parseDate = d3.time.format("%Y").parse;
+
+                var x0 = d3.time.scale().range([0, width - 30]);
+
+                var y0 = d3.scale.linear().range([height - height_offset, 0]);
+                var y1 = d3.scale.linear().range([height - height_offset, 0]);
+
+                var xAxis = d3.svg.axis().scale(x0)
+                    .orient("bottom").ticks(4).tickFormat(d3.time.format("%Y"));
+
+                var yAxisLeft = d3.svg.axis().scale(y0)
+                    .orient("left").ticks(9);
+
+                var yAxisRight = d3.svg.axis().scale(y1)
+                    .orient("right").ticks(9);
+
+                var yLine = d3.scale.linear().range([15, 0]);
+                var yNavLine = d3.svg.axis().scale(yLine)
+                    .orient("bottom").ticks(0);
+
+                var minDate = new Date(d3.min(data, function (d) {
+                    return d.year
+                }), 0, 0);
+                var maxDate = new Date(d3.max(data, function (d) {
+                    return d.year
+                }), 0, 1);
+
+                x0.domain([minDate, maxDate]);
+
+                y0.domain([0, d3.max(data, function (d) {
+                    return d3.max(d.omics, function (d) {
+                        if (d.name === "genomics" || d.name === "transcriptomics") {
+                            return d.value;
+                        }
+                    });
+                })]);
+
+                y1.domain([0, d3.max(data, function (d) {
+                    return d3.max(d.omics, function (d) {
+                        if (d.name === "metabolomics" || d.name === "proteomics") {
+                            return d.value;
+                        }
+                    });
+                })]);
+
+                var valueline = d3.svg.line()
+                    .x(function (d) {
+                        return x0(new Date(d.year, 0, 0));
+                    })
+                    .y(function (d) {
+                        return y0(d.value);
+                    });
+
+                var valueline2 = d3.svg.line()
+                    .x(function (d) {
+                        return x0(new Date(d.year, 0, 0));
+                    })
+                    .y(function (d) {
+                        return y1(d.value);
+                    });
+
+
+                //draw
+                svg.append("path")        // Add the valueline path.
+                    .style("stroke", "steelblue")
+                    .attr("d", valueline(genomics_list));
+
+                svg.append("path")
+                    .style("stroke", "steelblue")
+                    .style("stroke-dasharray", ("3, 3"))
+                    .attr("d", valueline(transcri_list));
+
+                svg.append("path")        // Add the valueline2 path.
+                    .attr("class", "line")
+                    .style("stroke", "red")
+                    .attr("d", valueline2(metabolo_list));
+
+                svg.append("path")
+                    .attr("class", "line")
+                    .style("stroke", "red")
+                    .style("stroke-dasharray", ("3, 3"))
+                    .attr("d", valueline2(proteomi_list));
+
+                svg.selectAll("path")
+                    .style('stroke-width', '2')
+                    .style('fill', 'none');
+
+                svg.selectAll("circle")
+                    .data(allYearData)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", function (d, i) {
+                        return x0(new Date(d.year, 0, 0));
+                    })
+                    .attr("cy", function (d) {
+                        if (d.name == "Genomics" || d.name == "Transcriptomics") {
+                            return y0(d.value);
+                        } else if (d.name == "Metabolomics" || d.name == "Proteomics") {
+                            return y1(d.value);
+                        }
+                    })
+                    .attr("fill", function (d) {
+                        if (d.name == "Genomics" || d.name == "Transcriptomics") {
+                            return "steelblue";
+                        } else if (d.name == "Metabolomics" || d.name == "Proteomics") {
+                            return "red";
+                        }
+                    });
+
+
+                svg.selectAll("circle")
+                    .attr("r", 4)
+                    .style("cursor", "pointer")
+                    .on("mouseover", function (d, i) {
+                        var mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
+                        tool_tip.transition()
+                            .duration(200)
+                            .style("opacity", .9);
+
+                        tool_tip.html(d.name.toString() + ": <br>" + d.value.toString() + " datasets")
+                            .style("left", ((mouse_coords[0] + 5) + "px"))
+                            .style("top", (parseInt(d3.select(this).attr("cy") - 13) + "px"))
+                            .style("height", "2.5em")
+                            .style("width", ((d.year.toString().length + 9) * 8 + "px"))
+                            .style("padding", "5px");
+                    })
+                    .on("mouseout", function () {
+                        tool_tip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    })
+                    .on("click", function (d) {
+                        tool_tip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+
+                        var searchWord = "*:* AND omics_type:\"" + getName(d.year, d.value) + "\" AND publication_date:\"" + d.year + "\"";
+                        angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+                    });
+
+                svg.append("g")            // Add the X Axis
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + (height - height_offset) + ")")
+                    .call(xAxis);
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .style("fill", "steelblue")
+                    .call(yAxisLeft);
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .style("fill", "red")
+                    .attr("transform", "translate(" + (width - 30) + " ,0)")
+                    .call(yAxisRight);
+                var legend = svg.selectAll(".legend")
+                    .data(omics_types.slice().reverse())
+                    .enter().append("g")
+                    .attr("class", "legend")
+                    .attr("transform", function (d, i) {
+                        return "translate(" + (i * 0) + ",200)";
+                    })
+                    .on("click", function (d) {
+                        var searchWord = "*:* AND omics_type:\"" + d + "\"";
+                        angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+                    });
+
+                var legend_coords = {
+                    "genomics": {x: 30, y: 25, color: "steelblue"},
+                    "transcriptomics": {x: 30, y: 45, color: "steelblue"},
+                    "metabolomics": {x: (width + 10) / 2, y: 25, color: "red"},
+                    "proteomics": {x: (width + 10) / 2, y: 45, color: "red"}
+                };
+
+                legend.append("path")
+                    .attr("class", "omics-line")
+                    .style("stroke-width", "2")
+                    .attr("d", function (d) {
+                        return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
+                            " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
+                    })
+                    .style("stroke", function (d) {
+                        return legend_coords[d]["color"];
+                    })
+                    .style("stroke-dasharray", function (d) {
+                        if (d === "transcriptomics" || d === "proteomics") {
+                            return ("3, 3");
+                        } else {
+                            return ("0, 0");
+                        }
+                    });
+
+                legend.append("text")
+                    .attr("x", function (d) {
+                        return legend_coords[d]['x'] + 20
+                    })
+                    .attr("y", function (d) {
+                        return legend_coords[d]['y']
+                    })
+                    .attr("dy", ".85em")
+                    .style("text-anchor", "front")
+                    .text(function (d) {
+                        return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
+                    });
+                function getName(year, value) {
+                    for (var i = 0; i < data.length; i++) {
+                        for (var j = 0; j < data[i].omics.length; j++) {
+                            if (data[i].omics[j].year == year && data[i].omics[j].value == value) {
+                                return data[i].omics[j].name;
+                            }
+                        }
+                    }
+                }
+
+            }
+
             redraw_chart_by_year();
 
 
-            var addEvent = function(object, type, callback) {
+            var addEvent = function (object, type, callback) {
                 if (object == null || typeof(object) == 'undefined') return;
                 if (object.addEventListener) {
                     object.addEventListener(type, callback, false);
                 } else if (object.attachEvent) {
                     object.attachEvent("on" + type, callback);
                 } else {
-                    object["on"+type] = callback;
+                    object["on" + type] = callback;
                 }
             };
 
             addEvent(window, "resize", redraw_chart_by_year);
 
-            function redraw_chart_by_year(){
-            var body = d3.select('#barchart_omicstype_annual');
-            var div_width_px = body.style("width");
-            var div_width = parseInt(div_width_px.substr(0, div_width_px.length - 2));
-            var latest_datasets_div_height_px = d3.select('#latestdatasetspanel').style('height');
-            var div_height = parseInt(latest_datasets_div_height_px.substr(0, latest_datasets_div_height_px.length - 2));
-            div_height = 288;
 
-            //prepare graph data
-            var body = d3.select('#barchart_omicstype_annual');
-            var div_width = parseInt(body.style("width"));
-            // var div_height= parseInt(d3.select('#latestdatasetspanel').style('height'));
-            var height_offset = 50;
-            //var div_width = 420;
-            var margin = {top: 20, right: 20, bottom: 20, left: 60},
-                width = div_width - margin.left - margin.right,
-                height = div_height - margin.top - margin.bottom;
-
-            body.attr("position", "relative");
-
-            var tool_tip = null;
-            if (!tool_tip) {
-                tool_tip = body.append("div")
-                    .attr("id", "bar_chart_tooltip")
-                    .attr("class", "chart_tooltip")
-                    .style("opacity", 0)
-                    .attr("position", "absolute");
-            }
-
-            d3.select("#barchart_omicstype_annual_svg").remove();
-            var svg = d3.select("#barchart_omicstype_annual").append("svg")
-                .attr("id", "barchart_omicstype_annual_svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-            //prepare data
-            var omics_types = d3.keys(annual_data[0]).filter(function (key) {
-                return key !== "year";
-            });
-
-            omics_types =  _.without(omics_types, "omics")
-
-            data = annual_data;
-            var genomics_list = [],
-                metabolo_list = [],
-                proteomi_list = [],
-                transcri_list = [],
-                allYearData = [];
-
-            data.forEach(function (d) {
-                d.omics = omics_types.map(function (name) {
-                    if (name !== "year") return {name: name, value: +d[name], year: d["year"]};
-                });
-
-                //calculate the log value
-                for (var i = 0; i < d.omics.length; i++) {
-                    var currOmic = d.omics[i];
-
-                    switch (currOmic.name) {
-                        case "genomics":
-                            genomics_list.push({
-                                year: +currOmic.year,
-                                value: +currOmic.value
-                            })
-                            break;
-                        case "transcriptomics":
-                            transcri_list.push({
-                                year: +currOmic.year,
-                                value: +currOmic.value
-                            })
-                            break;
-                        case "metabolomics":
-                            metabolo_list.push({
-                                year: +currOmic.year,
-                                value: +currOmic.value
-                            })
-                            break;
-                        case "proteomics":
-                            proteomi_list.push({
-                                year: +currOmic.year,
-                                value: +currOmic.value
-                            })
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            });
-
-            function prepareAllDate(priData, nameString) {
-                for (var i = 0; i < priData.length; i++) {
-                    allYearData.push({
-                        name: nameString,
-                        year: priData[i].year,
-                        value: priData[i].value
-                    })
-                }
-            }
-
-            prepareAllDate(genomics_list, "Genomics");
-            prepareAllDate(transcri_list, "Transcriptomics");
-            prepareAllDate(metabolo_list, "Metabolomics");
-            prepareAllDate(proteomi_list, "Proteomics");
-
-            //year show bug fixed here,adjust time linear to scale linear
-            // var x0 = d3.scale.linear().range([0, width - 30]);
-            var parseDate = d3.time.format("%Y").parse;
-
-            var x0 = d3.time.scale().range([0, width - 30]);
-
-            var y0 = d3.scale.linear().range([height - height_offset, 0]);
-            var y1 = d3.scale.linear().range([height - height_offset, 0]);
-
-            var xAxis = d3.svg.axis().scale(x0)
-                .orient("bottom").ticks(4).tickFormat(d3.time.format("%Y"));
-
-            var yAxisLeft = d3.svg.axis().scale(y0)
-                .orient("left").ticks(9);
-
-            var yAxisRight = d3.svg.axis().scale(y1)
-                .orient("right").ticks(9);
-
-            var yLine = d3.scale.linear().range([15, 0]);
-            var yNavLine = d3.svg.axis().scale(yLine)
-                .orient("bottom").ticks(0);
-
-            var minDate = new Date(d3.min(data, function (d) {
-                return d.year
-            }), 0, 0);
-            var maxDate = new Date(d3.max(data, function (d) {
-                return d.year
-            }), 0, 1);
-
-            x0.domain([minDate, maxDate]);
-
-            y0.domain([0, d3.max(data, function (d) {
-                return d3.max(d.omics, function (d) {
-                    if (d.name === "genomics" || d.name === "transcriptomics") {
-                        return d.value;
-                    }
-                });
-            })]);
-
-            y1.domain([0, d3.max(data, function (d) {
-                return d3.max(d.omics, function (d) {
-                    if (d.name === "metabolomics" || d.name === "proteomics") {
-                        return d.value;
-                    }
-                });
-            })]);
-
-            var valueline = d3.svg.line()
-                .x(function (d) {
-                    return x0(new Date(d.year, 0, 0));
-                })
-                .y(function (d) {
-                    return y0(d.value);
-                });
-
-            var valueline2 = d3.svg.line()
-                .x(function (d) {
-                    return x0(new Date(d.year, 0, 0));
-                })
-                .y(function (d) {
-                    return y1(d.value);
-                });
-
-
-            //draw
-            svg.append("path")        // Add the valueline path.
-                .style("stroke", "steelblue")
-                .attr("d", valueline(genomics_list));
-
-            svg.append("path")
-                .style("stroke", "steelblue")
-                .style("stroke-dasharray", ("3, 3"))
-                .attr("d", valueline(transcri_list));
-
-            svg.append("path")        // Add the valueline2 path.
-                .attr("class", "line")
-                .style("stroke", "red")
-                .attr("d", valueline2(metabolo_list));
-
-            svg.append("path")
-                .attr("class", "line")
-                .style("stroke", "red")
-                .style("stroke-dasharray", ("3, 3"))
-                .attr("d", valueline2(proteomi_list));
-
-            svg.selectAll("path")
-                .style('stroke-width', '2')
-                .style('fill', 'none');
-
-            svg.selectAll("circle")
-                .data(allYearData)
-                .enter()
-                .append("circle")
-                .attr("cx", function (d, i) {
-                    return x0(new Date(d.year, 0, 0));
-                })
-                .attr("cy", function (d) {
-                    if (d.name == "Genomics" || d.name == "Transcriptomics") {
-                        return y0(d.value);
-                    } else if (d.name == "Metabolomics" || d.name == "Proteomics") {
-                        return y1(d.value);
-                    }
-                })
-                .attr("fill", function (d) {
-                    if (d.name == "Genomics" || d.name == "Transcriptomics") {
-                        return "steelblue";
-                    } else if (d.name == "Metabolomics" || d.name == "Proteomics") {
-                        return "red";
-                    }
-                });
-
-
-            svg.selectAll("circle")
-                .attr("r", 4)
-                .style("cursor", "pointer")
-                .on("mouseover", function (d, i) {
-                    var mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
-                    tool_tip.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-
-                    tool_tip.html(d.name.toString() + ": <br>" + d.value.toString() + " datasets")
-                        .style("left", ((mouse_coords[0] + 5) + "px"))
-                        .style("top", (parseInt(d3.select(this).attr("cy") - 13) + "px"))
-                        .style("height", "2.5em")
-                        .style("width", ((d.year.toString().length + 9) * 8 + "px"))
-                        .style("padding", "5px");
-                })
-                .on("mouseout", function () {
-                    tool_tip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                })
-                .on("click", function (d) {
-                    tool_tip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-
-                    var searchWord = "*:* AND omics_type:\"" + getName(d.year, d.value) + "\" AND publication_date:\"" + d.year + "\"";
-                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                });
-
-            svg.append("g")            // Add the X Axis
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + (height - height_offset) + ")")
-                .call(xAxis);
-
-            svg.append("g")
-                .attr("class", "y axis")
-                .style("fill", "steelblue")
-                .call(yAxisLeft);
-
-            svg.append("g")
-                .attr("class", "y axis")
-                .style("fill", "red")
-                .attr("transform", "translate(" + (width - 30) + " ,0)")
-                .call(yAxisRight);
-            var legend = svg.selectAll(".legend")
-                .data(omics_types.slice().reverse())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function (d, i) {
-                    return "translate(" + (i * 0) + ",200)";
-                })
-                .on("click", function (d) {
-                    var searchWord = "*:* AND omics_type:\"" + d + "\"";
-                    angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                });
-
-            var legend_coords = {
-                "genomics": {x: 30, y: 25, color: "steelblue"},
-                "transcriptomics": {x: 30, y: 45, color: "steelblue"},
-                "metabolomics": {x: (width + 10) / 2, y: 25, color: "red"},
-                "proteomics": {x: (width + 10) / 2, y: 45, color: "red"}
-            };
-
-            legend.append("path")
-                .attr("class", "omics-line")
-                .style("stroke-width", "2")
-                .attr("d", function (d) {
-                    return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
-                        " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
-                })
-                .style("stroke", function (d) {
-                    return legend_coords[d]["color"];
-                })
-                .style("stroke-dasharray", function (d) {
-                    if (d === "transcriptomics" || d === "proteomics") {
-                        return ("3, 3");
-                    } else {
-                        return ("0, 0");
-                    }
-                });
-
-            legend.append("text")
-                .attr("x", function (d) {
-                    return legend_coords[d]['x'] + 20
-                })
-                .attr("y", function (d) {
-                    return legend_coords[d]['y']
-                })
-                .attr("dy", ".85em")
-                .style("text-anchor", "front")
-                .text(function (d) {
-                    return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
-                });
-            function getName(year, value) {
-                for (var i = 0; i < data.length; i++) {
-                    for (var j = 0; j < data[i].omics.length; j++) {
-                        if (data[i].omics[j].year == year && data[i].omics[j].value == value) {
-                            return data[i].omics[j].name;
-                        }
-                    }
-                }
-            }
-
-        }
-      }//function redraw
+        }//function redraw
     }//else
 }
 
