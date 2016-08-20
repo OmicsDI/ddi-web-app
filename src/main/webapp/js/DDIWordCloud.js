@@ -175,7 +175,7 @@ var drawHotwords = function () {
                 .data(words)
                 .enter().append("text")
                 .style("font-size", function (d) {
-                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * font_size_para + "px";
+                    return Math.sqrt(d.frequent) / Math.sqrt(maxfrequent)  * font_size_para  *div_width / 500 + "px";
                 })
                 .style("font-family", "Impact")
                 .style("fill", function (d, i) {
