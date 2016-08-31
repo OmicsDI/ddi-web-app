@@ -1305,3 +1305,9 @@ $lines-to-show: 3;
     height:10px;
     margin-bottom:4px
 }
+
+.sameline
+{
+    Display: Inline-Block;
+}
+
