@@ -6,8 +6,8 @@
      * web_service_url for whole app
      */
 
-    //var web_service_url = 'http://www.omicsdi.org/ws/';
-    var web_service_url = 'http://localhost:9091/';
+    var web_service_url = 'http://www.omicsdi.org/ws/';
+    // var web_service_url = 'http://localhost:9091/';
     var proteomics_list = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, gpmdb, GPMDB, GPMdb";
     var metabolomics_list = "MetaboLights Dataset, MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench, metabolome_express, MetabolomeExpress, Metabolomics Workbench, GNPS, gnps";
     var transcriptomics_list = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments";
@@ -88,9 +88,9 @@ var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autoc
  * but won't be able to open deep links to Angular pages
  * (for example, a link to a search result won't load in IE 9).
  */
-// angular.module('ddiApp').config(['$locationProvider', function ($locationProvider) {
-//       $locationProvider.html5Mode(false);
-// }]);
+angular.module('ddiApp').config(['$locationProvider', function ($locationProvider) {
+      $locationProvider.html5Mode(true);
+}]);
 
 /**
  * ANGLULAR CONFIG
