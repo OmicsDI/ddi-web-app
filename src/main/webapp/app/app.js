@@ -88,9 +88,9 @@ var ddiApp = angular.module('ddiApp',['underscore','ngRoute','ngAnimate', 'autoc
  * but won't be able to open deep links to Angular pages
  * (for example, a link to a search result won't load in IE 9).
  */
-angular.module('ddiApp').config(['$locationProvider', function ($locationProvider) {
-      $locationProvider.html5Mode(true);
-}]);
+// angular.module('ddiApp').config(['$locationProvider', function ($locationProvider) {
+//       $locationProvider.html5Mode(true).hashPrefix('!');
+// }]);
 
 /**
  * ANGLULAR CONFIG
