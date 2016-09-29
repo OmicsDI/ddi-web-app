@@ -1,0 +1,29 @@
+#REQUIREMENTS 
+# 1. <base href="/" > inside <head> before importing external (local) stylesheets and javascript files
+#    the above is required if deep linking
+#
+# 2. in the module configuration, set html5mode to TRUE i.e. $locationProvider.html5Mode(true).hashPrefix('!');
+
+#BEGIN
+
+Options +FollowSymLinks
+
+<ifModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !index
+    RewriteRule (.*) index.html [L]
+</ifModule>
+
+#END
+
+
+# If the request is a file, folder or symlink that exists, serve it up
+#RewriteCond %{REQUEST_FILENAME} -s [OR]
+#RewriteCond %{REQUEST_FILENAME} -l [OR]
+#RewriteCond %{REQUEST_FILENAME} -d
+#RewriteRule ^(.+)$ - [S=1]
+
+# otherwise, serve your index.html app
+#RewriteRule ^(.+)$ /index.html

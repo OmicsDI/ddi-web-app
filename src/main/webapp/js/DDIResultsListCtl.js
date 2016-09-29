@@ -162,6 +162,17 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      */
     $scope.is_facet_applied = function (facet_id, facet_value) {
         var query = $location.search().q || '';
+        facet_value = facet_value.replace(/\+/g, '\\+');
+        facet_value = facet_value.replace(/\?/g, '\\?');
+        facet_value = facet_value.replace(/\*/g, '\\*');
+        facet_value = facet_value.replace(/\(/g, '\\(');
+        facet_value = facet_value.replace(/\)/g, '\\)');
+        facet_value = facet_value.replace(/\[/g, '\\[');
+        facet_value = facet_value.replace(/\]/g, '\\]');
+        facet_value = facet_value.replace(/\{/g, '\\{');
+        facet_value = facet_value.replace(/\}/g, '\\}');
+        facet_value = facet_value.replace(/\:/g, '\\:');
+        facet_value = facet_value.replace(/\//g, '\\/');
         var facet_query = new RegExp(facet_id + '\\:"' + facet_value + '"', 'i');
         if (query.match(facet_query)) {
             return true;
@@ -230,7 +241,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
      */
     $scope.is_omic_clicked = function (thisomic) {
         thisomic = thisomic.toLowerCase();
-        if ($scope.query_for_show.toLowerCase().indexOf('omics_type:"' + thisomic + '"') > -1) return "true";
+        if ($scope.query_for_show != null && $scope.query_for_show.toLowerCase().indexOf('omics_type:"' + thisomic + '"') > -1) return "true";
         return "false";
     }
 

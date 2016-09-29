@@ -145,7 +145,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             $scope.$root.meta_dataset_abstract = $scope.dataset.description;
             $scope.$root.meta_dataset_identifier = $scope.acc;
             $scope.$root.meta_originalURL = $scope.dataset.full_dataset_link;
-            $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
+            $scope.$root.meta_ddiURL = "http://www.omicsdi.org/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
             $scope.$root.meta_entries = [];
 
             document.title = $scope.dataset.name;
@@ -328,7 +328,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                  $scope.dataset_enriched = "true";
             else
                 $scope.dataset_enriched = "false";
-            console.log(enrichment_info);
             prepare_synonyms();
             split_by_enrichment_info(enrichment_info);
         }).error(function () {
@@ -406,7 +405,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 };
                 sections.push(section);
             }
-            console.log(wholetext);
             return sections;
         }
 
@@ -588,13 +586,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             };
             sections.push(section);
         }
-        console.log(wholetext);
         return sections;
     }
 
 
     function deal_reanalysising(){
-        console.log($scope.dataset.similars);
         if($scope.dataset.similars == null || $scope.dataset.similars.length < 1) return;
         $scope.dataset.similars.forEach(function(d){
             if(d.relationType == "Reanalysis of"){
