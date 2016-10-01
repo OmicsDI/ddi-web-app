@@ -145,7 +145,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             $scope.$root.meta_dataset_abstract = $scope.dataset.description;
             $scope.$root.meta_dataset_identifier = $scope.acc;
             $scope.$root.meta_originalURL = $scope.dataset.full_dataset_link;
-            $scope.$root.meta_ddiURL = "http://www.ebi.ac.uk/Tools/omicsdi/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
+            $scope.$root.meta_ddiURL = "http://www.omicsdi.org/#/dataset/" + $scope.repositories[$scope.domain] + "/" + $scope.acc;
             $scope.$root.meta_entries = [];
 
             document.title = $scope.dataset.name;
