@@ -53,6 +53,34 @@ var bub_charts_tissues_organisms = function () {
             var total_tissues = tissues.shift();
             var total_organisms = organisms.shift();
             var total_diseases = diseases.shift();
+            
+            function merge_same_items(array){
+                 if (array == null || array.length < 1){
+                     return null;
+                 }
+                var newarray = [];
+                 for (var i = 0; i<array.length; i++){
+                     var item = array[i];
+                     for(var j = array.length - 1; j > i; j--){
+                            if(array[j].id.toLowerCase() == item.id.toLowerCase() ||
+                               array[j].label.toLowerCase() == item.label.toLowerCase())
+                            {
+                                item.value = parseInt(item.value) + parseInt(array[j].value);
+                                array[j].id = j+"NULLLLLLLL";
+                                array[j].label = j+"NULLLLLLLL";
+                            }
+                     }
+                     if(item.id != i+"NULLLLLLLL"){
+                         newarray.push(item);
+                     }
+                 }
+               return newarray; 
+            }
+            
+            
+            tissues = merge_same_items(tissues);
+            organisms = merge_same_items(organisms);
+            diseases = merge_same_items(diseases);
 
             organisms = organisms.sort(function (a, b) {
                 return parseInt(a.value) - parseInt(b.value);
@@ -82,6 +110,8 @@ var bub_charts_tissues_organisms = function () {
             tissues = tissues.filter(isMedium)
             diseases = diseases.filter(isMedium)
 
+            
+           
             var bub_chart_name = 'chart_tissues_organisms';
 
             var body = d3.select("#" + bub_chart_name);
@@ -105,7 +135,7 @@ var bub_charts_tissues_organisms = function () {
                     .attr("class", "bubble center")
                     .attr("style", "position:relative")
                 ;
-            d3.select("#" + bub_chart_name + "_radio_form").select('input[value=Tissues]').property('checked', true);
+            
 
 
             function reset_radio(div_width_temp) {
@@ -182,6 +212,7 @@ var bub_charts_tissues_organisms = function () {
 
             reset_radio(div_width);
 
+            d3.select("#" + bub_chart_name + "_radio_form").select('input[value=Tissues]').property('checked', true);
             d3.select(self.frameElement).style("height", diameter + "px");
 
             var tooltip = document.getElementById("tissue_organism_chart_tooltip");
@@ -548,7 +579,7 @@ var pie_charts_repos_omics = function () {
             }
 
             set_the_radio();
-            d3.select("#" + piechartname + "_radio_form").select('input[value=Resources]').property('checked', true)
+            d3.select("#" + piechartname + "_radio_form").select('input[value=Resources]').property('checked', true);
 
             function drawBarGraphy(data_now, data_add_key) {
 
