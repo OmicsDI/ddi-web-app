@@ -3,6 +3,18 @@
 Omics Discovery Index web-app
 =====================
 
+
+### JSP Dev Environment
+
+`tomcat 8.5.5`
+`jdk    1.8`
+
+### Usage
+
+`mvn clean && mvn install && cp -r target/ddi-web-app/* /path/to/tomcat/webapps/ROOT/`
+install to bundle and copy the packaged files to ROOT folder in your tomcat's webapps folder
+
+========================================================
 A web application for the *Omics Discovery Index* resource. We use mostly [`AngularJS`](https://angularjs.org/) as
 a framework for a *JavaEE* container-based web app. For visualisation [NVD3](https://github.com/novus/nvd3) and
 [Angularjs-nvd3-directives](http://cmaurer.github.io/angularjs-nvd3-directives/) are used.
@@ -142,3 +154,5 @@ This will find the latest versions that match the version ranges specified in th
 to your repository and execute scripts such as building the app or running tests. The DDI webapp
 project contains a Travis configuration file, `.travis.yml`, which will cause Travis to run the
 tests when pushed to GitHub. The results can be seen [here](https://travis-ci.org/PSI-PROXI/ddi-web-app).
+
+
