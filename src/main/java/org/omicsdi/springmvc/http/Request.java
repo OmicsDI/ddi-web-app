@@ -79,6 +79,16 @@ public class Request {
         result = sendGet(url,parameters);
         return result;
     }
+    public static String GetDatasetJson(String accession,String database,String url){
+        String result = new String();
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("acc", accession);
+        parameters.put("database",database);
+
+//        url=http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo
+        result = sendGet(url,parameters);
+        return result;
+    }
     public static String ChangeDatabaseName(String database){
         if (database.equals("metabolomics_workbench")){
             return "Metabolomics_Workbench";

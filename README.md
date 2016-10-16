@@ -8,11 +8,18 @@ Omics Discovery Index web-app
 
 `tomcat 8.5.5`
 `jdk    1.8`
+`Apache Maven 3.3.9`
 
 ### Usage
 
-`mvn clean && mvn install && cp -r target/ddi-web-app/* /path/to/tomcat/webapps/ROOT/`
-install to bundle and copy the packaged files to ROOT folder in your tomcat's webapps folder
+Assuming that you are in the root of application
+
+`mvn clean && mvn install` compile and bundle the source code
+
+copy the source under `target/ddi-web-app/` to `/path/to/tomcat/webapps/ROOT/`
+
+start tomcat, then access `localhost:8080`
+
 
 ========================================================
 A web application for the *Omics Discovery Index* resource. We use mostly [`AngularJS`](https://angularjs.org/) as

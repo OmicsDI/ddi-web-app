@@ -19,8 +19,8 @@
                 <meta content="width=device-width" name="viewport">
                 <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
 
-                <meta content={{meta_dataset_title}} name="dataset_title">
-                <meta content={{meta_dataset_abstract}} name="dataset_abstract">
+                <meta content="${meta_dataset_title}" name="dataset_title">
+                <meta content="${meta_dataset_abstract}" name="dataset_abstract">
                 <meta content={{meta_dataset_identifier}} name="dataset_identifier">
                 <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
 
@@ -65,13 +65,8 @@
                 <script type="application/ld+json">
                     {
                         "@context": "http://schema.org",
-                        "@type": "Book",
-                        "name": "${name}",
-                        "publisher": "Linked Data Tools",
-                        "inLanguage": "English",
-                        "bookFormat": {
-                            "@type": "EBook"
-                        }
+                        "@type": "Dataset",
+                        "name": "${name}"
                     }
                 </script>
                 <script>

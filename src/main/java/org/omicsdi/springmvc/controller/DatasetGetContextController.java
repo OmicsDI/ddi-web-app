@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import static org.omicsdi.springmvc.http.DataProcess.scope;
+//import static org.omicsdi.springmvc.http.DataProcess.scope;
+
+//import static com.sun.xml.internal.ws.api.message.Packet.Status.Request;
+//import static org.omicsdi.springmvc.http.DataProcess.scope;
 
 
 /**
@@ -35,7 +38,7 @@ public class DatasetGetContextController {
         String jsonString = Request.GetJson(acc,domain,"http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo");
         JSONObject jsonObject = new JSONObject(jsonString);
         DataProcess.splitByEnrichmentInfo(jsonString);
-        JSONArray target_title__sections = scope.title_sections;
+        JSONArray target_title__sections = DataProcess.scope.title_sections;
         String target_title =  new String();
         for (int i=0;i<target_title__sections.length();i++){
 
@@ -44,6 +47,14 @@ public class DatasetGetContextController {
         model.addAttribute("name", target_title);
         model.addAttribute("datasetDomain", domain);
         model.addAttribute("datasetAcc", acc);
+
+        String datasetJson = Request.GetDatasetJson(acc,domain,"http://www.omicsdi.org/ws/dataset/get");
+        JSONObject datasetDetail =  new JSONObject(datasetJson);
+        String meta_dataset_title = datasetDetail.getString("name");
+        String meta_dataset_abstract = datasetDetail.getString("description");
+        model.addAttribute("meta_dataset_title",meta_dataset_title);
+        model.addAttribute("meta_dataset_abstract",meta_dataset_abstract);
+        
         return "dataset";
     }
 
