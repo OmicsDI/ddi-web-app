@@ -34,8 +34,8 @@
                 <link rel="stylesheet" href="static/css/ebi-visual.css" type="text/css" media="screen">
                 <link rel="stylesheet" href="static/css/984-24-col-fluid.css" type="text/css" media="screen">
                 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-                <link rel="stylesheet" href="static/scripts/libs/slick-carousel/slick/slick.css">
-                <link rel="stylesheet" href="static/scripts/libs/slick-carousel/slick/slick-theme.css">
+                <link rel="stylesheet" href="static/js/libs/slick-carousel/slick/slick.css">
+                <link rel="stylesheet" href="static/js/libs/slick-carousel/slick/slick-theme.css">
                 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
                 <link type="text/css" href="static/css/ngProgress.css" rel="stylesheet">
                 <link type="text/css" href="static/css/ddi.css" rel="stylesheet">
@@ -692,35 +692,35 @@
                 </script>
 
 
-                <script src="static/scripts/libs/jquery/jquery-1.10.1.min.js"></script>
-                <script src="static/scripts/libs/angular/angular.min.js"></script>
-                <script src="static/scripts/libs/underscore/underscore-min.js"></script>
-                <script src="static/scripts/libs/angular-route/angular-route.min.js"></script>
-                <script src="static/scripts/libs/angular/angular-cookies.js"></script>
-                <script src="static/scripts/libs/angular/angular-animate.min.js"></script>
-                <script src="static/scripts/libs/angular/ngprogress.min.js"></script>
-                <script src="static/scripts/libs/angular/autocomplete.js"></script>
-                <script src="static/scripts/libs/angular-ui/ui-bootstrap-tpls-0.14.2.js"></script>
+                <script src="static/js/libs/jquery/jquery-1.10.1.min.js"></script>
+                <script src="static/js/libs/angular/angular.min.js"></script>
+                <script src="static/js/libs/underscore/underscore-min.js"></script>
+                <script src="static/js/libs/angular-route/angular-route.min.js"></script>
+                <script src="static/js/libs/angular/angular-cookies.js"></script>
+                <script src="static/js/libs/angular/angular-animate.min.js"></script>
+                <script src="static/js/libs/angular/ngprogress.min.js"></script>
+                <script src="static/js/libs/angular/autocomplete.js"></script>
+                <script src="static/js/libs/angular-ui/ui-bootstrap-tpls-0.14.2.js"></script>
 
-                <script src="static/scripts/app.js"></script>
-                <script src="static/scripts/DDIService.js"></script>
-                <script src="static/scripts/DDIMainContentCtl.js"></script>
-                <script src="static/scripts/DDIQueryCtl.js"></script>
-                <script src="static/scripts/DDIDatasetListsCtl.js"></script>
-                <script src="static/scripts/DDIResultsListCtl.js"></script>
-                <script src="static/scripts/DDIDatasetCtl.js"></script>
-                <script src="static/scripts/DDICheckCtl.js"></script>
+                <script src="static/js/app.js"></script>
+                <script src="static/js/DDIService.js"></script>
+                <script src="static/js/DDIMainContentCtl.js"></script>
+                <script src="static/js/DDIQueryCtl.js"></script>
+                <script src="static/js/DDIDatasetListsCtl.js"></script>
+                <script src="static/js/DDIResultsListCtl.js"></script>
+                <script src="static/js/DDIDatasetCtl.js"></script>
+                <script src="static/js/DDICheckCtl.js"></script>
 
-                <script src="static/scripts/DDIGetTweets.js"></script>
-                <script src="static/scripts/DDIPieCharts.js"></script>
-                <script src="static/scripts/DDIWordCloud.js"></script>
-                <script src="static/scripts/DDIChordDiagram.js"></script>
-                <script src="static/scripts/libs/d3/queue.v1.min.js"></script>
-                <script src="static/scripts/libs/d3/d3.min.js"></script>
-                <script src="static/scripts/libs/d3/d3.layout.cloud.js"></script>
-                <script src="static/scripts/libs/chord2/chord2.js"></script>
-                <script src="static/scripts/libs/slick-carousel/slick/slick.js"></script>
-                <script src="static/scripts/libs/angular-slick/dist/slick.js"></script>
+                <script src="static/js/DDIGetTweets.js"></script>
+                <script src="static/js/DDIPieCharts.js"></script>
+                <script src="static/js/DDIWordCloud.js"></script>
+                <script src="static/js/DDIChordDiagram.js"></script>
+                <script src="static/js/libs/d3/queue.v1.min.js"></script>
+                <script src="static/js/libs/d3/d3.min.js"></script>
+                <script src="static/js/libs/d3/d3.layout.cloud.js"></script>
+                <script src="static/js/libs/chord2/chord2.js"></script>
+                <script src="static/js/libs/slick-carousel/slick/slick.js"></script>
+                <script src="static/js/libs/angular-slick/dist/slick.js"></script>
 
             </body>
 
