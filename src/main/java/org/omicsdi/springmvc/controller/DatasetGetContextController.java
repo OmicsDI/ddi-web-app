@@ -1,16 +1,16 @@
-package com.websystique.springmvc.controller;
+package org.omicsdi.springmvc.controller;
 
 import org.json.JSONArray;
-import com.websystique.springmvc.http.DataProcess;
+import org.omicsdi.springmvc.http.DataProcess;
 import org.json.JSONObject;
-import com.websystique.springmvc.http.Request;
+import org.omicsdi.springmvc.http.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import static com.websystique.springmvc.http.DataProcess.scope;
+import static org.omicsdi.springmvc.http.DataProcess.scope;
 
 
 /**

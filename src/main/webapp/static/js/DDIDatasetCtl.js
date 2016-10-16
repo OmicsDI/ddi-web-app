@@ -11,8 +11,8 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.genomics_list = genomics_list;
 
         var long_text_length = 500;
-        $scope.acc = $routeParams.acc;
-        $scope.domain = $routeParams.domain;
+        $scope.acc = window.omicsdi.datasetAcc;
+        $scope.domain = window.omicsdi.datasetDomain;
         $scope.description_show_full = "false";
         $scope.pubmed_abstract_show_full = "false";
         $scope.data_protocol_show_full = "false";

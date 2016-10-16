@@ -1,4 +1,4 @@
-package com.websystique.springmvc.controller;
+package org.omicsdi.springmvc.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;

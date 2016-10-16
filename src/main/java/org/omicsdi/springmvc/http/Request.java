@@ -1,4 +1,4 @@
-package com.websystique.springmvc.http;
+package org.omicsdi.springmvc.http;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

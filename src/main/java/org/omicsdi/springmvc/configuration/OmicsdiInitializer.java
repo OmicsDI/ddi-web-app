@@ -1,14 +1,14 @@
-package com.websystique.springmvc.configuration;
+package org.omicsdi.springmvc.configuration;
 
 import javax.servlet.Filter;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class HelloWorldInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class OmicsdiInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
  
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { HelloWorldConfiguration.class };
+        return new Class[] { OmicsdiConfiguration.class };
     }
   
     @Override
