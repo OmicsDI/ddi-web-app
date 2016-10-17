@@ -65,7 +65,7 @@ this server is(assuming that you are in the root of application and started the 
 cp -r target/ddi-web-app/* /path/to/Tomcat/webapps/ROOT/
 ```
 
-Now browse to the app at `http://localhost:8000/`.
+Now browse to the app at `http://localhost:8080/`.
 
 
 
