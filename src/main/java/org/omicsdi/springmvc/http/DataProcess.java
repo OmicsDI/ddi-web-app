@@ -16,13 +16,13 @@ public  class DataProcess {
     public static  int  long_text_length=500;
     public static Scope scope = new Scope();
 
-     public static  class Scope {
+    public static  class Scope {
         static org.json.JSONArray synonymsList;
 
         public static org.json.JSONArray title_sections;
         public static String accession;
         static String database;
-         public static Map<String ,String> dataset = new HashMap<String ,String >();
+        public static Map<String ,String> dataset = new HashMap<String ,String >();
         Scope() {
 
         }
@@ -84,10 +84,19 @@ public  class DataProcess {
         boolean tobeReduced;
         boolean beAnnotated;
 
+//        System.out.println("enrichInfo.len "+enrichInfo.length());
+//        System.out.println("wholetext.len "+wholetext.length());
+
         if (enrichInfo != null && wholetext != null) {
             for (int i = 0; i < enrichInfo.length(); i++) {
                 int wordStart = enrichInfo.getJSONObject(i).getInt("from") - 1;
                 int wordEnd = enrichInfo.getJSONObject(i).getInt("to") - 1;
+//
+//                System.out.println();
+//                System.out.println("wordStart "+wordStart);
+//                System.out.println("preWordEnd "+prevWordEnd);
+
+
                 if (wordStart < prevWordEnd) {
                     continue;
                 }
@@ -97,9 +106,7 @@ public  class DataProcess {
                 int realWordEnd = realWordStart + wordText.length();
 
                 ArrayList synonyms = get_synonyms(wordText);
-//                if (synonyms!=null) {
-//                    System.out.println("syno" + synonyms.toString());
-//                }
+
                 modifiedWholeText = modifiedWholeText.substring(0, realWordStart) +
                         modifyString.substring(0, wordText.length()) +
                         modifiedWholeText.substring(realWordEnd, modifiedWholeText.length());
@@ -110,14 +117,29 @@ public  class DataProcess {
                     } else {
                         tobeReduced = false;
                     }
-                    prevRealWordEnd=0;
-                    JSONObject section = new JSONObject("{" +
-                            " \"text\":"+wholetext.substring(prevRealWordEnd, realWordStart - 1)+","  +
-                            "\"beAnnotated\":"+false+"," +
-                            "\"synonyms\":"+null+","  +
-                            "\"tobeReduced\":"+tobeReduced+"}");
-                    sections.put(section);
+//
+//                    System.out.println(wholetext);
+//                    System.out.println("prevRealWordEnd "+ prevRealWordEnd);
+//                    System.out.println("realWordStart "+realWordStart);
+
+//                    System.out.println(wholetext.substring(prevRealWordEnd < 0 ? 0:prevRealWordEnd, realWordStart - 1));
+                    String sub1 = wholetext.substring(prevRealWordEnd<0 ? 0: prevRealWordEnd, realWordStart - 1);
+
+//                     sub=sub.replace(":","@");
+//                    String text = "text:"+sub;
+//                        System.out.println(text);
+                        JSONObject section = new JSONObject("{" +
+                                "\"beAnnotated\":" + false + "," +
+                                "\"synonyms\":" + null + "," +
+                                "\"tobeReduced\":" + tobeReduced + "}");
+                        section=section.put("text",sub1);
+
+                        sections.put(section);
+
+
+
                 }
+//                System.out.println("hello");
 
 
                 if (realWordStart > long_text_length) {
@@ -125,12 +147,14 @@ public  class DataProcess {
                 } else {
                     tobeReduced = false;
                 }
-//                System.out.println(wholetext.substring(realWordStart, realWordEnd));
+
+                String sub2 = wholetext.substring(realWordStart, realWordEnd);
                 JSONObject section = new JSONObject("{" +
-                        "\"text\":"+wholetext.substring(realWordStart, realWordEnd)+","+
                         "\"beAnnotated\":"+true+"," +
                         " \"synonyms\":"+synonyms+"," +
                         "\"tobeReduced\":"+tobeReduced+"}");
+                section=section.put("text",sub2);
+
                 sections.put(section);
 
                 prevRealWordEnd = realWordEnd;
@@ -142,31 +166,33 @@ public  class DataProcess {
         if (prevRealWordEnd + 1 < long_text_length) {
             tobeReduced = false;
 
+            String sub3 = wholetext.substring(prevRealWordEnd + 1, long_text_length);
             JSONObject section = new JSONObject("{" +
-                    "\"text\":"+wholetext.substring(prevRealWordEnd + 1, long_text_length)+","  +
                     "\"beAnnotated\":"+false+"," +
                     " \"synonyms\":"+null+"," +
                     "\"tobeReduced\":"+tobeReduced+"}");
+            section=section.put("text",sub3);
             sections.put(section);
             prevRealWordEnd = long_text_length;
         }
         if (prevRealWordEnd + 1 <= wholetext.length()) {
             tobeReduced = true;
+            String sub4 = wholetext.substring(prevRealWordEnd, wholetext.length());
             JSONObject section = new JSONObject("{" +
-                    "\"text\":"+ wholetext.substring(prevRealWordEnd, wholetext.length())+ "," +
                     "\"beAnnotated\":"+false+"," +
                     "\"synonyms\":"+null+"," +
-                    "\"tobeReduced\":"+tobeReduced+"}");;
+                    "\"tobeReduced\":"+tobeReduced+"}");
+            section=section.put("text",sub4);
             sections.put(section);
         }
         return sections;
     }
     public static  ArrayList get_synonyms(String word) {
 
-        if (scope.synonymsList == null){
-            scope.synonymsList = Request.getSynonymsList(scope.accession, scope.database);
-//            System.out.println(scope.synonymsList.toString());
-        }
+//        if (scope.synonymsList == null){
+//            scope.synonymsList = Request.getSynonymsList(scope.accession, scope.database);
+////            System.out.println(scope.synonymsList.toString());
+//        }
 
 
         if (scope.synonymsList == null || word == null) {
@@ -190,7 +216,7 @@ public  class DataProcess {
             return null;
 
         //to make synonyms unique
-       ArrayList unique_synonyms = new ArrayList();
+        ArrayList unique_synonyms = new ArrayList();
         for (int i = 0; i < synonyms.length(); i++) {
 
             String synonym = (String) synonyms.get(i);

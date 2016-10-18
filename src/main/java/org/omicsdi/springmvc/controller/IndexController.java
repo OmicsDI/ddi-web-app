@@ -12,7 +12,7 @@ public class IndexController {
 
     //return the corresponding jsp page
 	@RequestMapping(method = RequestMethod.GET)
-	public String getIndexPage(ModelMap model) {
+	public String getIndexPage() {
 		return "index";
 	}
 
