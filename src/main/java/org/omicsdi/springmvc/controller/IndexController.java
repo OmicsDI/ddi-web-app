@@ -1,18 +1,17 @@
 package org.omicsdi.springmvc.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.ui.ModelMap;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
     //return the corresponding jsp page
-	@RequestMapping(method = RequestMethod.GET)
-	public String getIndexPage() {
+	@RequestMapping(value = "/",method = RequestMethod.GET)
+	public String getIndexPage(ModelMap model) {
 		return "index";
 	}
 
@@ -40,4 +39,5 @@ public class IndexController {
     public String getHelpPage() {
         return "help";
     }
+
 }

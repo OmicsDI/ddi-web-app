@@ -48,7 +48,6 @@ public  class DataProcess {
         if (!jsonObject.getString("accession").isEmpty()) {
 
             JSONArray titleEnrichInfo = jsonObject.getJSONObject("synonyms").getJSONArray("name");
-//            System.out.println(titleEnrichInfo.toString());
 
             if (jsonObject.getJSONObject("originalAttributes").getString("name").length() >= 1) {
                 scope.dataset.put("name",jsonObject.getJSONObject("originalAttributes").getString("name")) ;
@@ -57,7 +56,7 @@ public  class DataProcess {
             if (jsonObject.getJSONObject("originalAttributes").getString("description").length() >= 1) {
                 scope.dataset.put("description",jsonObject.getJSONObject("originalAttributes").getString("description")) ;
             }
-//            System.out.println(scope.database);
+
             scope.title_sections = get_section(scope.dataset.get("name"), titleEnrichInfo);
         }
         return scope;
@@ -66,7 +65,7 @@ public  class DataProcess {
     public static JSONArray get_section(String wholetext, JSONArray enrichInfo) {
 
         if(wholetext.length()<500){
-//            System.out.println(wholetext);
+
             long_text_length=wholetext.length();
         }
 
@@ -84,25 +83,17 @@ public  class DataProcess {
         boolean tobeReduced;
         boolean beAnnotated;
 
-//        System.out.println("enrichInfo.len "+enrichInfo.length());
-//        System.out.println("wholetext.len "+wholetext.length());
-
         if (enrichInfo != null && wholetext != null) {
             for (int i = 0; i < enrichInfo.length(); i++) {
+
                 int wordStart = enrichInfo.getJSONObject(i).getInt("from") - 1;
                 int wordEnd = enrichInfo.getJSONObject(i).getInt("to") - 1;
-//
-//                System.out.println();
-//                System.out.println("wordStart "+wordStart);
-//                System.out.println("preWordEnd "+prevWordEnd);
-
 
                 if (wordStart < prevWordEnd) {
                     continue;
                 }
                 String wordText = enrichInfo.getJSONObject(i).getString("text");
                 int realWordStart = modifiedWholeText.indexOf(wordText);
-//                System.out.println(realWordStart);
                 int realWordEnd = realWordStart + wordText.length();
 
                 ArrayList synonyms = get_synonyms(wordText);
@@ -117,17 +108,8 @@ public  class DataProcess {
                     } else {
                         tobeReduced = false;
                     }
-//
-//                    System.out.println(wholetext);
-//                    System.out.println("prevRealWordEnd "+ prevRealWordEnd);
-//                    System.out.println("realWordStart "+realWordStart);
 
-//                    System.out.println(wholetext.substring(prevRealWordEnd < 0 ? 0:prevRealWordEnd, realWordStart - 1));
                     String sub1 = wholetext.substring(prevRealWordEnd<0 ? 0: prevRealWordEnd, realWordStart - 1);
-
-//                     sub=sub.replace(":","@");
-//                    String text = "text:"+sub;
-//                        System.out.println(text);
                         JSONObject section = new JSONObject("{" +
                                 "\"beAnnotated\":" + false + "," +
                                 "\"synonyms\":" + null + "," +
@@ -136,10 +118,7 @@ public  class DataProcess {
 
                         sections.put(section);
 
-
-
                 }
-//                System.out.println("hello");
 
 
                 if (realWordStart > long_text_length) {
@@ -189,25 +168,19 @@ public  class DataProcess {
     }
     public static  ArrayList get_synonyms(String word) {
 
-//        if (scope.synonymsList == null){
-//            scope.synonymsList = Request.getSynonymsList(scope.accession, scope.database);
-////            System.out.println(scope.synonymsList.toString());
-//        }
-
 
         if (scope.synonymsList == null || word == null) {
             return null;
         }
 
-
         word = word.toLowerCase();
         JSONArray synonyms = new JSONArray();
-//        System.out.println(scope.synonymsList.toString());
+
         for (int i = 0; i < scope.synonymsList.length(); i++) {
             if (word.equals(scope.synonymsList.getJSONObject(i).getString("wordLabel"))) {
 
                 synonyms = scope.synonymsList.getJSONObject(i).getJSONArray("synonyms");
-//                System.out.println(synonyms.toString());
+
                 break;
             }
         }
@@ -221,7 +194,6 @@ public  class DataProcess {
 
             String synonym = (String) synonyms.get(i);
 
-//            System.out.println(synonym.toString());
             if (!unique_synonyms.toString().contains("synonym")) {
                 unique_synonyms.add(synonym);
             }

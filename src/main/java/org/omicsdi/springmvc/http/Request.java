@@ -2,6 +2,7 @@ package org.omicsdi.springmvc.http;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,37 +14,42 @@ import java.util.Map;
  */
 public class Request {
 
+    /**
+     *
+     * @param url
+     * @param parameters
+     * @return
+     * do GET
+     */
     public static String sendGet(String url, Map<String, String> parameters) {
-        String result = "";// 返回的结果
-        BufferedReader in = null;// 读取响应输入流
-        StringBuffer sb = new StringBuffer();// 存储参数
-        String params = "";// 编码之后的参数
+        String result = "";
+        BufferedReader in = null;// input stream
+        StringBuffer sub = new StringBuffer();// save param
+        String params = "";// after encode
         try {
-            // 编码请求参数
+            // encode request params
             if (parameters.size() == 1) {
                 for (String name : parameters.keySet()) {
-                    sb.append(name).append("=").append(
+                    sub.append(name).append("=").append(
                             java.net.URLEncoder.encode(parameters.get(name),
                                     "UTF-8"));
                 }
-                params = sb.toString();
+                params = sub.toString();
             } else {
                 for (String name : parameters.keySet()) {
-                    sb.append(name).append("=").append(
+                    sub.append(name).append("=").append(
                             java.net.URLEncoder.encode(parameters.get(name),
                                     "UTF-8")).append("&");
                 }
-                String temp_params = sb.toString();
+                String temp_params = sub.toString();
                 params = temp_params.substring(0, temp_params.length() - 1);
             }
             String full_url = url + "?" + params;
             System.out.println(full_url);
-            // 创建URL对象
             java.net.URL connURL = new java.net.URL(full_url);
-            // 打开URL连接
             java.net.HttpURLConnection httpConn = (java.net.HttpURLConnection) connURL
                     .openConnection();
-            // 设置通用属性
+            //Setting common attributes
             httpConn.setRequestProperty("Accept", "*/*");
             httpConn.setRequestProperty("Connection", "Keep-Alive");
             httpConn.setRequestProperty("User-Agent",
@@ -52,7 +58,7 @@ public class Request {
             in = new BufferedReader(new InputStreamReader(httpConn
                     .getInputStream(), "UTF-8"));
             String line;
-            // 读取返回的内容
+
             while ((line = in.readLine()) != null) {
                 result += line;
             }
@@ -69,26 +75,33 @@ public class Request {
         }
         return result;
     }
+
+    /**
+     * get  enrichmentInfo ;
+     */
     public static String GetJson(String accession,String database,String url){
         String result = new String();
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("accession", accession);
         parameters.put("database",database);
 
-//        url=http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo
         result = sendGet(url,parameters);
         return result;
     }
+
+    /**
+     * return dataset json  to get  meta_dataset_title and meta_dataset_abstract ;
+     */
     public static String GetDatasetJson(String accession,String database,String url){
         String result = new String();
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("acc", accession);
         parameters.put("database",database);
 
-//        url=http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo
         result = sendGet(url,parameters);
         return result;
     }
+    //when request url contains fallowing domain,we change it
     public static String ChangeDatabaseName(String database){
         if (database.equals("metabolomics_workbench")){
             return "Metabolomics_Workbench";
@@ -98,6 +111,7 @@ public class Request {
         }
         else return database;
     }
+    @Deprecated
     public static JSONArray getSynonymsList(String accession, String database){
         String  url="http://www.omicsdi.org/ws/enrichment/getSynonymsForDataset";
         String jsonString = GetJson(accession,ChangeDatabaseName(database),url);
@@ -105,6 +119,7 @@ public class Request {
         JSONArray synonymsList = jsonObject.getJSONArray("synonymsList");
         return  synonymsList;
     }
+
 
 }
 
