@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class DatasetController {
 
-    @RequestMapping(value = "/dataset/{domain}/{acc}", method = RequestMethod.GET)
+    @RequestMapping(value = "/dataset/{domain}/{acc:.+}", method = RequestMethod.GET)
     public String getContext(@PathVariable("domain") String domain,
                              @PathVariable("acc") String acc,
                              ModelMap model) {
-
+        System.out.println(acc);
         String jsonString = Request.GetJson(acc,Request.ChangeDatabaseName(domain), URL.getEnrichmentInfo);
         DataProcess.Scope scope = DataProcess.splitByEnrichmentInfo(jsonString);
         JSONArray target_title__sections = scope.title_sections;
