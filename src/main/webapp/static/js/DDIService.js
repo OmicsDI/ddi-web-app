@@ -1,14 +1,14 @@
 /**
  * Service for launching a metadata search.
  */
-angular.module('ddiApp').service('search', ['$location', function ($location) {
+angular.module('ddiApp').service('search', ['$location', function($location) {
 
     /**
      * To launch a new search, change browser url,
      * which will automatically trigger a new search
      * since the url changes are watched in the query controller.
      */
-    this.meta_search = function (query) {
+    this.meta_search = function(query) {
         query = query || '*:*';
         $location.url('/search' + '?q=' + query);
     };
@@ -19,13 +19,13 @@ angular.module('ddiApp').service('search', ['$location', function ($location) {
 /**
  * auto completion / suggestion words
  */
-angular.module('ddiApp').factory('WordRetriever', function ($http, $q, $timeout) {
+angular.module('ddiApp').factory('WordRetriever', function($http, $q, $timeout) {
     var WordRetriever = new Object();
 
-    WordRetriever.getwords = function (i) {
+    WordRetriever.getwords = function(i) {
         var worddata = $q.defer();
         $http.get(web_service_url + 'term/getTermByPattern?q=' + i + '&size=10')
-            .success(function (data) {
+            .success(function(data) {
                 var words = [];
                 for (var i = 0; i < data.items.length; i++) {
                     words.push(data.items[i].name);
@@ -45,7 +45,7 @@ angular.module('ddiApp').factory('WordRetriever', function ($http, $q, $timeout)
  * Service for passing data between controllers.
  angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window', function (_, $http, $location, $window) {
  */
-angular.module('ddiApp').service('results', ['_','$http', '$location', '$window', function (_, $http, $location, $window) {
+angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window', function(_, $http, $location, $window) {
 
     /**
      * Service initialization.
@@ -82,19 +82,19 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
 
     var query_urls = {
         'ebeye_search': search_config.ebeye_base_url +
-        '?query={QUERY}' +
+            '?query={QUERY}' +
             // '&format=json' +
             // '&fields=' + search_config.fields.join() +
-        '&facetcount=' + search_config.facetcount +
+            '&facetcount=' + search_config.facetcount +
             // '&facetfields=' + search_config.facetfields.join() +
-//                        '&size=' + search_config.page_size +
-        '&size={PAGESIZE}' +
-        '&sortfield={SORTFIELD}' +
-        '&order={ORDER}' +
-        '&start={START}',
+            //                        '&size=' + search_config.page_size +
+            '&size={PAGESIZE}' +
+            '&sortfield={SORTFIELD}' +
+            '&order={ORDER}' +
+            '&start={START}',
 
         'proxy': search_config.ddi_base_url +
-        '/api/internal/ebeye?url={EBEYE_URL}',
+            '/api/internal/ebeye?url={EBEYE_URL}',
     };
 
 
@@ -102,7 +102,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
      * Calculate base url for production and development environments.
      */
     function get_base_url() {
-//        var base_url = $location.protocol() + '://' + $location.host();
+        //        var base_url = $location.protocol() + '://' + $location.host();
         var base_url = $location.protocol() + '://' + $location.host();
         var port = $location.port();
         if (port !== '') {
@@ -115,17 +115,17 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
      * Launch EBeye search.
      * `start` determines the range of the results to be returned.
      */
-    this.search = function (query, start, page_size, sort_field, sort_order) {
+    this.search = function(query, start, page_size, sort_field, sort_order) {
         start = start || 0;
         page_size = page_size || 15;
         sort_field = sort_field || 'id';
         sort_order = sort_order || 'descending';
         display_search_interface();
         display_spinner();
-//        update_page_title();
+        //        update_page_title();
         query = preprocess_query(query);
         query_url = get_query_url(query, start);
-//        execute_ebeye_search(query_url, start === 0);
+        //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
         /**
          * Display search spinner if not a "load more" request.
@@ -158,8 +158,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
             var newSortField = sort_field;
             if (newSortField === "relevance") {
                 newSortField = ""
-            }
-            ;
+            };
 
             var ebeye_url = query_urls.ebeye_search.replace('{QUERY}', query).replace('{START}', start).replace('{PAGESIZE}', page_size).replace('{SORTFIELD}', newSortField).replace('{ORDER}', sort_order);
             console.log(ebeye_url);
@@ -260,7 +259,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
             $http({
                 url: url,
                 method: 'GET'
-            }).success(function (data) {
+            }).success(function(data) {
                 // console.log("get success: "+url);
                 data = preprocess_results(data);
                 overwrite_results = overwrite_results || false;
@@ -273,7 +272,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
                     result.entries = result.entries.concat(data.entries);
                 }
                 status.search_in_progress = false;
-            }).error(function () {
+            }).error(function() {
                 console.log("GET error:" + url);
                 status.search_in_progress = false;
                 status.show_error = true;
@@ -292,7 +291,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
                  * Order facets the same way as in the config.
                  */
                 function order_facets() {
-                    data.facets = _.sortBy(data.facets, function (facet) {
+                    data.facets = _.sortBy(data.facets, function(facet) {
                         return _.indexOf(search_config.facetfields, facet.id);
                     });
                 }
@@ -349,7 +348,7 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
                      */
                     function find_facet_id(facet_label) {
                         var index;
-                        _.find(data.facets, function (facet, i) {
+                        _.find(data.facets, function(facet, i) {
                             if (facet.id === facet_label) {
                                 index = i;
                                 return true;
@@ -367,56 +366,54 @@ angular.module('ddiApp').service('results', ['_','$http', '$location', '$window'
     /**
      * Load more results starting from the last loaded index.
      */
-    this.load_more_results = function (start, page_size, sort_field, sort_order) {
-        query = $location.search().q;
+    this.load_more_results = function(start, page_size, sort_field, sort_order) {
+        query = window.omicsdi.searchQ;
         this.search(query, start, page_size, sort_field, sort_order);
     };
 
     /**
      * Broadcast whether search interface should be displayed.
      */
-    this.get_status = function () {
+    this.get_status = function() {
         return status.display_search_interface;
     };
 
     /**
      * Broadcast search results changes.
      */
-    this.get_result = function () {
+    this.get_result = function() {
         return result;
     };
 
     /**
      * Broadcast whether search is in progress.
      */
-    this.get_search_in_progress = function () {
+    this.get_search_in_progress = function() {
         return status.search_in_progress;
     };
 
     /**
      * Broadcast whether an error has occurred.
      */
-    this.get_show_error = function () {
+    this.get_show_error = function() {
         return status.show_error;
     };
 
 
-    this.get_pages = function (current_page, page_size, hitcount) {
+    this.get_pages = function(current_page, page_size, hitcount) {
         var max_page_no = parseInt((hitcount - 1) / page_size) + 1;
         var startpage = 1;
         var pages = [0, 0, 0, 0];
 
         if (max_page_no - current_page < 5) {
             startpage = max_page_no - 4;
-        }
-        else {
+        } else {
             startpage = current_page - 2;
         }
 
         if (startpage < 1) {
             startpage = 1
-        }
-        ;
+        };
 
         for (var i = 0; i < 5; i++, startpage++) {
 

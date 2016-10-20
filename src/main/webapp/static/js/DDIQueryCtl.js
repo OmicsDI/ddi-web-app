@@ -2,26 +2,26 @@
  * Query controller
  * Responsible for the search box in the header.
  */
-angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location', '$window', '$timeout', 'results', 'search', 'WordRetriever', '$q', function ($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
+angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location', '$window', '$timeout', 'results', 'search', 'WordRetriever', '$q', function($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
 
     $scope.query = {
         text: '',
         submitted: false
     };
-    $scope.$is_example= false;
+    $scope.$is_example = false;
     /**
      * Launch a metadata search using the service.
      */
-    $scope.meta_search = function (query) {
+    $scope.meta_search = function(query) {
         $scope.$root.current_page = 1;
         search.meta_search(query);
         var current_abs_url = $location.absUrl();
         redirect($location.url());
 
         function redirect(newUrl) {
-            $timeout(function () {
+            $timeout(function() {
                 // wrapping in $timeout to avoid "digest in progress" errors
-                $window.location = $window.location.pathname +'#' + newUrl;
+                $window.location = $window.location.pathname + '#' + newUrl;
             });
         }
 
@@ -54,9 +54,9 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
     /**
      * Control browser navigation buttons.
      */
-    $scope.$watch(function () {
+    $scope.$watch(function() {
         return $location.url();
-    }, function (newUrl, oldUrl) {
+    }, function(newUrl, oldUrl) {
         // ignore url hash
         newUrl = newUrl.replace(/#.+$/, '');
         oldUrl = oldUrl.replace(/#.+$/, '');
@@ -80,16 +80,16 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
                 redirect(newUrl);
             } else {
                 // the new url is a search result page, launch that search
-                $scope.query.text = $location.search().q;
-                results.search($location.search().q, 0, $scope.$root.page_size, $scope.$root.sort_field, $scope.$root.sort_order);
+                $scope.query.text = window.omicsdi.searchQ;
+                results.search(window.omicsdi.searchQ, 0, $scope.$root.page_size, $scope.$root.sort_field, $scope.$root.sort_order);
                 $scope.query.submitted = false;
             }
         }
 
         function redirect(newUrl) {
-            $timeout(function () {
+            $timeout(function() {
                 // wrapping in $timeout to avoid "digest in progress" errors
-                $window.location = $window.location.pathname +'#' + newUrl;
+                $window.location = $window.location.pathname + '#' + newUrl;
             });
         }
 
@@ -98,23 +98,23 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
     /**
      * Called when the form is submitted.
      */
-    $scope.submit_query = function () {
+    $scope.submit_query = function() {
         $scope.query.submitted = true;
 
         $scope.$root.current_page = 1;
 
 
-//        if ($scope.queryForm.text.$invalid) {
-//            return;
+        //        if ($scope.queryForm.text.$invalid) {
+        //            return;
         // console.log("submitted invalid" + $scope.queryForm);
-//        }
+        //        }
         $scope.meta_search($scope.query.text);
     };
 
     /**
-    * Called when the example link is clicked.
-    */
-    $scope.example_query = function (example_input) {
+     * Called when the example link is clicked.
+     */
+    $scope.example_query = function(example_input) {
         $scope.$is_example = true;
         $scope.meta_search(example_input);
     };
@@ -125,12 +125,13 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
      * Check if the url contains a query when the controller is first created
      * and initiate a search if necessary.
      */
-    (function () {
-//        if ($location.url().indexOf("/search?q=") > -1) {
-         if ($location.url().indexOf("?q=") > -1) {
+    (function() {
+        //        if ($location.url().indexOf("/search?q=") > -1) {
+        if (location.href.indexOf("?q=") > -1) {
             // a search result page, launch a new search
-            $scope.query.text = $location.search().q;
-            results.search($location.search().q);
+            $scope.query.text = window.omicsdi.searchQ;
+            console.log(window.omicsdi.searchQ);
+            results.search(window.omicsdi.searchQ);
         }
     })();
 
@@ -139,23 +140,23 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
      * get suggestion words
      */
 
-    $scope.getwords = function () {
+    $scope.getwords = function() {
         return $scope.words;
     }
 
-    $scope.get_suggestions = function (typedthings) {
-//    console.log("Do something like reload data with this: " + typedthings );
-        if($scope.$is_example) {
-          $scope.$is_example = false;
-         return;
+    $scope.get_suggestions = function(typedthings) {
+        //    console.log("Do something like reload data with this: " + typedthings );
+        if ($scope.$is_example) {
+            $scope.$is_example = false;
+            return;
         }
         $scope.newwords = WordRetriever.getwords(typedthings);
-        $scope.newwords.then(function (data) {
+        $scope.newwords.then(function(data) {
             $scope.words = data;
         });
     }
 
-    $scope.do_query = function (suggestion) {
+    $scope.do_query = function(suggestion) {
         $scope.query.text = suggestion;
         $scope.meta_search($scope.query.text);
     }

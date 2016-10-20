@@ -63,7 +63,10 @@
 
                 <base href="/">
                 <script>
-                    var fanke;
+                    if (!window.omicsdi) {
+                        window.omicsdi = {};
+                    }
+                    window.omicsdi.searchQ = "${q}";
                 </script>
                 <script type="application/ld+json">
                     {
@@ -264,7 +267,7 @@
                         document.title = "OmicsDI Browse";
                     </script>
 
-                    <div id="content" ng-controller="ResultsListCtrl" class="ng-scope ng-cloak" ng-show="display_search_interface" style="margin: 10px">
+                    <div id="content" ng-controller="ResultsListCtrl" class="ng-scope ng-cloak" style="margin: 10px">
 
 
                         <div id="searching" class="ng-cloak row" style="height: 30px;">
@@ -291,7 +294,7 @@
                                     <h3 class="ng-binding">Show results for</h3>
                                     <ul class="list-unstyled metasearch-facet-values">
                                         <li>
-                                            <a href="" ng-class="{'disabled':omics_facets_no.Proteomics==='0'||is_omic_clicked('Proteomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Proteomics].value)"><img src="img/omics/Proteomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Proteomics</span>
+                                            <a href="" ng-class="{'disabled':omics_facets_no.Proteomics==='0'||is_omic_clicked('Proteomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Proteomics].value)"><img src="static/images/omics/Proteomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Proteomics</span>
                                                 <small>
                             ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Proteomics].count||0
                             | number}})
@@ -299,7 +302,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="" ng-class="{'disabled':omics_facets_no.Metabolomics==='0'||is_omic_clicked('Metabolomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Metabolomics].value)"><img src="img/omics/Metabolomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Metabolomics</span>
+                                            <a href="" ng-class="{'disabled':omics_facets_no.Metabolomics==='0'||is_omic_clicked('Metabolomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Metabolomics].value)"><img src="static/images/omics/Metabolomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Metabolomics</span>
                                                 <small>
                             ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Metabolomics].count||0
                             | number}})
@@ -307,7 +310,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="" ng-class="{'disabled':omics_facets_no.Transcriptomics==='0'||is_omic_clicked('Transcriptomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Transcriptomics].value)"><img src="img/omics/Transcriptomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Transcriptomics</span>
+                                            <a href="" ng-class="{'disabled':omics_facets_no.Transcriptomics==='0'||is_omic_clicked('Transcriptomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Transcriptomics].value)"><img src="static/images/omics/Transcriptomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Transcriptomics</span>
                                                 <small>
                             ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Transcriptomics].count||0
                             | number}})
@@ -315,7 +318,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="" ng-class="{'disabled':omics_facets_no.Genomics==='0'||is_omic_clicked('Genomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img src="img/omics/Genomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Genomics</span>
+                                            <a href="" ng-class="{'disabled':omics_facets_no.Genomics==='0'||is_omic_clicked('Genomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img src="static/images/omics/Genomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Genomics</span>
                                                 <small>
                             ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Genomics].count||0
                             | number}})
@@ -324,7 +327,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="" ng-class="{'disabled':omics_facets_no['Multi-Omics']==='0'||is_omic_clicked('Multi-Omics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex['Multi-Omics']].value)"><img src="img/omics/Multipleomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Multi-Omics</span>
+                                            <a href="" ng-class="{'disabled':omics_facets_no['Multi-Omics']==='0'||is_omic_clicked('Multi-Omics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex['Multi-Omics']].value)"><img src="static/images/omics/Multipleomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Multi-Omics</span>
                                                 <small>
                             ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex["Multi-Omics"]].count||0
                             | number}})
@@ -550,12 +553,12 @@
                                             <li class="repeated-item" ng-repeat="dataset in result.datasets">
                                                 <div class="ddi-card-panel  list-group-item">
                                                     <div class="project-widget-accession">
-                                                        <img src="img/omics/Multipleomics2.png" ng-show="dataset.omicsType.indexOf('Multi-Omics') != -1" />
-                                                        <img src="img/omics/Proteomics2.png" ng-show="dataset.omicsType.indexOf('Proteomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1" />
-                                                        <img src="img/omics/Metabolomics2.png" ng-show="dataset.omicsType.indexOf('Metabolomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1" />
-                                                        <img src="img/omics/Genomics2.png" ng-show="dataset.omicsType.indexOf('Genomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1 " />
-                                                        <img src="img/omics/Transcriptomics2.png" ng-show="(dataset.omicsType.indexOf('Transcriptomics') == 0 || dataset.omicsType.indexOf('transcriptomics') == 0) && dataset.omicsType.indexOf('Multi-Omics') == -1" />
-                                                        <a href={{ "#/dataset/"+dataset.source+ "/"+dataset.id}}>
+                                                        <img src="static/images/omics/Multipleomics2.png" ng-show="dataset.omicsType.indexOf('Multi-Omics') != -1" />
+                                                        <img src="static/images/omics/Proteomics2.png" ng-show="dataset.omicsType.indexOf('Proteomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                                        <img src="static/images/omics/Metabolomics2.png" ng-show="dataset.omicsType.indexOf('Metabolomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                                        <img src="static/images/omics/Genomics2.png" ng-show="dataset.omicsType.indexOf('Genomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1 " />
+                                                        <img src="static/images/omics/Transcriptomics2.png" ng-show="(dataset.omicsType.indexOf('Transcriptomics') == 0 || dataset.omicsType.indexOf('transcriptomics') == 0) && dataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                                        <a ng-href="/dataset/{{dataset.source}}/{{dataset.id}}">
                                                             <span ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                                     </div>
                                                     <blockquote class="ddi-blockquote">
@@ -599,11 +602,11 @@
                                                     <div class="project-widget-paragraph">
                                                         <span ng-show="dataset.publicationDate"><span ng-bind-html="dataset['publicationDate'].substr(0,4)|browsehighlight:highlight_terms"></span>{{"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}
                                                         | </span>
-                                                        <a href={{ "#dataset/"+dataset.source+ "/"+dataset.id}}><span ng-bind-html="dataset.id |browsehighlight:highlight_terms"></span></a> |
+                                                        <a ng-href="dataset/{{dataset.source}}/{{dataset.id}}"><span ng-bind-html="dataset.id |browsehighlight:highlight_terms"></span></a> |
                                                         <a href={{database_urls[repositories[dataset.source_title]]}}> <span ng-bind-html="repositories[dataset.source_title]|browsehighlight:highlight_terms"> </span> </a>
                                                     </div>
                                                     <div class="project-widget-tag" ng-hide="dataset.keywords[0] === 'Not available'">
-                                                        <a ng-repeat="keyword in dataset.keywords" title={{keyword}} class="keywords" href={{ "#/search?q="+ "\" "+keyword+"\ ""}}>{{keyword}}</a>
+                                                        <a ng-repeat="keyword in dataset.keywords" title={{keyword}} class="keywords" href="/search?q=" + "\" "+keyword+"\ ""}}>{{keyword}}</a>
                                                     </div>
                                                 </div>
                                             </li>

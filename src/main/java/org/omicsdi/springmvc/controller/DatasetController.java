@@ -47,8 +47,14 @@ public class DatasetController {
         //make <> tags in meta legal
         String meta_dataset_abstract = HtmlUtils.htmlEscape(datasetDetail.getString("description"));
         model.addAttribute("meta_dataset_title",meta_dataset_title);
+<<<<<<< HEAD
         //replace {{  by { , and replace }} by }
         model.addAttribute("meta_dataset_abstract",ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"}},{{"));
+=======
+        model.addAttribute("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"{"));
+        System.out.println(meta_dataset_title);
+        System.out.println(ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"{"));
+>>>>>>> 8f645e949864ba8f54ee79a0c504e493e8d43fc6
         return "dataset";
 
     }

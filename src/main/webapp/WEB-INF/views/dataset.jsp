@@ -123,7 +123,7 @@
                         <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
                         <div class="grid_12 alpha logo-title col-md-5 col-sm-12 col-xs-12" id="local-title">
                             <a href="/home" title="Back to OmicsDI homepage"><img src="/static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
-                            <span><h1><a href="#/home" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
+                            <span><h1><a href="/home" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
                         </div>
                         <!-- /local-title -->
 
@@ -367,8 +367,8 @@
                                                 <span ng-if="title_sections!=null" ng-repeat="section in title_sections" style="">
                                 <span ng-if="section.beAnnotated == 'false'">{{section.text}}</span>
                                                 <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'">{{section.text}}</span>
-                                                <a ng-if="section.synonyms.length >0 && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
-                                                <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="#/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                                <a ng-if="section.synonyms.length >0 && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                                <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" href="/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                                 </span>
 
                                                 <span ng-if="title_sections == null">
@@ -388,9 +388,9 @@
                                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
                                                     <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
-                                                    <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'"
+                                                    <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'"
                                                         class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
-                                                    <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="#/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                                    <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'" href="/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                                     </span>
 
                                                     <span ng-click="description_show_full='true'" ng-hide="description_show_full=='true'" class="hotword"><b>{{abstract_sections[abstract_sections.length-1].tobeReduced=='true'?"... [more]":""}}</b></span>
@@ -406,9 +406,9 @@
                                             <span ng-if="sample_protocol_sections != null" ng-repeat="section in sample_protocol_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
                                             <span ng-if="section.beAnnotated == 'true'&& enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'">{{section.text}}</span>
-                                            <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'"
+                                            <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'"
                                                 class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
-                                            <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="#/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                            <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && sample_protocol_show_full=='false'" href="/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                             </span>
 
                                             <!--<span ng-if="title_sections == null" >-->
@@ -424,9 +424,9 @@
                                             <span ng-if="data_protocol_sections != null" ng-repeat="section in data_protocol_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
                                             <span ng-if="section.beAnnotated == 'true' && enrich_button_label == 'Enrich'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'">{{section.text}}</span>
-                                            <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'"
+                                            <a ng-if="section.synonyms.length > 0 && section.beAnnotated == 'true' && enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="/search?q={{section.text}}" tooltip-animation="true" tooltip-template="'myTooltipTemplate.html'"
                                                 class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
-                                            <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="#/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
+                                            <a ng-if="section.synonyms == null && section.beAnnotated == 'true'&& enrich_button_label == 'Enriched'" ng-hide="section.tobeReduced=='true' && data_protocol_show_full=='false'" href="/search?q={{section.text}}" class="enrichedWords" style="color:darkcyan;">{{section.text}}</a>
                                             </span>
                                             <span ng-click="data_protocol_show_full='true'" ng-hide="data_protocol_show_full=='true'" class="hotword"><b>{{data_protocol_sections[data_protocol_sections.length-1].tobeReduced=='true'?"... [more]":""}}</b></span>
                                             <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b> [less]</b></span>
@@ -438,7 +438,7 @@
                                                 <span>
                                <span ng-repeat="reanalysis_item in reanalysis_list" class="sameline">
                                <a  class="biological"
-                                  href="#/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
+                                  ng-href="/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
                                    <img src="/static/images/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Proteomics"/>
                                    <img src="/static/images/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Metabolomics"/>
                                    <img src="/static/images/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Gemonics"/>
@@ -470,7 +470,7 @@
                                                 <b>OTHER RELATED OMICS DATASETS IN:</b>
                                                 <span>
                                <a ng-repeat="reanalysis_item in other_omics_list" class="biological"
-                                  href="#/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
+                                  ng-href="/dataset/{{reanalysis_item.database}}/{{reanalysis_item.accession}}">
                                    <img src="/static/images/omics/Proteomics2.png" ng-show="proteomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Proteomics"/>
                                    <img src="/static/images/omics/Metabolomics2.png" ng-show="metabolomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Metabolomics"/>
                                    <img src="/static/images/omics/Genomics2.png" ng-show="genomics_list.indexOf(reanalysis_item.database)>-1" class = "ddi-icon-in-reanalysis" title="Gemonics"/>
@@ -581,7 +581,7 @@
 
                                             <p style="margin-right:20px" class="align-justify">
                                                 <span ng-repeat="author in publication_info[publication_index_info[dataset.publicationIds[current_publication]]].authors">
-                                    <a href="#/search?q={{author.name_for_searching}}">
+                                    <a ng-href="/search?q={{author.name_for_searching}}">
                                         {{author.fullname.substr(0,author.fullname.length-2)}} </a> <span
                                         ng-if="!$last">,</span>
                                                 </span>
@@ -678,7 +678,7 @@
                                                         <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
                                                         <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " />
                                                         <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
-                                                        <a target="" class="align-justify" href={{ "/dataset/"+relatedDataset.source+ "/"+relatedDataset.id}}>
+                                                        <a target="" class="align-justify" ng-href="/dataset/{{relatedDataset.source}}/{{relatedDataset.id}}">
                                             {{relatedDataset.title}}
                                             <!--{{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}-->
                                         </a>
@@ -777,7 +777,7 @@
                                                 <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
                                                 <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " />
                                                 <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
-                                                <a target="" class="align-justify" href={{ "/dataset/"+relatedDataset.source+ "/"+relatedDataset.id}}>{{relatedDataset.title}}</a>
+                                                <a target="" class="align-justify" ng-href="/dataset/{{relatedDataset.source}}/{{relatedDataset.id}}">{{relatedDataset.title}}</a>
                                             </div>
                                             <div class="project-widget-paragraph hidden">
                                                 <b>Project description:</b> {{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}
@@ -961,10 +961,10 @@
                             <div class="col-md-2 col-sm-4 col-xs-12">
                                 <h3 class="about">Information</h3>
                                 <ul>
-                                    <li><a href="#/about">About OmicsDI</a></li>
-                                    <li><a href="#/databases">Databases</a></li>
-                                    <li><a href="#/help#/Overview">Help</a></li>
-                                    <li><a href="#/api#/overview">API</a></li>
+                                    <li><a href="/about">About OmicsDI</a></li>
+                                    <li><a href="/databases">Databases</a></li>
+                                    <li><a href="/help#/Overview">Help</a></li>
+                                    <li><a href="/api#/overview">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>
