@@ -11,13 +11,20 @@ public class ExceptionHandel {
 
     /**
      * it is used for make some String contains illegal characters be legal
-     *for example illegalCharFilter(string,"{:(\\")
+     *for example illegalCharFilter(string,"{,:,(,\\,")
     */
     public static String illegalCharFilter (String result,String filterChars){
+        String[] strToReplace = filterChars.split(",");
 
-        for(int i=0;i<filterChars.length();i++){
-            if(result.contains(String.valueOf(filterChars.charAt(i)))){
-                result=result.replace(String.valueOf(filterChars.charAt(i))," ");
+        for(int i=0;i<strToReplace.length;i++){
+            if(result.contains(strToReplace[i])){
+                if(strToReplace[i].equals("{{")) {
+                    result = result.replace(strToReplace[i], "{");
+                }
+                if(strToReplace[i].equals("}}")) {
+                    result = result.replace(strToReplace[i], "}");
+                }
+
             }
         }
 

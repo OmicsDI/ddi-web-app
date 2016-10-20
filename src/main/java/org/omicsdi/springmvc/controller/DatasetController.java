@@ -1,5 +1,7 @@
 package org.omicsdi.springmvc.controller;
 
+//import org.apache.commons.lang.StringEscapeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.omicsdi.springmvc.http.DataProcess;
@@ -11,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.HtmlUtils;
 
 
 /**
@@ -24,7 +27,7 @@ public class DatasetController {
     public String getContext(@PathVariable("domain") String domain,
                              @PathVariable("acc") String acc,
                              ModelMap model) {
-        System.out.println(acc);
+
         String jsonString = Request.GetJson(acc,Request.ChangeDatabaseName(domain), URL.getEnrichmentInfo);
         DataProcess.Scope scope = DataProcess.splitByEnrichmentInfo(jsonString);
         JSONArray target_title__sections = scope.title_sections;
@@ -41,10 +44,12 @@ public class DatasetController {
         String datasetJson = Request.GetDatasetJson(acc,Request.ChangeDatabaseName(domain),URL.getDatasetDetail);
         JSONObject datasetDetail =  new JSONObject(datasetJson);
         String meta_dataset_title = datasetDetail.getString("name");
-        String meta_dataset_abstract = datasetDetail.getString("description");
-
+        //make <> tags in meta legal
+        String meta_dataset_abstract = HtmlUtils.htmlEscape(datasetDetail.getString("description"));
         model.addAttribute("meta_dataset_title",meta_dataset_title);
-        model.addAttribute("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"{"));
+        //replace {{  by { , and replace }} by }
+        model.addAttribute("meta_dataset_abstract",ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"}},{{"));
         return "dataset";
+
     }
 }

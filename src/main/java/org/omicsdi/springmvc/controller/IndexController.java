@@ -15,6 +15,11 @@ public class IndexController {
 		return "index";
 	}
 
+	@RequestMapping(value = "home",method = RequestMethod.GET)
+	public String getHomePage(ModelMap model) {
+		return "index";
+	}
+
 	@RequestMapping(value = "about", method = RequestMethod.GET)
 	public String getAboutPage() {
 		return "about";
