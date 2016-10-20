@@ -45,6 +45,8 @@ public class DatasetController {
 
         model.addAttribute("meta_dataset_title",meta_dataset_title);
         model.addAttribute("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"{"));
+        System.out.println(meta_dataset_title);
+        System.out.println(ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"{"));
         return "dataset";
     }
 }
