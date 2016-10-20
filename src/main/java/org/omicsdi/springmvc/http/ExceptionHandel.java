@@ -18,6 +18,7 @@ public class ExceptionHandel {
 
         for(int i=0;i<strToReplace.length;i++){
             if(result.contains(strToReplace[i])){
+
                 if(strToReplace[i].equals("{{")) {
                     result = result.replace(strToReplace[i], "{");
                 }
