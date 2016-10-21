@@ -5,7 +5,7 @@
             <html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 
             <head ng-controller="MainContentCtrl">
-                <!-- <style type="text/css">@charset "UTF-8";
+                 <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
         display: none !important;
     }
@@ -13,7 +13,7 @@
     ng\:form {
         display: block;
     }
-    </style> -->
+    </style> 
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
@@ -121,9 +121,9 @@
                     <div id="ddi-local-masthead" class="row">
                         <!-- local-title -->
                         <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-                        <div class="grid_12 alpha logo-title col-md-5 col-sm-12 col-xs-12" id="local-title">
-                            <a href="/home" title="Back to OmicsDI homepage"><img src="/static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
-                            <span><h1><a href="/home" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
+                        <div class="grid_12 alpha logo-title col-md-6 col-sm-12 col-xs-12" id="local-title">
+                            <a href="/" title="Back to OmicsDI homepage"><img src="/static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
+                            <span><h1><a href="/" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
                         </div>
                         <!-- /local-title -->
 

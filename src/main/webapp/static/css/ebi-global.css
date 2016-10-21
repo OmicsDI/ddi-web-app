@@ -112,7 +112,7 @@ span{margin-top:2.3em}div#local-title.logo-title h1,
 div#local-title.logo-title-strapline
 h1{display:inline;line-height:100%}div#local-title.logo-title-strapline
 h1{font-size:270%}div#local-title.logo-title-strapline
-p{display:inline;font-size:123.1%}div#local-search form fieldset,
+p{display:inline;font-size:123.1%}div#local-title{margin-right:0;}div#queryCtrl{margin-bottom:15px;}div#local-search form fieldset,
 form#local-search
 fieldset{background-color:#fff;background-color:rgba(255, 255, 255, 0.8);padding:0.5em 2em 0.5em 0.3em}.oldie div#local-search form fieldset,
 .oldie form#local-search

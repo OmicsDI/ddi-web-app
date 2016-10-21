@@ -4,6 +4,13 @@
  */
 angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location', '$window', '$timeout', 'results', 'search', 'WordRetriever', '$q', function($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
 
+    var searchQ,
+            searchQIndex = location.href.indexOf("?q=");
+    if(searchQIndex !== -1) {
+        searchQ = location.href.substring(searchQIndex + 3);
+        searchQ = decodeURI(searchQ);
+    }
+    
     $scope.query = {
         text: '',
         submitted: false
@@ -15,13 +22,13 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
     $scope.meta_search = function(query) {
         $scope.$root.current_page = 1;
         search.meta_search(query);
-        var current_abs_url = $location.absUrl();
-        redirect($location.url());
+        // var current_abs_url = $location.absUrl();
+        redirect($window.location.href);
 
         function redirect(newUrl) {
             $timeout(function() {
                 // wrapping in $timeout to avoid "digest in progress" errors
-                $window.location = $window.location.pathname + '#' + newUrl;
+                $window.location.href = newUrl;
             });
         }
 
@@ -55,11 +62,11 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
      * Control browser navigation buttons.
      */
     $scope.$watch(function() {
-        return $location.url();
+        return $window.location.href;
     }, function(newUrl, oldUrl) {
         // ignore url hash
-        newUrl = newUrl.replace(/#.+$/, '');
-        oldUrl = oldUrl.replace(/#.+$/, '');
+        // newUrl = newUrl.replace(/#.+$/, '');
+        // oldUrl = oldUrl.replace(/#.+$/, '');
         // url has changed
         if (newUrl !== oldUrl) {
             if (newUrl.indexOf('tab=') !== -1) {
@@ -80,8 +87,8 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
                 redirect(newUrl);
             } else {
                 // the new url is a search result page, launch that search
-                $scope.query.text = window.omicsdi.searchQ;
-                results.search(window.omicsdi.searchQ, 0, $scope.$root.page_size, $scope.$root.sort_field, $scope.$root.sort_order);
+                $scope.query.text = searchQ;
+                results.search(searchQ, 0, $scope.$root.page_size, $scope.$root.sort_field, $scope.$root.sort_order);
                 $scope.query.submitted = false;
             }
         }
@@ -89,7 +96,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         function redirect(newUrl) {
             $timeout(function() {
                 // wrapping in $timeout to avoid "digest in progress" errors
-                $window.location = $window.location.pathname + '#' + newUrl;
+                $window.location.href = newUrl;
             });
         }
 
@@ -129,9 +136,8 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         //        if ($location.url().indexOf("/search?q=") > -1) {
         if (location.href.indexOf("?q=") > -1) {
             // a search result page, launch a new search
-            $scope.query.text = window.omicsdi.searchQ;
-            console.log(window.omicsdi.searchQ);
-            results.search(window.omicsdi.searchQ);
+            $scope.query.text = searchQ;
+            results.search(searchQ);
         }
     })();
 

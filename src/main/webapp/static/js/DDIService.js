@@ -10,7 +10,8 @@ angular.module('ddiApp').service('search', ['$location', function($location) {
      */
     this.meta_search = function(query) {
         query = query || '*:*';
-        $location.url('/search' + '?q=' + query);
+        // $location.url('/search' + '?q=' + query);
+        location.href = location.origin + '/search?q=' + query;
     };
 
 }]);
@@ -47,6 +48,12 @@ angular.module('ddiApp').factory('WordRetriever', function($http, $q, $timeout) 
  */
 angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window', function(_, $http, $location, $window) {
 
+    var searchQ,
+            searchQIndex = location.href.indexOf("?q=");
+    if(searchQIndex !== -1) {
+        searchQ = location.href.substring(searchQIndex + 3);
+        searchQ = decodeURI(searchQ);
+    }
     /**
      * Service initialization.
      */
@@ -103,11 +110,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      */
     function get_base_url() {
         //        var base_url = $location.protocol() + '://' + $location.host();
-        var base_url = $location.protocol() + '://' + $location.host();
-        var port = $location.port();
-        if (port !== '') {
-            base_url += ':' + port;
-        }
+        var base_url = location.protocol + '://' + location.host;
         return base_url;
     }
 
@@ -123,7 +126,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
         display_search_interface();
         display_spinner();
         //        update_page_title();
-        query = preprocess_query(query);
+        query = preprocess_query(decodeURI(query));
         query_url = get_query_url(query, start);
         //        execute_ebeye_search(query_url, start === 0);
         execute_ebeye_search(query_url, true);
@@ -140,7 +143,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
          * Change page title, which is also used in browser tabs.
          */
         function update_page_title() {
-            $window.document.title = 'Search: ' + query;
+            window.document.title = 'Search: ' + query;
         }
 
         /**
@@ -367,7 +370,7 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      * Load more results starting from the last loaded index.
      */
     this.load_more_results = function(start, page_size, sort_field, sort_order) {
-        query = window.omicsdi.searchQ;
+        query = searchQ;
         this.search(query, start, page_size, sort_field, sort_order);
     };
 

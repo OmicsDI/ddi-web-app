@@ -88,9 +88,9 @@
                     <div id="ddi-local-masthead" class="row">
                         <!-- local-title -->
                         <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
-                        <div class="grid_12 alpha logo-title col-md-5 col-sm-12 col-xs-12" id="local-title">
-                            <a href="/home" title="Back to OmicsDI homepage"><img src="static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
-                            <span><h1><a href="/home" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
+                        <div class="grid_12 alpha logo-title col-md-6 col-sm-12 col-xs-12" id="local-title">
+                            <a href="/" title="Back to OmicsDI homepage"><img src="static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
+                            <span><h1><a href="/" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
                         </div>
                         <!-- /local-title -->
 

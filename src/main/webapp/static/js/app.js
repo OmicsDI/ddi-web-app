@@ -96,20 +96,20 @@ var ddiApp = angular.module('ddiApp', ['underscore', 'ngRoute', 'ngAnimate', 'au
  * ANGLULAR CONFIG
  **/
 ddiApp.config(function($routeProvider, $locationProvider) {
-    $routeProvider.
-    when('/about', { templateUrl: '/static/views/about.html', controller: 'MainContentCtrl' }).
-    when('/api', { templateUrl: '/static/views/api.html', controller: 'MainContentCtrl' }).
-    when('/databases', { templateUrl: '/static/views/databases.html', controller: 'MainContentCtrl' }).
-    when('/help', { templateUrl: '/static/views/help.html', controller: 'MainContentCtrl' }).
-    when('/', { templateUrl: '/static/views/home.html', controller: 'MainContentCtrl' }).
-    when('/home', { templateUrl: '/static/views/home.html', controller: 'MainContentCtrl' }).
-        //    when('/search', { templateUrl: '/static/views/search.html', controller: 'MainContentCtrl' }).
-    when('/search?:searchstring', { templateUrl: '/static/views/browse.html', controller: 'MainContentCtrl' }).
-        //    when('/search/:search', { templateUrl: '/static/views/search.html', controller: 'MainContentCtrl' }).
-    when('/dataset/:domain/:acc', { templateUrl: '/static/views/dataset.html', controller: 'MainContentCtrl' }).
-        //    when('/check', {templateUrl: '/static/views/check.html', controller: 'MainContentCtrl'});
-    when('/check', { templateUrl: '/static/views/check.html', controller: 'MainContentCtrl' }).
-    otherwise({ templateUrl: '/static/views/home.html', controller: 'MainContentCtrl' });
+    // $routeProvider.
+    // when('/about', { templateUrl: '/static/views/about.html', controller: 'MainContentCtrl' }).
+    // when('/api', { templateUrl: '/static/views/api.html', controller: 'MainContentCtrl' }).
+    // when('/databases', { templateUrl: '/static/views/databases.html', controller: 'MainContentCtrl' }).
+    // when('/help', { templateUrl: '/static/views/help.html', controller: 'MainContentCtrl' }).
+    // when('/', { templateUrl: '/static/views/home.html', controller: 'MainContentCtrl' }).
+    // when('/home', { templateUrl: '/static/views/home.html', controller: 'MainContentCtrl' }).
+    //     //    when('/search', { templateUrl: '/static/views/search.html', controller: 'MainContentCtrl' }).
+    // when('/search?:searchstring', { templateUrl: '/static/views/browse.html', controller: 'MainContentCtrl' }).
+    //     //    when('/search/:search', { templateUrl: '/static/views/search.html', controller: 'MainContentCtrl' }).
+    // when('/dataset/:domain/:acc', { templateUrl: '/static/views/dataset.html', controller: 'MainContentCtrl' }).
+    //     //    when('/check', {templateUrl: '/static/views/check.html', controller: 'MainContentCtrl'});
+    // when('/check', { templateUrl: '/static/views/check.html', controller: 'MainContentCtrl' }).
+    // otherwise({ templateUrl: '/static/views/home.html', controller: 'MainContentCtrl' });
 
     // $locationProvider.hashPrefix("!");
 });

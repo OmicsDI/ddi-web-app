@@ -3,6 +3,12 @@
  * Responsible for visualising search results.
  */
 angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '$http', 'results', 'ngProgressFactory', '$window', function($scope, $location, $http, results, ngProgressFactory, $window) {
+        var searchQ,
+            searchQIndex = location.href.indexOf("?q=");
+        if(searchQIndex !== -1) {
+            searchQ = location.href.substring(searchQIndex + 3);
+            searchQ = decodeURI(searchQ);
+        }
 
         $scope.result = {
             entries: []
@@ -51,14 +57,14 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
                 if ($scope.result.datasets.length == 1) {
                     dataset1 = $scope.result.datasets[0];
-                    var new_path = "#/dataset/" + dataset1.source + "/" + dataset1.id;
-                    $window.location = $window.location.pathname + new_path;
+                    var new_path = "/dataset/" + dataset1.source + "/" + dataset1.id;
+                    location.pathname = new_path;
                 } else {
                     $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
                     $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
-                    $scope.query = window.omicsdi.searchQ;
+                    console.log(searchQ);
+                    $scope.query = searchQ;
                     $scope.query_for_show = $scope.query;
-                    console.log($scope.query);
                     prepare_query_for_show();
                     prepare_highlight_show();
                     get_new_indexes();
@@ -160,8 +166,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
          * Determine if the facet has already been applied.
          */
         $scope.is_facet_applied = function(facet_id, facet_value) {
-            console.log(facet_id);
-            var query = window.omicsdi.searchQ || '';
+            // console.log(facet_id);
+            var query = searchQ || '';
             facet_value = facet_value.replace(/\+/g, '\\+');
             facet_value = facet_value.replace(/\?/g, '\\?');
             facet_value = facet_value.replace(/\*/g, '\\*');
@@ -190,7 +196,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
             $scope.$root.current_page = 1;
 
-            var query = window.omicsdi.searchQ || '',
+            var query = searchQ || '',
                 facet = facet_id + ':"' + facet_value + '"',
                 new_query;
 
@@ -204,7 +210,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             } else {
                 new_query = query + ' AND ' + facet; // add new facet
             }
-            $location.search('q', new_query);
+            // $location.search('q', new_query);
+            location.search = "?q=" + new_query;
         };
 
         /**
@@ -228,7 +235,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
          */
 
         $scope.$watch(function() {
-            return $location.url();
+            return location.search;
         }, function(newUrl, oldUrl) {
             $scope.$root.current_page = 1;
             $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
