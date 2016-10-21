@@ -38,10 +38,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
         $scope.month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
-        $scope.instrument_pre_url = '#/search?q=*:* AND instrument_platform:';
-        $scope.tissue_pre_url = '#/search?q=*:* AND tissue:';
-        $scope.organism_pre_url = '#/search?q=*:* AND TAXONOMY:';
-        $scope.disease_pre_url = '#/search?q=*:* AND disease:';
+        $scope.instrument_pre_url = '/search?q=*:* AND instrument_platform:';
+        $scope.tissue_pre_url = '/search?q=*:* AND tissue:';
+        $scope.organism_pre_url = '/search?q=*:* AND TAXONOMY:';
+        $scope.disease_pre_url = '/search?q=*:* AND disease:';
         $scope.reanalysis_list = [];
         $scope.reanalyzed_list = [];
         $scope.other_omics_list = [];

@@ -533,8 +533,8 @@
                                         <!--dataset_protocol_bottom-->
 
                                         <div id="buttons_highlight_box">
-                                            <a href={{web_service_url+ "/dataset/"+domain+ "/"+acc+ ".json"}} target="_blank" title="Download Dataset as JSON" class="json-button">{JSON}</a>
-                                            <a href={{web_service_url+ "/dataset/"+domain+ "/"+acc+ ".xml"}} target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
+                                            <a ng-href="{{web_service_url}}dataset/{{domain}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">{JSON}</a>
+                                            <a ng-href="{{web_service_url}}dataset/{{domain}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
                                         </div>
                                     </div>
                                     <!--dataset_protocol_bottom-->
@@ -618,7 +618,7 @@
 
                                     <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
                                         <div class="col-md-4" style="margin-left:10px">
-                                            <a ng-hide="dataset.publications === null" href={{ "http://europepmc.org/abstract/MED/"+publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}>
+                                            <a ng-hide="dataset.publications === null" ng-href= "http://europepmc.org/abstract/MED/{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}">
                             PMID:
                             {{dataset.publicationIds[current_publication]}}</a>
                                         </div>
