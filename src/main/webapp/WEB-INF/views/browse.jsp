@@ -601,7 +601,7 @@
                                                         <a href={{database_urls[repositories[dataset.source_title]]}}> <span ng-bind-html="repositories[dataset.source_title]|browsehighlight:highlight_terms"> </span> </a>
                                                     </div>
                                                     <div class="project-widget-tag" ng-hide="dataset.keywords[0] === 'Not available'">
-                                                        <a ng-repeat="keyword in dataset.keywords" title={{keyword}} class="keywords" ng-href="/search?q=\'"{{keyword}} "\'">{{keyword}}</a>
+                                                        <a ng-repeat="keyword in dataset.keywords" title={{keyword}} class="keywords" ng-href="/search?q=%22{{keyword}}%22">{{keyword}}</a>
                                                     </div>
                                                 </div>
                                             </li>
