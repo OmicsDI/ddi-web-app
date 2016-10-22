@@ -322,7 +322,7 @@ input[type=radio ]:not(old):checked + label > span {
 }
 
 input[type=checkbox]:not(old):checked + label > span:before {
-    content: '✓';
+    content: "\2713";
     display: block;
     width: 1em;
     color: rgb(153, 104, 202);
