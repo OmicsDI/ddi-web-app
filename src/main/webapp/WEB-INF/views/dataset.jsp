@@ -571,7 +571,7 @@
 
                                     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
                                         <img ng-show="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null" src="/static/images/altmetric/altmetric_unknown.png">
-                                        <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}} style="border-bottom-style:none"> <img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
+                                        <a ng-href="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}" style="border-bottom-style:none"> <img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
                                         </a>
                                     </div>
                                     <div class="" id="dataset_middle" style="overflow:hidden;">
