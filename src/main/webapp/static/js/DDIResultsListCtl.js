@@ -201,14 +201,14 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                 new_query;
 
             if ($scope.is_facet_applied(facet_id, facet_value)) {
-                new_query = query;
+                new_query = decodeURI(query);
                 // remove facet in different contexts
                 new_query = new_query.replace(' AND ' + facet + ' AND ', ' AND ', 'i');
                 new_query = new_query.replace(facet + ' AND ', '', 'i');
                 new_query = new_query.replace(' AND ' + facet, '', 'i');
                 new_query = new_query.replace(facet, '', 'i') || 'RNA';
             } else {
-                new_query = query + ' AND ' + facet; // add new facet
+                new_query = decodeURI(query + ' AND ' + facet); // add new facet
             }
             // $location.search('q', new_query);
             location.search = "?q=" + new_query;

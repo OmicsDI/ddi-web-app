@@ -5,7 +5,7 @@
             <html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 
             <head ng-controller="MainContentCtrl">
-                <!-- <style type="text/css">@charset "UTF-8";
+                 <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
         display: none !important;
     }
@@ -13,7 +13,7 @@
     ng\:form {
         display: block;
     }
-    </style> -->
+    </style> 
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
@@ -289,7 +289,7 @@
 
 
                             <p class="align-justify">
-                                The ProteomeXchange Consortium is a collaboration of currently three major mass spectrometry proteomics data repositories, <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a> at EMBL-EBI in Cambridge  (UK), <a href="http://peptideatlas.org">PeptideAtlas </a>                                at ISB in Seattle (US), and <a href="http://massive.ucsd.edu"> MASSive</a> at UCSD (US), offering a unified data deposition and discovery strategy across all three repositories. ProteomeXchange is a distributed database
+                                The ProteomeXchange Consortium is a collaboration of currently three major mass spectrometry proteomics data repositories, <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a> at EMBL-EBI in Cambridge ï¿½(UK), <a href="http://peptideatlas.org">PeptideAtlas </a>                                at ISB in Seattle (US), and <a href="http://massive.ucsd.edu"> MASSive</a> at UCSD (US), offering a unified data deposition and discovery strategy across all three repositories. ProteomeXchange is a distributed database
                                 infrastructure; the potentially very large raw data component of the data is only held at the original submission database, while the searchable metadata is centrally collected and indexed. All ProteomeXchange data is fully
                                 open after release of the associated publication.
                             </p>
@@ -567,10 +567,8 @@
                             </nav>
                         </div>
                     </div>
-                </div>
                 <!--container-->
 
-                </div>
                 <!--wrapper-->
 
                 <!--main container -->
