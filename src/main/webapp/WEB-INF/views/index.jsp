@@ -499,7 +499,7 @@
                                             About
                                         </h4>
                                         <blockquote class="small callout-info ddi-blockquote">The Omics Discovery Index (OmicsDI) provides a Knowleage Discovery framework across a heterogeneous data (genomics, proteomics and metabolomics).
-                                            <a href="#/help#Overview">Read More</a>).
+                                            <a href="/help#Overview">Read More</a>).
                                         </blockquote>
                                         <br>
                                         <blockquote class="small callout-info ddi-blockquote">OmicsDI project has been developed on <a href="https://github.com/BD2K-OmicsDI/" target="_blank">GitHub</a>, you can check or contribute to our development at (<a href="https://github.com/BD2K-OmicsDI/" target="_blank">here</a>)
