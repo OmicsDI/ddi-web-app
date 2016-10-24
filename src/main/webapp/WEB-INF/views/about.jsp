@@ -291,7 +291,7 @@
 
                         <div class="help-content">
                             <p>
-                                OmicsDI development is a collaboration between multiple data resource providers and consortia such as <a href="http://metabolomexchange.org/site/">MetabolomeXchange</a> and <a href="www.proteomexchange.org">ProteomeXchange</a>.
+                                OmicsDI development is a collaboration between multiple data resource providers and consortia such as <a href="http://metabolomexchange.org/site/">MetabolomeXchange</a> and <a href="http://www.proteomexchange.org">ProteomeXchange</a>.
                             </p>
                             <p>
                                 The Github Page: <a href="http://github.com/BD2K-DDI">http://github.com/BD2K-DDI</a> </br>
