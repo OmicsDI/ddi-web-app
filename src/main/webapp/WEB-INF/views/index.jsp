@@ -507,7 +507,7 @@
                                         <br>
                                         <blockquote class="small callout-info ddi-blockquote">The frontend page is based on the
                                             <a href="https://angularjs.org/">Angular JS</a>;
-                                            <a href="d3js.org/">D3.js</a>
+                                            <a href="https://d3js.org/">D3.js</a>
                                         </blockquote>
 
                                     </div>
