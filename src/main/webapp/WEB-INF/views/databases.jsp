@@ -290,7 +290,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"pride"'><em>{{databases.PRIDE}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"pride"'><em>{{databases.PRIDE}}</em>
                                 datasets</a>
                                             </div>
 
