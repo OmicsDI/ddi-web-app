@@ -289,7 +289,7 @@
 
 
                             <p class="align-justify">
-                                The ProteomeXchange Consortium is a collaboration of currently three major mass spectrometry proteomics data repositories, <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a> at EMBL-EBI in Cambridge Â (UK), <a href="http://peptideatlas.org">PeptideAtlas </a>                                at ISB in Seattle (US), and <a href="http://massive.ucsd.edu"> MASSive</a> at UCSD (US), offering a unified data deposition and discovery strategy across all three repositories. ProteomeXchange is a distributed database
+                                The ProteomeXchange Consortium is a collaboration of currently three major mass spectrometry proteomics data repositories, <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a> at EMBL-EBI in Cambridge  (UK), <a href="http://peptideatlas.org">PeptideAtlas </a>                                at ISB in Seattle (US), and <a href="http://massive.ucsd.edu"> MASSive</a> at UCSD (US), offering a unified data deposition and discovery strategy across all three repositories. ProteomeXchange is a distributed database
                                 infrastructure; the potentially very large raw data component of the data is only held at the original submission database, while the searchable metadata is centrally collected and indexed. All ProteomeXchange data is fully
                                 open after release of the associated publication.
                             </p>
@@ -326,7 +326,7 @@
 
 
                             <p class="align-justify">
-                                The original OmicsDI project provides access to eleven different databases with proteomics, genomics, transcriptomics and metabolomics data from Europe and Unite States (see <a href="#/databases">updated list </a>). The
+                                The original OmicsDI project provides access to eleven different databases with proteomics, genomics, transcriptomics and metabolomics data from Europe and Unite States (see <a href="/databases">updated list </a>). The
                                 original list includes: PRIDE (proteomics, UK), PeptideAtlas (proteomics, US), MassIVE (proteomics, US), GPMDB (proteomics, Canada), Metaboligths (metabolomics, UK), MetabolomeWorkbench (metabolomics, US), GNPS (metabolomics,
                                 USA), MetabolomeExpress (metabolomics, Australia), ArrayExpress and GEO (transcriptomics, genomics, UK), ExpressionAtlas (UK), EGA (genomics, UK).
                             </p>
