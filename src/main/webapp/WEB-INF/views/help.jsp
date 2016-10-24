@@ -344,7 +344,7 @@
 
 
                             <p class="align-justify">
-                                The main goal of OmicsDI project is to have a way to search interesting datasets across omics repositories. The main web application and web service (see <a href="#/api">here</a>) allow the user to search and navigate through
+                                The main goal of OmicsDI project is to have a way to search interesting datasets across omics repositories. The main web application and web service (see <a href="/api">here</a>) allow the user to search and navigate through
                                 the OmicsDI datasets. The OmicsDI web application offers two main access modes: (i) using the home page navigation panels or (ii) the search box.
                             </p>
 
