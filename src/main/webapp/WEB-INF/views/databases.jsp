@@ -467,7 +467,7 @@
                                                 <!--MetabolomeExpress houses both private and public uncurated repositories as well as a quality-controlled database of highly-annotated metabolite response statistics submitted by MetabolomeExpress users.-->
                                             </div>
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='/search?q=*:* AND repository:"MetabolomeExpress MetaPhenDB"'><em>{{databases["MetabolomeExpress"]}}</em> datasets</a>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"MetabolomeExpress"'><em>{{databases["MetabolomeExpress"]}}</em> datasets</a>
                                             </div>
                                         </div>
                                     </div>
@@ -495,7 +495,7 @@
                                                 The Global Natural Products Social Molecular Networking (GNPS) is a platform for providing an overview of the molecular features in mass spectrometry based metabolomics by comparing fragmentation patterns to identify chemical relationships.
                                             </div>
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href="/search?q=*:* AND repository:"><em>{{databases.GNPS}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"GNPS"'><em>{{databases.GNPS}}</em>
                                 datasets</a>
                                             </div>
 
