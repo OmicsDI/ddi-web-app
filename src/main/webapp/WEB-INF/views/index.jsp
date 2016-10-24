@@ -432,7 +432,7 @@
                                                 <span class="icon icon-functional" data-icon="4">{{dataset.visitCount|megaNumber}}</span>
                                                 <a ng-href="/dataset/{{dataset.source}}/{{dataset.id}}" title={{dataset.title}}>
                                                     <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->
-                                                    {{dataset.title}} {{dataset.source}}
+                                                    {{dataset.title}}
                                                 </a>
                                             </li>
                                         </ul>
