@@ -316,7 +316,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"ega"'><em>{{databases.EGA}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"ega"'><em>{{databases.EGA}}</em>
                                 datasets</a>
                                             </div>
 
@@ -342,7 +342,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"MetaboLights"'><em>{{databases["MetaboLights Dataset"]}}</em> datasets</a>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"MetaboLights"'><em>{{databases["MetaboLights Dataset"]}}</em> datasets</a>
                                             </div>
 
                                         </div>
@@ -367,7 +367,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"PeptideAtlas"'><em>{{databases.PeptideAtlas}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"PeptideAtlas"'><em>{{databases.PeptideAtlas}}</em>
                                 datasets</a>
                                             </div>
 
@@ -396,7 +396,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"MassIVE"'><em>{{databases.MassIVE}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"MassIVE"'><em>{{databases.MassIVE}}</em>
                                 datasets</a>
                                             </div>
 
@@ -421,7 +421,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"MetabolomicsWorkbench"'><em>{{databases["Metabolomics Workbench"]}}</em> datasets</a>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"MetabolomicsWorkbench"'><em>{{databases["Metabolomics Workbench"]}}</em> datasets</a>
                                             </div>
                                         </div>
                                     </div>
@@ -444,7 +444,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"GPMDB"'><em>{{databases["GPMdb"]}}</em> datasets</a>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"GPMDB"'><em>{{databases["GPMdb"]}}</em> datasets</a>
                                             </div>
                                         </div>
                                     </div>
@@ -467,7 +467,7 @@
                                                 <!--MetabolomeExpress houses both private and public uncurated repositories as well as a quality-controlled database of highly-annotated metabolite response statistics submitted by MetabolomeExpress users.-->
                                             </div>
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"MetabolomeExpress MetaPhenDB"'><em>{{databases["MetabolomeExpress"]}}</em> datasets</a>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"MetabolomeExpress"'><em>{{databases["MetabolomeExpress"]}}</em> datasets</a>
                                             </div>
                                         </div>
                                     </div>
@@ -495,7 +495,7 @@
                                                 The Global Natural Products Social Molecular Networking (GNPS) is a platform for providing an overview of the molecular features in mass spectrometry based metabolomics by comparing fragmentation patterns to identify chemical relationships.
                                             </div>
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href="#/search?q=*:* AND repository:"><em>{{databases.GNPS}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"GNPS"'><em>{{databases.GNPS}}</em>
                                 datasets</a>
                                             </div>
 
@@ -520,7 +520,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"ArrayExpress"'><em>{{databases.ArrayExpress}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"ArrayExpress"'><em>{{databases.ArrayExpress}}</em>
                                 datasets</a>
                                             </div>
 
@@ -545,7 +545,7 @@
                                             </div>
 
                                             <div class="panel-footer small">
-                                                <a rel="nofollow" href='#/search?q=*:* AND repository:"ExpressionAtlas"'><em>{{databases["Expression Atlas Experiments"]}}</em>
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"ExpressionAtlas"'><em>{{databases["Expression Atlas Experiments"]}}</em>
                             datasets</a>
                                             </div>
 
