@@ -649,7 +649,7 @@
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
                                     <li><a href="/help">Help</a></li>
-                                    <li><a href="/api#/overview">API</a></li>
+                                    <li><a href="/api">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>
@@ -667,7 +667,7 @@
 
                 <!--wraper of page -->
                 <!-- To have google analytics-->
-                <script>
+               <%-- <script>
                     (function(i, s, o, g, r, a, m) {
                         i['GoogleAnalyticsObject'] = r;
                         i[r] = i[r] || function() {
@@ -683,7 +683,7 @@
 
                     ga('create', 'UA-70417662-1', 'auto');
                     ga('send', 'pageview');
-                </script>
+                </script>--%>
 
 
                 <script src="static/js/libs/jquery/jquery-1.10.1.min.js"></script>
@@ -704,6 +704,7 @@
                 <script src="static/js/DDIResultsListCtl.js"></script>
                 <script src="static/js/DDIDatasetCtl.js"></script>
                 <script src="static/js/DDICheckCtl.js"></script>
+                <script src="static/js/DDIGoogleAnalytics.js"></script>
 
                 <script src="static/js/DDIGetTweets.js"></script>
                 <script src="static/js/DDIPieCharts.js"></script>

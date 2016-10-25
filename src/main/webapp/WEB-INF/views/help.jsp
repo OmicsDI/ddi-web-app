@@ -333,7 +333,7 @@
 
 
                             <p class="align-justify">
-                                The project is open for new partners and databases (please contact us: <a href="omicsdi-support@ebi.ac.uk">omicsdi-support@ebi.ac.uk</a>). If you are interested in the architecture and the metadata that the resource should
+                                The project is open for new partners and databases (please contact us: <a href="mailto:omicsdi-support@ebi.ac.uk">omicsdi-support@ebi.ac.uk</a>). If you are interested in the architecture and the metadata that the resource should
                                 provide see section <a href="https://github.com/BD2K-DDI/specifications#23-Omicsdi-architecture">2.3</a> and <a href="https://github.com/BD2K-DDI/specifications#24-omicsDI-xml">2.4</a> in "Specifications" of OmicsDI.
                             </p>
 
@@ -501,7 +501,7 @@
                                     <li>Publication date</li>
                                     <li>Submitter details</li>
                                 </ul>
-                                A full description of the XML and the exporters can be found in <a href="https://github.com/BD2K-OmicsDI">Github </a>. If you need to add a new data resource, that is a new domain, get in touch first with the <a href="omicsdi-support@ebi.ac.uk">OmicsDI team </a>.
+                                A full description of the XML and the exporters can be found in <a href="https://github.com/BD2K-OmicsDI">Github </a>. If you need to add a new data resource, that is a new domain, get in touch first with the <a href="mailto:omicsdi-support@ebi.ac.uk">OmicsDI team </a>.
                             </p>
 
                             <h2 id="EBISearchIndexer">
@@ -660,7 +660,7 @@
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
                                     <li><a href="/help">Help</a></li>
-                                    <li><a href="/api#/overview">API</a></li>
+                                    <li><a href="/api">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>
@@ -678,7 +678,7 @@
 
                 <!--wraper of page -->
                 <!-- To have google analytics-->
-                <script>
+               <%-- <script>
                     (function(i, s, o, g, r, a, m) {
                         i['GoogleAnalyticsObject'] = r;
                         i[r] = i[r] || function() {
@@ -694,7 +694,7 @@
 
                     ga('create', 'UA-70417662-1', 'auto');
                     ga('send', 'pageview');
-                </script>
+                </script>--%>
 
 
                 <script src="static/js/libs/jquery/jquery-1.10.1.min.js"></script>
@@ -715,7 +715,7 @@
                 <script src="static/js/DDIResultsListCtl.js"></script>
                 <script src="static/js/DDIDatasetCtl.js"></script>
                 <script src="static/js/DDICheckCtl.js"></script>
-
+                <script src="static/js/DDIGoogleAnalytics.js"></script>
 
 
 
