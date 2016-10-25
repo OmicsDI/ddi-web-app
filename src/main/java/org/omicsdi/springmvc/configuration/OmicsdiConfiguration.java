@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan(basePackages = "org.omicsdi.springmvc")
 public class OmicsdiConfiguration extends WebMvcConfigurerAdapter{
-	
+
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

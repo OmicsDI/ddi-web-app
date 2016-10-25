@@ -79,7 +79,7 @@ public class Request {
     /**
      * get  enrichmentInfo ;
      */
-    public static String GetJson(String accession,String database,String url){
+    public static String getJson(String accession, String database, String url){
         String result = new String();
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("accession", accession);
@@ -89,10 +89,19 @@ public class Request {
         return result;
     }
 
+    public static String getPublication(String accession,  String url){
+        String result = new String();
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("acc", accession);
+
+        result = sendGet(url,parameters);
+        return result;
+    }
+
     /**
      * return dataset json  to get  meta_dataset_title and meta_dataset_abstract ;
      */
-    public static String GetDatasetJson(String accession,String database,String url){
+    public static String getDatasetJson(String accession, String database, String url){
         String result = new String();
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("acc", accession);
@@ -102,7 +111,8 @@ public class Request {
         return result;
     }
     //when request url contains fallowing domain,we change it
-    public static String ChangeDatabaseName(String database){
+    public static String changeDatabaseName(String database){
+
         if (database.equals("metabolomics_workbench")){
             return "Metabolomics_Workbench";
         }
@@ -114,7 +124,7 @@ public class Request {
     @Deprecated
     public static JSONArray getSynonymsList(String accession, String database){
         String  url="http://www.omicsdi.org/ws/enrichment/getSynonymsForDataset";
-        String jsonString = GetJson(accession,ChangeDatabaseName(database),url);
+        String jsonString = getJson(accession, changeDatabaseName(database),url);
         JSONObject jsonObject = new JSONObject(jsonString);
         JSONArray synonymsList = jsonObject.getJSONArray("synonymsList");
         return  synonymsList;

@@ -1,3 +1,5 @@
+<%@ page import="org.json.JSONArray" %>
+<%@ page import="org.json.JSONObject" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@ page isELIgnored="false"%>
@@ -21,13 +23,38 @@
 
                 <meta content="${meta_dataset_title}" name="dataset_title">
                 <meta content="${meta_dataset_abstract}" name="dataset_abstract">
-                <meta content={{meta_dataset_identifier}} name="dataset_identifier">
-                <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
+                <meta content="${meta_dataset_identifier}" name="dataset_identifier">
+
+                <c:forEach var="item" items="${meta_entries}" varStatus="status">
+                    <c:forEach var="item" items="${meta_entries.get(status.index)}" varStatus="status2">
+
+                         <c:if test="${status2.index==1}" >
+                            <c:forEach var="item" items="${meta_entries.get(status.index).get(1)}" varStatus="status3">
+
+                             <meta name="${meta_entries.get(status.index).get(status2.index).get(status3.index).get("name")}"  content="${meta_entries.get(status.index).get(status2.index).get(status3.index).get("content")}">
+
+                            </c:forEach>
+                         </c:if>
+                         <c:if test="${status2.index!=1}" >
+                            <meta name="${meta_entries.get(status.index).get(status2.index).get("name")}"  content="${meta_entries.get(status.index).get(status2.index).get("content")}">
+                         </c:if>
+
+                    </c:forEach>
+                </c:forEach>
+                <%--"<meta content=\"hello\" name =\"data\">">--%>
+                    <%--&lt;%&ndash;<meta content="hello" name ="data">"&ndash;%&gt;--%>
+               <%--<c:>--%>
+                   <%--for()--%>
+                   <%--</c:>>--%>
+
+
+
+                <%--<meta ng-repeat="entry in meta_entries" name=${entry.name} content=${entry.content}>--%>
 
 
                 <title>OmicsDI: Home</title>
-                <link rel="canonical" href={{meta_originalURL}}>
-                <link rel="canonical" href={{meta_ddiURL}}>
+                <link rel="canonical" href="${meta_originalURL}">
+                <link rel="canonical" href="${meta_ddiURL}">
                 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
                 <link rel="stylesheet" href="/static/css/boilerplate-style.css">
                 <link rel="stylesheet" href="/static/css/ebi-global.css" type="text/css" media="screen">
@@ -712,7 +739,7 @@
 
                                         var disqus_config = function() {
                                             var acc_database = getAccDatabase();
-                                            this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical URL variable
+                                            this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical Final variable
                                             this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
                                             this.page.title = "(" + acc_database["database"] + " - " + acc_database["acc"] + ") - " + document.title;
                                         };

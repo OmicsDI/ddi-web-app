@@ -2,18 +2,14 @@ package org.omicsdi.springmvc.controller;
 
 //import org.apache.commons.lang.StringEscapeUtils;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.omicsdi.springmvc.http.DataProcess;
-import org.omicsdi.springmvc.http.ExceptionHandel;
+import org.omicsdi.springmvc.http.Final;
 import org.omicsdi.springmvc.http.Request;
-import org.omicsdi.springmvc.http.URL;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.HtmlUtils;
 
 
 /**
@@ -28,28 +24,17 @@ public class DatasetController {
                              @PathVariable("acc") String acc,
                              ModelMap model) {
 
-        String jsonString = Request.GetJson(acc,Request.ChangeDatabaseName(domain), URL.getEnrichmentInfo);
-        DataProcess.Scope scope = DataProcess.splitByEnrichmentInfo(jsonString);
-        JSONArray target_title__sections = scope.title_sections;
-
-        String target_title =  new String();
-        for (int i=0;i<target_title__sections.length();i++){
-
-            target_title+=target_title__sections.getJSONObject(i).get("text").toString()+" ";
-        }
-        model.addAttribute("name", target_title);
-        model.addAttribute("datasetDomain", Request.ChangeDatabaseName(domain));
+        DataProcess.Scope scope = DataProcess.getScopeObject(domain,acc);
+        model.addAttribute("name", scope.target_title);
+        model.addAttribute("datasetDomain", Request.changeDatabaseName(domain));
         model.addAttribute("datasetAcc",acc);
-
-        String datasetJson = Request.GetDatasetJson(acc,Request.ChangeDatabaseName(domain),URL.getDatasetDetail);
-        JSONObject datasetDetail =  new JSONObject(datasetJson);
-        String meta_dataset_title = datasetDetail.getString("name");
-        //make <> tags in meta legal
-        String meta_dataset_abstract = HtmlUtils.htmlEscape(datasetDetail.getString("description"));
-        model.addAttribute("meta_dataset_title",meta_dataset_title);
-
-        //replace {{  by { , and replace }} by }
-        model.addAttribute("meta_dataset_abstract",ExceptionHandel.illegalCharFilter(meta_dataset_abstract,"}},{{"));
+        model.addAttribute("meta_dataset_title",scope.dataset.get("meta_dataset_title"));
+        model.addAttribute("meta_dataset_abstract", scope.dataset.get("meta_dataset_abstract"));
+        model.addAttribute("meta_originalURL",scope.dataset.get("meta_originalURL"));
+        model.addAttribute("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
+        model.addAttribute("meta_dataset_identifier",acc);
+        if(!scope.meta_entries.toString().equals("null")){
+        model.addAttribute("meta_entries",scope.meta_entries.toList());}
         return "dataset";
 
     }
