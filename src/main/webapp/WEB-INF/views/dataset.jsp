@@ -19,11 +19,11 @@
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
-                <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+                <%--<meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">--%>
 
-                <meta content="${meta_dataset_title}" name="dataset_title">
-                <meta content="${meta_dataset_abstract}" name="dataset_abstract">
-                <meta content="${meta_dataset_identifier}" name="dataset_identifier">
+                <meta content="${meta_dataset_title}" name="title">
+                <meta content="${meta_dataset_abstract}" name="description">
+                <meta content="${meta_dataset_identifier}" name="identifier">
 
                 <c:forEach var="item" items="${meta_entries}" varStatus="status">
                     <c:forEach var="item" items="${meta_entries.get(status.index)}" varStatus="status2">

@@ -12,7 +12,7 @@ public class  Final {
     public static final  Map<String,String> url = new HashMap<>();
     static{
         url.put("web_service_url","http://www.omicsdi.org/ws/");
-        url.put("datasetURL","http://www.omicsdi.org/#/dataset/");
+        url.put("datasetURL","http://www.omicsdi.org/dataset/");
         url.put("getDatasetInfoURL", "http://www.omicsdi.org/ws/dataset/get");
         url.put("getEnrichmentInfoURL","http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo");
         url.put("getSynonymsForDatasetURL","http://www.omicsdi.org/ws/enrichment/getSynonymsForDataset");
