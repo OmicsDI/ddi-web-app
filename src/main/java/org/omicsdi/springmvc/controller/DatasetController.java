@@ -31,10 +31,10 @@ public class DatasetController {
         model.addAttribute("meta_dataset_title",scope.dataset.get("meta_dataset_title"));
         model.addAttribute("meta_dataset_abstract", scope.dataset.get("meta_dataset_abstract"));
         model.addAttribute("meta_originalURL",scope.dataset.get("meta_originalURL"));
-        model.addAttribute("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
+        model.addAttribute("meta_ddiURL", Final.url.get("datasetURL") + Final.repositories.get(domain) + "/" + acc);
         model.addAttribute("meta_dataset_identifier",acc);
         if(!scope.meta_entries.toString().equals("null")){
-        model.addAttribute("meta_entries",scope.meta_entries.toList());}
+            model.addAttribute("meta_entries",scope.meta_entries.toList());}
         return "dataset";
 
     }
