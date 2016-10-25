@@ -25,7 +25,7 @@ public  class DataProcess {
         public String accession;
         public String database;
         public Map<String, String> dataset = new HashMap<>();
-        public String target_title;
+        public String target_title = "";
         public JSONArray meta_entries;
         public JSONArray publicationIds;
         Scope() {
