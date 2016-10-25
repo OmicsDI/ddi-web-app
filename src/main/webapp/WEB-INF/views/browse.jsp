@@ -5,7 +5,7 @@
             <html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 
             <head ng-controller="MainContentCtrl">
-                <!-- <style type="text/css">@charset "UTF-8";
+                 <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
         display: none !important;
     }
@@ -13,7 +13,7 @@
     ng\:form {
         display: block;
     }
-    </style> -->
+    </style> 
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
@@ -643,10 +643,7 @@
                     </div>
                     <!-- ResultsListCtrl -->
 
-                </div>
                 <!--wrapper-->
-
-
 
                 <!--main container -->
 
@@ -736,7 +733,7 @@
                                 <ul>
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
-                                    <li><a href="/help#/Overview">Help</a></li>
+                                    <li><a href="/help">Help</a></li>
                                     <li><a href="/api#/overview">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>

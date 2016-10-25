@@ -560,8 +560,8 @@
                                         <!--dataset_protocol_bottom-->
 
                                         <div id="buttons_highlight_box">
-                                            <a href={{web_service_url+ "/dataset/"+domain+ "/"+acc+ ".json"}} target="_blank" title="Download Dataset as JSON" class="json-button">{JSON}</a>
-                                            <a href={{web_service_url+ "/dataset/"+domain+ "/"+acc+ ".xml"}} target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
+                                            <a ng-href="{{web_service_url}}dataset/{{domain}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">{JSON}</a>
+                                            <a ng-href="{{web_service_url}}dataset/{{domain}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
                                         </div>
                                     </div>
                                     <!--dataset_protocol_bottom-->
@@ -598,7 +598,7 @@
 
                                     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
                                         <img ng-show="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null" src="/static/images/altmetric/altmetric_unknown.png">
-                                        <a href={{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}} style="border-bottom-style:none"> <img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
+                                        <a ng-href="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}" style="border-bottom-style:none"> <img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
                                         </a>
                                     </div>
                                     <div class="" id="dataset_middle" style="overflow:hidden;">
@@ -645,7 +645,7 @@
 
                                     <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
                                         <div class="col-md-4" style="margin-left:10px">
-                                            <a ng-hide="dataset.publications === null" href={{ "http://europepmc.org/abstract/MED/"+publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}>
+                                            <a ng-hide="dataset.publications === null" ng-href= "http://europepmc.org/abstract/MED/{{publication_info[publication_index_info[dataset.publicationIds[current_publication]]].pmid}}">
                             PMID:
                             {{dataset.publicationIds[current_publication]}}</a>
                                         </div>
@@ -990,7 +990,7 @@
                                 <ul>
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
-                                    <li><a href="/help#/Overview">Help</a></li>
+                                    <li><a href="/help">Help</a></li>
                                     <li><a href="/api#/overview">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>

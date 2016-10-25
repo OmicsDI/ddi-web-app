@@ -5,7 +5,7 @@
             <html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app" class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 
             <head ng-controller="MainContentCtrl">
-                <!-- <style type="text/css">@charset "UTF-8";
+                 <style type="text/css">@charset "UTF-8";
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
         display: none !important;
     }
@@ -13,7 +13,7 @@
     ng\:form {
         display: block;
     }
-    </style> -->
+    </style> 
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
@@ -289,7 +289,7 @@
 
 
                             <p class="align-justify">
-                                The ProteomeXchange Consortium is a collaboration of currently three major mass spectrometry proteomics data repositories, <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a> at EMBL-EBI in Cambridge  (UK), <a href="http://peptideatlas.org">PeptideAtlas </a>                                at ISB in Seattle (US), and <a href="http://massive.ucsd.edu"> MASSive</a> at UCSD (US), offering a unified data deposition and discovery strategy across all three repositories. ProteomeXchange is a distributed database
+                                The ProteomeXchange Consortium is a collaboration of currently three major mass spectrometry proteomics data repositories, <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a> at EMBL-EBI in Cambridge �(UK), <a href="http://peptideatlas.org">PeptideAtlas </a>                                at ISB in Seattle (US), and <a href="http://massive.ucsd.edu"> MASSive</a> at UCSD (US), offering a unified data deposition and discovery strategy across all three repositories. ProteomeXchange is a distributed database
                                 infrastructure; the potentially very large raw data component of the data is only held at the original submission database, while the searchable metadata is centrally collected and indexed. All ProteomeXchange data is fully
                                 open after release of the associated publication.
                             </p>
@@ -326,7 +326,7 @@
 
 
                             <p class="align-justify">
-                                The original OmicsDI project provides access to eleven different databases with proteomics, genomics, transcriptomics and metabolomics data from Europe and Unite States (see <a href="#/databases">updated list </a>). The
+                                The original OmicsDI project provides access to eleven different databases with proteomics, genomics, transcriptomics and metabolomics data from Europe and Unite States (see <a href="/databases">updated list </a>). The
                                 original list includes: PRIDE (proteomics, UK), PeptideAtlas (proteomics, US), MassIVE (proteomics, US), GPMDB (proteomics, Canada), Metaboligths (metabolomics, UK), MetabolomeWorkbench (metabolomics, US), GNPS (metabolomics,
                                 USA), MetabolomeExpress (metabolomics, Australia), ArrayExpress and GEO (transcriptomics, genomics, UK), ExpressionAtlas (UK), EGA (genomics, UK).
                             </p>
@@ -344,7 +344,7 @@
 
 
                             <p class="align-justify">
-                                The main goal of OmicsDI project is to have a way to search interesting datasets across omics repositories. The main web application and web service (see <a href="#/api">here</a>) allow the user to search and navigate through
+                                The main goal of OmicsDI project is to have a way to search interesting datasets across omics repositories. The main web application and web service (see <a href="/api">here</a>) allow the user to search and navigate through
                                 the OmicsDI datasets. The OmicsDI web application offers two main access modes: (i) using the home page navigation panels or (ii) the search box.
                             </p>
 
@@ -567,10 +567,8 @@
                             </nav>
                         </div>
                     </div>
-                </div>
                 <!--container-->
 
-                </div>
                 <!--wrapper-->
 
                 <!--main container -->
@@ -661,7 +659,7 @@
                                 <ul>
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
-                                    <li><a href="/help#/Overview">Help</a></li>
+                                    <li><a href="/help">Help</a></li>
                                     <li><a href="/api#/overview">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>

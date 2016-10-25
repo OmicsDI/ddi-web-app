@@ -432,7 +432,7 @@
                                                 <span class="icon icon-functional" data-icon="4">{{dataset.visitCount|megaNumber}}</span>
                                                 <a ng-href="/dataset/{{dataset.source}}/{{dataset.id}}" title={{dataset.title}}>
                                                     <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->
-                                                    {{dataset.title}} {{dataset.source}}
+                                                    {{dataset.title}}
                                                 </a>
                                             </li>
                                         </ul>
@@ -499,7 +499,7 @@
                                             About
                                         </h4>
                                         <blockquote class="small callout-info ddi-blockquote">The Omics Discovery Index (OmicsDI) provides a Knowleage Discovery framework across a heterogeneous data (genomics, proteomics and metabolomics).
-                                            <a href="#/help#Overview">Read More</a>).
+                                            <a href="/help">Read More</a>).
                                         </blockquote>
                                         <br>
                                         <blockquote class="small callout-info ddi-blockquote">OmicsDI project has been developed on <a href="https://github.com/BD2K-OmicsDI/" target="_blank">GitHub</a>, you can check or contribute to our development at (<a href="https://github.com/BD2K-OmicsDI/" target="_blank">here</a>)
@@ -507,7 +507,7 @@
                                         <br>
                                         <blockquote class="small callout-info ddi-blockquote">The frontend page is based on the
                                             <a href="https://angularjs.org/">Angular JS</a>;
-                                            <a href="d3js.org/">D3.js</a>
+                                            <a href="https://d3js.org/">D3.js</a>
                                         </blockquote>
 
                                     </div>
@@ -606,10 +606,10 @@
                                 <div class="col-md-2 col-sm-4 col-xs-12">
                                     <h3 class="about">Information</h3>
                                     <ul>
-                                        <li><a href="#/about">About OmicsDI</a></li>
-                                        <li><a href="#/databases">Databases</a></li>
-                                        <li><a href="#/help#/Overview">Help</a></li>
-                                        <li><a href="#/api#/overview">API</a></li>
+                                        <li><a href="/about">About OmicsDI</a></li>
+                                        <li><a href="/databases">Databases</a></li>
+                                        <li><a href="/help">Help</a></li>
+                                        <li><a href="/api#/overview">API</a></li>
                                         <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                         <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                         </li>
