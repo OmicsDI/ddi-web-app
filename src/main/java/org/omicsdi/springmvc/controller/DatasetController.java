@@ -26,7 +26,7 @@ public class DatasetController {
 
         DataProcess.Scope scope = DataProcess.getScopeObject(domain,acc);
         model.addAttribute("name", scope.target_title);
-        model.addAttribute("datasetDomain", Request.changeDatabaseName(domain));
+        model.addAttribute("datasetDomain", domain);
         model.addAttribute("datasetAcc",acc);
         model.addAttribute("meta_dataset_title",scope.dataset.get("meta_dataset_title"));
         model.addAttribute("meta_dataset_abstract", scope.dataset.get("meta_dataset_abstract"));
