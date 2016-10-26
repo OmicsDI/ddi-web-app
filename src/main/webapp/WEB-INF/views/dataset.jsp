@@ -19,11 +19,11 @@
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
-                <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+                <%--<meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">--%>
 
-                <meta content="${meta_dataset_title}" name="dataset_title">
-                <meta content="${meta_dataset_abstract}" name="dataset_abstract">
-                <meta content="${meta_dataset_identifier}" name="dataset_identifier">
+                <meta content="${meta_dataset_title}" name="title">
+                <meta content="${meta_dataset_abstract}" name="description">
+                <meta content="${meta_dataset_identifier}" name="identifier">
 
                 <c:forEach var="item" items="${meta_entries}" varStatus="status">
                     <c:forEach var="item" items="${meta_entries.get(status.index)}" varStatus="status2">
@@ -560,9 +560,14 @@
 
 
                                             <p style="margin-left:15px" class="align-justify">
-                                                <span ng-show="dataset.publicationDate"> {{dataset['publicationDate'].substr(0,4)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(6,2)}}| </span>
-                                                <a href={{dataset.full_dataset_link}}>{{acc}}</a> |
-                                                <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>
+                                                <b>Provider:</b>
+                                                <a href={{dataset.full_dataset_link}}>{{acc}}</a>  |
+                                                <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>  |
+                                                <span ng-show="dataset.publicationDate"> {{dataset['publicationDate'].substr(6,2)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(0,4)}} </span>
+                                            </p>
+
+                                            <p style="margin-left:15px">
+                                                <a href={{dataset.full_dataset_link}} class="access-data">ACCESS DATA</a>
                                             </p>
 
 
@@ -1001,7 +1006,7 @@
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
                                     <li><a href="/help">Help</a></li>
-                                    <li><a href="/api#/overview">API</a></li>
+                                    <li><a href="/api">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>
@@ -1019,7 +1024,7 @@
 
                 <!--wraper of page -->
                 <!-- To have google analytics-->
-                <script>
+               <%-- <script>
                     (function(i, s, o, g, r, a, m) {
                         i['GoogleAnalyticsObject'] = r;
                         i[r] = i[r] || function() {
@@ -1035,8 +1040,8 @@
 
                     ga('create', 'UA-70417662-1', 'auto');
                     ga('send', 'pageview');
-                </script>
-
+                </script>--%>
+                <script src="static/js/DDIGoogleAnalytics.js"></script>
 
 
 
