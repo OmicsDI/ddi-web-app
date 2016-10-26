@@ -93,7 +93,17 @@
                     {
                         "@context": "http://schema.org",
                         "@type": "Dataset",
-                        "name": "${name}"
+                        "name": "${name}",
+                        "description": "${meta_dataset_abstract}",
+                        "url": "${meta_ddiURL}",
+                        "sameAs": "${meta_originalURL}",
+                        "keywords": "${keywords}",
+                        "variablesMeasured": "${omics_type}",
+                        "creator": {
+                                  "@type" : "Person",
+                                  "name" : "${all_authors}"
+                               },
+                        "citation": "${journal}"
                     }
                 </script>
                 <script>

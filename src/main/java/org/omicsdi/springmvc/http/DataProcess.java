@@ -91,22 +91,35 @@ public  class DataProcess {
 
         String datasetJson = Request.getDatasetJson(acc, Request.changeDatabaseName(domain), Final.url.get("getDatasetInfoURL"));
         JSONObject datasetInfo = new JSONObject(datasetJson);
+        String full_dataset_link = datasetInfo.get("full_dataset_link").toString();
+        String keywords = datasetInfo.get("keywords").toString();
+
         scope.dataset.put("meta_dataset_title", datasetInfo.getString("name"));
         //make <> tags in meta legal
         String meta_dataset_abstract = HtmlUtils.htmlEscape(datasetInfo.getString("description"));
         //replace {{  by { , and replace }} by }
         scope.dataset.put("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract, "}},{{"));
-        scope.dataset.put("meta_originalURL", datasetInfo.get("full_dataset_link").toString());
+        scope.dataset.put("meta_originalURL", full_dataset_link.equals("null") ? "" : full_dataset_link );
         scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
+        scope.dataset.put("keywords",keywords.equals("null") ? "" : keywords.substring(1,datasetInfo.get("keywords").toString().length()-1).replaceAll("\"",""));
+
+        scope.dataset.put("omics_type",datasetInfo.getJSONArray("omics_type").toString()
+                .substring(2,datasetInfo.getJSONArray("omics_type").toString().length()-2));
+
+        String all_authors = "";
+        String journal = "";
+        String meta_entry_arr = "[";
         if(datasetInfo.get("publicationIds").equals(null)) {
             scope.meta_entries = new JSONArray();
+            scope.dataset.put("all_authors",all_authors);
+            scope.dataset.put("journal",journal);
             return scope;
         }
         else{
             scope.publicationIds = datasetInfo.getJSONArray("publicationIds");
         }
 
-        String meta_entry_arr = "[";
+
         for (int i = 0; i < scope.publicationIds.length(); i++) {
             String pubmed_id = String.valueOf(scope.publicationIds.getString(i));
 
@@ -115,6 +128,8 @@ public  class DataProcess {
             String publication_json = Request.getPublication(pubmed_id, publication_url);
             JSONObject publication_data = new JSONObject(publication_json);
             JSONObject entity = publication_data.getJSONArray("publications").getJSONObject(0);
+
+            scope.dataset.put("journal",entity.getString("journal"));
 
             String pub_year = entity.getString("date").substring(0, 4);
             String pub_month = entity.getString("date").substring(4, 6);
@@ -154,6 +169,7 @@ public  class DataProcess {
                 author.put("fullname", entity.getJSONArray("authors").get(j).toString());
                 author.put("name_for_searching", author_for_searching);
                 authors.put(author);
+                all_authors+=author.getString("fullname")+" ,";
             }
 
 
@@ -188,6 +204,7 @@ public  class DataProcess {
 
         String target_meta_entry_arr = meta_entry_arr.substring(0,meta_entry_arr.length()-1)+']';
         scope.meta_entries = new JSONArray(target_meta_entry_arr);
+        scope.dataset.put("all_authors",all_authors.substring(0,all_authors.length()-1));
 
         return scope;
 

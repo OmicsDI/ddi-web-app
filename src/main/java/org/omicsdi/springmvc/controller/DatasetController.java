@@ -33,8 +33,13 @@ public class DatasetController {
         model.addAttribute("meta_originalURL",scope.dataset.get("meta_originalURL"));
         model.addAttribute("meta_ddiURL", Final.url.get("datasetURL") + Final.repositories.get(domain) + "/" + acc);
         model.addAttribute("meta_dataset_identifier",acc);
+        model.addAttribute("keywords",scope.dataset.get("keywords"));
+        model.addAttribute("all_authors",scope.dataset.get("all_authors"));
+        model.addAttribute("omics_type",scope.dataset.get("omics_type"));
+        model.addAttribute("journal",scope.dataset.get("journal"));
         if(!scope.meta_entries.toString().equals("null")){
-            model.addAttribute("meta_entries",scope.meta_entries.toList());}
+            model.addAttribute("meta_entries",scope.meta_entries.toList());
+        }
         return "dataset";
 
     }
