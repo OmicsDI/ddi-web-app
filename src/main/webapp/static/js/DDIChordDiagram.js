@@ -2,7 +2,7 @@
  * Created by mingze on 14/10/15.
  */
 function drawChordDiagram() {
-    var urlString = window.location.hash;
+    var urlString = window.location.pathname;
     var urlWords = urlString.split("/");
     var acc = urlWords[3];
     var domain = urlWords[2];
