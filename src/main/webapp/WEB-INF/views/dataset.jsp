@@ -469,8 +469,7 @@
                                             <span ng-click="data_protocol_show_full='false'" ng-hide="data_protocol_show_full=='false'" class="hotword"><b> [less]</b></span>
                                         </p>
 
-                                        <div class="row" id="dataset_protocol_bottom" style="margin-top:10px;margin-left:10px">
-                                            <p ng-show="reanalysis_list.length > 0" style="margin-left:15px" class="align-justify">
+                                            <p ng-show="reanalysis_list.length > 0" class="align-justify">
                                                 <b>REANALYSIS of:</b>
                                                 <span>
                                <span ng-repeat="reanalysis_item in reanalysis_list" class="sameline">
@@ -487,7 +486,7 @@
                                                 </span>
                                             </p>
 
-                                            <p ng-show="reanalyzed_list.length > 0" style="margin-left:15px" class="align-justify">
+                                            <p ng-show="reanalyzed_list.length > 0" class="align-justify">
                                                 <b>REANALYZED by:</b>
                                                 <span>
                                <span ng-repeat="reanalyzed_item in reanalyzed_list" class="sameline">
@@ -503,7 +502,7 @@
                                                 </span>
                                             </p>
 
-                                            <p ng-show="other_omics_list.length > 0" style="margin-left:15px" class="align-justify">
+                                            <p ng-show="other_omics_list.length > 0" class="align-justify">
                                                 <b>OTHER RELATED OMICS DATASETS IN:</b>
                                                 <span>
                                <a ng-repeat="reanalysis_item in other_omics_list" class="biological"
@@ -519,7 +518,7 @@
                                             </p>
 
 
-                                            <p ng-show="dataset.instruments.length > 0 && dataset.instruments[0] != 'Not available'" style="margin-left:15px" ng-show="dataset.instruments" class="align-justify">
+                                            <p ng-show="dataset.instruments.length > 0 && dataset.instruments[0] != 'Not available'" ng-show="dataset.instruments" class="align-justify">
                                                 <b>INSTRUMENT(S):</b>
                                                 <span>
                                <a ng-repeat="instrument in dataset.instruments" title={{instrument}} class="biological"
@@ -529,7 +528,7 @@
                           </span>
                                             </p>
 
-                                            <p ng-show="dataset.organisms.length > 0 && dataset.organisms[0] != 'Not available'" style="margin-left:15px" class="align-justify">
+                                            <p ng-show="dataset.organisms.length > 0 && dataset.organisms[0] != 'Not available'" class="align-justify">
                                                 <b>ORGANISM(S):</b>
                                                 <span>
                    <a ng-repeat="organism in dataset.organisms" title={{organnism.name}} class="biological"
@@ -539,7 +538,7 @@
               </span>
                                             </p>
 
-                                            <p ng-show="dataset.tissues.length > 0 && dataset.tissues[0] != 'Not available'" style="margin-left:15px" class="align-justify"><b>TISSUE(S):</b>
+                                            <p ng-show="dataset.tissues.length > 0 && dataset.tissues[0] != 'Not available'" class="align-justify"><b>TISSUE(S):</b>
 
                                                 <span>
                    <a ng-repeat="tissue in dataset.tissues" title={{tissue}} class="biological"
@@ -549,7 +548,7 @@
               </span>
                                             </p>
 
-                                            <p ng-show="dataset.diseases.length > 0 && dataset.diseases[0] != 'Not available'" style="margin-left:15px" class="align-justify"><b>DISEASE(S):</b>
+                                            <p ng-show="dataset.diseases.length > 0 && dataset.diseases[0] != 'Not available'" class="align-justify"><b>DISEASE(S):</b>
                                                 <span>
                    <a ng-repeat="disease in dataset.diseases" title={{disease}} class="biological"
                       href={{disease_pre_url+'"'+disease+'"'}}>
@@ -559,22 +558,18 @@
                                             </p>
 
 
-                                            <p style="margin-left:15px" class="align-justify">
+                                            <p class="align-justify">
                                                 <b>Provider:</b>
                                                 <a href={{dataset.full_dataset_link}}>{{acc}}</a>  |
                                                 <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>
                                                 <span ng-show="dataset.publicationDate">| {{dataset['publicationDate'].substr(6,2)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(0,4)}} </span>
                                             </p>
 
-                                            <p style="margin-left:15px">
-                                                <a href={{dataset.full_dataset_link}} class="access-data">ACCESS DATA</a>
-                                            </p>
 
-
-                                        </div>
                                         <!--dataset_protocol_bottom-->
 
                                         <div id="buttons_highlight_box">
+                                            <a href={{dataset.full_dataset_link}} class="access-data">ACCESS DATA</a>
                                             <a ng-href="{{web_service_url}}dataset/{{domain}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">{JSON}</a>
                                             <a ng-href="{{web_service_url}}dataset/{{domain}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
                                         </div>
