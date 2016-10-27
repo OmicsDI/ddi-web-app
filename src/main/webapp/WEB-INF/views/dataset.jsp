@@ -20,6 +20,7 @@
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
                 <%--<meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">--%>
+                <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek" />
 
                 <meta content="${meta_dataset_title}" name="title">
                 <meta content="${meta_dataset_abstract}" name="description">
