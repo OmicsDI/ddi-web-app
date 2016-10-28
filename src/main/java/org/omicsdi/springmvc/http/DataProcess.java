@@ -61,19 +61,20 @@ public  class DataProcess {
         String jsonString = Request.getJson(acc, Request.changeDatabaseName(domain), Final.url.get("getEnrichmentInfoURL"));
         JSONObject jsonObject = new JSONObject(jsonString);
 
-        scope.accession = jsonObject.getString("accession");
-        scope.database = jsonObject.getString("database");
+        scope.accession = ExceptionHandel.filterNull(jsonObject.get("accession").toString());
+        scope.database = ExceptionHandel.filterNull(jsonObject.get("database").toString());
 
-        if (!jsonObject.getString("accession").isEmpty()) {
+        if (!scope.accession.isEmpty()) {
 
             JSONArray titleEnrichInfo = jsonObject.getJSONObject("synonyms").getJSONArray("name");
 
-            if (jsonObject.getJSONObject("originalAttributes").getString("name").length() >= 1) {
-                scope.dataset.put("name", jsonObject.getJSONObject("originalAttributes").getString("name"));
+            String name = ExceptionHandel.filterNull(jsonObject.getJSONObject("originalAttributes").get("name").toString());
+            if (name.length() >= 1) {
+                scope.dataset.put("name", name);
             }
-
-            if (jsonObject.getJSONObject("originalAttributes").getString("description").length() >= 1) {
-                scope.dataset.put("description", jsonObject.getJSONObject("originalAttributes").getString("description"));
+            String description = ExceptionHandel.filterNull(jsonObject.getJSONObject("originalAttributes").get("description").toString());
+            if (description.length() >= 1) {
+                scope.dataset.put("description", description);
             }
 
             scope.title_sections = get_section(scope.dataset.get("name"), titleEnrichInfo, scope);
@@ -92,19 +93,18 @@ public  class DataProcess {
         String datasetJson = Request.getDatasetJson(acc, Request.changeDatabaseName(domain), Final.url.get("getDatasetInfoURL"));
         JSONObject datasetInfo = new JSONObject(datasetJson);
         String full_dataset_link = datasetInfo.get("full_dataset_link").toString();
-        String keywords = datasetInfo.get("keywords").toString();
+        String keywords = ExceptionHandel.filterNull(datasetInfo.get("keywords").toString());
 
-        scope.dataset.put("meta_dataset_title", datasetInfo.getString("name"));
+        scope.dataset.put("meta_dataset_title", ExceptionHandel.filterNull(datasetInfo.get("name").toString()));
         //make <> tags in meta legal
-        String meta_dataset_abstract = HtmlUtils.htmlEscape(datasetInfo.getString("description"));
+        String meta_dataset_abstract = HtmlUtils.htmlEscape(ExceptionHandel.filterNull(datasetInfo.get("description").toString())).replaceAll("\"","");
         //replace {{  by { , and replace }} by }
         scope.dataset.put("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract, "}},{{"));
-        scope.dataset.put("meta_originalURL", full_dataset_link.equals("null") ? "" : full_dataset_link );
+        scope.dataset.put("meta_originalURL", ExceptionHandel.filterNull(full_dataset_link));
         scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
-        scope.dataset.put("keywords",keywords.equals("null") ? "" : keywords.substring(1,datasetInfo.get("keywords").toString().length()-1).replaceAll("\"",""));
-
-        scope.dataset.put("omics_type",datasetInfo.getJSONArray("omics_type").toString()
-                .substring(2,datasetInfo.getJSONArray("omics_type").toString().length()-2));
+        scope.dataset.put("keywords",keywords.isEmpty() ? "" :keywords.substring(1,keywords.length()-1).replaceAll("\"",""));
+        String omics_type = datasetInfo.getJSONArray("omics_type").toString();
+        scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
 
         String all_authors = "";
         String journal = "";
@@ -121,7 +121,7 @@ public  class DataProcess {
 
 
         for (int i = 0; i < scope.publicationIds.length(); i++) {
-            String pubmed_id = String.valueOf(scope.publicationIds.getString(i));
+            String pubmed_id = ExceptionHandel.filterNull(scope.publicationIds.get(i).toString());
 
             String publication_url = Final.url.get("web_service_url") + "publication/list";
 
@@ -129,16 +129,16 @@ public  class DataProcess {
             JSONObject publication_data = new JSONObject(publication_json);
             JSONObject entity = publication_data.getJSONArray("publications").getJSONObject(0);
 
-            scope.dataset.put("journal",entity.getString("journal"));
+            scope.dataset.put("journal",ExceptionHandel.filterNull(entity.get("journal").toString()).replaceAll("\"",""));
+            if(entity.get("date").toString().length()==8) {
+                String pub_year = entity.getString("date").substring(0, 4);
+                String pub_month = entity.getString("date").substring(4, 6);
+                String pub_day = entity.getString("date").substring(6, 8);
 
-            String pub_year = entity.getString("date").substring(0, 4);
-            String pub_month = entity.getString("date").substring(4, 6);
-            String pub_day = entity.getString("date").substring(6, 8);
-
-            entity.put("pub_date_month",pub_month);
-            entity.put("pub_date_year",pub_year);
-            entity.put("pub_date_day",pub_day.equals("00") ? "" : pub_day);
-
+                entity.put("pub_date_month", pub_month);
+                entity.put("pub_date_year", pub_year);
+                entity.put("pub_date_day", pub_day.equals("00") ? "" : pub_day);
+            }
 
             JSONArray authors = new JSONArray();
 
@@ -152,16 +152,17 @@ public  class DataProcess {
                 while (matcher1.find()) {
                     reg_result.add(matcher1.group());
                 }
-                surname = reg_result.get(0).toString();
+                surname = reg_result.isEmpty() ? "" : reg_result.get(0).toString();
 
 
                 Pattern reg_firstname = Pattern.compile("^.*? ");
-                java.util.regex.Matcher matcher2 = reg_firstname.matcher(entity.getJSONArray("authors").getString(j));
+                java.util.regex.Matcher matcher2 =
+                        reg_firstname.matcher(ExceptionHandel.filterNull(entity.getJSONArray("authors").get(j).toString()));
                 ArrayList firstname_result = new ArrayList();
                 while (matcher2.find()) {
                     firstname_result.add(matcher2.group());
                 }
-                String firstname = firstname_result.get(0).toString();
+                String firstname = firstname_result.isEmpty() ? "" : firstname_result.get(0).toString();
 
                 String author_for_searching = firstname + " " + surname;
 
@@ -175,7 +176,7 @@ public  class DataProcess {
 
             JSONObject meta_entry_title = new JSONObject();
             meta_entry_title.put("name", "citation_title");
-            meta_entry_title.put("content", entity.getString("title"));
+            meta_entry_title.put("content", ExceptionHandel.filterNull(entity.get("title").toString()));
 
             JSONArray meta_entries_pri = new JSONArray();
             meta_entries_pri.put(meta_entry_title);
@@ -240,7 +241,7 @@ public  class DataProcess {
                 if (wordStart < prevWordEnd) {
                     continue;
                 }
-                String wordText = enrichInfo.getJSONObject(i).getString("text");
+                String wordText = ExceptionHandel.filterNull(enrichInfo.getJSONObject(i).get("text").toString());
                 int realWordStart = modifiedWholeText.indexOf(wordText);
                 int realWordEnd = realWordStart + wordText.length();
 
@@ -326,7 +327,7 @@ public  class DataProcess {
         JSONArray synonyms = new JSONArray();
 
         for (int i = 0; i < scope.synonymsList.length(); i++) {
-            if (word.equals(scope.synonymsList.getJSONObject(i).getString("wordLabel"))) {
+            if (word.equals(ExceptionHandel.filterNull(scope.synonymsList.getJSONObject(i).get("wordLabel").toString()))) {
 
                 synonyms = scope.synonymsList.getJSONObject(i).getJSONArray("synonyms");
 

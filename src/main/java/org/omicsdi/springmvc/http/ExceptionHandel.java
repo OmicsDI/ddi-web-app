@@ -31,4 +31,10 @@ public class ExceptionHandel {
 
         return result;
     }
+    public static String filterNull (String message){
+        if (message.equals("null")){
+            return "";
+        }
+        return message;
+    }
 }

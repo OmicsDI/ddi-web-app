@@ -4,7 +4,6 @@ package org.omicsdi.springmvc.controller;
 
 import org.omicsdi.springmvc.http.DataProcess;
 import org.omicsdi.springmvc.http.Final;
-import org.omicsdi.springmvc.http.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +24,8 @@ public class DatasetController {
                              ModelMap model) {
 
         DataProcess.Scope scope = DataProcess.getScopeObject(domain,acc);
-        model.addAttribute("name", scope.target_title);
-        model.addAttribute("datasetDomain", Request.changeDatabaseName(domain));
+        model.addAttribute("name", scope.target_title.replaceAll("\"",""));
+        model.addAttribute("datasetDomain", domain);
         model.addAttribute("datasetAcc",acc);
         model.addAttribute("meta_dataset_title",scope.dataset.get("meta_dataset_title"));
         model.addAttribute("meta_dataset_abstract", scope.dataset.get("meta_dataset_abstract"));
