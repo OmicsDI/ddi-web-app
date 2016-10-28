@@ -65,7 +65,6 @@
 
                 <base href="/">
 
-
             </head>
 
             <body class="level2 ng-cloak">

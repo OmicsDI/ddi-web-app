@@ -71,8 +71,7 @@
                     {
                         "@context": "http://schema.org",
                         "@type": "AboutPage",
-                        "name": "About OmicsDI",
-
+                        "name": "About OmicsDI"
                     }
                 </script>
 
