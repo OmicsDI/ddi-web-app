@@ -68,18 +68,6 @@
                 <script>
                     var fanke;
                 </script>
-                <script type="application/ld+json">
-                    {
-                        "@context": "http://schema.org",
-                        "@type": "Book",
-                        "name": "${name}",
-                        "publisher": "Linked Data Tools",
-                        "inLanguage": "English",
-                        "bookFormat": {
-                            "@type": "EBook"
-                        }
-                    }
-                </script>
 
             </head>
 

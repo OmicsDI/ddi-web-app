@@ -67,18 +67,31 @@
                 <script>
                     var fanke;
                 </script>
+
                 <script type="application/ld+json">
-                    {
-                        "@context": "http://schema.org",
-                        "@type": "Book",
-                        "name": "${name}",
-                        "publisher": "Linked Data Tools",
-                        "inLanguage": "English",
-                        "bookFormat": {
-                            "@type": "EBook"
-                        }
-                    }
+                {
+
+                    "@context": "http://schema.org",
+
+                    "@type": "WebSite",
+
+                    "url": "https://www.omicsdi.org/",
+
+                    "potentialAction": {
+
+                    "@type": "SearchAction",
+
+                    "target": "https://www.omicsdi.org/search?q={search_term_string}",
+
+                    "query-input": "required name=search_term_string"
+
+                }
+
+                }
                 </script>
+
+
+
 
             </head>
 
