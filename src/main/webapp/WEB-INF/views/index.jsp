@@ -69,16 +69,17 @@
                 </script>
                 <script type="application/ld+json">
                     {
-                        ?@context?: ?http://schema.org?,
+                        "@context": "http://schema.org",
                         "@about": "OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics",
                         "keywords":"Proteomics, Genomics, Transcriptomics, Metabolomics, Multi-Omics, MultiOmics, Bioinformatics, System Biology, Datasets",
-                        ?@type?: ?WebSite?,
-                        ?url?: ?http://www.omicsdi.org/?,
+                        "@type": "WebSite",
+                        "url": "http://www.omicsdi.org/",
                         "image":"http://www.omicsdi.org/static/images/logo/OmicsDI-icon-3.png",
-                        ?potentialAction?: {
-                        ?@type?: ?SearchAction?,
-                            ?target?: ?http://www.omicsdi.org/search?q={search_term_string}?,
-                            ?query-input?: ?required name=search_term_string?
+                        "potentialAction": {
+                             "@type": "SearchAction",
+                             "target": "http://www.omicsdi.org/search?q={search_term_string}",
+                             "query-input": "required name=search_term_string"
+                        }
                      }
                 </script>
 
