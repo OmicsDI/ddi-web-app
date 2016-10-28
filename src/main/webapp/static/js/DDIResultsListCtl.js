@@ -55,22 +55,16 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                 $scope.$root.completing = false;
                 $scope.result = newValue;
 
-                if ($scope.result.datasets.length == 1) {
-                    dataset1 = $scope.result.datasets[0];
-                    var new_path = "/dataset/" + dataset1.source + "/" + dataset1.id;
-                    location.pathname = new_path;
-                } else {
-                    $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
-                    $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
-                    console.log(searchQ);
-                    $scope.query = searchQ;
-                    $scope.query_for_show = $scope.query;
-                    prepare_query_for_show();
-                    prepare_highlight_show();
-                    get_new_indexes();
-                    check_omics_type_null();
-                    change_GNPS_domainName();
-                }
+                $scope.pages = results.get_pages($scope.$root.current_page, $scope.$root.page_size, $scope.result.count);
+                $scope.max_page_no = 1 + parseInt(($scope.result.count - 1) / $scope.$root.page_size);
+                console.log(searchQ);
+                $scope.query = searchQ;
+                $scope.query_for_show = $scope.query;
+                prepare_query_for_show();
+                prepare_highlight_show();
+                get_new_indexes();
+                check_omics_type_null();
+                change_GNPS_domainName();
             }
         });
 
