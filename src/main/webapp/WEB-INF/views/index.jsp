@@ -70,7 +70,6 @@
                 <script type="application/ld+json">
                     {
                         "@context": "http://schema.org",
-                        "@about": "OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics",
                         "keywords":"Proteomics, Genomics, Transcriptomics, Metabolomics, Multi-Omics, MultiOmics, Bioinformatics, System Biology, Datasets",
                         "@type": "WebSite",
                         "url": "http://www.omicsdi.org/",
