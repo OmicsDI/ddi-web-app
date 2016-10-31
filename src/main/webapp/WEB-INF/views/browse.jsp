@@ -65,6 +65,18 @@
 
                 <base href="/">
 
+                <script type="application/ld+json">
+                    {
+                        "@context": "http://schema.org",
+                        "@type": "WebPage",
+                        "name": "Browse",
+                        "url": "http://www.omicsdi.org/search?q=*:*",
+                        "description" : "Browse and Search for OmicsDI Datasests",
+                        "image": "http://www.omicsdi.org/static/images/logo/search.png",
+                        "keywords" : "OmicsDI, Search, Browsers, Datasets, Searching"
+                    }
+                </script>
+
             </head>
 
             <body class="level2 ng-cloak">

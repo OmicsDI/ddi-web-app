@@ -17,7 +17,7 @@
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
-                <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+                <meta content="OmicSDI Restful API Home Page" name="description">
                 <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek" />
                 <meta name="msvalidate.01" content="14CFC7A456C8506DAA18CE922378B13F" />
 
@@ -66,6 +66,17 @@
                 <base href="/">
                 <script>
                     var fanke;
+                </script>
+                <script type="application/ld+json">
+                    {
+                        "@context": "http://schema.org",
+                        "@type": "WebPage",
+                        "name": "API",
+                        "url": "http://www.omicsdi.org/api",
+                        "description" : "OmicsDI API Home Page to programmatically access to OmicsDI Datasets",
+                        "image": "http://www.omicsdi.org/static/images/logo/API.png",
+                        "keywords" : "OmicsDI About Page, Help, Consortium"
+                    }
                 </script>
 
             </head>

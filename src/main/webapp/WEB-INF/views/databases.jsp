@@ -67,6 +67,17 @@
                 <script>
                     var fanke;
                 </script>
+                <script type="application/ld+json">
+                    {
+                        "@context": "http://schema.org",
+                        "@type": "WebPage",
+                        "name": "Help",
+                        "url": "http://www.omicsdi.org/databases",
+                        "description" : "OmicsDI Help Page",
+                        "image": "http://www.omicsdi.org/static/images/logo/help.png",
+                        "keywords" : "OmicsDI Help Page, Training, Examples"
+                    }
+                </script>
 
 
             </head>

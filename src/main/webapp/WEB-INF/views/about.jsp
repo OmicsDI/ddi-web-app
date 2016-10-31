@@ -71,7 +71,16 @@
                     {
                         "@context": "http://schema.org",
                         "@type": "AboutPage",
-                        "name": "About OmicsDI"
+                        "name": "About OmicsDI",
+                        "url": "http://www.omicsdi.org/about",
+                        "description" : "OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics",
+                        "primaryImageOfPage" : {
+                                 "@type" : "ImageObject",
+                                 "author" : "OmicsDI Consortium",
+                                 "contentLocation" : "Cambridge, UK",
+                                 "contentUrl" : "http://www.omicsdi.org/static/images/logo/about.png"
+                                 },
+                        "keywords" : "OmicsDI About Page, Help, Consortium"
                     }
                 </script>
 
