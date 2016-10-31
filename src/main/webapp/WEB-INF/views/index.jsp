@@ -86,6 +86,24 @@
                      }
                 </script>
 
+                <script type="application/ld+json">
+                    {
+                        "@context": "http://schema.org",
+                        "keywords":"Proteomics, Genomics, Transcriptomics, Metabolomics, Multi-Omics, MultiOmics, Bioinformatics, System Biology, Datasets",
+                        "@type": "Organization",
+                        "name" : "OmicsDI",
+                        "alternateName" : "OmicsDI",
+                        "description": "OmicsDI is an integrated and open source platform facilitating the access and dissemination of omics datasets. OmicsDI provides a unique infrastructure to integrate datasets coming
+                        from multiple omics studies, including at present proteomics, genomics and metabolomics and Multi-Omics",
+                        "url": "http://www.omicsdi.org/",
+                        "logo":"http://www.omicsdi.org/static/images/logo/OmicsDI-icon-3.png",
+                        "email": "omicsdi-support@ebi.ac.uk",
+                        "sameAs" : [ "https://github.com/BD2K-DDI",
+                                     "https://twitter.com/OmicsDI",
+                                     "https://plus.google.com/u/0/113645049761549550219"]
+                                     }
+                </script>
+
             </head>
 
             <body class="level2 ng-cloak">
