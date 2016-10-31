@@ -74,7 +74,7 @@
                         "name": "API",
                         "url": "http://www.omicsdi.org/api",
                         "description" : "OmicsDI API Home Page to programmatically access to OmicsDI Datasets",
-                        "image": "http://www.omicsdi.org/static/images/logo/API.png",
+                        "image": "http://www.omicsdi.org/static/images/logo/api.png",
                         "keywords" : "OmicsDI About Page, Help, Consortium"
                     }
                 </script>
