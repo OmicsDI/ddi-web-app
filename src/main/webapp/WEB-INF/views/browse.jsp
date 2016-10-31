@@ -17,7 +17,7 @@
                 <meta charset="utf-8">
                 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
                 <meta content="width=device-width" name="viewport">
-                <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
+                <meta content="Browse and Search for OmicsDI Datasests using specific queries" name="description">
                 <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek" />
                 <meta name="msvalidate.01" content="14CFC7A456C8506DAA18CE922378B13F" />
 
@@ -27,7 +27,7 @@
                 <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
 
 
-                <title>OmicsDI: Home</title>
+                <title>OmicsDI Browse and Search</title>
                 <link rel="canonical" href={{meta_originalURL}}>
                 <link rel="canonical" href={{meta_ddiURL}}>
                 <link rel="stylesheet" href="static/css/bootstrap.min.css">
@@ -88,8 +88,8 @@
                         <!-- local-title -->
                         <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
                         <div class="grid_12 alpha logo-title col-md-6 col-sm-12 col-xs-12" id="local-title">
-                            <a href="/" title="Back to OmicsDI homepage"><img src="static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
-                            <span><h1><a href="/" title="Back to OmicsDI homepage">Omics Discovery Index</a></h1></span>
+                            <a href="/" title="OmicsDI Homepage"><img src="static/images/logo/OmicsDI-icon-3.png" alt="logo" width="64" height="64"></a>
+                            <span><h1><a href="/" title="OmicsDI Homepage" alt="OmicsDI Homepage">Omics Discovery Index</a></h1></span>
                         </div>
                         <!-- /local-title -->
 
@@ -164,27 +164,19 @@
                         <!-- local-nav -->
                         <nav style="float:bottom" class="col-md-12 col-sm-12 col-xs-12">
                             <ul class="" id="local-nav">
-                                <li class=" first" id="home-menu"><a title="Home" href="/">Home</a></li>
-                                <li class="" id="browse-menu"><a title="Browse" href="/search?q=*:*">Browse</a>
-                                </li>
+                                <li class=" first" id="home-menu"><a title="Home" href="/" alt="Home">Home</a></li>
+                                <li class="" id="browse-menu"><a title="Browse" href="/search?q=*:*" alt="Browse">Browse</a></li>
                                 <li class="" id="api-menu">
-                                    <a title="OmicsDI API" href="/api">API</a>
+                                    <a title="OmicsDI API" href="/api" alt="API">API</a>
                                 </li>
                                 <li class=" last" id="about-prider-menu">
-                                    <a title="Databases" href="/databases">Databases</a>
+                                    <a title="Databases" href="/databases" alt="Databases">Databases</a>
                                 </li>
-                                <!-- If you need to include functional (as opposed to purely navigational) links in your local menu,
-                    add them here, and give them a class of "functional". Remember: you'll need a class of "last" for
-                    whichever one will show up last...
-                    For example: -->
-                                <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a>
+                                <li class="functional last">
+                                    <a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=omicsdi" alt="Feedback">Feedback</a>
                                 </li>
-                                <li class="functional"><a class="" href="/about">About</a></li>
-                                <li class="functional"><a class="" href="/help">Help</a></li>
-                                <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a>
-                                </li>
-                                <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a>
-                                </li>
+                                <li class="functional"><a class="" href="/about" alt="About">About</a></li>
+                                <li class="functional"><a class="" href="/help" alt="Help">Help</a></li>
                             </ul>
                         </nav>
                     </div>
