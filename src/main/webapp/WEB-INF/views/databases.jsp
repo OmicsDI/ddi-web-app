@@ -70,6 +70,49 @@
                         "keywords" : "OmicsDI Help Page, Training, Examples"
                     }
                 </script>
+                <script type="application/ld+json">
+                      {
+	                     "@context": "http://schema.org",
+	                     "@type": "BreadcrumbList",
+	                     "itemListElement":[
+	                     {
+			              "@type": "ListItem",
+			              "item":{"@id": "http://www.ebi.ac.uk/pride/archive/","name": "PRIDE Archive"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "http://gpmdb.thegpm.org/","name": "GPMDB"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "https://www.ebi.ac.uk/ega/","name": "EGA"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "http://www.ebi.ac.uk/metabolights/","name": "MetaboLights"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "http://www.peptideatlas.org/","name": "PeptideAtlas"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "https://www.ebi.ac.uk/arrayexpress/","name": "ArrayExpress"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "http://www.ebi.ac.uk/gxa/home","name": "ExpressionAtlas"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "https://www.metabolome-express.org/","name": "Metabolome Express"}
+		                 },
+		                 {
+			              "@type": "ListItem",
+			              "item":{"@id": "https://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp","name": "GNPS"}
+		                 }]
+}
+</script>
 
 
             </head>
