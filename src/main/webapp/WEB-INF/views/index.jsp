@@ -89,7 +89,6 @@
                 <script type="application/ld+json">
                     {
                         "@context": "http://schema.org",
-                        "keywords":"Proteomics, Genomics, Transcriptomics, Metabolomics, Multi-Omics, MultiOmics, Bioinformatics, System Biology, Datasets",
                         "@type": "Organization",
                         "name" : "OmicsDI",
                         "alternateName" : "OmicsDI",
