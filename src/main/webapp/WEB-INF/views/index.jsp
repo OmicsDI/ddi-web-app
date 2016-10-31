@@ -90,8 +90,8 @@
                     {
                         "@context": "http://schema.org",
                         "@type": "Organization",
-                        "name" : "OmicsDI",
-                        "alternateName" : "OmicsDI",
+                        "name" : "OmicsDI Consortium",
+                        "alternateName" : "OmicsDI Consortium",
                         "description": "OmicsDI is an integrated and open source platform facilitating the access and dissemination of omics datasets. OmicsDI provides a unique infrastructure to integrate datasets coming
                         from multiple omics studies, including at present proteomics, genomics and metabolomics and Multi-Omics",
                         "url": "http://www.omicsdi.org/",
