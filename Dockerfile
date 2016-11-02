@@ -1,23 +1,18 @@
 FROM tomcat:9
 
-#################################################################
-# Dockerfile
-#
-# Version:          1
-# Software:         ddi-web-app
-# Software Version: 2015020
-# Description:      Omics Discovery Index Web App
-# Website:          http://www.omicsdi.org/
-# Tags:             Proteomics, Genomics, Proteomics, Multi-Omics
-# Provides:         ddi-web-app 1.0
-# Base Image:       tomcat:9 
-# Build Cmd:        docker build biocontainers/ddi-web-app .
-# Pull Cmd:         docker pull biocotnainers/ddi-web-app
-# Run Cmd:          docker run -p 8080:8080 biocontainers/ddi-web-app
-# Extra:            Omicsdi Web app help you to create a web interface for your institute with omics datasets
-# Extra:            Please contact omicsdi-support@ebi.ac.uk for help 
-#################################################################
 
+LABEL base.image ="tomcat:9"
+LABEL version="1"
+LABEL software="ddi-web-app"
+LABEL software.version="1"
+LABEL description="Omics Discovery Index Web App"
+LABEL website="http://www.omicsdi.org/"
+LABEL tags="Proteomics, Genomics, Proteomics, Multi-Omics"
+LABEL run="docker run -p 8080:8080 biocontainers/ddi-web-app"
+LABEL extra="Omicsdi Web app help you to create a web interface for your institute with omics datasets"
+LABEL extra="Please contact omicsdi-support@ebi.ac.uk for help"
+LABEL license="Apache 2.0"
+ 
 MAINTAINER "Yasset Perez-Riverol <yperez@ebi.ac.uk>"
 
 RUN apt-get update
