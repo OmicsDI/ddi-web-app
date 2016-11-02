@@ -1,4 +1,4 @@
-ngs>
+<settings>
  <servers> 
   <server>
    <id>TomcatServer</id>
