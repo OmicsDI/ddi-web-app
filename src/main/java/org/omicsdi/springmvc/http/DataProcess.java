@@ -2,6 +2,7 @@ package org.omicsdi.springmvc.http;
 
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.util.HtmlUtils;
 
@@ -28,13 +29,15 @@ public  class DataProcess {
         public String target_title = "";
         public JSONArray meta_entries;
         public JSONArray publicationIds;
+        public JSONArray related_datasets;
         Scope() {
 
         }
 
         public Scope(Map<String, String> dataset, org.json.JSONArray title_sections,
                      org.json.JSONArray synonymsList, String accession, String database,
-                     String target_title, JSONArray meta_entries,JSONArray publicationIds) {
+                     String target_title, JSONArray meta_entries,JSONArray publicationIds,
+                     JSONArray related_datasets) {
             this.synonymsList = synonymsList;
             this.dataset = dataset;
             this.title_sections = title_sections;
@@ -43,6 +46,7 @@ public  class DataProcess {
             this.target_title = target_title;
             this.meta_entries = meta_entries;
             this.publicationIds = publicationIds;
+            this.related_datasets = related_datasets;
         }
 
     }
@@ -52,162 +56,200 @@ public  class DataProcess {
         Scope scope = new Scope();
         splitByEnrichmentInfo(domain, acc, scope);
         getDatasetInfo(domain, acc, scope);
+//            get_related_datasets(domain,acc,scope);
+
         return scope;
+
     }
 
     public static Scope splitByEnrichmentInfo(String domain, String acc, Scope scope) {
 
 
         String jsonString = Request.getJson(acc, Request.changeDatabaseName(domain), Final.url.get("getEnrichmentInfoURL"));
-        JSONObject jsonObject = new JSONObject(jsonString);
+        try{
+            JSONObject jsonObject = new JSONObject(jsonString);
+            scope.accession = ExceptionHandel.filterNull(jsonObject.get("accession").toString());
+            scope.database = ExceptionHandel.filterNull(jsonObject.get("database").toString());
 
-        scope.accession = ExceptionHandel.filterNull(jsonObject.get("accession").toString());
-        scope.database = ExceptionHandel.filterNull(jsonObject.get("database").toString());
+            if (!scope.accession.isEmpty()) {
 
-        if (!scope.accession.isEmpty()) {
+                JSONArray titleEnrichInfo = jsonObject.getJSONObject("synonyms").getJSONArray("name");
 
-            JSONArray titleEnrichInfo = jsonObject.getJSONObject("synonyms").getJSONArray("name");
+                String name = ExceptionHandel.filterNull(jsonObject.getJSONObject("originalAttributes").get("name").toString());
+                if (name.length() >= 1) {
+                    scope.dataset.put("name", name);
+                }
+                String description = ExceptionHandel.filterNull(jsonObject.getJSONObject("originalAttributes").get("description").toString());
+                if (description.length() >= 1) {
+                    scope.dataset.put("description", description);
+                }
 
-            String name = ExceptionHandel.filterNull(jsonObject.getJSONObject("originalAttributes").get("name").toString());
-            if (name.length() >= 1) {
-                scope.dataset.put("name", name);
+                scope.title_sections = get_section(scope.dataset.get("name"), titleEnrichInfo, scope);
+
+                for (int i = 0; i < scope.title_sections.length(); i++) {
+
+                    scope.target_title += scope.title_sections.getJSONObject(i).get("text").toString() + " ";
+                }
+
             }
-            String description = ExceptionHandel.filterNull(jsonObject.getJSONObject("originalAttributes").get("description").toString());
-            if (description.length() >= 1) {
-                scope.dataset.put("description", description);
-            }
-
-            scope.title_sections = get_section(scope.dataset.get("name"), titleEnrichInfo, scope);
-
-            for (int i = 0; i < scope.title_sections.length(); i++) {
-
-                scope.target_title += scope.title_sections.getJSONObject(i).get("text").toString() + " ";
-            }
-
+            return scope;
         }
-        return scope;
+        catch(JSONException e){
+            e.printStackTrace();
+            scope.accession = "";
+            scope.database = "";
+            scope.dataset.put("name","");
+            scope.dataset.put("description","");
+            scope.target_title = "";
+            scope.title_sections = new JSONArray();
+            return scope;
+        }
+
+
     }
 
     public static Scope getDatasetInfo(String domain, String acc, Scope scope) {
 
-        String datasetJson = Request.getDatasetJson(acc, Request.changeDatabaseName(domain), Final.url.get("getDatasetInfoURL"));
-        JSONObject datasetInfo = new JSONObject(datasetJson);
-        String full_dataset_link = datasetInfo.get("full_dataset_link").toString();
-        String keywords = ExceptionHandel.filterNull(datasetInfo.get("keywords").toString());
+        try{
+            String datasetJson = Request.getDatasetJson(acc, Request.changeDatabaseName(domain), Final.url.get("getDatasetInfoURL"));
+            JSONObject datasetInfo = new JSONObject(datasetJson);
+            String full_dataset_link = datasetInfo.get("full_dataset_link").toString();
+            String keywords = ExceptionHandel.filterNull(datasetInfo.get("keywords").toString());
 
-        scope.dataset.put("meta_dataset_title", ExceptionHandel.filterNull(datasetInfo.get("name").toString()));
-        //make <> tags in meta legal
-        String meta_dataset_abstract = HtmlUtils.htmlEscape(ExceptionHandel.filterNull(datasetInfo.get("description").toString())).replaceAll("\"","");
-        //replace {{  by { , and replace }} by }
-        scope.dataset.put("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract, "}},{{"));
-        scope.dataset.put("meta_originalURL", ExceptionHandel.filterNull(full_dataset_link));
-        scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
-        scope.dataset.put("keywords",keywords.isEmpty() ? "" :keywords.substring(1,keywords.length()-1).replaceAll("\"",""));
-        String omics_type = datasetInfo.getJSONArray("omics_type").toString();
-        scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
+            scope.dataset.put("meta_dataset_title", ExceptionHandel.filterNull(datasetInfo.get("name").toString()));
+            //make <> tags in meta legal
+            String meta_dataset_abstract = HtmlUtils.htmlEscape(ExceptionHandel.filterNull(datasetInfo.get("description").toString())).replaceAll("\"","");
+            //replace {{  by { , and replace }} by }
+            scope.dataset.put("meta_dataset_abstract", ExceptionHandel.illegalCharFilter(meta_dataset_abstract, "}},{{"));
+            scope.dataset.put("meta_originalURL", ExceptionHandel.filterNull(full_dataset_link));
+            scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
+            scope.dataset.put("keywords",keywords.isEmpty() ? "" :keywords.substring(1,keywords.length()-1).replaceAll("\"",""));
+            if(!datasetInfo.get("omics_type").toString().equals("null")){
+                String omics_type = datasetInfo.getJSONArray("omics_type").toString();
+                scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
 
-        String all_authors = "";
-        String journal = "";
-        String meta_entry_arr = "[";
-        if(datasetInfo.get("publicationIds").equals(null)) {
-            scope.meta_entries = new JSONArray();
-            scope.dataset.put("all_authors",all_authors);
-            scope.dataset.put("journal",journal);
+            }
+            else{
+                scope.dataset.put("omics_type","");
+            }
+
+            String all_authors = "";
+            String journal = "";
+            String meta_entry_arr = "[";
+            if(datasetInfo.get("publicationIds").equals(null)) {
+                scope.meta_entries = new JSONArray();
+                scope.dataset.put("all_authors",all_authors);
+                scope.dataset.put("journal",journal);
+                return scope;
+            }
+            else{
+                scope.publicationIds = datasetInfo.getJSONArray("publicationIds");
+            }
+
+
+            for (int i = 0; i < scope.publicationIds.length(); i++) {
+                String pubmed_id = ExceptionHandel.filterNull(scope.publicationIds.get(i).toString());
+
+                String publication_url = Final.url.get("web_service_url") + "publication/list";
+
+                String publication_json = Request.getPublication(pubmed_id, publication_url);
+                JSONObject publication_data = new JSONObject(publication_json);
+                JSONObject entity = publication_data.getJSONArray("publications").getJSONObject(0);
+
+                scope.dataset.put("journal",ExceptionHandel.filterNull(entity.get("journal").toString()).replaceAll("\"",""));
+                if(entity.get("date").toString().length()==8) {
+                    String pub_year = entity.getString("date").substring(0, 4);
+                    String pub_month = entity.getString("date").substring(4, 6);
+                    String pub_day = entity.getString("date").substring(6, 8);
+
+                    entity.put("pub_date_month", pub_month);
+                    entity.put("pub_date_year", pub_year);
+                    entity.put("pub_date_day", pub_day.equals("00") ? "" : pub_day);
+                }
+
+                JSONArray authors = new JSONArray();
+
+                for (int j = 0; j < entity.getJSONArray("authors").length(); j++) {
+
+                    Pattern reg_surname = Pattern.compile(" [A-Z]{1,2}$",Pattern.MULTILINE);
+                    java.util.regex.Matcher matcher1 = reg_surname.matcher(entity.getJSONArray("authors").get(j).toString());
+                    ArrayList reg_result = new ArrayList();
+                    String surname ="";
+
+                    while (matcher1.find()) {
+                        reg_result.add(matcher1.group());
+                    }
+                    surname = reg_result.isEmpty() ? "" : reg_result.get(0).toString();
+
+
+                    Pattern reg_firstname = Pattern.compile("^.*? ");
+                    java.util.regex.Matcher matcher2 =
+                            reg_firstname.matcher(ExceptionHandel.filterNull(entity.getJSONArray("authors").get(j).toString()));
+                    ArrayList firstname_result = new ArrayList();
+                    while (matcher2.find()) {
+                        firstname_result.add(matcher2.group());
+                    }
+                    String firstname = firstname_result.isEmpty() ? "" : firstname_result.get(0).toString();
+
+                    String author_for_searching = firstname + " " + surname;
+
+                    JSONObject author = new JSONObject();
+                    author.put("fullname", entity.getJSONArray("authors").get(j).toString());
+                    author.put("name_for_searching", author_for_searching);
+                    authors.put(author);
+                    all_authors+=author.getString("fullname")+" ,";
+                }
+
+
+                JSONObject meta_entry_title = new JSONObject();
+                meta_entry_title.put("name", "citation_title");
+                meta_entry_title.put("content", ExceptionHandel.filterNull(entity.get("title").toString()));
+
+                JSONArray meta_entries_pri = new JSONArray();
+                meta_entries_pri.put(meta_entry_title);
+
+                JSONObject meta_entry_author = new JSONObject();
+
+                String authors_jsonstr = "[";
+                for (int n = 0; n < authors.length(); n++) {
+                    meta_entry_author.put("name", "citation_author");
+                    meta_entry_author.put("content", authors.getJSONObject(n).getString("fullname"));
+                    authors_jsonstr = authors_jsonstr +meta_entry_author.toString()+",";
+                }
+                String target_authors_jsonstr = authors_jsonstr.substring(0,authors_jsonstr.length()-1)+']';
+
+                meta_entries_pri.put(new JSONArray(target_authors_jsonstr));
+
+                JSONObject meta_entry_pubdate = new JSONObject();
+                meta_entry_pubdate.put("name", "citation_pubdate");
+                meta_entry_pubdate.put("content", entity.getString("pub_date_year")+" "+
+                        Final.month_names_short.get(entity.getString("pub_date_month"))+ " "+entity.getString("pub_date_day")+";");
+                meta_entries_pri.put(meta_entry_pubdate);
+
+                meta_entry_arr = meta_entry_arr +meta_entries_pri.toString() + ",";
+
+            }
+
+            String target_meta_entry_arr = meta_entry_arr.substring(0,meta_entry_arr.length()-1)+']';
+            scope.meta_entries = new JSONArray(target_meta_entry_arr);
+            scope.dataset.put("all_authors",all_authors.substring(0,all_authors.length()-1));
+
             return scope;
         }
-        else{
-            scope.publicationIds = datasetInfo.getJSONArray("publicationIds");
+        catch (JSONException e){
+            e.printStackTrace();
+            scope.dataset.put("meta_dataset_title","");
+            scope.dataset.put("meta_dataset_abstract", "");
+            scope.dataset.put("meta_originalURL","");
+            scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
+            scope.dataset.put("keywords","");
+            scope.dataset.put("omics_type","");
+            scope.dataset.put("all_authors","");
+            scope.dataset.put("journal","");
+            scope.publicationIds = new JSONArray();
+            scope.meta_entries = new JSONArray();
+            return scope;
         }
-
-
-        for (int i = 0; i < scope.publicationIds.length(); i++) {
-            String pubmed_id = ExceptionHandel.filterNull(scope.publicationIds.get(i).toString());
-
-            String publication_url = Final.url.get("web_service_url") + "publication/list";
-
-            String publication_json = Request.getPublication(pubmed_id, publication_url);
-            JSONObject publication_data = new JSONObject(publication_json);
-            JSONObject entity = publication_data.getJSONArray("publications").getJSONObject(0);
-
-            scope.dataset.put("journal",ExceptionHandel.filterNull(entity.get("journal").toString()).replaceAll("\"",""));
-            if(entity.get("date").toString().length()==8) {
-                String pub_year = entity.getString("date").substring(0, 4);
-                String pub_month = entity.getString("date").substring(4, 6);
-                String pub_day = entity.getString("date").substring(6, 8);
-
-                entity.put("pub_date_month", pub_month);
-                entity.put("pub_date_year", pub_year);
-                entity.put("pub_date_day", pub_day.equals("00") ? "" : pub_day);
-            }
-
-            JSONArray authors = new JSONArray();
-
-            for (int j = 0; j < entity.getJSONArray("authors").length(); j++) {
-
-                Pattern reg_surname = Pattern.compile(" [A-Z]{1,2}$",Pattern.MULTILINE);
-                java.util.regex.Matcher matcher1 = reg_surname.matcher(entity.getJSONArray("authors").get(j).toString());
-                ArrayList reg_result = new ArrayList();
-                String surname ="";
-
-                while (matcher1.find()) {
-                    reg_result.add(matcher1.group());
-                }
-                surname = reg_result.isEmpty() ? "" : reg_result.get(0).toString();
-
-
-                Pattern reg_firstname = Pattern.compile("^.*? ");
-                java.util.regex.Matcher matcher2 =
-                        reg_firstname.matcher(ExceptionHandel.filterNull(entity.getJSONArray("authors").get(j).toString()));
-                ArrayList firstname_result = new ArrayList();
-                while (matcher2.find()) {
-                    firstname_result.add(matcher2.group());
-                }
-                String firstname = firstname_result.isEmpty() ? "" : firstname_result.get(0).toString();
-
-                String author_for_searching = firstname + " " + surname;
-
-                JSONObject author = new JSONObject();
-                author.put("fullname", entity.getJSONArray("authors").get(j).toString());
-                author.put("name_for_searching", author_for_searching);
-                authors.put(author);
-                all_authors+=author.getString("fullname")+" ,";
-            }
-
-
-            JSONObject meta_entry_title = new JSONObject();
-            meta_entry_title.put("name", "citation_title");
-            meta_entry_title.put("content", ExceptionHandel.filterNull(entity.get("title").toString()));
-
-            JSONArray meta_entries_pri = new JSONArray();
-            meta_entries_pri.put(meta_entry_title);
-
-            JSONObject meta_entry_author = new JSONObject();
-
-            String authors_jsonstr = "[";
-            for (int n = 0; n < authors.length(); n++) {
-                meta_entry_author.put("name", "citation_author");
-                meta_entry_author.put("content", authors.getJSONObject(n).getString("fullname"));
-                authors_jsonstr = authors_jsonstr +meta_entry_author.toString()+",";
-            }
-            String target_authors_jsonstr = authors_jsonstr.substring(0,authors_jsonstr.length()-1)+']';
-
-            meta_entries_pri.put(new JSONArray(target_authors_jsonstr));
-
-            JSONObject meta_entry_pubdate = new JSONObject();
-            meta_entry_pubdate.put("name", "citation_pubdate");
-            meta_entry_pubdate.put("content", entity.getString("pub_date_year")+" "+
-                    Final.month_names_short.get(entity.getString("pub_date_month"))+ " "+entity.getString("pub_date_day")+";");
-            meta_entries_pri.put(meta_entry_pubdate);
-
-            meta_entry_arr = meta_entry_arr +meta_entries_pri.toString() + ",";
-
-        }
-
-        String target_meta_entry_arr = meta_entry_arr.substring(0,meta_entry_arr.length()-1)+']';
-        scope.meta_entries = new JSONArray(target_meta_entry_arr);
-        scope.dataset.put("all_authors",all_authors.substring(0,all_authors.length()-1));
-
-        return scope;
 
     }
 
@@ -320,7 +362,7 @@ public  class DataProcess {
 
 
         if (scope.synonymsList == null || word == null) {
-            return null;
+            return new ArrayList();
         }
 
         word = word.toLowerCase();
@@ -350,6 +392,4 @@ public  class DataProcess {
         }
         return unique_synonyms;
     }
-
 }
-

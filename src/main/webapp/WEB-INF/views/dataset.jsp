@@ -93,20 +93,34 @@
 
                 <base href="/">
                 <script type="application/ld+json">
-                    {
+                   {
                         "@context": "http://schema.org",
                         "@type": "Dataset",
+                        <c:if test="${!name.equals(\"\")}">
                         "name": "${name}",
+                        </c:if>
+                        <c:if test="${!meta_dataset_abstract.equals(\"\")}">
                         "description": "${meta_dataset_abstract}",
-                        "url": "${meta_ddiURL}",
+                         </c:if>
+                        <c:if test="${!meta_originalURL.equals(\"\")}">
                         "sameAs": "${meta_originalURL}",
+                        </c:if>
+                        <c:if test="${!keywords.equals(\"\")}">
                         "keywords": "${keywords}",
+                         </c:if>
+                        <c:if test="${!omics_type.equals(\"\")}">
                         "variablesMeasured": "${omics_type}",
+                         </c:if>
+                        <c:if test="${!all_authors.equals(\"\")}">
                         "creator": {
-                                  "@type" : "Person",
-                                  "name" : "${all_authors}"
-                               },
-                        "citation": "${journal}"
+                        "@type" : "Person",
+                        "name" : "${all_authors}"
+                        },
+                         </c:if>
+                        <c:if test="${!journal.equals(\"\")}">
+                        "citation": "${journal}",
+                         </c:if>
+                        "url": "${meta_ddiURL}"
 
                     }
                 </script>
