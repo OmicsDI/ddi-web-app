@@ -677,6 +677,8 @@
                 <script src="static/js/DDIPieCharts.js"></script>
                 <script src="static/js/DDIWordCloud.js"></script>
                 <script src="static/js/DDIChordDiagram.js"></script>
+                <!--<script src="/static/js/DDIBundle.js"></script>-->
+                
                 <script src="static/js/libs/d3/queue.v1.min.js"></script>
                 <script src="static/js/libs/d3/d3.min.js"></script>
                 <script src="static/js/libs/d3/d3.layout.cloud.js"></script>

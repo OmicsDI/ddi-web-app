@@ -64,8 +64,10 @@
                 <link rel="stylesheet" href="/static/css/ebi-visual.css" type="text/css" media="screen">
                 <link rel="stylesheet" href="/static/css/984-24-col-fluid.css" type="text/css" media="screen">
                 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-                <link rel="stylesheet" href="/static/js/libs/slick-carousel/slick/slick.css">
-                <link rel="stylesheet" href="/static/js/libs/slick-carousel/slick/slick-theme.css">
+                <!--<link rel="stylesheet" href="static/js/libs/slick-carousel/slick/slick.css">-->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.4.1/slick.css">
+                <!--<link rel="stylesheet" href="static/js/libs/slick-carousel/slick/slick-theme.css">-->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.4.1/slick-theme.min.css">
                 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
                 <link type="text/css" href="/static/css/ngProgress.css" rel="stylesheet">
                 <link type="text/css" href="/static/css/ddi.css" rel="stylesheet">
@@ -134,15 +136,22 @@
                 </script>
 
 
-                <script src="/static/js/libs/jquery/jquery-1.10.1.min.js"></script>
-                <script src="/static/js/libs/angular/angular.min.js"></script>
-                <script src="/static/js/libs/underscore/underscore-min.js"></script>
-                <script src="/static/js/libs/angular-route/angular-route.min.js"></script>
-                <script src="/static/js/libs/angular/angular-cookies.js"></script>
-                <script src="/static/js/libs/angular/angular-animate.min.js"></script>
+                <!--<script src="/static/js/libs/jquery/jquery-1.10.1.min.js"></script>-->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                <!--<script src="/static/js/libs/underscore/underscore-min.js"></script>-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+                <!--<script src="/static/js/libs/angular/angular.min.js"></script>-->
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+                <!--<script src="/static/js/libs/angular-route/angular-route.min.js"></script>-->
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.min.js"></script>
+                <!--<script src="/static/js/libs/angular/angular-cookies.js"></script>-->
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-cookies.min.js"></script>
+                <!--<script src="/static/js/libs/angular/angular-animate.min.js"></script>-->
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
                 <script src="/static/js/libs/angular/ngprogress.min.js"></script>
                 <script src="/static/js/libs/angular/autocomplete.js"></script>
-                <script src="/static/js/libs/angular-ui/ui-bootstrap-tpls-0.14.2.js"></script>
+                <!--<script src="/static/js/libs/angular-ui/ui-bootstrap-tpls-0.14.2.js"></script>-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.2/ui-bootstrap-tpls.min.js"></script>
 
                 <script src="/static/js/app.js"></script>
                 <script src="/static/js/DDIService.js"></script>
@@ -160,11 +169,16 @@
                 <script src="/static/js/DDIPieCharts.js"></script>
                 <script src="/static/js/DDIWordCloud.js"></script>
                 <script src="/static/js/DDIChordDiagram.js"></script>
-                <script src="/static/js/libs/d3/queue.v1.min.js"></script>
-                <script src="/static/js/libs/d3/d3.min.js"></script>
+                <!--<script src="/static/js/DDIBundle.js"></script>-->
+
+                <!--<script src="/static/js/libs/d3/queue.v1.min.js"></script>-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-queue/1.0.7/d3-queue.min.js"></script>
+                <!--<script src="/static/js/libs/d3/d3.min.js"></script>-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.11/d3.min.js"></script>
                 <script src="/static/js/libs/d3/d3.layout.cloud.js"></script>
                 <script src="/static/js/libs/chord2/chord2.js"></script>
-                <script src="/static/js/libs/slick-carousel/slick/slick.js"></script>
+                <!--<script src="/static/js/libs/slick-carousel/slick/slick.js"></script>-->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.4.1/slick.js"></script>
                 <script src="/static/js/libs/angular-slick/dist/slick.js"></script>
 
             </head>
@@ -432,6 +446,7 @@
                                         <hr style="margin-right:10px">
                                         <div>
                                             <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
+                                                <p class="seo-friendly-and-remove">${meta_dataset_abstract}</p>
                                                 <p class="align-justify"><b>ABSTRACT</b>:
                                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
@@ -570,7 +585,7 @@
 
 
                                             <p class="align-justify">
-                                                <b>Provider:</b>
+                                                <b>PROVIDER:</b>
                                                 <a href={{dataset.full_dataset_link}}>{{acc}}</a>  |
                                                 <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>
                                                 <span ng-show="dataset.publicationDate">| {{dataset['publicationDate'].substr(6,2)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(0,4)}} </span>
@@ -619,7 +634,7 @@
 
                                     <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
                                         <img ng-show="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null" src="/static/images/altmetric/altmetric_unknown.png">
-                                        <a ng-href="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}" style="border-bottom-style:none"> <img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
+                                        <a ng-href="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].detail_url}}" style="border-bottom-style:none"> <img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" ng-src="{{altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url}}">
                                         </a>
                                     </div>
                                     <div class="" id="dataset_middle" style="overflow:hidden;">
@@ -1047,7 +1062,7 @@
                     ga('create', 'UA-70417662-1', 'auto');
                     ga('send', 'pageview');
                 </script>--%>
-                <script src="static/js/DDIGoogleAnalytics.js"></script>
+                <!--<script src="static/js/DDIGoogleAnalytics.js"></script>-->
 
 
 
