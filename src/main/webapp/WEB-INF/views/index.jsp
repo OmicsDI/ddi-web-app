@@ -12,6 +12,7 @@
                 <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
                 <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek" />
                 <meta name="msvalidate.01" content="14CFC7A456C8506DAA18CE922378B13F" />
+                <meta name="baidu-site-verification" content="YfNdTt7WSx" />
 
                 <title>OmicsDI: Home</title>
                 <link rel="stylesheet" href="static/css/bootstrap.min.css">
