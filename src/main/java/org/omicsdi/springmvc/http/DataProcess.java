@@ -124,6 +124,8 @@ public  class DataProcess {
             scope.dataset.put("meta_originalURL", ExceptionHandel.filterNull(full_dataset_link));
             scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
             scope.dataset.put("keywords",keywords.isEmpty() ? "" :keywords.substring(1,keywords.length()-1).replaceAll("\"",""));
+
+            String organization = ExceptionHandel.filterNull(datasetInfo.get("organization").toString());
             if(!datasetInfo.get("omics_type").toString().equals("null")){
                 String omics_type = datasetInfo.getJSONArray("omics_type").toString();
                 scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
@@ -132,6 +134,29 @@ public  class DataProcess {
             else{
                 scope.dataset.put("omics_type","");
             }
+
+
+            String omics_type = "";
+            /*for(Object omicsType : ExceptionHandel.filterNull(datasetInfo.getJSONArray("omics_type").toString()))
+            {
+                omics_type = "variableMeasured: " + omicsType.toString() + ",";
+            }*/
+            //scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
+            scope.dataset.put("omics_type",ExceptionHandel.filterNull(datasetInfo.get("omics_type").toString()));
+            /*        for(Object org: datasetInfo.getJSONArray("organization")) {
+
+            }*/
+            scope.dataset.put("organization", ExceptionHandel.filterNull(datasetInfo.get("organization").toString()));
+            scope.dataset.put("submitter", ExceptionHandel.filterNull(datasetInfo.get("submitter").toString()));
+
+            if(!ExceptionHandel.filterNull(datasetInfo.get("dates").toString()).isEmpty()) {
+            JSONObject datasetDates = new JSONObject(datasetInfo.get("dates").toString());
+            JSONArray pubDate = new JSONArray(datasetDates.get("publication").toString());
+            scope.dataset.put("pubDate",pubDate.get(0).toString());
+            String pubYear = pubDate.get(0).toString().split("-")[0];
+            scope.dataset.put("pubYear",pubYear);
+            }
+
 
             String all_authors = "";
             String journal = "";
