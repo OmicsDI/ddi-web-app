@@ -36,6 +36,11 @@ public class DatasetController {
         model.addAttribute("all_authors",scope.dataset.get("all_authors"));
         model.addAttribute("omics_type",scope.dataset.get("omics_type"));
         model.addAttribute("journal",scope.dataset.get("journal"));
+        model.addAttribute("creators",scope.dataset.get("creators"));
+        model.addAttribute("organization",scope.dataset.get("organization"));
+        model.addAttribute("submitter",scope.dataset.get("submitter"));
+        model.addAttribute("pub_date",scope.dataset.get("pubDate"));
+        model.addAttribute("pubYear",scope.dataset.get("pubYear"));
         if(!scope.meta_entries.toString().equals("null")){
             model.addAttribute("meta_entries",scope.meta_entries.toList());
         }
