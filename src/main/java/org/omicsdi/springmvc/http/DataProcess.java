@@ -24,7 +24,7 @@ public  class DataProcess {
         public org.json.JSONArray title_sections;
         public String accession;
         public String database;
-        public Map<String, String> dataset = new HashMap<>();
+        public Map<String, Object> dataset = new HashMap<>();
         public String target_title = "";
         public JSONArray meta_entries;
         public JSONArray publicationIds;
@@ -32,7 +32,7 @@ public  class DataProcess {
 
         }
 
-        public Scope(Map<String, String> dataset, org.json.JSONArray title_sections,
+        public Scope(Map<String, Object> dataset, org.json.JSONArray title_sections,
                      org.json.JSONArray synonymsList, String accession, String database,
                      String target_title, JSONArray meta_entries,JSONArray publicationIds) {
             this.synonymsList = synonymsList;
@@ -77,7 +77,7 @@ public  class DataProcess {
                 scope.dataset.put("description", description);
             }
 
-            scope.title_sections = get_section(scope.dataset.get("name"), titleEnrichInfo, scope);
+            scope.title_sections = get_section(scope.dataset.get("name").toString(), titleEnrichInfo, scope);
 
             for (int i = 0; i < scope.title_sections.length(); i++) {
 
@@ -94,7 +94,7 @@ public  class DataProcess {
         JSONObject datasetInfo = new JSONObject(datasetJson);
         String full_dataset_link = datasetInfo.get("full_dataset_link").toString();
         String keywords = ExceptionHandel.filterNull(datasetInfo.get("keywords").toString());
-
+        String organization = ExceptionHandel.filterNull(datasetInfo.get("organization").toString());
         scope.dataset.put("meta_dataset_title", ExceptionHandel.filterNull(datasetInfo.get("name").toString()));
         //make <> tags in meta legal
         String meta_dataset_abstract = HtmlUtils.htmlEscape(ExceptionHandel.filterNull(datasetInfo.get("description").toString())).replaceAll("\"","");
@@ -103,8 +103,32 @@ public  class DataProcess {
         scope.dataset.put("meta_originalURL", ExceptionHandel.filterNull(full_dataset_link));
         scope.dataset.put("meta_ddiURL", Final.url.get("DatasetURL") + Final.repositories.get(domain) + "/" + acc);
         scope.dataset.put("keywords",keywords.isEmpty() ? "" :keywords.substring(1,keywords.length()-1).replaceAll("\"",""));
-        String omics_type = datasetInfo.getJSONArray("omics_type").toString();
-        scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
+        String omics_type = "";
+        /*for(Object omicsType : ExceptionHandel.filterNull(datasetInfo.getJSONArray("omics_type").toString()))
+        {
+            omics_type = "variableMeasured: " + omicsType.toString() + ",";
+        }*/
+        //scope.dataset.put("omics_type",omics_type.substring(1,omics_type.length()-1).replaceAll("\"",""));
+        scope.dataset.put("omics_type",ExceptionHandel.filterNull(datasetInfo.get("omics_type").toString()));
+/*        for(Object org: datasetInfo.getJSONArray("organization")) {
+
+        }*/
+        scope.dataset.put("organization", ExceptionHandel.filterNull(datasetInfo.get("organization").toString()));
+        scope.dataset.put("submitter", ExceptionHandel.filterNull(datasetInfo.get("submitter").toString()));
+
+        if(!ExceptionHandel.filterNull(datasetInfo.get("dates").toString()).isEmpty()) {
+            JSONObject datasetDates = new JSONObject(datasetInfo.get("dates").toString());
+            JSONArray pubDate = new JSONArray(datasetDates.get("publication").toString());
+            scope.dataset.put("pubDate",pubDate.get(0));
+            String pubYear = pubDate.get(0).toString().split("-")[0];
+            scope.dataset.put("pubYear",pubYear);
+        }
+
+
+
+
+        //if(!pubDate.isEmpty())
+        //scope.dataset.put("pubYear",pubDate.split("-")[]);
 
         String all_authors = "";
         String journal = "";
@@ -197,6 +221,7 @@ public  class DataProcess {
             meta_entry_pubdate.put("name", "citation_pubdate");
             meta_entry_pubdate.put("content", entity.getString("pub_date_year")+" "+
                     Final.month_names_short.get(entity.getString("pub_date_month"))+ " "+entity.getString("pub_date_day")+";");
+            scope.dataset.put("pubYear",entity.getString("pub_date_year"));
             meta_entries_pri.put(meta_entry_pubdate);
 
             meta_entry_arr = meta_entry_arr +meta_entries_pri.toString() + ",";
@@ -205,8 +230,19 @@ public  class DataProcess {
 
         String target_meta_entry_arr = meta_entry_arr.substring(0,meta_entry_arr.length()-1)+']';
         scope.meta_entries = new JSONArray(target_meta_entry_arr);
-        scope.dataset.put("all_authors",all_authors.substring(0,all_authors.length()-1));
 
+        JSONArray creators = new JSONArray();
+        for(String authors:all_authors.split(","))
+        {
+            JSONObject creator = new JSONObject();
+            creator.put("@type","Person");
+            creator.put("name",authors);
+            creator.put("organization",organization);
+            creators.put(creator);
+        }
+
+        scope.dataset.put("all_authors",all_authors.substring(0,all_authors.length()-1));
+        scope.dataset.put("creators",creators);
         return scope;
 
     }
