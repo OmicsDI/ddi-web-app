@@ -101,13 +101,17 @@
                         "url": "${meta_ddiURL}",
                         "sameAs": "${meta_originalURL}",
                         "keywords": "${keywords}",
-                        "variablesMeasured": "${omics_type}",
-                        "creator": {
-                                  "@type" : "Person",
-                                  "name" : "${all_authors}"
-                               },
-                        "citation": "${journal}"
-
+                        "variableMeasured":${omics_type},
+                        "author":${all_authors},
+                        "creator":${creators},
+                        "citation": {
+                        "author":${submitter},
+                        "publisher": "${datasetDomain.toUpperCase()}",
+                        "title":"${name}",
+                        "year":${pubYear},
+                        "date":${pub_date},
+                        "url":"${meta_ddiURL}"
+                        }
                     }
                 </script>
 
