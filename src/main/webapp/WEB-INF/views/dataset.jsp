@@ -110,12 +110,12 @@
                         "keywords": "${keywords}",
                         </c:if>
                         <c:if test="${!omics_type.equals(\"\")}">
-                        "variableMeasured": "${omics_type}",
+                        "variableMeasured": ${omics_type},
                         </c:if>
-                        <c:if test="${!all_authors.equals(\"\")}">
+                        <c:if test="${!all_authors.isEmpty()}">
                         "creator": {
                         "@type" : "Person",
-                        "name" : "${all_authors}"
+                        "name" : ${all_authors},
                         "organization":${organization}
                         },
                         </c:if>
