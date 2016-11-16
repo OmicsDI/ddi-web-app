@@ -12,7 +12,6 @@
                 <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics" name="description">
                 <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek" />
                 <meta name="msvalidate.01" content="14CFC7A456C8506DAA18CE922378B13F" />
-                <meta name="baidu-site-verification" content="YfNdTt7WSx" />
 
                 <title>OmicsDI: Home</title>
                 <link rel="stylesheet" href="static/css/bootstrap.min.css">
@@ -678,8 +677,6 @@
                 <script src="static/js/DDIPieCharts.js"></script>
                 <script src="static/js/DDIWordCloud.js"></script>
                 <script src="static/js/DDIChordDiagram.js"></script>
-                <!--<script src="/static/js/DDIBundle.js"></script>-->
-                
                 <script src="static/js/libs/d3/queue.v1.min.js"></script>
                 <script src="static/js/libs/d3/d3.min.js"></script>
                 <script src="static/js/libs/d3/d3.layout.cloud.js"></script>

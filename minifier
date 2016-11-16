@@ -1,6 +1,0 @@
-#!/bin/bash
-
-if test -f ./src/main/webapp/static/js/DDIBundle.js 
-    then rm ./src/main/webapp/static/js/DDIBundle.js && uglifyjs ./src/main/webapp/static/js/app.js ./src/main/webapp/static/js/DDI*.js -c unused=false -o ./src/main/webapp/static/js/DDIBundle.js
-    else uglifyjs ./src/main/webapp/static/js/app.js ./src/main/webapp/static/js/DDI*.js -c unused=false -o ./src/main/webapp/static/js/DDIBundle.js
-fi

@@ -67,7 +67,5 @@ cp -r target/ddi-web-app/* /path/to/Tomcat/webapps/ROOT/
 
 Now browse to the app at `http://localhost:8080/`.
 
-### Deploy in prod env
 
-Compress the js files into **DDIBundle.js** by running `minifier` script(installed [uglifyjs2](https://github.com/mishoo/UglifyJS2) before);comment all the script tags pointing to `app.js DDI*.js` and add a script linking to `DDIBundle.js` in jsp pages
 
