@@ -151,18 +151,28 @@ public  class DataProcess {
 
             if(!ExceptionHandel.filterNull(datasetInfo.get("dates").toString()).isEmpty()) {
             JSONObject datasetDates = new JSONObject(datasetInfo.get("dates").toString());
-            JSONArray pubDate = new JSONArray(datasetDates.get("publication").toString());
-            scope.dataset.put("pubDate",pubDate.get(0).toString());
-            String pubYear = pubDate.get(0).toString().split("-")[0];
-            scope.dataset.put("pubYear",pubYear);
+                if(datasetDates != null && !datasetDates.isNull("publication")) {
+                    JSONArray pubDate = new JSONArray(datasetDates.get("publication").toString());
+                    scope.dataset.put("pubDate", pubDate.get(0).toString());
+                    String pubYear = pubDate.get(0).toString().split("-")[0];
+                    scope.dataset.put("pubYear", pubYear);
+                }
             }
 
 
             String all_authors = "";
             String journal = "";
+
+            if(!datasetInfo.get("submitter").equals(null))
+                all_authors = all_authors + datasetInfo.get("submitter").toString().replace("[","").replace("]","");  //.replace("\"","");
+
+            if(!datasetInfo.get("labHead").equals(null))
+                all_authors = all_authors + "," + datasetInfo.get("labHead").toString().replace("[","").replace("]",""); //.replace("\"","");
+
             String meta_entry_arr = "[";
             if(datasetInfo.get("publicationIds").equals(null)) {
                 scope.meta_entries = new JSONArray();
+                all_authors = "[" + all_authors + "]";
                 scope.dataset.put("all_authors",all_authors);
                 scope.dataset.put("journal",journal);
                 return scope;
