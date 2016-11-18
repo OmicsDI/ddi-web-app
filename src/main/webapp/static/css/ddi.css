@@ -1222,7 +1222,7 @@ $lines-to-show: 3;
 .tweet_two_lines
 {
     display: block; /* Fallback for non-webkit */
-    display: -webkit-box;
+    display: -webkit-box -moz-box ;
     max-width: 90%;
     height: 35px; /* Fallback for non-webkit */
     margin: 0 auto;
@@ -1237,6 +1237,9 @@ $lines-to-show: 3;
 {
     display: block; /* Fallback for non-webkit */
     display: -webkit-box;
+    display: -moz-box;
+    display: -o-box;
+    display: -ms-box;
     max-width: 95%;
     height: 20px; /* Fallback for non-webkit */
     margin: 0 auto;
