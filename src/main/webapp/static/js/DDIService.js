@@ -119,9 +119,10 @@ angular.module('ddiApp').service('results', ['_', '$http', '$location', '$window
      * `start` determines the range of the results to be returned.
      */
     this.search = function(query, start, page_size, sort_field, sort_order) {
+        var default_sort_field = "relevance"
         start = start || 0;
         page_size = page_size || 15;
-        sort_field = sort_field || 'id';
+        sort_field = sort_field || default_sort_field;
         sort_order = sort_order || 'descending';
         display_search_interface();
         display_spinner();
