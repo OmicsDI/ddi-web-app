@@ -548,7 +548,7 @@
                             <b>PROVIDER:</b>
                             <a href={{dataset.full_dataset_link}}>{{acc}}</a>  |
                             <a href={{database_urls[repositories[domain]]}}> {{repositories[domain]}} </a>
-                            <span ng-show="dataset.publicationDate">| {{dataset['publicationDate'].substr(6,2)+"-"+dataset['publicationDate'].substr(4,2)+"-"+dataset['publicationDate'].substr(0,4)}} </span>
+                            <span ng-show="dataset.publicationDate">| {{dataset['publicationDate'].substr(5,2)+"-"+dataset['publicationDate'].substr(8,2)+"-"+dataset['publicationDate'].substr(0,4)}} </span>
                         </p>
                         <!--dataset_protocol_bottom-->
                         <div id="buttons_highlight_box">
