@@ -1320,3 +1320,24 @@ $lines-to-show: 3;
     Display: Inline-Block;
 }
 
+/*for the advanced search box*/
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-plus-sign:before {
+    content: "\e081";
+}
+.glyphicon-minus-sign:before{
+    content:"\e082";
+}
+.glyphicon-remove-sign:before{
+    content:"\e083";
+}

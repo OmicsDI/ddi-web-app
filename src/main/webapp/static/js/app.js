@@ -72,7 +72,7 @@ underscore.factory('_', function() {
 
 
 
-var ddiApp = angular.module('ddiApp', ['underscore', 'ngRoute', 'ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress', 'ui.bootstrap', 'slick']);
+var ddiApp = angular.module('ddiApp', ['ngSanitize', 'queryBuilder', 'underscore', 'ngRoute', 'ngAnimate', 'autocomplete', 'ngCookies', 'ngProgress', 'ui.bootstrap', 'slick']);
 
 // $.getJSON('http://api.metabolomexchange.org/providers', function(data) {
 //     for (var i in data) {
