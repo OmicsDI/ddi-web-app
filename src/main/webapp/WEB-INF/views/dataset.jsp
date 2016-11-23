@@ -177,6 +177,10 @@
     <!--<script src="/static/js/libs/slick-carousel/slick/slick.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.4.1/slick.js"></script>
     <script src="/static/js/libs/angular-slick/dist/slick.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-sanitize.min.js"></script>
+    <script src="static/js/libs/angular-query-builder.js"></script>
 </head>
 <body class="level2 ng-cloak">
 <div id="" class="container" style="margin:0px;background-color: #0099cc;">
