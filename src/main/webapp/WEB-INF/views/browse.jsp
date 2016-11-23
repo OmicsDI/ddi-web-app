@@ -80,10 +80,7 @@
             </head>
 
             <body class="level2 ng-cloak">
-
->
-
-<%@include file="includes/header.jsp" %>
+            <%@include file="includes/header.jsp" %>
 
                 <div id="wrapper" class="container ng-cloak" ng-show="true">
                     <div id="ngProgressOutContainer" ng-show="show_progress_bar"></div>

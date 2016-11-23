@@ -13,7 +13,7 @@
 
         <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
         <!-- /local-search -->
-        <div class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search"
+        <div class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search">
              style="height:105px; float:right; margin-top:0px; z-index:1; width:45%">
         </div>
 
@@ -39,19 +39,18 @@
                     <!-- /form-group -->
                 </fieldset>
             </form>
-                <div class="container" ng-controller="QueryBuilderCtrl">
-<!--        <h1>Angular.js Query Builder</h1>  -->
+           <div class="container" ng-controller="QueryBuilderCtrl">
+    <!--        <h1>Angular.js Query Builder</h1>  -->
 
-        <div class="alert alert-info">
-            <strong>Example Output</strong><br>
-            <span ng-bind-html="output"></span>
+            <div class="alert alert-info">
+                <strong>Query preview</strong><br>
+                <span ng-bind-html="query_output"></span>
+            </div>
+
+            <query-builder group="filter.group"></query-builder>
+            </div>
+
         </div>
-
-        <query-builder group="filter.group"></query-builder>
-    </div>
-
-        </div>
-
     </div>
 
     <div id="local-masthead" class="masthead row" style="margin-left:-15px;margin-right:-15px">
@@ -80,11 +79,11 @@
 
     <script type="text/ng-template" id="/queryBuilderDirective.html">
         <div class="alert alert-warning alert-group">
-            <div class="form-inline">
+            <div class="form-inline" style="margin-left: -15px">
                 <select ng-options="o.name as o.name for o in operators" ng-model="group.operator" class="form-control input-sm"></select>
-                <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add Condition</button>
-                <button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Add Group</button>
-                <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus-sign"></span> Remove Group</button>
+                <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Condition</button>
+                <button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Group</button>
+                <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Remove Group</button>
             </div>
             <div class="group-conditions">
                 <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition">
@@ -93,11 +92,13 @@
                             <query-builder group="rule.group"></query-builder>
                         </div>
                         <div ng-switch-default="ng-switch-default">
-                            <div class="form-inline">
+                            <div class="form-inline" style="margin:3px">
                                 <select ng-options="t.name as t.name for t in fields" ng-model="rule.field" class="form-control input-sm"></select>
                                 <select style="margin-left: 5px" ng-options="c.name as c.name for c in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
-                                <input style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"/>
-                                <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                                <%--<input style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"/>--%>
+                                <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"></select>
+                                <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data2" class="form-control input-sm" ng-show="rule.condition=='range'"></select>
+                                <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>

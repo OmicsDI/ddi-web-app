@@ -1,6 +1,6 @@
-ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope) {
+ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
+    
     var data = '{"group": {"operator": "AND","rules": []}}';
-
     function htmlEntities(str) {
         return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
@@ -8,10 +8,27 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope) {
     function computed(group) {
         if (!group) return "";
         for (var str = "(", i = 0; i < group.rules.length; i++) {
-            i > 0 && (str += " <strong>" + group.operator + "</strong> ");
-            str += group.rules[i].group ?
-                computed(group.rules[i].group) :
-                group.rules[i].field + " " + htmlEntities(group.rules[i].condition) + " " + group.rules[i].data;
+//            i > 0 && (str += " <strong>" + group.operator + "</strong> ");
+            i > 0 && (str += " " + group.operator + " ");
+            // str += group.rules[i].group ?
+            //     computed(group.rules[i].group) :
+            //     group.rules[i].field + " " + htmlEntities(group.rules[i].condition) + " " + group.rules[i].data;
+            if(group.rules[i].group) {
+                str += computed(group.rules[i].group);
+            }
+            else{
+                var strtemp = "";
+                if(group.rules[i].condition == 'range') {strtemp = "[" + group.rules[i].data + " TO " +  (group.rules[i].data2||"") + "]" }
+                if(group.rules[i].condition == 'equal') {strtemp =  group.rules[i].data  }
+                
+                if(group.rules[i].field == 'all_fields'){
+                    str += strtemp;
+                }
+                else{
+                    str += group.rules[i].field + ": " + strtemp;
+                }
+                
+            }
         }
 
         return str + ")";
@@ -23,12 +40,15 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope) {
 
     $scope.$watch('filter', function (newValue) {
         $scope.json = JSON.stringify(newValue, null, 2);
-        $scope.output = computed(newValue.group);
+        $scope.query_output = computed(newValue.group);
     }, true);
 }]);
 
 var queryBuilder = angular.module('queryBuilder', []);
-queryBuilder.directive('queryBuilder', ['$compile', function ($compile) {
+queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, $http) {
+
+    
+    
     return {
         restrict: 'E',
         scope: {
@@ -39,32 +59,57 @@ queryBuilder.directive('queryBuilder', ['$compile', function ($compile) {
             var content, directive;
             content = element.contents().remove();
             return function (scope, element, attrs) {
+                
+
+                
                 scope.operators = [
                     { name: 'AND' },
-                    { name: 'OR' }
+                    { name: 'OR' },
+                    { name: 'NOT' }
                 ];
 
                 scope.fields = [
-                    { name: 'Firstname' },
-                    { name: 'Lastname' },
-                    { name: 'Birthdate' },
-                    { name: 'City' },
-                    { name: 'Country' }
+                    { name: 'all_fields' }
                 ];
 
                 scope.conditions = [
-                    { name: '=' },
-                    { name: '<>' },
-                    { name: '<' },
-                    { name: '<=' },
-                    { name: '>' },
-                    { name: '>=' }
+                    { name: 'equal' },
+//                    { name: 'not' },
+                    { name: 'range' }
                 ];
+                
+                scope.fields_data = {};
+                var fields_url = "http://www.omicsdi.org/ws/dataset/search?query=cancer&size=0&faceCount=20";
+                if(scope.fields.length <= 1) {
+                    $http({
+                        url: fields_url,
+                        method: 'GET'
+                    }).success(function (http_data) {
+                        
+                        var raw_fields_data = http_data.facets;
+                        for(var i =0; i<raw_fields_data.length; i++){
+                            var field_name = raw_fields_data[i].id;
+                            var new_field = {name:field_name};
+                            scope.fields.push(new_field);
+                            var facets= [];
+                            var rawfacet = raw_fields_data[i]['facetValues'];
+                            for(var j=0; j<rawfacet.length; j++){
+                                var facet = {'value':rawfacet[j]['value'], 'label':rawfacet[j]['label']};
+                                facets.push(facet);
+                            }
+                            scope.fields_data[field_name] = facets;
+                        }
+                        // deal_fields();
+                    }).error(function () {
+                        console.error("GET error:" + url);
+                    });
+                }
+                console.log(scope.fields_data);
 
                 scope.addCondition = function () {
                     scope.group.rules.push({
-                        condition: '=',
-                        field: 'Firstname',
+                        condition: 'equal',
+                        field: 'all_fields',
                         data: ''
                     });
                 };
