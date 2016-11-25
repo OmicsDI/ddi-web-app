@@ -538,12 +538,10 @@
                                                 </a>
                                                 </span>
                         </p>
-                       <%-- <p ng-show="dataset.submitter != 'Not available'" class="align-justify"><b>Submitter:</b>
-                            <span>
-                       <span> {{submitter+';' + }}</span>
-                                                </a>
-                                                </span>
-                        </p>--%>
+                        <p ng-show="dataset.submitter.length > 0 && dataset.submitter[0] != 'Not available'" class="align-justify">
+                            <b>Submitter:</b>
+                            <a href='mailto:{{dataset.submitterMail[0]}}'>{{dataset['submitter'] + ' <' + dataset['submitterMail'] + '>'}}</a>
+                        </p>
                         <p class="align-justify">
                             <b>PROVIDER:</b>
                             <a href={{dataset.full_dataset_link}}>{{acc}}</a>  |

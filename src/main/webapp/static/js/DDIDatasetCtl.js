@@ -129,13 +129,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
                 return;
             }
-            for (var i = 0; i < $scope.dataset.protocols.length; i++) {
-                if ($scope.dataset.protocols[i].name == "sample_protocol") {
-                    $scope.sample_protocol_description = $scope.dataset.protocols[i].description;
-                }
+            if($scope.dataset.protocols != null) {
+                for (var i = 0; i < $scope.dataset.protocols.length; i++) {
+                    if ($scope.dataset.protocols[i].name == "sample_protocol") {
+                        $scope.sample_protocol_description = $scope.dataset.protocols[i].description;
+                    }
 
-                if ($scope.dataset.protocols[i].name == "data_protocol") {
-                    $scope.data_protocol_description = $scope.dataset.protocols[i].description;
+                    if ($scope.dataset.protocols[i].name == "data_protocol") {
+                        $scope.data_protocol_description = $scope.dataset.protocols[i].description;
+                    }
                 }
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
