@@ -687,7 +687,6 @@
                 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular.min.js"></script>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.18/angular-sanitize.min.js"></script>
                 <script src="static/js/libs/angular-query-builder.js"></script>
-
                 <script>
                     bub_charts_tissues_organisms();
                     pie_charts_repos_omics();

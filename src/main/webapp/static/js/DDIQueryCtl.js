@@ -10,12 +10,24 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         searchQ = location.href.substring(searchQIndex + 3);
         searchQ = decodeURI(searchQ);
     }
+
+    $scope.popup = {
+        open: false
+    };
+
+    $scope.facaret = true;
     
     $scope.query = {
         text: '',
         submitted: false
     };
     $scope.$is_example = false;
+
+    $scope.showOrHideAdv = function () {
+        $scope.popup.open = !$scope.popup.open;
+        $scope.facaret = !$scope.facaret;
+    }
+
     /**
      * Launch a metadata search using the service.
      */

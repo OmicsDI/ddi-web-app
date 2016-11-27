@@ -28,6 +28,11 @@
                                           click-activation="false" data="words" on-type="get_suggestions"
                                           on-select="do_query"></autocomplete>
                             <div class="input-group-btn">
+                                <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
+                                    <i class="fa fa-caret-down" aria-hidden="true" ng-if="facaret"></i>
+                                    <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
+                                    Advance
+                                </button>
                                 <button type="submit" class="btn btn-primary ddi-btn">
                                     <i class="fa fa-search"></i> Search
                                 </button>
@@ -39,15 +44,26 @@
                     <!-- /form-group -->
                 </fieldset>
             </form>
-           <div class="container" ng-controller="QueryBuilderCtrl">
-    <!--        <h1>Angular.js Query Builder</h1>  -->
 
-            <div class="alert alert-info">
-                <strong>Query preview</strong><br>
-                <span ng-bind-html="query_output"></span>
-            </div>
+            <div ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF">
+                <div ng-controller="QueryBuilderCtrl">
+                    <!--        <h1>Angular.js Query Builder</h1>  -->
+                    <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                        <fieldset>
+                            <div class="alert alert-info">
+                                <div style="position: relative;">
+                                    <strong>Query preview</strong>
+                                    <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                                <span ng-bind-html="query_output"></span>
+                            </div>
 
-            <query-builder group="filter.group"></query-builder>
+                            <query-builder group="filter.group"></query-builder>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
 
         </div>
