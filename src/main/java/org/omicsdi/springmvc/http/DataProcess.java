@@ -8,6 +8,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -111,6 +112,7 @@ public  class DataProcess {
     public static Scope getDatasetInfo(String domain, String acc, Scope scope) {
 
         try{
+            List<String> authorsList = new ArrayList<String>();
             String datasetJson = Request.getDatasetJson(acc, Request.changeDatabaseName(domain), Final.url.get("getDatasetInfoURL"));
             JSONObject datasetInfo = new JSONObject(datasetJson);
             String full_dataset_link = datasetInfo.get("full_dataset_link").toString();
@@ -164,15 +166,15 @@ public  class DataProcess {
             String journal = "";
 
             if(!datasetInfo.get("submitter").equals(null))
-                all_authors = all_authors + datasetInfo.get("submitter").toString().replace("[","").replace("]","");  //.replace("\"","");
+                authorsList.add(datasetInfo.get("submitter").toString().replace("[","").replace("]",""));  //.replace("\"","");
 
             if(!datasetInfo.get("labHead").equals(null))
-                all_authors = all_authors + "," + datasetInfo.get("labHead").toString().replace("[","").replace("]",""); //.replace("\"","");
+                authorsList.add(datasetInfo.get("labHead").toString().replace("[","").replace("]","")); //.replace("\"","");
 
             String meta_entry_arr = "[";
             if(datasetInfo.get("publicationIds").equals(null)) {
                 scope.meta_entries = new JSONArray();
-                all_authors = "[" + all_authors + "]";
+                all_authors = all_authors.toString();
                 scope.dataset.put("all_authors",all_authors);
                 scope.dataset.put("journal",journal);
                 return scope;
@@ -203,7 +205,8 @@ public  class DataProcess {
                 }
 
                 JSONArray authors = new JSONArray();
-
+                if(!all_authors.isEmpty())
+                all_authors = all_authors.replace("\"","")+ ",";
                 for (int j = 0; j < entity.getJSONArray("authors").length(); j++) {
 
                     Pattern reg_surname = Pattern.compile(" [A-Z]{1,2}$",Pattern.MULTILINE);
@@ -232,7 +235,7 @@ public  class DataProcess {
                     author.put("fullname", entity.getJSONArray("authors").get(j).toString());
                     author.put("name_for_searching", author_for_searching);
                     authors.put(author);
-                    all_authors+=author.getString("fullname")+" ,";
+                    authorsList.add(author.getString("fullname"));
                 }
 
 
@@ -267,7 +270,7 @@ public  class DataProcess {
 
             String target_meta_entry_arr = meta_entry_arr.substring(0,meta_entry_arr.length()-1)+']';
             scope.meta_entries = new JSONArray(target_meta_entry_arr);
-            scope.dataset.put("all_authors",all_authors.substring(0,all_authors.length()-1));
+            scope.dataset.put("all_authors",authorsList.toString());
 
             return scope;
         }

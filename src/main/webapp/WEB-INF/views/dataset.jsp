@@ -114,9 +114,10 @@
                         </c:if>
                         <c:if test="${!all_authors.isEmpty()}">
                         "creator": {
-                        "@type" : "Person",
+                        "@type" : "Person",<c:choose><c:when test="${!organization.isEmpty()}">
                         "name" : ${all_authors},
-                        "organization":${organization}
+                        "organization":${organization}</c:when><c:otherwise>
+                        "name" : ${all_authors}</c:otherwise></c:choose>
                         },
                         </c:if>
                         <c:if test="${!submitter.isEmpty()}">
@@ -539,7 +540,7 @@
                                                 </span>
                         </p>
                         <p ng-show="dataset.submitter.length > 0 && dataset.submitter[0] != 'Not available'" class="align-justify">
-                            <b>Submitter:</b>
+                            <b>SUBMITTER:</b>
                             <a href='mailto:{{dataset.submitterMail[0]}}'>{{dataset['submitter'] + ' <' + dataset['submitterMail'] + '>'}}</a>
                         </p>
                         <p class="align-justify">
