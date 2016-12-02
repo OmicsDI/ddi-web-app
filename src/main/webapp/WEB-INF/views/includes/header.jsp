@@ -102,7 +102,7 @@
                 <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Remove Group</button>
             </div>
             <div class="group-conditions">
-                <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition">
+                <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition" ng-init="ruleIndex = $index">
                     <div ng-switch="rule.hasOwnProperty('group')">
                         <div ng-switch-when="true">
                             <query-builder group="rule.group"></query-builder>
@@ -122,7 +122,7 @@
                                         <div ng-if="adv_show" class="adv-dropdown-menu">
                                             <input type="text" class="input-block" ng-model="repos_input"  placeholder="Find your repositories">
                                             <ul class="list-unstyled metasearch-facet-values">
-                                                <li ng-click="addRuleData(facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input">{{facet.label}}</li>
+                                                <li ng-click="addRuleData(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input">{{facet.label}}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                                         <div ng-if="adv_show_two" class="adv-dropdown-menu">
                                             <input type="text" class="input-block" ng-model="repos_input_two"  placeholder="Find your repositories">
                                             <ul class="list-unstyled metasearch-facet-values">
-                                                <li ng-click="addRuleDataTwo(facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input_two">{{facet.label}}</li>
+                                                <li ng-click="addRuleDataTwo(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input_two">{{facet.label}}</li>
                                             </ul>
                                         </div>
                                     </div>

@@ -134,14 +134,14 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     "group" in scope.$parent && scope.$parent.group.rules.splice(scope.$parent.$index, 1);
                 };
 
-                scope.addRuleData = function (value) {
-                    scope.group.rules[scope.group.rules.length-1]['data'] = value;
+                scope.addRuleData = function (index, value) {
+                    scope.group.rules[index]['data'] = value;
                     scope.adv_show = !scope.adv_show;
                     console.log(scope.adv_show);
                 }
 
-                scope.addRuleDataTwo = function (value) {
-                    scope.group.rules[scope.group.rules.length-1]['data2'] = value;
+                scope.addRuleDataTwo = function (index, value) {
+                    scope.group.rules[scope.index]['data2'] = value;
                     scope.adv_show_two = !scope.adv_show_two;
                 }
 
