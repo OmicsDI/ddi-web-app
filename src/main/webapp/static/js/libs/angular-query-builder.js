@@ -38,6 +38,11 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
 
     $scope.filter = JSON.parse(data);
 
+
+    $scope.submit_adv_query = function(query_string){
+        angular.element(document.getElementById('queryCtrl')).scope().meta_search(query_string);
+    };
+    
     $scope.$watch('filter', function (newValue) {
         $scope.json = JSON.stringify(newValue, null, 2);
         $scope.query_output = computed(newValue.group);
@@ -139,7 +144,8 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     scope.group.rules[index]['data'] = value;
                     scope.adv_show = !scope.adv_show;
                     console.log(scope.adv_show);
-                }
+                };
+                
 
                 scope.addRuleDataTwo = function (index, value) {
                     scope.group.rules[index]['data2'] = value;

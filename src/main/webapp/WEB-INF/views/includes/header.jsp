@@ -13,8 +13,7 @@
 
         <!-- NB: if you do not have a local-search, delete the following div, and drop the class="grid_12 alpha" class from local-title above -->
         <!-- /local-search -->
-        <div class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search">
-             style="height:105px; float:right; margin-top:0px; z-index:1; width:45%">
+        <div class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search" style="height:120px; float:right; margin-top:0px; z-index:1; width:45%">
         </div>
 
         <div ng-controller="QueryCtrl" id="queryCtrl" class="col-md-6 col-sm-12 col-xs-12" ng-show="show_top_search"
@@ -53,7 +52,7 @@
                             <div class="alert alert-info">
                                 <div style="position: relative;">
                                     <strong>Query preview</strong>
-                                    <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;">
+                                    <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;" ng-click="submit_adv_query(query_output)">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </div>
