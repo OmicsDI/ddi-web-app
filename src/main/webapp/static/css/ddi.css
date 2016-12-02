@@ -1320,3 +1320,50 @@ $lines-to-show: 3;
     Display: Inline-Block;
 }
 
+.query-bulider-box {
+    -webkit-box-shadow: 1px 1px #EEE,-1px -1px #EEE;
+    -moz-box-shadow: 1px 1px #EEE,-1px -1px #EEE;
+    box-shadow: 1px 1px #EEE,-1px -1px #EEE;
+}
+
+.adv-dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 100%;    
+    right: 0;
+    z-index: 1000;
+    width: 300px;
+    max-height: 170px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    padding: 2px 0;
+    margin: 2px 0 0;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    font-size: 12px;
+}
+
+.adv-dropdown-menu>input {
+    display: block;
+    /*width: 96%;*/
+    margin-left: 2px;
+    border-radius: 4px;
+}
+
+.adv-dropdown-menu ul li {
+    display: block;
+    margin: 3px 0;
+    padding: 3px 4px;
+    clear: both;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.adv-dropdown-menu ul li:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
