@@ -359,9 +359,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                 return b.length - a.length;
             });
 
-            //remove the asterisk symbols from the Regexp
+            //remove the special symbols, such as asterisk,(), from the Regexp
             for (var i = 0; i < termsToHighlight.length; i++) {
-                termsToHighlight[i] = termsToHighlight[i].replace(/\*/g, "");
+                termsToHighlight[i] = termsToHighlight[i].replace(/[\*, \(, \))]/g, "");
             }
 
             // Regex to simultaneously replace terms

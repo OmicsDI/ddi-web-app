@@ -19,7 +19,7 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
             else{
                 var strtemp = "";
                 if(group.rules[i].condition == 'range') {strtemp = "[" + group.rules[i].data + " TO " +  (group.rules[i].data2||"") + "]" }
-                if(group.rules[i].condition == 'equal') {strtemp =  group.rules[i].data  }
+                if(group.rules[i].condition == 'equal') {strtemp =  "(" + group.rules[i].data +")" }
                 
                 if(group.rules[i].field == 'all_fields'){
                     str += strtemp;
@@ -74,7 +74,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
 
                 scope.conditions = [
                     { name: 'equal' },
-//                    { name: 'not' },
+                    { name: 'not' },
                     { name: 'range' }
                 ];
                 
