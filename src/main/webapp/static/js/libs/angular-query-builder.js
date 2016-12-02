@@ -70,7 +70,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 ];
 
                 scope.fields = [
-                    { name: 'all_fields' }
+                    { name: 'all_fields', label:'All Fields' }
                 ];
 
                 scope.conditions = [
@@ -90,7 +90,8 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                         var raw_fields_data = http_data.facets;
                         for(var i =0; i<raw_fields_data.length; i++){
                             var field_name = raw_fields_data[i].id;
-                            var new_field = {name:field_name};
+                            var field_label = raw_fields_data[i].label;
+                            var new_field = {name:field_name, label:field_label};
                             scope.fields.push(new_field);
                             var facets= [];
                             var rawfacet = raw_fields_data[i]['facetValues'];
@@ -102,7 +103,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                         }
                         // deal_fields();
                     }).error(function () {
-                        console.error("GET error:" + url);
+                        console.error("GET error:" + fields_url);
                     });
                 }
                 console.log(scope.fields_data);
@@ -141,7 +142,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 }
 
                 scope.addRuleDataTwo = function (index, value) {
-                    scope.group.rules[scope.index]['data2'] = value;
+                    scope.group.rules[index]['data2'] = value;
                     scope.adv_show_two = !scope.adv_show_two;
                 }
 

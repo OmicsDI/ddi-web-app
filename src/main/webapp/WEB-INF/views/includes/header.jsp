@@ -109,38 +109,34 @@
                         </div>
                         <div ng-switch-default="ng-switch-default">
                             <div class="form-inline" style="margin-top:3px">
-                                <select ng-options="t.name as t.name for t in fields" ng-model="rule.field" class="form-control input-sm"></select>
-                                <select style="margin-left: 3px" ng-options="c.name as c.name for c in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
+                                <select ng-options="field.name as field.label for field in fields" ng-model="rule.field" class="form-control input-sm" ng-click="rule.data=''; rule.data2=''"></select>
+                                <select style="margin-left: 3px" ng-options="condition.name as condition.name for condition in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
                                 <%--<input style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"/>--%>
                                 <!-- <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"></select> -->
                                 <div class="input-group" style="margin-left:3px;">
-                                    <input ng-model="rule.data" type="text" class="form-control" placeholder="---------------------------">
-                                    <div class="input-group-btn" style="position: relative;">
-                                        <button ng-click="adv_show=!adv_show" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 5px 7px;">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <div ng-if="adv_show" class="adv-dropdown-menu">
-                                            <input type="text" class="input-block" ng-model="repos_input"  placeholder="Find your repositories">
+                                    <input ng-model="rule.data" type="text" class="form-control" placeholder="--" ng-focus="adv_show=true" ng-blur="adv_show=false">
+                                        <%--<button ng-click="adv_show=!adv_show" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 5px 7px;">--%>
+                                            <%--<span class="caret"></span>--%>
+                                        <%--</button>--%>
+                                        <div ng-if="adv_show" class="adv-dropdown-menu" style="width:100%">
+                                            <%--<input type="text" class="input-block" ng-model="rule.data"  placeholder="Find your repositories">--%>
                                             <ul class="list-unstyled metasearch-facet-values">
-                                                <li ng-click="addRuleData(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input">{{facet.label}}</li>
+                                                <li ng-mousedown="addRuleData(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data">{{facet.label}}</li>
                                             </ul>
                                         </div>
-                                    </div>
                                 </div>
                                 <!-- <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data2" class="form-control input-sm" ng-show="rule.condition=='range'"></select> -->
                                 <div ng-if="rule.condition=='range'" class="input-group" style="margin-left:3px;">
-                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder="---------------------------">
-                                    <div class="input-group-btn" style="position: relative;">
-                                        <button ng-click="adv_show_two=!adv_show_two" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 5px 7px;">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <div ng-if="adv_show_two" class="adv-dropdown-menu">
-                                            <input type="text" class="input-block" ng-model="repos_input_two"  placeholder="Find your repositories">
+                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder="--"ng-focus="adv_show_two=true" ng-blur="adv_show_two=false">
+                                        <%--<button ng-click="adv_show_two=!adv_show_two" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 5px 7px;">--%>
+                                            <%--<span class="caret"></span>--%>
+                                        <%--</button>--%>
+                                        <div ng-if="adv_show_two" class="adv-dropdown-menu" style="width:100%">
+                                            <%--<input type="text" class="input-block" ng-model="rule.data2"  placeholder="Find your repositories">--%>
                                             <ul class="list-unstyled metasearch-facet-values">
-                                                <li ng-click="addRuleDataTwo(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input_two">{{facet.label}}</li>
+                                                <li ng-mousedown="addRuleDataTwo(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data2">{{facet.label}}</li>
                                             </ul>
                                         </div>
-                                    </div>
                                 </div>
                                 <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
                             </div>
