@@ -139,6 +139,7 @@
         window.omicsdi.datasetDomain = "${datasetDomain}";
         window.omicsdi.datasetAcc = "${datasetAcc}";
     </script>
+    <%@include file="includes/shared_js.jsp" %>
     <!--<script src="/static/js/libs/jquery/jquery-1.10.1.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <!--<script src="/static/js/libs/underscore/underscore-min.js"></script>-->
