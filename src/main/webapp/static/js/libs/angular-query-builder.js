@@ -60,7 +60,8 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
             content = element.contents().remove();
             return function (scope, element, attrs) {
                 
-
+                scope.adv_show = false;
+                scope.adv_show_two = false;
                 
                 scope.operators = [
                     { name: 'AND' },
@@ -112,6 +113,8 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                         field: 'all_fields',
                         data: ''
                     });
+                    scope.adv_show = false;
+                    scope.adv_show_two = false;
                 };
 
                 scope.removeCondition = function (index) {
@@ -130,6 +133,17 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 scope.removeGroup = function () {
                     "group" in scope.$parent && scope.$parent.group.rules.splice(scope.$parent.$index, 1);
                 };
+
+                scope.addRuleData = function (value) {
+                    scope.group.rules[scope.group.rules.length-1]['data'] = value;
+                    scope.adv_show = !scope.adv_show;
+                    console.log(scope.adv_show);
+                }
+
+                scope.addRuleDataTwo = function (value) {
+                    scope.group.rules[scope.group.rules.length-1]['data2'] = value;
+                    scope.adv_show_two = !scope.adv_show_two;
+                }
 
                 directive || (directive = $compile(content));
 

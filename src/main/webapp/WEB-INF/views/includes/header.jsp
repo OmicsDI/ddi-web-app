@@ -45,10 +45,10 @@
                 </fieldset>
             </form>
 
-            <div ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF">
+            <div class="query-bulider-box" ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF;">
                 <div ng-controller="QueryBuilderCtrl">
                     <!--        <h1>Angular.js Query Builder</h1>  -->
-                    <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                    <form novalidate name="queryForm" class="local-search">
                         <fieldset>
                             <div class="alert alert-info">
                                 <div style="position: relative;">
@@ -108,12 +108,40 @@
                             <query-builder group="rule.group"></query-builder>
                         </div>
                         <div ng-switch-default="ng-switch-default">
-                            <div class="form-inline" style="margin:3px">
+                            <div class="form-inline" style="margin-top:3px">
                                 <select ng-options="t.name as t.name for t in fields" ng-model="rule.field" class="form-control input-sm"></select>
-                                <select style="margin-left: 5px" ng-options="c.name as c.name for c in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
+                                <select style="margin-left: 3px" ng-options="c.name as c.name for c in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
                                 <%--<input style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"/>--%>
-                                <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"></select>
-                                <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data2" class="form-control input-sm" ng-show="rule.condition=='range'"></select>
+                                <!-- <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm"></select> -->
+                                <div class="input-group" style="margin-left:3px;">
+                                    <input ng-model="rule.data" type="text" class="form-control" placeholder="---------------------------">
+                                    <div class="input-group-btn" style="position: relative;">
+                                        <button ng-click="adv_show=!adv_show" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 5px 7px;">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div ng-if="adv_show" class="adv-dropdown-menu">
+                                            <input type="text" class="input-block" ng-model="repos_input"  placeholder="Find your repositories">
+                                            <ul class="list-unstyled metasearch-facet-values">
+                                                <li ng-click="addRuleData(facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input">{{facet.label}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <select ng-options="facet.value as facet.label for facet in fields_data[rule.field]" style="margin-left: 5px" type="text" ng-model="rule.data2" class="form-control input-sm" ng-show="rule.condition=='range'"></select> -->
+                                <div ng-if="rule.condition=='range'" class="input-group" style="margin-left:3px;">
+                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder="---------------------------">
+                                    <div class="input-group-btn" style="position: relative;">
+                                        <button ng-click="adv_show_two=!adv_show_two" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="padding: 5px 7px;">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <div ng-if="adv_show_two" class="adv-dropdown-menu">
+                                            <input type="text" class="input-block" ng-model="repos_input_two"  placeholder="Find your repositories">
+                                            <ul class="list-unstyled metasearch-facet-values">
+                                                <li ng-click="addRuleDataTwo(facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:repos_input_two">{{facet.label}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
                             </div>
                         </div>
