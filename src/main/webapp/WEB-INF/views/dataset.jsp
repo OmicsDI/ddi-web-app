@@ -421,7 +421,6 @@
                         <hr style="margin-right:10px">
                         <div>
                             <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
-                                <p class="seo-friendly-and-remove">${meta_dataset_abstract}</p>
                                 <p class="align-justify"><b>ABSTRACT</b>:
                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
