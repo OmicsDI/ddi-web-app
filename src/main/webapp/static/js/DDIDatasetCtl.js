@@ -3,7 +3,7 @@
  * Responsible for the Dataset fetching.
  */
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$location', '$window', '$routeParams', '$timeout', '$q', function($scope, $http, $location, $window, $routeParams, $timeout, $q) {
-
+        angular.element('.seo-friendly-remove').empty();
         $scope.web_service_url = web_service_url;
         $scope.proteomics_list = proteomics_list;
         $scope.metabolomics_list = metabolomics_list;
