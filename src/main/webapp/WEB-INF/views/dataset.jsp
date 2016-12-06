@@ -94,44 +94,30 @@
 
     <base href="/">
     <script type="application/ld+json">
-                   {
-                        "@context": "http://schema.org",
-                        "@type": "Dataset",
-                        <c:if test="${!name.equals(\"\")}">
-                        "name": "${name}",
-                        </c:if>
-                        <c:if test="${!meta_dataset_abstract.equals(\"\")}">
-                        "description": "${meta_dataset_abstract}",
-                        </c:if>
-                        <c:if test="${!meta_originalURL.equals(\"\")}">
-                        "sameAs": "${meta_originalURL}",
-                        </c:if>
-                        <c:if test="${!keywords.equals(\"\")}">
-                        "keywords": "${keywords}",
-                        </c:if>
-                        <c:if test="${!omics_type.equals(\"\")}">
-                        "variableMeasured": ${omics_type},
-                        </c:if>
-                        <c:if test="${!all_authors.isEmpty()}">
-                        "creator": {
-                        "@type" : "Person",<c:choose><c:when test="${!organization.isEmpty()}">
-                        "name" : ${all_authors},
-                        "organization":${organization}</c:when><c:otherwise>
-                        "name" : ${all_authors}</c:otherwise></c:choose>
-                        },
-                        </c:if>
-                        <c:if test="${!submitter.isEmpty()}">
-                        "citation": {
-                        "author":${submitter},
-                        "publisher": "${datasetDomain.toUpperCase()}",
-                        "title":"${name}",
-                        "year":"${pubYear}",
-                        "date":"${pub_date}",
-                        "url":"${meta_ddiURL}"
-                        }
-                        </c:if>
-                        "url": "${meta_ddiURL}"
-                    }
+   {
+        "@context": "http://schema.org",
+        "@type": "Dataset", <c:if test="${!name.equals(\"\")}">
+        "name": "${name}",</c:if><c:if test="${!meta_dataset_abstract.equals(\"\")}">
+        "description": "${meta_dataset_abstract}",</c:if><c:if test="${!meta_originalURL.equals(\"\")}">
+        "sameAs": "${meta_originalURL}",</c:if><c:if test="${!keywords.equals(\"\")}">
+        "keywords": "${keywords}",</c:if><c:if test="${!omics_type.equals(\"\")}">
+        "variableMeasured": ${omics_type},</c:if><c:if test="${!all_authors.isEmpty()}">
+        "creator": {
+        "@type" : "Person",<c:choose><c:when test="${ not empty organization}">
+        "name" : ${all_authors},
+        "organization":${organization}</c:when><c:otherwise>
+        "name" : ${all_authors}</c:otherwise></c:choose>
+        },</c:if><c:if test="${!submitter.isEmpty()}">
+        "citation": {
+        "author":${submitter},
+        "publisher": "${datasetDomain.toUpperCase()}",
+        "title":"${name}",<c:if test="${not empty pubYear}">
+        "year":"${pubYear}",</c:if><c:if test="${not empty pub_date}">
+        "date":"${pub_date}",</c:if>
+        "url":"${meta_ddiURL}"
+        },</c:if>
+        "url": "${meta_ddiURL}"
+    }
                 </script>
     <script>
         if (!window.omicsdi) {
