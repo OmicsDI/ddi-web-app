@@ -236,7 +236,7 @@ public  class DataProcess {
                     author.put("fullname", entity.getJSONArray("authors").get(j).toString());
                     author.put("name_for_searching", author_for_searching);
                     authors.put(author);
-                    authorsList.add(author.getString("fullname"));
+                    authorsList.add("\"" + author.getString("fullname") + "\"");
                 }
 
 

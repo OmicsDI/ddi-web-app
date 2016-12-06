@@ -102,12 +102,13 @@
         "sameAs": "${meta_originalURL}",</c:if><c:if test="${!keywords.equals(\"\")}">
         "keywords": "${keywords}",</c:if><c:if test="${!omics_type.equals(\"\")}">
         "variableMeasured": ${omics_type},</c:if><c:if test="${!all_authors.isEmpty()}">
-        "creator": {
-        "@type" : "Person",<c:choose><c:when test="${ not empty organization}">
-        "name" : ${all_authors},
-        "organization":${organization}</c:when><c:otherwise>
-        "name" : ${all_authors}</c:otherwise></c:choose>
-        },</c:if><c:if test="${!submitter.isEmpty()}">
+        "creator": [{
+            "@type" : "Person",
+            "name" : ${all_authors}
+        }<c:if test="${!all_authors.isEmpty()}">,{
+            "@type":"Organization",
+            "name":${organization}
+        }</c:if>],</c:if><c:if test="${!submitter.isEmpty()}">
         "citation": {
         "author":${submitter},
         "publisher": "${datasetDomain.toUpperCase()}",
