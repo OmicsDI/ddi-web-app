@@ -166,7 +166,7 @@ public  class DataProcess {
             String journal = "";
 
             if(!datasetInfo.get("submitter").equals(null))
-                authorsList.add(datasetInfo.get("submitter").toString().replace("[","").replace("]",""));  //.replace("\"","");
+                authorsList.add(datasetInfo.get("submitter").toString().replace("[","").replace("]",""));//.replace("\"","");
 
             if(!datasetInfo.get("labHead").equals(null))
                 authorsList.add(datasetInfo.get("labHead").toString().replace("[","").replace("]","")); //.replace("\"","");
@@ -174,7 +174,8 @@ public  class DataProcess {
             String meta_entry_arr = "[";
             if(datasetInfo.get("publicationIds").equals(null)) {
                 scope.meta_entries = new JSONArray();
-                all_authors = all_authors.toString();
+                //all_authors = all_authors.toString();
+                all_authors = authorsList.toString();
                 scope.dataset.put("all_authors",all_authors);
                 scope.dataset.put("journal",journal);
                 return scope;
