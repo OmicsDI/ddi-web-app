@@ -101,7 +101,7 @@
         "description": "${meta_dataset_abstract}",</c:if><c:if test="${!meta_originalURL.equals(\"\")}">
         "sameAs": "${meta_originalURL}",</c:if><c:if test="${!keywords.equals(\"\")}">
         "keywords": "${keywords}",</c:if><c:if test="${!omics_type.equals(\"\")}">
-        "variableMeasured": ${omics_type},</c:if><c:if test="${!all_authors.isEmpty()}">
+        "variableMeasured": ${omics_type},</c:if><c:if test="${!(all_authors.isEmpty() && all_authors.equals(\"[]\"))}">
         "creator": [{
             "@type" : "Person",
             "name" : ${all_authors}
@@ -111,8 +111,14 @@
         }</c:if>],</c:if><c:if test="${!submitter.isEmpty()}">
         "citation": {
         "@type":"CreativeWork",
-        "author":${submitter},
-        "publisher": "${datasetDomain.toUpperCase()}",
+        "author":{
+                    "@type":"Person",
+                    "name":${submitter}
+                },
+        "publisher": {
+            "@type":"Organization",
+            "name":"${datasetDomain.toUpperCase()}"
+            },
         "name":"${name}",
         "url":"${meta_ddiURL}"
         },</c:if>
