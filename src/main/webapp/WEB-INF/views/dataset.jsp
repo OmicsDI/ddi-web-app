@@ -105,7 +105,7 @@
         "creator": [{
             "@type" : "Person",
             "name" : ${all_authors}
-        }<c:if test="${!all_authors.isEmpty()}">,{
+        }<c:if test="${!organization.isEmpty()}">,{
             "@type":"Organization",
             "name":${organization}
         }</c:if>],</c:if><c:if test="${!submitter.isEmpty()}">
