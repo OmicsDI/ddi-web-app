@@ -110,11 +110,10 @@
             "name":${organization}
         }</c:if>],</c:if><c:if test="${!submitter.isEmpty()}">
         "citation": {
+        "@type":"CreativeWork",
         "author":${submitter},
         "publisher": "${datasetDomain.toUpperCase()}",
-        "title":"${name}",<c:if test="${not empty pubYear}">
-        "year":"${pubYear}",</c:if><c:if test="${not empty pub_date}">
-        "date":"${pub_date}",</c:if>
+        "name":"${name}",
         "url":"${meta_ddiURL}"
         },</c:if>
         "url": "${meta_ddiURL}"
