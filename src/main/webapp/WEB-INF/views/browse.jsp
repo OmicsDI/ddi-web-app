@@ -306,7 +306,6 @@
                         </small>
                                             </a>
                                         </li>
-                                        <li ng-hide=">
                                         <li ng-hide="omics_facets_no.Genomics==0">
                                             <a href="" ng-class="{'disabled':omics_facets_no.Genomics==='0'||is_omic_clicked('Genomics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex.Genomics].value)"><img src="static/images/omics/Genomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Genomics</span>
                                                 <small>
@@ -316,8 +315,7 @@
                                                 </label>
                                             </a>
                                         </li>
-                                        <li ng-hide=">
-                                        <li ng-hide="omics_facets_no.Multi-Omics==0">
+                                        <li ng-hide="omics_facets_no['Multi-Omics']==0">
                                             <a href="" ng-class="{'disabled':omics_facets_no['Multi-Omics']==='0'||is_omic_clicked('Multi-Omics')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex['Multi-Omics']].value)"><img src="static/images/omics/Multipleomics2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Multi-Omics</span>
                                                 <small>
                             ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex["Multi-Omics"]].count||0

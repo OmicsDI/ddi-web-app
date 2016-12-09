@@ -174,7 +174,12 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             facet_value = facet_value.replace(/\:/g, '\\:');
             facet_value = facet_value.replace(/\//g, '\\/');
             var facet_query = new RegExp(facet_id + '\\:"' + facet_value + '"', 'i');
-            if (query.match(facet_query)) {
+
+            var queries = get_queries(query);
+            group_query = queries[0];
+            facet_queries = queries[1];
+            
+            if (facet_queries.match(facet_query)) {
                 return true;
             } else {
                 return false;
@@ -187,9 +192,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
          * parameters.
          */
         $scope.facet_search = function(facet_id, facet_value) {
-
             $scope.$root.current_page = 1;
-
             var query = searchQ || '',
                 facet = facet_id + ':"' + facet_value + '"',
                 new_query;
@@ -197,18 +200,55 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             if ($scope.is_facet_applied(facet_id, facet_value)) {
                 new_query = decodeURI(query);
                 // remove facet in different contexts
-                new_query = new_query.replace(' AND ' + facet + ' AND ', ' AND ', 'i');
-                new_query = new_query.replace(facet + ' AND ', '', 'i');
-                new_query = new_query.replace(' AND ' + facet, '', 'i');
-                new_query = new_query.replace(facet, '', 'i') || 'RNA';
+                // new_query = new_query.replace(facet + ' AND ', '', 'i');
+                // new_query = new_query.replace(' AND ' + facet, '', 'i');
+                // new_query = new_query.replace(facet, '', 'i') || 'RNA';
+                // new_query = new_query.replace(' AND ' + facet + ' AND ', ' AND ', 'i');
+
+                var queries = get_queries(new_query);
+                group_query = queries[0];
+                facet_queries = queries[1];
+                
+                facet_queries = facet_queries.replace(' AND ' + facet + ' AND ', ' AND ', 'i');
+                facet_queries = facet_queries.replace(' AND ' + facet, '', 'i');
+                
+                new_query = group_query + facet_queries;
+                
             } else {
-                new_query = decodeURI(query + ' AND ' + facet); // add new facet
+                new_query = decodeURI(query);
+                var queries = get_queries(new_query);
+                group_query = queries[0];
+                facet_queries = queries[1];
+                facet_queries = facet_queries + ' AND ' + facet;
+                new_query = decodeURI(group_query + facet_queries); // add new facet
             }
             // $location.search('q', new_query);
             location.search = "?q=" + new_query;
         };
 
-        /**
+    /**
+     * split the queries into two kind:
+     * group_query, advanced group query sourounded by "()", e.g. (publication_date: ["2012" TO "2014"] AND repository:"ArrayExpress"), we don't check the facet inside the group query, to avoid remove the wrong facet.
+     * facet_queries, a list of queries from facet, which only use "AND", such as "AND disease:"normal" AND tissue:"kidney""
+     */
+     var get_queries = function(query){
+        query = query.replace(/^\s*(.*)\s*/, "$1");//remove the suffix and prefix space
+
+        if(!query.match(/^\(.*\)/)){   //if query is not surrouned by "()"
+            query = "(" + query + ")";
+        }
+        
+        var facet_queries = query.replace(/^(\(.*\))/, "");//remove the suffix and prefix space
+        var group_query = RegExp.$1;
+   
+        
+        var queries = [];
+        queries.push(group_query);
+        queries.push(facet_queries);
+        return queries;
+     }
+    
+    /**
          * Show/hide search facets to save screen space.
          * Uses jQuery for simplicity.
          * Activated only on mobile devices.
@@ -361,7 +401,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
 
             //remove the asterisk symbols from the Regexp
             for (var i = 0; i < termsToHighlight.length; i++) {
-                termsToHighlight[i] = termsToHighlight[i].replace(/\*/g, "");
+                termsToHighlight[i] = termsToHighlight[i].replace(/[\*, \(, \), \:, \[, \] ]/g, "");
             }
 
             // Regex to simultaneously replace terms
