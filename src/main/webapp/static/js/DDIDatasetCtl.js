@@ -3,7 +3,7 @@
  * Responsible for the Dataset fetching.
  */
 angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$location', '$window', '$routeParams', '$timeout', '$q', function($scope, $http, $location, $window, $routeParams, $timeout, $q) {
-
+        angular.element('.seo-friendly-remove').empty();
         $scope.web_service_url = web_service_url;
         $scope.proteomics_list = proteomics_list;
         $scope.metabolomics_list = metabolomics_list;
@@ -129,13 +129,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 $scope.get_dataset_fail = "We can't access this dataset: " + $scope.acc + " at " + $scope.domain + " right now.";
                 return;
             }
-            for (var i = 0; i < $scope.dataset.protocols.length; i++) {
-                if ($scope.dataset.protocols[i].name == "sample_protocol") {
-                    $scope.sample_protocol_description = $scope.dataset.protocols[i].description;
-                }
+            if($scope.dataset.protocols != null) {
+                for (var i = 0; i < $scope.dataset.protocols.length; i++) {
+                    if ($scope.dataset.protocols[i].name == "sample_protocol") {
+                        $scope.sample_protocol_description = $scope.dataset.protocols[i].description;
+                    }
 
-                if ($scope.dataset.protocols[i].name == "data_protocol") {
-                    $scope.data_protocol_description = $scope.dataset.protocols[i].description;
+                    if ($scope.dataset.protocols[i].name == "data_protocol") {
+                        $scope.data_protocol_description = $scope.dataset.protocols[i].description;
+                    }
                 }
             }
             $scope.dataset.instruments = squash($scope.dataset.instruments);
@@ -494,7 +496,6 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
 
             var modifiedWholeText = wholetext.toLowerCase();
-            var modifyString = "________________________________________________________________________________________________________________________________________________";
             var sections = [];
             var prevRealWordEnd = -1;
 
@@ -511,11 +512,15 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     }
                     var wordText = enrichInfo[i].text;
                     var realWordStart = modifiedWholeText.indexOf(wordText);
-                    var realWordEnd = realWordStart + wordText.length;
+                    var realWordEnd = realWordStart + wordText.length - 1;
+                    if(realWordStart < 0){
+                        console.log("got a non exist word text: " +  wordText  );
+                        modifiedWholeText = "_".repeat(realWordEnd + 1) + modifiedWholeText.substring(realWordEnd + 1, modifiedWholeText.length);
+                        continue;
+                    }
                     var synonyms = [];
                     var tobeReduced;
-
-                    modifiedWholeText = modifiedWholeText.substring(0, realWordStart) + modifyString.substring(0, wordText.length) + modifiedWholeText.substring(realWordEnd, modifiedWholeText.length);
+                    
 
                     if (prevRealWordEnd + 1 < realWordStart) {
                         if (realWordStart > long_text_length) {
@@ -524,12 +529,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                             tobeReduced = "false"
                         }
                         var section = {
-                            "text": wholetext.substring(prevRealWordEnd, realWordStart - 1),
+                            "text": modifiedWholeText.substring(prevRealWordEnd + 1, realWordStart),
                             "beAnnotated": "false",
                             "synonyms": null,
                             "tobeReduced": tobeReduced
                         };
                         sections.push(section);
+                        modifiedWholeText = "_".repeat(realWordStart) + modifiedWholeText.substring(realWordStart, modifiedWholeText.length);
                     }
 
                     synonyms = get_synonyms(wordText);
@@ -539,12 +545,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                         tobeReduced = "false"
                     }
                     var section = {
-                        "text": wholetext.substring(realWordStart, realWordEnd),
+                        "text": modifiedWholeText.substring(realWordStart, realWordEnd+1),
                         "beAnnotated": "true",
                         "synonyms": synonyms,
                         "tobeReduced": tobeReduced
                     };
                     sections.push(section);
+                    modifiedWholeText = "_".repeat(realWordEnd) + modifiedWholeText.substring(realWordEnd + 1, modifiedWholeText.length);
 
                     prevRealWordEnd = realWordEnd;
                     prevWordStart = wordStart;
@@ -557,7 +564,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             if (prevRealWordEnd + 1 < long_text_length) {
                 tobeReduced = "false"
                 var section = {
-                    "text": wholetext.substring(prevRealWordEnd + 1, long_text_length),
+                    "text": modifiedWholeText.substring(prevRealWordEnd + 1, long_text_length),
                     "beAnnotated": "false",
                     "synonyms": null,
                     "tobeReduced": tobeReduced
@@ -565,10 +572,10 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 sections.push(section);
                 prevRealWordEnd = long_text_length;
             }
-            if (prevRealWordEnd + 1 <= wholetext.length) {
+            if (prevRealWordEnd + 1 <= modifiedWholeText.length) {
                 tobeReduced = "true"
                 var section = {
-                    "text": wholetext.substring(prevRealWordEnd, wholetext.length),
+                    "text": modifiedWholeText.substring(prevRealWordEnd, modifiedWholeText.length),
                     "beAnnotated": "false",
                     "synonyms": null,
                     "tobeReduced": tobeReduced

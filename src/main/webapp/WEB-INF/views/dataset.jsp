@@ -94,43 +94,36 @@
 
     <base href="/">
     <script type="application/ld+json">
-                   {
-                        "@context": "http://schema.org",
-                        "@type": "Dataset",
-                        <c:if test="${!name.equals(\"\")}">
-                        "name": "${name}",
-                        </c:if>
-                        <c:if test="${!meta_dataset_abstract.equals(\"\")}">
-                        "description": "${meta_dataset_abstract}",
-                        </c:if>
-                        <c:if test="${!meta_originalURL.equals(\"\")}">
-                        "sameAs": "${meta_originalURL}",
-                        </c:if>
-                        <c:if test="${!keywords.equals(\"\")}">
-                        "keywords": "${keywords}",
-                        </c:if>
-                        <c:if test="${!omics_type.equals(\"\")}">
-                        "variableMeasured": ${omics_type},
-                        </c:if>
-                        <c:if test="${!all_authors.isEmpty()}">
-                        "creator": {
-                        "@type" : "Person",
-                        "name" : ${all_authors},
-                        "organization":${organization}
-                        },
-                        </c:if>
-                        <c:if test="${!submitter.isEmpty()}">
-                        "citation": {
-                        "author":${submitter},
-                        "publisher": "${datasetDomain.toUpperCase()}",
-                        "title":"${name}",
-                        "year":"${pubYear}",
-                        "date":"${pub_date}",
-                        "url":"${meta_ddiURL}"
-                        }
-                        </c:if>
-                        "url": "${meta_ddiURL}"
-                    }
+   {
+        "@context": "http://schema.org",
+        "@type": "Dataset", <c:if test="${!name.equals(\"\")}">
+        "name": "${name}",</c:if><c:if test="${!meta_dataset_abstract.equals(\"\")}">
+        "description": "${meta_dataset_abstract}",</c:if><c:if test="${!meta_originalURL.equals(\"\")}">
+        "sameAs": "${meta_originalURL}",</c:if><c:if test="${!keywords.equals(\"\")}">
+        "keywords": "${keywords}",</c:if><c:if test="${!omics_type.equals(\"\")}">
+        "variableMeasured": ${omics_type},</c:if><c:if test="${!(all_authors.isEmpty() && all_authors.equals(\"[]\"))}">
+        "creator": [{
+            "@type" : "Person",
+            "name" : ${all_authors}
+        }<c:if test="${!organization.isEmpty()}">,{
+            "@type":"Organization",
+            "name":${organization}
+        }</c:if>],</c:if><c:if test="${!submitter.isEmpty()}">
+        "citation": {
+        "@type":"CreativeWork",
+        "author":{
+                    "@type":"Person",
+                    "name":${submitter}
+                },
+        "publisher": {
+            "@type":"Organization",
+            "name":"${datasetDomain.toUpperCase()}"
+            },
+        "name":"${name}",
+        "url":"${meta_ddiURL}"
+        },</c:if>
+        "url": "${meta_ddiURL}"
+    }
                 </script>
     <script>
         if (!window.omicsdi) {
@@ -268,7 +261,7 @@
                         <hr style="margin-right:10px">
                         <div>
                             <div ng-show="dataset.description.length > 1 && dataset.description!=='Not available'">
-                                <p class="seo-friendly-and-remove">${meta_dataset_abstract}</p>
+                                <p class="seo-friendly-remove">${meta_dataset_abstract}</p>
                                 <p class="align-justify"><b>ABSTRACT</b>:
                                     <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" style="">
                                         <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' && description_show_full=='false'">{{section.text}}</span>
@@ -386,12 +379,10 @@
                                                 </a>
                                                 </span>
                         </p>
-                       <%-- <p ng-show="dataset.submitter != 'Not available'" class="align-justify"><b>Submitter:</b>
-                            <span>
-                       <span> {{submitter+';' + }}</span>
-                                                </a>
-                                                </span>
-                        </p>--%>
+                        <p ng-show="dataset.submitter.length > 0 && dataset.submitter[0] != 'Not available'" class="align-justify">
+                            <b>SUBMITTER:</b>
+                            <a href='mailto:{{dataset.submitterMail[0]}}'>{{dataset['submitter'] + ' <' + dataset['submitterMail'] + '>'}}</a>
+                        </p>
                         <p class="align-justify">
                             <b>PROVIDER:</b>
                             <a href={{dataset.full_dataset_link}}>{{acc}}</a>  |
