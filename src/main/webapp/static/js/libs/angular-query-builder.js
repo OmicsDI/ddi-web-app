@@ -18,8 +18,8 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
             }
             else{
                 var strtemp = "";
-                if(group.rules[i].condition == 'range') {strtemp = "[" + group.rules[i].data + " TO " +  (group.rules[i].data2||"") + "]" }
-                if(group.rules[i].condition == 'equal') {strtemp =  "(" + group.rules[i].data +")" }
+                if(group.rules[i].condition == 'range') {strtemp = "[\"" + group.rules[i].data + "\" TO \"" +  (group.rules[i].data2||"") + "\"]" }
+                if(group.rules[i].condition == 'equal') {strtemp =  "(\"" + group.rules[i].data +"\")" }
                 
                 if(group.rules[i].field == 'all_fields'){
                     str += strtemp;
@@ -40,6 +40,10 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
 
 
     $scope.submit_adv_query = function(query_string){
+        if((query_string.match(/\(\"\"\)/) || query_string.match(/\(\)/))){     // not going to search with empty condition: ()  or ("") 
+            alert("Sorry, can not perform the search, some input box is empty, please fill them all");
+            return;
+        }
         angular.element(document.getElementById('queryCtrl')).scope().meta_search(query_string);
     };
     
@@ -80,7 +84,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
 
                 scope.conditions = [
                     { name: 'equal' },
-                    { name: 'not' },
+                    // { name: 'not' },
                     { name: 'range' }
                 ];
                 

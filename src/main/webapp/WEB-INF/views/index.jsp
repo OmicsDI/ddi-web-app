@@ -131,74 +131,65 @@
                                     </h3>
 
                                     <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
-                                        <!-- <fieldset> -->
                                         <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
                                             <div class="input-group">
                                                 <autocomplete ng-model="query.text" attr-placeholder="organism, repository, gene, tissue, accession" click-activation="true" data="words" on-type="get_suggestions" on-select="do_query"></autocomplete>
-                                                <!--
-                                                            <input type="text" style="background-color:#fff; width:99%"
-                                                                   placeholder="organism, repository, gene, tissue, accession"
-                                                                   class="form-control"
-                                                                   id="query-text"
-                                                                   name="text"
-                                                                   tabindex="1"
-                                                                   ng-model="query.text"
-                                                                   ng-minlength="2"
-                                                                   ng-maxlength="1000"
-                                                                   autocomplete="off"
-                                                                   required>
-                            -->
+
                                                 <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
+                                                        <i class="fa fa-caret-down" aria-hidden="true" ng-if="facaret"></i>
+                                                        <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
+                                                            Advance
+                                                    </button>
+
                                                     <button type="submit" class="btn btn-primary ddi-btn">
-                                    <i class="fa fa-search"></i> Search
-                                </button>
+                                                    <i class="fa fa-search"></i> Search
+                                                    </button>
                                                 </div>
                                                 <!-- /input-group-btn -->
                                             </div>
                                             <!--input-group -->
                                             <span class="help-block example-searches">
-                         <!-- <small> -->
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="example_query('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('TAXONOMY:&quot;9606&quot;')">Homo
-                                     sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Hela')">Hela</a>
-                             </i>
-                         <!-- </small> -->
-                     </span>
-                                            <!--
-                        <label class="control-label ng-cloak has-error"
-                               for="query-text"
-                               ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                               ng-cloak>
-                            Your query is too short
-                        </label>
-                        <label class="control-label ng-cloak"
-                               for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                               ng-cloak>
-                            Your query is too long
-                        </label>
-                        -->
+                                                 <i>
+                                                     Examples:
+                                                     <a href="" rel="nofollow" ng-click="example_query('cancer')">cancer</a>,
+                                                     <a href="" rel="nofollow" ng-click="example_query('TAXONOMY:&quot;9606&quot;')">Homo
+                                                         sapiens</a>,
+                                                     <a href="" rel="nofollow" ng-click="example_query('Orbitrap')">Orbitrap</a>,
+                                                     <a href="" rel="nofollow" ng-click="example_query('Q9HAU5')">Q9HAU5</a>,
+                                                     <a href="" rel="nofollow" ng-click="example_query('Phospho')">Phospho</a>,
+                                                     <a href="" rel="nofollow" ng-click="example_query('Hela')">Hela</a>
+                                                 </i>
+                                            </span>
                                         </div>
-                                        <!-- /form-group -->
-                                        <!-- </fieldset> -->
                                     </form>
-                                    <!-- /form -->
+                                    <div class="query-bulider-box" ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF;">
+                                        <div ng-controller="QueryBuilderCtrl">
+                                            <!--        <h1>Angular.js Query Builder</h1>  -->
+                                            <form novalidate name="queryForm" class="local-search">
+                                                <fieldset>
+                                                    <div class="alert alert-info">
+                                                        <div style="position: relative;">
+                                                            <strong>Query preview</strong>
+                                                            <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;" ng-click="submit_adv_query(query_output)">
+                                                                <i class="fa fa-search" style="font-size: 30px"></i>
+                                                            </button>
+                                                        </div>
+                                                        <span ng-bind-html="query_output"></span>
+                                                    </div>
+
+                                                    <query-builder group="filter.group"></query-builder>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!--/controller-->
                             </div>
 
                             <div class="col-md-4">
                             </div>
-
-
                         </div>
 
-                        <!-- <div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style=""> -->
                         <div class="row">
 
                             <div class="col-md-4">
@@ -216,10 +207,7 @@
                                 <div id="chart_repos_omics" class="panel panel-default" style="height:360px">
                                 </div>
                             </div>
-
-
                         </div>
-                        <!-- row -->
 
 
                         <div class="row" ng-controller="DatasetListsCtrl">
