@@ -1320,12 +1320,6 @@ $lines-to-show: 3;
     Display: Inline-Block;
 }
 
-.query-bulider-box {
-    -webkit-box-shadow: 1px 1px #EEE,-1px -1px #EEE;
-    -moz-box-shadow: 1px 1px #EEE,-1px -1px #EEE;
-    box-shadow: 1px 1px #EEE,-1px -1px #EEE;
-}
-
 .adv-dropdown-menu {
     display: block;
     position: absolute;
