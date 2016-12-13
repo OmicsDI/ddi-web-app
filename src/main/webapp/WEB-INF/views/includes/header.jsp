@@ -48,7 +48,7 @@
                 <div ng-controller="QueryBuilderCtrl">
                     <!--        <h1>Angular.js Query Builder</h1>  -->
                     <form novalidate name="queryForm" class="local-search">
-                        <fieldset>
+                        <fieldset style="background-color:#FFFFFF">
                             <div class="alert alert-info">
                                 <div style="position: relative;">
                                     <strong>Query preview</strong>
