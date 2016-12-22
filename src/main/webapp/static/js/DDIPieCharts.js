@@ -105,7 +105,6 @@ var bub_charts_tissues_organisms = function () {
                     .attr("class", "bubble center")
                     .attr("style", "position:relative")
                 ;
-            d3.select("#" + bub_chart_name + "_radio_form").select('input[value=Tissues]').property('checked', true);
 
 
             function reset_radio(div_width_temp) {
@@ -181,6 +180,7 @@ var bub_charts_tissues_organisms = function () {
             }
 
             reset_radio(div_width);
+            d3.select("#" + bub_chart_name + "_radio_form").select('input[value=Tissues]').property('checked', true);
 
             d3.select(self.frameElement).style("height", diameter + "px");
 
