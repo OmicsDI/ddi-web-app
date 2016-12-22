@@ -30,7 +30,7 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
                 
             }
         }
-
+        str = str.replace(/"\*\:\*"/g, "*:*");
         return str + ")";
     }
 
@@ -38,8 +38,8 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
 
     $scope.filter = JSON.parse(data);
 
-
-    $scope.submit_adv_query = function(query_string){
+    $scope.submit_adv_query = function(){
+        query_string = $scope.query_output;
         if((query_string.match(/\(\"\"\)/) || query_string.match(/\(\)/))){     // not going to search with empty condition: ()  or ("") 
             alert("Sorry, can not perform the search, some input box is empty, please fill them all");
             return;
@@ -81,6 +81,20 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 scope.fields = [
                     { name: 'all_fields', label:'All Fields' }
                 ];
+                
+                var xref_fields = [
+                    {name: 'UNIPROT', label:'UNIPROT'},
+                    {name: 'PUBMED', label:'PUBMED'},
+                    {name: 'ENSEMBL', label:'ENSEMBL'},
+                    {name: 'WORMGENE', label:'WORMGENE'},
+                    {name: 'PUBCHEM', label:'PUBCHEM'},
+                    {name: 'CHEBI', label:'CHEBI'},
+                    {name: 'HMDB', label:'HMDB'},
+                    {name: 'KEGG', label:'KEGG'},
+                    {name: 'NCBI', label:'NCBI'},
+                    {name: 'PASS', label:'PASS'},
+                    {name: 'SGD', label:'SGD'}
+                ]
 
                 scope.conditions = [
                     { name: 'equal' },
@@ -110,13 +124,13 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                             }
                             scope.fields_data[field_name] = facets;
                         }
+                        scope.fields = scope.fields.concat(xref_fields);
                         // deal_fields();
                     }).error(function () {
                         console.error("GET error:" + fields_url);
                     });
                 }
-                console.log(scope.fields_data);
-
+                
                 scope.addCondition = function () {
                     scope.group.rules.push({
                         condition: 'equal',
@@ -126,6 +140,8 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     scope.adv_show = false;
                     scope.adv_show_two = false;
                 };
+                
+                scope.addCondition();
 
                 scope.removeCondition = function (index) {
                     scope.group.rules.splice(index, 1);
@@ -140,7 +156,16 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     });
                 };
 
+                scope.isRootGroup = function () {
+                    if(typeof(scope.$parent.group) == "undefined") {
+                        return true;
+                    }
+                    else{
+                        return false;}
+                };
+                
                 scope.removeGroup = function () {
+                    console.log(scope.isRootGroup());
                     "group" in scope.$parent && scope.$parent.group.rules.splice(scope.$parent.$index, 1);
                 };
 
@@ -154,6 +179,10 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 scope.addRuleDataTwo = function (index, value) {
                     scope.group.rules[index]['data2'] = value;
                     scope.adv_show_two = !scope.adv_show_two;
+                }
+                
+                scope.submit_adv_search = function (query_string){
+                    scope.$parent.submit_adv_query();
                 }
 
                 directive || (directive = $compile(content));

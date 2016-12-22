@@ -139,7 +139,7 @@
                                                     <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
                                                         <i class="fa fa-caret-down" aria-hidden="true" ng-if="facaret"></i>
                                                         <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
-                                                            Advance
+                                                            Advanced
                                                     </button>
 
                                                     <button type="submit" class="btn btn-primary ddi-btn">
@@ -167,7 +167,7 @@
                                         <div ng-controller="QueryBuilderCtrl">
                                             <!--        <h1>Angular.js Query Builder</h1>  -->
                                             <form novalidate name="queryForm" class="local-search">
-                                                <fieldset>
+                                                <fieldset style="background-color:#FFFFFF">
                                                     <div class="alert alert-info">
                                                         <div style="position: relative;">
                                                             <strong>Query preview</strong>

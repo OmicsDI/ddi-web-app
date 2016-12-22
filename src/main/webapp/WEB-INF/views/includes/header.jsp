@@ -30,7 +30,7 @@
                                 <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
                                     <i class="fa fa-caret-down" aria-hidden="true" ng-if="facaret"></i>
                                     <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
-                                    Advance
+                                    Advanced
                                 </button>
                                 <button type="submit" class="btn btn-primary ddi-btn">
                                     <i class="fa fa-search"></i> Search
@@ -52,7 +52,7 @@
                             <div class="alert alert-info">
                                 <div style="position: relative;">
                                     <strong>Query preview</strong>
-                                    <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;" ng-click="submit_adv_query(query_output)">
+                                    <button id = "adv_search_button"  type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;" ng-click="submit_adv_query()">
                                         <i class="fa fa-search" style="font-size: 30px"></i>
                                     </button>
                                 </div>
@@ -93,12 +93,15 @@
 
 
     <script type="text/ng-template" id="/queryBuilderDirective.html">
-        <div class="alert alert-warning alert-group">
+        <div class="alert alert-warning alert-group"  >
             <div class="form-inline" style="margin-left: -15px">
                 <select ng-options="o.name as o.name for o in operators" ng-model="group.operator" class="form-control input-sm"></select>
-                <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Condition</button>
+                <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Field</button>
                 <button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Group</button>
-                <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i> Remove Group</button>
+                <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger" ng-hide="isRootGroup()"><i class="fa fa-minus" aria-hidden="true"></i> Remove Group</button>
+                <button type="submit" class="btn btn-primary" style="margin-left: 5px; padding:3px 6px; width:85px" ng-click="submit_adv_search()">
+                    <i class="fa fa-search" style="font-size: 20px"></i>
+                </button>
             </div>
             <div class="group-conditions">
                 <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition" ng-init="ruleIndex = $index">
@@ -111,7 +114,7 @@
                                 <select ng-options="field.name as field.label for field in fields" ng-model="rule.field" class="form-control input-sm" ng-click="rule.data=''; rule.data2=''"></select>
                                 <select style="margin-left: 3px" ng-options="condition.name as condition.name for condition in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
                                 <div class="input-group" style="margin-left:3px;">
-                                    <input ng-model="rule.data" type="text" class="form-control" placeholder="--------------------" ng-focus="adv_show=true" ng-blur="adv_show=false" ng-init="rule.data='*:*'">
+                                    <input ng-model="rule.data" type="text" class="form-control" placeholder="--click to input--" ng-focus="adv_show=true" ng-blur="adv_show=false" ng-init="rule.data='*:*'">
                                         <div ng-if="adv_show" class="adv-dropdown-menu" style="width:100%">
                                             <ul class="list-unstyled metasearch-facet-values">
                                                 <li ng-mousedown="addRuleData(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data">{{facet.label}}</li>
@@ -119,7 +122,7 @@
                                         </div>
                                 </div>
                                 <div ng-if="rule.condition=='range'" class="input-group" style="margin-left:3px;">
-                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder="--------------------" ng-focus="adv_show_two=true" ng-blur="adv_show_two=false">
+                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder="--click to input--" ng-focus="adv_show_two=true" ng-blur="adv_show_two=false">
                                         <div ng-if="adv_show_two" class="adv-dropdown-menu" style="width:100%">
                                             <ul class="list-unstyled metasearch-facet-values">
                                                 <li ng-mousedown="addRuleDataTwo(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data2">{{facet.label}}</li>
