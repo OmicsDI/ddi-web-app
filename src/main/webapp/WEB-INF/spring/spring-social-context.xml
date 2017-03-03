@@ -1,0 +1,79 @@
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:social="http://www.springframework.org/schema/spring-social"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/social
+		http://docs.spring.io/autorepo/schema/spring-social/current/social/spring-social-1.1.xsd
+		http://www.springframework.org/schema/aop 
+       	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+        
+	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+  		<beans:property name="location">
+    		<beans:value>/WEB-INF/spring/social.properties</beans:value>
+  		</beans:property>
+	</beans:bean>    
+	
+    <beans:import resource="classpath:/org/springframework/social/orcid/configuration.xml" />	
+        
+    <beans:bean id="connectionFactoryLocator" class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
+        <beans:property name="connectionFactories">
+            <beans:list>
+                <beans:bean class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+                    <beans:constructor-arg value="${facebook.clientId}" />
+                    <beans:constructor-arg value="${facebook.clientSecret}" />
+                </beans:bean>
+				<beans:bean class="org.springframework.social.orcid.connect.OrcidConnectionFactory">
+                    <beans:constructor-arg value="${orcid.clientId}" />
+                    <beans:constructor-arg value="${orcid.clientSecret}" />
+                </beans:bean>                
+ 				<!-- To add another provider, add that provider's Connection factory here -->
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    
+    <beans:bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" factory-method="noOpText" />
+    
+ 	<beans:bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+  		<beans:property name="dataSource" ref="dataSource"/>
+	</beans:bean>
+    
+    <beans:bean id="usersConnectionRepository" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+        <beans:constructor-arg ref="dataSource" />
+        <beans:constructor-arg ref="connectionFactoryLocator" />
+        <beans:constructor-arg ref="textEncryptor" />
+        <beans:property name="connectionSignUp" ref="accountConnectionSignUp" />
+    </beans:bean>
+    
+	<beans:bean name="socialSignInAdapter" class="org.jyougo.springsocial.SocialSignInAdapter">
+		<beans:constructor-arg ref="userDao" />
+	</beans:bean>
+			
+	<beans:bean name="accountConnectionSignUp" class="org.jyougo.springsocial.AccountConnectionSignUp">
+		<beans:constructor-arg ref="userDao" />
+	</beans:bean>	
+	
+	<!-- To add another provider, copy this bean and change out the class definition -->
+	<beans:bean id="facebook" factory-bean="connectionRepository" factory-method="findPrimaryConnection" scope="request">
+		<beans:constructor-arg value="org.springframework.social.facebook.api.Facebook" />
+		<aop:scoped-proxy proxy-target-class="false" />
+	</beans:bean>
+
+	<beans:bean id="orcid" factory-bean="connectionRepository" factory-method="findPrimaryConnection" scope="request">
+		<beans:constructor-arg value="org.springframework.social.orcid.api.OrcidApi" />
+		<aop:scoped-proxy proxy-target-class="false" />
+	</beans:bean>
+
+	<beans:bean id="connectionRepository" factory-method="createConnectionRepository" factory-bean="usersConnectionRepository" scope="request">
+    	<beans:constructor-arg value="#{request.userPrincipal.name}" />
+    	<aop:scoped-proxy proxy-target-class="false" />
+	</beans:bean>
+        
+</beans:beans>

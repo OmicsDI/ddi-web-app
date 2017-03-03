@@ -1,0 +1,20 @@
+{{profile}}
+<hr/>
+<div *ngIf="!name">
+  name not exists
+</div>
+
+<div *ngIf="name">
+  name exists
+</div>
+
+{{name}}
+
+ <li class="functional" [mdMenuTriggerFor]="menu">
+      <a data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Dialog">Login</a>
+  </li>
+<md-menu #menu="mdMenu" [overlapTrigger]="false">
+
+    <app-login-dialog></app-login-dialog>
+
+</md-menu>

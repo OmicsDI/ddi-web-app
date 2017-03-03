@@ -111,6 +111,7 @@ ddiApp.config(function($routeProvider) {
     when('/dataset/:domain/:acc', { templateUrl: 'app/views/dataset.html', controller: 'MainContentCtrl' }).
 //    when('/check', {templateUrl: 'app/views/check.html', controller: 'MainContentCtrl'});
     when('/check', {templateUrl: 'app/views/check.html', controller: 'MainContentCtrl'}).
+    when('/profile', {templateUrl: 'app/views/profile.html', controller: 'ProfileCtrl'}).
     otherwise({  templateUrl: 'app/views/home.html', controller: 'MainContentCtrl' });
 
 });
@@ -143,10 +144,10 @@ ddiApp.factory('ddiAppApi', function($http) {
         getDataset: function(provider, accession) { return $http.get('http://api.metabolomexchange.org/provider/' + provider + '/' + accession, { cache: useCache }); },
         getProviders: function() { return $http.get('http://api.metabolomexchange.org/providers', { cache: useCache }); },
         getProvider: function(provider) { return $http.get('http://api.metabolomexchange.org/provider/' + provider, { cache: useCache }); },
-        findDatasets: function(search) { 
+        findDatasets: function(search) {
             var andMatch = search.replace(new RegExp(' ', 'g'), '&');
             var searchUrl = 'http://api.metabolomexchange.org/datasets/' + andMatch;
-            return $http.get(searchUrl, { cache: useCache }); 
+            return $http.get(searchUrl, { cache: useCache });
         }
     };
 });
