@@ -16,7 +16,7 @@ export class LoginLauncherComponent implements OnInit {
   public name : string;
 
   constructor(public dialog: MdDialog, private profileService: ProfileService) {
-    this.name = "some string";
+    this.name = null;
   }
   ngOnInit() {
     this.getProfile();

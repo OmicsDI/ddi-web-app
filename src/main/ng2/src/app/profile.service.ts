@@ -5,19 +5,19 @@ import { Profile } from './profile';
 
 @Injectable()
 export class ProfileService {
-  profileUrl = "http://localhost:8080/user/profile";
+  profileUrl = "http://localhost:8088/user/profile?angular=2";
 
   constructor (private http: Http) {}
 
   getProfile (): Observable<Profile> {
-    return this.http.get(this.profileUrl)
+    return this.http.get(this.profileUrl, { withCredentials: true })
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   private extractData(res: Response) {
     let body = res.json();
-    return body.data || { };
+    return body || { };
   }
 
   private handleError (error: Response | any) {
