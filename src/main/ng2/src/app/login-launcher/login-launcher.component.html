@@ -1,4 +1,4 @@
-  <li class="functional" [mdMenuTriggerFor]="menu">
+  <li class="functional" [mdMenuTriggerFor]="menu" *ngIf="!(name && name!='unknown')">
     <a data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Menu">Login</a>
   </li>
   <md-menu #menu="mdMenu" [overlapTrigger]="false">
@@ -16,7 +16,7 @@
     <button md-menu-item disabled>
       Dashboard
     </button>
-    <button md-menu-item>
+    <button md-menu-item (click)="LogOut()">
       Log Out
     </button>
   </md-menu>

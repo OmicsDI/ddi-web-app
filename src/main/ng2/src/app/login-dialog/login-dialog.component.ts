@@ -23,20 +23,26 @@ export class LoginDialogComponent implements OnInit {
     window.location.href = url;
   }
 
-  loginElixir(){
-    console.error("ERROR YOU DID!");
+  submit(provider: string, scope: string){
+      var f = document.createElement("form");
+      f.setAttribute('method',"post");
+      f.setAttribute('action',"signin/" + provider);
 
-    let url2 = 'https://sandbox.orcid.org/oauth/signin?client_id=APP-FBTNY1E6990OKN73&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fsignin%2Forcid&scope=%2Fauthenticate&state=13725027-f513-4154-9774-d3e594f3206b';
+      var i = document.createElement("input"); //input element, text
+      i.setAttribute('type',"hidden");
+      i.setAttribute('name',"scope");
+      i.setAttribute('value',scope);
 
-    //window.location.href = url2;
+      var s = document.createElement("input"); //input element, Submit button
+      s.setAttribute('type',"submit");
+      s.setAttribute('value',"Submit");
 
-    this.http.get("http://localhost:8088/api/login?provider=elixir")
-      .map(res => res.text())
-      .subscribe(
-        data => this.redirect(data),
-        err => this.logError(err),
-        () => console.log('Random Quote Complete')
-      );
+      f.appendChild(i);
+      f.appendChild(s);
+
+      document.getElementsByTagName('body')[0].appendChild(f);
+
+      f.submit();
+    }
   }
 
-}

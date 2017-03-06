@@ -33,6 +33,8 @@ public class HomeController {
         return "home";
     }
 
+
+
     @RequestMapping(value = "/orcid", method = RequestMethod.GET)
     public String welcomeOrcid(Locale locale, Model model) {
         OrcidApi orcidApi = orcid.getApi();

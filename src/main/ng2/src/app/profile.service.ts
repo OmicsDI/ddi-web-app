@@ -6,6 +6,7 @@ import { Profile } from './profile';
 @Injectable()
 export class ProfileService {
   profileUrl = "http://localhost:8088/user/profile?angular=2";
+  logoutUrl = "http://localhost:8088/user/logout";
 
   constructor (private http: Http) {}
 
@@ -32,5 +33,23 @@ export class ProfileService {
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+
+  private extractDataLogin(res: Response) {
+    console.warn("logging out - extracting data..");
+  }
+
+  private handleErrorLogin (error: Response | any) {
+    console.warn("logging out - error..");
+    return Observable.throw("Error in logout");
+  }
+
+  public logOut() {
+    ///not working
+    this.http.get(this.logoutUrl, {withCredentials: true})
+      .map(this.extractDataLogin)
+      .catch(this.handleErrorLogin);
+
+    console.warn("logging out..");
   }
 }
