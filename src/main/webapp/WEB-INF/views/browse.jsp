@@ -434,8 +434,12 @@
                                                 </div>
                                             </li>
                                         </ul>
+
                                     </div>
+
                                 </div>
+
+
                                 <!-- row -->
                                 <div class="grid_22 ddi-pagination " style="width:100%">
 
@@ -464,8 +468,80 @@
                                 </div>
 
 
+
                             </div>
+
                             <!-- ResultsListCtrl-->
+                        </div>
+                        <div id="searchFeedback" ng-controller="ResultsListCtrl" class="ng-scope ng-cloak ng-binding list-group">
+                            <div ng-hide="feedback.isSatisfiedDiv" class="ddi-card-panel" style="width:65%;margin-left:28%;">
+                                <div>
+                                    <h4 >
+                                        <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 17px;"> Search Feedback</i>
+                                    </h4>
+                                    <h4 >
+                                        <i aria-hidden="true" style="font-size: 13px;"> Did you find what you were looking for?</i>
+                                    </h4>
+                                </div>
+                                <div style="padding: 10px;">
+                                    <label style="font-style: normal;font-weight: normal">
+                                        <input  style="opacity:10;" type="radio" ng-model="feedback.isSatisfiedVal" value="true" name="level1"
+                                                ng-change="feedback.txtArea = false;feedback.submitBtn = false;feedback.isSatisfiedDiv=false;feedback.issue=true;"        checked>
+                                        Yes
+                                    </label>
+                                    <label style="font-style: normal;font-weight: normal">
+                                        <input style="opacity: 10;" type="radio" ng-model="feedback.isSatisfiedVal" value="false" name="level2"
+                                               ng-change="feedback.txtArea = false;feedback.submitBtn = false;feedback.isSatisfiedDiv=false;feedback.issue=false;"
+                                        >
+                                        No
+                                    </label><br/>
+                                </div>
+                                <div ng-hide="feedback.issue">
+                                    <label>Choose a category that best describes the issue that you are having with the search:</label>
+                                    <span class="a-dropdown-container" >
+                                        <select name="category" autocomplete="off" tabIndex="-1" class="a-native-dropdown" ng-model="feedback.selectMessage" ng-change="selectEvent(value)">
+                                        <option class="a-prompt" value="">&hellip;</option>
+                                        <%--<option value="CUSTOMER_SVC">I need to talk to customer service.</option>--%>
+                                        <option value="FIND_ITEM">I still haven&#039;t found what I&#039;m looking for.</option>
+                                        <option value="NARROW_OR_SORT">How do I filter or sort my search ?</option>
+                                        <option value="OTHER">Something is broken.</option>
+                                        <option value="INCORRECT_DESC">Some information looks wrong.</option>
+                                        <option value="FEATURE_REQUEST">Could you add a feature ?</option>
+                                        <option value="ITEM_REQUEST">Could you start carrying a database or omics type not listed here ?</option>
+                                        </select>
+                                        <span tabIndex="-1" id="sx-hms-categoy-dropdown" class="a-button a-button-dropdown">
+                                            <span class="a-button-inner">
+                                                <span class="a-button-text a-declarative" data-action="a-dropdown-button" role="button" tabIndex="0" aria-hidden="true">
+                                                <%--<span class="a-dropdown-prompt">&hellip;</span>--%></span>
+                                                <i class="a-icon a-icon-dropdown"></i>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    </div>
+                                <div ng-hide="feedback.txtArea">
+                                        <textarea rows="5" id="feedtxtArea" style="width:100%;" ng-model="feedback.messageData" ng-required="true" required placeholder="please enter your comments here." style ="border-color:ghostwhite;border-style: none">
+                                        </textarea>
+                                </div>
+                                <div  ng-hide="feedback.submitBtn" style="padding:10px;">
+                                    <button ng-click="save_feedback()">Submit</button>
+                                </div>
+<%--                                <div>
+                                    <span class="a-button a-button-primary">
+                                        <span class="a-button-inner">
+                                        <input name="submit" title="Submit" class="a-button-input" type="submit" value="submit">
+                                        <span class="a-button-text" aria-hidden="true">Submit</span>
+                                    </span>
+                                    </span>
+                                </div>--%>
+                                <div>
+                                    <h4 >
+                                        <i aria-hidden="true" style="font-size: 13px;"> If you need help or have a question, please visit <a href="http://blog.omicsdi.org/" class="a-button-text" role="button">Help Section</a></i>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div ng-hide="feedback.thanks" class="ddi-card-panel" style="width:65%;margin-left:28%;">
+                                <label data-ng-bind="feedback.labelMessage"></label>
+                            </div>
                         </div>
                         <!-- result show -->
                     </div>
@@ -476,7 +552,116 @@
                 <!--main container -->
 
                 <!-- </div> ResultsListCtrl -->
-                <footer>
+
+
+                    <%--<div id="centerBelowExtraHowsMySearch" class="ddi-card-panel">
+                        <div id="hows-my-search">
+                            <div>
+                                <div >
+                            <div id="sx-hms-heading">
+                                <h4 class="a-color-secondary">Search Feedback</h4>
+                                                        <span>Did you find what you were looking for?</span>
+                            </div>
+                                <ul class="a-unordered-list a-nostyle a-button-list a-declarative a-button-toggle-group a-horizontal a-spacing-none a-spacing-top-micro" role="radiogroup" data-action="a-button-group" data-a-button-group="{&quot;name&quot;:&quot;toggleSearchFeedbackType&quot;}">
+                                    <li>
+                                <span class="a-list-item">
+                                    <span class="a-button a-button-toggle" id="a-autoid-0" aria-checked="false">
+                                    <span class="a-button-inner">
+                                    <input name="sx-feedback-yes" title="Yes" class="a-button-input" type="submit" aria-labelledby="a-autoid-0-announce">
+                                    <span class="a-button-text" aria-hidden="true" id="a-autoid-0-announce">
+                                        Yes
+                                    </span>
+                                    </span>
+                                    </span>
+                                </span>
+                            </li>
+                                <li>
+                                    <span class="a-list-item"><span class="a-button a-button-toggle a-button-selected" id="a-autoid-1" aria-checked="true">
+                                        <span class="a-button-inner"><input name="sx-feedback-no" title="No" class="a-button-input" type="submit" aria-labelledby="a-autoid-1-announce">
+                                            <span class="a-button-text" aria-hidden="true" id="a-autoid-1-announce">No</span>
+                                        </span>
+                                    </span>
+                                    </span>
+                                </li>
+                            </ul>
+                                <form id="sx-hms-response-form" method="post" action="/gp/search/hmsfeedback/ref=sr_hms_f" class="a-spacing-none"><div id="sx-hms-category-list" style="">
+                        <p class="a-spacing-top-small">
+                            <label>Choose a category that best describes the issue that you are having with the search:</label>
+                            <span class="a-dropdown-container">
+                                <select name="category" autocomplete="off" tabindex="-1" class="a-native-dropdown">
+                                    <option class="a-prompt" value="">?</option>
+                                    <option value="CUSTOMER_SVC">I need to talk to customer service.</option>
+                                    <option value="FIND_ITEM">I still haven't found what I'm looking for.</option>
+                                    <option value="NARROW_OR_SORT">How do I filter or sort my search ?</option>
+                                    <option value="OTHER">Something is broken.</option>
+                                    <option value="INCORRECT_DESC">A picture or description looks wrong.</option>
+                                    <option value="FEATURE_REQUEST">Could you add a feature ?</option>
+                                    <option value="ITEM_REQUEST">Could you start carrying a product not listed here ?</option>
+                                </select>
+                                <span tabindex="-1" id="sx-hms-categoy-dropdown" class="a-button a-button-dropdown" style="min-width: 0.25%;">
+                                    <span class="a-button-inner">
+                                        <span class="a-button-text a-declarative" data-action="a-dropdown-button" role="button" tabindex="0" aria-hidden="true" aria-pressed="false">
+                                            <span class="a-dropdown-prompt">
+                                                I still haven't found what I'm looking for.
+                                            </span>
+                                        </span>
+                                        <i class="a-icon a-icon-dropdown"></i>
+                                    </span>
+                                </span>
+                            </span>
+                        </p>
+                            </div>
+
+                        <div id="sx-hms-response" style="">
+                            <input type="hidden" name="store" value="gateway">
+                            <input type="hidden" name="keywords" value="whey protein uk">
+                            <input type="hidden" name="qid" value="1487245167">
+                            <input type="hidden" name="url" value="https://www.amazon.co.uk/s?url=search-alias%3Daps&amp;field-keywords=whey+protein+uk&amp;sprefix=%2Caps%2C172">
+                            <input type="hidden" name="vote" value="no" id="sx-hms-vote">
+
+                            <p class="a-spacing-none a-spacing-top-small">
+                                <label>Leave us some comments about your search; your comments can help make our site better for everyone.</label>
+                            </p>
+                            <div class="a-input-text-wrapper a-spacing-mini">
+                                <textarea placeholder="Please note that we are unable to respond directly to feedback submitted via this form." id="sx-hms-response-text" rows="5" name="response"></textarea></div><span class="a-button a-button-primary" id="a-autoid-2"><span class="a-button-inner"><input name="submit" title="Submit" class="a-button-input" type="submit" value="submit" aria-labelledby="a-autoid-2-announce"><span class="a-button-text" aria-hidden="true" id="a-autoid-2-announce">Submit</span></span></span></div>
+                    </form>
+                                <div id="sx-hms-customer-support" style="display: none">
+                                    <div class="a-box a-alert a-alert-info a-spacing-top-small">
+                                        <div class="a-box-inner a-alert-container">
+                                            <i class="a-icon a-icon-alert"></i>
+                                            <div class="a-alert-content">
+                                                <span class="a-letter-space"></span>
+                                                <span class="a-button a-button-primary" id="a-autoid-3">
+                                                    <span class="a-button-inner">
+                                                        <a href="/gp/help/contact-us/general-questions.html/ref=sr_hms_cs?browse_node_id=492860&amp;ie=UTF8&amp;qid=1487245167" class="a-button-text" role="button" id="a-autoid-3-announce">contact us</a>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <div id="sx-hms-response-sent" style="display: none;">
+                            <div class="a-box a-alert a-alert-success">
+                                <div class="a-box-inner a-alert-container">
+                                    <i class="a-icon a-icon-alert"></i>
+                                    <div class="a-alert-content">
+                                        Thank you for your feedback.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                                <div class="a-row">
+                                    <span>
+                                        If you need help or have a question for Customer Service, please <a class="a-link-normal a-text-normal" href="/gp/help/customer/display.html/ref=sr_hms_help?nodeId=492860&amp;ie=UTF8&amp;qid=1487245167">visit the Help Section</a>.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>--%>
+
+                    <footer>
                     <div class="row" id="global-footer">
 
                         <nav class="col-md-12" id="global-nav-expanded">
@@ -561,8 +746,8 @@
                                 <ul>
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
-                                    <li><a href="/help">Help</a></li>
-                                    <li><a href="/api">API</a></li>
+                                    <li><a href="http://blog.omicsdi.org/">Help</a></li>
+                                    <li><a href="http://www.omicsdi.org/ws">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>

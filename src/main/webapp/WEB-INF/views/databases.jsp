@@ -466,8 +466,8 @@
                                 <ul>
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
-                                    <li><a href="/help">Help</a></li>
-                                    <li><a href="/api">API</a></li>
+                                    <li><a href="http://blog.omicsdi.org/">Help</a></li>
+                                    <li><a href="http://www.omicsdi.org/ws">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>

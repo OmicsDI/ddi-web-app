@@ -1,21 +1,58 @@
 package org.omicsdi.springmvc.http;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by goucong on 18.10.16.
  */
 public class  Final {
 
+    static {
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+
+            input = new FileInputStream("~/ddi-web-app/src/main/resources/ddiData.properties");
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            System.out.println(prop.getProperty("ddi.web.service.url"));
+            webServiceUrl = prop.getProperty("ddi.web.service.url");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static String webServiceUrl;
+
     public static final  Map<String,String> url = new HashMap<>();
     static{
-        url.put("web_service_url","http://www.omicsdi.org/ws/");
-        url.put("datasetURL","http://www.omicsdi.org/dataset/");
-        url.put("getDatasetInfoURL", "http://www.omicsdi.org/ws/dataset/get");
-        url.put("getEnrichmentInfoURL","http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo");
-        url.put("getSynonymsForDatasetURL","http://www.omicsdi.org/ws/enrichment/getSynonymsForDataset");
+        System.out.println("service url is " + webServiceUrl);
+        url.put("web_service_url",webServiceUrl);
+        url.put("datasetURL",webServiceUrl +"dataset/");
+        url.put("getDatasetInfoURL", webServiceUrl + "dataset/get");
+        url.put("getEnrichmentInfoURL",webServiceUrl + "enrichment/getEnrichmentInfo");
+        url.put("getSynonymsForDatasetURL",webServiceUrl + "enrichment/getSynonymsForDataset");
 
     }
     public static Map<String,String> repositories = new Hashtable<>();

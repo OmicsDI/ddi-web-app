@@ -64,7 +64,7 @@
                         "@context": "http://schema.org",
                         "@type": "WebPage",
                         "name": "Help",
-                        "url": "http://www.omicsdi.org/help",
+                        "url": "http://blog.omicsdi.org",
                         "description" : "OmicsDI Help Page",
                         "image": "http://www.omicsdi.org/static/images/logo/help.png",
                         "keywords" : "OmicsDI Help Page, Training, Examples"
@@ -166,7 +166,7 @@
 
 
                             <p class="align-justify">
-                                The main goal of OmicsDI project is to have a way to search interesting datasets across omics repositories. The main web application and web service (see <a href="/api">here</a>) allow the user to search and navigate through
+                                The main goal of OmicsDI project is to have a way to search interesting datasets across omics repositories. The main web application and web service (see <a href="http://www.omicsdi.org/ws">here</a>) allow the user to search and navigate through
                                 the OmicsDI datasets. The OmicsDI web application offers two main access modes: (i) using the home page navigation panels or (ii) the search box.
                             </p>
 
@@ -481,8 +481,8 @@
                                 <ul>
                                     <li><a href="/about">About OmicsDI</a></li>
                                     <li><a href="/databases">Databases</a></li>
-                                    <li><a href="/help">Help</a></li>
-                                    <li><a href="/api">API</a></li>
+                                    <li><a href="http://blog.omicsdi.org/">Help</a></li>
+                                    <li><a href="http://www.omicsdi.org/ws">API</a></li>
                                     <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                     <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                     </li>

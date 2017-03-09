@@ -1,5 +1,5 @@
-ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
-    
+ddiApp.controller('QueryBuilderCtrl', ['$scope','$cookies','$cookieStore', function ($scope,$cookies,$cookieStore) {
+
     var data = '{"group": {"operator": "AND","rules": []}}';
     function htmlEntities(str) {
         return String(str).replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -39,9 +39,14 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
     $scope.filter = JSON.parse(data);
 
     $scope.submit_adv_query = function(){
+        debugger;
         query_string = $scope.query_output;
-        if((query_string.match(/\(\"\"\)/) || query_string.match(/\(\)/))){     // not going to search with empty condition: ()  or ("") 
-            alert("Sorry, can not perform the search, some input box is empty, please fill them all");
+        datarules = $scope.group_data;
+        $cookieStore.put('rules',datarules);
+        if((query_string.match(/\(\"\"\)/) || query_string.match(/\(\)/))){
+            $scope.$parent.hideBasicInfo = true;// not going to search with empty condition: ()  or ("")
+            $scope.hideBasicInfo = true;
+            //alert("Sorry, can not perform the search, some input box is empty, please fill them all");
             return;
         }
         angular.element(document.getElementById('queryCtrl')).scope().meta_search(query_string);
@@ -50,14 +55,12 @@ ddiApp.controller('QueryBuilderCtrl', ['$scope', function ($scope ) {
     $scope.$watch('filter', function (newValue) {
         $scope.json = JSON.stringify(newValue, null, 2);
         $scope.query_output = computed(newValue.group);
+        $scope.group_data = newValue.group.rules;
     }, true);
 }]);
 
-var queryBuilder = angular.module('queryBuilder', []);
-queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, $http) {
-
-    
-    
+var queryBuilder = angular.module('queryBuilder', ['ngCookies']);
+queryBuilder.directive('queryBuilder', ['$compile','$http','$cookies','$cookieStore', function ($compile, $http,$cookies,$cookieStore) {
     return {
         restrict: 'E',
         scope: {
@@ -71,7 +74,12 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 
                 scope.adv_show = false;
                 scope.adv_show_two = false;
-                
+                debugger;
+                //scope.hideBasicInfo = true;
+                scope.capitalize = function capitalize(string) {
+                    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+                };
+
                 scope.operators = [
                     { name: 'AND' },
                     { name: 'OR' },
@@ -83,7 +91,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 ];
                 
                 var xref_fields = [
-                    {name: 'UNIPROT', label:'UNIPROT'},
+                    /*{name: 'UNIPROT', label:'UNIPROT AC/ID'},
                     {name: 'PUBMED', label:'PUBMED'},
                     {name: 'ENSEMBL', label:'ENSEMBL'},
                     {name: 'WORMGENE', label:'WORMGENE'},
@@ -93,45 +101,71 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     {name: 'KEGG', label:'KEGG'},
                     {name: 'NCBI', label:'NCBI'},
                     {name: 'PASS', label:'PASS'},
-                    {name: 'SGD', label:'SGD'}
-                ]
+                    {name: 'SGD', label:'SGD'}*/
+                ];
 
                 scope.conditions = [
-                    { name: 'equal' },
+                    { name: 'equal' }
                     // { name: 'not' },
-                    { name: 'range' }
+
                 ];
                 
                 scope.fields_data = {};
-                var fields_url = "http://www.omicsdi.org/ws/dataset/search?query=cancer&size=0&faceCount=20";
+
+                scope.cookData = {fieldValue:'',txtValue:''};
+                var fields_url = web_service_url + "dataset/search?query=cancer&size=0&faceCount=20";
+                debugger;
+                //var fields_url = "http://wwwdev.ebi.ac.uk/ebisearch/ws/rest/pride/?query=domain_source:pride&facetcount=20&facetfields=UNIPROT&format=JSON"
                 if(scope.fields.length <= 1) {
                     $http({
                         url: fields_url,
                         method: 'GET'
                     }).success(function (http_data) {
-                        
-                        var raw_fields_data = http_data.facets;
-                        for(var i =0; i<raw_fields_data.length; i++){
-                            var field_name = raw_fields_data[i].id;
-                            var field_label = raw_fields_data[i].label;
-                            var new_field = {name:field_name, label:field_label};
-                            scope.fields.push(new_field);
-                            var facets= [];
-                            var rawfacet = raw_fields_data[i]['facetValues'];
-                            for(var j=0; j<rawfacet.length; j++){
-                                var facet = {'value':rawfacet[j]['value'], 'label':rawfacet[j]['label']};
-                                facets.push(facet);
-                            }
-                            scope.fields_data[field_name] = facets;
-                        }
-                        scope.fields = scope.fields.concat(xref_fields);
+                        debugger;
+                        scope.getFacets(http_data);
                         // deal_fields();
                     }).error(function () {
                         console.error("GET error:" + fields_url);
                     });
                 }
-                
+
+                scope.getFacets = function (http_data) {
+                    debugger;
+                    var raw_fields_data = http_data.facets;
+                    for(var i =0; i<raw_fields_data.length; i++){
+                        var field_name = raw_fields_data[i].id;
+                        var field_label = raw_fields_data[i].label;
+                        var new_field = {name:field_name, label:field_label};
+                        scope.fields.push(new_field);
+                        var facets= [];
+                        var rawfacet = raw_fields_data[i]['facetValues'];
+                        for(var j=0; j<rawfacet.length; j++){
+                            var facet = {'value':rawfacet[j]['value'], 'label':rawfacet[j]['label']};
+                            facets.push(facet);
+                        }
+                        scope.fields_data[field_name] = facets;
+                    }
+                    scope.fields = scope.fields.concat(xref_fields);
+                };
+
+                debugger;
+                scope.init = function () {
+                    debugger;
+                    if(scope.$parent.rule == undefined && $cookieStore.get('rules') != undefined)
+                    {
+                        scope.group.rules = $cookieStore.get('rules');
+                    }
+                    if(scope.$parent.rule != undefined && scope.$parent.rule.group.rules.length != undefined && scope.$parent.rule.group.rules.length > 1 ){
+                        if(scope.group.rules[scope.group.rules.length -1].field == "all_fields")
+                        {
+                            scope.group.rules.splice(scope.group.rules.length -1,1);
+                        }
+                    }
+
+                };
+
                 scope.addCondition = function () {
+                    scope.hideBasicInfo = false;
                     scope.group.rules.push({
                         condition: 'equal',
                         field: 'all_fields',
@@ -140,7 +174,7 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     scope.adv_show = false;
                     scope.adv_show_two = false;
                 };
-                
+
                 scope.addCondition();
 
                 scope.removeCondition = function (index) {
@@ -148,6 +182,8 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                 };
 
                 scope.addGroup = function () {
+                    scope.hideBasicInfo = false;
+                    debugger;
                     scope.group.rules.push({
                         group: {
                             operator: 'AND',
@@ -163,27 +199,79 @@ queryBuilder.directive('queryBuilder', ['$compile','$http', function ($compile, 
                     else{
                         return false;}
                 };
-                
+
+                scope.selectField = function(rule) {
+                    debugger;
+                    if(rule != undefined) {
+                        if(rule.field == "publication_date"){
+                            scope.conditions.push({ name: 'range' });
+                        }
+                        else if(scope.conditions.length >1 ){
+                            scope.conditions.pop();
+                        }
+                        scope.clearData(rule);
+                    }
+                };
+
+                scope.clearData = function (rule) {
+                    rule.data = '';
+                    rule.data2 = '';
+                    scope.placeValue = '--click to input--';
+                    scope.placeValue2 = '--click to input--';
+                };
+
                 scope.removeGroup = function () {
                     console.log(scope.isRootGroup());
                     "group" in scope.$parent && scope.$parent.group.rules.splice(scope.$parent.$index, 1);
                 };
 
-                scope.addRuleData = function (index, value) {
+                scope.addRuleData = function (index, value, name, rule) {
+                    debugger;
                     scope.group.rules[index]['data'] = value;
                     scope.adv_show = !scope.adv_show;
                     console.log(scope.adv_show);
                 };
-                
 
-                scope.addRuleDataTwo = function (index, value) {
+                scope.matchIndex = function(arr,field_name){
+                   var arrIndex = 0;
+                   var arrMatch= _.find(arr, function(item, index) {
+                        if (item.name == field_name) {
+                            arrIndex = index;
+                            return index;
+                        }
+                    });
+                    return arrIndex;
+                };
+
+                scope.saveToCookies = function(){
+                    if(scope.group.rules.length > 0) {
+                        var rule = scope.group.rules[0];
+                        var field_name = rule.field;
+                        debugger;
+                        $cookieStore.put('rules',scope.group.rules);
+                    }
+                };
+
+                scope.addRuleDataTwo = function (index, value, rule) {
                     scope.group.rules[index]['data2'] = value;
                     scope.adv_show_two = !scope.adv_show_two;
-                }
+                };
                 
-                scope.submit_adv_search = function (query_string){
-                    scope.$parent.submit_adv_query();
-                }
+                scope.submit_adv_search = function (query_string,rule){
+                    debugger;
+                    if(scope.group.rules != undefined) {
+                        var rulesLength = scope.group.rules.length;
+                        var rules = scope.group.rules;
+                        var lastRule = rules[rulesLength - 1];
+                        if ((rulesLength == 0) || (lastRule.data != undefined && lastRule.data == "") || (lastRule.group != undefined && lastRule.group.rules[lastRule.group.rules.length-1].data == "" ) ) {     // not going to search with empty condition: ()  or ("")
+                            scope.hideBasicInfo = true;
+                            //alert("Sorry, can not perform the search, some input box is empty, please fill them all");
+                            return;
+                        }
+                        scope.saveToCookies();
+                        scope.$parent.submit_adv_query();
+                    }
+                };
 
                 directive || (directive = $compile(content));
 

@@ -28,7 +28,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         $scope.search_in_progress = results.get_search_in_progress();
         $scope.show_error = results.get_show_error();
         $scope.highlight_terms = ["a", "b"];
-
+        $scope.feedback = {"txtArea":true,"submitBtn":true,"isSatisfiedDiv":false,"isSatisfiedVal":true,"messageData":"","labelMessage":"","thanks":true,"issue":true,"selectMessage":""};
 
         $scope.facetsNo = 8;
         $scope.omics_facets_no = { "Proteomics": "", "Metabolomics": "", "Genomics": "", "Multi-Omics": "", "Transcriptomics": "" };
@@ -95,6 +95,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             }
         });
 
+
+        $scope.selectEvent = function (select_value) {
+            //debugger;
+        };
 
         $scope.$watch('search_in_progress', function(newValue, oldValue) {
             if ($scope.search_in_progress) {
@@ -226,6 +230,61 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             location.search = "?q=" + new_query;
         };
 
+        $scope.save_feedback = function() {
+            debugger;
+            if(!($scope.feedback.messageData == "")){
+            var data2 = {
+                "message": $scope.feedback.messageData + ' '+$scope.feedback.selectMessage,
+                "userInfo": "testuser",
+                "satisfied": $scope.feedback.isSatisfiedVal,
+                "searchQuery": $scope.query_for_show
+            };
+
+
+            $http({
+                url: 'http://localhost:9091/feedback/getAllFeedbacks',
+                method: 'GET'
+            }).success(function (http_data) {
+                debugger;
+                // scope.getFacets(http_data);
+                // deal_fields();
+            }).error(function () {
+                debugger;
+                //console.error("GET error:" + fields_url);
+            });
+
+            $http({
+             url: 'http://localhost:9091/feedback/saveFeedback/',
+             method: 'PUT',
+             data:data2,
+             headers: {
+                 //'Access-Control-Allow-Origin':'http://localhost:8080',
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+             }
+             }).success(function (http_data) {
+             debugger;
+             //scope.getFacets(http_data);
+             // deal_fields();
+             }).error(function (data,status,response) {
+             debugger;
+             //console.error("GET error:" + fields_url);
+             });
+
+            $http.put('http://localhost:9091/feedback/saveFeedback/', data2)
+                .success(function (data, status, headers, config, statusText) {
+                    $scope.feedback.txtArea = true;
+                    $scope.feedback.isSatisfiedDiv = true;
+                    $scope.feedback.labelMessage = "Thanks for feedback."
+                    $scope.feedback.thanks = false;
+                    debugger;
+                })
+                .error(function (data, status, header, config, statusText) {
+                    debugger;
+                });
+        }
+    };
+
     /**
      * split the queries into two kind:
      * group_query, advanced group query sourounded by "()", e.g. (publication_date: ["2012" TO "2014"] AND repository:"ArrayExpress"), we don't check the facet inside the group query, to avoid remove the wrong facet.
@@ -246,7 +305,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         queries.push(group_query);
         queries.push(facet_queries);
         return queries;
-     }
+     };
     
     /**
          * Show/hide search facets to save screen space.
@@ -284,7 +343,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             thisomic = thisomic.toLowerCase();
             if ($scope.query_for_show != null && $scope.query_for_show.toLowerCase().indexOf('omics_type:"' + thisomic + '"') > -1) return "true";
             return "false";
-        }
+        };
 
         function get_new_indexes() {
             if ($scope.result.count == '0') return;
@@ -295,11 +354,9 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                         $scope.index_of_facets[facet] = i;
                     }
                 }
-            };
-
-        };
-
-        function check_omics_type_null() {
+            }
+        }
+    function check_omics_type_null() {
             if ($scope.result.count == '0') return;
             if ($scope.result.count == null) return;
             $scope.omics_facets_no = { "Proteomics": "0", "Metabolomics": "0", "Genomics": "0", "Transcriptomics": "0","Multi-Omics": "0" };
@@ -349,7 +406,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         function prepare_highlight_show() {
             $scope.highlight_terms = $scope.query_for_show.match(/".*?"/g);
             console.log($scope.query_for_show);
-            if ($scope.highlight_terms === null) $scope.highlight_terms = [""]
+            if ($scope.highlight_terms === null) $scope.highlight_terms = [""];
             if ($scope.query_for_show.indexOf("AND") > -1) {
                 var search_term = $scope.query_for_show.match(/.*?AND/);
                 search_term = search_term[0].replace(/AND/, "");

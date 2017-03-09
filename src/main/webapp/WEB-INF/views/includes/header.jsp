@@ -32,19 +32,19 @@
                                     <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
                                     Advanced
                                 </button>
-                                <button type="submit" class="btn btn-primary ddi-btn">
+                                <button type="submit" ng-disab class="btn btn-primary ddi-btn">
                                     <i class="fa fa-search"></i> Search
                                 </button>
                             </div>
                             <!-- /input-group-btn -->
                         </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         </span>
                     </div>
                     <!-- /form-group -->
                 </fieldset>
             </form>
 
-            <div class="query-bulider-box" ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF;">
+            <div class="query-bulider-box" ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.07);">
                 <div ng-controller="QueryBuilderCtrl">
                     <!--        <h1>Angular.js Query Builder</h1>  -->
                     <form novalidate name="queryForm" class="local-search">
@@ -75,7 +75,7 @@
                 <li class=" first" id="home-menu"><a title="Home" href="/" alt="Home">Home</a></li>
                 <li class="" id="browse-menu"><a title="Browse" href="/search?q=*:*" alt="Browse">Browse</a></li>
                 <li class="" id="api-menu">
-                    <a title="OmicsDI API" href="/api" alt="API">API</a>
+                    <a title="OmicsDI API" href="http://www.omicsdi.org/ws" alt="API">API</a>
                 </li>
                 <li class=" last" id="about-prider-menu">
                     <a title="Databases" href="/databases" alt="Databases">Databases</a>
@@ -85,7 +85,7 @@
                        href="http://www.ebi.ac.uk/support/index.php?query=omicsdi" alt="Feedback">Feedback</a>
                 </li>
                 <li class="functional"><a class="" href="/about" alt="About">About</a></li>
-                <li class="functional"><a class="" href="/help" alt="Help">Help</a></li>
+                <li class="functional"><a class="" href="http://blog.omicsdi.org/" alt="Help">Help</a></li>
             </ul>
         </nav>
     </div>
@@ -93,15 +93,18 @@
 
 
     <script type="text/ng-template" id="/queryBuilderDirective.html">
-        <div class="alert alert-warning alert-group"  >
-            <div class="form-inline" style="margin-left: -15px">
+        <div class="alert alert-warning alert-group" ng-init="init()">
+            <div class="form-inline" style="position: relative;">
                 <select ng-options="o.name as o.name for o in operators" ng-model="group.operator" class="form-control input-sm"></select>
                 <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Field</button>
                 <button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Group</button>
                 <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger" ng-hide="isRootGroup()"><i class="fa fa-minus" aria-hidden="true"></i> Remove Group</button>
-                <button type="submit" class="btn btn-primary" style="margin-left: 5px; padding:3px 6px; width:85px" ng-click="submit_adv_search()">
+<%--                <button type="submit" class="btn btn-primary" style="margin-left: 5px; padding:3px 6px; width:85px" ng-click="submit_adv_search()">
                     <i class="fa fa-search" style="font-size: 20px"></i>
-                </button>
+                </button>--%>
+            </div>
+            <div ng-if="hideBasicInfo">
+                <label>"Sorry, can not perform the search either there is no field or data is empty."</label>
             </div>
             <div class="group-conditions">
                 <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition" ng-init="ruleIndex = $index">
@@ -111,21 +114,21 @@
                         </div>
                         <div ng-switch-default="ng-switch-default">
                             <div class="form-inline" style="margin-top:3px">
-                                <select ng-options="field.name as field.label for field in fields" ng-model="rule.field" class="form-control input-sm" ng-click="rule.data=''; rule.data2=''"></select>
-                                <select style="margin-left: 3px" ng-options="condition.name as condition.name for condition in conditions" ng-model="rule.condition" class="form-control input-sm"></select>
+                                <select ng-options="field.name as field.label for field in fields" ng-model="rule.field" class="form-control input-sm" ng-click="selectField(rule)" ></select>
+                                <select style="margin-left: 3px" ng-options="condition.name as condition.name for condition in conditions" ng-model="rule.condition" ng-click="placeValue2='--click to input--'; rule.data2='';rule.data=''; placeValue='--click to input--'" class="form-control input-sm"></select>
                                 <div class="input-group" style="margin-left:3px;">
-                                    <input ng-model="rule.data" type="text" class="form-control" placeholder="--click to input--" ng-focus="adv_show=true" ng-blur="adv_show=false" ng-init="rule.data='*:*'">
+                                    <input ng-model="rule.data" type="text" class="form-control" placeholder={{placeValue}} ng-focus="adv_show=true" ng-blur="adv_show=false">
                                         <div ng-if="adv_show" class="adv-dropdown-menu" style="width:100%">
                                             <ul class="list-unstyled metasearch-facet-values">
-                                                <li ng-mousedown="addRuleData(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data">{{facet.label}}</li>
+                                                <li ng-mousedown="addRuleData(ruleIndex, facet.value,facet.label,rule)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data">{{facet.label}}</li>
                                             </ul>
                                         </div>
                                 </div>
                                 <div ng-if="rule.condition=='range'" class="input-group" style="margin-left:3px;">
-                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder="--click to input--" ng-focus="adv_show_two=true" ng-blur="adv_show_two=false">
+                                    <input ng-model="rule.data2" type="text" class="form-control" placeholder={{placeValue2}} ng-focus="adv_show_two=true" ng-blur="adv_show_two=false">
                                         <div ng-if="adv_show_two" class="adv-dropdown-menu" style="width:100%">
                                             <ul class="list-unstyled metasearch-facet-values">
-                                                <li ng-mousedown="addRuleDataTwo(ruleIndex, facet.value)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data2">{{facet.label}}</li>
+                                                <li ng-mousedown="addRuleDataTwo(ruleIndex, facet.value,rule)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data2">{{facet.label}}</li>
                                             </ul>
                                         </div>
                                 </div>

@@ -159,7 +159,7 @@
                                 <li class="" id="browse-menu"><a title="Browse" href="/search?q=*:*">Browse</a>
                                 </li>
                                 <li class="" id="api-menu">
-                                    <a title="OmicsDI API" href="/api">API</a>
+                                    <a title="OmicsDI API" href="http://www.omicsdi.org/ws">API</a>
                                 </li>
                                 <li class=" last" id="about-prider-menu">
                                     <a title="Databases" href="/databases">Databases</a>
@@ -171,7 +171,7 @@
                                 <li class="functional last"><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=pride">Feedback</a>
                                 </li>
                                 <li class="functional"><a class="" href="/about">About</a></li>
-                                <li class="functional"><a class="" href="/help">Help</a></li>
+                                <li class="functional"><a class="" href="http://blog.omicsdi.org/">Help</a></li>
                                 <li class="functional" id="login-menu" hidden="true"><a title="Login to PRIDE Archive" data-icon="l" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/login">Login</a>
                                 </li>
                                 <li class="functional first" id="register-menu" hidden="true"><a title="Register" data-icon="5" class="icon icon-functional" href="http://www.ebi.ac.uk/pride/archive/register">Register</a>
@@ -353,8 +353,8 @@
                                     <ul>
                                         <li><a href="/about">About OmicsDI</a></li>
                                         <li><a href="/databases">Databases</a></li>
-                                        <li><a href="/help">Help</a></li>
-                                        <li><a href="/api">API</a></li>
+                                        <li><a href="http://blog.omicsdi.org/">Help</a></li>
+                                        <li><a href="http://www.omicsdi.org/ws">API</a></li>
                                         <li><a href="http://www.ebi.ac.uk/support/index.php?query=pride">Contact us</a></li>
                                         <li><a target="_blank" href="https://github.com/BD2K-DDI/" class="no-icon">Code on GitHub</a>
                                         </li>

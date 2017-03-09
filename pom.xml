@@ -11,6 +11,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<springframework.version>4.3.1.RELEASE</springframework.version>
 		<jackson.version>2.7.5</jackson.version>
+		<!--//<ddi.web.service.url>http://ves-hx-43.ebi.ac.uk:8090/Tools/omicsdi/ws</ddi.web.service.url>-->
+		<ddi.web.service.url>http://ves-hx-43.ebi.ac.uk:8090/ddi-web-service-1.0-SNAPSHOT</ddi.web.service.url>
 	</properties>
 
 	<dependencies>
@@ -44,6 +46,25 @@
 
 
 	<build>
+        <resources>
+            <!-- regular resources -->
+            <!-- Maven should filter properties files -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/props/*.properties</include>
+                </includes>
+            </resource>
+            <!-- Maven should not filter other files -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/props/*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
 		<plugins>
 			<plugin>
                    <groupId>org.apache.maven.plugins</groupId>

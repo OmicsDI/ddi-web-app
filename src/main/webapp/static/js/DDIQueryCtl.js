@@ -2,7 +2,9 @@
  * Query controller
  * Responsible for the search box in the header.
  */
-angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location', '$window', '$timeout', 'results', 'search', 'WordRetriever', '$q', function($scope, $http, $location, $window, $timeout, results, search, WordRetriever, $q) {
+angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location', '$window', '$timeout',
+    'results', 'search', 'WordRetriever', '$q','$cookies','$cookieStore', function($scope, $http, $location, $window, $timeout,
+                                                                                   results, search, WordRetriever, $q,$cookies,$cookieStore) {
 
     var searchQ,
             searchQIndex = location.href.indexOf("?q=");
@@ -26,12 +28,19 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
     $scope.showOrHideAdv = function () {
         $scope.popup.open = !$scope.popup.open;
         $scope.facaret = !$scope.facaret;
-    }
+    };
 
     /**
      * Launch a metadata search using the service.
      */
     $scope.meta_search = function(query) {
+        debugger;
+        var regQuery = new RegExp('\\(.*\\)');
+
+        if(query == "" || query == '*:*' || !regQuery.test(query))
+        {
+            $cookieStore.put("rules",null);
+        }
         $scope.$root.current_page = 1;
         search.meta_search(query);
         // var current_abs_url = $location.absUrl();
@@ -160,7 +169,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
 
     $scope.getwords = function() {
         return $scope.words;
-    }
+    };
 
     $scope.get_suggestions = function(typedthings) {
         //    console.log("Do something like reload data with this: " + typedthings );
@@ -172,7 +181,7 @@ angular.module('ddiApp').controller('QueryCtrl', ['$scope', '$http', '$location'
         $scope.newwords.then(function(data) {
             $scope.words = data;
         });
-    }
+    };
 
     $scope.do_query = function(suggestion) {
         $scope.query.text = suggestion;
