@@ -1,0 +1,38 @@
+
+
+<div style="margin:10px;">
+
+
+    <button (click)="submit('orcid','/authenticate');" type="submit" style="background: #a6ce39; height:60px; width:225px; vertical-align: top; cursor: pointer; border: none;">
+      <img style="float:left; margin-left: 10px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoHAAsCAA0p3QAAAhhJREFUWMPNlzFrFFEQx3+zXETxBMHKQg3CEQMhReBUgh8gEUGwsklvvoGCWPgJxMIvcIJyYKFwMViIaAhEsYlICos7ogERtBILlfxtZuWx7rvb5Hbv/De7+97szP/NvDdvBgpCUl3SsqTHkrr6F12fW5ZUpyxIakrqaO/oSGru16j5s63h0Q51ZmER4yeBD0AtT2av6wF+Aw1g28wUTiY5xqeAHjBRgvF0kROucyrriSRn5Vs5Sr4EqxkGW8CpkIRlPPDT2YbYMLPzPq8SPPLDzA7neaDtMc/iPeXiULoxs0etH15K2lG5aIYEOho9OmGG64c1l5sJxq4PyCMXJT0vQKJeA5YGxCzdF2F6PZiGDlgMTsdToGtmK8CKpKvAgz66l2rAwhAb6hJwK/i+7cTeAvNm9lBSDWhF/l9IgNkhs1we5oCvAGZ2H9iIyM0mwCTlw4C6pDv+fTciN5lQLa7481VMoGoCJzwMH8dF4LNvymP9CPQqMi7gib9fiMj0EmCzIgIGXPP3GxGZzQRYrcD4N+C0mUnSZeBcRG41TRL39mnoRU5I18zsmcd+HnjU5/9Wkcto3WXmgrGbA+6C45JaRS4jC3L664i+78A74Agw42OfgJ3IxjsDHC3gvbNm9iZk3Za0O4JreDcsSIqUZGXjl5kdiBWlDapHIyxK/xLwen0bmK7Q+HS2Nxh7YzL21uz/bE5H2Z7/AawM/+HMgWgPAAAAAElFTkSuQmCC"/>
+      <div style="float:left; border:none; margin-top:10px; margin-left: 15px;" >
+      <strong>Sign in with ORCID</strong>
+      </div>
+    </button>
+    <input type="hidden" name="scope" id="orcid_scope" value="/authenticate" />
+
+
+
+    <button (click)="submit('elixir','/authenticate');" type="submit" style="background: #ff7a04; height:60px; width:225px; vertical-align: top; cursor: pointer; border: none;">
+      <img style="float:left; height:50px;" src="/img/login/elixir.png" height="50" />
+      <div style="float:left; border:none; margin-top:17px; margin-left: 5px;" >
+        <strong>Sign in with ELIXIR</strong>
+      </div>
+    </button>
+
+
+<hr/>
+<div style="text-align: center; font-style:italic; margin-top: 10px; margin-bottom: 10px;">
+
+  or use your favorite social network
+</div>
+<div style="text-align: center;">
+    <img (click)="submit('facebook','public_profile');" type="image" src="/img/login/facebook.png" style="padding:2px;"/>
+    <img (click)="submit('twitter','public_profile');" type="image" src="/img/login/twitter.png" style="padding:2px;"/>
+    <img (click)="submit('google','public_profile');" type="image" src="/img/login/google.png" style="padding:2px;"/>
+</div>
+
+
+<div style="margin-bottom:5px; font-style:italic; font-size: x-small; text-align: center">more to come...</div>
+
+</div>

@@ -1,0 +1,25 @@
+  <li class="functional" [mdMenuTriggerFor]="menu" *ngIf="!(name && name!='unknown')">
+    <a data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Menu">Login</a>
+  </li>
+  <md-menu #menu="mdMenu" [overlapTrigger]="false">
+    <app-login-dialog></app-login-dialog>
+  </md-menu>
+
+  <li class="functional" [mdMenuTriggerFor]="loggedInMenu" *ngIf="name && name!='unknown'">
+    <a data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Dialog">{{name}}</a>
+  </li>
+
+  <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
+    <button md-menu-item>
+      Profile
+    </button>
+    <button md-menu-item disabled>
+      Dashboard
+    </button>
+    <button md-menu-item (click)="LogOut()">
+      Log Out
+    </button>
+  </md-menu>
+
+
+
