@@ -7,10 +7,10 @@ import org.springframework.social.connect.UserProfile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.ddi.security.model.User;
-import uk.ac.ebi.ddi.security.Service.MongoUserDetailsService;
+import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 
 @Component
-public class AutoSignUpHandler implements ConnectionSignUp {
+public class DummySignUpHandler implements ConnectionSignUp {
 
     @Autowired
     MongoUserDetailsService mongoUserDetailsService;

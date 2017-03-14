@@ -3,9 +3,11 @@ package uk.ac.ebi.ddi.security.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
@@ -20,6 +22,7 @@ import org.springframework.social.orcid.connect.OrcidConnectionFactory;
 import org.springframework.social.orcid.utils.OrcidConfig;
 import org.springframework.social.orcid.utils.OrcidConfigBroker;
 import org.springframework.util.MultiValueMap;
+import uk.ac.ebi.ddi.security.DummySignUpHandler;
 import uk.ac.ebi.ddi.security.UserAuthenticationUserIdSource;
 
 import java.lang.reflect.Constructor;
@@ -31,7 +34,8 @@ import org.springframework.social.connect.mongo.MongoConnectionService;
 
 @Configuration
 @EnableSocial
-@ComponentScan("org.springframework.social.connect.mongo")
+@ComponentScan({"org.springframework.social.connect.mongo","uk.ac.ebi.ddi.security"})
+@PropertySources(value = {@PropertySource("file:C:\\AWork\\ddi-web-app-O2\\profile\\src\\main\\resources\\application.properties")})
 public class SocialConfig extends SocialConfigurerAdapter {
 
 	public SocialConfig() throws Exception{
@@ -48,8 +52,18 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		stringField.set(null,config);
 	}
 
+	@Bean
+	public TextEncryptor textEncryptor() {
+		return Encryptors.noOpText();
+	}
+
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+
 	@Autowired
-	private ConnectionSignUp autoSignUpHandler;
+	private ConnectionSignUp dummySignUpHandler;
 
 	//@Autowired
 	//private O2UserDetailsService userDetailsService;
@@ -83,7 +97,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		MongoUsersConnectionRepository mongoUsersConnectionRepository =
 				new MongoUsersConnectionRepository(mongoConnectionService, connectionFactoryLocator, textEncryptor);
 
-		mongoUsersConnectionRepository.setConnectionSignUp(autoSignUpHandler);
+		mongoUsersConnectionRepository.setConnectionSignUp(dummySignUpHandler);
 
 		return mongoUsersConnectionRepository;
 

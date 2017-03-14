@@ -3,6 +3,9 @@ package uk.ac.ebi.ddi.security.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,12 +23,18 @@ import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 import uk.ac.ebi.ddi.security.SocialAuthenticationSuccessHandler;
 import uk.ac.ebi.ddi.security.StatelessAuthenticationFilter;
-import uk.ac.ebi.ddi.security.Service.MongoUserDetailsService;
+import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 
 @EnableWebSecurity
 @Configuration
 @Order(1)
+@PropertySources(value = {@PropertySource("classpath:application.properties")})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	//To resolve ${} in @Value
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 
 	@Autowired
 	private SocialAuthenticationSuccessHandler socialAuthenticationSuccessHandler;
@@ -60,6 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				//allow anonymous font and template requests
 				.antMatchers("/").permitAll()
+				.antMatchers("/index.html").permitAll()
+
 				.antMatchers("/favicon.ico").permitAll()
 				.antMatchers("/resources/**").permitAll()
 
@@ -103,8 +114,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return mongoUserDetailsService;
 	}
 
-	@Bean
-	public TextEncryptor textEncryptor() {
-		return Encryptors.noOpText();
-	}
 }

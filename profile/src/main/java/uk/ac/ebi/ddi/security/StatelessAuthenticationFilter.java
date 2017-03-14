@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import uk.ac.ebi.ddi.security.Service.TokenAuthenticationService;
+import uk.ac.ebi.ddi.security.service.TokenAuthenticationService;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
 
 import javax.servlet.FilterChain;

@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import uk.ac.ebi.ddi.security.Service.TokenAuthenticationService;
+import uk.ac.ebi.ddi.security.service.TokenAuthenticationService;
 import uk.ac.ebi.ddi.security.model.User;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
-import uk.ac.ebi.ddi.security.Service.MongoUserDetailsService;
+import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

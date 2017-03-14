@@ -1,24 +1,19 @@
-package uk.ac.ebi.ddi.security.Service;
+package uk.ac.ebi.ddi.security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.social.connect.mongo.MongoConnection;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.security.model.MongoUser;
 import uk.ac.ebi.ddi.security.model.User;
+import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Created by user on 3/12/2017.
@@ -27,28 +22,24 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @Service
 public class MongoUserDetailsService implements UserDetailsService, SocialUserDetailsService {
 
-    private MongoTemplate mongoTemplate;
+    private MongoUserDetailsRepository mongoUserDetailsRepository;
 
     @Autowired
-    MongoUserDetailsService(MongoTemplate mongoTemplate){
-        this.mongoTemplate = mongoTemplate;
+    MongoUserDetailsService(MongoUserDetailsRepository mongoUserDetailsRepository){ this.mongoUserDetailsRepository = mongoUserDetailsRepository;
     }
 
     public User findById(Long Id){
-        Query q = query(where("UserId").is(Id.toString()));
 
-        q.fields().include("UserId").include("UserName").include("AccessToken");
+        MongoUser mongoUser = mongoUserDetailsRepository.findByUserId(Id.toString());
 
-        List<MongoUser> results = mongoTemplate.find(q, MongoUser.class);
-
-        if(0==results.size())
+        if(null==mongoUser)
             return null;
 
         User user = new User();
 
-        Long UserId = Long.parseLong(results.get(0).getUserId());
+        Long UserId = Long.parseLong(mongoUser.getUserId());
 
-        String UserName = results.get(0).getUserName();
+        String UserName = mongoUser.getUserName();
 
         user.setId(UserId);
 
@@ -57,20 +48,17 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
         return user;
     }
     public User findByUsername(String name){
-        Query q = query(where("UserName").is(name));
 
-        q.fields().include("UserId").include("UserName").include("AccessToken");
+        MongoUser mongoUser = mongoUserDetailsRepository.findByName(name);
 
-        List<MongoUser> results = mongoTemplate.find(q, MongoUser.class);
-
-        if(0==results.size())
+        if(null==mongoUser)
             return null;
 
         User user = new User();
 
-        Long UserId = Long.parseLong(results.get(0).getUserId());
+        Long UserId = Long.parseLong(mongoUser.getUserId());
 
-        String UserName = results.get(0).getUserName();
+        String UserName = mongoUser.getUserName();
 
         user.setId(UserId);
 
@@ -86,10 +74,10 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
         Long userId = u.getId();
 
         if(null==userId){
-            Query query = new Query();
-            query.with(new Sort(Sort.Direction.DESC, "userId"));
-            query.limit(1);
-            MongoUser mongoUser = mongoTemplate.findOne(query, MongoUser.class);
+            // Keep that in a constant if it stays the same
+            PageRequest request = new PageRequest(0, 1, new Sort(Sort.Direction.DESC, "userId"));
+            MongoUser mongoUser = mongoUserDetailsRepository.findByUserIdNotNull(request).getContent().get(0);
+
             if(null==mongoUser){
                 userId = 0L;
             }else{
@@ -103,7 +91,7 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
         mongoUser.setAccessToken(u.getAccessToken());
         mongoUser.setRoles("USER,ADMIN"); //TODO
 
-        mongoTemplate.save(mongoUser);
+        mongoUserDetailsRepository.save(mongoUser);
 
         u.setId(userId);
     }
