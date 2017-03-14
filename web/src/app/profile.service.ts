@@ -1,24 +1,46 @@
 import { Injectable }       from '@angular/core';
-import { Http, Response }   from '@angular/http';
+import { Http, Response, RequestOptionsArgs, Headers }   from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from './profile';
 
 @Injectable()
 export class ProfileService {
-  profileUrl = "http://localhost:8088/user/profile?angular=2";
+  profileUrl = "http://localhost:8080/api/mongo";
   logoutUrl = "http://localhost:8088/user/logout";
 
   constructor (private http: Http) {}
 
   getProfile (): Observable<Profile> {
-    return this.http.get(this.profileUrl, { withCredentials: true })
+    return this.http.get(this.profileUrl) //{ withCredentials: true }
         .map(this.extractData)
         .catch(this.handleError);
   }
 
+  private getUserUrl(id){
+    return this.profileUrl + "/" + id;
+  }
+
+  public updateUser(profile:Profile){
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', 'application/json');
+
+    var config: RequestOptionsArgs = { headers: headers };
+    //$http.post(url, config) .success ...
+    return this.http.post(this.profileUrl, JSON.stringify(profile), config)
+      .map(res => res.json());
+  }
+
   private extractData(res: Response) {
     let body = res.json();
-    return body || { };
+    //return body || { };
+
+    var p : Profile;
+
+    p = (body || { }) as Profile;
+
+    return p;
   }
 
   private handleError (error: Response | any) {

@@ -22,28 +22,45 @@ public class MongoUser {
 
     String roles;
 
+    String orcid;
+
+    //DataSet[] dataSets;
+
     public String getUserId(){
         return userId;
     }
-    public void setUserId(String userId){
-        this.userId = userId;
+    public void setUserId(String val){
+        this.userId = val;
     }
     public String getUserName(){
         return userName;
     }
-    public void setUserName(String username){
-        this.userName = username;
+    public void setUserName(String val){
+        this.userName = val;
     }
     public String getAccessToken(){
         return accessToken;
     }
-    public void setAccessToken(String accessToken){
-        this.accessToken = accessToken;
+    public void setAccessToken(String val){
+        this.accessToken = val;
     }
     public String getRoles(){
         return roles;
     }
-    public void setRoles(String roles){
-        this.roles = roles;
+    public void setRoles(String val){
+        this.roles = val;
     }
+    public String getOrcid(){
+        return orcid;
+    }
+    public void setOrcid(String val){
+        this.orcid = val;
+    }
+    /*
+    public DataSet[] getDataSets(){        return dataSets;    }
+    public void setDataSet(DataSet[] val){
+        this.dataSets = val;
+    }
+    */
+
 }

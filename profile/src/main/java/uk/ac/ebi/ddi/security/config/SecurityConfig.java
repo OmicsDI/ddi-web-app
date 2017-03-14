@@ -28,13 +28,8 @@ import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 @EnableWebSecurity
 @Configuration
 @Order(1)
-@PropertySources(value = {@PropertySource("classpath:application.properties")})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	//To resolve ${} in @Value
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
+
 
 	@Autowired
 	private SocialAuthenticationSuccessHandler socialAuthenticationSuccessHandler;
@@ -70,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//allow anonymous font and template requests
 				.antMatchers("/").permitAll()
 				.antMatchers("/index.html").permitAll()
+				.antMatchers("/api/mongo").permitAll()
 
 				.antMatchers("/favicon.ico").permitAll()
 				.antMatchers("/resources/**").permitAll()

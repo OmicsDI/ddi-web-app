@@ -14,10 +14,10 @@ export class LoginLauncherComponent implements OnInit {
   public name : string;
 
   constructor(private profileService: ProfileService) {
-    this.name = null;
+    this.name = "Unknown";
   }
   ngOnInit() {
-    this.getProfile();
+    //this.getProfile();
   }
 
   getProfile(){
@@ -25,7 +25,7 @@ export class LoginLauncherComponent implements OnInit {
       .subscribe(
         profile => {
           this.profile = profile;
-          this.name = profile.Name;
+          this.name = profile.userName;
         }
       );
   }

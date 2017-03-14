@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { DatabaseComponent } from './database/database.component';
 import { AboutComponent } from './about/about.component';
 import {routing} from "./app.routes";
 import {MaterialModule} from "@angular/material";
+import {ProfileService} from "./profile.service";
 
 @NgModule({
   declarations: [
@@ -32,9 +33,11 @@ import {MaterialModule} from "@angular/material";
     FormsModule,
     HttpModule,
     MaterialModule,
-    routing
+    routing,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

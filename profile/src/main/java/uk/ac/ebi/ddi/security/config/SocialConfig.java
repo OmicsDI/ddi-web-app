@@ -34,8 +34,7 @@ import org.springframework.social.connect.mongo.MongoConnectionService;
 
 @Configuration
 @EnableSocial
-@ComponentScan({"org.springframework.social.connect.mongo","uk.ac.ebi.ddi.security"})
-@PropertySources(value = {@PropertySource("file:C:\\AWork\\ddi-web-app-O2\\profile\\src\\main\\resources\\application.properties")})
+@ComponentScan({"org.springframework.social.connect.mongo"})
 public class SocialConfig extends SocialConfigurerAdapter {
 
 	public SocialConfig() throws Exception{

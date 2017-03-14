@@ -1,7 +1,18 @@
 <p>
   profile works!
   <br/><br/>
-  My Name: {{Name}}
+  My Name: {{name}}
   <br/><br/>
-  My Orcid: {{Orcid}}
+  My Orcid: {{profileX.orcid}}
 </p>
+
+hello ow owow
+
+<form materialize class="col s12" (ngSubmit)="save()" [formGroup]="form" >
+      Name:<input id="name" type="text" class="validate"
+             [(ngModel)]="profileX.userName" formControlName="name">
+
+  <button type="submit">Submit</button>
+</form>
+
+
