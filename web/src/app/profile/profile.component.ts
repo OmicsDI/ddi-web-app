@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   profileX : Profile = new Profile;
   public name: String;
   form: FormGroup;
+  editMode: boolean = false;
 
   constructor(private profileService: ProfileService
               ,formBuilder: FormBuilder) {
@@ -46,6 +47,17 @@ export class ProfileComponent implements OnInit {
           this.name = profile.userName;
         }
       );
+  }
+
+  editClicked() {
+    this.editMode = true;
+  }
+  submitClicked() {
+    this.save();
+    this.editMode = false;
+  }
+  cancelClicked() {
+    this.editMode = false;
   }
 
   save() {

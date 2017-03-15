@@ -1,18 +1,234 @@
-<p>
-  profile works!
-  <br/><br/>
-  My Name: {{name}}
-  <br/><br/>
-  My Orcid: {{profileX.orcid}}
-</p>
+<div id="gs_top">
+  <div id="gsc_bdy">
+    <div class="gsc_lcl" role="main" id="gsc_prf_w">
+      <div id="gsc_prf" class="gs_scl">
+        <div id="gsc_prf_pu">
+          <a href="https://scholar.google.co.uk/citations?user=zILlRaEAAAAJ&amp;hl=en" id="gsc_prf_pua"><img
+            [src]="profileX.imageUrl"
+            sizes="print 52px,(max-width:599px) 49px,(max-width:981px) 65px,98px"
+            id="gsc_prf_pup"></a>
+          <form method="post" enctype="multipart/form-data"
+                action="https://scholar.google.co.uk/citations?view_op=list_works&amp;update_op=upload_photo&amp;hl=en"
+                id="gsc_prf_puf"><input name="xsrf" value="AMstHGQAAAAAWMp-zQO2ofiz85gtd3aqW3ujH08rJP4X"
+                                        type="hidden">
+            <div id="gsc_prf_pufi">
+              <div id="gsc_prf_pufi2"><input name="upload_file" accept="image/*" aria-label="Change photo"
+                                             type="file"></div>
+            </div>
+            <a id="gsc_prf_pufb" href="javascript:void(0)" role="button">Change photo</a></form>
+        </div>
 
-hello ow owow
+        <div id="gsc_prf_i">
+          <div id="gsc_prf_ib">
+            <div id="gsc_prf_ibi">
+              <button (click)="editClicked()" *ngIf="!editMode"  type="button" id="gsc_prf_btne" aria-controls="gsc_prf_e"
+                      class="gs_btnC gs_in_ib gs_btn_hph"><span class="gs_wr"><span
+                class="gs_lbl">Edit</span><span class="gs_ico"></span></span></button>
+            </div>
+          </div>
+          <!-- ##################### View Mode ############################ -->
+          <div *ngIf="!editMode">
+          <div id="gsc_prf_in">{{profileX.userName}}</div>
+          <div class="gsc_prf_il">{{profileX.affiliation}}</div>
+          <div class="gsc_prf_il">{{profileX.bio}}</div>
+          <div class="gsc_prf_il">{{profileX.orcid}}</div>
+          </div>
 
-<form materialize class="col s12" (ngSubmit)="save()" [formGroup]="form" >
-      Name:<input id="name" type="text" class="validate"
-             [(ngModel)]="profileX.userName" formControlName="name">
+          <!-- ##################### Edit Mode ############################# -->
+          <form *ngIf="editMode" id="gsc_prf_ef">
+            <div class="gsc_prf_el">Name</div>
+            <div  class="gsc_prf_ev">
+              <div [formGroup]="form" class="gs_in_txtf">
+                <input
+                       [(ngModel)]="profileX.userName"
+                       type="text"
+                       class="gs_in_txt"
+                       name="userName"
+                       maxlength="250"
+                       formControlName="name">
+                <div class="gs_in_txts gs_gray"></div>
+              </div>
+            </div>
+            <div class="gsc_prf_el">Orcid ID</div>
+            <div class="gsc_prf_ev">
+              <div class="gs_in_txtf">
+                <input
+                  [(ngModel)]="profileX.orcid"
+                  type="text"
+                  class="gs_in_txt"
+                  name="orcid"
+                  maxlength="250" autocapitalize="off">
+                <div class="gs_in_txts gs_gray"></div>
+              </div>
+            </div>
+            <div class="gsc_prf_el">Affiliation</div>
+            <div class="gsc_prf_ev">
+              <div class="gs_in_txtf">
+                  <input
+                        [(ngModel)]="profileX.affiliation"
+                         type="text"
+                         class="gs_in_txt"
+                         name="affiliation"
+                         maxlength="250" autocapitalize="off">
+                <div class="gs_in_txts gs_gray"></div>
+              </div>
+            </div>
+            <div class="gsc_prf_el">Primary email</div>
+            <div class="gsc_prf_ev">
+              <div class="gs_in_txtf">
+                  <input type="text" class="gs_in_txt"
+                         [(ngModel)]="profileX.email"
+                         name="email"
+                         maxlength="250" autocapitalize="off" autocorrect="off">
+                <div class="gs_in_txts gs_gray"></div>
+              </div>
+            </div>
+            <div class="gsc_prf_el">Homepage</div>
+            <div class="gsc_prf_ev">
+              <div class="gs_in_txtf">
+                  <input type="text" class="gs_in_txt" name="homepage"
+                       [(ngModel)]="profileX.homepage"
+                       maxlength="250"
+                       autocapitalize="off" autocorrect="off">
+                <div class="gs_in_txts gs_gray"></div>
+              </div>
+            </div>
+            <div class="gsc_prf_el">Bio</div>
+            <div class="gsc_prf_ev">
+              <div class="gs_in_txtf">
+                    <textarea [(ngModel)]="profileX.bio"
+                              style="height:100px;"
+                              class="gs_in_txt"
+                              name="bio"></textarea>
+                <div class="gs_in_txts gs_gray"></div>
+              </div>
+            </div>
+            <div id="gsc_prf_ep"><span class="gs_in_cb">
+                <input [(ngModel)]="profileX.isPublic" type="checkbox" name="isPublic" id="gsc_prf_p"
+                       value="1" checked=""><label for="gsc_prf_p">Make my profile public</label><span
+              class="gs_chk"></span><span class="gs_cbx"></span></span></div>
+            <div id="gsc_prf_eb">
+              <button (click)="submitClicked()" type="submit" id="gsc_prf_ebs" name="save_profile_btn" class=" gs_btn_act">
+                <span class="gs_wr">
+                <span class="gs_lbl">Save</span>
+                <span class="gs_bsc">
+                <span class="gs_bs"></span></span></span>
+              </button>
+              <button (click)="cancelClicked()" type="button" id="gsc_prf_btni" aria-controls="gsc_prf_i" class="">
+                <span class="gs_wr"><span class="gs_lbl">Cancel</span></span>
+              </button>
+            </div>
+          </form>
 
-  <button type="submit">Submit</button>
-</form>
+
+        </div>
+      </div>
+
+    </div>
+    <div id="gsc_rsb" role="navigation">
+
+      <div class="gsc_rsb_s" id="gsc_rsb_co"><h3 class="gsc_rsb_h">Co-authors<a class="gsc_rsb_lc"
+                                                                                href="#">Edit…</a>
+      </h3>
+        <ul class="gsc_rsb_a">
+          <li><span class="gsc_rsb_aa"><a href="#">Enio Morricone</a></span></li>
+          <li><span class="gsc_rsb_aa"><a href="#">Bruce Willis</a></span></li>
+          <li><span class="gsc_rsb_aa"><a href="#">Bill Gates</a></span></li>
+          <li><span class="gsc_rsb_aa"><a href="#">Jethro Tull</a></span></li>
+          <li class="gsc_rsb_fade"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="gsc_rsb" role="navigation" style="top:200px;">
+      <div class="gsc_rsb_s" id="gsc_rsb_co"><h3 class="gsc_rsb_h">Social connections
+      </h3>
+        <ul class="gsc_rsb_a">
+          <li><span class="gsc_rsb_aa"><img src="assets/orcid.gif"/>&nbsp;<a href="#">Orcid</a></span></li>
+          <li><span class="gsc_rsb_aa"><img src="assets/elixir.gif"/>&nbsp;<a href="#">Elixir</a></span></li>
+          <li><span class="gsc_rsb_aa"><img src="assets/facebook.gif"/>&nbsp;<a href="#">Facebook</a></span></li>
+          <li><span class="gsc_rsb_aa"><img src="assets/twitter.gif"/>&nbsp;<a href="#">Twitter</a></span></li>
+          <li class="gsc_rsb_fade"></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="gsc_lcl" role="complementary" id="gsc_art">
+      <form method="post"
+            action="#"
+            id="citationsForm"><input name="xsrf" value="AMstHGQAAAAAWMp-zQO2ofiz85gtd3aqW3ujH08rJP4X"
+                                      type="hidden">
+        <table id="gsc_a_t">
+          <thead id="gsc_a_hd">
+          <tr id="gsc_a_tr0" aria-hidden="true">
+            <th class="gsc_a_x"></th>
+            <th class="gsc_a_t" id="gsc_a_tr0_t"></th>
+            <th class="gsc_a_c"></th>
+            <th class="gsc_a_y"></th>
+          </tr>
+          <tr id="gsc_a_trh">
+            <th class="gsc_a_x" scope="col"><span id="gsc_a_xall"><span id="gsc_x_all" role="checkbox"
+                                                                        class="gs_cb_gen gs_in_cb gs_in_cbj"
+                                                                        aria-checked="false"
+                                                                        data-s="0"><span
+              class="gs_cb_wr"><span class="gs_lbl"></span><span class="gs_chk"></span><span
+              class="gs_cbx"></span></span></span></span></th>
+            <th class="gsc_a_t" id="gsc_a_trh_t" scope="col"><span id="gsc_a_ta"><a
+              href="https://scholar.google.co.uk/citations?hl=en&amp;user=zILlRaEAAAAJ&amp;view_op=list_works&amp;sortby=title"
+              class="gsc_a_a">Title</a></span>
+              </th>
+            <th class="gsc_a_c" scope="col"><span id="gsc_a_ca">Source</span></th>
+            <th class="gsc_a_y" scope="col"><span class="gsc_a_h">Claimed</span></th>
+          </tr>
+          </thead>
+          <tbody id="gsc_a_b">
+          <tr class="gsc_a_tr" *ngFor="let item of profileX.dataSets; let i = index;" >
+            <td class="gsc_a_x" style="width:60%"><span class="gs_in_cb gs_in_cbj" onclick="void(0)"><input name="s"
+                                                                                          id="gsc_xzILlRaEAAAAJ:u5HHmVD_uO8C"
+                                                                                          value="zILlRaEAAAAJ:u5HHmVD_uO8C"
+                                                                                          type="checkbox"><label
+              for="gsc_xzILlRaEAAAAJ:u5HHmVD_uO8C"></label><span class="gs_chk"></span><span
+              class="gs_cbx"></span></span></td>
+            <td class="gsc_a_t"><a href="#" class="gsc_a_at">{{item.dataSetId}} dataset identificator</a>
+
+              <div class="gs_gray">European Bioinformatics Institute, ...
+              </div>
+              <div class="gs_gray">OmicDI database<span class="gs_oph">, released 2017</span></div>
+            </td>
+            <td class="gsc_a_c"><a
+              href="https://scholar.google.co.uk/scholar?oi=bibs&amp;hl=en&amp;cites=4488064911611266682"
+              class="gsc_a_ac">{{item.source}}</a></td>
+            <td class="gsc_a_y"><span class="gsc_a_h">{{item.claimed}}</span></td>
+          </tr>
+          </tbody>
+        </table>
+        <div id="gsc_a_sp" style="display:none"></div>
+        <div id="gsc_a_err" class="gs_alrt" style="display:none">The system can't perform the operation now. Try
+          again later.
+        </div>
+        <div id="gsc_lwp">
+          <div id="gsc_bpf">
+            <button type="button" id="gsc_bpf_prev" aria-label="Previous" disabled="disabled"
+                    class="gs_btnPL gs_in_ib gs_btn_half gs_btn_slt gs_dis"><span class="gs_wr"><span
+              class="gs_lbl"></span><span class="gs_ico gs_ico_dis"></span></span></button>
+            <button type="button" id="gsc_bpf_more" disabled="disabled" class=" gs_btn_smd gs_dis"><span
+              class="gs_wr"><span class="gs_lbl">Show more</span></span></button>
+            <button type="button" id="gsc_bpf_next" aria-label="Next" disabled="disabled"
+                    class="gs_btnPR gs_in_ib gs_btn_half gs_btn_srt gs_dis"><span class="gs_wr"><span
+              class="gs_lbl"></span><span class="gs_ico gs_ico_dis"></span></span></button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="gsc_lcl">
+      <div id="gs_ftr" role="contentinfo">
+        <div id="gsc_dscl">Dates and citation counts are estimated and are determined automatically by a
+          super computer program.
+        </div>
+    </div>
+  </div>
+</div>
+<div id="gs_rdy"></div>
 
 

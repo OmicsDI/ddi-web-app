@@ -24,7 +24,79 @@ public class MongoUser {
 
     String orcid;
 
-    //DataSet[] dataSets;
+    String bio;
+
+    String homepage;
+
+    String email;
+
+    String affiliation;
+
+    Boolean isPublic;
+
+    DataSet[] dataSets;
+
+    String imageUrl;
+
+    String SomethingNew;
+
+    public String getSomethingNew() {
+        return SomethingNew;
+    }
+
+    public void setSomethingNew(String somethingNew) {
+        SomethingNew = somethingNew;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAffiliation() {
+        return affiliation;
+    }
+
+    public void setAffiliation(String affiliation) {
+        this.affiliation = affiliation;
+    }
+
+    public Boolean getPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(Boolean aPublic) {
+        isPublic = aPublic;
+    }
+
+
 
     public String getUserId(){
         return userId;
@@ -56,11 +128,9 @@ public class MongoUser {
     public void setOrcid(String val){
         this.orcid = val;
     }
-    /*
+
     public DataSet[] getDataSets(){        return dataSets;    }
-    public void setDataSet(DataSet[] val){
+    public void setDataSets(DataSet[] val){
         this.dataSets = val;
     }
-    */
-
 }
