@@ -17,6 +17,7 @@ public class UserController {
 	MongoUserDetailsRepository mongoUserDetailsRepository;
 
 	@RequestMapping(value = "/api/user/current", method = RequestMethod.GET)
+	@CrossOrigin
 	public User getCurrent() {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof UserAuthentication) {

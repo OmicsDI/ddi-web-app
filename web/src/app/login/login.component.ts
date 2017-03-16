@@ -23,7 +23,11 @@ export class LoginComponent implements OnInit {
     window.location.href = url;
   }
 
-  submit(provider: string, scope: string){
+  submit(provider: string, scope: string) {
+    window.location.href = "http://localhost:8080/auth/" + provider + "?scope=" + scope;
+  }
+
+  subminForm(provider: string, scope: string) {
       var f = document.createElement("form");
       f.setAttribute('method',"post");
       f.setAttribute('action',"signin/" + provider);

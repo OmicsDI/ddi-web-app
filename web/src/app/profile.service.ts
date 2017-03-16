@@ -1,17 +1,31 @@
 import { Injectable }       from '@angular/core';
-import { Http, Response, RequestOptionsArgs, Headers }   from '@angular/http';
+import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from './profile';
 
 @Injectable()
 export class ProfileService {
-  profileUrl = "http://localhost:8080/api/mongo";
+  profileUrl = "http://localhost:8080/api/user/current";
   logoutUrl = "http://localhost:8088/user/logout";
 
   constructor (private http: Http) {}
 
+  getParameterByName(name): string {
+  var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+  return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
   getProfile (): Observable<Profile> {
-    return this.http.get(this.profileUrl) //{ withCredentials: true }
+
+    let authToken = this.getParameterByName("auth");
+    var config: RequestOptionsArgs;
+    if(authToken) {
+      let headers = new Headers();
+      headers.append('X-AUTH-TOKEN', authToken);
+      config = { headers: headers };
+    }
+
+    return this.http.get(this.profileUrl,config) //{ withCredentials: true }
         .map(this.extractData)
         .catch(this.handleError);
   }

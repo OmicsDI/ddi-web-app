@@ -2,32 +2,31 @@ package uk.ac.ebi.ddi.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
-import uk.ac.ebi.ddi.security.SocialAuthenticationSuccessHandler;
-import uk.ac.ebi.ddi.security.StatelessAuthenticationFilter;
+import uk.ac.ebi.ddi.security.component.SocialAuthenticationSuccessHandler;
+import uk.ac.ebi.ddi.security.component.StatelessAuthenticationFilter;
 import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 
 @EnableWebSecurity
 @Configuration
 @Order(1)
+@EnableGlobalMethodSecurity(securedEnabled = true)
+@ComponentScan("uk.ac.ebi.ddi.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -61,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		//.headers().cacheControl().and()
 		http.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS,"/api/**").permitAll()
 
 				//allow anonymous font and template requests
 				.antMatchers("/").permitAll()

@@ -14,10 +14,10 @@ export class LoginLauncherComponent implements OnInit {
   public name : string;
 
   constructor(private profileService: ProfileService) {
-    this.name = "Unknown";
+    this.name = null;
   }
   ngOnInit() {
-    //this.getProfile();
+    this.getProfile();
   }
 
   getProfile(){

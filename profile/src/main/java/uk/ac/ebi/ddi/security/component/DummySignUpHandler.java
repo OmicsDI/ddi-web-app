@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.security;
+package uk.ac.ebi.ddi.security.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
@@ -12,8 +12,12 @@ import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 @Component
 public class DummySignUpHandler implements ConnectionSignUp {
 
+    private MongoUserDetailsService mongoUserDetailsService;
+
     @Autowired
-    MongoUserDetailsService mongoUserDetailsService;
+    public DummySignUpHandler(MongoUserDetailsService mongoUserDetailsService){
+        this.mongoUserDetailsService = mongoUserDetailsService;
+    }
 
     private volatile long userCount;
 

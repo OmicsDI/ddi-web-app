@@ -25,7 +25,8 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
     private MongoUserDetailsRepository mongoUserDetailsRepository;
 
     @Autowired
-    MongoUserDetailsService(MongoUserDetailsRepository mongoUserDetailsRepository){ this.mongoUserDetailsRepository = mongoUserDetailsRepository;
+    MongoUserDetailsService(MongoUserDetailsRepository mongoUserDetailsRepository){
+        this.mongoUserDetailsRepository = mongoUserDetailsRepository;
     }
 
     public User findById(Long Id){

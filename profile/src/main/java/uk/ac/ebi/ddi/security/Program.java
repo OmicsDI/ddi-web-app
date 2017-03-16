@@ -10,7 +10,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.servlet.Filter;
 
-@EnableAutoConfiguration(exclude = { SocialWebAutoConfiguration.class })
+@EnableAutoConfiguration
 @Configuration
 @ComponentScan
 public class Program {

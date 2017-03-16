@@ -40,7 +40,7 @@ app.controller('AuthCtrl', function ($scope, $rootScope, $http, $cookies, TokenS
 		var authCookie = $cookies['AUTH-TOKEN'];
 		if (authCookie) {
 			TokenStorage.store(authCookie);
-			delete $cookies['AUTH-TOKEN'];
+			//delete $cookies['AUTH-TOKEN'];
 		}
 		$http.get('/api/user/current').success(function (user) {
 			if (user.username) {

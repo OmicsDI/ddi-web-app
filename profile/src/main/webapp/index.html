@@ -6,6 +6,20 @@
 	<script src="resources/js/angular-cookies.js" type="application/javascript"></script>
 	<script src="resources/js/controllers.js" type="application/javascript"></script>
 </head>
+
+<script>
+    function getCookieValue(a) {
+        var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+        return b ? b.pop() : '';
+    }
+	console.log("index.html");
+    var authToken = getCookieValue('AUTH-TOKEN');
+    if(authToken){
+    	console.log(authToken);
+    	window.location.href = "http://localhost:4200/profile?auth=" + authToken;
+	}
+</script>
+
 <body ng-controller="AuthCtrl" ng-init="init()" style="padding: 10% 20%">
 	<div ng-hide="authenticated">
 		<a href="/auth/facebook">Login with Facebook</a><br/>

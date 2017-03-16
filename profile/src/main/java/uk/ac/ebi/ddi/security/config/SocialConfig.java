@@ -15,6 +15,7 @@ import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.*;
 import org.springframework.social.connect.mongo.*;
+import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.orcid.api.OrcidApi;
@@ -22,7 +23,7 @@ import org.springframework.social.orcid.connect.OrcidConnectionFactory;
 import org.springframework.social.orcid.utils.OrcidConfig;
 import org.springframework.social.orcid.utils.OrcidConfigBroker;
 import org.springframework.util.MultiValueMap;
-import uk.ac.ebi.ddi.security.DummySignUpHandler;
+import uk.ac.ebi.ddi.security.component.DummySignUpHandler;
 import uk.ac.ebi.ddi.security.UserAuthenticationUserIdSource;
 
 import java.lang.reflect.Constructor;
@@ -34,7 +35,8 @@ import org.springframework.social.connect.mongo.MongoConnectionService;
 
 @Configuration
 @EnableSocial
-@ComponentScan({"org.springframework.social.connect.mongo"})
+@PropertySource("classpath:application.properties")
+@ComponentScan({"org.springframework.social.connect.mongo","uk.ac.ebi.ddi.security"})
 public class SocialConfig extends SocialConfigurerAdapter {
 
 	public SocialConfig() throws Exception{
@@ -130,5 +132,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	@Bean
 	public UserIdSource userIdSource(){
 		return new UserAuthenticationUserIdSource();
+	}
+
+	@Bean
+	public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
+		return new ConnectController(connectionFactoryLocator,
+				connectionRepository);
 	}
 }
