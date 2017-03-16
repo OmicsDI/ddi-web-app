@@ -38,13 +38,11 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
 
         User user = new User();
 
-        Long UserId = Long.parseLong(mongoUser.getUserId());
-
         String UserName = mongoUser.getUserName();
 
-        user.setId(UserId);
+        user.setUserId(mongoUser.getUserId());
 
-        user.setUsername(UserName);
+        user.setUserName(UserName);
 
         return user;
     }
@@ -57,13 +55,11 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
 
         User user = new User();
 
-        Long UserId = Long.parseLong(mongoUser.getUserId());
-
         String UserName = mongoUser.getUserName();
 
-        user.setId(UserId);
+        user.setUserId(mongoUser.getUserId());
 
-        user.setUsername(UserName);
+        user.setUserName(UserName);
 
         return user;
     }
@@ -72,7 +68,7 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
     }
 
     public void save(User u){
-        Long userId = u.getId();
+        Long userId = Long.parseLong(u.getUserId());
 
         if(null==userId){
             // Keep that in a constant if it stays the same
@@ -94,7 +90,7 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
 
         mongoUserDetailsRepository.save(mongoUser);
 
-        u.setId(userId);
+        u.setUserId(userId.toString());
     }
 
     public void saveAndFlush(User u){

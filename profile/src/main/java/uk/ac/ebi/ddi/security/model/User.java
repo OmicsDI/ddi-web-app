@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class User implements SocialUserDetails {
 
-	private Long id;
+	private String userId;
 
 	@JsonIgnore
 	private String providerId;
@@ -18,9 +18,10 @@ public class User implements SocialUserDetails {
 	private String providerUserId;
 
 	@JsonIgnore
+
 	private String accessToken;
 
-	private String username;
+	private String userName;
 
 	private long expires;
 
@@ -32,27 +33,27 @@ public class User implements SocialUserDetails {
 
 	private boolean accountEnabled;
 
-	public Long getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
 	}
 
 	@Override
 	@JsonIgnore
-	public String getUserId() {
-		return id.toString();
-	}
-
-	@Override
 	public String getUsername() {
-		return username;
+		return getUserName();
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+
+	public void setUserName(String username) {
+		this.userName = username;
 	}
 
 	@Override

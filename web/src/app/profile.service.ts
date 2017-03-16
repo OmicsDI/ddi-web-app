@@ -39,6 +39,10 @@ export class ProfileService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
+    let authToken = this.getParameterByName("auth");
+    if(authToken) {
+      headers.append('X-AUTH-TOKEN', authToken);
+    }
 
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...

@@ -51,12 +51,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Set a custom successHandler on the SocialAuthenticationFilter
 		final SpringSocialConfigurer socialConfigurer = new SpringSocialConfigurer();
 		socialConfigurer.addObjectPostProcessor(new ObjectPostProcessor<SocialAuthenticationFilter>() {
+
 			@Override
 			public <O extends SocialAuthenticationFilter> O postProcess(O socialAuthenticationFilter) {
 				socialAuthenticationFilter.setAuthenticationSuccessHandler(socialAuthenticationSuccessHandler);
+				socialAuthenticationFilter.setConnectionAddedRedirectUrl("http://localhost:4200/profile");
 				return socialAuthenticationFilter;
 			}
 		});
+
+		http.csrf().disable();
 
 		//.headers().cacheControl().and()
 		http.authorizeRequests()
@@ -77,12 +81,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				//allow anonymous GETs to API
 				.antMatchers(HttpMethod.GET, "/api/**").permitAll()
-
+				//allow anonymous POSTSs to API
+				.antMatchers(HttpMethod.POST, "/api/**").permitAll()
 				//defined Admin only API area
 				.antMatchers("/admin/**").hasRole("ADMIN")
 
 				//all other request need to be authenticated
-				.antMatchers(HttpMethod.GET, "/api/users/current/details").hasRole("USER")
+				//.antMatchers(HttpMethod.GET, "/api/users/current/details").hasRole("USER")
 				.anyRequest().hasRole("USER").and()
 
 				.exceptionHandling().and().anonymous().and().servletApi().and()
@@ -92,6 +97,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// apply the configuration from the socialConfigurer (adds the SocialAuthenticationFilter)
 				.apply(socialConfigurer.userIdSource(userIdSource));
+
+
+
 	}
 
 	@Bean

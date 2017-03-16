@@ -30,7 +30,7 @@ public class DummySignUpHandler implements ConnectionSignUp {
         UserProfile profile = connection.fetchUserProfile();
         String name = profile.getName();
 
-        user.setUsername(generateUniqueUserName(name));
+        user.setUserName(generateUniqueUserName(name));
         user.setProviderId(connection.getKey().getProviderId());
         user.setProviderUserId(connection.getKey().getProviderUserId());
         user.setAccessToken(connection.createData().getAccessToken());
