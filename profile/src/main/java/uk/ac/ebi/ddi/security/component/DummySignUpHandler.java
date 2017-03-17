@@ -6,6 +6,7 @@ import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.ddi.security.model.MongoUser;
 import uk.ac.ebi.ddi.security.model.User;
 import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 
@@ -26,6 +27,8 @@ public class DummySignUpHandler implements ConnectionSignUp {
     public String execute(final Connection<?> connection) {
         //add new users to the db with its default roles for later use in SocialAuthenticationSuccessHandler
         final User user = new User();
+
+        String imageUrl = connection.getImageUrl();
 
         UserProfile profile = connection.fetchUserProfile();
         String name = profile.getName();

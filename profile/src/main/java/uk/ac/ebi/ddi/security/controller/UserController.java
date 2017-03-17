@@ -20,12 +20,13 @@ public class UserController {
 
 	@RequestMapping(value = "/api/user/current", method = RequestMethod.GET)
 	@CrossOrigin
-	public User getCurrent() {
+	public MongoUser getCurrent() {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof UserAuthentication) {
-			return ((UserAuthentication) authentication).getDetails();
+			User user = ((UserAuthentication) authentication).getDetails();
+			return mongoUserDetailsRepository.findByUserId(user.getUserId());
 		}
-		return new User(); //anonymous user support
+		return new MongoUser(); //anonymous user support
 	}
 
 	//@RequestMapping(value = "/api/mongo", method = RequestMethod.GET)
