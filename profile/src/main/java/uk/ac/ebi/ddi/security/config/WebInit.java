@@ -2,7 +2,7 @@ package uk.ac.ebi.ddi.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import uk.ac.ebi.ddi.security.component.StatelessAuthenticationFilter;
+import uk.ac.ebi.ddi.security.component.TokenAuthenticationFilter;
 
 import javax.servlet.Filter;
 
@@ -28,6 +28,6 @@ public class WebInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{new StatelessAuthenticationFilter()};
+        return new Filter[]{new TokenAuthenticationFilter()};
     }
 }

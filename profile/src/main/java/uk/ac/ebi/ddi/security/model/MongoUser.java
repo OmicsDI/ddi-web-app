@@ -1,16 +1,22 @@
 package uk.ac.ebi.ddi.security.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.social.security.SocialUserDetails;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Created by user on 3/12/2017.
  */
 
 @Document(collection = "users")
-public class MongoUser {
+public class MongoUser implements SocialUserDetails {
     @Id
     @NotEmpty
     String userId;
@@ -39,6 +45,8 @@ public class MongoUser {
     String imageUrl;
 
     String SomethingNew;
+
+    long expires;
 
     public String getSomethingNew() {
         return SomethingNew;
@@ -132,5 +140,61 @@ public class MongoUser {
     public DataSet[] getDataSets(){        return dataSets;    }
     public void setDataSets(DataSet[] val){
         this.dataSets = val;
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        final GrantedAuthority a = new GrantedAuthority(){
+            @Override
+            public String getAuthority() {
+                return "USER";
+            }
+        };
+        return new HashSet<GrantedAuthority>(){{ add(a); }};
+    }
+
+    @Override
+    @JsonIgnore
+    public String getPassword() {
+        throw new IllegalStateException("password should never be used");
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return this.getUserName();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public long getExpires() {
+        return expires;
+    }
+
+    public void setExpires(long expires) {
+        this.expires = expires;
     }
 }

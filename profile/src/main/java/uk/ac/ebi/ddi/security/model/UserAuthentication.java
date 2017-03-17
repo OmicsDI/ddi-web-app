@@ -2,16 +2,16 @@ package uk.ac.ebi.ddi.security.model;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import uk.ac.ebi.ddi.security.model.User;
+import uk.ac.ebi.ddi.security.model.MongoUser;
 
 import java.util.Collection;
 
 public class UserAuthentication implements Authentication {
 
-	private final User user;
+	private final MongoUser user;
 	private boolean authenticated = true;
 
-	public UserAuthentication(User user) {
+	public UserAuthentication(MongoUser user) {
 		this.user = user;
 	}
 
@@ -31,7 +31,7 @@ public class UserAuthentication implements Authentication {
 	}
 
 	@Override
-	public User getDetails() {
+	public MongoUser getDetails() {
 		return user;
 	}
 

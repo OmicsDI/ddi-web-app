@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.ddi.security.model.MongoUser;
-import uk.ac.ebi.ddi.security.model.User;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
 import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
 
@@ -23,7 +22,7 @@ public class UserController {
 	public MongoUser getCurrent() {
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof UserAuthentication) {
-			User user = ((UserAuthentication) authentication).getDetails();
+			MongoUser user = ((UserAuthentication) authentication).getDetails();
 			return mongoUserDetailsRepository.findByUserId(user.getUserId());
 		}
 		return new MongoUser(); //anonymous user support

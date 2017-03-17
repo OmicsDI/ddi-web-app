@@ -9,7 +9,6 @@ import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.security.model.MongoUser;
-import uk.ac.ebi.ddi.security.model.User;
 import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
 
 import java.util.ArrayList;
@@ -29,14 +28,14 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
         this.mongoUserDetailsRepository = mongoUserDetailsRepository;
     }
 
-    public User findById(Long Id){
+    public MongoUser findById(Long Id){
 
         MongoUser mongoUser = mongoUserDetailsRepository.findByUserId(Id.toString());
 
         if(null==mongoUser)
             return null;
 
-        User user = new User();
+        MongoUser user = new MongoUser();
 
         String UserName = mongoUser.getUserName();
 
@@ -46,14 +45,14 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
 
         return user;
     }
-    public User findByUsername(String name){
+    public MongoUser findByUsername(String name){
 
         MongoUser mongoUser = mongoUserDetailsRepository.findByName(name);
 
         if(null==mongoUser)
             return null;
 
-        User user = new User();
+        MongoUser user = new MongoUser();
 
         String UserName = mongoUser.getUserName();
 
@@ -63,44 +62,40 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
 
         return user;
     }
-    public User findByProviderIdAndProviderUserId(String Id1, String Id2){
+    public MongoUser findByProviderIdAndProviderUserId(String Id1, String Id2){
         return null;
     }
 
-    public void save(User u){
-        Long userId = Long.parseLong(u.getUserId());
+    public void save(MongoUser u){
+        //TODO:calculate unique UID
+        String UserId = u.getUserId();
 
-        if(null==userId){
-            // Keep that in a constant if it stays the same
+        if(null==UserId){
+            Long newUserId = 0L;
             PageRequest request = new PageRequest(0, 1, new Sort(Sort.Direction.DESC, "userId"));
-            MongoUser mongoUser = mongoUserDetailsRepository.findByUserIdNotNull(request).getContent().get(0);
-
-            if(null==mongoUser){
-                userId = 0L;
-            }else{
-                userId = Long.parseLong(mongoUser.getUserId()) + 1;
+            List<MongoUser> foundUsers = mongoUserDetailsRepository.findByUserIdNotNull(request).getContent();
+            if(foundUsers.size() > 0) {
+                MongoUser mongoUser = foundUsers.get(0);
+                if (null != mongoUser) {
+                    newUserId = Long.parseLong(mongoUser.getUserId()) + 1;
+                }
             }
+            UserId = newUserId.toString();
+            u.setUserId(UserId);
         }
-
-        MongoUser mongoUser = new MongoUser();
-        mongoUser.setUserId(userId.toString());
-        mongoUser.setUserName(u.getUsername());
-        mongoUser.setAccessToken(u.getAccessToken());
-        mongoUser.setRoles("USER,ADMIN"); //TODO
-
-        mongoUserDetailsRepository.save(mongoUser);
-
-        u.setUserId(userId.toString());
+        //TODO: roles
+        u.setRoles("USER,ADMIN");
+        mongoUserDetailsRepository.save(u);
     }
 
-    public void saveAndFlush(User u){
+    public void saveAndFlush(MongoUser u){
         save(u);
 
         return;
     }
 
-    public List<User> findAll(){
-        return new ArrayList<User>();
+    public List<MongoUser> findAll(){
+        return new ArrayList<MongoUser>();
     }
 
     public int count(){
@@ -108,7 +103,7 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
     }
 
     @Override
-    public User loadUserByUsername(String s) throws UsernameNotFoundException {
+    public MongoUser loadUserByUsername(String s) throws UsernameNotFoundException {
         return findByUsername(s);
     }
 

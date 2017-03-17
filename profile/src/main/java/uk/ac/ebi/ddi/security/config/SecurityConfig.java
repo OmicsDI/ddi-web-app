@@ -19,7 +19,7 @@ import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 import uk.ac.ebi.ddi.security.component.SocialAuthenticationSuccessHandler;
-import uk.ac.ebi.ddi.security.component.StatelessAuthenticationFilter;
+import uk.ac.ebi.ddi.security.component.TokenAuthenticationFilter;
 import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 
 @EnableWebSecurity
@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private SocialAuthenticationSuccessHandler socialAuthenticationSuccessHandler;
 
 	@Autowired
-	private StatelessAuthenticationFilter statelessAuthenticationFilter;
+	private TokenAuthenticationFilter TokenAuthenticationFilter;
 
 	@Autowired
 	private UserIdSource userIdSource;
@@ -93,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().and().anonymous().and().servletApi().and()
 
 				// add custom authentication filter for complete stateless JWT based authentication
-				.addFilterBefore(statelessAuthenticationFilter, AbstractPreAuthenticatedProcessingFilter.class)
+				.addFilterBefore(TokenAuthenticationFilter, AbstractPreAuthenticatedProcessingFilter.class)
 
 				// apply the configuration from the socialConfigurer (adds the SocialAuthenticationFilter)
 				.apply(socialConfigurer.userIdSource(userIdSource));

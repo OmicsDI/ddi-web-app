@@ -1,12 +1,9 @@
 package uk.ac.ebi.ddi.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.UserIdSource;
@@ -22,14 +19,9 @@ import org.springframework.social.orcid.api.OrcidApi;
 import org.springframework.social.orcid.connect.OrcidConnectionFactory;
 import org.springframework.social.orcid.utils.OrcidConfig;
 import org.springframework.social.orcid.utils.OrcidConfigBroker;
-import org.springframework.util.MultiValueMap;
-import uk.ac.ebi.ddi.security.component.DummySignUpHandler;
 import uk.ac.ebi.ddi.security.UserAuthenticationUserIdSource;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Set;
 
 import org.springframework.social.connect.mongo.MongoConnectionService;
 

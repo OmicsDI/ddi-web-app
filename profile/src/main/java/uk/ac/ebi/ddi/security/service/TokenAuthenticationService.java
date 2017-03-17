@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.ddi.security.TokenHandler;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
-import uk.ac.ebi.ddi.security.model.User;
+import uk.ac.ebi.ddi.security.model.MongoUser;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ public class TokenAuthenticationService {
 	}
 
 	public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
-		final User user = authentication.getDetails();
+		final MongoUser user = authentication.getDetails();
 		user.setExpires(System.currentTimeMillis() + TEN_DAYS);
 		final String token = tokenHandler.createTokenForUser(user);
 
@@ -42,7 +42,7 @@ public class TokenAuthenticationService {
 		// (it is up to the client to read our previously set cookie and put it in the header)
 		final String token = request.getHeader(AUTH_HEADER_NAME);
 		if (token != null) {
-			final User user = tokenHandler.parseUserFromToken(token);
+			final MongoUser user = tokenHandler.parseUserFromToken(token);
 			if (user != null) {
 				return new UserAuthentication(user);
 			}

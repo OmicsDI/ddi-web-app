@@ -8,6 +8,14 @@ public class DataSet {
     String source;
     String claimed;
 
+    public DataSet( String dataSetId
+                    ,String source
+                    ,String claimed){
+        this.dataSetId = dataSetId;
+        this.source = source;
+        this.claimed = claimed;
+    }
+
     public String getDataSetId() {
         return dataSetId;
     }
