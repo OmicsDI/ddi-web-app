@@ -79,4 +79,8 @@ public class MongoUsersConnectionRepository implements UsersConnectionRepository
 		return new org.springframework.social.connect.mongo.MongoConnectionRepository(userId, mongoService, connectionFactoryLocator, textEncryptor);
 	}
 
+	public List<Connection<?>> getConnections(String userId){
+		return mongoService.getConnections(userId);
+	}
+
 }

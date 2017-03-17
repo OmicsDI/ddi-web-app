@@ -144,9 +144,13 @@
       <div class="gsc_rsb_s" id="gsc_rsb_co"><h3 class="gsc_rsb_h">Social connections
       </h3>
         <ul class="gsc_rsb_a">
-          <li><span class="gsc_rsb_aa"><img src="assets/orcid.gif"/>&nbsp;<a href="#">Orcid</a></span></li>
+          <li><span class="gsc_rsb_aa"><img src="assets/orcid.gif"/>&nbsp;<a href="#">Orcid</a>
+            <span *ngIf="orcidConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/assets/link.png"></span>
+          </span></li>
           <li><span class="gsc_rsb_aa"><img src="assets/elixir.gif"/>&nbsp;<a href="#">Elixir</a></span></li>
-          <li><span class="gsc_rsb_aa"><img src="assets/facebook.gif"/>&nbsp;<a href="#">Facebook</a></span></li>
+          <li><span class="gsc_rsb_aa"><img src="assets/facebook.gif"/>&nbsp;<a href="#">Facebook</a>
+            <span *ngIf="facebookConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/assets/link.png"></span>
+          </span></li>
           <li><span class="gsc_rsb_aa"><img src="assets/twitter.gif"/>&nbsp;<a href="#">Twitter</a></span></li>
           <li class="gsc_rsb_fade"></li>
         </ul>

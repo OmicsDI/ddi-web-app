@@ -7,6 +7,7 @@ import { Profile } from './profile';
 export class ProfileService {
   profileUrl = "http://localhost:8080/api/user/current";
   logoutUrl = "http://localhost:8088/user/logout";
+  connectionsUrl = "http://localhost:8088/api/users/{0}/connections";
 
   constructor (private http: Http) {}
 
@@ -16,7 +17,6 @@ export class ProfileService {
 }
 
   getProfile (): Observable<Profile> {
-
     let authToken = this.getParameterByName("auth");
     var config: RequestOptionsArgs;
     if(authToken) {
@@ -24,10 +24,16 @@ export class ProfileService {
       headers.append('X-AUTH-TOKEN', authToken);
       config = { headers: headers };
     }
-
     return this.http.get(this.profileUrl,config) //{ withCredentials: true }
         .map(this.extractData)
         .catch(this.handleError);
+  }
+
+  getUserConnections (userId: string): Observable<string[]>{
+    let url = "http://localhost:8080/api/users/" + userId + "/connections";
+    return this.http.get(url) //{ withCredentials: true }
+      .map(this.extractConnectionsData)
+      .catch(this.handleError);
   }
 
   private getUserUrl(id){
@@ -53,11 +59,16 @@ export class ProfileService {
   private extractData(res: Response) {
     let body = res.json();
     //return body || { };
-
     var p : Profile;
-
     p = (body || { }) as Profile;
+    return p;
+  }
 
+  private extractConnectionsData(res: Response) {
+    let body = res.json();
+    //return body || { };
+    var p : String[];
+    p = (body || { }) as String[];
     return p;
   }
 

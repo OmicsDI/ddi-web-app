@@ -14,6 +14,8 @@ export class ProfileComponent implements OnInit {
   public name: String;
   form: FormGroup;
   editMode: boolean = false;
+  facebookConnected: boolean = false;
+  orcidConnected: boolean = false;
 
   constructor(private profileService: ProfileService
               ,formBuilder: FormBuilder) {
@@ -45,8 +47,23 @@ export class ProfileComponent implements OnInit {
         profile => {
           this.profileX = profile;
           this.name = profile.userName;
+          let userId =  profile.userId
+          this.getConnections(userId);
         }
       );
+  }
+
+  getConnections(userId: string){
+    this.profileService.getUserConnections(userId)
+      .subscribe(
+        connections => {
+
+          console.info("getting user connections");
+
+          this.facebookConnected = connections.some(x=>x=="facebook");
+          this.orcidConnected = connections.some(x=>x=="orcid");
+        }
+      )
   }
 
   editClicked() {
