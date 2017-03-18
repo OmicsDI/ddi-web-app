@@ -3,6 +3,7 @@ package uk.ac.ebi.ddi.security.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mongo.MongoUsersConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.orcid.api.OrcidApi;
@@ -19,17 +20,17 @@ import java.util.List;
  */
 @RestController
 public class ConnectionController {
-    private MongoUsersConnectionRepository mongoUsersConnectionRepository;
+    private MongoUsersConnectionRepository mognoUsersConnectionRepository;
 
     @Autowired
-    public ConnectionController(MongoUsersConnectionRepository mongoUsersConnectionRepository){
-        this.mongoUsersConnectionRepository =  mongoUsersConnectionRepository;
+    public ConnectionController(UsersConnectionRepository usersConnectionRepository){
+        this.mognoUsersConnectionRepository =  (MongoUsersConnectionRepository)usersConnectionRepository;
     }
 
     @RequestMapping(value = "/api/users/{UserID}/connections", method = RequestMethod.GET)
     @CrossOrigin
     public String[] getUserConnections(@PathVariable String UserID) {
-        List<Connection<?>> connections = this.mongoUsersConnectionRepository.getConnections(UserID);
+        List<Connection<?>> connections = this.mognoUsersConnectionRepository.getConnections(UserID);
 
         List<String> result = new ArrayList<String>();
 

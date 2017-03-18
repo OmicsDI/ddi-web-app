@@ -49,7 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// Set a custom successHandler on the SocialAuthenticationFilter
+
 		final SpringSocialConfigurer socialConfigurer = new SpringSocialConfigurer();
+
 		socialConfigurer.addObjectPostProcessor(new ObjectPostProcessor<SocialAuthenticationFilter>() {
 
 			@Override
@@ -97,9 +99,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// apply the configuration from the socialConfigurer (adds the SocialAuthenticationFilter)
 				.apply(socialConfigurer.userIdSource(userIdSource));
-
-
-
 	}
 
 	@Bean

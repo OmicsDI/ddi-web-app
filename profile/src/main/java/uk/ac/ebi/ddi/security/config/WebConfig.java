@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @EnableMongoRepositories("uk.ac.ebi.ddi.security.repo")
-@ComponentScan({"uk.ac.ebi.ddi.security","org.springframework.security"})
+@ComponentScan({"uk.ac.ebi.ddi.security","org.springframework.security","org.springframework.social.connect.mongo"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

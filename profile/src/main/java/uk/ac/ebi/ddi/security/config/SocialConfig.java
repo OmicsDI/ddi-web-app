@@ -85,7 +85,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	}
 
 	@Override
-	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+	public MongoUsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 
 		MongoUsersConnectionRepository mongoUsersConnectionRepository =
 				new MongoUsersConnectionRepository(mongoConnectionService, connectionFactoryLocator, textEncryptor);
