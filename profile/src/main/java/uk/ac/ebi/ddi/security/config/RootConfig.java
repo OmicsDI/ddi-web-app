@@ -1,9 +1,6 @@
 package uk.ac.ebi.ddi.security.config;
 
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.social.SocialWebAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,14 +15,10 @@ import javax.servlet.Filter;
 /**
  * Created by user on 3/16/2017.
  */
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 @Configuration
 @ComponentScan({"uk.ac.ebi.ddi.security","org.springframework.social.connect.mongo"})
 public class RootConfig {
-
-    public static void main(String[] args) {
-        SpringApplication.run(RootConfig.class, args);
-    }
 
     @Bean
     public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {

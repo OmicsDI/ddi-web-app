@@ -26,7 +26,6 @@ import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
 @Configuration
 @Order(1)
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ComponentScan("uk.ac.ebi.ddi.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 

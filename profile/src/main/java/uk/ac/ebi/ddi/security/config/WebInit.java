@@ -22,7 +22,8 @@ public class WebInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[]{uk.ac.ebi.ddi.security.config.WebConfig.class
                               ,uk.ac.ebi.ddi.security.config.SecurityConfig.class
-                              ,uk.ac.ebi.ddi.security.config.SocialConfig.class};
+                              ,uk.ac.ebi.ddi.security.config.SocialConfig.class
+                              ,uk.ac.ebi.ddi.security.config.MongoConfig.class};
     }
 
     @Override
