@@ -30,17 +30,15 @@ public class ConnectionController {
     @RequestMapping(value = "/api/users/{UserID}/connections", method = RequestMethod.GET)
     @CrossOrigin
     public String[] getUserConnections(@PathVariable String UserID) {
-        List<Connection<?>> connections = this.mognoUsersConnectionRepository.getConnections(UserID);
+        ConnectionRepository repo = this.mognoUsersConnectionRepository.createConnectionRepository(UserID);
+
+        MultiValueMap<String,Connection<?>> connections = repo.findAllConnections();
 
         List<String> result = new ArrayList<String>();
 
-        for (Connection<?> connection : connections){
-            if(connection.getApi() instanceof Facebook)
-                result.add("facebook");
-            if(connection.getApi() instanceof OrcidApi)
-                result.add("orcid");
+        for (String connection : connections.keySet()){
+                result.add(connection);
         }
-
         //String[] stringArray = Arrays.copyOf(connections.keySet().toArray(), connections.keySet().size(), String[].class);
         return result.toArray( new String[result.size()]);
     }
