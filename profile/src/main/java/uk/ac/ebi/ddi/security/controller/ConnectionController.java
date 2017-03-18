@@ -37,6 +37,7 @@ public class ConnectionController {
         List<String> result = new ArrayList<String>();
 
         for (String connection : connections.keySet()){
+            if (connections.get(connection).size() > 0)
                 result.add(connection);
         }
         //String[] stringArray = Arrays.copyOf(connections.keySet().toArray(), connections.keySet().size(), String[].class);
