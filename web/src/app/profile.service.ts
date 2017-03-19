@@ -2,6 +2,7 @@ import { Injectable }       from '@angular/core';
 import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Profile } from './profile';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class ProfileService {
@@ -9,22 +10,23 @@ export class ProfileService {
   logoutUrl = "http://localhost:8088/user/logout";
   connectionsUrl = "http://localhost:8088/api/users/{0}/connections";
 
-  constructor (private http: Http) {}
+  constructor (private http: AuthHttp) {}
 
   getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
+  }
 
   getProfile (): Observable<Profile> {
+    /*
     let authToken = this.getParameterByName("auth");
     var config: RequestOptionsArgs;
     if(authToken) {
       let headers = new Headers();
       headers.append('X-AUTH-TOKEN', authToken);
       config = { headers: headers };
-    }
-    return this.http.get(this.profileUrl,config) //{ withCredentials: true }
+    }*/
+    return this.http.get(this.profileUrl) //,config //{ withCredentials: true }
         .map(this.extractData)
         .catch(this.handleError);
   }
@@ -43,12 +45,13 @@ export class ProfileService {
   public updateUser(profile:Profile){
 
     let headers = new Headers();
+    /**
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
     let authToken = this.getParameterByName("auth");
     if(authToken) {
       headers.append('X-AUTH-TOKEN', authToken);
-    }
+    }**/
 
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...

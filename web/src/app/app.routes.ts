@@ -8,6 +8,8 @@ import {ProfileComponent} from "./profile/profile.component";
 import {DatabaseComponent} from "./database/database.component";
 import {HomeComponent} from "./home/home.component";
 import {AboutComponent} from "./about/about.component";
+import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
+import { AuthGuard } from './auth-guard.service';
 
 // Route Configuration
 export const routes: Routes = [
@@ -17,9 +19,10 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'database', component: DatabaseComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'about', component: AboutComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent }
 ];
 
 // Deprecated provide

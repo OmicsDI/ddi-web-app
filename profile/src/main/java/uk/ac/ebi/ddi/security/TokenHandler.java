@@ -33,10 +33,12 @@ public final class TokenHandler {
 
 	public MongoUser parseUserFromToken(String token) {
 		final String[] parts = token.split(SEPARATOR_SPLITTER);
-		if (parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 0) {
-			try {
-				final byte[] userBytes = fromBase64(parts[0]);
-				final byte[] hash = fromBase64(parts[1]);
+		if (parts.length == 3 && parts[0].length() > 0 && parts[1].length() > 0 && parts[2].length() > 0) {
+			try
+			{
+				//final byte[] headerBytes = fromBase64(parts[0]);
+				final byte[] userBytes = fromBase64(parts[1]);
+				final byte[] hash = fromBase64(parts[2]);
 
 				boolean validHash = Arrays.equals(createHmac(userBytes), hash);
 				if (validHash) {
@@ -56,6 +58,11 @@ public final class TokenHandler {
 		byte[] userBytes = toJSON(user);
 		byte[] hash = createHmac(userBytes);
 		final StringBuilder sb = new StringBuilder(170);
+
+		String header = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
+
+		sb.append(toBase64(header.getBytes()));
+		sb.append(SEPARATOR);
 		sb.append(toBase64(userBytes));
 		sb.append(SEPARATOR);
 		sb.append(toBase64(hash));

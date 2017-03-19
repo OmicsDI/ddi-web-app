@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ProfileService} from "../profile.service";
 import {Profile} from '../profile';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login-launcher',
@@ -13,7 +15,7 @@ export class LoginLauncherComponent implements OnInit {
   public profile : Profile;
   public name : string;
 
-  constructor(private profileService: ProfileService) {
+  constructor(private profileService: ProfileService, private router: Router, private auth: AuthService) {
     this.name = null;
   }
   ngOnInit() {
@@ -42,6 +44,12 @@ export class LoginLauncherComponent implements OnInit {
   }
 
   LogOut() {
+    localStorage.removeItem('id_token');
+
+    this.router.navigate(['home']);
+
+    /*
+
     var f = document.createElement("form");
     f.setAttribute('method',"post");
     f.setAttribute('action',"user/logout");
@@ -55,6 +63,8 @@ export class LoginLauncherComponent implements OnInit {
     document.getElementsByTagName('body')[0].appendChild(f);
 
     f.submit();
+
+    */
 
     //this.profileService.logOut();
 

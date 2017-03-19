@@ -9,10 +9,20 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
-  <link href="vendor/@angular2-material/core/overlay/overlay.css" rel="stylesheet">
-
 </head>
+<script>
+   function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+  }
+  var auth = getParameterByName('auth');
+  if(auth) {
+     localStorage.setItem('id_token', auth);
+     console.log("redirectd");
+     console.log(window.location.href);
+     window.location.href = window.location.href.replace("?auth="+auth,"");
+  }
+</script>
 <body>
   <app-root>Loading...</app-root>
 </body>
