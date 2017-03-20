@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-login-launcher',
+  selector: '[AppLoginLauncher]',
   templateUrl: './login-launcher.component.html',
   styleUrls: ['./login-launcher.component.css'],
   providers: [ProfileService],

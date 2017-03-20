@@ -1,13 +1,12 @@
-  <li class="functional" [mdMenuTriggerFor]="menu" *ngIf="!auth.loggedIn()">
-    <a data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Menu">Login</a>
-  </li>
+<a [mdMenuTriggerFor]="menu" *ngIf="!auth.loggedIn()" data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Menu">Login</a>
+
   <md-menu #menu="mdMenu" [overlapTrigger]="false">
     <app-login-dialog></app-login-dialog>
   </md-menu>
 
-  <li class="functional" [mdMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()">
-    <a data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Dialog">{{name}}</a>
-  </li>
+
+<a [mdMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()" data-icon="\" class="icon icon-static" data-icon="&amp;" alt="Open Login Dialog">{{name}}</a>
+
 
   <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
     <button md-menu-item>

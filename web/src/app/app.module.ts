@@ -18,6 +18,10 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import {AuthService} from "./auth.service";
 import {AuthGuard} from "./auth-guard.service";
 import { Routes, RouterModule } from '@angular/router';
+import { ApiComponent } from './api/api.component';
+import { SearchComponent } from './search/search.component';
+import { DatasetComponent } from './dataset/dataset.component';
+import { CheckComponent } from './check/check.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -48,7 +52,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DatabaseComponent,
     ProfileComponent,
     AboutComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    ApiComponent,
+    SearchComponent,
+    DatasetComponent,
+    CheckComponent
   ],
   imports: [
     BrowserModule,

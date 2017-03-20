@@ -1,3 +1,233 @@
-<p>
-  home works!
-</p>
+<script >
+  document.title = "OmicsDI Home";
+</script>
+
+
+<div ng-show="web_service_fail==='false'" class="container">
+
+
+  <div id="" class="row" style="margin:10px">
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div ng-controller="QueryCtrl" class="ng-scope panel panel-default" style="">
+        <!--      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">   -->
+        <h3 style="margin-top:10px">
+        </h3>
+
+        <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
+          <!-- <fieldset> -->
+          <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+            <div class="input-group">
+              autocomplete removed
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-primary ddi-btn">
+                  <i class="fa fa-search"></i> Search
+                </button>
+              </div>
+              <!-- /input-group-btn -->
+            </div>
+            <!--input-group -->
+            <span class="help-block example-searches">
+                         <!-- <small> -->
+                             <i>
+                                 Examples:
+                                 <a href="" rel="nofollow" ng-click="example_query('cancer')">cancer</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('TAXONOMY:&quot;9606&quot;')">Homo
+                                     sapiens</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('Orbitrap')">Orbitrap</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('Q9HAU5')">Q9HAU5</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('Phospho')">Phospho</a>,
+                                 <a href="" rel="nofollow" ng-click="example_query('Hela')">Hela</a>
+                             </i>
+              <!-- </small> -->
+                     </span>
+            <!--
+            <label class="control-label ng-cloak has-error"
+                   for="query-text"
+                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+                   ng-cloak>
+                Your query is too short
+            </label>
+            <label class="control-label ng-cloak"
+                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+                   ng-cloak>
+                Your query is too long
+            </label>
+            -->
+          </div>
+          <!-- /form-group -->
+          <!-- </fieldset> -->
+        </form>
+        <!-- /form -->
+      </div>
+      <!--/controller-->
+    </div>
+
+    <div class="col-md-4">
+    </div>
+
+
+  </div>
+
+  <!-- <div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style=""> -->
+  <div class="row">
+
+    <div class="col-md-4">
+      <div id="hotwords" class="panel panel-default" style="height:360px">
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div id="chart_tissues_organisms" class="panel panel-default" style="height:360px">
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div id="chart_repos_omics" class="panel panel-default" style="height:360px">
+      </div>
+    </div>
+
+
+  </div>
+  <!-- row -->
+
+
+  <div class="row" ng-controller="DatasetListsCtrl">
+    <div class="col-md-4">
+      <div id="latestdatasetspanel" class="panel panel-default">
+
+        <div class="">
+          <h4 class="icon icon-functional " data-icon="z"> Latest Datasets</h4>
+        </div>
+        <div class="panel-body ">
+          <ul class="nobullet">
+            <li ng-show="get_latest_datasets_fail.length > 1" class="error-info">
+              {{get_latest_datasets_fail}}
+            </li>
+            latestList
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div id="most_accessed_datasets" class="panel panel-default">
+
+        <div class="">
+          <h4 class="icon icon-functional " data-icon="z"> Most Accessed Datasets</h4>
+        </div>
+        <div class="panel-body ">
+          <ul class="nobullet">
+            <li ng-show="get_most_access_datasets_fail.length > 1" class="error-info">
+              {{get_most_access_datasets_fail}}
+            </li>
+            visit count
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div id="barchart_omicstype_annual" class="panel panel-default">
+
+        <!--         <div class="" >
+                   <h4  > act us</h4>
+                </div>
+                <div class="panel-body ">
+                    <ul>
+                    </ul>
+                </div> -->
+
+
+      </div>
+    </div>
+
+
+  </div>
+  <!--row -->
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default" style="height:260px">
+        <div id="tweets-of-the-month" class="">
+          <h4 data-icon="N" class="icon icon-generic">
+            News
+          </h4>
+        </div>
+
+        <div>
+          <a href="https://twitter.com/@DDIndex" data-icon="T" style="margin-left: 8px"
+             class="justify-body-text icon icon-socialmedia">More tweets</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+
+      <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl"
+           style="height:260px">
+
+        <div class="">
+          <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
+        </div>
+        <blockquote>
+          statistics data
+        </blockquote>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="panel panel-default" style="height:260px">
+        <div id="About" class="">
+          <h4 data-icon="N" class="icon icon-generic">
+            About
+          </h4>
+          <blockquote class="small callout-info ddi-blockquote">The Omics Discovery Index (OmicsDI) provides a Knowleage
+            Discovery framework across a heterogeneous data (genomics, proteomics, trascriptomics and metabolomics).
+            <a href="#/help#Overview">Read More</a>).
+          </blockquote>
+
+          <blockquote class="small callout-info ddi-blockquote">OmicsDI project has been developed on <a
+            href="https://github.com/BD2K-OmicsDI/" target="_blank">GitHub</a>, you can check or
+            contribute to our development at (<a href="https://github.com/BD2K-OmicsDI/" target="_blank">here</a>)
+          </blockquote>
+
+          <blockquote class="small callout-info ddi-blockquote">The frontend page is based on the
+            <a href="https://angularjs.org/">Angular JS</a>;
+            <a href="d3js.org/">D3.js</a>
+          </blockquote>
+
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!--row -->
+</div>
+<!--main container -->
+<script>
+  bub_charts_tissues_organisms();
+  pie_charts_repos_omics();
+  barcharts_years_omics_types();
+  drawHotwords();
+
+  /**
+   *  get tweets and write into the page
+   *
+   */
+  var tf = new TweetFetcher('599190509341515776');
+  tf.fetch(function (tweets) {
+    publishtweets(tweets);
+  }, 4);
+</script>

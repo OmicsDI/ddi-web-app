@@ -1,3 +1,329 @@
-<p>
-  database works!
-</p>
+<script>
+  document.title = "OmicsDI Databases";
+</script>
+
+<div id="databases" style="margin: 20px" ng-controller="DatasetListsCtrl">
+
+    <div id="slick-page-one">
+
+      <div class="row">
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="http://www.ebi.ac.uk/pride/archive/">PRIDE</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="PRIDE Database" href="http://www.ebi.ac.uk/pride/archive/"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="PRIDE logo" src="img/db-logos/pride_logo.jpg"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              is a centralized, standards compliant, public data repository for proteomics data, including
+              protein and peptide identifications, post-translational modifications and supporting
+              spectral evidence.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"pride"'>datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="https://www.ebi.ac.uk/ega/">EGA</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="EGA Database" href="https://www.ebi.ac.uk/ega/"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="EGA logo" src="img/db-logos/ega_phenome_logo.jpg"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              allows you to explore datasets from genomic studies, provided by a range of data providers.
+              Access to datasets must be approved by the specified Data Access Committee (DAC).
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"ega"'>datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="http://www.ebi.ac.uk/metabolights/">MetaboLights</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="MetaboLights Database" href="http://www.ebi.ac.uk/metabolights/"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="MetaboLignts logo" src="img/db-logos/MetaboLightsLogo.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              is a database for Metabolomics experiments and derived information.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"MetaboLights"'>datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="http://www.peptideatlas.org/">PeptideAtlas</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="PeptideAtlas Database" href="http://www.peptideatlas.org/"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="RefSeq logo" src="img/db-logos/PeptideAtlas_Logo.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              is a multi-organism, publicly accessible compendium of peptides identified in a large set of
+              tandem mass spectrometry proteomics experiments.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"PeptideAtlas"'>datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp">MassIVE</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="MassIVE Database" href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="MassIVE logo" src="img/db-logos/MassIVE_logo.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              is a community resource developed by the NIH-funded Center for Computational Mass
+              Spectrometry to promote the global, free exchange of mass spectrometry data.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"MassIVE"'>datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="http://www.metabolomicsworkbench.org/">Metabolomics Workbench</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="Metabolomics Workbench Database" href="http://www.metabolomicsworkbench.org/"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="Metabolomics Workbench logo"
+                     src="img/db-logos/Metabolomics_Workbench_logo.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              is a scalable and extensible informatics infrastructure which will serve as a national
+              metabolomics resource.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow"
+                 href='#/search?q=*:* AND repository:"MetabolomicsWorkbench"'>datasets</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="http://gpmdb.thegpm.org/">GPMDB</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="GPMDB Database" href="http://gpmdb.thegpm.org/"
+                 class="pull-right  image_a">
+                <img alt="GPMDB logo"
+                     src="img/db-logos/the_gpm_db_140x105.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              The Global Proteome Machine Database was constructed to utilize the information obtained by GPM
+              servers to aid in the difficult process of validating peptide MS/MS spectra as well as protein
+              coverage patterns.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow"
+                 href='#/search?q=*:* AND repository:"GPMDB"'><em>{{databases["GPMdb"]}}</em> datasets</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="https://www.metabolome-express.org/">MetabolomeExpress</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="MetabolomeExpress Database" href="https://www.metabolome-express.org/"
+                 class="pull-right  image_a">
+                <img alt="MetabolomeExpress logo"
+                     src="img/db-logos/metabolome express logo_Mx.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              A public place to process, interpret and share GC/MS metabolomics datasets.
+              <!--MetabolomeExpress houses both private and public uncurated repositories as well as a quality-controlled database of highly-annotated metabolite response statistics submitted by MetabolomeExpress users.-->
+            </div>
+            <div class="panel-footer small">
+              <a rel="nofollow"
+                 href='#/search?q=*:* AND repository:"MetabolomeExpress MetaPhenDB"'><em>{{databases["MetabolomeExpress"]}}</em> datasets</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!--row-->
+    </div>
+    <div id="slick-page-two">
+
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="https://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp">GNPS</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="GNPS Database" href="https://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="GNPS logo" src="img/db-logos/GNPS_logo.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              The Global Natural Products Social Molecular Networking (GNPS) is a platform for providing an overview of the molecular features in mass spectrometry based metabolomics by comparing fragmentation patterns to identify chemical relationships.
+            </div>
+            <div class="panel-footer small">
+              <a rel="nofollow" href='"#/search?q=*:* AND repository:"pride"'>datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="https://www.ebi.ac.uk/arrayexpress/">ArrayExpress</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="ArrayExpress Database" href="https://www.ebi.ac.uk/arrayexpress/"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="ArrayExpress logo" src="img/db-logos/array_express.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              ArrayExpress Archive of Functional Genomics Data stores data from high-throughput functional genomics experiments,
+              and provides these data for reuse to the research community.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"ArrayExpress"'>
+                datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="panel panel-default expert-db-card ">
+
+            <div class="expert-db-card-header">
+              <a href="http://www.ebi.ac.uk/gxa/home">Expression Atlas</a>
+            </div>
+
+            <div class="expert-db-card-logo">
+              <a title="Expression Atlas Database" href="http://www.ebi.ac.uk/gxa/home"
+                 class="pull-right expert-db-logo image_a">
+                <img alt="ExpressioAtlas logo" src="img/db-logos/expression_atlas.png"
+                     class="img-rounded hvr-grow">
+              </a>
+            </div>
+
+            <div class="panel-body small">
+              The Expression Atlas provides information on gene expression patterns under different biological conditions. Gene expression data is re-analysed in-house to detect genes showing interesting baseline and differential expression patterns.
+            </div>
+
+            <div class="panel-footer small">
+              <a rel="nofollow" href='#/search?q=*:* AND repository:"ExpressionAtlas"'>
+                datasets</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+      </div>
+    </div>
+
+</div>
+

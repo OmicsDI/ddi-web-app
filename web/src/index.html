@@ -1,29 +1,89 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app"
+      class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 <head>
-  <meta charset="utf-8">
-  <title>Web</title>
-  <base href="/">
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width" name="viewport">
+    <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
+          name="description">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta content={{meta_dataset_title}} name="dataset_title">
+    <meta content={{meta_dataset_abstract}} name="dataset_abstract">
+    <meta content={{meta_dataset_identifier}} name="dataset_identifier">
+    <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
 
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>OmicsDI: Home</title>
+    <link rel="canonical" href={{meta_originalURL}}>
+    <link rel="canonical" href={{meta_ddiURL}}>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/boilerplate-style.css">
+    <link rel="stylesheet" href="/css/ebi-global.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/css/ebi-visual.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/css/984-24-col-fluid.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link type="text/css" href="/css/ngProgress.css" rel="stylesheet">
+    <link type="text/css" href="/css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="/css/autocomplete.css" rel="stylesheet">
+
+    <!-- favico -->
+    <link rel="apple-touch-icon" sizes="57x57" href="img/favico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/favico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/favico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/favico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/favico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/favico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/favico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/favico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="img/favico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favico/favicon-16x16.png">
+    <link rel="manifest" href="img/favico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="img/favico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!--favico end -->
+    <base href="/">
 </head>
+
 <script>
-   function getParameterByName(name) {
+  function getParameterByName(name) {
     var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
   }
   var auth = getParameterByName('auth');
   if(auth) {
-     localStorage.setItem('id_token', auth);
-     console.log("redirectd");
-     console.log(window.location.href);
-     window.location.href = window.location.href.replace("?auth="+auth,"");
+    localStorage.setItem('id_token', auth);
+    window.location.href = window.location.href.replace("?auth="+auth,"");
   }
 </script>
-<body>
-  <app-root>Loading...</app-root>
+
+<body class="level2">
+
+<app-root>Loading..</app-root>
+<!--wraper of page -->
+<!-- To have google analytics-->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new
+                        Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-70417662-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
 </body>
 </html>
