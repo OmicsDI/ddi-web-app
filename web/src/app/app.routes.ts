@@ -4,15 +4,15 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {ProfileComponent} from "./profile/profile.component";
-import {DatabaseComponent} from "./database/database.component";
-import {HomeComponent} from "./home/home.component";
-import {ApiComponent} from "./api/api.component";
-import {SearchComponent} from "./search/search.component";
-import {AboutComponent} from "./about/about.component";
-import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
-import { AuthGuard } from './auth-guard.service';
-import {DatasetComponent} from "./dataset/dataset.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
+import {DatabaseComponent} from "./pages/database/database.component";
+import {HomeComponent} from "./pages/home/home.component";
+import {ApiComponent} from "./pages/api/api.component";
+import {SearchComponent} from "./pages/search/search.component";
+import {AboutComponent} from "./pages/about/about.component";
+import {UnauthorizedComponent} from "./pages/unauthorized/unauthorized.component";
+import { AuthGuard } from './services/auth-guard.service';
+import {DatasetComponent} from "./pages/dataset/dataset.component";
 
 // Route Configuration
 export const routes: Routes = [

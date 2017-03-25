@@ -7,24 +7,7 @@
   </div>
   <div class="row" style="">
     <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
-      <div id="socialnetworks" style="top:13em; z-index:100;margin-left:20px; width:50px" ng-show="get_dataset_fail.length<1" class="">
-        <!-- <g:plusone></g:plusone> -->
-        <div class="simple-skinnyleft">
-          <a href="" class="tweetcountwrapper" ng-click="click_share_this('twitter')"><i class="fa fa-twitter"></i>
-            <!-- <div class="simple-skinnyleft tweetcount">1,421</div> -->
-          </a>
-          <a href="" class="facebookcountwrapper" ng-click="click_share_this('facebook')"><i class="fa fa-facebook"></i>
-          </a>
-          <a href="" class="emailcountwrapper" ng-click="click_share_this('email')"><i class="fa fa-envelope"></i>
-          </a>
-          <a href="" class="tumblrcountwrapper" ng-click="click_share_this('tumblr')"><i class="fa fa-tumblr"></i>
-          </a>
-          <a href="" class="linkedincountwrapper" ng-click="click_share_this('linkedin')"><i class="fa fa-linkedin"></i>
-          </a>
-          <a href="" class="googlepluscountwrapper" ng-click="click_share_this('google')"> <i class="fa fa-google-plus"></i>
-          </a>
-        </div>
-      </div>
+      <app-socialnetworks></app-socialnetworks>
     </div>
     <!-- col-md-1-->
     <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
@@ -1801,57 +1784,8 @@
         <br>
         <!--dataset_middle_bottom-->
       </div>
-      <!--dataset_middle_panel-->
-
-      <!--dataset_bottom_panel-->
       <div class="panel panel-default">
-        <div class="panel-footer ">
-          <h3>Comment
-          </h3>
-        </div>
-        <div id="disqus_thread" style="margin:10px"><iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="https://disqus.com/embed/comments/?base=default&amp;version=07ee6e9c02559e4d32efa90d6d002d33&amp;f=omicsdi&amp;t_u=http%3A%2F%2Fwww.omicsdi.org%2Fdataset%2Farrayexpress-repository%2FE-GEOD-66737&amp;t_d=OmicsDI%20Dataset&amp;t_t=OmicsDI%20Dataset&amp;s_o=default" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 75px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
-        <!-- comment public JS code start -->
-        <script>
-          /**
-           * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-           * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-           */
-          var currentURL = window.location.href,
-            indexDataset = currentURL.indexOf("dataset");
-          var disqus_config = function() {
-            var acc_database = getAccDatabase();
-            this.page.url = currentURL.substr(0, indexDataset - 2) + currentURL.substr(indexDataset); // Replace PAGE_URL with your page's canonical Final variable
-            this.page.identifier = currentURL.substr(indexDataset); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-            this.page.title = "(" + acc_database["database"] + " - " + acc_database["acc"] + ") - " + document.title;
-          };
-          function getAccDatabase() {
-            while (document.title == "OmicsDI Dataset") {
-              wait(10);
-            }
-            var url = document.location.toString();
-            var arrUrl = url.split("//");
-            var start = arrUrl[1].indexOf("/");
-            var relUrl = arrUrl[1].substring(start);
-            if (relUrl.indexOf("?") != -1) {
-              relUrl = relUrl.split("?")[0];
-            }
-            var reg_address = /(\w+)\/(\w+)$/;
-            var result_array = reg_address.exec(relUrl);
-            var acc_database = {};
-            acc_database["database"] = result_array[1];
-            acc_database["acc"] = result_array[2];
-            return acc_database;
-          }
-          (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document,
-              s = d.createElement('script');
-            s.src = '//omicsdi.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-          })();
-        </script>
-        <noscript>Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript" rel="nofollow"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
-        <!-- comment public JS code end -->
+          <app-disqus></app-disqus>
       </div>
     </div>
     <!-- col-md-8 centerpanel-->
@@ -1861,182 +1795,15 @@
       Similar Datasets
     </h4>
       <p></p>
-      <!--<uib-tabset>-->
-      <!--<uib-tab heading="By MetaData">-->
       <ul class="list-unstyled">
-        <!-- ngRepeat: dataset in result.datasets -->
-        <!-- ngRepeat: relatedDataset in related_datasets | limitTo:related_datasets_limit --><li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-        <div class="project-widget  list-group-item ddi-card-panel">
-          <div class="project-widget-accession">
-            <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
-            <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
-            <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
-            <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-59327" href="/dataset/arrayexpress-repository/E-GEOD-59327">The exon junction complex controls transposable element activity by ensuring faithful splicing of the piwi transcript</a>
-          </div>
-          <div class="project-widget-paragraph hidden ng-binding">
-            <b>Project description:</b> The exon junction complex (EJC) is a highly conserved ribonucleoprotein complex which binds RNAs during splicing and remains associated with them foll...
-            <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
-            <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
-            <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-binding">
-            <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2014-12-10| </span>
-            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-59327 |
-            <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
-          </div>
-        </div>
-      </li><!-- end ngRepeat: relatedDataset in related_datasets | limitTo:related_datasets_limit --><li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-        <div class="project-widget  list-group-item ddi-card-panel">
-          <div class="project-widget-accession">
-            <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
-            <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
-            <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
-            <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-43308" href="/dataset/arrayexpress-repository/E-GEOD-43308">Identification of in vivo, conserved, FUS RNA binding sites and the impact of FUS on the neuronal transcriptome</a>
-          </div>
-          <div class="project-widget-paragraph hidden ng-binding">
-            <b>Project description:</b> FUS, an RNA binding protein was recently implicated in Amyotrophic Lateral Sclerosis (ALS). ALS is a fatal neurodegenerative disease. We report the id...
-            <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
-            <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
-            <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-binding">
-            <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2014-05-02| </span>
-            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-43308 |
-            <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
-          </div>
-        </div>
-      </li><!-- end ngRepeat: relatedDataset in related_datasets | limitTo:related_datasets_limit --><li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-        <div class="project-widget  list-group-item ddi-card-panel">
-          <div class="project-widget-accession">
-            <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
-            <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
-            <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
-            <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-40507" href="/dataset/arrayexpress-repository/E-GEOD-40507">Multiple insert size paired-end sequencing for deconvolution of complex transcriptomes</a>
-          </div>
-          <div class="project-widget-paragraph hidden ng-binding">
-            <b>Project description:</b> Deep sequencing of transcriptomes allows quantitative and qualitative analysis of many RNA species in a sample, with parallel comparison of expression...
-            <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
-            <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
-            <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-binding">
-            <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2012-11-06| </span>
-            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-40507 |
-            <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
-          </div>
-        </div>
-      </li><!-- end ngRepeat: relatedDataset in related_datasets | limitTo:related_datasets_limit --><li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-        <div class="project-widget  list-group-item ddi-card-panel">
-          <div class="project-widget-accession">
-            <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
-            <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
-            <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
-            <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-49293" href="/dataset/arrayexpress-repository/E-GEOD-49293">The RNA binding protein RBM38 (RNPC1) regulates splicing during late erythroid differentiation</a>
-          </div>
-          <div class="project-widget-paragraph hidden ng-binding">
-            <b>Project description:</b> Alternative pre-mRNA splicing is a prevalent mechanism in mammals that promotes proteomic diversity, including expression of cell-type specific protei...
-            <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
-            <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
-            <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-binding">
-            <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2014-06-03| </span>
-            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-49293 |
-            <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
-          </div>
-        </div>
-      </li><!-- end ngRepeat: relatedDataset in related_datasets | limitTo:related_datasets_limit --><li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
-        <div class="project-widget  list-group-item ddi-card-panel">
-          <div class="project-widget-accession">
-            <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
-            <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-            <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
-            <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
-            <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-70907" href="/dataset/arrayexpress-repository/E-GEOD-70907">Targeted paired-end sequencing of nascent RNA from S. cerevisiae</a>
-          </div>
-          <div class="project-widget-paragraph hidden ng-binding">
-            <b>Project description:</b> Targeted paired-end sequencing of cDNA from unfragmented nascent RNA from exponentially growing S. cerevisiae cells was employed to obtain Pol II tran...
-            <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
-            <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
-            <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
-          </div>
-          <div class="project-widget-paragraph ng-binding">
-            <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2016-03-25| </span>
-            <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-70907 |
-            <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
-          </div>
-        </div>
-      </li><!-- end ngRepeat: relatedDataset in related_datasets | limitTo:related_datasets_limit -->
-        <!-- end ngRepeat: -->
+        <app-similar *ngFor="similar"></app-similar>
       </ul>
       <div class="input-btn center" style="width: 102px; margin-bottom: 10px;" ng-show="related_datasets.length > 5">
         <button type="submit" class="btn btn-default  ng-binding" ng-click="related_load_more()">
           <i class="fa fa-search"></i> Load More
         </button>
       </div>
-      <!--</uib-tab>-->
-      <!--<uib-tab heading="By Experiment Data">-->
-      <!--<ul class="list-unstyled">-->
-      <!--&lt;!&ndash; ngRepeat: dataset in result.datasets &ndash;&gt;-->
-      <!--<li class="result animate-repeat "-->
-      <!--ng-repeat="relatedDataset in related_datasets_by_exp | limitTo:related_datasets_limit" style="">-->
-      <!--<div class="project-widget  list-group-item ddi-card-panel">-->
-      <!--<div class="project-widget-accession">-->
-      <!--<img src="/static/images/omics/Proteomics2.png"-->
-      <!--ng-show="proteomics_list.indexOf(relatedDataset.source)>-1"/>-->
-      <!--<img src="/static/images/omics/Metabolomics2.png"-->
-      <!--ng-show="metabolomics_list.indexOf(relatedDataset.source)>-1"/>-->
-      <!--<img src="/static/images/omics/Genomics2.png" ng-show="genomics_list.indexOf(relatedDataset.source)>-1"/>-->
-      <!--<a target="" class="align-justify"-->
-      <!--href={{"#/dataset/"+repositories[relatedDataset.source]+"/"+relatedDataset.id}}>{{relatedDataset.title}}</a>-->
-      <!--</div>-->
-      <!--<div class="project-widget-paragraph hidden">-->
-      <!--<b>Project description:</b>-->
-      <!--{{relatedDataset["description"]|limitTo:150}}{{relatedDataset["description"].length>450?'...':''}}-->
-      <!--<span ng-show="relatedDataset.description===null">Not available</span>-->
-      <!--</div>-->
-      <!--<div class="project-widget-paragraph" ng-show="relatedDataset['organisms']">-->
-      <!--<b>Organism: </b><span ng-repeat="organism in relatedDataset['organisms']">{{organism["name"]}}  </span>-->
-      <!--<span ng-show="relatedDataset.organisms.length===0">Not available</span>-->
-      <!--</div>-->
-      <!--<div class="project-widget-paragraph">-->
-      <!--<span ng-show="relatedDataset.publicationDate"> {{relatedDataset['publicationDate'].substr(0,4)+"-"+relatedDataset['publicationDate'].substr(4,2)+"-"+relatedDataset['publicationDate'].substr(6,2)}}| </span>-->
-      <!--&lt;!&ndash;a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}&ndash;&gt;{{relatedDataset.id}}</a> |-->
-      <!--&lt;!&ndash;a href={{database_urls[repositories[relatedDataset.source]]}}&ndash;&gt; {{repositories[relatedDataset.source]}} </a>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</li>-->
-      <!--&lt;!&ndash; end ngRepeat: &ndash;&gt;-->
-      <!--</ul>-->
-      <!--<div class="input-btn center" style="width:102px; margin-bottom:10px">-->
-      <!--<button type="submit" class="btn btn-default " ng-click="related_load_more()">-->
-      <!--<i class="fa fa-search"></i> {{load_more_btn_show}}-->
-      <!--</button>-->
-      <!--</div>-->
-      <!--</uib-tab>-->
-      <!--</uib-tabset>-->
-      <!-- /input-group-btn -->
     </div>
-    <!-- col-md-3 rightpanel-->
   </div>
   <!-- row-->
 </div>

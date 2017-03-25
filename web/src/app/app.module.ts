@@ -4,24 +4,36 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpModule, Http, RequestOptions} from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { LoginLauncherComponent } from './login-launcher/login-launcher.component';
-import { HomeComponent } from './home/home.component';
-import { ProfileComponent } from './profile/profile.component';
-import { DatabaseComponent } from './database/database.component';
-import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './controls/login/login.component';
+import { LoginLauncherComponent } from './controls/login-launcher/login-launcher.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { DatabaseComponent } from './pages/database/database.component';
+import { AboutComponent } from './pages/about/about.component';
 import {routing} from "./app.routes";
 import {MaterialModule} from "@angular/material";
-import {ProfileService} from "./profile.service";
+import {ProfileService} from "./services/profile.service";
 import { AUTH_PROVIDERS, AuthHttp, AuthConfig } from 'angular2-jwt';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import {AuthService} from "./auth.service";
-import {AuthGuard} from "./auth-guard.service";
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
+import {AuthService} from "./services/auth.service";
+import {AuthGuard} from "./services/auth-guard.service";
 import { Routes, RouterModule } from '@angular/router';
-import { ApiComponent } from './api/api.component';
-import { SearchComponent } from './search/search.component';
-import { DatasetComponent } from './dataset/dataset.component';
-import { CheckComponent } from './check/check.component';
+import { ApiComponent } from './pages/api/api.component';
+import { SearchComponent } from './pages/search/search.component';
+import { DatasetComponent } from './pages/dataset/dataset.component';
+import { CheckComponent } from './pages/check/check.component';
+import {SearchService} from "./services/search.service";
+import {SearchBoxComponent} from "./pages/search/search-box/search-box.component";
+import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
+import {SearchFacetComponent} from "./pages/search/search-facet/search-facet.component";
+import {AutocompleteJComponent} from "./controls/autocomplete-j/autocomplete-j.component";
+import {AutocompleteNComponent} from "./controls/autocomplete-n/autocomplete-n.component";
+import {TruncatePipe} from "./pipes/truncate.pipe";
+import {FacetComponent} from "./controls/facet/facet.component";
+import {Ng2AutoCompleteModule} from "ng2-auto-complete";
+import { SocialnetworksComponent } from './controls/socialnetworks/socialnetworks.component';
+import { SimilarComponent } from './pages/dataset/similar/similar.component';
+import { DisqusComponent } from './pages/dataset/disqus/disqus.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -48,15 +60,23 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     LoginComponent,
     LoginLauncherComponent,
     HomeComponent,
-    ProfileComponent,
     DatabaseComponent,
-    ProfileComponent,
     AboutComponent,
     UnauthorizedComponent,
     ApiComponent,
     SearchComponent,
     DatasetComponent,
-    CheckComponent
+    CheckComponent,
+    SearchBoxComponent,
+    SearchResultComponent,
+    SearchFacetComponent,
+    AutocompleteJComponent,
+    AutocompleteNComponent,
+    TruncatePipe,
+    FacetComponent,
+    SocialnetworksComponent,
+    SimilarComponent,
+    DisqusComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +85,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MaterialModule,
     routing,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2AutoCompleteModule
   ],
   exports: [
     RouterModule
@@ -75,7 +96,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
      useFactory: authHttpServiceFactory,
      deps: [Http, RequestOptions]}
     , AuthService
-    , AuthGuard],
+    , AuthGuard
+    , SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

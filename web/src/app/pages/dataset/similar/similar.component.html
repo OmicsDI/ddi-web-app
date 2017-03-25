@@ -1,0 +1,25 @@
+<li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
+  <div class="project-widget  list-group-item ddi-card-panel">
+    <div class="project-widget-accession">
+      <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
+      <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
+      <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
+      <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
+      <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
+      <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-49293" href="/dataset/arrayexpress-repository/E-GEOD-49293">The RNA binding protein RBM38 (RNPC1) regulates splicing during late erythroid differentiation</a>
+    </div>
+    <div class="project-widget-paragraph hidden ng-binding">
+      <b>Project description:</b> Alternative pre-mRNA splicing is a prevalent mechanism in mammals that promotes proteomic diversity, including expression of cell-type specific protei...
+      <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
+    </div>
+    <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
+      <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
+      <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
+    </div>
+    <div class="project-widget-paragraph ng-binding">
+      <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2014-06-03| </span>
+      <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-49293 |
+      <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
+    </div>
+  </div>
+</li>

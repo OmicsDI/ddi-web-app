@@ -1,0 +1,60 @@
+<span class="" style="">
+                <span id="metasearch-results-count" class="ng-binding ng-scope">{{searchCount}}</span>
+                <i class="fa fa-search"></i> Results for search term:
+                <b class="ng-binding">{{searchQuery}}</b>
+</span>
+
+<ul>
+
+  <li *ngFor="let d of dataSets" class="repeated-item ng-scope" ng-repeat="dataset in result.datasets" style="">
+    <div class="ddi-card-panel  list-group-item">
+      <div class="project-widget-accession">
+        <img src="img/omics/Multipleomics2.png" *ngIf="d.omicsType.indexOf('Multiomics') > -1" class="ng-hide">
+        <img src="img/omics/Proteomics2.png" *ngIf="d.omicsType.indexOf('Proteomics') > -1" class="ng-hide">
+        <img src="img/omics/Metabolomics2.png" *ngIf="d.omicsType.indexOf('Metabolomics') > -1" class="ng-hide">
+        <img src="img/omics/Genomics2.png" *ngIf="d.omicsType.indexOf('Genomics') > -1" class="">
+        <img src="img/omics/Transcriptomics2.png" *ngIf="d.omicsType.indexOf('Transcriptomics') > -1 && d.omicsType.indexOf('Multi-Omics') > -1" class="ng-hide">
+        <a [routerLink]="['/dataset',d.source, d.id]" >
+          <span class="ng-binding">{{d.title}} lol </span></a>
+      </div>
+      <blockquote class="ddi-blockquote">
+        <div class="project-widget-paragraph align-justify ng-binding">
+          <!--
+              <b>Project description:</b>
+          -->
+          <span class="ng-binding"><p>{{d.description | truncate : 200 : '...'}}</p></span>
+
+          <span *ngIf="!!!d.description">Not available</span>
+        </div>
+
+        <div class="project-widget-paragraph">
+        </div>
+        <div class="project-widget-paragraph">
+          ORGANISM(S): <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
+          <span *ngIf="!d.organisms">Not available</span>
+        </div>
+
+        <div class="project-widget-paragraph ng-hide">
+          TISSUE(S):  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
+          <span *ngIf="!d.tissues">Not available</span>
+        </div>
+        <div class="project-widget-paragraph ng-hide">
+          DISEASE(S): <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
+          <span *ngIf="!d.diseases">Not available</span>
+        </div>
+      </blockquote>
+
+      <div class="project-widget-paragraph">
+        <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
+          <span class="ng-binding">{{d.publicationDate}}</span>-- | </span>
+        <a href="#dataset/ega/{{d.id}}"><span class="ng-binding">{{d.id}}</span></a> |
+        <a href="https://www.ebi.ac.uk/ega/"> <span class="ng-binding">{{d.source}}</span> </a>
+      </div>
+      <div *ngIf="d.keywords" class="project-widget-paragraph ng-hide">
+        <span *ngFor="let o of d.keywords">{{o.name}}&nbsp;</span>
+      </div>
+    </div>
+  </li>
+</ul>
+
+

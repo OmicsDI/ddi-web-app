@@ -1,0 +1,18 @@
+<input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+       placeholder="Find your {{label}}"
+       #searchInput
+       (keyup)="searchByName()"
+       style="width:100%;">
+<ul class="list-unstyled metasearch-facet-values">
+
+  <li *ngFor="let v of facetValuesFiltered" class="ng-scope" [hidden]="!v.visible">
+    <!-- https://github.com/Dogfalo/materialize/issues/4322 -->
+    <input type="checkbox"
+           style=" position:relative; left: 0px; opacity: 50; visibility: visible;"
+           (click)="checkBoxClicked(v.value)" >
+    <a href="" class="metasearch-facet-link ng-binding">{{v.value}}
+      <small class="ng-binding">({{v.count}})</small>
+    </a>
+  </li>
+
+</ul>
