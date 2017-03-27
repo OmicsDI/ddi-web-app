@@ -1,7 +1,7 @@
 <div id="" class="container" style="margin:0px;background-color: #0099cc;">
 
     <!-- local-search -->
-    <div id="ddi-local-masthead" class="row">
+    <%--<div id="ddi-local-masthead" class="row">
         <!-- local-title -->
         <!-- NB: for additional title style patterns, see http://frontier.ebi.ac.uk/web/style/patterns -->
         <div class="grid_12 alpha logo-title col-md-6 col-sm-12 col-xs-12" id="local-title">
@@ -66,26 +66,151 @@
             </div>
 
         </div>
-    </div>
+    </div>--%>
 
-    <div id="local-masthead" class="masthead row" style="margin-left:-15px;margin-right:-15px">
+    <div id="local-masthead" class="masthead row" style="margin-left:-15px;margin-right:-15px;margin-top: 15px">
         <!-- local-nav -->
         <nav style="float:bottom" class="col-md-12 col-sm-12 col-xs-12">
+
             <ul class="" id="local-nav">
-                <li class=" first" id="home-menu"><a title="Home" href="/" alt="Home">Home</a></li>
+                <li class=" first" id="home-image">
+                <div>
+                    <a href="/" title="OmicsDI Homepage"><img src ="static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;width: 41.848px;height: 28px;padding-right: 0px;padding-left: 20px;padding-right: 0px;padding-top: 1px;"></a>
+                </div></li>
+                <li class="" id="home-menu"><a title="Home" href="/" alt="Home">Home</a></li>
                 <li class="" id="browse-menu"><a title="Browse" href="/search?q=*:*" alt="Browse">Browse</a></li>
                 <li class="" id="api-menu">
                     <a title="OmicsDI API" href="http://www.omicsdi.org/ws" alt="API">API</a>
                 </li>
-                <li class=" last" id="about-prider-menu">
+                <li class="" id="about-prider-menu">
                     <a title="Databases" href="/databases" alt="Databases">Databases</a>
                 </li>
-                <li class="functional last">
+                <li dropdown>
+                    <a href="#" dropdown-toggle>Help <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://blog.omicsdi.org/" alt="Help">Omics Help</a></li>
+                        <li><a href="/about" alt="About">About Omicsdi</a></li>
+                        <li><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=omicsdi" alt="Feedback">Feedback</a></li>
+                    </ul>
+                </li>
+                <li class="col-md-6 col-sm-12 col-xs-12 functional">
+                    <%--<div class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search" style="height:120px; float:right; margin-top:0px; z-index:1; width:45%">
+                    </div>--%>
+
+                    <div ng-controller="QueryCtrl" id="queryCtrl" ng-show="show_top_search"
+                         style="height: 29px;float:right;margin-top:0px;z-index:1;">
+                        <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                            <%--<fieldset>--%>
+                                <div class="form-group " ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                                    <div class="input-group ">
+                                        <autocomplete ng-model="query.text"
+                                                      attr-placeholder="organism, repository, gene, tissue, accession"
+                                                      click-activation="false" data="words" on-type="get_suggestions"
+                                                      on-select="do_query"></autocomplete>
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
+                                                <i class="fa fa-caret-down" aria-hidden="true" ng-if="facaret"></i>
+                                                <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
+                                                Advanced
+                                            </button>
+                                            <button type="submit" ng-disab class="btn btn-primary ddi-btn">
+                                                <i class="fa fa-search"></i> Search
+                                            </button>
+                                        </div>
+                                        <!-- /input-group-btn -->
+                                    </div>
+                                    </span>
+                                </div>
+                                <!-- /form-group -->
+                           <%-- </fieldset>--%>
+                        </form>
+
+                        <div class="query-bulider-box" ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.07);">
+                            <div ng-controller="QueryBuilderCtrl">
+                                <!--        <h1>Angular.js Query Builder</h1>  -->
+                                <form novalidate name="queryForm" class="local-search">
+                                    <fieldset style="background-color:#FFFFFF;position: relative; z-index: 1">
+                                        <div class="alert alert-info">
+                                            <div style="position: relative;">
+                                                <strong>Query preview</strong>
+                                                <button id = "adv_search_button"  type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;" ng-click="submit_adv_query()">
+                                                    <i class="fa fa-search" style="font-size: 30px"></i>
+                                                </button>
+                                            </div>
+                                            <span ng-bind-html="query_output"></span>
+                                        </div>
+
+                                        <query-builder group="filter.group"></query-builder>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
+<%--                <li class="functional last">
                     <a data-icon="\" class="icon icon-static"
                        href="http://www.ebi.ac.uk/support/index.php?query=omicsdi" alt="Feedback">Feedback</a>
                 </li>
                 <li class="functional"><a class="" href="/about" alt="About">About</a></li>
-                <li class="functional"><a class="" href="http://blog.omicsdi.org/" alt="Help">Help</a></li>
+                <li class="functional"><a class="" href="http://blog.omicsdi.org/" alt="Help">Help</a></li>--%>
+                <%--<li class="">
+                &lt;%&ndash;<div class="col-md-4 col-sm-10 col-xs-12" ng-hide="show_top_search" style="height:120px; float:right; margin-top:0px; z-index:1; width:45%">
+                </div>&ndash;%&gt;
+
+                <div ng-controller="QueryCtrl" id="queryCtrl" class="col-md-6 col-sm-12 col-xs-12" ng-show="show_top_search"
+                     style="height:105px; float:right; margin-top:0px; z-index:1; ">
+                    <form novalidate name="queryForm" class="local-search" ng-submit="submit_query()">
+                        <fieldset>
+                            <div class="form-group " ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
+                                <div class="input-group ">
+                                    <autocomplete ng-model="query.text"
+                                                  attr-placeholder="organism, repository, gene, tissue, accession"
+                                                  click-activation="false" data="words" on-type="get_suggestions"
+                                                  on-select="do_query"></autocomplete>
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
+                                            <i class="fa fa-caret-down" aria-hidden="true" ng-if="facaret"></i>
+                                            <i class="fa fa-caret-up" aria-hidden="true" ng-if="!facaret"></i>
+                                            Advanced
+                                        </button>
+                                        <button type="submit" ng-disab class="btn btn-primary ddi-btn">
+                                            <i class="fa fa-search"></i> Search
+                                        </button>
+                                    </div>
+                                    <!-- /input-group-btn -->
+                                </div>
+                                </span>
+                            </div>
+                            <!-- /form-group -->
+                        </fieldset>
+                    </form>
+
+                    <div class="query-bulider-box" ng-if="popup.open" style="margin-left: 9px;margin-right: 9px;margin-top: -13px;background-color: #FFFFFF; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.07);">
+                        <div ng-controller="QueryBuilderCtrl">
+                            <!--        <h1>Angular.js Query Builder</h1>  -->
+                            <form novalidate name="queryForm" class="local-search">
+                                <fieldset style="background-color:#FFFFFF">
+                                    <div class="alert alert-info">
+                                        <div style="position: relative;">
+                                            <strong>Query preview</strong>
+                                            <button id = "adv_search_button"  type="submit" class="btn btn-primary" style="padding:3px 6px;float: right;" ng-click="submit_adv_query()">
+                                                <i class="fa fa-search" style="font-size: 30px"></i>
+                                            </button>
+                                        </div>
+                                        <span ng-bind-html="query_output"></span>
+                                    </div>
+
+                                    <query-builder group="filter.group"></query-builder>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                </li>--%>
+
             </ul>
         </nav>
     </div>
@@ -93,7 +218,7 @@
 
 
     <script type="text/ng-template" id="/queryBuilderDirective.html">
-        <div class="alert alert-warning alert-group" ng-init="init()">
+        <div class="alert alert-warning alert-group" ng-init="init()" style="position: relative; z-index: 1">
             <div class="form-inline" style="position: relative;">
                 <select ng-options="o.name as o.name for o in operators" ng-model="group.operator" class="form-control input-sm"></select>
                 <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Field</button>

@@ -233,10 +233,16 @@
                     </div>
                     <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
                         <img src="/static/images/omics/Multipleomics.png" ng-show="dataset.omics_type.indexOf('Multi-Omics') != -1" />
+                        <img src="/static/images/omics/Multipleomics.png" ng-show="dataset.omics_type.indexOf('Multiomics') != -1" />
                         <img src="/static/images/omics/Proteomics.png" ng-show="dataset.omics_type.indexOf('Proteomics') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1" />
                         <img src="/static/images/omics/Metabolomics.png" ng-show="dataset.omics_type.indexOf('Metabolomics') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1" />
                         <img src="/static/images/omics/Genomics.png" ng-show="dataset.omics_type.indexOf('Genomics') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1 " />
                         <img src="/static/images/omics/Transcriptomics.png" ng-show="(dataset.omics_type.indexOf('Transcriptomics') == 0 || dataset.omics_type.indexOf('transcriptomics') == 0) && dataset.omics_type.indexOf('Multi-Omics') == -1" />
+                        <img src="/static/images/omics/BioModel.png" ng-show="dataset.omics_type.indexOf('Models') == 0" />
+                        <img src="/static/images/omics/rsz_1newcircle.jpg" ng-show="dataset.omics_type.indexOf('UNKNOWN') == 0"/>
+<%--                        <img src="/static/images/omics/BioModel.png" ng-show="dataset.omics_type.indexOf('LINCS') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1 " />
+                        <img src="/static/images/omics/BioModel.png" ng-show="dataset.omics_type.indexOf('PAXDB') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1 " />
+                        <img src="/static/images/omics/BioModel.png" ng-show="dataset.omics_type.indexOf('JPOST Repository') == 0 && dataset.omics_type.indexOf('Multi-Omics') == -1 " />--%>
                         <br>
                         <br>
                         <br>
@@ -516,10 +522,13 @@
                                     <br>
                                     <li ng-repeat="relatedDataset in related_datasets_by_biological| limitTo:related_datasets_by_biological_limit" class="title_one_line" style="height: 2.0em">
                                         <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" />
+                                        <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multiomics') != -1" />
                                         <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
                                         <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
                                         <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " />
                                         <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                        <img src="/static/images/omics/BioModel2.png" ng-show="relatedDataset.omicsType.indexOf('Models') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                        <img src="/static/images/omics/rsz_newcircle.jpg" ng-show="relatedDataset.omicsType.indexOf('UNKNOWN') != -1" />
                                         <a target="" class="align-justify" ng-href="/dataset/{{relatedDataset.source}}/{{relatedDataset.id}}">
                                             {{relatedDataset.title}}
                                             <!--{{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}-->
@@ -599,10 +608,13 @@
                         <div class="project-widget  list-group-item ddi-card-panel">
                             <div class="project-widget-accession">
                                 <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" />
+                                <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multiomics') != -1" />
                                 <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
                                 <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
                                 <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " />
                                 <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                <img src="/static/images/omics/BioModel2.png" ng-show="relatedDataset.omicsType.indexOf('Models') == 0" />
+                                <img src="/static/images/omics/rsz_newcircle.jpg" ng-show="relatedDataset.omicsType.indexOf('UNKNOWN') == 0" />
                                 <a target="" class="align-justify" ng-href="/dataset/{{relatedDataset.source}}/{{relatedDataset.id}}">{{relatedDataset.title}}</a>
                             </div>
                             <div class="project-widget-paragraph hidden">

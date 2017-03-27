@@ -23,11 +23,14 @@ angular.module('ddiApp').controller('MainContentCtrl', ['$scope', '$routeParams'
             location.pathname === '/search' ||
             location.pathname === '/databases' ||
             location.pathname.match(/\/dataset/) ||
-            location.pathname === '/help'
+            location.pathname === 'http://blog.omicsdi.org/'
         ) {
             $scope.$root.show_top_search = true
         } else {
             $scope.$root.show_top_search = false
+        }
+        if(location.pathname.match(/\/help/)){
+            location.target('http://blog.omicsdi.org/')
         }
 
         if (location.pathname.match('/search')) {

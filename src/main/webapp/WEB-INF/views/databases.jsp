@@ -370,6 +370,107 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="panel panel-default expert-db-card ">
+
+                                            <div class="expert-db-card-header">
+                                                <a href="https://www.ebi.ac.uk/biomodels-main/">BioModels Database</a>
+                                            </div>
+
+                                            <div class="expert-db-card-logo">
+                                                <a title="BioModels Database" href="https://www.ebi.ac.uk/biomodels-main/" class="pull-right expert-db-logo image_a">
+                                                    <img alt="ExpressioAtlas logo" src="/static/images/logo/BioModels_logo.png" class="img-rounded hvr-grow">
+                                                </a>
+                                            </div>
+
+                                            <div class="panel-body small">
+                                                BioModels Database is a repository of computational models of biological processes. Models described from literature are manually curated and enriched with cross-references.
+                                            </div>
+
+                                            <div class="panel-footer small">
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"BioModels Database"' alt="BioModels Datasets"><em>{{databases["BioModels"]}}</em>
+                                                    datasets</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="panel panel-default expert-db-card ">
+
+                                            <div class="expert-db-card-header">
+                                                <a href="  http://lincsportal.ccs.miami.edu/dcic-portal/">LINCS</a>
+                                            </div>
+
+                                            <div class="expert-db-card-logo">
+                                                <a title="LINCS" href="  http://lincsportal.ccs.miami.edu/dcic-portal/" class="pull-right expert-db-logo image_a">
+                                                    <img alt="LINCS logo" src="/static/images/logo/ldp_logo.png" class="img-rounded hvr-grow">
+                                                </a>
+                                            </div>
+
+                                            <div class="panel-body small">
+                                                The Database contains all publicly available HMS LINCS datasets and information for each dataset about experimental reagents (small molecule perturbagens, cells, antibodies, and proteins) and experimental and data analysis protocols.
+                                            </div>
+
+                                            <div class="panel-footer small">
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"LINCS"' alt="LINCS"><em>{{databases["LINCS"]}}</em>
+                                                    datasets</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="panel panel-default expert-db-card ">
+
+                                            <div class="expert-db-card-header">
+                                                <a href="http://www.ebi.ac.uk/gxa/home">PAXDB</a>
+                                            </div>
+
+                                            <div class="expert-db-card-logo">
+                                                <a title="PAXDB" href="http://www.ebi.ac.uk/gxa/home" class="pull-right expert-db-logo image_a">
+                                                    <img alt="PAXDB" src="/static/images/logo/paxdb_logo.png" class="img-rounded hvr-grow">
+                                                </a>
+                                            </div>
+
+                                            <div class="panel-body small">
+                                                PaxDb contains estimated abundance values for a large number of proteins in several different species. Furthermore, you can find information about inter-species variation of protein abundances.
+                                            </div>
+
+                                            <div class="panel-footer small">
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"PAXDB"' alt="PAXDB"><em>{{databases.Paxdb}}</em>
+                                                    datasets</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="panel panel-default expert-db-card ">
+
+                                            <div class="expert-db-card-header">
+                                                <a href="https://repository.jpostdb.org">JPOST</a>
+                                            </div>
+
+                                            <div class="expert-db-card-logo">
+                                                <a title="JPOST Repository" href="http://www.ebi.ac.uk/gxa/home" class="pull-right expert-db-logo image_a">
+                                                    <img alt="JPOST Repository logo" src="/static/images/logo/jpost.png" class="img-rounded hvr-grow">
+                                                </a>
+                                            </div>
+
+                                            <div class="panel-body small">
+                                                jPOSTrepo (Japan ProteOme STandard Repository) is a new data repository of sharing MS raw/processed data.
+                                            </div>
+
+                                            <div class="panel-footer small">
+                                                <a rel="nofollow" href='/search?q=*:* AND repository:"JPOST Repository"' alt="JPOST Repository"><em>{{databases["jPOST"]}}</em>
+                                                    datasets</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 <div class="row">
                                 </div>
@@ -454,7 +555,10 @@
                                         <li><a target="_blank" href="https://www.ebi.ac.uk/arrayexpress/" class="no-icon">ArrayExpress</a>
                                         </li>
                                         <li><a target="_blank" href="http://www.ebi.ac.uk/gxa/home" class="no-icon">ExpressionAtlas</a></li>
-
+                                        <li><a target="_blank" href="https://www.ebi.ac.uk/biomodels-main/" class="no-icon">BioModels</a></li>
+                                        <li><a target="_blank" href="http://lincsportal.ccs.miami.edu/dcic-portal/" class="no-icon">Lincs</a></li>
+                                        <li><a target="_blank" href="http://pax-db.org" class="no-icon">Paxdb</a></li>
+                                        <li><a target="_blank" href="https://repository.jpostdb.org/" class="no-icon">Jpost Repository</a></li>
                                     </ul>
                                 </div>
 

@@ -158,8 +158,15 @@
                         </small>
                                             </a>
                                         </li>
-
-                                    </ul>
+                       <%--                 <li ng-hide="omics_facets_no['Models']==0">
+                                            <a href="" ng-class="{'disabled':omics_facets_no['Models']==='0'||is_omic_clicked('Models')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex['Models']].value)"><img src="static/images/omics/BioModel2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Models</span>
+                                                <small>
+                                                    ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex["Models"]].count||0
+                                                    | number}})
+                                                </small>
+                                            </a>
+                                        </li>
+                        --%>            </ul>
                                 </div>
                                 <div ng-hide="result.facets[index_of_facets.repository].facetValues == null">
                                     <!-- Repository -->
@@ -377,10 +384,13 @@
                                                 <div class="ddi-card-panel  list-group-item">
                                                     <div class="project-widget-accession">
                                                         <img src="static/images/omics/Multipleomics2.png" ng-show="dataset.omicsType.indexOf('Multi-Omics') != -1" />
+                                                        <img src="static/images/omics/Multipleomics2.png" ng-show="dataset.omicsType.indexOf('Multiomics') != -1" />
                                                         <img src="static/images/omics/Proteomics2.png" ng-show="dataset.omicsType.indexOf('Proteomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1" />
                                                         <img src="static/images/omics/Metabolomics2.png" ng-show="dataset.omicsType.indexOf('Metabolomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1" />
                                                         <img src="static/images/omics/Genomics2.png" ng-show="dataset.omicsType.indexOf('Genomics') == 0 && dataset.omicsType.indexOf('Multi-Omics') == -1 " />
                                                         <img src="static/images/omics/Transcriptomics2.png" ng-show="(dataset.omicsType.indexOf('Transcriptomics') == 0 || dataset.omicsType.indexOf('transcriptomics') == 0) && dataset.omicsType.indexOf('Multi-Omics') == -1" />
+                                                        <img src="static/images/omics/BioModel2.png" ng-show="dataset.omicsType.indexOf('Models') != -1 " />
+                                                        <img src="static/images/omics/rsz_newcircle.jpg" ng-show="dataset.omicsType.indexOf('UNKNOWN') == 0" />
                                                         <a ng-href="/dataset/{{dataset.source}}/{{dataset.id}}">
                                                             <span ng-bind-html="dataset['title']|browsehighlight:highlight_terms"></span></a>
                                                     </div>
@@ -525,14 +535,6 @@
                                 <div  ng-hide="feedback.submitBtn" style="padding:10px;">
                                     <button ng-click="save_feedback()">Submit</button>
                                 </div>
-<%--                                <div>
-                                    <span class="a-button a-button-primary">
-                                        <span class="a-button-inner">
-                                        <input name="submit" title="Submit" class="a-button-input" type="submit" value="submit">
-                                        <span class="a-button-text" aria-hidden="true">Submit</span>
-                                    </span>
-                                    </span>
-                                </div>--%>
                                 <div>
                                     <h4 >
                                         <i aria-hidden="true" style="font-size: 13px;"> If you need help or have a question, please visit <a href="http://blog.omicsdi.org/" class="a-button-text" role="button">Help Section</a></i>

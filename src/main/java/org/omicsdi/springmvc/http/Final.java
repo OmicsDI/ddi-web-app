@@ -20,16 +20,22 @@ public class  Final {
         InputStream input = null;
 
         try {
+            String current = new java.io.File( "." ).getCanonicalPath();
+            System.out.println("Current dir:"+current);
+            String currentDir = System.getProperty("user.dir");
+            System.out.println("Current dir using System:" +currentDir);
 
-            input = new FileInputStream("~/ddi-web-app/src/main/resources/ddiData.properties");
+/*            input = new FileInputStream("resources/ddiData.properties");
 
             // load a properties file
             prop.load(input);
 
             // get the property value and print it out
             System.out.println(prop.getProperty("ddi.web.service.url"));
-            webServiceUrl = prop.getProperty("ddi.web.service.url");
-
+            webServiceUrl = prop.getProperty("ddi.web.service.url");*/
+            //webServiceUrl = "http://ves-hx-43.ebi.ac.uk:8090/Tools/omicsdi/ws/";
+            //webServiceUrl = "http://localhost:8080/";
+            webServiceUrl = "http://www.omicsdi.org/ws/";
         } catch (IOException ex) {
             ex.printStackTrace();
         } finally {

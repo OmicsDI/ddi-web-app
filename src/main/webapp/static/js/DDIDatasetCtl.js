@@ -204,13 +204,13 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                     var authors = [];
                     //get the name for searching
                     for (var i = 0; i < entity.authors.length; i++) {
-                        var reg_surname = new RegExp(" [A-Z]{1,2}$", "")
+                        var reg_surname = new RegExp(" [A-Z]{1,2}$", "");
                         var reg_result = reg_surname.exec(entity.authors[i]);
                         if (reg_result != null) {
                             var surname = reg_result[0];
                         }
 
-                        var reg_firstname = new RegExp("^.*? ", "")
+                        var reg_firstname = new RegExp("^.*? ", "");
                         var firstname = reg_firstname.exec(entity.authors[i])[0];
 
                         var author_for_searching = firstname + " " + surname;
@@ -248,7 +248,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                         "title": entity.title,
                         "authors": authors,
                         "pub_date": entity.date
-                    }
+                    };
                     publication_info_entity.citation = publication_info_entity.citation.replace(/\(\): \./, "");
 
                     $scope.publication_info.push(publication_info_entity);
@@ -427,7 +427,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
             var start = section_positions[section_positions.length - 1].to + 1; //the last section
             var beAnnotated = "false";
-            var tobeReduced = "false"
+            var tobeReduced = "false";
             if (wholetext.length > long_text_length) {
                 tobeReduced = "true"
             }
@@ -495,7 +495,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             }
 
 
-            var modifiedWholeText = wholetext.toLowerCase();
+            var modifiedWholeText = (wholetext != null) ? wholetext.toLowerCase():"";
             var sections = [];
             var prevRealWordEnd = -1;
 
@@ -562,7 +562,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
 
             if (prevRealWordEnd + 1 < long_text_length) {
-                tobeReduced = "false"
+                tobeReduced = "false";
                 var section = {
                     "text": modifiedWholeText.substring(prevRealWordEnd + 1, long_text_length),
                     "beAnnotated": "false",
@@ -573,7 +573,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 prevRealWordEnd = long_text_length;
             }
             if (prevRealWordEnd + 1 <= modifiedWholeText.length) {
-                tobeReduced = "true"
+                tobeReduced = "true";
                 var section = {
                     "text": modifiedWholeText.substring(prevRealWordEnd, modifiedWholeText.length),
                     "beAnnotated": "false",
@@ -635,11 +635,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
 
         $scope.onclick_publication_left = function() {
             $scope.current_publication--;
-        }
+        };
 
         $scope.onclick_publication_right = function() {
             $scope.current_publication++;
-        }
+        };
 
         /**
          * To control the enrichment info show
@@ -653,7 +653,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             } else if ($scope.$root.enrich_button_label == "Enriched") {
                 $scope.$root.enrich_button_label = "Enrich"
             }
-        }
+        };
 
         /*
          * To load more related datasets
@@ -670,7 +670,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             } else {
                 if ($scope.load_more_btn_show === "Load More") $scope.load_more_btn_show = "Go Back";
             }
-        }
+        };
 
         /**
          * filter the related datasets by threshold in different omics type
@@ -683,7 +683,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 'Metabolomics': 3.8,
                 'Genomics': 6.5,
                 'Transcriptomics': 10.0
-            }
+            };
 
             var temp_datasets = $scope.related_datasets;
             var index = 0;
@@ -699,6 +699,12 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                         omics_type_value = 'Metabolomics';
                     else if (omics_type.toString().toLowerCase().indexOf('Proteomics'.toLocaleLowerCase()) > -1)
                         omics_type_value = 'Proteomics';
+                    else if (omics_type.toString().toLowerCase().indexOf('Models'.toLocaleLowerCase()) > -1)
+                        omics_type_value = 'Models';
+                    else if (omics_type.toString().toLowerCase().indexOf('Multiomics'.toLocaleLowerCase()) > -1)
+                        omics_type_value = 'Multiomics';
+                    else if (omics_type.toString().toLowerCase().indexOf('UNKNOWN'.toLocaleLowerCase()) > -1)
+                        omics_type_value = 'UNKNOWN';
                 }
                 var threshold = FilterThresholds[omics_type_value];
                 if (threshold == null)
@@ -718,11 +724,11 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
             $scope.threshold = $scope.threshold.toPrecision(2);
 
             if ($scope.threshold >= 1) {
-                $scope.threshold = 1.00
+                $scope.threshold = 1.00;
                 $scope.threshold = $scope.threshold.toPrecision(3);
             }
             if ($scope.threshold < 0.5) {
-                $scope.threshold = 0.50
+                $scope.threshold = 0.50;
                 $scope.threshold = $scope.threshold.toPrecision(2);
             }
             if ($scope.biological_similarity_info != null) {
@@ -730,7 +736,7 @@ angular.module('ddiApp').controller('DatasetCtrl', ['$scope', '$http', '$locatio
                 // console.log($scope.biological_similarity_info);
             }
             //$scope.related_datasets_by_biological_limit ++;
-        }
+        };
 
         function find_similarity_limit(scores, threshold) {
             // console.log(scores);
