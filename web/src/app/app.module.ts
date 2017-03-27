@@ -23,6 +23,10 @@ import { SearchComponent } from './pages/search/search.component';
 import { DatasetComponent } from './pages/dataset/dataset.component';
 import { CheckComponent } from './pages/check/check.component';
 import {SearchService} from "./services/search.service";
+import {DataSetService} from "./services/dataset.service";
+import {PublicationService} from "./services/publication.service";
+import {SimilarityService} from "./services/similarity.service";
+
 import {SearchBoxComponent} from "./pages/search/search-box/search-box.component";
 import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
 import {SearchFacetComponent} from "./pages/search/search-facet/search-facet.component";
@@ -34,6 +38,7 @@ import {Ng2AutoCompleteModule} from "ng2-auto-complete";
 import { SocialnetworksComponent } from './controls/socialnetworks/socialnetworks.component';
 import { SimilarComponent } from './pages/dataset/similar/similar.component';
 import { DisqusComponent } from './pages/dataset/disqus/disqus.component';
+import { PublicationComponent } from './pages/dataset/publication/publication.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -76,7 +81,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FacetComponent,
     SocialnetworksComponent,
     SimilarComponent,
-    DisqusComponent
+    DisqusComponent,
+    PublicationComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +103,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
      deps: [Http, RequestOptions]}
     , AuthService
     , AuthGuard
-    , SearchService],
+    , SearchService
+    , DataSetService
+    , PublicationService
+    , SimilarityService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

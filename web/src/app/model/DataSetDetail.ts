@@ -4,8 +4,6 @@ import {Dates} from "./Dates";
 /**
  * Created by user on 3/25/2017.
  */
-declare module namespace {
-
   export class DataSetDetail {
     id: string;
     source: string;
@@ -30,8 +28,6 @@ declare module namespace {
     submitterMail: string[];
     labHead?: any;
     labHeadMail?: any;
-  }
-
 }
 
 

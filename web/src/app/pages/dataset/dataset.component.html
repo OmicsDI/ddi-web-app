@@ -1,4 +1,4 @@
-<div class="container ng-scope" id="datasetCtrl" ng-controller="DatasetCtrl">
+<div class="container ng-scope" id="datasetCtrl">
   <div id="" class="row">
   </div>
   <div id="error-row" class="row">
@@ -22,11 +22,11 @@
           </h3>
         </div>
         <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-          <img src="/static/images/omics/Multipleomics.png" ng-show="dataset.omics_type.indexOf('Multi-Omics') != -1" class="ng-hide" style="">
-          <img src="/static/images/omics/Proteomics.png" ng-show="dataset.omics_type.indexOf('Proteomics') == 0 &amp;&amp; dataset.omics_type.indexOf('Multi-Omics') == -1" class="ng-hide">
-          <img src="/static/images/omics/Metabolomics.png" ng-show="dataset.omics_type.indexOf('Metabolomics') == 0 &amp;&amp; dataset.omics_type.indexOf('Multi-Omics') == -1" class="ng-hide">
-          <img src="/static/images/omics/Genomics.png" ng-show="dataset.omics_type.indexOf('Genomics') == 0 &amp;&amp; dataset.omics_type.indexOf('Multi-Omics') == -1 " class="ng-hide">
-          <img src="/static/images/omics/Transcriptomics.png" ng-show="(dataset.omics_type.indexOf('Transcriptomics') == 0 || dataset.omics_type.indexOf('transcriptomics') == 0) &amp;&amp; dataset.omics_type.indexOf('Multi-Omics') == -1" class="" style="">
+          <img src="/static/images/omics/Multipleomics.png" gngIf="d.omics_type.indexOf('Multi-Omics') != -1" style="">
+          <img src="/static/images/omics/Proteomics.png" gngIf="d.omics_type.indexOf('Proteomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Metabolomics.png" gngIf="d.omics_type.indexOf('Metabolomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Genomics.png" gngIf="this.d.omics_type.indexOf('Genomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Transcriptomics.png" gngIf="this.d.omics_type.indexOf('Transcriptomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
           <br>
           <br>
           <br>
@@ -34,8 +34,8 @@
         <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
           <div>
             <h4>
-              <span ng-if="title_sections!=null" ng-repeat="section in title_sections" class="ng-scope">
-              <span ng-if="section.beAnnotated == 'false'" class="ng-binding ng-scope">transcription profiling by high throughput sequencing of arabidopsis rbm25-1 mutant seedlings before and after abscisic acid treatment</span>
+              <span class="ng-scope">
+              <span class="ng-binding ng-scope">{{d.name}}</span>
               </span>
             </h4>
             <p id="ontology_highlight_box" ng-click="enrich_click()" class="hotword" style="">
@@ -44,12 +44,11 @@
           </div>
           <hr style="margin-right:10px">
           <div>
-            <div ng-show="dataset.description.length > 1 &amp;&amp; dataset.description!=='Not available'" class="" style="">
-              <p class="seo-friendly-remove"></p>
+            <div>
+              {{d.description}}
               <p class="align-justify"><b>ABSTRACT</b>:
-                <span ng-if="abstract_sections != null" ng-repeat="section in abstract_sections" class="ng-scope">
-                                        <span ng-if="section.beAnnotated == 'false'" ng-hide="section.tobeReduced=='true' &amp;&amp; description_show_full=='false'" class="ng-binding ng-scope">we used
-                                        </span>
+                <span>
+                    {{d.abstract}}
                 </span>
               </p>
             </div>
@@ -57,50 +56,65 @@
           <p class="align-justify" style="">
             <span><b>SAMPLE PROTOCOL:</b></span>
               <span class="ng-scope">
-                  <span class="ng-binding ng-scope">growth protocol</span>
+                  sample_protocol
               </span>
           </p>
           <p class="align-justify">
             <span><b>DATA PROTOCOL:</b></span>
               <span class="ng-scope">
-                  <span class="ng-binding ng-scope">growth protocol</span>
+                  data_protocol
               </span>
           </p>
           <p ng-show="reanalysis_list.length > 0" class="align-justify ng-hide">
-            <b>REANALYSIS of:</b>
+            <b>REANALYSIS of:</b>reanalysis_of
           </p>
           <p ng-show="reanalyzed_list.length > 0" class="align-justify ng-hide">
-            <b>REANALYZED by:</b>
+            <b>REANALYZED by:</b>reanalised_by
           </p>
           <p ng-show="other_omics_list.length > 0" class="align-justify ng-hide">
-            <b>OTHER RELATED OMICS DATASETS IN:</b>
+            <b>OTHER RELATED OMICS DATASETS IN:</b>related_omics
           </p>
-          <p ng-show="dataset.instruments.length > 0 &amp;&amp; dataset.instruments[0] != 'Not available'" class="align-justify ng-hide">
-            <b>INSTRUMENT(S):</b>
+          <p class="align-justify">
+            <b>INSTRUMENT(S):</b>{{d.instruments}}
           </p>
-          <p ng-show="dataset.organisms.length > 0 &amp;&amp; dataset.organisms[0] != 'Not available'" class="align-justify">
+          <p class="align-justify">
             <b>ORGANISM(S):</b>
-              <a ng-repeat="organism in dataset.organisms" title="" class="biological ng-binding ng-scope" href="/search?q=*:* AND TAXONOMY:&quot;3702&quot;">
-                       Arabidopsis thaliana;
-              </a>
+              <span *ngFor="let o of d.organisms">
+                <a class="biological" href="/search?q=*:* AND TAXONOMY:&quot;{{o.acc}}&quot;">
+                       {{o.name}}
+                </a>&nbsp;
+              </span>
           </p>
           <p class="align-justify ng-hide"><b>TISSUE(S):</b>
+              {{d.tissues}}
           </p>
           <p class="align-justify ng-hide"><b>DISEASE(S):</b>
+              {{d.diseases}}
           </p>
           <p class="align-justify">
             <b>SUBMITTER:</b>
-            <a href="mailto:jhzhu@umd.edu" class="ng-binding">Wenwu Wu,Xiangqiang Zhan,Bilian Qian,Jianhua Zhu &lt;jhzhu@umd.edu&gt;</a>
+              <span *ngFor="let o of d.submitter">
+                <span>
+                       {{o.name}}
+                </span>&nbsp;
+              </span>
+
+              <span *ngFor="let o of d.submitterMail">
+                <span>
+                  <a href="#">{{o.name}}</a>
+                </span>&nbsp;
+              </span>
           </p>
           <p class="align-justify">
             <b>PROVIDER:</b>
-            <a href="https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-66737" class="ng-binding">E-GEOD-66737</a>  |
-            <a href="https://www.ebi.ac.uk/arrayexpress/" class="ng-binding"> ArrayExpress </a>
-            <span ng-show="dataset.publicationDate" class="ng-binding" style="">| 2016-09-19 </span>
+            <a href="#" class="ng-binding">{{d.id}}</a>  |
+            <a href="#" class="ng-binding"> {{d.source}} </a>
+            <span>| {{d.publicationDate}} </span>
           </p>
           <!--dataset_protocol_bottom-->
           <div id="buttons_highlight_box">
-            <a href="https://www.ebi.ac.uk/arrayexpress/experiments/E-GEOD-66737" class="access-data">ACCESS DATA</a>
+
+            <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
             <a ng-href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.json" target="_blank" title="Download Dataset as JSON" class="json-button" href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.json">&lt;JSON&gt;</a>
             <a ng-href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.xml" target="_blank" title="Download Dataset as XML" class="xml-button" href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.xml">&lt;XML&gt;</a>
           </div>
@@ -110,69 +124,13 @@
         </div>
         <!--dataset_bottom-->
       </div>
-      <!--dataset_upper -->
-      <div class="panel panel-default" id="dataset_middle_publication" style="position: relative;" ng-hide="dataset.publicationIds ==null || dataset.publicationIds.length < 1 || get_dataset_fail.length > 0">
-        <div class="panel-footer ">
-          <h3>Publications</h3>
-        </div>
-        <span ng-hide="current_publication===0 || dataset.publicationIds === null" class="fa fa-chevron-circle-left ddi-prev ng-hide" ng-click="onclick_publication_left()">
-                    </span>
-        <span ng-hide="current_publication===dataset.publicationIds.length-1 || dataset.publicationIds === null" class="fa fa-chevron-circle-right ddi-next ng-hide" ng-click="onclick_publication_right()" style="">
-                    </span>
-        <div class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
-          <img ng-show="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]]==null" src="/static/images/altmetric/altmetric_unknown.png" class="ng-hide" style="">
-          <a ng-href="http://www.altmetric.com/details.php?citation_id=4555849" style="border-bottom-style:none" href="http://www.altmetric.com/details.php?citation_id=4555849"> <!-- ngIf: altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url --><img ng-if="altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url" ng-src="https://altmetric-badges.a.ssl.fastly.net/?size=64&amp;score=1&amp;types=ttttffff" class="ng-scope" src="https://altmetric-badges.a.ssl.fastly.net/?size=64&amp;score=1&amp;types=ttttffff"><!-- end ngIf: altmetric_entities[publication_index[dataset.publicationIds[current_publication]]].image_url -->
-          </a>
-        </div>
-        <div class="" id="dataset_middle" style="overflow:hidden;">
-          <div>
-            <h4 style="margin-right:20px" class="ng-binding">
-              An Arabidopsis PWI and RRM motif-containing protein is critical for pre-mRNA splicing and ABA responses.</h4>
-            <p style="margin-right:20px" class="align-justify">
-                                    <a ng-href="/search?q=Zhan   X" class="ng-binding" href="/search?q=Zhan   X">
-                                      Zhan Xiangqiang </a></p>
-            <p style="margin-right:20px" class="align-justify ng-binding">
-              Nature communications. 2015 Sep 25; 6(): 8139.</p>
-          </div>
-          <hr style="margin-right:30px">
-          <p ng-show="publication_info.length < 1 &amp;&amp; dataset.publicationIds.length > 0" class="align-justify ng-hide" style="">
-            Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to
-            <a href="http://www.ncbi.nlm.nih.gov/pubmed/?term=26404089">
-              PUBMED
-            </a> or
-            <a href="http://www.altmetric.com/details.php?citation_id=4555849">Altmetric</a>.
-          </p>
-          <div style="margin-right: 20px;"  class="">
-            <p ng-show="pubmed_abstract_show_full=='true'" class="align-justify ng-binding ng-hide">
-              ABSTRACT: The phytohormone abscisic acid (ABA) is important for growth, development and stress responses in plants. Recent research has identified ABA receptors and signalling components that regulate seed germination and stomatal closure. However, proteins that regulate ABA signalling remain poorly understood. Here we use a forward-genetic screen to identify rbm25-1 and rbm25-2, two Arabidopsis mutants with increased sensitivity to growth inhibition by ABA. Using RNA-seq, we found that RBM25 controls the splicing of many pre-mRNAs. The protein phosphatase 2C HAB1, a critical component in ABA signalling, shows a dramatic defect in pre-mRNA splicing in rbm25 mutants. Ectopic expression of a HAB1 complementary DNA derived from wild-type mRNAs partially suppresses the rbm25-2 mutant phenotype. We suggest that RNA splicing is of particular importance for plant response to ABA and that the splicing factor RBM25 has a critical role in this response.
-              <br>
-              <span ng-click="pubmed_abstract_show_full='false'" class="hotword"><b> [less]</b>
-                                </span>
-            </p>
-            <p ng-show="pubmed_abstract_show_full=='false'" class="align-justify ng-binding">
-              ABSTRACT: The phytohormone abscisic acid (ABA) is important for growth, development and stress responses in plants. Recent research has identified ABA receptors and signalling components that regulate seed germination and stomatal closure. However, proteins that regulate ABA signalling remain poorly understood. Here we use a forward-genetic screen to identify rbm25-1 and rbm25-2, two Arabidopsis mutants with increased sensitivity to growth inhibition by ABA. Using RNA-seq, we found that RBM25 controls the
-              <span ng-click="pubmed_abstract_show_full='true'" class="hotword"><b class="ng-binding">... [more]</b></span>
-            </p>
-          </div>
-        </div>
-        <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
-          <div class="col-md-4" style="margin-left:10px">
-            <a ng-hide="dataset.publications === null" ng-href="http://europepmc.org/abstract/MED/26404089" class="ng-binding" href="http://europepmc.org/abstract/MED/26404089">
-              PMID:
-              26404089</a>
-          </div>
-          <div class="col-md-4">
-                                            <span ng-hide="dataset.publications === null" class="ng-binding">
-                                Publication: 1/1
-                            </span>
-          </div>
-          <div class="col-md-3">
-            <p class="ng-binding"></p>
-          </div>
-        </div>
-        <br>
-        <!--dataset_middle_bottom-->
+
+      <div *ngFor="let p of d.publicationIds">
+        {{p}}<app-publication [id]="p"></app-publication>
       </div>
+
+      <!--dataset_upper -->
+
       <div class="panel panel-default">
         <app-disqus></app-disqus>
       </div>
