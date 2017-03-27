@@ -428,7 +428,7 @@
                                             </div>
 
                                             <div class="expert-db-card-logo">
-                                                <a title="PAXDB" href="http://www.ebi.ac.uk/gxa/home" class="pull-right expert-db-logo image_a">
+                                                <a title="PAXDB" href="http://pax-db.org" class="pull-right expert-db-logo image_a">
                                                     <img alt="PAXDB" src="/static/images/logo/paxdb_logo.png" class="img-rounded hvr-grow">
                                                 </a>
                                             </div>
