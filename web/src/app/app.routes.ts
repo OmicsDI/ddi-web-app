@@ -11,7 +11,7 @@ import {ApiComponent} from "./pages/api/api.component";
 import {SearchComponent} from "./pages/search/search.component";
 import {AboutComponent} from "./pages/about/about.component";
 import {UnauthorizedComponent} from "./pages/unauthorized/unauthorized.component";
-import { AuthGuard } from './services/auth-guard.service';
+import { AuthGuardService } from './services/auth-guard.service';
 import {DatasetComponent} from "./pages/dataset/dataset.component";
 
 // Route Configuration
@@ -22,7 +22,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },
   { path: 'api', component: ApiComponent },

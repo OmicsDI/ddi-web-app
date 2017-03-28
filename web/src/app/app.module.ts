@@ -16,7 +16,7 @@ import {ProfileService} from "./services/profile.service";
 import { AUTH_PROVIDERS, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import {AuthService} from "./services/auth.service";
-import {AuthGuard} from "./services/auth-guard.service";
+import {AuthGuardService} from "./services/auth-guard.service";
 import { Routes, RouterModule } from '@angular/router';
 import { ApiComponent } from './pages/api/api.component';
 import { SearchComponent } from './pages/search/search.component';
@@ -102,7 +102,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
      useFactory: authHttpServiceFactory,
      deps: [Http, RequestOptions]}
     , AuthService
-    , AuthGuard
+    , AuthGuardService
     , SearchService
     , DataSetService
     , PublicationService
