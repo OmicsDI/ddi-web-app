@@ -387,7 +387,7 @@
                         </p>
                         <p ng-show="dataset.submitter.length > 0 && dataset.submitter[0] != 'Not available'" class="align-justify">
                             <b>SUBMITTER:</b>
-                            <a href='mailto:{{dataset.submitterMail[0]}}'>{{dataset['submitter'] + ' <' + dataset['submitterMail'] + '>'}}</a>
+                            <a href='mailto:{{dataset.submitterMail[0]}}'>{{dataset['submitter']}}</a>
                         </p>
                         <p class="align-justify">
                             <b>PROVIDER:</b>

@@ -424,7 +424,7 @@
                                         <div class="panel panel-default expert-db-card ">
 
                                             <div class="expert-db-card-header">
-                                                <a href="http://www.ebi.ac.uk/gxa/home">PAXDB</a>
+                                                <a href="http://pax-db.org">PAXDB</a>
                                             </div>
 
                                             <div class="expert-db-card-logo">
