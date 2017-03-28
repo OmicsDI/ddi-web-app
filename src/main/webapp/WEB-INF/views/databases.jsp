@@ -453,7 +453,7 @@
                                             </div>
 
                                             <div class="expert-db-card-logo">
-                                                <a title="JPOST Repository" href="http://www.ebi.ac.uk/gxa/home" class="pull-right expert-db-logo image_a">
+                                                <a title="JPOST Repository" href="https://repository.jpostdb.org" class="pull-right expert-db-logo image_a">
                                                     <img alt="JPOST Repository logo" src="/static/images/logo/jpost.png" class="img-rounded hvr-grow">
                                                 </a>
                                             </div>
