@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+import {Http, Response} from "@angular/http";
+import {Subject, Observable} from "rxjs";
+import {SimilarityResult} from "../model/SimilarityResult";
 
 @Injectable()
 export class SimilarityService {
 
-  private resultSource = new Subject<PublicationResult>();
+  private resultSource = new Subject<SimilarityResult>();
 
   searchResult$ = this.resultSource.asObservable();
 
@@ -15,8 +18,8 @@ export class SimilarityService {
   search(acc: string){
     let searchUrl = this.url.replace('26404089',acc);
 
-    let o : Observable<PublicationResult> = this.http.get(searchUrl) //,config //{ withCredentials: true }
-      .map(x => this.extractData<PublicationResult>(x));
+    let o : Observable<SimilarityResult> = this.http.get(searchUrl) //,config //{ withCredentials: true }
+      .map(x => this.extractData<SimilarityResult>(x));
 
     o.subscribe(x => {
       this.resultSource.next(x);
