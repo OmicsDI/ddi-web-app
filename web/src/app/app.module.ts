@@ -40,6 +40,8 @@ import { SimilarComponent } from './pages/dataset/similar/similar.component';
 import { DisqusComponent } from './pages/dataset/disqus/disqus.component';
 import { PublicationComponent } from './pages/dataset/publication/publication.component';
 
+import { DisqusModule } from 'angular2-disqus';
+
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
@@ -92,7 +94,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     routing,
     FormsModule,
     ReactiveFormsModule,
-    Ng2AutoCompleteModule
+    Ng2AutoCompleteModule,
+    DisqusModule
   ],
   exports: [
     RouterModule

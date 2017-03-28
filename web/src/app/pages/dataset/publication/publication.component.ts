@@ -20,8 +20,6 @@ export class PublicationComponent implements OnInit {
       result => {
         this.d = result.publications[0];
       });
-
-
   }
 
   ngOnInit() {

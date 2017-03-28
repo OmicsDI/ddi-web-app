@@ -10,13 +10,14 @@ export class SimilarityService {
 
   searchResult$ = this.resultSource.asObservable();
 
-  url: string = "http://www.omicsdi.org/ws/publication/list?acc=26404089";
+  url: string = "http://www.omicsdi.org/ws/dataset/getSimilar?acc=E-MTAB-4919&database=arrayexpress-repository";
 
   constructor(private http: Http) {
   }
 
-  search(acc: string){
-    let searchUrl = this.url.replace('26404089',acc);
+  search(acc: string, repository: string){
+    let searchUrl = this.url.replace('E-MTAB-4919',acc);
+    searchUrl = searchUrl.replace('arrayexpress-repository',repository);
 
     let o : Observable<SimilarityResult> = this.http.get(searchUrl) //,config //{ withCredentials: true }
       .map(x => this.extractData<SimilarityResult>(x));

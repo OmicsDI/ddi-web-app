@@ -14,6 +14,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
   d: DataSetDetail = new DataSetDetail();
   subscription: Subscription;
 
+  acc:string;
+  repository:string;
+
   constructor(private dataSetService: DataSetService, private route: ActivatedRoute) {
     console.info("DatasetComponent ctor");
     this.subscription = this.dataSetService.dataSetDetail$.subscribe(
@@ -30,9 +33,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
-          let acc: string = params['acc'];
-          let domain: string = params['domain'];
-          this.dataSetService.getDataSetDetail(acc,domain);
+          this.acc = params['acc'];
+          this.repository = params['domain'];
+          this.dataSetService.getDataSetDetail(this.acc,this.repository);
     })
   }
 

@@ -140,14 +140,8 @@
       Similar Datasets
     </h4>
       <p></p>
-      <ul class="list-unstyled">
-        <app-similar></app-similar>
-      </ul>
-      <div class="input-btn center" style="width: 102px; margin-bottom: 10px;">
-        <button type="submit" class="btn btn-default  ng-binding" ng-click="related_load_more()">
-          <i class="fa fa-search"></i> Load More
-        </button>
-      </div>
+
+        <app-similar [acc]="acc" [repository]="repository"></app-similar>
     </div>
   </div>
 </div>

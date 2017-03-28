@@ -18,6 +18,10 @@ export class DataSet {
   publicationDate: string;
   score?: any;
   omicsType: string[];
+
+  constructor(){
+    this.omicsType = [];
+  }
 }
 
 

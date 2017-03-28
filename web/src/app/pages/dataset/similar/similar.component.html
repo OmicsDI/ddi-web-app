@@ -1,25 +1,36 @@
-<li class="result animate-repeat  ng-scope" ng-repeat="relatedDataset in related_datasets | limitTo:related_datasets_limit" style="">
+
+<ul class="list-unstyled">
+
+<li *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope" style="">
   <div class="project-widget  list-group-item ddi-card-panel">
     <div class="project-widget-accession">
-      <img src="/static/images/omics/Multipleomics2.png" ng-show="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" class="ng-hide">
-      <img src="/static/images/omics/Proteomics2.png" ng-show="relatedDataset.omicsType.indexOf('Proteomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-      <img src="/static/images/omics/Metabolomics2.png" ng-show="relatedDataset.omicsType.indexOf('Metabolomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="ng-hide">
-      <img src="/static/images/omics/Genomics2.png" ng-show="relatedDataset.omicsType.indexOf('Genomics') == 0 &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " class="ng-hide">
-      <img src="/static/images/omics/Transcriptomics2.png" ng-show="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) &amp;&amp; relatedDataset.omicsType.indexOf('Multi-Omics') == -1" class="">
-      <a target="" class="align-justify ng-binding" ng-href="/dataset/arrayexpress-repository/E-GEOD-49293" href="/dataset/arrayexpress-repository/E-GEOD-49293">The RNA binding protein RBM38 (RNPC1) regulates splicing during late erythroid differentiation</a>
+      <img src="/static/images/omics/Multipleomics2.png" *ngIf="omicsTest(ds,'Multi-Omics')">
+      <img src="/static/images/omics/Proteomics2.png" *ngIf="omicsTest(ds,'Proteomics')">
+      <img src="/static/images/omics/Metabolomics2.png" *ngIf="omicsTest(ds,'Metabolomics')">
+      <img src="/static/images/omics/Genomics2.png" *ngIf="omicsTest(ds,'Genomics')">
+      <img src="/static/images/omics/Transcriptomics2.png" *ngIf="omicsTest(ds,'Transcriptomics')">
+      <a target="" class="align-justify ng-binding" href="/dataset/{{ds.source}}/{{ds.id}}">
+        {{ds.title}}</a>
     </div>
     <div class="project-widget-paragraph hidden ng-binding">
-      <b>Project description:</b> Alternative pre-mRNA splicing is a prevalent mechanism in mammals that promotes proteomic diversity, including expression of cell-type specific protei...
-      <span ng-show="relatedDataset.description===null" class="ng-hide">Not available</span>
+      <b>Project description:</b>{{ds.description}}
+      <span *ngIf="null==ds.description">Not available</span>
     </div>
-    <div class="project-widget-paragraph ng-hide" ng-show="relatedDataset['organisms']">
-      <b>Organism: </b><!-- ngRepeat: organism in relatedDataset['organisms'] -->
-      <span ng-show="relatedDataset.organisms.length===0" class="ng-hide">Not available</span>
+    <div *ngIf="ds.organisms != null && ds.organisms.length > 0" class="project-widget-paragraph">
+      <b>Organism: </b>
+        <span *ngFor="let o of ds.organisms">{{o}}&nbsp;</span>
     </div>
     <div class="project-widget-paragraph ng-binding">
-      <span ng-show="relatedDataset.publicationDate" class="ng-binding"> 2014-06-03| </span>
-      <!--a href={{"dataset.html#/"+relatedDataset.id+"*"+relatedDataset.source}}-->E-GEOD-49293 |
-      <!--a href={{database_urls[repositories[relatedDataset.source]]}}-->ArrayExpress
+      <span class="ng-binding"> {{ds.publicationDate}}| </span>
+        {{ds.id}} |
+        {{ds.source}}
     </div>
   </div>
 </li>
+
+</ul>
+<div class="input-btn center" style="width: 102px; margin-bottom: 10px;">
+  <button type="submit" class="btn btn-default  ng-binding" (click)="loadMore()">
+    <i class="fa fa-search"></i>{{ loadMoreButtonText }}
+  </button>
+</div>

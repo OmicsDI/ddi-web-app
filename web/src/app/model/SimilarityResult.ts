@@ -11,4 +11,8 @@ export class SimilarityResult {
   count: number;
   datasets: DataSet[];
   facets: Facet[];
+  
+  constuctor(){
+    this.datasets = [];
+  }
 }
