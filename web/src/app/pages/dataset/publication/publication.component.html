@@ -1,10 +1,12 @@
+bound publication IDs: {{ids}} <span (click)="loadComponent()">load</span>
+
 <div class="panel panel-default" id="dataset_middle_publication" style="position: relative;">
   <div class="panel-footer ">
     <h3>Publications</h3>
   </div>
-  <span class="fa fa-chevron-circle-left ddi-prev ng-hide" ng-click="onclick_publication_left()">
+  <span id="chevronLeft" class="fa fa-chevron-circle-left ddi-prev ng-hide" (click)="clickLeft()">
                     </span>
-  <span class="fa fa-chevron-circle-right ddi-next ng-hide" ng-click="onclick_publication_right()" style="">
+  <span id="chevronRight" class="fa fa-chevron-circle-right ddi-next ng-hide" (click)="clickRight()">
                     </span>
 
 
@@ -13,15 +15,18 @@
   <div class="" id="dataset_middle" style="overflow:hidden;">
     <div>
       <h4 style="margin-right:20px" class="ng-binding">
-        An Arabidopsis PWI and RRM motif-containing protein is critical for pre-mRNA splicing and ABA responses.</h4>
+        {{d.title}}</h4>
       <p style="margin-right:20px" class="align-justify">
-        <a ng-href="/search?q=Zhan   X" class="ng-binding" href="/search?q=Zhan   X">
-          Zhan Xiangqiang </a></p>
+        <span *ngFor="let a of d.authors">
+        <a class="ng-binding" href="/search?q={{a}}">
+          {{a}}
+        </a>
+        </span></p>
       <p style="margin-right:20px" class="align-justify ng-binding">
-        Nature communications. 2015 Sep 25; 6(): 8139.</p>
+        {{d.journal}} {{d.date}} {{d.issue}}</p>
     </div>
     <hr style="margin-right:30px">
-    <p ng-show="publication_info.length < 1 &amp;&amp; dataset.publicationIds.length > 0" class="align-justify ng-hide" style="">
+    <p class="align-justify" style="">
       Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to
       <a href="http://www.ncbi.nlm.nih.gov/pubmed/?term=26404089">
         PUBMED
@@ -29,27 +34,23 @@
       <a href="http://www.altmetric.com/details.php?citation_id=4555849">Altmetric</a>.
     </p>
     <div style="margin-right: 20px;"  class="">
-      <p ng-show="pubmed_abstract_show_full=='true'" class="align-justify ng-binding ng-hide">
-        ABSTRACT: The phytohormone abscisic acid (ABA) is important for growth, development and stress responses in plants. Recent research has identified ABA receptors and signalling components that regulate seed germination and stomatal closure. However, proteins that regulate ABA signalling remain poorly understood. Here we use a forward-genetic screen to identify rbm25-1 and rbm25-2, two Arabidopsis mutants with increased sensitivity to growth inhibition by ABA. Using RNA-seq, we found that RBM25 controls the splicing of many pre-mRNAs. The protein phosphatase 2C HAB1, a critical component in ABA signalling, shows a dramatic defect in pre-mRNA splicing in rbm25 mutants. Ectopic expression of a HAB1 complementary DNA derived from wild-type mRNAs partially suppresses the rbm25-2 mutant phenotype. We suggest that RNA splicing is of particular importance for plant response to ABA and that the splicing factor RBM25 has a critical role in this response.
+      <p class="align-justify ng-binding">
+        <span *ngFor="let a of d.pubAbstract">{{a}}&nbsp;</span>
         <br>
-        <span ng-click="pubmed_abstract_show_full='false'" class="hotword"><b> [less]</b>
+        <span class="hotword"><b> [less]</b>
                                 </span>
-      </p>
-      <p ng-show="pubmed_abstract_show_full=='false'" class="align-justify ng-binding">
-        ABSTRACT: The phytohormone abscisic acid (ABA) is important for growth, development and stress responses in plants. Recent research has identified ABA receptors and signalling components that regulate seed germination and stomatal closure. However, proteins that regulate ABA signalling remain poorly understood. Here we use a forward-genetic screen to identify rbm25-1 and rbm25-2, two Arabidopsis mutants with increased sensitivity to growth inhibition by ABA. Using RNA-seq, we found that RBM25 controls the
-        <span ng-click="pubmed_abstract_show_full='true'" class="hotword"><b class="ng-binding">... [more]</b></span>
       </p>
     </div>
   </div>
   <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
     <div class="col-md-4" style="margin-left:10px">
-      <a ng-hide="dataset.publications === null" ng-href="http://europepmc.org/abstract/MED/26404089" class="ng-binding" href="http://europepmc.org/abstract/MED/26404089">
+      <a class="ng-binding" href="http://europepmc.org/abstract/MED/{{d.id}}">
         PMID:
-        26404089</a>
+        {{d.id}}</a>
     </div>
     <div class="col-md-4">
                                             <span ng-hide="dataset.publications === null" class="ng-binding">
-                                Publication: 1/1
+                                Publication: {{current_idx+1}}/{{ids_length}}
                             </span>
     </div>
     <div class="col-md-3">

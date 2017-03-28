@@ -21,22 +21,19 @@ export class DatasetComponent implements OnInit, OnDestroy {
         console.info("dataSetDetail$ subscribtion");
         this.d = result;
         console.info("dataSetDetailResult:" + result);
+        console.info("publicationIds:" + result.publicationIds);
       });
 
 
-    this.dataSetService.getDataSetDetail('E-GEOD-66737','arrayexpress-repository');
+    //
   }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(params => {
           let acc: string = params['acc'];
           let domain: string = params['domain'];
-          //this.dataSetService.getDataSetDetail(acc,domain);
+          this.dataSetService.getDataSetDetail(acc,domain);
     })
-
-
-    //let url = this.dataSetUrl.replace('E-GEOD-66737',accession);
-    //url = url.replace('arrayexpress-repository',repository);
   }
 
   ngOnDestroy() {

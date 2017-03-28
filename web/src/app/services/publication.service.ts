@@ -20,6 +20,7 @@ export class PublicationService {
 
   search(acc: string){
     let searchUrl = this.url.replace('26404089',acc);
+
     let o : Observable<PublicationResult> = this.http.get(searchUrl) //,config //{ withCredentials: true }
       .map(x => this.extractData<PublicationResult>(x));
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SimilarityService} from "../../../services/similarity.service";
 
 @Component({
   selector: 'app-similar',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SimilarComponent implements OnInit {
 
-  constructor() { }
+  //subscription: Subscription;
+
+  constructor(private similarityService: SimilarityService) {
+  }
 
   ngOnInit() {
   }

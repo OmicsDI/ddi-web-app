@@ -11,22 +11,22 @@
     </div>
     <!-- col-md-1-->
     <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
-      <div id="dataset-error-row" class="row error-info ng-hide" ng-hide="get_dataset_fail.length<1">
+      <div id="dataset-error-row" class="row error-info ng-hide">
         <p class="ng-binding">
 
         </p>
       </div>
-      <div class="panel panel-default" id="dataset_upper" ng-hide="get_dataset_fail.length>0">
+      <div class="panel panel-default" id="dataset_upper" >
         <div class="panel-footer ">
           <h3>Dataset Information
           </h3>
         </div>
         <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-          <img src="/static/images/omics/Multipleomics.png" gngIf="d.omics_type.indexOf('Multi-Omics') != -1" style="">
-          <img src="/static/images/omics/Proteomics.png" gngIf="d.omics_type.indexOf('Proteomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
-          <img src="/static/images/omics/Metabolomics.png" gngIf="d.omics_type.indexOf('Metabolomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
-          <img src="/static/images/omics/Genomics.png" gngIf="this.d.omics_type.indexOf('Genomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
-          <img src="/static/images/omics/Transcriptomics.png" gngIf="this.d.omics_type.indexOf('Transcriptomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Multipleomics.png" *ngIf="d.omics_type.indexOf('Multi-Omics') != -1" style="">
+          <img src="/static/images/omics/Proteomics.png" *ngIf="d.omics_type.indexOf('Proteomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Metabolomics.png" *ngIf="d.omics_type.indexOf('Metabolomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Genomics.png" *ngIf="this.d.omics_type.indexOf('Genomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
+          <img src="/static/images/omics/Transcriptomics.png" *ngIf="this.d.omics_type.indexOf('Transcriptomics') != -1 && d.omics_type.indexOf('Multi-Omics') == -1">
           <br>
           <br>
           <br>
@@ -65,13 +65,13 @@
                   data_protocol
               </span>
           </p>
-          <p ng-show="reanalysis_list.length > 0" class="align-justify ng-hide">
+          <p class="align-justify ng-hide">
             <b>REANALYSIS of:</b>reanalysis_of
           </p>
-          <p ng-show="reanalyzed_list.length > 0" class="align-justify ng-hide">
+          <p class="align-justify ng-hide">
             <b>REANALYZED by:</b>reanalised_by
           </p>
-          <p ng-show="other_omics_list.length > 0" class="align-justify ng-hide">
+          <p class="align-justify ng-hide">
             <b>OTHER RELATED OMICS DATASETS IN:</b>related_omics
           </p>
           <p class="align-justify">
@@ -125,9 +125,7 @@
         <!--dataset_bottom-->
       </div>
 
-      <div *ngFor="let p of d.publicationIds">
-        {{p}}<app-publication [id]="p"></app-publication>
-      </div>
+      <app-publication [ids]="d.publicationIds"></app-publication>
 
       <!--dataset_upper -->
 
@@ -136,7 +134,7 @@
       </div>
     </div>
     <!-- col-md-8 centerpanel-->
-    <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" ng-hide="related_datasets == null || related_datasets.length<1 || get_similar_dataset_fail.length > 0 || get_dataset_fail.length > 0" style="">
+    <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" >
       <p>
       </p><h4>
       Similar Datasets
@@ -145,7 +143,7 @@
       <ul class="list-unstyled">
         <app-similar></app-similar>
       </ul>
-      <div class="input-btn center" style="width: 102px; margin-bottom: 10px;" ng-show="related_datasets.length > 5">
+      <div class="input-btn center" style="width: 102px; margin-bottom: 10px;">
         <button type="submit" class="btn btn-default  ng-binding" ng-click="related_load_more()">
           <i class="fa fa-search"></i> Load More
         </button>

@@ -28,6 +28,10 @@ import {Dates} from "./Dates";
     submitterMail: string[];
     labHead?: any;
     labHeadMail?: any;
+
+    constructor(){
+      this.omics_type = [];
+    }
 }
 
 
