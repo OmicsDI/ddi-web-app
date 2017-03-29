@@ -1,4 +1,11 @@
-<input  ng2-auto-complete
+<div class="autocomplete">
+<input
+  type="text"
+  placeholder="organism, repository, gene, tissue, accession"
+  class="ng-touched"
+  ng2-auto-complete
         [(ngModel)]="selected"
         [source]="observableSource.bind(this)"
-        min-chars="3"/>
+        min-chars="3"
+/>
+</div>

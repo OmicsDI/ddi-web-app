@@ -1,5 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Http} from "@angular/http";
+import {SearchService} from "../../services/search.service";
+import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 
 @Component({
   selector: 'app-search',
@@ -9,9 +11,12 @@ import {Http} from "@angular/http";
 export class SearchComponent implements OnInit {
   content : string;
 
-  constructor(private http: Http) { }
+  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) { }
 
   ngOnInit() {
-
+    console.log("search page onInit");
+    this.searchService.callSearch("");
+    this.slimLoadingBarService.start();
   }
+
 }

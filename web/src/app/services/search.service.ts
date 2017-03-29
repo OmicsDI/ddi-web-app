@@ -25,7 +25,7 @@ export class SearchService {
 
   search(searchQuery: string): Observable<SearchResult> {
     /** use searchQuery **/
-    let searchUrl = this.url.replace('Orbitrap',searchQuery);
+    let searchUrl = this.url.replace('Orbitrap*',searchQuery);
     return this.http.get(searchUrl) //,config //{ withCredentials: true }
       .map(this.extractData);
   }

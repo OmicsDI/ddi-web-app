@@ -1,0 +1,26 @@
+<div ng-controller="QueryCtrl" id="queryCtrl" ng-show="show_top_search" style="height: 29px;float:right;margin-top:0px;z-index:1;" class="ng-scope">
+  <form novalidate="" name="queryForm" class="local-search ng-pristine ng-valid ng-valid-required" ng-submit="submit_query()">
+
+    <div class="form-group " ng-class="(query.submitted &amp;&amp; queryForm.$invalid) ? 'has-error' : ''">
+      <div class="input-group ">
+        <app-autocomplete-n></app-autocomplete-n>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-primary ddi-btn" ng-click="showOrHideAdv()">
+            <!-- ngIf: facaret --><i class="fa fa-caret-down ng-scope" aria-hidden="true" ng-if="facaret"></i><!-- end ngIf: facaret -->
+            <!-- ngIf: !facaret -->
+            Advanced
+          </button>
+          <button type="submit" ng-disab="" class="btn btn-primary ddi-btn">
+            <i class="fa fa-search"></i> Search
+          </button>
+        </div>
+        <!-- /input-group-btn -->
+      </div>
+
+    </div>
+    <!-- /form-group -->
+
+  </form>
+
+  <!-- ngIf: popup.open -->
+</div>

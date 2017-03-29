@@ -1,10 +1,4 @@
-<span class="" style="">
-                <span id="metasearch-results-count" class="ng-binding ng-scope">{{searchCount}}</span>
-                <i class="fa fa-search"></i> Results for search term:
-                <b class="ng-binding">{{searchQuery}}</b>
-</span>
-
-<ul>
+<ul class="list-unstyled">
 
   <li *ngFor="let d of dataSets" class="repeated-item ng-scope" ng-repeat="dataset in result.datasets" style="">
     <div class="ddi-card-panel  list-group-item">
@@ -50,9 +44,12 @@
         <a href="#dataset/ega/{{d.id}}"><span class="ng-binding">{{d.id}}</span></a> |
         <a href="https://www.ebi.ac.uk/ega/"> <span class="ng-binding">{{d.source}}</span> </a>
       </div>
-      <div *ngIf="d.keywords" class="project-widget-paragraph ng-hide">
-        <span *ngFor="let o of d.keywords">{{o.name}}&nbsp;</span>
+
+      <div *ngIf="d.keywords" class="project-widget-paragraph">
+        <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" href="/search?q={{o}}">{{o}}&nbsp;</a>
       </div>
+
+
     </div>
   </li>
 </ul>

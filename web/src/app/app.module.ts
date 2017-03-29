@@ -27,7 +27,7 @@ import {DataSetService} from "./services/dataset.service";
 import {PublicationService} from "./services/publication.service";
 import {SimilarityService} from "./services/similarity.service";
 
-import {SearchBoxComponent} from "./pages/search/search-box/search-box.component";
+import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
 import {SearchFacetComponent} from "./pages/search/search-facet/search-facet.component";
 import {AutocompleteJComponent} from "./controls/autocomplete-j/autocomplete-j.component";
@@ -41,6 +41,14 @@ import { DisqusComponent } from './pages/dataset/disqus/disqus.component';
 import { PublicationComponent } from './pages/dataset/publication/publication.component';
 
 import { DisqusModule } from 'angular2-disqus';
+import { SearchPagerComponent } from './pages/search/search-pager/search-pager.component';
+import { SearchTotalComponent } from './pages/search/search-total/search-total.component';
+import { SearchSortComponent } from './pages/search/search-sort/search-sort.component';
+import { SearchAdvancedComponent } from './pages/search/search-advanced/search-advanced.component';
+
+import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+import {DropdownModule} from "ng2-dropdown";
+import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -84,7 +92,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SocialnetworksComponent,
     SimilarComponent,
     DisqusComponent,
-    PublicationComponent
+    PublicationComponent,
+    SearchPagerComponent,
+    SearchTotalComponent,
+    SearchSortComponent,
+    SearchAdvancedComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +107,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FormsModule,
     ReactiveFormsModule,
     Ng2AutoCompleteModule,
-    DisqusModule
+    DisqusModule,
+    AlertModule.forRoot(),
+    DropdownModule,
+    SlimLoadingBarModule.forRoot()
   ],
   exports: [
     RouterModule
