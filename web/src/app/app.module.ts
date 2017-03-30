@@ -39,6 +39,15 @@ import { SocialnetworksComponent } from './controls/socialnetworks/socialnetwork
 import { SimilarComponent } from './pages/dataset/similar/similar.component';
 import { DisqusComponent } from './pages/dataset/disqus/disqus.component';
 import { PublicationComponent } from './pages/dataset/publication/publication.component';
+import { ReposOmicsComponent } from './pages/home/charts/repos-omics/repos-omics.component';
+import { HotwordsComponent } from './pages/home/charts/hotwords/hotwords.component';
+import { TissuesOrganismsComponent } from './pages/home/charts/tissues-organisms/tissues-organisms.component';
+import { MostAccessedComponent } from './pages/home/charts/most-accessed/most-accessed.component';
+import { AnnualOmicstypeComponent } from './pages/home/charts/annual-omicstype/annual-omicstype.component';
+import { LatestDatasetsComponent } from './pages/home/charts/latest-datasets/latest-datasets.component';
+import { TweetsNewsComponent } from './pages/home/charts/tweets-news/tweets-news.component';
+import { StatisticsPanelComponent } from './pages/home/charts/statistics-panel/statistics-panel.component';
+import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.component';
 
 import { DisqusModule } from 'angular2-disqus';
 import { SearchPagerComponent } from './pages/search/search-pager/search-pager.component';
@@ -96,7 +105,17 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchPagerComponent,
     SearchTotalComponent,
     SearchSortComponent,
-    SearchAdvancedComponent
+    SearchAdvancedComponent,
+    ReposOmicsComponent,
+    HotwordsComponent,
+    TissuesOrganismsComponent,
+    MostAccessedComponent,
+    AnnualOmicstypeComponent,
+    LatestDatasetsComponent,
+    TweetsNewsComponent,
+    StatisticsPanelComponent,
+    AboutComponent,
+    HomeAboutComponent
   ],
   imports: [
     BrowserModule,
