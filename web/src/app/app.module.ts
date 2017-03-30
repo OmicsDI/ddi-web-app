@@ -52,12 +52,13 @@ import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.co
 import { DisqusModule } from 'angular2-disqus';
 import { SearchPagerComponent } from './pages/search/search-pager/search-pager.component';
 import { SearchTotalComponent } from './pages/search/search-total/search-total.component';
-import { SearchSortComponent } from './pages/search/search-sort/search-sort.component';
 import { SearchAdvancedComponent } from './pages/search/search-advanced/search-advanced.component';
 
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
+import {PagingService} from "./services/paging.service";
+import {Ng2PaginationModule} from "ng2-pagination";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -104,7 +105,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PublicationComponent,
     SearchPagerComponent,
     SearchTotalComponent,
-    SearchSortComponent,
     SearchAdvancedComponent,
     ReposOmicsComponent,
     HotwordsComponent,
@@ -129,7 +129,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DisqusModule,
     AlertModule.forRoot(),
     DropdownModule,
-    SlimLoadingBarModule.forRoot()
+    SlimLoadingBarModule.forRoot(),
+    Ng2PaginationModule
   ],
   exports: [
     RouterModule
@@ -143,7 +144,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , SearchService
     , DataSetService
     , PublicationService
-    , SimilarityService],
+    , SimilarityService
+    , PagingService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -15,8 +15,12 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     console.log("search page onInit");
-    this.searchService.callSearch("");
     this.slimLoadingBarService.start();
+    this.searchService.callSearch("");
+  }
+
+  ngAfterViewChecked(){
+    //this.slimLoadingBarService.complete();
   }
 
 }
