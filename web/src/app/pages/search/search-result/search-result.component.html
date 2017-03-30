@@ -1,6 +1,9 @@
 <ul class="list-unstyled">
+  <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.pageSize, currentPage: searchService.currentPage
+  , totalItems: total }, let last = last"
+      class="repeated-item ng-scope"
+      style="">
 
-  <li *ngFor="let d of dataSets" class="repeated-item ng-scope" ng-repeat="dataset in result.datasets" style="">
     <div class="ddi-card-panel  list-group-item">
       <div class="project-widget-accession">
         <img src="img/omics/Multipleomics2.png" *ngIf="d.omicsType.indexOf('Multiomics') > -1" class="ng-hide">

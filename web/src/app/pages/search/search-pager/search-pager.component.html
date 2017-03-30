@@ -1,27 +1,44 @@
-<div class="grid_22 ddi-pagination " style="width:100%">
+<table style="border:none;">
+  <tr style="border:none;">
+    <td style="white-space: nowrap; border:none;">
+      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+    </td>
+    <td style="width: 100%; border:none;">&nbsp;
+    </td>
+    <td style="white-space: nowrap; border:none;">
+      <span style="border:none;">Sort by:
+                            <a style="margin-left: 5px;" (click)="sort('id')">Accession
+                              <span *ngIf="searchService.sortBy=='id'">
+                                <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                                <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                              </span>
+                            </a>
 
-  <div class="col_pager row">
-    <div class="pr-pager col-md-3 ">
-      Page
-      <a href="" ng-click="pagination(1,'default','default','default')" style="margin-left:5px" ng-show="current_page>3 &amp;&amp; max_page_no>5" class="ng-binding ng-hide">1&lt;&lt;</a>
-      <!-- <li><a href="" class="btn " ng-repeat="page in pages" ng-click="pagination(page,'default','default','default')" ng-disabled="current_page===page">{{page}}</a></li> -->
-      <!-- ngRepeat: page in pages --><a href="" class="ng-binding ng-scope disabled" ng-repeat="page in pages" style="margin-left:5px" ng-click="pagination(page,'default','default','default')" ng-class="{'disabled':current_page===page}">1</a><!-- end ngRepeat: page in pages --><a href="" class="ng-binding ng-scope" ng-repeat="page in pages" style="margin-left:5px" ng-click="pagination(page,'default','default','default')" ng-class="{'disabled':current_page===page}">2</a><!-- end ngRepeat: page in pages --><a href="" class="ng-binding ng-scope" ng-repeat="page in pages" style="margin-left:5px" ng-click="pagination(page,'default','default','default')" ng-class="{'disabled':current_page===page}">3</a><!-- end ngRepeat: page in pages --><a href="" class="ng-binding ng-scope" ng-repeat="page in pages" style="margin-left:5px" ng-click="pagination(page,'default','default','default')" ng-class="{'disabled':current_page===page}">4</a><!-- end ngRepeat: page in pages --><a href="" class="ng-binding ng-scope" ng-repeat="page in pages" style="margin-left:5px" ng-click="pagination(page,'default','default','default')" ng-class="{'disabled':current_page===page}">5</a><!-- end ngRepeat: page in pages -->
-      <a href="" ng-click="pagination(max_page_no,'default','default','default')" style="margin-left: 5px;" ng-show="current_page<=max_page_no-3 &amp;&amp; max_page_no>5" class="ng-binding">&gt;&gt;5536</a>
-    </div>
-    <div class="pr-page-size col-md-3 ">
+                            <a style="margin-left: 5px;" (click)="sort('')">Relevance
+                              <span *ngIf="searchService.sortBy==''">
+                                <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                                <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                              </span>
+                            </a>
 
-      Page size
-      <a href="" ng-click="pagination(1,'15','default','default')" style="margin-left: 5px;" ng-class="{'disabled':page_size==15}" ng-show="result.count>15" class="disabled">15</a>
-      <a href="" ng-click="pagination(1,'20','default','default')" style="margin-left: 5px;" ng-class="{'disabled':page_size==20}" ng-hide="result.count<20" class="">20</a>
-      <a href="" ng-click="pagination(1,'50','default','default')" style="margin-left:5px" ng-class="{'disabled':page_size==50}" ng-hide="result.count<50" class="">50</a>
-      <a href="" ng-click="pagination(1,'100','default','default')" style="margin-left:5px" ng-class="{'disabled':page_size==100}" ng-hide="result.count<100" class="">100</a>
+                            <a style="margin-left:5px" (click)="sort('publication_date')">
+                                Published
+                              <span *ngIf="searchService.sortBy=='publication_date'">
+                                <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                                <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                              </span>
+                            </a>
+      </span>
+      &nbsp;&nbsp;&nbsp;
+      <span>
+      Page size&nbsp;
+      <select [ngModel]="searchService.selectedPageSize" (change)="searchService.changePageSize($event.target.value)">
+        <option [value]="c" *ngFor="let c of searchService.pageSizes">{{c}}</option>
+      </select>
+      </span>
+    </td>
+  </tr>
+</table>
 
-    </div>
-    <div class="pr-stats col-md-3  ">
-      Showing <span class="ng-binding"><span ng-show="result.count > 0" class="ng-binding" style="">1 -</span> 15</span>
-      of <span class="ng-binding"> 83033</span>
-    </div>
-  </div>
-</div>
 
 

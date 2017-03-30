@@ -14,7 +14,7 @@
 
 .autocomplete ul{
   color: darkblue;
-  list-style-type: none;  
+  list-style-type: none;
   position: absolute;
   left: 0;
   margin-left:2px;
@@ -30,7 +30,7 @@
 .autocomplete li{
   font-size: 1.2em;
   text-align: left;
-  margin-left: -17px;
+  margin-left: 0px;
   list-style:none;
   width: inherit;
   padding:0;
