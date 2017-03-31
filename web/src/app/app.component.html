@@ -19,7 +19,7 @@
               <li><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=omicsdi" alt="Feedback">Feedback</a></li>
             </ul>
           </li>
-          <li *ngIf="auth.loggedIn()"><a [routerLink]="['/profile']">Profile</a></li>
+          <!-- li *ngIf="auth.loggedIn()"><a [routerLink]="['/profile']">Profile</a></li -->
 
           <li AppLoginLauncher>
           </li>
@@ -148,8 +148,3 @@
   </footer>
 
 </div>
-
-
-  <button (click)="startLoading()">Start Loading</button>
-  <button (click)="stopLoading()">Stop Loading</button>
-  <button (click)="completeLoading()">Complete Loading</button>

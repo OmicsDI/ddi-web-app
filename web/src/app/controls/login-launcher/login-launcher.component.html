@@ -9,7 +9,7 @@
 
 
   <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
-    <button md-menu-item>
+    <button [routerLink]="['/profile']" md-menu-item>
       Profile
     </button>
     <button md-menu-item disabled>
