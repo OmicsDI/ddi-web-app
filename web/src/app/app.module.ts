@@ -60,7 +60,6 @@ import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
 import {PagingService} from "./services/paging.service";
 import {Ng2PaginationModule} from "ng2-pagination";
 import {EnrichmentService} from "./services/enrichment.service";
-import { Ng2TooltipOverlayModule } from 'ng2-tooltip-overlay';
 import { OntologyTooltipPipe } from './pipes/ontology-tooltip.pipe';
 import {TooltipModule} from "ng2-tooltip";
 import { AnnotatedTextComponent } from './controls/annotated-text/annotated-text.component';
@@ -139,7 +138,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DropdownModule,
     SlimLoadingBarModule.forRoot(),
     Ng2PaginationModule,
-    Ng2TooltipOverlayModule,
     TooltipModule
   ],
   exports: [
