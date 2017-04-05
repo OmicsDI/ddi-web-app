@@ -18,7 +18,13 @@ export class ReposOmicsComponent implements OnInit {
   private transcriptomicsList: string;
   
   private pieChartName = 'chart_repos_omics';
+  private body;
   private retryLimitTimes = 2;
+
+  private reposDataSimple = [];
+  private data = [];
+  private omicsDataSimple = [];
+  private omicsDataNum = [];
 
   constructor(dataSetService: DataSetService) {
     this.webServiceUrl = dataSetService.getWebServiceUrl();
@@ -52,12 +58,13 @@ export class ReposOmicsComponent implements OnInit {
   }
 
   public draw(domains: any[], omicsType: any[]): void {
-    this.removeGettingInfo(this.pieChartName);
+    let self = this;
+    self.removeGettingInfo(self.pieChartName);
 
-    let repos = this.transformDomains(domains);
+    let repos = self.transformDomains(domains);
     omicsType.shift();
     omicsType.pop();
-    omicsType = this.dealCaseSensitiveIds(omicsType);
+    omicsType = self.dealCaseSensitiveIds(omicsType);
 
     
     omicsType.sort((a, b) => {
@@ -93,34 +100,30 @@ export class ReposOmicsComponent implements OnInit {
       }
     ];
 
-    let reposDataSimple = []
-      , data = []
-      , omicsDataSimple = []
-      , omicsDataNum = [];
 
     for (let i = 0; i < repos.length; i++) {
-      if (this.proteomicsList.indexOf(repos[i].name) > -1) {
+      if (self.proteomicsList.indexOf(repos[i].name) > -1) {
         reposData[0].children.push({
           name: repos[i].name,
           size: repos[i].value
         })
         continue;
       }
-      if (this.genomicsList.indexOf(repos[i].name) > -1) {
+      if (self.genomicsList.indexOf(repos[i].name) > -1) {
         reposData[1].children.push({
             name: repos[i].name,
             size: repos[i].value
         });
         continue;
       }
-      if (this.metabolomicsList.indexOf(repos[i].name) > -1) {
+      if (self.metabolomicsList.indexOf(repos[i].name) > -1) {
         reposData[2].children.push({
             name: repos[i].name,
             size: repos[i].value
         });
         continue;
       }
-      if (this.transcriptomicsList.indexOf(repos[i].name) > -1) {
+      if (self.transcriptomicsList.indexOf(repos[i].name) > -1) {
         reposData[3].children.push({
             name: repos[i].name,
             size: repos[i].value
@@ -135,30 +138,44 @@ export class ReposOmicsComponent implements OnInit {
       for (let j = 0; j < reposData[i].children.length; j++) {
         total += parseInt(reposData[i].children[j].size);
 
-        reposDataSimple.push({
+        self.reposDataSimple.push({
           name: reposData[i].children[j].name,
           size: reposData[i].children[j].size
         })
 
-        data.push(reposData[i].children[j].size);
+        self.data.push(reposData[i].children[j].size);
       }
       reposData[i].size = total;
     }
 
     for (let i = 0; i < omicsType.length; i++) {
-      omicsDataSimple.push({
+      self.omicsDataSimple.push({
         name: omicsType[i].name,
         size: omicsType[i].value
       })
-      omicsDataNum.push(omicsType[i].value);
+      self.omicsDataNum.push(omicsType[i].value);
     }
 
-    let body = d3.select('#' + this.pieChartName);
-    this.setTheRadio(body);
+    let body = self.body = d3.select('#' + self.pieChartName);
+
+    self.setTheRadio();
+    self.drawBarGraphic(self.data, self.reposDataSimple);
+    self.showTip('*:* AND repository:"', self.reposDataSimple);
+
+    d3.select(window).on('resize', function() {
+      self.drawBarGraphic(self.data, self.reposDataSimple);
+      self.showTip('*:* AND repository:"', self.reposDataSimple);
+    });
   }
 
-  private setTheRadio(body): void {
-    let pieChartName = this.pieChartName
+// radio form set up ---------------------------//
+  private setTheRadio(): void {
+    let omicsDataNum = this.omicsDataNum
+      , omicsDataSimple = this.omicsDataSimple
+      , reposDataSimple = this.reposDataSimple
+      , data = this.data
+      , pieChartName = this.pieChartName
+      , body = this.body;
 
     let divWidth = parseInt(body.style('width'));
     let formDiv = d3.select('#' + pieChartName + '_formdiv');
@@ -208,7 +225,196 @@ export class ReposOmicsComponent implements OnInit {
         .append('span')
         .append('span');
 
-    console.log('loaded');
+    d3.select("#" + this.pieChartName + "_radio_form")
+      .selectAll('input')
+      .on('change', change);
+
+    d3.select("#" + this.pieChartName + "_radio_form")
+      .select('input[value=Resources]')
+      .property('checked', true);
+    
+    let self = this;
+    function change() {
+      let value = this.value || 'Resources'
+        , d: any[]
+        , searchWordPre: string;
+      
+      if (value == 'Omics') {
+        d = omicsDataNum;
+        searchWordPre = '*:* AND omics_type:"';
+
+        self.drawBarGraphic(d, omicsDataSimple);
+        self.showTip(searchWordPre, omicsDataSimple)
+      }else if (value == 'Resources') {
+        d = data;
+        searchWordPre = '*:* AND repository:"';
+
+        self.drawBarGraphic(d, reposDataSimple);
+        self.showTip(searchWordPre, reposDataSimple);
+        
+      }
+    }
+  }
+
+// 
+  private drawBarGraphic(dataNow: any[],dataAddKey: any[]): void {
+    let body = d3.select('#' + this.pieChartName);
+
+    let divWidth = parseInt(body.style('width'));
+    let divHeight = parseInt(body.style('height'));
+    body.attr('position', 'relative');
+    d3.select('#' + this.pieChartName + '_svg').remove();
+
+    let svgHeight = divHeight - 40;
+    let rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 3;
+    let rectWidth = (divWidth - 70) * 0.06514;
+    let marginValueBefore = (divWidth - 70 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
+    let marginValue = marginValueBefore > 65 ? 65 : marginValueBefore;
+    let lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
+        upper = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
+        most = d3.scaleLinear().domain([5001, 80000]).range([rectHeight + 8, 8]).clamp(true),
+        color = d3.schemeCategory10;
+    
+    let svg = body
+                .append("svg")
+                .attr("width", divWidth)
+                .attr("height", svgHeight)
+                .attr('margin-top', 10)
+                .attr("id", this.pieChartName + "_svg");
+
+    if (svg.selectAll("rect")) {
+        svg.selectAll("rect").remove();
+    }
+
+    if (svg.selectAll("g")) {
+        svg.selectAll("g").remove();
+    }
+
+    if (svg.selectAll("text")) {
+        svg.selectAll("text").remove();
+    }
+
+    svg
+      .selectAll("rect.lower")
+      .data(dataNow)
+      .enter()
+      .append("rect")
+      .attr("class", "lower")
+      .attr("x", function (d, i) {
+          return 70 + i * marginValue;
+      })
+      .attr("width", rectWidth)
+      .attr("y", function (d) {
+          return lower(d);
+      })
+      .attr("height", function (d) {
+          return rectHeight * 3 + 28 - lower(d);
+      })
+      .style("fill", function(d, i) { return color[i % 10] });
+
+    svg.selectAll("rect.upper")
+        .data(dataNow)
+        .enter()
+        .append("rect")
+        .attr("class", "upper")
+        .attr("x", function (d, i) {
+            return 70 + i * marginValue;
+        })
+        .attr("width", rectWidth)
+        .attr("y", function (d) {
+            return upper(d);
+        })
+        .attr("height", function (d) {
+            return d >= 1500 ? rectHeight * 2 + 18 - upper(d) : 0;
+        })
+        .style("fill", function(d, i) { return color[i % 10] });
+
+    svg.selectAll("rect.most")
+        .data(dataNow)
+        .enter()
+        .append("rect")
+        .attr("class", "most")
+        .attr("x", function (d, i) {
+            return 70 + i * marginValue;
+        })
+        .attr("width", rectWidth)
+        .attr("y", function (d) {
+            return most(d);
+        })
+        .attr("height", function (d) {
+            return d >= 10000 ? rectHeight + 8 - most(d) : 0
+        })
+        .style('fill', function(d, i) { return color[i % 10] });
+
+
+    svg.append("g").attr("transform", "translate(60,0)")
+        .call(d3.axisLeft(lower).ticks(4));
+
+    svg.append("g").attr("transform", "translate(60,0)")
+        .call(d3.axisLeft(upper).ticks(4));
+
+    svg.append("g").attr("transform", 'translate(60,0)')
+        .call(d3.axisLeft(most).ticks(4));
+
+    this.setTheRadio();
+  }
+
+  private showTip(searchWordPre: string, dataAddKey: any[]): void {
+    let self = this
+      , pieChartName = self.pieChartName;
+    d3.select('#' + pieChartName + '_tooltip').remove();
+
+    let tooltip = self.body
+        .append('div')
+        .attr('id', pieChartName + '_tooltip')
+        .attr('class', 'chart_tooltip')
+        .style('opacity', 0)
+        .attr('position', 'absolute');
+
+    self.body.selectAll('rect')
+        .on('mouseover', function(d, i) {
+          i = i % dataAddKey.length;
+          let mouseCoords = d3.mouse(document.getElementById(pieChartName + '_tooltip').parentElement);
+          d3.select(this).attr('cursor', 'pointer');
+
+          tooltip.transition()
+            .duration(200)
+            .style('opacity', .9);
+
+          tooltip.html(dataAddKey[i].name.toString() + ': <br>' + dataAddKey[i].size.toString() + ' datasets')
+            .style('left', (mouseCoords[0]) + 'px')
+            .style('top', parseInt(d3.select(this).attr('y')) - 30 + 'px')
+            // .style('height', '2.8em')
+            // .style('width', (self.getLength(dataAddKey[i].name, dataAddKey[i].size) * 7.5) + 'px')
+            .style('padding', '3px')
+            .style('font-size', 'monospace');
+        })
+        .on('mouseout', function () {
+            tooltip.transition()
+                .duration(500)
+                .style('opacity', '0');
+        })
+        .on('click', function (d, i) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+            let searchWord = searchWordPre + dataAddKey[i].name.toString() + '"';
+            if (dataAddKey[i].name.toString() == "MetaboLights Dataset")
+                searchWord = searchWordPre + "MetaboLights" + '"';
+            if (dataAddKey[i].name.toString() == "Metabolome Workbench")
+                searchWord = searchWordPre + "MetabolomicsWorkbench" + '"';
+            if (dataAddKey[i].name.toString() == "Expression Atlas Experiments")
+                searchWord = searchWordPre + "ExpressionAtlas" + '"';
+            // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
+            //---------------------------------------- redirect to do ----------------------------------------//
+        })
+  }
+
+  private getLength(name: string, value: string): number {
+    let nameLen = name.toString().length
+      , valueLen = (value.toString() + ' datasets').length;
+    
+    return nameLen > valueLen ? nameLen : valueLen;
   }
 
   private dealCaseSensitiveIds(omicstype: any[]): any[] {
@@ -259,7 +465,7 @@ export class ReposOmicsComponent implements OnInit {
   public outputGettingInfo(errDiv: string): void {
     let tempDiv = d3.select('#' + errDiv);
 
-    if (tempDiv.select('i')[0][0] === null) {
+    if (!tempDiv.select('i')[0][0]) {
       tempDiv.append('i')
              .attr('class', 'fa fa-spinner fa-spin');
     }
