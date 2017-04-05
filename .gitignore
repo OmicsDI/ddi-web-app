@@ -24,3 +24,4 @@ angular-route
 /profile/.idea
 /web/.idea
 target/
+.DS_Store
