@@ -50,6 +50,11 @@ import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
 import {PagingService} from "./services/paging.service";
 import {Ng2PaginationModule} from "ng2-pagination";
+import {EnrichmentService} from "./services/enrichment.service";
+import { Ng2TooltipOverlayModule } from 'ng2-tooltip-overlay';
+import { OntologyTooltipPipe } from './pipes/ontology-tooltip.pipe';
+import {TooltipModule} from "ng2-tooltip";
+import { AnnotatedTextComponent } from './controls/annotated-text/annotated-text.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -96,7 +101,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PublicationComponent,
     SearchPagerComponent,
     SearchTotalComponent,
-    SearchAdvancedComponent
+    SearchAdvancedComponent,
+    OntologyTooltipPipe,
+    AnnotatedTextComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +118,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AlertModule.forRoot(),
     DropdownModule,
     SlimLoadingBarModule.forRoot(),
-    Ng2PaginationModule
+    Ng2PaginationModule,
+    Ng2TooltipOverlayModule,
+    TooltipModule
   ],
   exports: [
     RouterModule
@@ -126,7 +135,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , DataSetService
     , PublicationService
     , SimilarityService
-    , PagingService],
+    , PagingService
+    , EnrichmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,6 +1,6 @@
-import {Synonyms} from "./EnrichmentInfo/Synonyms";
-import {OriginalAttributes} from "./EnrichmentInfo/OriginalAttributes";
-import {Id} from "./EnrichmentInfo/Id";
+import {Synonyms} from "./Synonyms";
+import {OriginalAttributes} from "./OriginalAttributes";
+import {Id} from "./Id";
 /**
  * Created by user on 3/25/2017.
  */

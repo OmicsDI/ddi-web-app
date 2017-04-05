@@ -1,3 +1,8 @@
+<span ng2-tooltip="This is my tooltip">
+  Move mouse over here to see the tooltip
+</span>
+
+
 <div class="container ng-scope" id="datasetCtrl">
   <div id="" class="row">
   </div>
@@ -34,50 +39,45 @@
         <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
           <div>
             <h4>
-              <span class="ng-scope">
-              <span class="ng-binding ng-scope">{{d.name}}</span>
-              </span>
+              <annotated-text [text]="d.name" [sections]="title_sections"></annotated-text>
             </h4>
-            <p id="ontology_highlight_box" ng-click="enrich_click()" class="hotword" style="">
+            <p id="ontology_highlight_box" (click)="enrich_click()" class="hotword" style="">
               <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
             </p>
           </div>
           <hr style="margin-right:10px">
           <div>
             <div>
-              {{d.description}}
               <p class="align-justify"><b>ABSTRACT</b>:
-                <span>
-                    {{d.abstract}}
-                </span>
+                <annotated-text [text]="d.description" [sections]="abstract_sections"></annotated-text>
               </p>
             </div>
           </div>
-          <p class="align-justify" style="">
+          <p class="align-justify" *ngIf="null!=d.sample_protocol">
             <span><b>SAMPLE PROTOCOL:</b></span>
               <span class="ng-scope">
-                  sample_protocol
+                  <annotated-text [text]="d.sample_protocol" [sections]="sample_protocol"></annotated-text>
               </span>
           </p>
-          <p class="align-justify">
+          <p class="align-justify" *ngIf="null!=d.data_protocol">
             <span><b>DATA PROTOCOL:</b></span>
               <span class="ng-scope">
-                  data_protocol
+                  <annotated-text [text]="d.data_protocol" [sections]="data_protocol"></annotated-text>
               </span>
           </p>
-          <p class="align-justify ng-hide">
+          <p class="align-justify ng-hide" *ngIf="null!=d.reanalysis_of">
             <b>REANALYSIS of:</b>reanalysis_of
           </p>
-          <p class="align-justify ng-hide">
+          <p class="align-justify ng-hide" *ngIf="null!=d.reanalised_by">
             <b>REANALYZED by:</b>reanalised_by
           </p>
-          <p class="align-justify ng-hide">
+          <p class="align-justify ng-hide" *ngIf="null!=d.related_omics">
             <b>OTHER RELATED OMICS DATASETS IN:</b>related_omics
           </p>
-          <p class="align-justify">
+          <p class="align-justify" *ngIf="null!=d.instruments">
             <b>INSTRUMENT(S):</b>{{d.instruments}}
           </p>
-          <p class="align-justify">
+          <p class="align-justify" *ngIf="null!=d.organisms">
             <b>ORGANISM(S):</b>
               <span *ngFor="let o of d.organisms">
                 <a class="biological" href="/search?q=*:* AND TAXONOMY:&quot;{{o.acc}}&quot;">
@@ -85,13 +85,13 @@
                 </a>&nbsp;
               </span>
           </p>
-          <p class="align-justify ng-hide"><b>TISSUE(S):</b>
+          <p class="align-justify ng-hide" *ngIf="null!=d.tissues"><b>TISSUE(S):</b>
               {{d.tissues}}
           </p>
-          <p class="align-justify ng-hide"><b>DISEASE(S):</b>
+          <p class="align-justify ng-hide" *ngIf="null!=d.diseases"><b>DISEASE(S):</b>
               {{d.diseases}}
           </p>
-          <p class="align-justify">
+          <p class="align-justify" *ngIf="null!=d.submitter">
             <b>SUBMITTER:</b>
               <span *ngFor="let o of d.submitter">
                 <span>
