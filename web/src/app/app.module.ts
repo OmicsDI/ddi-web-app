@@ -105,7 +105,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PublicationComponent,
     SearchPagerComponent,
     SearchTotalComponent,
-    SearchAdvancedComponent,
     ReposOmicsComponent,
     HotwordsComponent,
     TissuesOrganismsComponent,
@@ -115,7 +114,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     TweetsNewsComponent,
     StatisticsPanelComponent,
     AboutComponent,
-    HomeAboutComponent
+    HomeAboutComponent,
+    SearchAdvancedComponent
   ],
   imports: [
     BrowserModule,
