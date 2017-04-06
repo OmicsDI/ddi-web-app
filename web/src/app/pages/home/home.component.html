@@ -100,20 +100,7 @@
 
   <div class="row" ng-controller="DatasetListsCtrl">
     <div class="col-md-4">
-      <div id="latestdatasetspanel" class="panel panel-default">
-
-        <div class="">
-          <h4 class="icon icon-functional " data-icon="z"> Latest Datasets</h4>
-        </div>
-        <div class="panel-body ">
-          <ul class="nobullet">
-            <li ng-show="get_latest_datasets_fail.length > 1" class="error-info">
-              {{get_latest_datasets_fail}}
-            </li>
-            latestList
-          </ul>
-        </div>
-      </div>
+      <app-latest-datasets></app-latest-datasets>
     </div>
 
     <div class="col-md-4">

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {SimilarityResult} from "../model/SimilarityResult";
-import {SearchResult} from "../model/SearchResult";
-import {Subject, Observable} from "rxjs";
-import {Http, Response} from "@angular/http";
-import {DataSetDetail} from "../model/DataSetDetail";
+import { SimilarityResult } from "../model/SimilarityResult";
+import { SearchResult } from "../model/SearchResult";
+import { Subject, Observable } from "rxjs";
+import { Http, Response } from "@angular/http";
+import { DataSetDetail } from "../model/DataSetDetail";
+import { DataSet } from "../model/DataSet";
 
 @Injectable()
 export class DataSetService {
@@ -17,7 +18,6 @@ export class DataSetService {
   constructor(private http: Http) { }
 
   private dataSetSource = new Subject<DataSetDetail>();
-
   dataSetDetail$ = this.dataSetSource.asObservable();
 
   //http://www.omicsdi.org/ws/dataset/get?acc=E-GEOD-66737&database=arrayexpress-repository
@@ -32,28 +32,28 @@ export class DataSetService {
   //http://www.omicsdi.org/ws/publication/list?acc=26404089
   dataSetUrl: string = "http://www.omicsdi.org/ws/dataset/get?acc=E-GEOD-66737&database=arrayexpress-repository";
 
-  private extractData<T>(res: Response) : T {
+  private extractData<T>(res: Response): T {
 
     console.info("Extract Data");
 
     let body = res.json();
-    var result : T;
-    result = (body || { }) as T;
+    var result: T;
+    result = (body || {}) as T;
     return result;
   }
 
-  private getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail>{
+  private getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
     console.info("DataSetService.getDataSetDetail");
-    let url = this.dataSetUrl.replace('E-GEOD-66737',accession);
-    url = url.replace('arrayexpress-repository',repository);
+    let url = this.dataSetUrl.replace('E-GEOD-66737', accession);
+    url = url.replace('arrayexpress-repository', repository);
     console.info("url:" + url);
 
     return this.http.get(url)
       .map(x => this.extractData<DataSetDetail>(x));
   }
 
-  public getDataSetDetail(accession: string, repository: string){
-    this.getDataSetDetail_private(accession,repository).subscribe(result => {
+  public getDataSetDetail(accession: string, repository: string) {
+    this.getDataSetDetail_private(accession, repository).subscribe(result => {
       this.dataSetSource.next(result);
     });
     /** TODO: handle error **/
@@ -78,4 +78,18 @@ export class DataSetService {
   public getTranscriptomicsList(): string {
     return this.transcriptomicsList;
   }
+
+  public getLatestDataSet(): Promise<Response> {
+    return this.http.get(this.webServiceUrl + "dataset/latest?size=10")
+      .map(res => res.json())
+      .toPromise();
+  }
+  public getMonthDay(dateString: string): string {
+    let month_names_short = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let month_int = parseInt(dateString.substr(4, 2));
+    let day_int = parseInt(dateString.substr(6, 2));
+    let month = month_names_short[month_int - 1];
+    return month + " " + day_int+" ";
+  }
+
 }

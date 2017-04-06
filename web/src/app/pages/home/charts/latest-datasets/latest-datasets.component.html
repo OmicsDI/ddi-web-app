@@ -1,3 +1,29 @@
-<p>
-  latest-datasets works!
-</p>
+<div id="latestdatasetspanel" class="panel panel-default">
+  <div class="">
+    <h4 class="icon icon-functional " data-icon="z"> Latest Datasets</h4>
+  </div>
+  <div class="panel-body ">
+    <ul class="nobullet">
+
+      <li *ngIf="isRequestLatestDatasetFailed()" class="error-info">
+        Sorry, the accessing to this datasets list was temporally failed.
+      </li>
+      <li *ngFor="let _dataset of latestDatasets" class="title_one_line">
+
+        <img src="/src/img/omics/Proteomics2.png" *ngIf="proteomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Proteomics" />
+        <img src="/src/img/omics/Metabolomics2.png" *ngIf="metabolomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Metabolomics" />
+        <img src="/src/img/omics/Genomics2.png" *ngIf="genomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Gemonics" />
+        <img src="/src/img/omics/Transcriptomics2.png" *ngIf="transcriptomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Transcriptomics" />
+        <a href="/dataset/{{_dataset.source}}/{{_dataset.id}}" title={{_dataset.title}}>
+              {{getMonthDay(_dataset.publicationDate)}}{{_dataset.title}}
+          <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->
+            <span class="icon icon-functional" data-icon=""></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
