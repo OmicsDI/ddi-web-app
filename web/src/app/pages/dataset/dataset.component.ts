@@ -11,6 +11,8 @@ import {Synonyms} from "../../model/EnrichmentInfo/Synonyms";
 import {forEach} from "@angular/router/src/utils/collection";
 import {SynonymResult} from "../../model/EnrichmentInfo/SynonymResult";
 import {Synonym} from "../../model/EnrichmentInfo/Synonym";
+import { DisqusModule } from 'angular2-disqus';
+
 
 @Component({
   selector: 'app-dataset',
@@ -33,9 +35,16 @@ export class DatasetComponent implements OnInit, OnDestroy {
   abstract_sections:Section[];
   sample_protocol_sections:Section[];
   data_protocol_sections:Section[];
+  current_url: String;
+  page_identifier:String;
+  index_dataset:number;
 
   constructor(private dataSetService: DataSetService, private route: ActivatedRoute, private enrichmentService: EnrichmentService) {
-    console.info("DatasetComponent ctor");
+    console.info("DatasetComponent constructor");
+
+    this.current_url = route.pathFromRoot.toString();
+    this.index_dataset = this.current_url.indexOf("dataset");
+    this.page_identifier = this.current_url.substr(this.index_dataset);//"dataset/paxdb/10090102";
     this.subscription = this.dataSetService.dataSetDetail$.subscribe(
       result => {
         console.info("dataSetDetail$ subscribtion");

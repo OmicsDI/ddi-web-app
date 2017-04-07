@@ -49,7 +49,10 @@ import { TweetsNewsComponent } from './pages/home/charts/tweets-news/tweets-news
 import { StatisticsPanelComponent } from './pages/home/charts/statistics-panel/statistics-panel.component';
 import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.component';
 
-import { DisqusModule } from 'angular2-disqus';
+/*import { DisqusModule } from 'angular2-disqus';*/
+import {DisqusModule} from "ng2-awesome-disqus";
+
+
 import { SearchPagerComponent } from './pages/search/search-pager/search-pager.component';
 import { SearchTotalComponent } from './pages/search/search-total/search-total.component';
 import { SearchAdvancedComponent } from './pages/search/search-advanced/search-advanced.component';
