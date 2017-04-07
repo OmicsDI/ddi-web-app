@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AutocompleteNComponent} from "../autocomplete-n/autocomplete-n.component";
 import {SearchService} from "../../services/search.service";
 import {Router} from "@angular/router";
+import {SearchQuery} from "../../model/SearchQuery";
 
 @Component({
   selector: '[AppSearchBox]',
@@ -11,6 +12,8 @@ import {Router} from "@angular/router";
 export class SearchBoxComponent implements OnInit {
 
   @ViewChild(AutocompleteNComponent) autocompleteComponent:AutocompleteNComponent;
+
+  query:SearchQuery = new SearchQuery();
 
   constructor(private searchService: SearchService, private router: Router) {
   }
@@ -25,6 +28,9 @@ export class SearchBoxComponent implements OnInit {
     if(this.router.url !== "/search"){
       this.router.navigate(["search"]);
     }
+  }
 
+  doNotPropagate(event){
+    event.stopPropagation();
   }
 }

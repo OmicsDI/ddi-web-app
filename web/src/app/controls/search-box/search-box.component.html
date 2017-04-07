@@ -8,7 +8,7 @@
             <i class="fa fa-caret-down" aria-hidden="true"></i>
             Advanced
           </button>
-          <button type="submit" ng-disab class="btn btn-primary ddi-btn"  (click)="search()" >
+          <button type="submit" ng-disab class="btn btn-primary ddi-btn" (click)="search()" >
             <i class="fa fa-search"></i> Search
           </button>
         </div>
@@ -17,50 +17,18 @@
   </form>
 </div>
 
-<md-menu #advancedSearchMenu="mdMenu" [overlapTrigger]="false">
-
-  <div class="alert alert-warning alert-group" ng-init="init()" style="position: relative; z-index: 1">
-    <div class="form-inline" style="position: relative;">
-      <select ng-options="o.name as o.name for o in operators" ng-model="group.operator" class="form-control input-sm"></select>
-      <button style="margin-left: 5px" ng-click="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Field</button>
-      <button style="margin-left: 5px" ng-click="addGroup()" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Add Group</button>
-      <button style="margin-left: 5px" ng-click="removeGroup()" class="btn btn-sm btn-danger" ng-hide="isRootGroup()"><i class="fa fa-minus" aria-hidden="true"></i> Remove Group</button>
+<md-menu #advancedSearchMenu="mdMenu" [overlapTrigger]="false" style="max-width:700px;">
+  <div style="min-width:600px">
+  <div class="alert alert-info">
+    <div style="position: relative;">
+      <strong>Query preview</strong><br/>
+      {{query.toQueryString()}}
+      <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right; position: relative; top:-20px;" ng-click="submit_adv_query(query_output)">
+        <i class="fa fa-search" style="font-size: 30px"></i>
+      </button>
     </div>
-    <div ng-if="hideBasicInfo">
-      <label>"Sorry, can not perform the search either there is no field or data is empty."</label>
-    </div>
-    <div class="group-conditions">
-      <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition" ng-init="ruleIndex = $index">
-        <div ng-switch="rule.hasOwnProperty('group')">
-          <div ng-switch-when="true">
-            query builder
-          </div>
-          <div ng-switch-default="ng-switch-default">
-            <div class="form-inline" style="margin-top:3px">
-              <select ng-options="field.name as field.label for field in fields" ng-model="rule.field" class="form-control input-sm" ng-click="selectField(rule)" ></select>
-              <select style="margin-left: 3px" ng-options="condition.name as condition.name for condition in conditions" ng-model="rule.condition" ng-click="placeValue2='--click to input--'; rule__data2='';rule__data=''; placeValue='--click to input--'" class="form-control input-sm"></select>
-              <div class="input-group" style="margin-left:3px;">
-                <input ng-model="rule.data" type="text" class="form-control" placeholder={{placeValue}} ng-focus="adv_show=true" ng-blur="adv_show=false">
-                <div ng-if="adv_show" class="adv-dropdown-menu" style="width:100%">
-                  <ul class="list-unstyled metasearch-facet-values">
-                    <li ng-mousedown="addRuleData(ruleIndex, facet.value,facet.label,rule)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule.field] | filter:rule.data">{{facet__label}}</li>
-                  </ul>
-                </div>
-              </div>
-              <div ng-if="rule.condition=='range'" class="input-group" style="margin-left:3px;">
-                <input ng-model="rule.data2" type="text" class="form-control" placeholder={{placeValue2}} ng-focus="adv_show_two=true" ng-blur="adv_show_two=false">
-                <div ng-if="adv_show_two" class="adv-dropdown-menu" style="width:100%">
-                  <ul class="list-unstyled metasearch-facet-values">
-                    <li ng-mousedown="addRuleDataTwo(ruleIndex, facet.value,rule)" class="metasearch-facet-link" ng-repeat="facet in fields_data[rule__field] | filter:rule__data2">{{facet__label}}</li>
-                  </ul>
-                </div>
-              </div>
-              <button style="margin-left: 5px" ng-click="removeCondition($index)" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <span ng-bind-html="query_output"></span>
   </div>
-
+  <query-builder [(query)]="query" (click)="doNotPropagate($event);"></query-builder>
+  </div>
 </md-menu>

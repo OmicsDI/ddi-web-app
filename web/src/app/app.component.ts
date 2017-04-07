@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { AuthService } from './services/auth.service';
 import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
+import {QueryBuilderComponent} from "./controls/query-builder/query-builder.component";
+import {SearchQuery} from "./model/SearchQuery";
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,10 @@ import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 
 export class AppComponent {
   title : string;
+
+  @ViewChild(QueryBuilderComponent) queryBuilder: QueryBuilderComponent;
+
+  query: SearchQuery = new SearchQuery();
 
   constructor(private auth: AuthService, private slimLoadingBarService: SlimLoadingBarService){
     this.title =this.getTitle();
@@ -34,4 +40,9 @@ export class AppComponent {
   completeLoading() {
     this.slimLoadingBarService.complete();
   }
+
+   queryBuilderChanged(){
+    //this.query = this.queryBuilder.getQuery();
+  }
+
 }

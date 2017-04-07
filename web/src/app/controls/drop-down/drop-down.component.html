@@ -1,0 +1,10 @@
+<input [(ngModel)]="value" type="text" class="form-control" placeholder={{placeValue}}
+       (focus)="adv_show=true"
+       (blur)="adv_show=false">
+<div *ngIf="adv_show" class="adv-dropdown-menu" style="width:100%;">
+  <ul class="list-unstyled metasearch-facet-values">
+    <li (mousedown)="setRuleData(facet)"
+        class="metasearch-facet-link"
+        *ngFor="let facet of facetValues">{{facet.label}}</li>
+  </ul>
+</div>
