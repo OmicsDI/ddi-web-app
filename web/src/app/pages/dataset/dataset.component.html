@@ -125,7 +125,8 @@
       <!--dataset_upper -->
 
       <div class="panel panel-default">
-        <app-disqus></app-disqus>
+        <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
+        <disqus [shortname]="datasetpage" [identifier]="page_identifier" ></disqus>
       </div>
     </div>
     <!-- col-md-8 centerpanel-->
