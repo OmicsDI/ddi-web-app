@@ -29,13 +29,14 @@ export class LatestDatasetsComponent implements OnInit {
     this.genomics_list = this.dataSetService.getGenomicsList();
     this.transcriptomics_list = this.dataSetService.getTranscriptomicsList();
 
-    this.dataSetService.getLatestDataSet()
+    this.dataSetService.getLatestDataSets()
       .then(res => {
         this.latestDatasets = res["datasets"];
       })
       .then(() => {
-        if (this.latestDatasets == null) {
+        if (this.latestDatasets === null) {
           LatestDatasetsComponent.requestLatestDatasetFailed = true;
+          console.log("datasets array is empty");
         }
       })
       .catch(this.handleError)
@@ -44,6 +45,7 @@ export class LatestDatasetsComponent implements OnInit {
   private handleError(error: any) {
 
     LatestDatasetsComponent.requestLatestDatasetFailed = true;
+    console.log("GET error with url: http://www.omicsdi.org/ws/dataset/dataset/latest?size=10");
     return Promise.reject(error.message || error);
   }
   isRequestLatestDatasetFailed(): boolean {

@@ -1,3 +1,29 @@
-<p>
-  most-accessed works!
-</p>
+<div id="most_accessed_datasets" class="panel panel-default">
+
+  <div class="">
+    <h4 class="icon icon-functional " data-icon="z"> Most Accessed Datasets</h4>
+  </div>
+  <div class="panel-body ">
+    <ul class="nobullet">
+
+      <li *ngIf="isRequestMostAccessedDatasetFailed()" class="error-info">
+        Sorry, the accessing to this datasets list was temporally failed.
+      </li>
+      <li *ngFor="let _dataset of mostAccessedDatasets " class="title_one_line">
+
+        <img src="/src/img/omics/Proteomics2.png" *ngIf="proteomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Proteomics" />
+        <img src="/src/img/omics/Metabolomics2.png" *ngIf="metabolomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Metabolomics" />
+        <img src="/src/img/omics/Genomics2.png" *ngIf="genomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Gemonics" />
+        <img src="/src/img/omics/Transcriptomics2.png" *ngIf="transcriptomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
+          title="Transcriptomics" />
+        <span class="icon icon-functional" data-icon="4">{{_dataset.visitCount|megaNumber}}</span>
+        <a href="/dataset/{{_dataset.source}}/{{_dataset.id}}" title={{_dataset.title}}>
+              {{_dataset.title}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
