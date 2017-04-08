@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { Selection } from 'd3-selection';
 
 import { DataSetService } from '../../../../services/dataset.service';
+import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
 
 @Component({
   selector: 'repos-omics',
@@ -46,10 +47,10 @@ export class ReposOmicsComponent implements OnInit {
         if (err) {
           this.retryLimitTimes--;
           if (this.retryLimitTimes <= 0){
-            this.outputErrorInfo(this.pieChartName);
+            ChartsErrorHandler.outputErrorInfo(this.pieChartName);
             return;
           }
-          this.outputGettingInfo(this.pieChartName);
+          ChartsErrorHandler.outputGettingInfo(this.pieChartName);
           this.startRequest();
         } else {
           this.draw(domains, omicstype);
@@ -59,7 +60,7 @@ export class ReposOmicsComponent implements OnInit {
 
   public draw(domains: any[], omicsType: any[]): void {
     let self = this;
-    self.removeGettingInfo(self.pieChartName);
+    ChartsErrorHandler.removeGettingInfo(self.pieChartName);
 
     let repos = self.transformDomains(domains);
     omicsType.shift();
@@ -451,29 +452,4 @@ export class ReposOmicsComponent implements OnInit {
       }])
     }, []);
   }
-
-  public outputErrorInfo(errDiv: string): void {
-    let tempDiv = d3.select('#' + errDiv);
-    
-    tempDiv.selectAll('i').remove();
-    tempDiv.selectAll('p').remove();
-    tempDiv.append('p')
-           .attr('class', 'error-info')
-           .text('Sorry, accessing to this web service was temporally failed.');
-  }
-
-  public outputGettingInfo(errDiv: string): void {
-    let tempDiv = d3.select('#' + errDiv);
-
-    if (!tempDiv.select('i')[0][0]) {
-      tempDiv.append('i')
-             .attr('class', 'fa fa-spinner fa-spin');
-    }
-  }
-
-  public removeGettingInfo(errDiv: string): void {
-    let tempDiv = d3.select('#' + errDiv);
-    tempDiv.select('i').remove();
-  }
-
 }
