@@ -5,6 +5,8 @@ import { Subject, Observable } from "rxjs";
 import { Http, Response } from "@angular/http";
 import { DataSetDetail } from "../model/DataSetDetail";
 import { DataSet } from "../model/DataSet";
+import { StatisticsDomains } from '../model/StatisticsDomains';
+import { StatisticsOmics } from '../model/StatisticsOmics';
 
 @Injectable()
 export class DataSetService {
