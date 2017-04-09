@@ -1,5 +1,6 @@
-<script >
+<script>
   document.title = "OmicsDI Home";
+
 </script>
 
 
@@ -77,8 +78,7 @@
   <div class="row">
 
     <div class="col-md-4">
-      <div id="hotwords" class="panel panel-default" style="height:360px">
-      </div>
+      <app-hotwords></app-hotwords>
     </div>
 
 
@@ -98,28 +98,14 @@
   <!-- row -->
 
 
-  <div class="row" ng-controller="DatasetListsCtrl">
+  <div class="row">
     <div class="col-md-4">
       <app-latest-datasets></app-latest-datasets>
     </div>
 
     <div class="col-md-4">
-      <div id="most_accessed_datasets" class="panel panel-default">
-
-        <div class="">
-          <h4 class="icon icon-functional " data-icon="z"> Most Accessed Datasets</h4>
-        </div>
-        <div class="panel-body ">
-          <ul class="nobullet">
-            <li ng-show="get_most_access_datasets_fail.length > 1" class="error-info">
-              {{get_most_access_datasets_fail}}
-            </li>
-            visit count
-          </ul>
-        </div>
-      </div>
+      <app-most-accessed></app-most-accessed>
     </div>
-
 
     <div class="col-md-4">
       <div id="barchart_omicstype_annual" class="panel panel-default">
@@ -131,72 +117,25 @@
                     <ul>
                     </ul>
                 </div> -->
-
-
       </div>
     </div>
-
-
   </div>
   <!--row -->
 
   <hr>
 
   <div class="row">
+
     <div class="col-md-4">
-      <div class="panel panel-default" style="height:260px">
-        <div id="tweets-of-the-month" class="">
-          <h4 data-icon="N" class="icon icon-generic">
-            News
-          </h4>
-        </div>
-
-        <div>
-          <a href="https://twitter.com/@DDIndex" data-icon="T" style="margin-left: 8px"
-             class="justify-body-text icon icon-socialmedia">More tweets</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-
-      <div id="statisticspanel" class="panel panel-default" ng-controller="DatasetListsCtrl"
-           style="height:260px">
-
-        <div class="">
-          <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
-        </div>
-        <blockquote>
-          statistics data
-        </blockquote>
-      </div>
+      <app-tweets-news></app-tweets-news>
     </div>
 
+    <div class="col-md-4">
+      <app-statistics-panel></app-statistics-panel>
+    </div>
 
     <div class="col-md-4">
-      <div class="panel panel-default" style="height:260px">
-        <div id="About" class="">
-          <h4 data-icon="N" class="icon icon-generic">
-            About
-          </h4>
-          <blockquote class="small callout-info ddi-blockquote">The Omics Discovery Index (OmicsDI) provides a Knowleage
-            Discovery framework across a heterogeneous data (genomics, proteomics, trascriptomics and metabolomics).
-            <a href="#/help#Overview">Read More</a>).
-          </blockquote>
-
-          <blockquote class="small callout-info ddi-blockquote">OmicsDI project has been developed on <a
-            href="https://github.com/BD2K-OmicsDI/" target="_blank">GitHub</a>, you can check or
-            contribute to our development at (<a href="https://github.com/BD2K-OmicsDI/" target="_blank">here</a>)
-          </blockquote>
-
-          <blockquote class="small callout-info ddi-blockquote">The frontend page is based on the
-            <a href="https://angularjs.org/">Angular JS</a>;
-            <a href="d3js.org/">D3.js</a>
-          </blockquote>
-
-        </div>
-        <div>
-        </div>
-      </div>
+      <app-home-about></app-home-about>
     </div>
 
 
@@ -205,11 +144,6 @@
 </div>
 <!--main container -->
 <script>
-  bub_charts_tissues_organisms();
-  pie_charts_repos_omics();
-  barcharts_years_omics_types();
-  drawHotwords();
-
   /**
    *  get tweets and write into the page
    *
@@ -218,4 +152,5 @@
   tf.fetch(function (tweets) {
     publishtweets(tweets);
   }, 4);
+
 </script>

@@ -68,6 +68,7 @@ import {TooltipModule} from "ng2-tooltip";
 import { AnnotatedTextComponent } from './controls/annotated-text/annotated-text.component';
 import { QueryBuilderComponent } from './controls/query-builder/query-builder.component';
 import { DropDownComponent } from './controls/drop-down/drop-down.component';
+import { MegaNumberPipe } from './pipes/mega-number.pipe';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -129,7 +130,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HomeAboutComponent,
     SearchAdvancedComponent,
     QueryBuilderComponent,
-    DropDownComponent
+    DropDownComponent,
+    MegaNumberPipe
   ],
   imports: [
     BrowserModule,

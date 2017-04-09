@@ -79,8 +79,13 @@ export class DataSetService {
     return this.transcriptomicsList;
   }
 
-  public getLatestDataSet(): Promise<Response> {
+  public getLatestDataSets(): Promise<Response> {
     return this.http.get(this.webServiceUrl + "dataset/latest?size=10")
+      .map(res => res.json())
+      .toPromise();
+  }
+  public getMostAccessedDataSets(): Promise<Response> {
+    return this.http.get(this.webServiceUrl + "dataset/mostAccessed?size=20")
       .map(res => res.json())
       .toPromise();
   }
