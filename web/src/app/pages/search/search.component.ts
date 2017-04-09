@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
     console.log("search page onInit");
     this.slimLoadingBarService.start();
     if(null==this.searchService.searchQuery){
-      this.searchService.callSearch("");
+      this.searchService.callSearch("*:*");
     }
   }
 

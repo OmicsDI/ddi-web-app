@@ -22,7 +22,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   total: number;
   loading: boolean;
 
-  constructor(private http: Http, private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
+  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
 
     console.log("SearchResultComponent ctor");
     this.slimLoadingBarService.start();
@@ -52,6 +52,4 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     //this.slimLoadingBarService.complete();
     //console.log("search-result.ngAfterViewChecked");
   }
-
-
 }
