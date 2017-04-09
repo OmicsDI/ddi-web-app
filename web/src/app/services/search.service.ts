@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import {Subject, Observable} from "rxjs";
 import {Http, Response} from "@angular/http";
 import {SearchResult} from "../model/SearchResult";
+import {AppConfig} from "../app.config";
+import {BaseService} from "./base.service";
 
 @Injectable()
-export class SearchService {
+export class SearchService extends BaseService{
 
   private searchResultSource = new Subject<SearchResult>();
 
@@ -12,9 +14,7 @@ export class SearchService {
 
   public searchQuery: string;
 
-  url: string = "http://www.omicsdi.org/ws/dataset/search?query=Orbitrap*&facetcount=100&size=15&sortfield=id&order=descending&start=0";
-
-  pageSize: string = "15";
+  pageSize: number = 15;
   currentPage: number = 1;
 
   sortOrder: string = "ascending";
@@ -23,8 +23,8 @@ export class SearchService {
   selectedPageSize = "10";
   pageSizes = ["10","20","50","100" ];
 
-
-  constructor(private http: Http) {
+  constructor(private http: Http, private appConfig: AppConfig) {
+    super()
   }
 
   public callSearch(searchQuery: string ){
@@ -41,25 +41,8 @@ export class SearchService {
   }
 
   search(searchQuery: string, page: number): Observable<SearchResult> {
-    /** use searchQuery **/
-    let searchUrl = this.url.replace('Orbitrap*',searchQuery);
-    searchUrl = searchUrl.replace('start=0','start=' + String((page-1)*15));
-
-    searchUrl = searchUrl.replace('sortfield=id','sortfield='+this.sortBy);
-    searchUrl = searchUrl.replace('order=descending','order='+this.sortOrder);
-
-    searchUrl = searchUrl.replace('size=15','size='+this.pageSize);
-
-    return this.http.get(searchUrl) //,config //{ withCredentials: true }
-      .map(this.extractData);
-  }
-
-  private extractData(res: Response) : SearchResult {
-    let body = res.json();
-    //return body || { };
-    var searchResult : SearchResult;
-    searchResult = (body || { }) as SearchResult;
-    return searchResult;
+    return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.pageSize,this.sortBy,this.sortOrder,(page-1)*15))
+      .map(x => this.extractData<SearchResult>(x));
   }
 
   page(page: number){
@@ -71,7 +54,7 @@ export class SearchService {
     this.callSearch(this.searchQuery); //page
   }
 
-  changePageSize(size: string){
+  changePageSize(size: number){
     this.pageSize = size;
     this.callSearch1(this.searchQuery,1);
   }

@@ -133,8 +133,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }else {
 
       Observable.forkJoin(
-        [this.enrichmentService.getEnrichmentInfo1(this.repository,this.acc),
-        this.enrichmentService.getSynonyms1(this.repository,this.acc)]
+        [this.enrichmentService.getEnrichmentInfo(this.repository,this.acc),
+        this.enrichmentService.getSynonyms(this.repository,this.acc)]
       ).subscribe(
         data => {
           console.log("subscription to forkJoin");

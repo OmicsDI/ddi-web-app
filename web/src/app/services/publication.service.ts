@@ -3,39 +3,25 @@ import {PublicationResult} from "../model/PublicationResult";
 import {SearchResult} from "../model/SearchResult";
 import {Observable, Subject} from "rxjs";
 import {Response, Http} from "@angular/http";
+import {AppConfig} from "../app.config";
+import {BaseService} from "./base.service";
 
 @Injectable()
-export class PublicationService {
-
-  //
+export class PublicationService extends BaseService{
 
   private resultSource = new Subject<PublicationResult>();
 
   searchResult$ = this.resultSource.asObservable();
-
-  url: string = "http://www.omicsdi.org/ws/publication/list?acc=26404089";
-
-  constructor(private http: Http) {
+  constructor(private http: Http, private appConfig: AppConfig) {
+    super();
   }
 
   search(acc: string){
-    let searchUrl = this.url.replace('26404089',acc);
-
-    let o : Observable<PublicationResult> = this.http.get(searchUrl) //,config //{ withCredentials: true }
+    let o : Observable<PublicationResult> = this.http.get(this.appConfig.getPublicationUrl(acc)) //,config //{ withCredentials: true }
       .map(x => this.extractData<PublicationResult>(x));
 
     o.subscribe(x => {
       this.resultSource.next(x);
     });
-  }
-
-  private extractData<T>(res: Response) : T {
-
-    console.info("Extract Data");
-
-    let body = res.json();
-    var result : T;
-    result = (body || { }) as T;
-    return result;
   }
 }

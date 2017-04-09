@@ -5,50 +5,27 @@ import { Subject, Observable } from "rxjs";
 import { Http, Response } from "@angular/http";
 import { DataSetDetail } from "../model/DataSetDetail";
 import { DataSet } from "../model/DataSet";
+import {AppConfig} from "../app.config";
+import {BaseService} from "./base.service";
 
 @Injectable()
-export class DataSetService {
+export class DataSetService extends BaseService{
 
-  private webServiceUrl = 'http://www.omicsdi.org/ws/';
   private proteomicsList = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, gpmdb, GPMDB, GPMdb,LINCS,LINCS,paxdb,PAXDB,jpost,JPOST Repository";
   private metabolomicsList = "MetaboLights Dataset, MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench, metabolome_express, MetabolomeExpress, Metabolomics Workbench, GNPS, gnps";
   private transcriptomicsList = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments";
   private genomicsList = "ega,EGA";
 
-  constructor(private http: Http) { }
-
-  private dataSetSource = new Subject<DataSetDetail>();
-  dataSetDetail$ = this.dataSetSource.asObservable();
-
-  //http://www.omicsdi.org/ws/dataset/get?acc=E-GEOD-66737&database=arrayexpress-repository
-  //http://www.omicsdi.org/ws/dataset/getSimilar?acc=E-GEOD-66737&database=arrayexpress-repository
-  //http://www.omicsdi.org/ws/dataset/getFileLinks?acc=E-GEOD-66737&database=arrayexpress-repository
-
-  //http://www.omicsdi.org/ws/enrichment/getSimilarityInfo?accession=E-GEOD-66737&database=arrayexpress-repository
-  //http://www.omicsdi.org/ws/enrichment/getEnrichmentInfo?accession=E-GEOD-66737&database=arrayexpress-repository
-  //http://www.omicsdi.org/ws/enrichment/getSimilarDatasetsByBiologicalData?accession=E-GEOD-66737&database=arrayexpress-repository
-  //http://www.omicsdi.org/ws/enrichment/getSynonymsForDataset?accession=E-GEOD-66737&database=arrayexpress-repository
-
-  //http://www.omicsdi.org/ws/publication/list?acc=26404089
-  dataSetUrl: string = "http://www.omicsdi.org/ws/dataset/get?acc=E-GEOD-66737&database=arrayexpress-repository";
-
-  private extractData<T>(res: Response): T {
-
-    console.info("Extract Data");
-
-    let body = res.json();
-    var result: T;
-    result = (body || {}) as T;
-    return result;
+  constructor(private http:Http, private appConfig: AppConfig) {
+    super();
   }
 
-  private getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
-    console.info("DataSetService.getDataSetDetail");
-    let url = this.dataSetUrl.replace('E-GEOD-66737', accession);
-    url = url.replace('arrayexpress-repository', repository);
-    console.info("url:" + url);
+  private dataSetSource = new Subject<DataSetDetail>();
 
-    return this.http.get(url)
+  dataSetDetail$ = this.dataSetSource.asObservable();
+
+  private getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
+    return this.http.get(this.appConfig.getDatasetUrl(accession,repository))
       .map(x => this.extractData<DataSetDetail>(x));
   }
 
@@ -56,11 +33,10 @@ export class DataSetService {
     this.getDataSetDetail_private(accession, repository).subscribe(result => {
       this.dataSetSource.next(result);
     });
-    /** TODO: handle error **/
   }
 
   public getWebServiceUrl(): string {
-    return this.webServiceUrl;
+    return this.appConfig.getWebServiceUrl();
   }
 
   public getProteomicsList(): string {
@@ -80,15 +56,16 @@ export class DataSetService {
   }
 
   public getLatestDataSets(): Promise<Response> {
-    return this.http.get(this.webServiceUrl + "dataset/latest?size=10")
+    return this.http.get(this.appConfig.getDatasetLatestUrl())
       .map(res => res.json())
       .toPromise();
   }
   public getMostAccessedDataSets(): Promise<Response> {
-    return this.http.get(this.webServiceUrl + "dataset/mostAccessed?size=20")
+    return this.http.get(this.appConfig.getDatasetMostAccessedUrl())
       .map(res => res.json())
       .toPromise();
   }
+
   public getMonthDay(dateString: string): string {
     let month_names_short = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let month_int = parseInt(dateString.substr(4, 2));
