@@ -35,8 +35,17 @@ export class FacetComponent implements OnInit {
     this.facetValuesFiltered = this.facetValues.map(x => new FacetValueFiltered(x));
   }
 
-  checkBoxClicked(value:string){
-    this.facetValueSelected.emit(value);
+  checkBoxClicked(value:string, event){
+
+    let val: string;
+
+    if(event.target.checked){
+      val = "checked";
+    }else {
+      val = "unchecked";
+    }
+
+    this.facetValueSelected.emit(value + " " + val);
   }
 
   searchByName(){

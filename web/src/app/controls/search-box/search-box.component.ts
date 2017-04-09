@@ -21,13 +21,22 @@ export class SearchBoxComponent implements OnInit {
   ngOnInit() {
   }
 
-  search(){
-    let searchString = this.autocompleteComponent.selected;
-    this.searchService.callSearch(searchString);
+  doSearch(query: string){
+    this.searchService.callSearch(query);
 
     if(this.router.url !== "/search"){
       this.router.navigate(["search"]);
     }
+  }
+
+  search(){
+    let searchString = this.autocompleteComponent.selected;
+    this.doSearch(searchString);
+  }
+
+  advSearch()
+  {
+    this.doSearch(this.query.toQueryString());
   }
 
   doNotPropagate(event){

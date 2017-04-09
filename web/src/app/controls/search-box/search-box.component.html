@@ -23,7 +23,7 @@
     <div style="position: relative;">
       <strong>Query preview</strong><br/>
       {{query.toQueryString()}}
-      <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right; position: relative; top:-20px;" ng-click="submit_adv_query(query_output)">
+      <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right; position: relative; top:-20px;" (click)="advSearch()">
         <i class="fa fa-search" style="font-size: 30px"></i>
       </button>
     </div>
