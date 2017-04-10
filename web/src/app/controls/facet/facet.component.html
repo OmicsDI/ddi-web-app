@@ -9,7 +9,7 @@
     <!-- https://github.com/Dogfalo/materialize/issues/4322 -->
     <input type="checkbox"
            style=" position:relative; left: 0px; opacity: 50; visibility: visible;"
-           (click)="checkBoxClicked(v.value)" >
+           (click)="checkBoxClicked(v.value, $event)" >
     <a href="" class="metasearch-facet-link ng-binding">{{v.value}}
       <small class="ng-binding">({{v.count}})</small>
     </a>

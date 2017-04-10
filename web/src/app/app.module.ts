@@ -30,7 +30,6 @@ import {SimilarityService} from "./services/similarity.service";
 import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
 import {SearchFacetComponent} from "./pages/search/search-facet/search-facet.component";
-import {AutocompleteJComponent} from "./controls/autocomplete-j/autocomplete-j.component";
 import {AutocompleteNComponent} from "./controls/autocomplete-n/autocomplete-n.component";
 import {TruncatePipe} from "./pipes/truncate.pipe";
 import {FacetComponent} from "./controls/facet/facet.component";
@@ -69,6 +68,7 @@ import { AnnotatedTextComponent } from './controls/annotated-text/annotated-text
 import { QueryBuilderComponent } from './controls/query-builder/query-builder.component';
 import { DropDownComponent } from './controls/drop-down/drop-down.component';
 import { MegaNumberPipe } from './pipes/mega-number.pipe';
+import {AppConfig} from "./app.config";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -105,7 +105,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchBoxComponent,
     SearchResultComponent,
     SearchFacetComponent,
-    AutocompleteJComponent,
     AutocompleteNComponent,
     TruncatePipe,
     FacetComponent,
@@ -163,7 +162,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , PublicationService
     , SimilarityService
     , PagingService
-    , EnrichmentService],
+    , EnrichmentService
+    , AppConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule {

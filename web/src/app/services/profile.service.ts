@@ -3,14 +3,14 @@ import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@an
 import { Observable } from 'rxjs/Observable';
 import { Profile } from '../model/profile';
 import { AuthHttp } from 'angular2-jwt';
+import {AppConfig} from "../app.config";
+import {BaseService} from "./base.service";
 
 @Injectable()
-export class ProfileService {
-  profileUrl = "http://localhost:8080/api/user/current";
-  logoutUrl = "http://localhost:8088/user/logout";
-  connectionsUrl = "http://localhost:8088/api/users/{0}/connections";
-
-  constructor (private http: AuthHttp) {}
+export class ProfileService extends BaseService {
+  constructor (private http: AuthHttp, private appConfig: AppConfig) {
+    super();
+  }
 
   getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -18,28 +18,15 @@ export class ProfileService {
   }
 
   getProfile (): Observable<Profile> {
-    /*
-    let authToken = this.getParameterByName("auth");
-    var config: RequestOptionsArgs;
-    if(authToken) {
-      let headers = new Headers();
-      headers.append('X-AUTH-TOKEN', authToken);
-      config = { headers: headers };
-    }*/
-    return this.http.get(this.profileUrl) //,config //{ withCredentials: true }
-        .map(this.extractData)
+    return this.http.get(this.appConfig.getProfileUrl()) //,config //{ withCredentials: true }
+        .map(x => this.extractData<Profile>(x))
         .catch(this.handleError);
   }
 
   getUserConnections (userId: string): Observable<string[]>{
-    let url = "http://localhost:8080/api/users/" + userId + "/connections";
-    return this.http.get(url) //{ withCredentials: true }
-      .map(this.extractConnectionsData)
+    return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) //{ withCredentials: true }
+      .map(x => this.extractData<String[]>(x))
       .catch(this.handleError);
-  }
-
-  private getUserUrl(id){
-    return this.profileUrl + "/" + id;
   }
 
   public updateUser(profile:Profile){
@@ -55,24 +42,8 @@ export class ProfileService {
 
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...
-    return this.http.post(this.profileUrl, JSON.stringify(profile), config)
+    return this.http.post(this.appConfig.getProfileUrl(), JSON.stringify(profile), config)
       .map(res => res.json());
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    //return body || { };
-    var p : Profile;
-    p = (body || { }) as Profile;
-    return p;
-  }
-
-  private extractConnectionsData(res: Response) {
-    let body = res.json();
-    //return body || { };
-    var p : String[];
-    p = (body || { }) as String[];
-    return p;
   }
 
   private handleError (error: Response | any) {
@@ -96,14 +67,5 @@ export class ProfileService {
   private handleErrorLogin (error: Response | any) {
     console.warn("logging out - error..");
     return Observable.throw("Error in logout");
-  }
-
-  public logOut() {
-    ///not working
-    this.http.get(this.logoutUrl, {withCredentials: true})
-        .map(this.extractDataLogin)
-        .catch(this.handleErrorLogin);
-
-    console.warn("logging out..");
   }
 }

@@ -1,4 +1,4 @@
-<table style="border:none;">
+<table style="border:none;" *ngIf="total>0" >
   <tr style="border:none;">
     <td style="white-space: nowrap; border:none;">
       <pagination-controls (pageChange)="getPage($event)"></pagination-controls>

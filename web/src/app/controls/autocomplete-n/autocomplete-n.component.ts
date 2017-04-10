@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {Http, Response} from "@angular/http";
 import {AutocompleteResult} from "../../model/AutocompleteResult";
 import {AutocompleteResultItem} from "../../model/AutocompleteResultItem";
+import {AppConfig} from "../../app.config";
 
 @Component({
   selector: 'app-autocomplete-n',
@@ -12,21 +13,14 @@ import {AutocompleteResultItem} from "../../model/AutocompleteResultItem";
 export class AutocompleteNComponent implements OnInit {
   selected: string;
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private appConfig: AppConfig) {
   }
 
   ngOnInit() {
   }
 
-  list: string[] = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
-
-  url_template: string = "http://www.omicsdi.org/ws/term/getTermByPattern?q=000&size=10";
-
   observableSource(keyword: any) {
-
-    let url = this.url_template.replace('000',keyword);
-
-    return this.http.get(url) //,config //{ withCredentials: true }
+    return this.http.get(this.appConfig.getAutocompleteUrl(keyword))
       .map(this.extractData);
   }
 
