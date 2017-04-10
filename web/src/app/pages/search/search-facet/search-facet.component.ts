@@ -25,7 +25,7 @@ export class SearchFacetComponent implements OnInit {
   }
 
   facetValueSelected(value: string) {
-      alert(value);
+      this.searchService.callSearchByFacets();
   }
 
 }

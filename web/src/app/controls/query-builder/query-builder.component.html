@@ -19,16 +19,16 @@
         <div *ngIf="null==rule.query">
           <div class="form-inline" style="margin-top:3px">
             <select [(ngModel)]="rule.field" class="form-control input-sm" (click)="selectField(rule)" >
-              <option *ngFor="let field of fields">{{field.name}}</option>
+              <option *ngFor="let field of searchService.facets" [ngValue]="field.id">{{field.label}}</option>
             </select>
             <select style="margin-left: 3px" [(ngModel)]="rule.condition" class="form-control input-sm">
               <option *ngFor="let condition of conditions">{{condition.name}}</option>
             </select>
             <div class="input-group" style="margin-left:3px;">
-              <app-drop-down [(value)]="rule.data" [facetValues]="getFieldsData()" (valueChange)="dropDownValueChange()" ></app-drop-down>
+              <app-drop-down [(value)]="rule.data" [facetValues]="getFieldsData(rule.field)" (valueChange)="dropDownValueChange()" ></app-drop-down>
             </div>
             <div *ngIf="rule.condition=='range'" class="input-group" style="margin-left:3px;">
-              <app-drop-down [(ngModel)]="rule.data2" [facetValues]="getFieldsData()" ></app-drop-down>
+              <app-drop-down [(ngModel)]="rule.data2" [facetValues]="getFieldsData(rule.field)" ></app-drop-down>
             </div>
             <button style="margin-left: 5px" (click)="removeCondition(i)" class="btn btn-sm btn-danger"><i class="fa fa-minus" aria-hidden="true"></i></button>
           </div>

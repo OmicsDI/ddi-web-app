@@ -13,8 +13,6 @@ export class SearchBoxComponent implements OnInit {
 
   @ViewChild(AutocompleteNComponent) autocompleteComponent:AutocompleteNComponent;
 
-  query:SearchQuery = new SearchQuery();
-
   constructor(private searchService: SearchService, private router: Router) {
   }
 
@@ -36,7 +34,7 @@ export class SearchBoxComponent implements OnInit {
 
   advSearch()
   {
-    this.doSearch(this.query.toQueryString());
+    this.doSearch(this.searchService.query.toQueryString());
   }
 
   doNotPropagate(event){
