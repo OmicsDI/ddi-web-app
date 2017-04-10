@@ -2,6 +2,6 @@
 <h3>{{f.label}}</h3>
 <div class="metasearch-organism-facet force-scrollbars list-group-item"
      style="overflow-x:hidden;">
-  <app-facet [label]="f.label" [facetValues]="f.facetValues" (facetValueSelected)="facetValueSelected($event)"></app-facet>
+  <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues" (facetValueSelected)="facetValueSelected($event)"></app-facet>
 </div>
 </div>

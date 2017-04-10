@@ -14,10 +14,6 @@ import {SearchQuery} from "./model/SearchQuery";
 export class AppComponent {
   title : string;
 
-  @ViewChild(QueryBuilderComponent) queryBuilder: QueryBuilderComponent;
-
-  query: SearchQuery = new SearchQuery();
-
   constructor(private auth: AuthService, private slimLoadingBarService: SlimLoadingBarService){
     this.title =this.getTitle();
   }
@@ -40,9 +36,4 @@ export class AppComponent {
   completeLoading() {
     this.slimLoadingBarService.complete();
   }
-
-   queryBuilderChanged(){
-    //this.query = this.queryBuilder.getQuery();
-  }
-
 }
