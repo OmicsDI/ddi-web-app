@@ -2,6 +2,7 @@ import {Component, OnInit, Input, EventEmitter, Output, Query} from '@angular/co
 import {Facet} from "../../model/Facet";
 import {FacetValue} from "../../model/FacetValue";
 import {SearchQuery, Rule} from "../../model/SearchQuery";
+import {SearchService} from "../../services/search.service";
 
 @Component({
   selector: 'query-builder',
@@ -10,7 +11,7 @@ import {SearchQuery, Rule} from "../../model/SearchQuery";
 })
 export class QueryBuilderComponent implements OnInit {
 
-  constructor() {
+  constructor(private searchService:SearchService) {
   }
 
   ngOnInit() {
@@ -35,7 +36,7 @@ export class QueryBuilderComponent implements OnInit {
   ];
 
   fields = [
-    {name: 'all_fields', label: 'All Fields'}
+      {name: 'all_fields', label: 'All Fields'}
     , {name: 'hello', label: 'hello world'}
   ];
 
@@ -106,16 +107,10 @@ export class QueryBuilderComponent implements OnInit {
     this.query.rules.splice(index, 1);
   }
 
-  getFieldsData() : FacetValue[]
-  { return[{
-      label:"somelabel",
-      value:"somevalue",
-      count:"33",
-    },{
-     label:"grrrh",
-      value:"wow",
-      count:"34",
-  }];
+  getFieldsData(field:string) : FacetValue[]
+  {
+    console.log("getFacetValues called:" + field);
+    return this.searchService.getFacetValues(field);
   }
 
   dropDownValueChange(){

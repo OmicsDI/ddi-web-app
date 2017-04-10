@@ -17,18 +17,15 @@
   </form>
 </div>
 
-<md-menu #advancedSearchMenu="mdMenu" [overlapTrigger]="false" style="max-width:700px;">
-  <div style="min-width:600px">
+<md-menu #advancedSearchMenu="mdMenu" [overlapTrigger]="false" style="max-width:500px;">
+  <div style="min-width:550px">
   <div class="alert alert-info">
     <div style="position: relative;">
       <strong>Query preview</strong><br/>
-      {{query.toQueryString()}}
-      <button type="submit" class="btn btn-primary" style="padding:3px 6px;float: right; position: relative; top:-20px;" (click)="advSearch()">
-        <i class="fa fa-search" style="font-size: 30px"></i>
-      </button>
+      {{searchService.query.toQueryString()}}
     </div>
     <span ng-bind-html="query_output"></span>
   </div>
-  <query-builder [(query)]="query" (click)="doNotPropagate($event);"></query-builder>
+  <query-builder [(query)]="searchService.query" (click)="doNotPropagate($event);"></query-builder>
   </div>
 </md-menu>
