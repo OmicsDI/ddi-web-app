@@ -23,7 +23,7 @@ export class AppConfig{
     return `${environment.webServiceUrl}publication/list?acc=${acc}`;
   }
   getProfileUrl():string{
-    return "${environment.userServiceUrl}user/current";
+    return `${environment.userServiceUrl}user/current`;
   }
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections`;
