@@ -109,16 +109,7 @@
     </div>
 
     <div class="col-md-4">
-      <div id="barchart_omicstype_annual" class="panel panel-default">
-
-        <!--         <div class="" >
-                   <h4  > act us</h4>
-                </div>
-                <div class="panel-body ">
-                    <ul>
-                    </ul>
-                </div> -->
-      </div>
+      <app-annual-omicstype></app-annual-omicstype>
     </div>
   </div>
   <!--row -->
@@ -143,15 +134,3 @@
   </div>
   <!--row -->
 </div>
-<!--main container -->
-<script>
-  /**
-   *  get tweets and write into the page
-   *
-   */
-  var tf = new TweetFetcher('599190509341515776');
-  tf.fetch(function (tweets) {
-    publishtweets(tweets);
-  }, 4);
-
-</script>
