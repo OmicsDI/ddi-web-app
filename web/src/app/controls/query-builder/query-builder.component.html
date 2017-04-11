@@ -1,4 +1,4 @@
-<div class="alert alert-warning alert-group" style="position: relative; z-index: 1">
+<div *ngIf="query" class="alert alert-warning alert-group" style="position: relative; z-index: 1">
   <div class="form-inline" style="position: relative;">
     <select [(ngModel)]="query.operator" class="form-control input-sm" >
       <option *ngFor="let o of operators">{{o.name}}</option>

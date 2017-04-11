@@ -3,6 +3,7 @@ import {SimilarityService} from "../../../services/similarity.service";
 import {SimilarityResult} from "../../../model/SimilarityResult";
 import {Subscription} from "rxjs";
 import {DataSet} from "../../../model/DataSet";
+import {AppConfig} from "../../../app.config";
 
 @Component({
   selector: 'app-similar',
@@ -23,7 +24,7 @@ export class SimilarComponent implements OnInit {
 
   loadMoreButtonText: string = "Load More";
 
-  constructor(private similarityService: SimilarityService) {
+  constructor(private similarityService: SimilarityService, private appConfig: AppConfig) {
     this.subscription = this.similarityService.searchResult$.subscribe(
       result => {
         this.d = result;
@@ -42,16 +43,6 @@ export class SimilarComponent implements OnInit {
       {
         this.similarityService.search(this.acc,this.repository);
       }
-  }
-
-  omicsTest(ds: DataSet, omics: string ): boolean
-  {
-    if(ds==null)
-      return false;
-    if(ds.omicsType == null)
-      return false;
-
-    return (ds.omicsType.indexOf(omics) != -1);
   }
 
   loadMore(){
@@ -73,5 +64,14 @@ export class SimilarComponent implements OnInit {
     return this.d.datasets.slice(0,this.datasetNumber);
   }
 
+  omicsTest(d: DataSet, omics: string ):boolean{
+    if(d == null)
+      return false;
+
+    if(d.omicsType == null)
+      return false;
+
+    return (d.omicsType.indexOf(omics) != -1);
+  }
 
 }

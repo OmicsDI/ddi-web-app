@@ -102,8 +102,8 @@
           </p>
           <p class="align-justify">
             <b>PROVIDER:</b>
-            <a href="#" class="ng-binding">{{d.id}}</a>  |
-            <a href="#" class="ng-binding"> {{d.source}} </a>
+            <a [href]="d.full_dataset_link">{{d.id}}</a>  |
+            <a [href]="databaseUrl"> {{d.source}} </a>
             <span>| {{d.publicationDate}} </span>
           </p>
           <!--dataset_protocol_bottom-->

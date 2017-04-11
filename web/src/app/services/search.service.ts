@@ -15,17 +15,15 @@ export class SearchService extends BaseService{
 
   searchResult$ = this.searchResultSource.asObservable();
 
-  public searchQuery: string;
+  public textQuery: string;
+  public paramQuery: SearchQuery = new SearchQuery();
 
-  public query: SearchQuery = new SearchQuery();
-
-  pageSize: number = 15;
   currentPage: number = 1;
 
   sortOrder: string = "ascending";
   sortBy: string = "id";
 
-  selectedPageSize = "10";
+  selectedPageSize = 10;
   pageSizes = ["10","20","50","100" ];
 
   public facets: Facet[];
@@ -34,40 +32,57 @@ export class SearchService extends BaseService{
     super()
   }
 
+  public getFullQuery(): string{
+    let result: string = "";
+    if(this.textQuery){
+      result += this.textQuery;
+    }
+    let s = this.paramQuery.toQueryString();
+    //// query string built by legacy algorithm
+    if (s == '((""))')
+      s = "";
+    if (s == '(())')
+      s = "";
+    if( s != "")
+    {
+      if(result)
+        result = "(" + result + " AND " +  this.paramQuery.toQueryString() + ")";
+      else
+        result = this.paramQuery.toQueryString();
+    }
+    return result;
+  }
+
   public callSearch(searchQuery: string ){
-    this.callSearch1(searchQuery,1);
+    this.textQuery = searchQuery;
+    this.callSearch1(this.getFullQuery(),1);
   }
 
   public callSearch1(searchQuery: string, page: number ){
     this.currentPage = page;
-    this.searchQuery = searchQuery;
     this.search(searchQuery, page).subscribe(searchResult => {
       this.searchResultSource.next(searchResult);
       this.facets = (JSON.parse(JSON.stringify(searchResult.facets)));
-
-
-
     });
     /** TODO: handle error **/
   }
 
   search(searchQuery: string, page: number): Observable<SearchResult> {
-    return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.pageSize,this.sortBy,this.sortOrder,(page-1)*15))
+    return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.selectedPageSize,this.sortBy,this.sortOrder,(page-1)*15))
       .map(x => this.extractData<SearchResult>(x));
   }
 
   page(page: number){
-    this.callSearch1(this.searchQuery, page); //page
+    this.callSearch1(this.getFullQuery(), page); //page
   }
 
   sort(){
     this.currentPage = 1;
-    this.callSearch(this.searchQuery); //page
+    this.callSearch(this.textQuery); //page
   }
 
-  changePageSize(size: number){
-    this.pageSize = size;
-    this.callSearch1(this.searchQuery,1);
+  changePageSize(){
+    this.callSearch1(this.getFullQuery(),1);
   }
 
   selectedFacets: Object = new Object; //string=>string[]
@@ -93,9 +108,10 @@ export class SearchService extends BaseService{
   }
 
   callSearchByFacets(){
-    let query: SearchQuery = new SearchQuery();
-    query.operator = "AND";
-    query.rules = new Array<Rule>();
+    this.paramQuery = new SearchQuery();
+
+    this.paramQuery.operator = "AND";
+    this.paramQuery.rules = new Array<Rule>();
     for (var id in this.selectedFacets) {
       if(this.selectedFacets[id].length == 0)
         continue;
@@ -119,23 +135,12 @@ export class SearchService extends BaseService{
         rule.data = this.selectedFacets[id][0];
         rule.condition = 'equal';
       }
-      query.rules.push(rule);
+      this.paramQuery.rules.push(rule);
     }
-    this.callSearch(query.toQueryString());
+    this.callSearch(this.textQuery);
   }
 
   getFacetValues(facet: string):FacetValue[]{
-
-    /***
-    let result: FacetValue[] = new Array<FacetValue>();
-    let v:FacetValue = new FacetValue();
-    v.label = "label1";
-    v.value = "value1";
-    result.push(v);
-
-    return result;
-     ***/
-
     let result: FacetValue[];
     result = new Array<FacetValue>();
 
@@ -158,23 +163,6 @@ export class SearchService extends BaseService{
         }
       }
     }
-
-
-    /***
-    for(let f of this.facets)
-    {
-      if(f.id == facet){
-        return f.facetValues;
-      }
-    }
-    ***/
-
-    /****
-    else {
-
-    }
-    ****/
-
     return result;
   }
 }

@@ -12,6 +12,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 import {SynonymResult} from "../../model/EnrichmentInfo/SynonymResult";
 import {Synonym} from "../../model/EnrichmentInfo/Synonym";
 import { DisqusModule } from 'angular2-disqus';
+import {AppConfig} from "../../app.config";
 
 
 @Component({
@@ -30,6 +31,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
   acc:string;
   repository:string;
+  repositoryName:string;
 
   title_sections:Section[];
   abstract_sections:Section[];
@@ -38,8 +40,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
   current_url: String;
   page_identifier:String;
   index_dataset:number;
+  databaseUrl: string;
 
-  constructor(private dataSetService: DataSetService, private route: ActivatedRoute, private enrichmentService: EnrichmentService) {
+  constructor(private dataSetService: DataSetService, private route: ActivatedRoute, private enrichmentService: EnrichmentService
+      ,private appConfig: AppConfig) {
     console.info("DatasetComponent constructor");
 
     this.current_url = route.pathFromRoot.toString();
@@ -52,6 +56,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
         //TODO: update with canonical id
         this.acc = result.id;
         this.repository = result.source;
+        this.repositoryName = this.appConfig.repositories[result.source];
+        this.databaseUrl = this.appConfig.database_urls[this.appConfig.repositories[result.source]];
         console.info("dataSetDetailResult:" + result);
         console.info("publicationIds:" + result.publicationIds);
       });
@@ -70,6 +76,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
   }
 
   ontology_highlighted: boolean = false;
+
+
 
   getSynonyms(text: string): string[]{
     let result: string[];

@@ -69,6 +69,7 @@ import { QueryBuilderComponent } from './controls/query-builder/query-builder.co
 import { DropDownComponent } from './controls/drop-down/drop-down.component';
 import { MegaNumberPipe } from './pipes/mega-number.pipe';
 import {AppConfig} from "./app.config";
+import {ToDateStringPipe} from "./pipes/toDateString.pipe";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -107,6 +108,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchFacetComponent,
     AutocompleteNComponent,
     TruncatePipe,
+    ToDateStringPipe,
     FacetComponent,
     SocialnetworksComponent,
     SimilarComponent,

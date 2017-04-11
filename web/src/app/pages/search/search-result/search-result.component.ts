@@ -6,6 +6,7 @@ import {TruncatePipe} from "../../../pipes/truncate.pipe";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 import {Http, Response} from "@angular/http";
 import {SearchResult} from "../../../model/SearchResult";
+import {AppConfig} from "../../../app.config";
 
 @Component({
   selector: 'app-search-result',
@@ -14,7 +15,6 @@ import {SearchResult} from "../../../model/SearchResult";
 })
 export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecked {
   subscription: Subscription;
-  searchQuery: String;
   result: Observable<SearchResult>;
   datasets: Observable<DataSet[]>;
 
@@ -22,7 +22,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   total: number;
   loading: boolean;
 
-  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
+  constructor(private appConfig: AppConfig, private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
 
     console.log("SearchResultComponent ctor");
     this.slimLoadingBarService.start();
@@ -35,7 +35,6 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     this.subscription = this.searchService.searchResult$.subscribe(
       searchResult => {
         this.total = searchResult.count;
-        this.searchQuery = this.searchService.searchQuery;
         this.slimLoadingBarService.complete();
         console.log("search result observed:" + String(searchResult.count));
       });
@@ -51,5 +50,15 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   {
     //this.slimLoadingBarService.complete();
     //console.log("search-result.ngAfterViewChecked");
+  }
+
+  omicsTest(d:DataSet, omics:string):boolean{
+    if(d == null)
+      return false;
+
+    if(d.omicsType == null)
+      return false;
+
+    return (d.omicsType.indexOf(omics) != -1);
   }
 }

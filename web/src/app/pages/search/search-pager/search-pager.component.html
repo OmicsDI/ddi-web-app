@@ -32,13 +32,15 @@
       &nbsp;&nbsp;&nbsp;
       <span>
       Page size&nbsp;
-      <select [ngModel]="searchService.selectedPageSize" (change)="searchService.changePageSize($event.target.value)">
+      <select [(ngModel)]="searchService.selectedPageSize" (change)="searchService.changePageSize()" >
         <option [value]="c" *ngFor="let c of searchService.pageSizes">{{c}}</option>
       </select>
       </span>
     </td>
   </tr>
 </table>
+
+<!---  -->
 
 
 

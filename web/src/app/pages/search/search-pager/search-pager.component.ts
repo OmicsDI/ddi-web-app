@@ -15,7 +15,6 @@ export class SearchPagerComponent implements OnInit {
 
   collection = [];
   subscription: Subscription;
-  searchQuery: String;
   result: Observable<SearchResult>;
   datasets: Observable<DataSet[]>;
 

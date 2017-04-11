@@ -32,6 +32,13 @@ import {Dates} from "./Dates";
     constructor(){
       this.omics_type = [];
     }
+  omicsTest(omics: string ): boolean
+  {
+    if(this.omics_type == null)
+      return false;
+    return (this.omics_type.indexOf(omics) != -1);
+  }
+
 }
 
 

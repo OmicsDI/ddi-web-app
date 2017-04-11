@@ -22,10 +22,10 @@
   <div class="alert alert-info">
     <div style="position: relative;">
       <strong>Query preview</strong><br/>
-      {{searchService.query.toQueryString()}}
+      {{searchService.paramQuery.toQueryString()}}
     </div>
     <span ng-bind-html="query_output"></span>
   </div>
-  <query-builder [(query)]="searchService.query" (click)="doNotPropagate($event);"></query-builder>
+  <query-builder [(query)]="searchService.paramQuery" (click)="doNotPropagate($event);"></query-builder>
   </div>
 </md-menu>

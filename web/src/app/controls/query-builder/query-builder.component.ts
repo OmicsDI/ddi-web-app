@@ -109,7 +109,6 @@ export class QueryBuilderComponent implements OnInit {
 
   getFieldsData(field:string) : FacetValue[]
   {
-    console.log("getFacetValues called:" + field);
     return this.searchService.getFacetValues(field);
   }
 

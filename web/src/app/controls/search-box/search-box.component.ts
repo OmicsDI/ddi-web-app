@@ -34,7 +34,8 @@ export class SearchBoxComponent implements OnInit {
 
   advSearch()
   {
-    this.doSearch(this.searchService.query.toQueryString());
+    //this.doSearch(this.searchService.query.toQueryString());
+    this.search();
   }
 
   doNotPropagate(event){

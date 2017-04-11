@@ -1,18 +1,19 @@
 <ul class="list-unstyled">
-  <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.pageSize, currentPage: searchService.currentPage
+  <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.selectedPageSize, currentPage: searchService.currentPage
   , totalItems: total }, let last = last"
       class="repeated-item ng-scope"
       style="">
 
     <div class="ddi-card-panel  list-group-item">
       <div class="project-widget-accession">
-        <img src="img/omics/Multipleomics2.png" *ngIf="d.omicsType.indexOf('Multiomics') > -1" class="ng-hide">
-        <img src="img/omics/Proteomics2.png" *ngIf="d.omicsType.indexOf('Proteomics') > -1" class="ng-hide">
-        <img src="img/omics/Metabolomics2.png" *ngIf="d.omicsType.indexOf('Metabolomics') > -1" class="ng-hide">
-        <img src="img/omics/Genomics2.png" *ngIf="d.omicsType.indexOf('Genomics') > -1" class="">
-        <img src="img/omics/Transcriptomics2.png" *ngIf="d.omicsType.indexOf('Transcriptomics') > -1 && d.omicsType.indexOf('Multi-Omics') > -1" class="ng-hide">
+        <img src="img/omics/Multipleomics2.png" *ngIf="omicsTest(d,'Multipleomics')" >
+        <img src="img/omics/Proteomics2.png" *ngIf="omicsTest(d,'Proteomics')" >
+        <img src="img/omics/Metabolomics2.png" *ngIf="omicsTest(d,'Metabolomics')" >
+        <img src="img/omics/Genomics2.png" *ngIf="omicsTest(d,'Genomics')" >
+        <img src="img/omics/Transcriptomics2.png" *ngIf="omicsTest(d,'Transcriptomics')" >
+
         <a [routerLink]="['/dataset',d.source, d.id]" >
-          <span class="ng-binding">{{d.title}} lol </span></a>
+          <span class="ng-binding">{{d.title}}</span></a>
       </div>
       <blockquote class="ddi-blockquote">
         <div class="project-widget-paragraph align-justify ng-binding">
@@ -43,9 +44,9 @@
 
       <div class="project-widget-paragraph">
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
-          <span class="ng-binding">{{d.publicationDate}}</span>-- | </span>
-        <a href="#dataset/ega/{{d.id}}"><span class="ng-binding">{{d.id}}</span></a> |
-        <a href="https://www.ebi.ac.uk/ega/"> <span class="ng-binding">{{d.source}}</span> </a>
+          <span class="ng-binding">{{d.publicationDate | toDateString }}</span> | </span>
+        <a href="dataset/{{d.source}}/{{d.id}}"><span class="ng-binding">{{d.id}}</span></a> |
+        <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> <span class="ng-binding">{{appConfig.repositories[d.source]}}</span> </a>
       </div>
 
       <div *ngIf="d.keywords" class="project-widget-paragraph">
