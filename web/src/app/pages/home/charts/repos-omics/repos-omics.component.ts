@@ -163,7 +163,8 @@ export class ReposOmicsComponent implements OnInit {
     self.drawBarGraphic(self.data, self.reposDataSimple);
     self.showTip('*:* AND repository:"', self.reposDataSimple);
 
-    d3.select(window).on('resize', function() {
+    // give different namespace after 'resize' to add window listener
+    d3.select(window).on('resize.repos_omics', function() {
       self.drawBarGraphic(self.data, self.reposDataSimple);
       self.showTip('*:* AND repository:"', self.reposDataSimple);
     });
