@@ -45,7 +45,7 @@ export class AnnualOmicstypeComponent implements OnInit {
     // d3.select(window).on('resize',function(){
     //   self.drawGraph(processedData);
     // });
-    window.addEventListener('resize',function(){
+    window.addEventListener('resize.annualOmicstype',function(){
       self.drawGraph(processedData);
     });
   }

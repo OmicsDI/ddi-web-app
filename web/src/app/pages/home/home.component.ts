@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HotwordsComponent } from './charts/hotwords/hotwords.component';
+import { TissuesOrganismsComponent } from './charts/tissues-organisms/tissues-organisms.component';
 import { ReposOmicsComponent } from './charts/repos-omics/repos-omics.component';
 
 @Component({
