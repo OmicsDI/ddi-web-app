@@ -45,31 +45,6 @@ export class LoginLauncherComponent implements OnInit {
 
   LogOut() {
     localStorage.removeItem('id_token');
-
     this.router.navigate(['home']);
-
-    /*
-
-    var f = document.createElement("form");
-    f.setAttribute('method',"post");
-    f.setAttribute('action',"user/logout");
-
-    var s = document.createElement("input"); //input element, Submit button
-    s.setAttribute('type',"submit");
-    s.setAttribute('value',"Submit");
-
-    f.appendChild(s);
-
-    document.getElementsByTagName('body')[0].appendChild(f);
-
-    f.submit();
-
-    */
-
-    //this.profileService.logOut();
-
-    //this.deleteCookie("_gat");
-    //this.deleteCookie("JSESSIONID");
-    //this.deleteCookie("_ga");
   }
 }

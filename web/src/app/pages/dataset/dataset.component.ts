@@ -41,6 +41,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
   page_identifier:String;
   index_dataset:number;
   databaseUrl: string;
+  web_service_url: string;
 
   constructor(private dataSetService: DataSetService, private route: ActivatedRoute, private enrichmentService: EnrichmentService
       ,private appConfig: AppConfig) {
@@ -61,6 +62,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         console.info("dataSetDetailResult:" + result);
         console.info("publicationIds:" + result.publicationIds);
       });
+    this.web_service_url = dataSetService.getWebServiceUrl();
   }
 
   ngOnInit() {
@@ -156,7 +158,5 @@ export class DatasetComponent implements OnInit, OnDestroy {
       console.log("add hightlighting");
 
     }
-
-    //this.enrichmentService.getEnrichmentInfo(this.repository, this.acc);
   }
 }

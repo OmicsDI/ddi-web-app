@@ -1,4 +1,5 @@
-<div style="height: 29px;float:right;margin-top:0px;z-index:1;">
+<div style="height: 29px;float:right;margin-top:0px;z-index:1;" xmlns:width="http://www.w3.org/1999/xhtml"
+     xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml">
   <form novalidate name="queryForm" class="local-search">
     <div class="form-group ">
       <div class="input-group ">
@@ -17,8 +18,16 @@
   </form>
 </div>
 
-<md-menu #advancedSearchMenu="mdMenu" [overlapTrigger]="false" style="max-width:500px;">
-  <div style="min-width:550px">
+<style>
+div.mat-menu-panel{
+max-width: 550px;
+width: 550px;
+overflow: visible;
+}
+</style>
+
+<md-menu id="advancedSearchMenu" #advancedSearchMenu="mdMenu" [overlapTrigger]="false">
+  <div class="mat-menu-content" style="width:550px">
   <div class="alert alert-info">
     <div style="position: relative;">
       <strong>Query preview</strong><br/>

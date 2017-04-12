@@ -5,6 +5,7 @@ import { Profile } from '../model/profile';
 import { AuthHttp } from 'angular2-jwt';
 import {AppConfig} from "../app.config";
 import {BaseService} from "./base.service";
+import {DataSetShort} from "../model/DataSetShort";
 
 @Injectable()
 export class ProfileService extends BaseService {
@@ -67,5 +68,9 @@ export class ProfileService extends BaseService {
   private handleErrorLogin (error: Response | any) {
     console.warn("logging out - error..");
     return Observable.throw("Error in logout");
+  }
+
+  public claimDataset(userID: string, accession:string, repository:string){
+    alert(`claim ${userID} ${accession} ${repository}`);
   }
 }

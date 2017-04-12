@@ -108,10 +108,11 @@
           </p>
           <!--dataset_protocol_bottom-->
           <div id="buttons_highlight_box">
-
             <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
-            <a ng-href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.json" target="_blank" title="Download Dataset as JSON" class="json-button" href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.json">&lt;JSON&gt;</a>
-            <a ng-href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.xml" target="_blank" title="Download Dataset as XML" class="xml-button" href="http://www.omicsdi.org/ws/dataset/arrayexpress-repository/E-GEOD-66737.xml">&lt;XML&gt;</a>
+            <claim-button [accession]="acc" [repository]="repository" ></claim-button>
+
+            <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>
+            <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
           </div>
         </div>
         <!--dataset_protocol_bottom-->

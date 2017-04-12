@@ -70,6 +70,7 @@ import { DropDownComponent } from './controls/drop-down/drop-down.component';
 import { MegaNumberPipe } from './pipes/mega-number.pipe';
 import {AppConfig} from "./app.config";
 import {ToDateStringPipe} from "./pipes/toDateString.pipe";
+import { ClaimButtonComponent } from './controls/claim-button/claim-button.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -132,7 +133,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchAdvancedComponent,
     QueryBuilderComponent,
     DropDownComponent,
-    MegaNumberPipe
+    MegaNumberPipe,
+    ClaimButtonComponent
   ],
   imports: [
     BrowserModule,

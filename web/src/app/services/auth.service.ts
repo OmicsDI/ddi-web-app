@@ -5,6 +5,11 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthService {
   constructor() { }
   loggedIn() {
-    return tokenNotExpired();
+    let result: boolean;
+    result = tokenNotExpired();
+    if(!result){
+      return false;
+    }
+    return result;
   }
 }
