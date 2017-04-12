@@ -19,50 +19,7 @@
         <h3 style="margin-top:10px">
         </h3>
 
-        <form novalidate name="queryForm" class="global-search" ng-submit="submit_query()">
-          <!-- <fieldset> -->
-          <div class="form-group" ng-class="(query.submitted && queryForm.$invalid) ? 'has-error' : ''">
-            <div class="input-group">
-              autocomplete removed
-              <div class="input-group-btn">
-                <button type="submit" class="btn btn-primary ddi-btn">
-                  <i class="fa fa-search"></i> Search
-                </button>
-              </div>
-              <!-- /input-group-btn -->
-            </div>
-            <!--input-group -->
-            <span class="help-block example-searches">
-                         <!-- <small> -->
-                             <i>
-                                 Examples:
-                                 <a href="" rel="nofollow" ng-click="example_query('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('TAXONOMY:&quot;9606&quot;')">Homo
-                                     sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Hela')">Hela</a>
-                             </i>
-              <!-- </small> -->
-                     </span>
-            <!--
-            <label class="control-label ng-cloak has-error"
-                   for="query-text"
-                   ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
-                   ng-cloak>
-                Your query is too short
-            </label>
-            <label class="control-label ng-cloak"
-                   for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
-                   ng-cloak>
-                Your query is too long
-            </label>
-            -->
-          </div>
-          <!-- /form-group -->
-          <!-- </fieldset> -->
-        </form>
+        <search-box-large></search-box-large>
         <!-- /form -->
       </div>
       <!--/controller-->
