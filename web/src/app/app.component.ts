@@ -4,6 +4,7 @@ import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 import {QueryBuilderComponent} from "./controls/query-builder/query-builder.component";
 import {SearchQuery} from "./model/SearchQuery";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -13,13 +14,24 @@ import {SearchQuery} from "./model/SearchQuery";
 
 export class AppComponent {
   title : string;
+  homePage: boolean;
 
-  constructor(private auth: AuthService, private slimLoadingBarService: SlimLoadingBarService){
+  constructor(private auth: AuthService, private slimLoadingBarService: SlimLoadingBarService
+    , private route: ActivatedRoute
+    , private router: Router){
+
     this.title =this.getTitle();
   }
 
+  ngOnInit() {
+    this.router.events.subscribe(x => {
+      this.homePage = (x.url == "/" || x.url == "/home");
+    });
+  }
+
+
   getTitle(): string{
-    let result = 'appp worrks';
+    let result = 'Omics DI 2.0';
     return result;
   }
 
