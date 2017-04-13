@@ -408,7 +408,7 @@ export class ReposOmicsComponent implements OnInit {
             if (dataAddKey[i].name.toString() == "Expression Atlas Experiments")
                 searchWord = searchWordPre + "ExpressionAtlas" + '"';
             // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-            //---------------------------------------- redirect to do ----------------------------------------//
+            //---------------------------------------- redirect ----------------------------------------//
         })
   }
 
