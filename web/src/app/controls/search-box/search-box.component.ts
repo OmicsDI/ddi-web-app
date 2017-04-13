@@ -20,11 +20,12 @@ export class SearchBoxComponent implements OnInit {
   }
 
   doSearch(query: string){
+    this.router.navigate(["search"], { queryParams: { q: query }});
+    /***
     this.searchService.callSearch(query);
-
     if(this.router.url !== "/search"){
       this.router.navigate(["search"]);
-    }
+    }***/
   }
 
   search(){

@@ -18,10 +18,9 @@ export class SearchBoxLargeComponent implements OnInit {
   }
 
   doSearch(query: string){
-    this.searchService.callSearch(query);
-
+    //this.searchService.callSearch(query);
     if(this.router.url !== "/search"){
-      this.router.navigate(["search"]);
+      this.router.navigate(["search"], { queryParams: { q: query }});
     }
   }
 

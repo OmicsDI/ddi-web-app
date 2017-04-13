@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Http} from "@angular/http";
 import {SearchService} from "../../services/search.service";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -11,13 +12,24 @@ import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 export class SearchComponent implements OnInit {
   content : string;
 
-  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) { }
+  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log("search page onInit");
     this.slimLoadingBarService.start();
-    if(true){ /***null==this.searchService.searchQuery***/
+
+    /***null==this.searchService.searchQuery***/
+    /*** if(true){
       this.searchService.callSearch("*:*");
-    }
+    }***/
+
+    this.route.queryParams.subscribe(params => {
+      let q: string = params['q'];
+      if(null!=q){
+        this.searchService.callSearch(q);
+      }
+      else{
+        this.searchService.callSearch("*:*");
+      }
+    })
   }
 }
