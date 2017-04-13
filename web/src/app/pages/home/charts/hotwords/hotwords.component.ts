@@ -251,9 +251,7 @@ export class HotwordsComponent implements OnInit {
 
         wordcloud_tooltip.html("<strong>" + d.frequent + "</strong> datasets")
           .style("left", (mouse_coords[0] + 25) + "px")
-          .style("top", (mouse_coords[1] - 25) + "px")
-          .style("height", "20px")
-          .style("width", d.frequent.toString().length * 10 + 70 + "px");
+          .style("top", (mouse_coords[1] - 25) + "px");
       })
       .on("mouseout", function (d, i) {
         d3.select('#word_cloud_chart_tooltip')
