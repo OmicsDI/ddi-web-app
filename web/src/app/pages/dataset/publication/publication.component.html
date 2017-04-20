@@ -32,11 +32,9 @@
       <a href="http://www.altmetric.com/details.php?citation_id=4555849">Altmetric</a>.
     </p>
     <div style="margin-right: 20px;"  class="">
-      <p class="align-justify ng-binding">
-        <span *ngFor="let a of d.pubAbstract">{{a}}&nbsp;</span>
-        <br>
-        <span class="hotword"><b> [less]</b>
-                                </span>
+      <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding">
+        <span>{{a | truncate : lengthLimit : ' '}}&nbsp;</span>
+        <span class="hotword" (click)="moreOrLess()"><b>{{moreLessBtn}}</b></span>
       </p>
     </div>
   </div>

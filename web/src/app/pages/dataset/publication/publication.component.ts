@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {PublicationService} from "../../../services/publication.service";
 import {Subscription} from "rxjs";
 import {Publication} from "../../../model/Publication";
+import {TruncatePipe} from '../../../pipes/truncate.pipe';
 
 @Component({
   selector: 'app-publication',
@@ -14,6 +15,7 @@ export class PublicationComponent implements OnInit {
   subscription: Subscription;
   current_idx: number = 0;
   ids_length: string = "";
+  toggle: boolean = true;
 
   constructor(private publicationService: PublicationService) {
     this.subscription = this.publicationService.searchResult$.subscribe(
@@ -61,4 +63,15 @@ export class PublicationComponent implements OnInit {
     this.publicationService.search(this.ids[this.current_idx]);
   }
 
+  get lengthLimit(): string{
+    return this.toggle ? '500' : '5000';
+  }
+
+  get moreLessBtn(): string{
+    return this.toggle ? '...[more]' : '[less]';
+  }
+
+  moreOrLess() {
+    this.toggle = !this.toggle;
+  }
 }
