@@ -1261,7 +1261,8 @@ $lines-to-show: 3;
 
 .json-button{
     background-color: #4CAF50; /* Green */
-    border: none;
+    border: 1px solid #4CAF50;
+    border-bottom-color: #4CAF50 !important;
     padding: 8px 16px;
     text-align: center;
     border-radius: 12px;
@@ -1280,12 +1281,12 @@ $lines-to-show: 3;
 .json-button:hover {
     background-color: white; /* Green */
     color: black;
-    border: 2px solid #4CAF50;
 }
 
 .xml-button{
     background-color: #E4753D;
-    border: none;
+    border: 1px solid #E4753D;
+    border-bottom-color: #E4753D !important;
     padding: 8px 16px;
     text-align: center;
     border-radius: 12px;
@@ -1304,7 +1305,6 @@ $lines-to-show: 3;
 .xml-button:hover {
     background-color: white; /* Green */
     color: black;
-    border:2px solid #E4753D
 }
 
 .ddi-icon-in-reanalysis{

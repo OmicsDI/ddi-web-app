@@ -19,6 +19,7 @@ export class PublicationComponent implements OnInit {
     this.subscription = this.publicationService.searchResult$.subscribe(
       result => {
         this.d = result.publications[0];
+        console.log(this.d)
       });
   }
 

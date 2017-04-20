@@ -2,9 +2,9 @@
   <div class="panel-footer ">
     <h3>Publications</h3>
   </div>
-  <span id="chevronLeft" class="fa fa-chevron-circle-left ddi-prev ng-hide" (click)="clickLeft()">
+  <span id="chevronLeft" class="fa fa-chevron-circle-left ddi-prev ng-hide" (click)="clickLeft()" *ngIf="d.pubAbstract && d.pubAbstract.length > 1">
                     </span>
-  <span id="chevronRight" class="fa fa-chevron-circle-right ddi-next ng-hide" (click)="clickRight()">
+  <span id="chevronRight" class="fa fa-chevron-circle-right ddi-next ng-hide" (click)="clickRight()" *ngIf="d.pubAbstract && d.pubAbstract.length > 1">
                     </span>
 
 
