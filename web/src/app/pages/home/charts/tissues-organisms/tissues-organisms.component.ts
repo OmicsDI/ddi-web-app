@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as d3 from 'd3';
 import { PackLayout } from 'd3';
 
@@ -12,6 +12,9 @@ import { DataSetService } from 'app/services/dataset.service';
   styleUrls: ['./tissues-organisms.component.css']
 })
 export class TissuesOrganismsComponent implements OnInit {
+
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   private webServiceUrl: string;
   private retryLimitTimes: number;
@@ -48,6 +51,7 @@ export class TissuesOrganismsComponent implements OnInit {
           self.retryLimitTimes--;
 
           if (self.retryLimitTimes <= 0) {
+            self.notifyHomeLoader.emit('tissues');
             ChartsErrorHandler.outputErrorInfo(self.bubChartName);
             return;
           }
@@ -55,6 +59,7 @@ export class TissuesOrganismsComponent implements OnInit {
           ChartsErrorHandler.outputGettingInfo(self.bubChartName);
           self.startRequest();
         }else {
+          self.notifyHomeLoader.emit('tissues');
           ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
           self.tissues = tissues;
@@ -329,7 +334,6 @@ export class TissuesOrganismsComponent implements OnInit {
             taxonomyid: arr[i].id
         });
     }
-    console.log({children: classes})
     return {children: classes};
   }
 

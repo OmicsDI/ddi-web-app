@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import * as d3 from 'd3';
 
 import { FrequentlyTerm } from 'app/model/FrequentlyTerm';
@@ -12,6 +12,9 @@ const cloud = require('d3-cloud');
   styleUrls: ['./hotwords.component.css']
 })
 export class HotwordsComponent implements OnInit {
+
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   private webServiceUrl: string;
   private terms: {
@@ -43,6 +46,7 @@ export class HotwordsComponent implements OnInit {
   }
 
   private startRequest() {
+    let self = this;
     let webServiceUrl = this.webServiceUrl;
 
     d3.queue()
@@ -50,7 +54,8 @@ export class HotwordsComponent implements OnInit {
       .defer(d3.json, webServiceUrl+'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol')
       .defer(d3.json, webServiceUrl+'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol')
       .await((error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]) => {
-        this.drawWordCloud(error, omicsDes, omicsDatap, omicsSamp);
+        self.notifyHomeLoader.emit('hotwords');
+        self.drawWordCloud(error, omicsDes, omicsDatap, omicsSamp);
       });
   }
 

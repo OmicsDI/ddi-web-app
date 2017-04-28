@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { DataSetService } from 'app/services/dataset.service';
 import { DataSet } from 'app/model/DataSet';
 
@@ -10,6 +10,9 @@ import { DataSet } from 'app/model/DataSet';
   providers: [DataSetService]
 })
 export class LatestDatasetsComponent implements OnInit {
+
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   latestDatasets: DataSet[];
   static requestLatestDatasetFailed;
@@ -31,6 +34,8 @@ export class LatestDatasetsComponent implements OnInit {
 
     this.dataSetService.getLatestDataSets()
       .then(res => {
+        this.notifyHomeLoader.emit('latest_datasets');
+        
         this.latestDatasets = res["datasets"];
       })
       .then(() => {

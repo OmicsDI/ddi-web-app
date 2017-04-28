@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import * as d3 from 'd3';
 import { Selection } from 'd3-selection';
 
@@ -11,6 +11,9 @@ import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler
   styleUrls: ['./repos-omics.component.css']
 })
 export class ReposOmicsComponent implements OnInit {
+
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   private webServiceUrl: string;
   private proteomicsList: string;
@@ -47,12 +50,14 @@ export class ReposOmicsComponent implements OnInit {
         if (err) {
           this.retryLimitTimes--;
           if (this.retryLimitTimes <= 0){
+            this.notifyHomeLoader.emit('repos_omics');
             ChartsErrorHandler.outputErrorInfo(this.pieChartName);
             return;
           }
           ChartsErrorHandler.outputGettingInfo(this.pieChartName);
           this.startRequest();
         } else {
+          this.notifyHomeLoader.emit('repos_omics');
           this.draw(domains, omicstype);
         }
       });

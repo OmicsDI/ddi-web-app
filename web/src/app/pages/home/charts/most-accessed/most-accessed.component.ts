@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { DataSetService } from 'app/services/dataset.service';
 import { DataSet } from 'app/model/DataSet';
 
@@ -10,6 +10,9 @@ import { DataSet } from 'app/model/DataSet';
 })
 
 export class MostAccessedComponent implements OnInit {
+
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   mostAccessedDatasets: DataSet[];
   static requestMostAccessedDatasetFailed;
@@ -31,6 +34,8 @@ export class MostAccessedComponent implements OnInit {
 
     this.dataSetService.getMostAccessedDataSets()
       .then(res => {
+        this.notifyHomeLoader.emit('most_accessed');
+
         this.mostAccessedDatasets = res["datasets"];
         this.mostAccessedDatasets.length = 10;
         this.mostAccessedDatasets.sort(function (dataset1, dataset2) {

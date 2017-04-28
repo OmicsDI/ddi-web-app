@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Http, Response } from "@angular/http";
 import * as d3 from 'd3';
 
@@ -9,11 +9,15 @@ import * as d3 from 'd3';
 })
 export class TweetsNewsComponent implements OnInit {
 
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
+
   constructor(private http: Http) { }
 
   ngOnInit() {
     this.fetchTweets()
         .then(res => {
+           this.notifyHomeLoader.emit('tweet_news');
            this.publishtweets(this.parseTweets(res, 4));
       })
   }

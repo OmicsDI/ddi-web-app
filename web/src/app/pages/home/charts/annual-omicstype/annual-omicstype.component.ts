@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import * as d3 from 'd3';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
 
@@ -8,6 +8,9 @@ import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler
   styleUrls: ['./annual-omicstype.component.css']
 })
 export class AnnualOmicstypeComponent implements OnInit {
+
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   private web_service_url = "http://www.omicsdi.org/ws/";
   private retryLimitTimes = 2;
@@ -26,12 +29,14 @@ export class AnnualOmicstypeComponent implements OnInit {
         if (err) {
           this.retryLimitTimes--;
           if (this.retryLimitTimes <= 0) {
+            this.notifyHomeLoader.emit('annual_omicstype');
             ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
             return;
           }
           ChartsErrorHandler.outputGettingInfo('barchart_omicstype_annual');
           this.startRequest();
         } else {
+          this.notifyHomeLoader.emit('annual_omicstype');
           ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
           let processedData = this.prepareData(annualData);
           this.draw(processedData); 

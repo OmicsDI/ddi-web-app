@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { StatisticsService } from 'app/services/statistics.service';
 
 @Component({
@@ -9,12 +9,16 @@ import { StatisticsService } from 'app/services/statistics.service';
 })
 export class StatisticsPanelComponent implements OnInit {
 
+  @Output()
+  notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
+
   statisticsList: any;
   constructor(private statisticsService: StatisticsService) { }
 
   ngOnInit() {
     this.statisticsService.getStatisticsList()
       .then(data => {
+        this.notifyHomeLoader.emit('statistics');
         this.statisticsList = data;
         for (let i = 0; i < this.statisticsList.length; i++) {
           this.statisticsList[i].name = this.statisticsList[i].name.replace(/Different /g, '');
