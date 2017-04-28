@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
   }
 
   loadOnePart($partName): void {
-    console.log($partName);
 
     this.isLoaded[$partName] = true;
 

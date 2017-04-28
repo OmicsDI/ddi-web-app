@@ -15,13 +15,12 @@
                          <!-- <small> -->
                              <i>
                                  Examples:
-                                 <a href="" rel="nofollow" ng-click="example_query('cancer')">cancer</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('TAXONOMY:&quot;9606&quot;')">Homo
-                                     sapiens</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Orbitrap')">Orbitrap</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Q9HAU5')">Q9HAU5</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Phospho')">Phospho</a>,
-                                 <a href="" rel="nofollow" ng-click="example_query('Hela')">Hela</a>
+                                 <a rel="nofollow" (click)="doSearch('cancer')">cancer</a>,
+                                 <a rel="nofollow" (click)="doSearch('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a rel="nofollow" (click)="doSearch('Orbitrap')">Orbitrap</a>,
+                                 <a rel="nofollow" (click)="doSearch('Q9HAU5')">Q9HAU5</a>,
+                                 <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,
+                                 <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>
                              </i>
       <!-- </small> -->
                      </span>

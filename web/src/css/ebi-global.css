@@ -154,7 +154,7 @@ p.address{color:#888}#ebi-footer-meta
 p.legal{margin-bottom:9px}#global-nav-expanded
 img{padding-left:0.7em;margin:29px
 0 0 0;border:none}#global-nav-expanded
-h3{margin-top:20px;margin-bottom 5px;line-height:1.538}#global-nav-expanded
+h3{margin-top:20px;margin-bottom: 5px;line-height:1.538}#global-nav-expanded
 h3.services{border-bottom:2px solid #207a7a}#global-nav-expanded
 h3.research{border-bottom:2px solid #71b360}#global-nav-expanded
 h3.training{border-bottom:2px solid #fab700}#global-nav-expanded
@@ -164,3 +164,4 @@ h3{padding:0}#global-nav-expanded .grid_4 h3
 a{display:block;padding:0.5em 0.3em 0 0.3em}#global-nav-expanded .grid_4 h3 a:hover,
 #global-nav-expanded .grid_4 h3 a:focus,
 #global-nav-expanded .grid_4 h3 a:active{background-color:#ddd}@media screen and (min-height: 600px){div#content{min-height:250px}}@media screen and (min-height: 1000px){div#content{min-height:450px}}
+.example-searches a{cursor: pointer}
