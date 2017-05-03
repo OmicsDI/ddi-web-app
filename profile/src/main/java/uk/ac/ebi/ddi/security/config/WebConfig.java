@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @EnableMongoRepositories("uk.ac.ebi.ddi.security.repo")
-@ComponentScan
+@ComponentScan 
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

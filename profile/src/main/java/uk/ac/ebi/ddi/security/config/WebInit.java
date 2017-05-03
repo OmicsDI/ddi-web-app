@@ -9,6 +9,7 @@ import javax.servlet.Filter;
 
 /**
  * Created by user on 3/16/2017.
+ * 配置DispatcherServlet 搭建Springmvc
  */
 @Configuration
 public class WebInit extends AbstractAnnotationConfigDispatcherServletInitializer {

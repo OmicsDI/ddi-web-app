@@ -22,8 +22,10 @@
 
 <body ng-controller="AuthCtrl" ng-init="init()" style="padding: 10% 20%">
 	<div ng-hide="authenticated">
-		<a href="/auth/facebook">Login with Facebook</a><br/>
-		<a href="/auth/orcid?scope=/authenticate">Login with Orcid</a>
+		<a href="/profile/auth/facebook">Login with Facebook</a><br/>
+		<a href="/profile/auth/orcid?scope=/authenticate">Login with Orcid</a><br/>
+		<a href="/profile/auth/github">Login with Github</a><br/>
+		<a href="/profile/auth/twitter">Login with Twitter</a>
 	</div>
 	<div ng-show="authenticated">
 		Logged in as {{username}} <button ng-click="logout()">Logout</button><br><br>
