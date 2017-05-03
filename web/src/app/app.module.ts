@@ -72,6 +72,7 @@ import {AppConfig} from "./app.config";
 import {ToDateStringPipe} from "./pipes/toDateString.pipe";
 import { ClaimButtonComponent } from './controls/claim-button/claim-button.component';
 import { SearchBoxLargeComponent } from './controls/search-box-large/search-box-large.component';
+import {FileSelectDirective} from "ng2-file-upload";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -136,7 +137,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DropDownComponent,
     MegaNumberPipe,
     ClaimButtonComponent,
-    SearchBoxLargeComponent
+    SearchBoxLargeComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,

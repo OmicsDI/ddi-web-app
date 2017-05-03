@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import {ProfileService} from "../../services/profile.service";
-import {Profile} from "../../model/profile";
+import {Profile} from "../../model/Profile";
 
 @Component({
   selector: '[AppLoginLauncher]',

@@ -8,6 +8,8 @@ public class DataSet {
     String source;
     String claimed;
 
+    public DataSet(){}
+
     public DataSet( String dataSetId
                     ,String source
                     ,String claimed){

@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {ProfileService} from "../../services/profile.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Profile} from "../../model/profile";
+import {Profile} from "../../model/Profile";
+import {forEach} from "@angular/router/src/utils/collection";
+import {DataSetShort} from "../../model/DataSetShort";
+import {DataSetService} from "../../services/dataset.service";
+import {DataSetDetail} from "../../model/DataSetDetail";
+import {AppConfig} from "../../app.config";
+import {FileUploader} from 'ng2-file-upload';
+
+const URL = 'http://localhost:8080/api/user/picture';
 
 @Component({
   selector: 'app-profile',
@@ -16,9 +24,15 @@ export class ProfileComponent implements OnInit {
   editMode: boolean = false;
   facebookConnected: boolean = false;
   orcidConnected: boolean = false;
+  dataSetDetails:DataSetDetail[] = new Array<DataSetDetail>();
+  profileImageUrl: string = "";
+
+  public uploader:FileUploader;
 
   constructor(private profileService: ProfileService
-              ,formBuilder: FormBuilder) {
+              ,private dataSetService: DataSetService
+              ,private formBuilder: FormBuilder
+              ,private appConfig: AppConfig) {
     this.form = formBuilder.group({
       name: ['', [
         Validators.required,
@@ -47,8 +61,30 @@ export class ProfileComponent implements OnInit {
         profile => {
           this.profileX = profile;
           this.name = profile.userName;
+
+          this.dataSetDetails = [];
+
+          profile.dataSets.forEach( x => this.dataSetService.getDataSetDetail_private(x.dataSetId, x.source).subscribe(
+            y => {
+                let d:DataSetDetail = y ;
+
+                y['claimed'] = x.claimed;
+                y['databaseUrl'] = this.appConfig.database_urls[this.appConfig.repositories[x.source]];
+
+                this.dataSetDetails.push(y)
+            })
+          );
+
           let userId =  profile.userId
           this.getConnections(userId);
+
+          this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(userId)});
+
+          this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+            this.profileImageUrl = this.getProfileImageUrl();
+          };
+
+          this.profileImageUrl = this.getProfileImageUrl();
         }
       );
   }
@@ -84,5 +120,44 @@ export class ProfileComponent implements OnInit {
 
     result.subscribe(); //data => this.router.navigate(['users']));
   }
+
+  checkAll(ev) {
+    console.log("checking select all" + ev);
+    this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked)
+  }
+
+  isAllChecked() {
+    if(null==this.profileX.dataSets)
+      return false;
+    return this.profileX.dataSets.every(_ => (_ as any).state);
+  }
+
+  deleteSelected(){
+    let  dataSets: DataSetDetail[] = this.dataSetDetails.filter(x => !(x as any).state);
+
+    this.profileService.saveDataSets(this.profileX.userId, dataSets.map( x => {
+      let r:DataSetShort = new DataSetShort();
+      r.source = x.source;
+      r.dataSetId = x.id;
+      r.claimed = x['claimed'];
+      return r;
+    }));
+
+    this.getProfile();
+  }
+
+  getProfileImageUrl(): string{
+    return "http://localhost:8080/api/users/3/picture?random" + Math.random();
+  }
+
+  public fileChangeEvent(fileInput: any){
+    if (fileInput.target.files && fileInput.target.files[0]) {
+      setTimeout(() => {
+        console.log('fileChangeEvent hello');
+        this.uploader.uploadAll();
+      }, 100);
+    }
+  }
+
 
 }

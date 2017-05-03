@@ -109,7 +109,8 @@
           <!--dataset_protocol_bottom-->
           <div id="buttons_highlight_box">
             <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
-            <claim-button [accession]="acc" [repository]="repository" ></claim-button>
+
+            <claim-button [accession]="d.id" [repository]="d.source" ></claim-button>
 
             <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>
             <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>

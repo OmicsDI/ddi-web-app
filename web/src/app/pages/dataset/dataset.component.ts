@@ -120,6 +120,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
   }
 
   process_sections(){
+    //TODO: encoding problems
     let description = this.enrichmentInfo.originalAttributes.description.replace("Â³loopingÂ²","WloopingW");
 
     this.title_sections = this.get_section(this.enrichmentInfo.originalAttributes.name, this.enrichmentInfo.synonyms.name);
@@ -154,9 +155,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
           this.process_sections();
         }
       )
-
       console.log("add hightlighting");
-
     }
   }
 }

@@ -2128,8 +2128,17 @@ th.gsc_a_c {
   display: none
 }
 
+th.gsc_a_c {
+  text-align: center;
+}
+
+.gsc_a_ca{
+  text-align: center;
+}
+
 td.gsc_a_c {
   padding: 8px;
+  text-align: center;
 }
 
 th.gsc_a_y {
@@ -2713,4 +2722,22 @@ html, body {
     width: 52pt;
     height: 52pt;
   }
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  display: inline-block;
+  text-decoration: underline;
+}
+
+.inputfile + label:hover {
+  color: red;
 }

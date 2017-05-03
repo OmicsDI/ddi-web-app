@@ -46,6 +46,8 @@ public class MongoUser implements SocialUserDetails {
 
     String SomethingNew;
 
+    byte[] image;
+
     long expires;
 
     public String getSomethingNew() {
@@ -140,6 +142,13 @@ public class MongoUser implements SocialUserDetails {
     public DataSet[] getDataSets(){        return dataSets;    }
     public void setDataSets(DataSet[] val){
         this.dataSets = val;
+    }
+
+    public void setImage(byte[] image){
+        this.image = image;
+    }
+    public byte[] getImage(){
+        return this.image;
     }
 
     @Override

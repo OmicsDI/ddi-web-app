@@ -24,12 +24,12 @@ export class DataSetService extends BaseService{
 
   dataSetDetail$ = this.dataSetSource.asObservable();
 
-  private getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
+  public getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
     return this.http.get(this.appConfig.getDatasetUrl(accession,repository))
       .map(x => this.extractData<DataSetDetail>(x));
   }
 
-  public getDataSetDetail(accession: string, repository: string) {
+  public getDataSetDetail(accession: string, repository: string){
     this.getDataSetDetail_private(accession, repository).subscribe(result => {
       this.dataSetSource.next(result);
     });

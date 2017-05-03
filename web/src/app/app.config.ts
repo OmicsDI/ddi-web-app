@@ -46,6 +46,15 @@ export class AppConfig{
   getAutocompleteUrl(keyword:string):string{
     return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10`;
   }
+  getProfileClaimDatasetUrl(userId:string){
+    return `${environment.userServiceUrl}users/${userId}/datasets`;
+  }
+  getProfileSaveDatasetsUrl(userId:string){
+    return `${environment.userServiceUrl}users/${userId}/datasets`;
+  }
+  getProfileUploadImageUrl(userId:string){
+    return `${environment.userServiceUrl}users/${userId}/picture`;
+  }
 
   public repositories = {
   "pride": "PRIDE",
