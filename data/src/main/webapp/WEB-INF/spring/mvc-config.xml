@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+
+    <!-- Enables the Spring MVC @Controller programming model -->
+    <annotation-driven/>
+
+    <context:component-scan base-package="uk.ac.ebi.ddi.ws.modules"/>
+
+    <beans:bean id="ebeyeWsConfigDev" class="uk.ac.ebi.ddi.ebe.ws.dao.config.EbeyeWsConfigDev" />
+    <beans:bean id="ebeyeWsConfigProd" class="uk.ac.ebi.ddi.ebe.ws.dao.config.EbeyeWsConfigProd" />
+
+
+    <!-- Swagger config (REST service documentation)-->
+    <!-- Swagger beans -->
+    <beans:bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
+    <beans:bean class="uk.ac.ebi.ddi.ws.swagger.SwaggerConfig"/>
+    <!-- static resources mapping for Swagger UI -->
+    <resources mapping="/**" location="/resources/" />
+    <!-- pick up the properties needed for our Swagger configuration -->
+    <!--<context:property-placeholder location="classpath:META-INF/props/swagger.properties" ignore-unresolvable="true"/>-->
+
+</beans:beans>

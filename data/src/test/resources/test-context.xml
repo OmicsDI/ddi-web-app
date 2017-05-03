@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- define the packages to scan for the test config (see app-context-bootstrap.xml for production config) -->
+    <context:component-scan base-package="uk.ac.ebi.ddi.ws"/>
+
+<!--    <bean id="datasetController" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="uk.ac.ebi.ddi.ws.modules.dataset.controller"/>
+    </bean>-->
+
+    <bean id="datasetController" class="uk.ac.ebi.ddi.ws.modules.dataset.controller.DatasetController"/>
+
+    <bean id="datasetWsClient" class="uk.ac.ebi.ddi.ebe.ws.dao.client.dataset.DatasetWsClient">
+        <constructor-arg ref="ebeyeWsConfigDev"/>
+    </bean>
+
+    <bean id="ebeyeWsConfigDev" class="uk.ac.ebi.ddi.ebe.ws.dao.config.EbeyeWsConfigDev" />
+    <!--<bean id="filePathBuilder" class="uk.ac.ebi.pride.archive.utils.config.FilePathBuilderPride3"/>
+    <bean id="fileUtils" class="uk.ac.ebi.pride.archive.utils.streaming.FileUtils"/>
+
+    <util:properties id="fileConfig" location="classpath:META-INF/props/file.properties"/>
+    <util:properties id="buildConfig" location="classpath:META-INF/props/build.properties"/>
+
+    &lt;!&ndash;<util:properties id="databaseConfig" location="classpath:META-INF/props/db.properties"/>&ndash;&gt;
+
+
+    <bean id="projectServiceImpl" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="uk.ac.ebi.pride.archive.repo.project.service.ProjectServiceImpl"/>
+    </bean>
+
+-->
+</beans>

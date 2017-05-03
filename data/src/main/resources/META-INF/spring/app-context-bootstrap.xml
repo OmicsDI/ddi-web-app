@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringSecurityFiltersConfiguredInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <!-- property files -->
+    <context:property-placeholder location="classpath:META-INF/props/*.properties" ignore-unresolvable="true"/>
+
+    <!-- Callback filter for cross server query support -->
+    <bean class="uk.ac.ebi.pride.web.util.callback.filter.JsonpCallbackFilter" id="jsonpCallbackFilter"/>
+
+    <bean id="ebeyeWsConfig" class="uk.ac.ebi.ddi.ebe.ws.dao.config.EbeyeWsConfigDev"/>
+    <bean id="ebeyeWsConfigProd" class="uk.ac.ebi.ddi.ebe.ws.dao.config.EbeyeWsConfigProd"/>
+
+    <bean id="domainClient" class="uk.ac.ebi.ddi.ebe.ws.dao.client.domain.DomainWsClient">
+        <constructor-arg ref="ebeyeWsConfigProd"/>
+    </bean>
+
+    <bean id="facetWsClient" class="uk.ac.ebi.ddi.ebe.ws.dao.client.facet.FacetWsClient">
+        <constructor-arg ref="ebeyeWsConfigProd"/>
+    </bean>
+
+    <bean id="dataWsClient" class="uk.ac.ebi.ddi.ebe.ws.dao.client.dataset.DatasetWsClient">
+        <constructor-arg ref="ebeyeWsConfigProd"/>
+    </bean>
+
+    <bean id="dictionaryClient" class="uk.ac.ebi.ddi.ebe.ws.dao.client.dictionary.DictionaryClient">
+        <constructor-arg ref="ebeyeWsConfigProd"/>
+    </bean>
+
+    <bean id="publicationWsClient" class="uk.ac.ebi.ddi.ebe.ws.dao.client.publication.PublicationWsClient">
+        <constructor-arg ref="ebeyeWsConfigProd"/>
+    </bean>
+
+    <!-- Maven information an autowired classes -->
+
+    <mongo:repositories     base-package="uk.ac.ebi.ddi.service.db.repo" />
+    <context:component-scan base-package="uk.ac.ebi.ddi.service.db.service"/>
+
+
+    <mongo:mongo-client credentials="${ddi.mongo.app.user}:${ddi.mongo.app.password}@${ddi.mongo.app.authenticationDatabase}" id="mongoClient" replica-set="${ddi.mongo.app.machine.one}:${ddi.mongo.app.port},${ddi.mongo.app.machine.two}:${ddi.mongo.app.port},${ddi.mongo.app.machine.three}:${ddi.mongo.app.port}">
+        <mongo:client-options connections-per-host="5"
+                              threads-allowed-to-block-for-connection-multiplier="10"
+                              connect-timeout="100000"
+                              max-wait-time="30000"
+                              socket-keep-alive="true"
+                              socket-timeout="1000000"
+                              write-concern="NORMAL"
+                              read-preference="PRIMARY_PREFERRED"/>
+    </mongo:mongo-client>
+
+
+    <mongo:db-factory dbname="${ddi.mongo.app.db}" port="${ddi.mongo.app.port}" mongo-ref="mongoClient"/>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+    </bean>
+
+    <bean id="resourceService" class="uk.ac.ebi.ddi.service.db.service.logger.DatasetResourceService"/>
+    <bean id="eventService" class="uk.ac.ebi.ddi.service.db.service.logger.HttpEventService"/>
+    <bean id="enrichmentService" class="uk.ac.ebi.ddi.service.db.service.enrichment.EnrichmentInfoService"/>
+    <bean id="datasetStatInfoService" class="uk.ac.ebi.ddi.service.db.service.similarity.DatasetStatInfoService"/>
+    <bean id="datasetSimilarsService" class="uk.ac.ebi.ddi.service.db.service.dataset.DatasetSimilarsService" />
+
+    <bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
+
+    <!--&lt;!&ndash;<bean id="annotService" class="uk.ac.ebi.ddi.annotation.service.synonyms.DDIAnnotationService"/>&ndash;&gt;-->
+    <!--<bean id="termService" class="uk.ac.ebi.ddi.service.db.service.similarity.TermInDBService"/>-->
+    <!--<bean id="synonymsService " class="uk.ac.ebi.ddi.service.db.service.enrichment.SynonymsService"/>-->
+
+
+    <context:property-placeholder location="classpath:META-INF/props/*.properties" ignore-unresolvable="true"/>
+
+</beans>
