@@ -5,11 +5,14 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.github.api.GitHub;
+import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.orcid.api.OrcidApi;
 import org.springframework.social.orcid.jaxb.beans.OrcidProfile;
 import org.springframework.social.orcid.jaxb.beans.PersonalDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import uk.ac.ebi.ddi.security.model.DataSet;
 import uk.ac.ebi.ddi.security.model.MongoUser;
 import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
@@ -64,6 +67,12 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
             imageUrl = "/assets/orcid.png";
             affiliation = "Orcid user";
             bio = orcidProfile.getOrcidBio().getBiography().getValue();
+        }else if(connection.getApi() instanceof GitHub){
+        	email = ((GitHub)connection.getApi()).userOperations().getUserProfile().getEmail();
+            affiliation = "GitHub user";
+        }else if(connection.getApi() instanceof Twitter){
+        	//email = ((Twitter)connection.getApi()).userOperations().getUserProfile().getEmail();
+            affiliation = "GitHub user";
         }
 
         user.setUserName(generateUniqueUserName(name));

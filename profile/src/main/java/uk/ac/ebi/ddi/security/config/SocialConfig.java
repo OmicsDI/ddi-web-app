@@ -1,7 +1,12 @@
 package uk.ac.ebi.ddi.security.config;
 
+import java.lang.reflect.Field;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.Encryptors;
@@ -10,20 +15,25 @@ import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
-import org.springframework.social.connect.*;
-import org.springframework.social.connect.mongo.*;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.ConnectionSignUp;
+import org.springframework.social.connect.mongo.MongoConnectionService;
+import org.springframework.social.connect.mongo.MongoUsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.github.api.GitHub;
+import org.springframework.social.github.connect.GitHubConnectionFactory;
 import org.springframework.social.orcid.api.OrcidApi;
 import org.springframework.social.orcid.connect.OrcidConnectionFactory;
 import org.springframework.social.orcid.utils.OrcidConfig;
 import org.springframework.social.orcid.utils.OrcidConfigBroker;
+import org.springframework.social.twitter.api.Twitter;
+import org.springframework.social.twitter.connect.TwitterConnectionFactory;
+
 import uk.ac.ebi.ddi.security.UserAuthenticationUserIdSource;
-
-import java.lang.reflect.Field;
-
-import org.springframework.social.connect.mongo.MongoConnectionService;
 
 @Configuration
 @EnableSocial
@@ -74,6 +84,13 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		cfConfig.addConnectionFactory(new OrcidConnectionFactory(
 				env.getProperty("orcid.clientId"),
 				env.getProperty("orcid.clientSecret")));
+		
+		cfConfig.addConnectionFactory(new GitHubConnectionFactory(
+				env.getProperty("github.clientId"),
+				env.getProperty("github.clientSecret")));
+		cfConfig.addConnectionFactory(new TwitterConnectionFactory(
+				env.getProperty("twitter.consumerKey"),
+				env.getProperty("twitter.consumerSecret")));
 	}
 
 	@Override
@@ -104,7 +121,6 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		return usersConnectionRepository;
 		*/
 	}
-
 	@Bean
 	@Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
 	public Facebook facebook(ConnectionRepository repository) {
@@ -118,7 +134,21 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		Connection<OrcidApi> connection = repository.findPrimaryConnection(OrcidApi.class);
 		return connection != null ? connection.getApi() : null;
 	}
+	
+	@Bean
+	@Scope(value="request",proxyMode = ScopedProxyMode.INTERFACES)
+	public GitHub github(ConnectionRepository repository){
+		Connection<GitHub> connection = repository.findPrimaryConnection(GitHub.class);
+		return connection != null ? connection.getApi() : null;
+	}
 
+	@Bean
+	@Scope(value="request",proxyMode = ScopedProxyMode.INTERFACES)
+	public Twitter twitter(ConnectionRepository repository){
+		Connection<Twitter> connection = repository.findPrimaryConnection(Twitter.class);
+		return connection != null ? connection.getApi() : null;
+		}
+	
 	@Bean
 	public UserIdSource userIdSource(){
 		return new UserAuthenticationUserIdSource();
