@@ -1,11 +1,12 @@
 import { Injectable }       from '@angular/core';
 import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { Profile } from '../model/profile';
+import { Profile } from '../model/Profile';
 import { AuthHttp } from 'angular2-jwt';
 import {AppConfig} from "../app.config";
 import {BaseService} from "./base.service";
 import {DataSetShort} from "../model/DataSetShort";
+import {DataSetId} from "../model/DataSetId";
 
 @Injectable()
 export class ProfileService extends BaseService {
@@ -70,7 +71,27 @@ export class ProfileService extends BaseService {
     return Observable.throw("Error in logout");
   }
 
-  public claimDataset(userID: string, accession:string, repository:string){
-    alert(`claim ${userID} ${accession} ${repository}`);
+  public saveDataSets(userID: string, datasets: DataSetShort[]){
+    let r:string;
+    this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID),JSON.stringify(datasets))
+      .map(res => res.json()).subscribe(data => {
+      r = data;
+    });
+    console.log(r);
+  }
+
+  public claimDataset(userID: string, dataset: DataSetShort) {
+    //alert(`claim ${userID} ${accession} ${repository}`);
+    //let datasetId:DataSetId = new DataSetId();
+    //datasetId.accession = accession;
+    //datasetId.repository = repository;
+
+      let r:string;
+
+      this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID),JSON.stringify(dataset))
+      .map(res => res.json()).subscribe(data => {
+        r = data;
+      });
+
   }
 }
