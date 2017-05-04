@@ -55,8 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			@Override
 			public <O extends SocialAuthenticationFilter> O postProcess(O socialAuthenticationFilter) {
+
+				socialAuthenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
+				socialAuthenticationSuccessHandler.setDefaultTargetUrl("http://localhost:4200/profile");
+
 				socialAuthenticationFilter.setAuthenticationSuccessHandler(socialAuthenticationSuccessHandler);
-				socialAuthenticationFilter.setConnectionAddedRedirectUrl("http://localhost:4200/profile");
+				//socialAuthenticationFilter.setConnectionAddedRedirectUrl("http://localhost:4200/profile");
 				return socialAuthenticationFilter;
 			}
 		});

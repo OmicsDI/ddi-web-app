@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.ac.ebi.ddi.security.model.MongoUser;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
+import uk.ac.ebi.ddi.security.model.UserShort;
 import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
 
 import javax.servlet.ServletContext;
@@ -93,5 +94,21 @@ public class UserController {
 			b = IOUtils.toByteArray(in);
 		}
 		return b;
+	}
+
+	@RequestMapping(value = "/api/users/{userId}/coauthors", method = RequestMethod.GET)
+	@CrossOrigin
+	public UserShort[] getCoAuthors(@PathVariable String userId) {
+		UserShort[] result = new UserShort[2];
+
+		result[0] = new UserShort();
+		result[0].setUserId("1");
+		result[0].setUserName("User One");
+
+		result[1] = new UserShort();
+		result[1].setUserId("2");
+		result[1].setUserName("User Two");
+
+		return result;
 	}
 }
