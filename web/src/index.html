@@ -86,14 +86,14 @@
 
 </head>
 <script>
-  function getParameterByName(name) {
-    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+  function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
   }
-  var auth = getParameterByName('auth');
-  if(auth) {
-    localStorage.setItem('id_token', auth);
-    window.location.href = window.location.href.replace("?auth="+auth,"");
+  var authToken = getCookieValue('AUTH-TOKEN');
+  if(authToken){
+    console.log(authToken);
+    localStorage.setItem('id_token', authToken);
   }
 </script>
 
