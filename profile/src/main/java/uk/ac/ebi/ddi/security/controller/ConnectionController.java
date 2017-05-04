@@ -30,7 +30,7 @@ public class ConnectionController {
     @RequestMapping(value = "/api/users/{UserID}/connections", method = RequestMethod.GET)
     @CrossOrigin
     public String[] getUserConnections(@PathVariable String UserID) {
-        ConnectionRepository repo = this.mognoUsersConnectionRepository.createConnectionRepository(UserID);//添加一个新的连接,这对当前用户存储库
+        ConnectionRepository repo = this.mognoUsersConnectionRepository.createConnectionRepository(UserID);
 
         MultiValueMap<String,Connection<?>> connections = repo.findAllConnections();
 
