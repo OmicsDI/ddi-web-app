@@ -43,6 +43,8 @@ export class SearchService extends BaseService{
       s = "";
     if (s == '(())')
       s = "";
+    if(s=='()')
+      s = "";
     if( s != "")
     {
       if(result)
