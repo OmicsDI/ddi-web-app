@@ -54,6 +54,17 @@ export class FacetComponent implements OnInit {
     this.facetValueSelected.emit(value + " " + val);
   }
 
+  labelClicked(value: string, event, isCheckboxChecked: boolean) {
+    event.preventDefault();
+    if (isCheckboxChecked) {
+      this.searchService.unselectFacet(this.id,value);  
+    }else {
+      this.searchService.selectFacet(this.id,value);
+    }
+    this.facetValueSelected.emit(value);
+    console.log(isCheckboxChecked);
+  }
+
   searchByName(){
     for (let v of this.facetValuesFiltered)
     {
