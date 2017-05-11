@@ -136,10 +136,7 @@
                                                                                 href="#">Edit…</a>
       </h3>
         <ul class="gsc_rsb_a">
-          <li><span class="gsc_rsb_aa"><a href="#">Enio Morricone</a></span></li>
-          <li><span class="gsc_rsb_aa"><a href="#">Bruce Willis</a></span></li>
-          <li><span class="gsc_rsb_aa"><a href="#">Bill Gates</a></span></li>
-          <li><span class="gsc_rsb_aa"><a href="#">Jethro Tull</a></span></li>
+          <li *ngFor="let author of coauthors"><span class="gsc_rsb_aa"><a href="#">{{author}}</a></span></li>
           <li class="gsc_rsb_fade"></li>
         </ul>
       </div>

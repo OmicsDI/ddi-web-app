@@ -31,6 +31,12 @@ export class ProfileService extends BaseService {
       .catch(this.handleError);
   }
 
+  getCoAuthors (userId: string): Observable<string[]> {
+    return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))
+        .map(x => this.extractData<String[]>(x))
+        .catch(this.handleError);
+  }
+
   public updateUser(profile:Profile){
 
     let headers = new Headers();

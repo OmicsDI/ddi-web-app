@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   orcidConnected: boolean = false;
   dataSetDetails:DataSetDetail[] = new Array<DataSetDetail>();
   profileImageUrl: string = "";
+  coauthors: string[];
   userId: string = "";
 
   public uploader:FileUploader;
@@ -60,6 +61,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile()
       .subscribe(
         profile => {
+          console.log('getting profile')
           this.profileX = profile;
           this.name = profile.userName;
 
@@ -78,6 +80,7 @@ export class ProfileComponent implements OnInit {
 
           this.userId =  profile.userId
           this.getConnections(this.userId);
+          this.getCoAuthors(userId);
 
           this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
 
@@ -99,6 +102,18 @@ export class ProfileComponent implements OnInit {
 
           this.facebookConnected = connections.some(x=>x=="facebook");
           this.orcidConnected = connections.some(x=>x=="orcid");
+        }
+      )
+  }
+
+  getCoAuthors(userId: string) {
+    console.log(userId);
+    this.profileService.getCoAuthors(userId)
+      .subscribe(
+        authors => {
+          console.log("getting user's co-authors");
+
+          this.coauthors = authors;
         }
       )
   }

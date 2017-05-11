@@ -28,6 +28,9 @@ export class AppConfig{
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections`;
   }
+  getUserCoAuthorsUrl(userId:string):string{
+    return `${environment.userServiceUrl}users/${userId}/coauthors`;
+  }
   getEnrichmentUrl(acc:string,repository:string):string{
     return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}`;
   }

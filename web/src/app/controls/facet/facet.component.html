@@ -7,11 +7,12 @@
 
   <li *ngFor="let v of facetValuesFiltered" class="ng-scope" [hidden]="!v.visible">
     <!-- https://github.com/Dogfalo/materialize/issues/4322 -->
-    <input type="checkbox"
+    <input #checkbox
+           type="checkbox"
            style=" position:relative; left: 0px; opacity: 50; visibility: visible;"
            [checked]="isChecked(v.value)"
            (click)="checkBoxClicked(v.value, $event)" >
-    <a href="" class="metasearch-facet-link ng-binding">{{v.value}}
+    <a (click)="labelClicked(v.value, $event, checkbox.checked)" href="" class="metasearch-facet-link ng-binding">{{v.value}}
       <small class="ng-binding">({{v.count}})</small>
     </a>
   </li>
