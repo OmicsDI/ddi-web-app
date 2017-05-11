@@ -189,7 +189,7 @@
           <tr class="gsc_a_tr" *ngFor="let item of dataSetDetails; let i = index;" >
             <td style="width:60%"><span class="gs_in_cb" style="left:7px;"><input type="checkbox" [(ngModel)]="item.state"><span class="gs_chk"></span>
               <span class="gs_cbx"></span></span></td>
-            <td class="gsc_a_t"><a href="/dataset/{{item.repository}}/{{item.id}}" class="gsc_a_at">{{item.name}}</a>
+            <td class="gsc_a_t"><a href="/dataset/{{item.source}}/{{item.id}}" class="gsc_a_at">{{item.name}}</a>
 
               <div class="gs_gray">{{item.organization}}
               </div>

@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit {
   orcidConnected: boolean = false;
   dataSetDetails:DataSetDetail[] = new Array<DataSetDetail>();
   profileImageUrl: string = "";
+  userId: string = "";
 
   public uploader:FileUploader;
 
@@ -75,10 +76,10 @@ export class ProfileComponent implements OnInit {
             })
           );
 
-          let userId =  profile.userId
-          this.getConnections(userId);
+          this.userId =  profile.userId
+          this.getConnections(this.userId);
 
-          this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(userId)});
+          this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
 
           this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
             this.profileImageUrl = this.getProfileImageUrl();
@@ -147,7 +148,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfileImageUrl(): string{
-    return "http://localhost:8080/api/users/3/picture?random" + Math.random();
+    return "http://localhost:8080/api/users/"+ this.userId +"/picture?random" + Math.random();
   }
 
   public fileChangeEvent(fileInput: any){
