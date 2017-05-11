@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
 
           this.userId =  profile.userId
           this.getConnections(this.userId);
-          this.getCoAuthors(userId);
+          this.getCoAuthors(this.userId);
 
           this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
 

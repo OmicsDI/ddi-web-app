@@ -53,7 +53,9 @@
         <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" href="/search?q={{o}}">{{o}}&nbsp;</a>
       </div>
 
-
+      <div style="float:right; position: relative; top:-25px;">
+        <claim-button [accession]="d.id" [repository]="d.source" ></claim-button>
+      </div>
     </div>
   </li>
 </ul>

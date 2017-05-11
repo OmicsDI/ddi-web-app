@@ -108,10 +108,13 @@
                 <div class="gs_in_txts gs_gray"></div>
               </div>
             </div>
-            <div id="gsc_prf_ep"><span class="gs_in_cb">
+            <div id="gsc_prf_ep">
                 <input [(ngModel)]="profileX.isPublic" type="checkbox" name="isPublic" id="gsc_prf_p"
-                       value="1" checked=""><label for="gsc_prf_p">Make my profile public</label><span
-              class="gs_chk"></span><span class="gs_cbx"></span></span></div>
+                       value="1" checked="" style="opacity:100;" >
+                <label for="gsc_prf_p" style="padding-left:20px;">Make my profile public</label>
+            </div>
+
+
             <div id="gsc_prf_eb">
               <button (click)="submitClicked()" type="submit" id="gsc_prf_ebs" name="save_profile_btn" class=" gs_btn_act">
                 <span class="gs_wr">
@@ -132,12 +135,13 @@
     </div>
     <div id="gsc_rsb" role="navigation">
 
-      <div class="gsc_rsb_s" id="gsc_rsb_co"><h3 class="gsc_rsb_h">Co-authors<a class="gsc_rsb_lc"
+      <div class="gsc_rsb_s" id="gsc_rsb_co"><h3 class="gsc_rsb_h">Add co-authors<a class="gsc_rsb_lc"
                                                                                 href="#">Edit…</a>
       </h3>
         <ul class="gsc_rsb_a">
-          <li *ngFor="let author of coauthors"><span class="gsc_rsb_aa"><a href="#">{{author}}</a></span></li>
-          <li class="gsc_rsb_fade"></li>
+          <li *ngFor="let author of coauthors"><span class="gsc_rsb_aa"><a href="#">{{author.userName}}</a></span>
+            &nbsp;<a href="#">add</a>
+          </li>
         </ul>
       </div>
     </div>
