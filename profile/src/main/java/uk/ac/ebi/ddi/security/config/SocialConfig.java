@@ -22,6 +22,8 @@ import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.mongo.MongoConnectionService;
 import org.springframework.social.connect.mongo.MongoUsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
+import org.springframework.social.elixir.api.Elixir;
+import org.springframework.social.elixir.connect.ElixirConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.github.api.GitHub;
@@ -91,6 +93,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		cfConfig.addConnectionFactory(new TwitterConnectionFactory(
 				env.getProperty("twitter.consumerKey"),
 				env.getProperty("twitter.consumerSecret")));
+
+		cfConfig.addConnectionFactory(new ElixirConnectionFactory(
+				env.getProperty("elixir.clientId"),
+				env.getProperty("elixir.clientSecret")));
+
 	}
 
 	@Override
@@ -148,7 +155,14 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		Connection<Twitter> connection = repository.findPrimaryConnection(Twitter.class);
 		return connection != null ? connection.getApi() : null;
 		}
-	
+
+	@Bean
+	@Scope(value="request",proxyMode = ScopedProxyMode.INTERFACES)
+	public Elixir elixir(ConnectionRepository repository){
+		Connection<Elixir> connection = repository.findPrimaryConnection(Elixir.class);
+		return connection != null ? connection.getApi() : null;
+	}
+
 	@Bean
 	public UserIdSource userIdSource(){
 		return new UserAuthenticationUserIdSource();

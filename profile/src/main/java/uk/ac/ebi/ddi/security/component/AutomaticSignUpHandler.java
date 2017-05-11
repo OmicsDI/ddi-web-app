@@ -8,11 +8,13 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.github.api.GitHub;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.orcid.api.OrcidApi;
+import org.springframework.social.elixir.api.Elixir;
 import org.springframework.social.orcid.jaxb.beans.OrcidProfile;
 import org.springframework.social.orcid.jaxb.beans.PersonalDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.ddi.security.model.DataSet;
 import uk.ac.ebi.ddi.security.model.MongoUser;
 import uk.ac.ebi.ddi.security.service.MongoUserDetailsService;
@@ -73,6 +75,9 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
         }else if(connection.getApi() instanceof Twitter){
         	//email = ((Twitter)connection.getApi()).userOperations().getUserProfile().getEmail();
             affiliation = "GitHub user";
+        }else if(connection.getApi() instanceof Elixir){
+            //email = ((Twitter)connection.getApi()).userOperations().getUserProfile().getEmail();
+            affiliation = "Elixir user";
         }
 
         user.setUserName(generateUniqueUserName(name));
