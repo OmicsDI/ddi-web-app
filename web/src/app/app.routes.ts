@@ -13,6 +13,7 @@ import {AboutComponent} from "./pages/about/about.component";
 import {UnauthorizedComponent} from "./pages/unauthorized/unauthorized.component";
 import { AuthGuardService } from './services/auth-guard.service';
 import {DatasetComponent} from "./pages/dataset/dataset.component";
+import {TermsComponent} from "./pages/terms/terms.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -29,6 +30,7 @@ export const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'dataset/:domain/:acc', component: DatasetComponent },
+  { path: 'terms', component: TermsComponent }
 ];
 
 // Deprecated provide

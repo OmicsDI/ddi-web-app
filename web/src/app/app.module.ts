@@ -75,6 +75,7 @@ import { SearchBoxLargeComponent } from './controls/search-box-large/search-box-
 import {FileSelectDirective} from "ng2-file-upload";
 import { ClaimAllButtonComponent } from './controls/claim-all-button/claim-all-button.component';
 import { SearchQueryComponent } from './pages/search/search-query/search-query.component';
+import { TermsComponent } from './pages/terms/terms.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -142,7 +143,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchBoxLargeComponent,
     FileSelectDirective,
     ClaimAllButtonComponent,
-    SearchQueryComponent
+    SearchQueryComponent,
+    TermsComponent
   ],
   imports: [
     BrowserModule,

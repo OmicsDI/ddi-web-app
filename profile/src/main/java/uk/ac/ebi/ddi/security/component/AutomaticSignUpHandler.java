@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
+import org.springframework.social.elixir.api.ElixirProfile;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.github.api.GitHub;
 import org.springframework.social.twitter.api.Twitter;
@@ -74,9 +75,15 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
             affiliation = "GitHub user";
         }else if(connection.getApi() instanceof Twitter){
         	//email = ((Twitter)connection.getApi()).userOperations().getUserProfile().getEmail();
-            affiliation = "GitHub user";
+            affiliation = "Twitter user";
         }else if(connection.getApi() instanceof Elixir){
-            //email = ((Twitter)connection.getApi()).userOperations().getUserProfile().getEmail();
+            ElixirProfile elixirProfile = ((Elixir)connection.getApi()).userOperations().getUserProfile();
+
+            String givenName = elixirProfile.getFirstName();
+            String familyName = elixirProfile.getLastName();
+            name = givenName + " " + familyName;
+            email = elixirProfile.getEmail();
+
             affiliation = "Elixir user";
         }
 

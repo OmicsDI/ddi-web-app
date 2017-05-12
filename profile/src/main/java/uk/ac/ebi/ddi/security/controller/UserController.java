@@ -45,6 +45,12 @@ public class UserController {
 	@RequestMapping(value = "/api/user/current", method = RequestMethod.POST)
 	@CrossOrigin
 	public void setMongoUser(@RequestBody MongoUser mongoUser) {
+		MongoUser user = mongoUserDetailsRepository.findByUserId(mongoUser.getUserId());
+
+		mongoUser.setImage(user.getImage());
+		//TODO:
+		//mongoUser.coAuthors =
+
 		mongoUserDetailsRepository.save(mongoUser);
 	}
 
