@@ -1,0 +1,46 @@
+<table style="border:none;" *ngIf="total>0" >
+  <tr style="border:none;">
+    <td style="white-space: nowrap; border:none;">
+      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+    </td>
+    <td style="width: 100%; border:none;">&nbsp;
+    </td>
+    <td style="white-space: nowrap; border:none;">
+      <span style="border:none;">Sort by:
+                            <a style="margin-left: 5px;" (click)="sort('id')">Accession
+                              <span *ngIf="searchService.sortBy=='id'">
+                                <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                                <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                              </span>
+                            </a>
+
+                            <a style="margin-left: 5px;" (click)="sort('')">Relevance
+                              <span *ngIf="searchService.sortBy==''">
+                                <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                                <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                              </span>
+                            </a>
+
+                            <a style="margin-left:5px" (click)="sort('publication_date')">
+                                Published
+                              <span *ngIf="searchService.sortBy=='publication_date'">
+                                <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                                <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                              </span>
+                            </a>
+      </span>
+      &nbsp;&nbsp;&nbsp;
+      <span>
+      Page size&nbsp;
+      <select [(ngModel)]="searchService.selectedPageSize" (change)="searchService.changePageSize()" >
+        <option [value]="c" *ngFor="let c of searchService.pageSizes">{{c}}</option>
+      </select>
+      </span>
+    </td>
+  </tr>
+</table>
+
+<!---  -->
+
+
+

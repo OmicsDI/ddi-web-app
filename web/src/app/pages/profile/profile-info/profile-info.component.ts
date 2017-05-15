@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import {ProfileService} from "../../services/profile.service";
+import {ProfileService} from "../../../services/profile.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Profile} from "../../model/Profile";
-import {forEach} from "@angular/router/src/utils/collection";
-import {DataSetShort} from "../../model/DataSetShort";
-import {DataSetService} from "../../services/dataset.service";
-import {DataSetDetail} from "../../model/DataSetDetail";
-import {AppConfig} from "../../app.config";
+import {Profile} from "../../../model/Profile";
+import {DataSetShort} from "../../../model/DataSetShort";
+import {DataSetService} from "../../../services/dataset.service";
+import {DataSetDetail} from "../../../model/DataSetDetail";
+import {AppConfig} from "../../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 
-const URL = 'http://localhost:8080/api/user/picture';
-
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
-  providers: [ProfileService]
+  selector: 'app-profile-info',
+  templateUrl: './profile-info.component.html',
+  styleUrls: ['./profile-info.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileInfoComponent implements OnInit {
   profileX : Profile = new Profile;
   public name: String;
   form: FormGroup;
@@ -32,9 +28,9 @@ export class ProfileComponent implements OnInit {
   public uploader:FileUploader;
 
   constructor(private profileService: ProfileService
-              ,private dataSetService: DataSetService
-              ,private formBuilder: FormBuilder
-              ,private appConfig: AppConfig) {
+    ,private dataSetService: DataSetService
+    ,private formBuilder: FormBuilder
+    ,private appConfig: AppConfig) {
     this.form = formBuilder.group({
       name: ['', [
         Validators.required,
@@ -54,9 +50,18 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProfile();
+    this.profileService.getProfile().subscribe(
+        x => {
+          this.profileImageUrl = this.getProfileImageUrl();
+          this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.profileService.profile.userId)});
+          this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+            this.profileImageUrl = this.getProfileImageUrl();
+          };
+        }
+    );
   }
 
+  /*
   getProfile(){
     this.profileService.getProfile()
       .subscribe(
@@ -69,17 +74,17 @@ export class ProfileComponent implements OnInit {
 
           profile.dataSets.forEach( x => this.dataSetService.getDataSetDetail_private(x.dataSetId, x.source).subscribe(
             y => {
-                let d:DataSetDetail = y ;
+              let d:DataSetDetail = y ;
 
-                y['claimed'] = x.claimed;
-                y['databaseUrl'] = this.appConfig.database_urls[this.appConfig.repositories[x.source]];
+              y['claimed'] = x.claimed;
+              y['databaseUrl'] = this.appConfig.database_urls[this.appConfig.repositories[x.source]];
 
-                this.dataSetDetails.push(y)
+              this.dataSetDetails.push(y)
             })
           );
 
           this.userId =  profile.userId
-          //this.getConnections(this.userId);
+          this.getConnections(this.userId);
           this.getCoAuthors(this.userId);
 
           this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
@@ -91,8 +96,20 @@ export class ProfileComponent implements OnInit {
           this.profileImageUrl = this.getProfileImageUrl();
         }
       );
-  }
+  }*/
 
+  getConnections(userId: string){
+    this.profileService.getUserConnections(userId)
+      .subscribe(
+        connections => {
+
+          console.info("getting user connections");
+
+          this.facebookConnected = connections.some(x=>x=="facebook");
+          this.orcidConnected = connections.some(x=>x=="orcid");
+        }
+      )
+  }
 
   getCoAuthors(userId: string) {
     console.log(userId);
@@ -120,20 +137,20 @@ export class ProfileComponent implements OnInit {
   save() {
     var result;
 
-    result = this.profileService.updateUser(this.profileX);
+    result = this.profileService.updateUser(this.profileService.profile);
 
     result.subscribe(); //data => this.router.navigate(['users']));
   }
 
   checkAll(ev) {
     console.log("checking select all" + ev);
-    this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked)
+    this.profileService.profile.dataSets.forEach(x => (x as any).state = ev.target.checked)
   }
 
   isAllChecked() {
-    if(null==this.profileX.dataSets)
+    if(null==this.profileService.profile.dataSets)
       return false;
-    return this.profileX.dataSets.every(_ => (_ as any).state);
+    return this.profileService.profile.dataSets.every(_ => (_ as any).state);
   }
 
   deleteSelected(){
@@ -147,11 +164,11 @@ export class ProfileComponent implements OnInit {
       return r;
     }));
 
-    this.getProfile();
+    this.profileService.getProfile();
   }
 
   getProfileImageUrl(): string{
-    return "http://localhost:8080/api/users/"+ this.userId +"/picture?random" + Math.random();
+    return "http://localhost:8080/api/users/"+ this.profileService.profile.userId +"/picture?random" + Math.random();
   }
 
   public fileChangeEvent(fileInput: any){

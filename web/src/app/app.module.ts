@@ -76,6 +76,16 @@ import {FileSelectDirective} from "ng2-file-upload";
 import { ClaimAllButtonComponent } from './controls/claim-all-button/claim-all-button.component';
 import { SearchQueryComponent } from './pages/search/search-query/search-query.component';
 import { TermsComponent } from './pages/terms/terms.component';
+import { ProfileResultComponent } from './pages/profile/profile-result/profile-result.component';
+import { ProfilePagerComponent } from './pages/profile/profile-pager/profile-pager.component';
+import { ProfileTotalComponent } from './pages/profile/profile-total/profile-total.component';
+import { ProfileInfoComponent } from './pages/profile/profile-info/profile-info.component';
+import { ProfileCoauthorsComponent } from './pages/profile/profile-coauthors/profile-coauthors.component';
+import { ProfileConnectionsComponent } from './pages/profile/profile-connections/profile-connections.component';
+import { OmicsImageComponent } from './controls/omics-image/omics-image.component';
+import { DeleteButtonComponent } from './controls/delete-button/delete-button.component';
+import { DeleteAllButtonComponent } from './controls/delete-all-button/delete-all-button.component';
+import {UiSwitchModule} from "../../node_modules/angular2-ui-switch";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -144,7 +154,16 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FileSelectDirective,
     ClaimAllButtonComponent,
     SearchQueryComponent,
-    TermsComponent
+    TermsComponent,
+    ProfileResultComponent,
+    ProfilePagerComponent,
+    ProfileTotalComponent,
+    ProfileInfoComponent,
+    ProfileCoauthorsComponent,
+    ProfileConnectionsComponent,
+    OmicsImageComponent,
+    DeleteButtonComponent,
+    DeleteAllButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -160,7 +179,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DropdownModule,
     SlimLoadingBarModule.forRoot(),
     Ng2PaginationModule,
-    TooltipModule
+    TooltipModule,
+    UiSwitchModule
   ],
   exports: [
     RouterModule

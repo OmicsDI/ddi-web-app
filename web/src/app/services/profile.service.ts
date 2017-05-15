@@ -7,10 +7,19 @@ import {AppConfig} from "../app.config";
 import {BaseService} from "./base.service";
 import {DataSetShort} from "../model/DataSetShort";
 import {DataSetId} from "../model/DataSetId";
+import {UserShort} from "../model/UserShort";
+import {DataSetDetail} from "../model/DataSetDetail";
+import {DataSetService} from "./dataset.service";
 
 @Injectable()
 export class ProfileService extends BaseService {
-  constructor (private http: AuthHttp, private appConfig: AppConfig) {
+
+  connections: String[];
+  coauthors: UserShort[];
+  profile: Profile = new Profile();
+  dataSetDetails: DataSetDetail[] = new Array();
+
+  constructor (private http: AuthHttp, private appConfig: AppConfig, private dataSetService: DataSetService) {
     super();
   }
 
@@ -21,7 +30,12 @@ export class ProfileService extends BaseService {
 
   getProfile (): Observable<Profile> {
     return this.http.get(this.appConfig.getProfileUrl()) //,config //{ withCredentials: true }
-        .map(x => this.extractData<Profile>(x))
+        .map(x => {
+          this.profile = this.extractData<Profile>(x);
+          this.getCoAuthors(this.profile.userId);
+          this.getDataSetDetails(this.profile);
+          return this.profile;
+        })
         .catch(this.handleError);
   }
 
@@ -33,9 +47,26 @@ export class ProfileService extends BaseService {
 
   getCoAuthors (userId: string): Observable<string[]> {
     return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))
-        .map(x => this.extractData<String[]>(x))
+        .map(x => {
+            this.coauthors = this.extractData<UserShort[]>(x);
+            return this.coauthors;
+        })
         .catch(this.handleError);
   }
+
+  getDataSetDetails(profile: Profile){
+    this.dataSetDetails = [];
+
+    profile.dataSets.forEach( x => this.dataSetService.getDataSetDetail_private(x.dataSetId, x.source).subscribe(
+    y => {
+       let d:DataSetDetail = y ;
+
+        y['claimed'] = x.claimed;
+        y['databaseUrl'] = this.appConfig.database_urls[this.appConfig.repositories[x.source]];
+
+        this.dataSetDetails.push(y)
+    }))
+  };
 
   public updateUser(profile:Profile){
 

@@ -1,0 +1,14 @@
+.gsc_rsb_a {
+  position: relative;
+  list-style: none;
+}
+
+.gsc_rsb_aa {
+  display: block;
+  padding: 4px 0;
+  line-height: 17px;
+}
+
+.gsc_rsb_lc {
+  font-weight: normal;
+}

@@ -24,6 +24,7 @@
     "@angular/router": "^3.3.1",
     "angular2-disqus": "^5.0.0",
     "angular2-jwt": "^0.2.0",
+    "angular2-ui-switch": "git+https://github.com/daominhsangvn/angular2-ui-switch.git",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "d3": "^4.7.4",
