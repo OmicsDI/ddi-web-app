@@ -162,4 +162,10 @@ export class ProfileComponent implements OnInit {
       }, 100);
     }
   }
+
+  updateProfile(){
+    console.log("updateProfile called");
+
+    this.save();
+  }
 }

@@ -1,7 +1,7 @@
 <table style="border:none;">
   <td style="vertical-align: top; border:none; min-width: 300px;">
     <app-profile-info></app-profile-info>
-    <app-profile-coauthors></app-profile-coauthors>
+    <app-profile-coauthors [profile]="profileX" (change)="updateProfile()"></app-profile-coauthors>
     <app-profile-connections></app-profile-connections>
   </td>
   <td style="vertical-align: top; border:none;">
