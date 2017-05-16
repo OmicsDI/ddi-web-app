@@ -64,7 +64,6 @@ export class ProfileComponent implements OnInit {
           console.log('getting profile')
           this.profileX = profile;
           this.name = profile.userName;
-
           this.dataSetDetails = [];
 
           profile.dataSets.forEach( x => this.dataSetService.getDataSetDetail_private(x.dataSetId, x.source).subscribe(

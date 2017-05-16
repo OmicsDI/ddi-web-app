@@ -24,7 +24,7 @@
       </div>
 
       <div style="float:right; position: relative; top:-25px;">
-        <app-delete-button [repository]="d.repository" [accession]="d.accession"></app-delete-button>
+        <app-delete-button (click)="delete(d.source,d.id)"></app-delete-button>
       </div>
     </div>
   </li>

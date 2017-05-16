@@ -2,7 +2,7 @@
   <td style="vertical-align: top; border:none; min-width: 300px;">
     <app-profile-info></app-profile-info>
     <app-profile-coauthors [profile]="profileX" (change)="updateProfile()"></app-profile-coauthors>
-    <app-profile-connections></app-profile-connections>
+    <app-profile-connections [profile]="profileX"></app-profile-connections>
   </td>
   <td style="vertical-align: top; border:none;">
     <!---
@@ -12,7 +12,7 @@
     <app-delete-all-button></app-delete-all-button>
     </div><br/><br/>
     <app-profile-pager></app-profile-pager>
-    <app-profile-result></app-profile-result>
+    <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
 
   </td>
   <tr>
