@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import uk.ac.ebi.ddi.security.model.DataSet;
 import uk.ac.ebi.ddi.security.model.MongoUser;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
 import uk.ac.ebi.ddi.security.model.UserShort;
@@ -18,6 +19,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -105,16 +109,35 @@ public class UserController {
 	@RequestMapping(value = "/api/users/{userId}/coauthors", method = RequestMethod.GET)
 	@CrossOrigin
 	public UserShort[] getCoAuthors(@PathVariable String userId) {
-		UserShort[] result = new UserShort[2];
 
-		result[0] = new UserShort();
-		result[0].setUserId("1");
-		result[0].setUserName("User One");
+		ArrayList<UserShort> result = new ArrayList<UserShort>();
+		MongoUser me = mongoUserDetailsRepository.findByUserId(userId);
 
-		result[1] = new UserShort();
-		result[1].setUserId("2");
-		result[1].setUserName("User Two");
+		for(MongoUser mongoUser : mongoUserDetailsRepository.findAll()) {
+			Boolean found = false;
+			for (DataSet ds : mongoUser.getDataSets()) {
+				for (DataSet ds2 : me.getDataSets()) {
+					if ((ds.getDataSetId() == ds2.getDataSetId())
+							&& (ds.getSource() == ds.getSource())) {
+						found = true;
+						break;
+					}
+					if (found)
+						break;
+				}
+				if (found) {
+					UserShort user = new UserShort();
+					user.setUserId(mongoUser.getUserId());
+					user.setUserName(mongoUser.getUserName());
+					result.add(user);
+				}
+			}
+		}
+		UserShort user = new UserShort();
+		user.setUserId("0");
+		user.setUserName("Mark Twain");
+		result.add(user);
 
-		return result;
+		return result.toArray(new UserShort[0]);
 	}
 }

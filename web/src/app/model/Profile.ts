@@ -1,4 +1,5 @@
 import {DataSetShort} from "./DataSetShort";
+import {UserShort} from "./UserShort";
 
 export class Profile{
     public userId: string;
@@ -14,6 +15,7 @@ export class Profile{
     public imageUrl: string;
 
     public dataSets: DataSetShort[];
+    public coauthors: UserShort[];
 
     constructor(){
     }

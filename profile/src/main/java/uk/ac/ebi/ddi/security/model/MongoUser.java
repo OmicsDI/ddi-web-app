@@ -50,6 +50,16 @@ public class MongoUser implements SocialUserDetails {
 
     long expires;
 
+    public UserShort[] getCoauthors() {
+        return coauthors;
+    }
+
+    public void setCoauthors(UserShort[] coauthors) {
+        this.coauthors = coauthors;
+    }
+
+    UserShort[] coauthors;
+
     public String getSomethingNew() {
         return SomethingNew;
     }
