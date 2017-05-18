@@ -58,6 +58,9 @@ export class AppConfig{
   getProfileUploadImageUrl(userId:string){
     return `${environment.userServiceUrl}users/${userId}/picture`;
   }
+  getDatabasesUrl(){
+    return `${environment.userServiceUrl}database/all`;
+  }
 
   public repositories = {
   "pride": "PRIDE",
