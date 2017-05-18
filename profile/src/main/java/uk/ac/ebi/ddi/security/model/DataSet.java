@@ -1,29 +1,49 @@
 package uk.ac.ebi.ddi.security.model;
 
+import java.util.List;
+
 /**
  * Created by user on 3/14/2017.
  */
 public class DataSet {
-    String dataSetId;
+    String id;
     String source;
     String claimed;
+    String name;
+    List<String> omics_type = null;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getOmics_type() {
+        return omics_type;
+    }
+
+    public void setOmics_type(List<String> omics_type) {
+        this.omics_type = omics_type;
+    }
 
     public DataSet(){}
 
-    public DataSet( String dataSetId
+    public DataSet( String id
                     ,String source
                     ,String claimed){
-        this.dataSetId = dataSetId;
+        this.id = id;
         this.source = source;
         this.claimed = claimed;
     }
 
-    public String getDataSetId() {
-        return dataSetId;
+    public String getId() {
+        return id;
     }
 
-    public void setDataSetId(String dataSetId) {
-        this.dataSetId = dataSetId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSource() {

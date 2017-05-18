@@ -23,7 +23,7 @@ export class ProfileResultComponent implements OnInit {
   delete(source, id){
     console.log(`${id} ${source}`);
 
-    let i: number = this.profile.dataSets.findIndex( x => x.source == source && x.dataSetId == id);
+    let i: number = this.profile.dataSets.findIndex( x => x.source == source && x.id == id);
     if(i!=-1){
       this.profile.dataSets.slice(i,0);
     }

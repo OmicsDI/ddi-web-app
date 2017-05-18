@@ -13,6 +13,7 @@ import {SynonymResult} from "../../model/EnrichmentInfo/SynonymResult";
 import {Synonym} from "../../model/EnrichmentInfo/Synonym";
 import { DisqusModule } from 'angular2-disqus';
 import {AppConfig} from "../../app.config";
+import {ProfileService} from "../../services/profile.service";
 
 
 @Component({
@@ -43,8 +44,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
   databaseUrl: string;
   web_service_url: string;
 
-  constructor(private dataSetService: DataSetService, private route: ActivatedRoute, private enrichmentService: EnrichmentService
-      ,private appConfig: AppConfig) {
+  constructor(private dataSetService: DataSetService
+      ,private route: ActivatedRoute
+      ,private enrichmentService: EnrichmentService
+      ,private appConfig: AppConfig
+      ,private profileService: ProfileService) {
     console.info("DatasetComponent constructor");
 
     this.current_url = route.pathFromRoot.toString();

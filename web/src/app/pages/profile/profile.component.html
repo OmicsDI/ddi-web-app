@@ -1,20 +1,17 @@
 <table style="border:none;">
-  <td style="vertical-align: top; border:none; min-width: 300px;">
-    <app-profile-info></app-profile-info>
+  <td style="vertical-align: top; border:none; min-width: 300px; width:300px;">
+    <app-profile-info [profile]="profileService.profile"></app-profile-info>
+
     <app-profile-coauthors [profile]="profileX" (change)="updateProfile()"></app-profile-coauthors>
     <app-profile-connections [profile]="profileX"></app-profile-connections>
+
   </td>
   <td style="vertical-align: top; border:none;">
-    <!---
-
-    --->
     <div style="float:right; padding-right: 20px;">
-    <app-delete-all-button></app-delete-all-button>
+      <app-delete-all-button></app-delete-all-button>
     </div><br/><br/>
     <app-profile-pager></app-profile-pager>
-    <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
-
-  </td>
+    <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>  </td>
   <tr>
 
   </tr>

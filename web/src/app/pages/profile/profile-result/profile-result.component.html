@@ -1,5 +1,5 @@
 <ul class="list-unstyled">
-  <li *ngFor="let d of this.profileService.dataSetDetails"
+  <li *ngFor="let d of this.profile.dataSets"
       class="repeated-item ng-scope"
       style="">
 
@@ -8,7 +8,9 @@
 
         <app-omics-image [omics]="d.omics_type"></app-omics-image>
 
-        <a [routerLink]="['/dataset',d.source, d.id]" >
+        {{d.id}}
+
+        <a [routerLink]="['/dataset', (d.source || 'x'), (d.id  || 'x')]">
           <span>{{d.name}}</span></a>
       </div>
 

@@ -117,7 +117,7 @@ public class UserController {
 			Boolean found = false;
 			for (DataSet ds : mongoUser.getDataSets()) {
 				for (DataSet ds2 : me.getDataSets()) {
-					if ((ds.getDataSetId() == ds2.getDataSetId())
+					if ((ds.getId() == ds2.getId())
 							&& (ds.getSource() == ds.getSource())) {
 						found = true;
 						break;

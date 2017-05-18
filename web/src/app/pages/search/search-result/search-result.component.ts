@@ -7,6 +7,8 @@ import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 import {Http, Response} from "@angular/http";
 import {SearchResult} from "../../../model/SearchResult";
 import {AppConfig} from "../../../app.config";
+import {Profile} from "../../../model/Profile";
+import {ProfileService} from "../../../services/profile.service";
 
 @Component({
   selector: 'app-search-result',
@@ -22,7 +24,10 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   total: number;
   loading: boolean;
 
-  constructor(private appConfig: AppConfig, private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
+  constructor(private appConfig: AppConfig
+    , private searchService: SearchService
+    , private slimLoadingBarService: SlimLoadingBarService
+    , private profileService: ProfileService) {
 
     console.log("SearchResultComponent ctor");
     this.slimLoadingBarService.start();
@@ -38,6 +43,8 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
         this.slimLoadingBarService.complete();
         console.log("search result observed:" + String(searchResult.count));
       });
+    console.log("getting profile");
+    this.profileService.getProfile();
   }
 
   ngOnDestroy() {

@@ -7,8 +7,7 @@ import {Profile} from "../../model/Profile";
 @Component({
   selector: '[AppLoginLauncher]',
   templateUrl: './login-launcher.component.html',
-  styleUrls: ['./login-launcher.component.css'],
-  providers: [ProfileService],
+  styleUrls: ['./login-launcher.component.css']
 })
 export class LoginLauncherComponent implements OnInit {
 

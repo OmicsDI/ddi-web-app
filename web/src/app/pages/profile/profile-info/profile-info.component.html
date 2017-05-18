@@ -17,10 +17,10 @@
 
 <!-- ##################### View Mode ############################ -->
 <div *ngIf="!editMode" style="padding-top:20px;">
-  <div id="gsc_prf_in">{{profileService.profile.userName}}</div>
-  <div class="gsc_prf_il">{{profileService.profile.affiliation}}</div>
-  <div class="gsc_prf_il">{{profileService.profile.bio}}</div>
-  <div class="gsc_prf_il">{{profileService.profile.orcid}}</div>
+  <div id="gsc_prf_in">{{this.profile && this.profile.userName}}</div>
+  <div class="gsc_prf_il">{{this.profile && this.profile.affiliation}}</div>
+  <div class="gsc_prf_il">{{this.profile && this.profile.bio}}</div>
+  <div class="gsc_prf_il">{{this.profile && this.profile.orcid}}</div>
 
 <div style="text-align: center; padding-top:20px;">
   <button (click)="editClicked()" *ngIf="!editMode"  type="button" id="gsc_prf_btne" aria-controls="gsc_prf_e"
@@ -37,7 +37,7 @@
         <div  class="gsc_prf_ev">
           <div [formGroup]="form" class="gs_in_txtf">
             <input
-              [(ngModel)]="profileService.profile.userName"
+              [(ngModel)]="this.profile && this.profile.userName"
               type="text"
               class="gs_in_txt"
               name="userName"
@@ -50,7 +50,7 @@
         <div class="gsc_prf_ev">
           <div class="gs_in_txtf">
             <input
-              [(ngModel)]="profileService.profile.orcid"
+              [(ngModel)]="this.profile && this.profile.orcid"
               type="text"
               class="gs_in_txt"
               name="orcid"
@@ -62,7 +62,7 @@
         <div class="gsc_prf_ev">
           <div class="gs_in_txtf">
             <input
-              [(ngModel)]="profileService.profile.affiliation"
+              [(ngModel)]="this.profile && this.profile.affiliation"
               type="text"
               class="gs_in_txt"
               name="affiliation"
@@ -74,7 +74,7 @@
         <div class="gsc_prf_ev">
           <div class="gs_in_txtf">
             <input type="text" class="gs_in_txt"
-                   [(ngModel)]="profileService.profile.email"
+                   [(ngModel)]="this.profile && this.profile.email"
                    name="email"
                    maxlength="250" autocapitalize="off" autocorrect="off">
             <div class="gs_in_txts gs_gray"></div>
@@ -84,7 +84,7 @@
         <div class="gsc_prf_ev">
           <div class="gs_in_txtf">
             <input type="text" class="gs_in_txt" name="homepage"
-                   [(ngModel)]="profileService.profile.homepage"
+                   [(ngModel)]="this.profile && this.profile.homepage"
                    maxlength="250"
                    autocapitalize="off" autocorrect="off">
             <div class="gs_in_txts gs_gray"></div>
@@ -93,7 +93,7 @@
         <div class="gsc_prf_el">Bio</div>
         <div class="gsc_prf_ev">
           <div class="gs_in_txtf">
-                    <textarea [(ngModel)]="profileService.profile.bio"
+                    <textarea [(ngModel)]="this.profile && this.profile.bio"
                               style="height:100px;"
                               class="gs_in_txt"
                               name="bio"></textarea>
@@ -101,7 +101,7 @@
           </div>
         </div>
         <div id="gsc_prf_ep">
-          <input [(ngModel)]="profileService.profile.isPublic" type="checkbox" name="isPublic" id="gsc_prf_p"
+          <input [(ngModel)]="this.profile && this.profile.isPublic" type="checkbox" name="isPublic" id="gsc_prf_p"
                  value="1" checked="" style="opacity:100;" >
           <label for="gsc_prf_p" style="padding-left:20px;">Make my profile public</label>
         </div>

@@ -1,4 +1,4 @@
 <ng-container *ngIf="auth.loggedIn()">
   <a *ngIf="!claimed" (click)="claimDataset()" class="access-data">CLAIM DATASET</a>
-  <a *ngIf="claimed" (click)="viewInProfile()" class="access-data">VIEW IN PROFILE</a>
+  <a *ngIf="claimed" (click)="viewInProfile()" class="profile-data">VIEW IN PROFILE</a>
 </ng-container>

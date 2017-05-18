@@ -14,8 +14,7 @@ const URL = 'http://localhost:8080/api/user/picture';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
-  providers: [ProfileService]
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   profileX : Profile = new Profile;
@@ -27,7 +26,7 @@ export class ProfileComponent implements OnInit {
   dataSetDetails:DataSetDetail[] = new Array<DataSetDetail>();
   profileImageUrl: string = "";
   coauthors: string[];
-  userId: string = "";
+  userId: string = "xxx";
 
   public uploader:FileUploader;
 
@@ -62,22 +61,12 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         profile => {
           console.log('getting profile')
+
           this.profileX = profile;
           this.name = profile.userName;
           this.dataSetDetails = [];
 
-          profile.dataSets.forEach( x => this.dataSetService.getDataSetDetail_private(x.dataSetId, x.source).subscribe(
-            y => {
-                let d:DataSetDetail = y ;
-
-                y['claimed'] = x.claimed;
-                y['databaseUrl'] = this.appConfig.database_urls[this.appConfig.repositories[x.source]];
-
-                this.dataSetDetails.push(y)
-            })
-          );
-
-          this.userId =  profile.userId
+          this.userId =  profile.userId;
           //this.getConnections(this.userId);
           this.getCoAuthors(this.userId);
 
@@ -94,12 +83,10 @@ export class ProfileComponent implements OnInit {
 
 
   getCoAuthors(userId: string) {
-    console.log(userId);
     this.profileService.getCoAuthors(userId)
       .subscribe(
         authors => {
-          console.log("getting user's co-authors");
-
+          console.log(`getting user's co-authors ${userId}`);
           this.coauthors = authors;
         }
       )
@@ -141,7 +128,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.saveDataSets(this.profileX.userId, dataSets.map( x => {
       let r:DataSetShort = new DataSetShort();
       r.source = x.source;
-      r.dataSetId = x.id;
+      r.id = x.id;
       r.claimed = x['claimed'];
       return r;
     }));

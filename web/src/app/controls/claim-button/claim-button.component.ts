@@ -6,6 +6,7 @@ import {DataSetShort} from "../../model/DataSetShort";
 import {fdatasyncSync} from "fs";
 import {Router} from "@angular/router";
 import * as moment from 'moment';
+import {DataSet} from "../../model/DataSet";
 
 @Component({
   selector: 'claim-button',
@@ -14,11 +15,9 @@ import * as moment from 'moment';
 })
 export class ClaimButtonComponent implements OnInit,OnChanges {
 
-  @Input() repository: string;
-  @Input() accession: string;
-  profile:Profile;
+  @Input() dataSet: DataSet;
+
   claimed:boolean;
-  userId:string;
 
   constructor(private auth: AuthService, private profileService: ProfileService, private router: Router) {
   }
@@ -37,35 +36,36 @@ export class ClaimButtonComponent implements OnInit,OnChanges {
         let from = JSON.stringify(changedProp.previousValue);
         log.push(`${propName} changed from ${from} to ${to}`);
       }
-    }
-    console.log(log.join(', '));
 
-    if((null!=this.accession)&&(null!=this.repository)){
-      this.getProfile();
-    }
-  }
-
-  getProfile(){
-    this.profileService.getProfile()
-      .subscribe(
-        profile => {
-          this.profile = profile;
-          this.userId = profile.userId;
-
-          let obj: any = profile.dataSets.find(x => x.dataSetId == this.accession && x.source == this.repository);
-
+      if(propName=="dataSet"){
+        if(null!=changes[propName].currentValue){
+          let profile: Profile = this.profileService.profile;
+          let obj: any;
+          if(null!= profile.dataSets) {
+            obj = profile.dataSets.find(x => x.id == this.dataSet.id && x.source == this.dataSet.source);
+          }
           this.claimed = (null != obj) ;
         }
-      );
+      }
+    }
   }
 
   claimDataset(){
     let dataset: DataSetShort = new DataSetShort();
-    dataset.source = this.repository;
-    dataset.dataSetId = this.accession;
+    dataset.source = this.dataSet.source;
+    dataset.id = this.dataSet.id;
     dataset.claimed = moment().format("ll");
+    dataset.name = this.dataSet.title;
+    dataset.omics_type = this.dataSet.omicsType;
 
-    this.profileService.claimDataset(this.userId, dataset);
+    if(!this.profileService.profile){
+      console.log(`this.profileService.profile is NULL`);
+      console.log(`this.profileService.userId ${this.profileService.userId}`);
+    }else{
+      console.log(`claim dataset for user: ${this.profileService.profile.userId}`);
+      this.profileService.claimDataset(this.profileService.profile.userId, dataset);
+    }
+
     this.claimed = true;
   }
 
