@@ -9,15 +9,15 @@ export class DeleteButtonComponent implements OnInit {
 
   constructor() { }
 
-  @Input() repository: string;
-  @Input() accession: string;
+  @Input() source: string;
+  @Input() id: string;
   @Output() click = new EventEmitter();
 
   ngOnInit() {
   }
 
   delete(){
-    this.click.emit(null);
+    this.click.emit({source:this.source, id:this.id});
   }
 
 }

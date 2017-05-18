@@ -20,13 +20,11 @@ export class ProfileResultComponent implements OnInit {
     //this.profileService.getDataSetDetails(this.profileService.profile);
   }
 
-  delete(source, id){
-    console.log(`${id} ${source}`);
-
-    let i: number = this.profile.dataSets.findIndex( x => x.source == source && x.id == id);
+  delete($event){
+    let i: number = this.profile.dataSets.findIndex( x => x.source == $event.source && x.id == $event.id);
     if(i!=-1){
-      this.profile.dataSets.slice(i,0);
+      this.profile.dataSets.splice(i,1);
     }
-    this.change.emit(null);
+    this.change.emit({});
   }
 }
