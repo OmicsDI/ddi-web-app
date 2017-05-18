@@ -86,6 +86,8 @@ import { OmicsImageComponent } from './controls/omics-image/omics-image.componen
 import { DeleteButtonComponent } from './controls/delete-button/delete-button.component';
 import { DeleteAllButtonComponent } from './controls/delete-all-button/delete-all-button.component';
 import {UiSwitchModule} from "../../node_modules/angular2-ui-switch";
+import {OntologyService} from "./services/ontology.service";
+import { FacetOmicsComponent } from './controls/facet-omics/facet-omics.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -163,7 +165,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ProfileConnectionsComponent,
     OmicsImageComponent,
     DeleteButtonComponent,
-    DeleteAllButtonComponent
+    DeleteAllButtonComponent,
+    FacetOmicsComponent
   ],
   imports: [
     BrowserModule,
@@ -197,6 +200,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , SimilarityService
     , PagingService
     , EnrichmentService
+    , OntologyService
     , AppConfig],
   bootstrap: [AppComponent]
 })

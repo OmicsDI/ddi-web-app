@@ -58,6 +58,9 @@ export class AppConfig{
   getProfileUploadImageUrl(userId:string){
     return `${environment.userServiceUrl}users/${userId}/picture`;
   }
+  getOntologyLookupUrl(keys: string[]){
+    return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}`;
+  }
 
   public repositories = {
   "pride": "PRIDE",
