@@ -58,8 +58,11 @@ export class AppConfig{
   getProfileUploadImageUrl(userId:string){
     return `${environment.userServiceUrl}users/${userId}/picture`;
   }
-  getOntologyLookupUrl(keys: string[]){
+  getOntologyLookupUrl(keys: string[]) {
     return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}`;
+  }
+  getDatabasesUrl(){
+    return `${environment.userServiceUrl}database/all`;
   }
 
   public repositories = {

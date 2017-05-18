@@ -26,6 +26,7 @@ import {SearchService} from "./services/search.service";
 import {DataSetService} from "./services/dataset.service";
 import {PublicationService} from "./services/publication.service";
 import {SimilarityService} from "./services/similarity.service";
+import {DatabaseListService} from './services/database-list.service';
 
 import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
@@ -201,6 +202,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , PagingService
     , EnrichmentService
     , OntologyService
+    , DatabaseListService
     , AppConfig],
   bootstrap: [AppComponent]
 })
