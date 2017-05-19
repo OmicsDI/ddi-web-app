@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 import {SearchService} from "../../../services/search.service";
+import {SearchQuery} from "../../../model/SearchQuery";
 
 @Component({
   selector: 'app-search-query',
@@ -19,6 +20,11 @@ export class SearchQueryComponent implements OnInit {
       searchResult => {
         this.searchQuery = this.searchService.getFullQuery();
       });
+  }
+
+  showAllClick(){
+    this.searchService.paramQuery = new SearchQuery();
+    this.searchService.callSearch("*:*");
   }
 
 }

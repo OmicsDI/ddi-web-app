@@ -11,7 +11,4 @@ export class FacetOmicsComponent extends FacetComponent {
 
   constructor(searchService: SearchService) { super(searchService); }
 
-  ngOnInit() {
-  }
-
 }

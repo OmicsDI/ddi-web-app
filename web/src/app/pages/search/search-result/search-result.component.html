@@ -6,11 +6,7 @@
 
     <div class="ddi-card-panel  list-group-item">
       <div class="project-widget-accession">
-        <img src="img/omics/Multipleomics2.png" *ngIf="omicsTest(d,'Multipleomics')" >
-        <img src="img/omics/Proteomics2.png" *ngIf="omicsTest(d,'Proteomics')" >
-        <img src="img/omics/Metabolomics2.png" *ngIf="omicsTest(d,'Metabolomics')" >
-        <img src="img/omics/Genomics2.png" *ngIf="omicsTest(d,'Genomics')" >
-        <img src="img/omics/Transcriptomics2.png" *ngIf="omicsTest(d,'Transcriptomics')" >
+        <app-omics-image [omics]="d.omicsType"> </app-omics-image>
 
         <a [routerLink]="['/dataset',d.source, d.id]" >
           <span class="ng-binding">{{d.title}}</span></a>
@@ -20,7 +16,7 @@
           <!--
               <b>Project description:</b>
           -->
-          <span class="ng-binding"><p>{{d.description | truncate : 200 : '...'}}</p></span>
+          <span>{{d.description | truncate : 200 : '...'}}</span>
 
           <span *ngIf="!!!d.description">Not available</span>
         </div>
