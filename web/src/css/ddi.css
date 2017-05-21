@@ -1359,3 +1359,17 @@ $lines-to-show: 3;
     background-color: #f5f5f5;
     cursor: pointer;
 }
+
+/* database pagination item styling*/
+.my-pagination .ngx-pagination {
+  text-align: center;
+  padding: 0 9px;
+}
+
+.my-pagination .ngx-pagination li {
+  cursor: pointer;
+}
+
+.my-pagination .ngx-pagination li.disable {
+  cursor: default;
+}

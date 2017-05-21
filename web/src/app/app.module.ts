@@ -61,7 +61,7 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
 import {PagingService} from "./services/paging.service";
-import {Ng2PaginationModule} from "ng2-pagination";
+import {NgxPaginationModule} from "ngx-pagination";
 import {EnrichmentService} from "./services/enrichment.service";
 import { OntologyTooltipPipe } from './pipes/ontology-tooltip.pipe';
 import {TooltipModule} from "ng2-tooltip";
@@ -182,7 +182,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AlertModule.forRoot(),
     DropdownModule,
     SlimLoadingBarModule.forRoot(),
-    Ng2PaginationModule,
+    NgxPaginationModule,
     TooltipModule,
     UiSwitchModule
   ],

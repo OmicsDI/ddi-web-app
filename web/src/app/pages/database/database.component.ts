@@ -9,7 +9,12 @@ import { Database } from '../../model/Database';
   styleUrls: ['./database.component.css']
 })
 export class DatabaseComponent implements OnInit {
-  databases: Database[];
+  public databases: Database[];
+  public p: number = 1;
+  public config = { 
+    itemsPerPage: 8, 
+    currentPage: this.p
+  }
 
   constructor(
     private databaseListService: DatabaseListService,
@@ -26,14 +31,10 @@ export class DatabaseComponent implements OnInit {
       .getDatabaseList()
       .subscribe(
         result => {
+          console.log(result);
           this.databases = result;
-          this.prepareDBs();
           this.loadingService.complete();
         }
       )
-  }
-
-  prepareDBs() {
-    
   }
 }

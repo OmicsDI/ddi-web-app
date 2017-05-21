@@ -35,9 +35,9 @@
     "ng2-bootstrap": "^1.4.2",
     "ng2-dropdown": "0.0.21",
     "ng2-file-upload": "^1.2.1",
-    "ng2-pagination": "^2.0.1",
     "ng2-slim-loading-bar": "^2.4.0",
     "ng2-tooltip": "0.0.7",
+    "ngx-pagination": "^3.0.0",
     "rxjs": "^5.0.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
