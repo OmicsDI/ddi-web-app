@@ -19,8 +19,9 @@
                  [href]="db.source"
                  class="pull-right  image_a">
                 <img [alt]="db.imgAlt"
-                     src="img/db-logos/metabolome express logo_Mx.png"
-                     class="img-rounded hvr-grow">
+                     [src]="url + 'database/' + db.databaseName + '/picture'"
+                     class="img-rounded hvr-grow"
+                     style="max-width: 130px;max-height: 100px">
               </a>
             </div>
 
