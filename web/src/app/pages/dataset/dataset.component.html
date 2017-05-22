@@ -88,9 +88,9 @@
           </p>
           <p class="align-justify" *ngIf="null!=d.submitter">
             <b>SUBMITTER:</b>
-              <span *ngFor="let o of d.submitter">
+              <span *ngFor="let o of d.submitter; let i = index;" >
                 <span>
-                       {{o.name}}
+                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img *ngIf="d.submitterMail && d.submitterMail[i]" src="/static/images/logo/rsz_mail.png">{{o}}</a>
                 </span>&nbsp;
               </span>
 
