@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Http} from '@angular/http';
+import {AppConfig} from "../../app.config";
 
 @Component({
   selector: 'app-login-dialog',
@@ -8,7 +9,7 @@ import {Http} from '@angular/http';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public http: Http) {
+  constructor(public http: Http,private appConfig: AppConfig) {
     console.info("LoginComponent ctor");
   }
 
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit(provider: string, scope: string) {
-    window.location.href = "http://localhost:8080/auth/" + provider + "?scope=" + scope;
+    window.location.href = this.appConfig.getLoginUrl(provider,scope);
   }
 
   subminForm(provider: string, scope: string) {

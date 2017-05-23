@@ -95,7 +95,7 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
   }
 
   getProfileImageUrl(): string{
-    return "http://localhost:8080/api/users/"+ this.profile.userId +"/picture?random" + Math.random();
+    return this.appConfig.getProfileImageUrl(this.profile.userId);
   }
 
   public fileChangeEvent(fileInput: any){

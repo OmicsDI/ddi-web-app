@@ -1,7 +1,6 @@
 package uk.ac.ebi.ddi.security.controller;
-
-import org.apache.logging.log4j.core.util.KeyValuePair;
 import org.springframework.web.bind.annotation.*;
+import uk.ac.ebi.ddi.security.model.KeyValuePair;
 
 import java.util.ArrayList;
 

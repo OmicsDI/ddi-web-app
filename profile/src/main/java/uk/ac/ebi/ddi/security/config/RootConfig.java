@@ -32,8 +32,8 @@ public class RootConfig {
     @Bean
     public Filter characterEncodingFilter() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8"); //设置request字符集
-        characterEncodingFilter.setForceEncoding(true);//是否将response字符集也设置为上
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
 

@@ -23,10 +23,10 @@ public class DatabaseDetailService {
     public List<DatabaseDetail> getDatabaseList() {
         List<DatabaseDetail> databaseDetailList = new ArrayList<>();
         Iterable<DatabaseDetail> iterable = databaseDetailRepository.findAll();
-        iterable.forEach(databaseDetail -> {
+        for(DatabaseDetail databaseDetail : databaseDetailRepository.findAll()){
             databaseDetail.setImage(null);
             databaseDetailList.add(databaseDetail);
-        });
+        }
         return databaseDetailList;
     }
 

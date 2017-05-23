@@ -9,8 +9,6 @@ import {DataSetDetail} from "../../model/DataSetDetail";
 import {AppConfig} from "../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 
-const URL = 'http://localhost:8080/api/user/picture';
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -137,7 +135,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfileImageUrl(): string{
-    return "http://localhost:8080/api/users/"+ this.userId +"/picture?random" + Math.random();
+    return this.appConfig.getProfileImageUrl(this.userId);
   }
 
   public fileChangeEvent(fileInput: any){

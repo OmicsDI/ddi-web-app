@@ -64,6 +64,13 @@ export class AppConfig{
   getDatabasesUrl(){
     return `${environment.userServiceUrl}database/all`;
   }
+  getLoginUrl(provider: string, scope: string){
+    return `${environment.userServiceUrl.replace("api","auth")}${provider}?scope=${scope}`;
+  }
+  getProfileImageUrl(userId: string){
+    //TODO: interpolate?
+    return `${environment.userServiceUrl}users/${userId}/picture?random=` + Math.random();
+  }
 
   public repositories = {
   "pride": "PRIDE",
