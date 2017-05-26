@@ -158,7 +158,7 @@
                         </small>
                                             </a>
                                         </li>
-                       <%--                 <li ng-hide="omics_facets_no['Models']==0">
+                                        <li ng-hide="omics_facets_no['Models']==0">
                                             <a href="" ng-class="{'disabled':omics_facets_no['Models']==='0'||is_omic_clicked('Models')==='true'}" ng-click="facet_search(result.facets[index_of_facets.omics_type].id, result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex['Models']].value)"><img src="static/images/omics/BioModel2.png" style="vertical-align: top" /><span>  </span><span style="font-size:15px; font-weight:bold">Models</span>
                                                 <small>
                                                     ({{result.facets[index_of_facets.omics_type].facetValues[omicsfacetsindex["Models"]].count||0
@@ -166,7 +166,7 @@
                                                 </small>
                                             </a>
                                         </li>
-                        --%>            </ul>
+                                    </ul>
                                 </div>
                                 <div ng-hide="result.facets[index_of_facets.repository].facetValues == null">
                                     <!-- Repository -->
@@ -319,6 +319,46 @@
                                     </div>
                                 </div>
 
+
+                                <div ng-hide="result.facets[index_of_facets.curationstatus].facetValues == null">
+                                    <!-- technology-->
+                                    <h3 class="ng-binding">Curation Status</h3>
+
+                                    <div class="metasearch-organism-facet force-scrollbars list-group-item">
+                                        <input type="text" class="form-control" ng-model="curation_input"  placeholder="Find curation status">
+                                        <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Curation status' }">
+                                            <li ng-repeat="facet_value in result.facets[index_of_facets.curationstatus].facetValues | filter:curation_input">
+                                                <input type="checkbox" id="result.facets[index_of_facets.curationstatus].label" ng-checked="is_facet_applied(result.facets[index_of_facets.curationstatus].id, facet_value.value)" ng-click="facet_search(result.facets[index_of_facets.curationstatus].id, facet_value.value)">
+                                                <label for="result.facets[index_of_facets.curationstatus].label"><span></span>
+                                                    {{result.facet[1].label}}</label>
+                                                <a href="" ng-click="facet_search(result.facets[index_of_facets.curationstatus].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}}
+                                                    <small>({{facet_value.count | number}})</small>
+                                                </a>
+                                            </li>
+                                            <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div ng-hide="result.facets[index_of_facets.modelformat].facetValues == null">
+                                    <!-- technology-->
+                                    <h3 class="ng-binding">Model Format</h3>
+
+                                    <div class="metasearch-organism-facet force-scrollbars list-group-item">
+                                        <input type="text" class="form-control" ng-model="model_format"  placeholder="Find Model Format">
+                                        <ul class="list-unstyled metasearch-facet-values" ng-class="{'metasearch-organism-facet force-scrollbars': facet.label=='Curation status' }">
+                                            <li ng-repeat="facet_value in result.facets[index_of_facets.curationstatus].facetValues | filter:model_format">
+                                                <input type="checkbox" id="result.facets[index_of_facets.modelformat].label" ng-checked="is_facet_applied(result.facets[index_of_facets.modelformat].id, facet_value.value)" ng-click="facet_search(result.facets[index_of_facets.modelformat].id, facet_value.value)">
+                                                <label for="result.facets[index_of_facets.curationstatus].label"><span></span>
+                                                    {{result.facet[1].label}}</label>
+                                                <a href="" ng-click="facet_search(result.facets[index_of_facets.modelformat].id, facet_value.value)" class="metasearch-facet-link">{{facet_value.label}}
+                                                    <small>({{facet_value.count | number}})</small>
+                                                </a>
+                                            </li>
+                                            <!-- <small ng-if="facet.label == 'Organisms' && facet.facetValues.length > 10" class="text-muted">Showing top {{facet.facetValues.length}} organisms</small> -->
+                                        </ul>
+                                    </div>
+                                </div>
 
                             </div>
                             <!-- facets column -->

@@ -8,6 +8,7 @@ angular.module('ddiApp').controller('CheckCtrl', ['$scope', '$http', function ($
         $scope.metabolomics_list = metabolomics_list;
         $scope.transcriptomics_list  = transcriptomics_list;
         $scope.genomics_list = genomics_list;
+        $scope.biomodels_list = biomodels_list;
         $scope.repositories = repositories;
         $scope.get_latest_datasets_fail = '';
         $scope.get_most_access_datasets_fail = '';
@@ -39,8 +40,6 @@ angular.module('ddiApp').controller('CheckCtrl', ['$scope', '$http', function ($
                 $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/D/g, 'D');
                 $scope.statistic_list[i].name = $scope.statistic_list[i].name.replace(/T/g, 'T');
             }
-            ;
-
         }).error(function () {
             console.log("GET error:" + url);
         });

@@ -31,7 +31,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
         $scope.feedback = {"txtArea":true,"submitBtn":true,"isSatisfiedDiv":false,"isSatisfiedVal":true,"messageData":"","labelMessage":"","thanks":true,"issue":true,"selectMessage":""};
 
         $scope.facetsNo = 8;
-        $scope.omics_facets_no = { "Proteomics": "", "Metabolomics": "", "Genomics": "", "Multi-Omics": "", "Transcriptomics": "" };
+        $scope.omics_facets_no = { "Proteomics": "", "Metabolomics": "", "Genomics": "", "Multi-Omics": "", "Transcriptomics": "","Models":"" };
         $scope.index_of_facets = {
             "omics_type": "-1",
             "repository": "-1",
@@ -42,6 +42,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
             "instrument_platform": "-1",
             "publication_date": "-1",
             "technology_type": "-1",
+            "curationstatus":"-1",
+            "modelformat":"-1",
             "test": "0"
         };
 
@@ -240,9 +242,10 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                 "searchQuery": $scope.query_for_show
             };
 
+            //$http.defaults.headers.post["Content-Type"] = "text/plain";
 
-            $http({
-                url: 'http://localhost:9091/feedback/getAllFeedbacks',
+           /* $http({
+                url: web_service_url + 'feedback/getAllFeedbacks',
                 method: 'GET'
             }).success(function (http_data) {
                 debugger;
@@ -252,15 +255,17 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
                 debugger;
                 //console.error("GET error:" + fields_url);
             });
-
+*/
+            debugger;
             $http({
-             url: 'http://localhost:9091/feedback/saveFeedback/',
+
+             url: web_service_url + 'feedback/saveFeedback',
              method: 'PUT',
              data:data2,
              headers: {
-                 //'Access-Control-Allow-Origin':'http://localhost:8080',
+                 'Access-Control-Allow-Origin':'http://localhost:8080',
              'Accept': 'application/json',
-             'Content-Type': 'application/json'
+             'Content-Type': 'application/json',
              }
              }).success(function (http_data) {
              debugger;
@@ -271,7 +276,7 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
              //console.error("GET error:" + fields_url);
              });
 
-            $http.put('http://localhost:9091/feedback/saveFeedback/', data2)
+            $http.put(web_service_url + 'feedback/saveFeedback', data2)
                 .success(function (data, status, headers, config, statusText) {
                     $scope.feedback.txtArea = true;
                     $scope.feedback.isSatisfiedDiv = true;
@@ -359,8 +364,8 @@ angular.module('ddiApp').controller('ResultsListCtrl', ['$scope', '$location', '
     function check_omics_type_null() {
             if ($scope.result.count == '0') return;
             if ($scope.result.count == null) return;
-            $scope.omics_facets_no = { "Proteomics": "0", "Metabolomics": "0", "Genomics": "0", "Transcriptomics": "0","Multi-Omics": "0" };
-            $scope.omicsfacetsindex = { "Proteomics": "", "Metabolomics": "", "Genomics": "", "Transcriptomics": "","Multi-Omics": "" };
+            $scope.omics_facets_no = { "Proteomics": "0", "Metabolomics": "0", "Genomics": "0", "Transcriptomics": "0","Multi-Omics": "0","Models":"0" };
+            $scope.omicsfacetsindex = { "Proteomics": "", "Metabolomics": "", "Genomics": "", "Transcriptomics": "","Multi-Omics": "","Models":"" };
             var omicsfacet = $scope.result.facets[$scope.index_of_facets.omics_type].facetValues;
             for (omic in omicsfacet) {
                 $scope.omics_facets_no[omicsfacet[omic].label] = omicsfacet[omic].count;
