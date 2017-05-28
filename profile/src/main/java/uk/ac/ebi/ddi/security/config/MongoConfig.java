@@ -32,16 +32,17 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
         ServerAddress serverAddress = new ServerAddress(env.getRequiredProperty("mongo.host"));
         List<MongoCredential> credentials = new ArrayList<>();
-        credentials.add(MongoCredential.createScramSha1Credential(
+        credentials.add(MongoCredential.createCredential(
                 env.getRequiredProperty("mongo.username"),
-                env.getRequiredProperty("mongo.name"),
+                env.getRequiredProperty("mongo.authenticationDatabase"),
                 env.getRequiredProperty("mongo.password").toCharArray()
         ));
         System.out.println(credentials.toString());
+
         MongoClientOptions options = new MongoClientOptions.Builder()
                 .build();
 
-        MongoClient mongoClient =new MongoClient(serverAddress, options);
+        MongoClient mongoClient =new MongoClient(serverAddress, credentials);
 
         return mongoClient;
     }

@@ -63,7 +63,7 @@
         <configuration>
           <workingDirectory>C:\AWork\ddi-web-app-O2\web</workingDirectory>
           <!--installDirectory>target/node-installation-dir</installDirectory-->
-          <skip>${frontend.skip}</skip>
+          <!-- skip>${frontend.skip}</skip -->
         </configuration>
         <executions>
           <execution><id>install-node-and-npm</id>
@@ -83,7 +83,7 @@
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>run build</arguments>
+              <arguments>run build -- --environment=${angular.environment}</arguments>
             </configuration>
           </execution>
         </executions>

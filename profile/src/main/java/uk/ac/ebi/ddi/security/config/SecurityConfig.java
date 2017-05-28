@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -41,6 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private MongoUserDetailsService mongoUserDetailsService;
 
+	@Autowired
+	Environment env;
+
 	public SecurityConfig() {
 		super(true);
 	}
@@ -50,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Set a custom successHandler on the SocialAuthenticationFilter
 
 		final SpringSocialConfigurer socialConfigurer = new SpringSocialConfigurer();
+		final String targetUrl = env.getRequiredProperty("security.targetUrl");
 
 		socialConfigurer.addObjectPostProcessor(new ObjectPostProcessor<SocialAuthenticationFilter>() {
 
@@ -57,10 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			public <O extends SocialAuthenticationFilter> O postProcess(O socialAuthenticationFilter) {
 
 				socialAuthenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
-				socialAuthenticationSuccessHandler.setDefaultTargetUrl("http://localhost:4200/profile");
-
+				socialAuthenticationSuccessHandler.setDefaultTargetUrl(targetUrl);
 				socialAuthenticationFilter.setAuthenticationSuccessHandler(socialAuthenticationSuccessHandler);
-				//socialAuthenticationFilter.setConnectionAddedRedirectUrl("http://localhost:4200/profile");
 				return socialAuthenticationFilter;
 			}
 		});
