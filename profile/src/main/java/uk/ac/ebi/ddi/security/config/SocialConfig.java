@@ -41,13 +41,15 @@ import uk.ac.ebi.ddi.security.UserAuthenticationUserIdSource;
 @EnableSocial
 public class SocialConfig extends SocialConfigurerAdapter {
 
-	public SocialConfig() throws Exception{
+	public SocialConfig(Environment env) throws Exception{
+
 		OrcidConfig config = new OrcidConfig();
-		config.setFrontendUrl("https://sandbox.orcid.org/");
-		config.setApiUrl("https://api.sandbox.orcid.org/v1.2/");
-		config.setPubApiUrl("https://pub.sandbox.orcid.org/v1.2/");
-		config.setAuthorizeUrl("https://sandbox.orcid.org/oauth/authorize");
-		config.setAccessTokenUrl("https://sandbox.orcid.org/oauth/token");
+
+		config.setFrontendUrl(env.getProperty("orcid.frontend.url")); //"https://sandbox.orcid.org/"
+		config.setApiUrl(env.getProperty("orcid.api.url"));//"https://api.sandbox.orcid.org/v1.2/"
+		config.setPubApiUrl(env.getProperty("orcid.pub.url"));//"https://pub.sandbox.orcid.org/v1.2/"
+		config.setAuthorizeUrl(env.getProperty("orcid.authorize.url"));//"https://sandbox.orcid.org/oauth/authorize"
+		config.setAccessTokenUrl(env.getProperty("orcid.token.url"));//"https://sandbox.orcid.org/oauth/token"
 
 		Field stringField = OrcidConfigBroker.class.getDeclaredField("orcidConfig");
 		stringField.setAccessible(true);
@@ -67,9 +69,6 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
 	@Autowired
 	private ConnectionSignUp dummySignUpHandler;
-
-	//@Autowired
-	//private O2UserDetailsService userDetailsService;
 
 	@Autowired
 	private TextEncryptor textEncryptor;

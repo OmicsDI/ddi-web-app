@@ -13,12 +13,15 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
 
   facebookConnected: boolean = false;
   orcidConnected : boolean = false;
+  twitterConnected : boolean = false;
+  elixirConnected : boolean = false;
+  githubConnected : boolean = false;
 
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
-    console.info("getting user connections:" + this.profile.userId);
-    this.getConnections(this.profile.userId);
+    //console.info("getting user connections:" + this.profile.userId);
+    //this.getConnections(this.profile.userId);
   }
 
 
@@ -42,6 +45,9 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
         connections => {
           this.facebookConnected = connections.some(x=>x=="facebook");
           this.orcidConnected = connections.some(x=>x=="orcid");
+          this.twitterConnected = connections.some(x=>x=="twitter");
+          this.elixirConnected = connections.some(x=>x=="elixir");
+          this.githubConnected = connections.some(x=>x=="github");
         }
       )
   }
