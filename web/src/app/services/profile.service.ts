@@ -13,8 +13,6 @@ import {DataSetService} from "./dataset.service";
 @Injectable()
 export class ProfileService extends BaseService {
 
-  connections: String[];
-  coauthors: UserShort[];
   public profile: Profile; //this.profile.userId
   public userId: string;
 
@@ -28,8 +26,8 @@ export class ProfileService extends BaseService {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
   }
 
-  getProfile (): Observable<Profile> {
-    return this.http.get(this.appConfig.getProfileUrl()) //,config //{ withCredentials: true }
+  getProfile (username: string = null): Observable<Profile> {
+    return this.http.get(this.appConfig.getProfileUrl(username)) //,config //{ withCredentials: true }
         .map(x => {
           this.profile = this.extractData<Profile>(x);
           if(!this.profile){
@@ -50,12 +48,16 @@ export class ProfileService extends BaseService {
       .catch(this.handleError);
   }
 
-  getCoAuthors (userId: string): Observable<string[]> {
-    return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))
-        .map(x => {
-            this.coauthors = this.extractData<UserShort[]>(x);
-            return this.coauthors;
-        })
+  deleteConnection(userId: string, provider: string): Observable<any>{
+    let deleteConnectionUrl = this.appConfig.getDeleteConnectionUrl(userId,provider);
+    return this.http.delete(deleteConnectionUrl)
+      .map(res => res.json())
+      .catch(this.handleError);
+  }
+
+  getCoAuthors (userId: string): Observable<UserShort[]> {
+    return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))//
+        .map(x => this.extractData<UserShort[]>(x))
         .catch(this.handleError);
   }
 
@@ -72,7 +74,7 @@ export class ProfileService extends BaseService {
 
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...
-    return this.http.post(this.appConfig.getProfileUrl(), JSON.stringify(profile), config)
+    return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), config)
       .map(res => res.json());
   }
 

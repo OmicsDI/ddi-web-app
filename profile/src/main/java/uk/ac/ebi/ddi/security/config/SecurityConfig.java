@@ -93,6 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/api/**").permitAll()
 				//allow anonymous PUTSs to API
 				.antMatchers(HttpMethod.PUT, "/api/**").permitAll()
+
+				.antMatchers(HttpMethod.DELETE, "/api/**").permitAll()
 				//defined Admin only API area
 				.antMatchers("/admin/**").hasRole("ADMIN")
 

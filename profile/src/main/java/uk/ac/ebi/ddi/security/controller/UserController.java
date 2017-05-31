@@ -40,6 +40,12 @@ public class UserController {
 		return new MongoUser(); //anonymous user support
 	}
 
+	@RequestMapping(value = "/api/user", method = RequestMethod.GET)
+	@CrossOrigin
+	public MongoUser getUser(@RequestParam(value="username", required=true) String username) {
+		return mongoUserDetailsRepository.findByName(username);
+	}
+
 	//@RequestMapping(value = "/api/mongo", method = RequestMethod.GET)
 	//@CrossOrigin
 	//public MongoUser getMongoUser() {
@@ -111,6 +117,7 @@ public class UserController {
 	public UserShort[] getCoAuthors(@PathVariable String userId) {
 
 		ArrayList<UserShort> result = new ArrayList<UserShort>();
+		/************ NullPointerException here ********************
 		MongoUser me = mongoUserDetailsRepository.findByUserId(userId);
 
 		for(MongoUser mongoUser : mongoUserDetailsRepository.findAll()) {
@@ -133,6 +140,7 @@ public class UserController {
 				}
 			}
 		}
+		******************************************************/
 		UserShort user = new UserShort();
 		user.setUserId("0");
 		user.setUserName("Mark Twain");

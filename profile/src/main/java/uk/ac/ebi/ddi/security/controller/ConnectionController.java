@@ -2,6 +2,7 @@ package uk.ac.ebi.ddi.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mongo.MongoUsersConnectionRepository;
@@ -42,5 +43,22 @@ public class ConnectionController {
         }
         //String[] stringArray = Arrays.copyOf(connections.keySet().toArray(), connections.keySet().size(), String[].class);
         return result.toArray( new String[result.size()]);
+    }
+
+    @RequestMapping(value = "/api/users/{UserID}/connections/{provider}", method = RequestMethod.DELETE)
+    @CrossOrigin
+    public void deleteUserConnection(@PathVariable String UserID, @PathVariable String provider) {
+        ConnectionRepository repo = this.mognoUsersConnectionRepository.createConnectionRepository(UserID);
+
+        MultiValueMap<String,Connection<?>> connections = repo.findAllConnections();
+        for (String connection : connections.keySet()){
+            if (connections.get(connection).size() > 0){
+                ConnectionKey key = connections.get(connection).get(0).getKey();
+                if(key.getProviderId().equals(provider)){
+                    repo.removeConnection(key);
+                    return;
+                }
+            }
+        }
     }
 }

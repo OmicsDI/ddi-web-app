@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges} from '@angular/core';
 import {ProfileService} from "../../../services/profile.service";
 import {Profile} from "../../../model/Profile";
+import {AppConfig} from "../../../app.config";
 
 @Component({
   selector: 'app-profile-connections',
@@ -17,7 +18,9 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
   elixirConnected : boolean = false;
   githubConnected : boolean = false;
 
-  constructor(private profileService: ProfileService) { }
+  userId: string;
+
+  constructor(private profileService: ProfileService, private appConfig: AppConfig) { }
 
   ngOnInit() {
     //console.info("getting user connections:" + this.profile.userId);
@@ -33,7 +36,8 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
       //console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
       if(propName=="profile"){
         if(null!=chng.currentValue){
-          this.getConnections(chng.currentValue.userId);
+          this.userId = chng.currentValue.userId;
+          this.getConnections(this.userId);
         }
       }
     }
@@ -50,6 +54,16 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
           this.githubConnected = connections.some(x=>x=="github");
         }
       )
+  }
+
+  githubConnectedChanged(){
+    console.log(`githubConnectedChanged: ${this.githubConnected}`);
+
+    if(this.githubConnected){ //disconnect
+      this.profileService.deleteConnection(this.userId, "github").subscribe();
+    }else{ //connect
+      window.location.href=this.appConfig.getLoginUrl("github",this.appConfig.githubScope);
+    }
   }
 
 

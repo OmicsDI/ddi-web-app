@@ -30,7 +30,7 @@
       <li><span class="gsc_rsb_aa"><img src="assets/github.png"/>&nbsp;<a href="#">GitHub</a>
                     <span *ngIf="githubConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="/assets/link.png"></span>
             <span style="float:right; padding-right:60px;">
-              <ui-switch size="small" [(ngModel)]="githubConnected"></ui-switch>
+              <ui-switch size="small" [(ngModel)]="githubConnected" (change)="githubConnectedChanged()"></ui-switch>
             </span>
       </span></li>
 

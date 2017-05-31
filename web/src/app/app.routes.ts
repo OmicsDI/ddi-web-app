@@ -23,6 +23,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
+  { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },

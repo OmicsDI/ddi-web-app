@@ -22,8 +22,11 @@ export class AppConfig{
   getPublicationUrl(acc:string):string{
     return `${environment.webServiceUrl}publication/list?acc=${acc}`;
   }
-  getProfileUrl():string{
-    return `${environment.userServiceUrl}user/current`;
+  getProfileUrl(username:string):string{
+    if(username)
+      return `${environment.userServiceUrl}user?username=${username}`;
+    else
+      return `${environment.userServiceUrl}user/current`;
   }
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections`;
@@ -71,6 +74,15 @@ export class AppConfig{
     //TODO: interpolate?
     return `${environment.userServiceUrl}users/${userId}/picture?random=` + Math.random();
   }
+  getDeleteConnectionUrl(userId: string, provider: string){
+
+    return `${environment.userServiceUrl}users/${userId}/connections/${provider}`;
+  }
+  public githubScope = "public_profile";
+  public facebookScope = "email,public_profile";
+  public twitterScope = "public_profile";
+  public orcidScope = "/authenticate";
+  public elixirScope = "openid,profile,email";
 
   public repositories = {
   "pride": "PRIDE",

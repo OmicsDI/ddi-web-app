@@ -98,11 +98,9 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
         //TODO: not needed?
         //user.setProviderId(connection.getKey().getProviderId());
         //user.setProviderUserId(connection.getKey().getProviderUserId());
-
-        DataSet[] dataSets = new DataSet[]{ new DataSet("E-MTAB-12345","ArrayExpress","1999")
-                                            ,new DataSet("X-FILES","IMDB","2017")};
-
-        user.setDataSets( dataSets);
+        //DataSet[] dataSets = new DataSet[]{ new DataSet("E-MTAB-12345","ArrayExpress","1999")
+        //                                    ,new DataSet("X-FILES","IMDB","2017")};
+        //user.setDataSets( dataSets);
 
         user.setAccessToken(connection.createData().getAccessToken());
 

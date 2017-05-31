@@ -8,6 +8,7 @@ import {DataSetService} from "../../services/dataset.service";
 import {DataSetDetail} from "../../model/DataSetDetail";
 import {AppConfig} from "../../app.config";
 import {FileUploader} from 'ng2-file-upload';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -25,13 +26,15 @@ export class ProfileComponent implements OnInit {
   profileImageUrl: string = "";
   coauthors: string[];
   userId: string = "xxx";
+  username: string = null;
 
   public uploader:FileUploader;
 
   constructor(private profileService: ProfileService
               ,private dataSetService: DataSetService
               ,private formBuilder: FormBuilder
-              ,private appConfig: AppConfig) {
+              ,private appConfig: AppConfig
+              ,private route: ActivatedRoute) {
     this.form = formBuilder.group({
       name: ['', [
         Validators.required,
@@ -51,11 +54,16 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProfile();
+    this.route.params.subscribe(params => {
+      this.username = params['username'];
+      this.getProfile(this.username);
+    })
   }
 
-  getProfile(){
-    this.profileService.getProfile()
+  getProfile(username: string  = null){
+    console.log("current username:" + username);
+
+    this.profileService.getProfile(username)
       .subscribe(
         profile => {
           console.log('getting profile')
@@ -66,7 +74,7 @@ export class ProfileComponent implements OnInit {
 
           this.userId =  profile.userId;
           //this.getConnections(this.userId);
-          this.getCoAuthors(this.userId);
+          //this.getCoAuthors(this.userId);
 
           this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
 
@@ -77,17 +85,6 @@ export class ProfileComponent implements OnInit {
           this.profileImageUrl = this.getProfileImageUrl();
         }
       );
-  }
-
-
-  getCoAuthors(userId: string) {
-    this.profileService.getCoAuthors(userId)
-      .subscribe(
-        authors => {
-          console.log(`getting user's co-authors ${userId}`);
-          this.coauthors = authors;
-        }
-      )
   }
 
   editClicked() {
@@ -131,7 +128,7 @@ export class ProfileComponent implements OnInit {
       return r;
     }));
 
-    this.getProfile();
+    this.getProfile(this.username);
   }
 
   getProfileImageUrl(): string{
