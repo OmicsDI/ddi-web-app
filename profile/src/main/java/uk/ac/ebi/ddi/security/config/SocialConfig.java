@@ -167,9 +167,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
 		return new UserAuthenticationUserIdSource();
 	}
 
+	/***********************************
 	@Bean
 	public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {
 		return new ConnectController(connectionFactoryLocator,
 				connectionRepository);
 	}
+	*************************************/
 }

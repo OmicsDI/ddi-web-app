@@ -122,6 +122,31 @@ export class ProfileService extends BaseService {
       .map(res => res.json()).subscribe(data => {
         r = data;
       });
+  }
 
+  setCookie(name, value)
+  {
+    var today = new Date();
+    var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
+    document.cookie=name + "=" + value + "; path=/; expires=" + expiry.toUTCString();
+  }
+
+  public connect(provider: string) {
+
+    var form = document.createElement("form");
+    var element1 = document.createElement("input");
+
+    form.method = "POST";
+    form.action = this.appConfig.getConnectUrl(provider);
+
+    element1.value = localStorage.getItem("id_token");
+    element1.name = "X-AUTH-TOKEN";
+    form.appendChild(element1);
+
+    document.body.appendChild(form);
+
+    this.setCookie("X-AUTH-TOKEN", localStorage.getItem("id_token"));
+
+    form.submit();
   }
 }

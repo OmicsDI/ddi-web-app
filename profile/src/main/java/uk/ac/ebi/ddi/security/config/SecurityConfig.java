@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 			@Override
 			public <O extends SocialAuthenticationFilter> O postProcess(O socialAuthenticationFilter) {
+				System.out.print("setting redirect url to:" + targetUrl);
 
 				socialAuthenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
 				socialAuthenticationSuccessHandler.setDefaultTargetUrl(targetUrl);
@@ -86,6 +87,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/auth/**").permitAll()
 
 				.antMatchers("/signin/**").permitAll()
+
+				.antMatchers("/connect/**").permitAll()
 
 				//allow anonymous GETs to API
 				.antMatchers(HttpMethod.GET, "/api/**").permitAll()

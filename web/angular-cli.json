@@ -24,9 +24,9 @@
       "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
-        "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts",
-        "qa": "environments/environment.qa.ts"
+        "local": "environments/environment.ts",
+        "dev": "environments/environment.dev.ts",
+        "prod": "environments/environment.prod.ts"
       }
 
     }

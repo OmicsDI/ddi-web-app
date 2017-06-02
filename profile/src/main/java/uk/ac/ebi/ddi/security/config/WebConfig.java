@@ -5,8 +5,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 /**
  * Created by user on 3/16/2017.
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan 
 public class WebConfig extends WebMvcConfigurerAdapter {
 
+
     @Bean
     public InternalResourceViewResolver resolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -24,6 +27,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         return resolver;
     }
+
+/**********************
+    @Bean
+    public ViewResolver viewResolver() {
+        UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
+        //viewResolver.setViewClass(TilesView.class);
+        return viewResolver;
+    }
+ ************************/
 
     @Bean(name = "multipartResolver")
     public CommonsMultipartResolver multipartResolver() {

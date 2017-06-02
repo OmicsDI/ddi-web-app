@@ -56,13 +56,14 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
       )
   }
 
-  githubConnectedChanged(){
-    console.log(`githubConnectedChanged: ${this.githubConnected}`);
+  connectedChanged(connected: boolean, provider: string){
+    console.log(`connectedChanged: ${provider} ${this.githubConnected}`);
 
-    if(this.githubConnected){ //disconnect
-      this.profileService.deleteConnection(this.userId, "github").subscribe();
+    if(connected){ //disconnect
+      this.profileService.deleteConnection(this.userId, provider).subscribe();
     }else{ //connect
-      window.location.href=this.appConfig.getLoginUrl("github",this.appConfig.githubScope);
+      //window.location.href=this.appConfig.getLoginUrl("github",this.appConfig.githubScope);
+      this.profileService.connect(provider);
     }
   }
 

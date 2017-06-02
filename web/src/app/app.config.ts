@@ -75,8 +75,10 @@ export class AppConfig{
     return `${environment.userServiceUrl}users/${userId}/picture?random=` + Math.random();
   }
   getDeleteConnectionUrl(userId: string, provider: string){
-
     return `${environment.userServiceUrl}users/${userId}/connections/${provider}`;
+  }
+  getConnectUrl(provider:string){
+    return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
   }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";

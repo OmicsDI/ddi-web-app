@@ -3,6 +3,7 @@ package uk.ac.ebi.ddi.security.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.WebUtils;
 import uk.ac.ebi.ddi.security.TokenHandler;
 import uk.ac.ebi.ddi.security.model.UserAuthentication;
 import uk.ac.ebi.ddi.security.model.MongoUser;
@@ -40,7 +41,25 @@ public class TokenAuthenticationService {
 	public UserAuthentication getAuthentication(HttpServletRequest request) {
 		// to prevent CSRF attacks we still only allow authentication using a custom HTTP header
 		// (it is up to the client to read our previously set cookie and put it in the header)
-		final String token = request.getHeader(AUTH_HEADER_NAME);
+		String token = request.getHeader(AUTH_HEADER_NAME);
+		if(token!=null) {
+			System.out.print("received token from form header:"+token);
+		}
+		if(token == null){
+			token = request.getParameter(AUTH_HEADER_NAME);
+			if(token!=null) {
+				System.out.print("received token from form parameter:"+token);
+			}
+		}
+		if(token == null) {
+			Cookie cookie = WebUtils.getCookie(request, AUTH_HEADER_NAME);
+			if(null!=cookie) {
+				token = cookie.getValue();
+				if(token!=null) {
+					System.out.print("received token from cookie:"+token);
+				}
+			}
+		}
 		if (token != null) {
 			final MongoUser user = tokenHandler.parseUserFromToken(token);
 			if (user != null) {
