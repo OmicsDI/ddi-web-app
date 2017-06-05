@@ -1,5 +1,7 @@
 package uk.ac.ebi.ddi.security.component;
 
+import org.europepmc.springframework.social.orcid.jaxb.beans.Person;
+import org.europepmc.springframework.social.orcid.jaxb.beans.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
@@ -8,10 +10,9 @@ import org.springframework.social.elixir.api.ElixirProfile;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.github.api.GitHub;
 import org.springframework.social.twitter.api.Twitter;
-import org.springframework.social.orcid.api.OrcidApi;
+import org.europepmc.springframework.social.orcid.api.OrcidApi;
 import org.springframework.social.elixir.api.Elixir;
-import org.springframework.social.orcid.jaxb.beans.OrcidProfile;
-import org.springframework.social.orcid.jaxb.beans.PersonalDetails;
+import org.europepmc.springframework.social.orcid.jaxb.beans.PersonalDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,18 +59,23 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
         }else if(connection.getApi() instanceof OrcidApi){
 
             OrcidApi orcidApi = (OrcidApi)connection.getApi();
-            OrcidProfile orcidProfile = orcidApi.messageOperations().getOrcidProfile();
-            PersonalDetails personalDetails = orcidProfile.getOrcidBio().getPersonalDetails();
+            Record orcidProfile = orcidApi.messageOperations().getOrcidProfile();
+            Person personalDetails = orcidProfile.getPerson();
 
             orcid = orcidProfile.getOrcidIdentifier().getPath();
 
-            String givenName = personalDetails.getGivenNames();
-            String familyName = personalDetails.getFamilyName();
+            String givenName = personalDetails.getName().getGivenNames().getValue();
+            String familyName = personalDetails.getName().getFamilyName().getValue();
             name = givenName + " " + familyName;
 
             imageUrl = "/assets/orcid.png";
             affiliation = "Orcid user";
-            bio = orcidProfile.getOrcidBio().getBiography().getValue();
+            bio = personalDetails.getBiography().getContent();
+
+
+
+
+
         }else if(connection.getApi() instanceof GitHub){
         	email = ((GitHub)connection.getApi()).userOperations().getUserProfile().getEmail();
             affiliation = "GitHub user";

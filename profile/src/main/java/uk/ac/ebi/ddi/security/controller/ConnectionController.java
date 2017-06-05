@@ -7,7 +7,7 @@ import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.mongo.MongoUsersConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.orcid.api.OrcidApi;
+import org.europepmc.springframework.social.orcid.api.OrcidApi;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.ddi.security.model.MongoUser;

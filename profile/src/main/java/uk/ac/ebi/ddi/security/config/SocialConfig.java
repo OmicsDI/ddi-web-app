@@ -28,10 +28,10 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.github.api.GitHub;
 import org.springframework.social.github.connect.GitHubConnectionFactory;
-import org.springframework.social.orcid.api.OrcidApi;
-import org.springframework.social.orcid.connect.OrcidConnectionFactory;
-import org.springframework.social.orcid.utils.OrcidConfig;
-import org.springframework.social.orcid.utils.OrcidConfigBroker;
+import org.europepmc.springframework.social.orcid.api.OrcidApi;
+import org.europepmc.springframework.social.orcid.connect.OrcidConnectionFactory;
+import org.europepmc.springframework.social.orcid.utils.OrcidConfig;
+import org.europepmc.springframework.social.orcid.utils.OrcidConfigBroker;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
