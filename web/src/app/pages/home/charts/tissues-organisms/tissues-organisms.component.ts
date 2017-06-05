@@ -199,7 +199,7 @@ export class TissuesOrganismsComponent implements OnInit {
       .selectAll('input')
       .on('change', function(d: any) {  
         console.log(d);
-        self.field = this.value;    // ignore this exception raised by editor
+        //AZ:TODO self.field = this.value;    // ignore this exception raised by editor
         self.change();
       });
   }

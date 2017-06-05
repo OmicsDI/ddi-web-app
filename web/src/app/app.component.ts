@@ -25,7 +25,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.router.events.subscribe(x => {
-      this.homePage = (x.url == "/" || x.url == "/home");
+      this.homePage = (x.toString() == "/" || x.toString() == "/home");
     });
   }
 

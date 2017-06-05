@@ -151,8 +151,8 @@ export class HotwordsComponent implements OnInit {
 
     d3.select("#hotwords_form")
       .selectAll('input')
-      .on('click', function(d: any, i, ele) { 
-        self.field = this.value;        //ignore this exception raised by editor
+      .on('click', function(d: any, i, ele) {
+        //AZ:TODO self.field = this.value;        //ignore this exception raised by editor
         self.addWordCloudOrChange();
       })
   }
