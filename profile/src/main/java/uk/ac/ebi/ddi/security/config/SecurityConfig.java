@@ -88,7 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.antMatchers("/signin/**").permitAll()
 
-				.antMatchers("/connect/**").permitAll()
+				.antMatchers(HttpMethod.POST,"/connect/**").permitAll()
+				.antMatchers(HttpMethod.GET,"/connect/**").permitAll()
 
 				//allow anonymous GETs to API
 				.antMatchers(HttpMethod.GET, "/api/**").permitAll()

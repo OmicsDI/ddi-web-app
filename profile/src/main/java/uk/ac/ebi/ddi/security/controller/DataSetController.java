@@ -36,9 +36,14 @@ public class DataSetController {
 
         DataSet[] dataSets = user.getDataSets();
 
-        DataSet[] result = Arrays.copyOf(dataSets, dataSets.length +1);
+        DataSet[] result;
+        if(null==dataSets) {
+            result = new DataSet[1];
+        }else {
+             result = Arrays.copyOf(dataSets, dataSets.length + 1);
+        }
 
-        result[dataSets.length] = dataSet;
+        result[result.length-1] = dataSet;
 
         user.setDataSets(result);
 

@@ -7,7 +7,7 @@ export class AuthService {
 
   loggedIn() {
     let result: boolean;
-    result = tokenNotExpired();
+    result = tokenNotExpired("id_token");
     if(!result){
       return false;
     }
