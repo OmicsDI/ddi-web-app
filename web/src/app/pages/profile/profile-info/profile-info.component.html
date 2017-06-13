@@ -1,9 +1,13 @@
-<div style="text-align: center; padding-top: 20px;">
+<div class="caption">{{this.profile && this.profile.userName}}</div>
+
+
+<div class="pictureFrame" style="">
 
 <img
   [src]="this.profileImageUrl"
-  sizes="print 52px,(max-width:599px) 49px,(max-width:981px) 65px,98px"
-  id="gsc_prf_pup">
+  width="150"
+  id="gsc_prf_pup"
+  style="width:150px;">
 <form method="post" enctype="multipart/form-data"
       action="#"
       id="gsc_prf_puf">
@@ -14,109 +18,127 @@
 </form>
 </div>
 
-
-<!-- ##################### View Mode ############################ -->
-<div *ngIf="!editMode" style="padding-top:20px;">
-  <div id="gsc_prf_in">{{this.profile && this.profile.userName}}</div>
-  <div class="gsc_prf_il">{{this.profile && this.profile.affiliation}}</div>
-  <div class="gsc_prf_il">{{this.profile && this.profile.bio}}</div>
-  <div class="gsc_prf_il">{{this.profile && this.profile.orcid}}</div>
-
-<div style="text-align: center; padding-top:20px;">
-  <button (click)="editClicked()" *ngIf="!editMode"  type="button" id="gsc_prf_btne" aria-controls="gsc_prf_e"
-          class="gs_btnC gs_in_ib gs_btn_hph"><span class="gs_wr"><span
-    class="gs_lbl">Edit</span><span class="gs_ico"></span></span></button>
+<div class="bioContainer">
+<div class="bio" *ngIf="!editMode">{{this.profile && this.profile.bio}}<a class="editBioLink" (click)="editClicked()">Edit Bio</a>
 </div>
 
-</div>
-
-
-<!-- ##################### Edit Mode ############################# -->
-      <form *ngIf="editMode" id="gsc_prf_ef">
-        <div class="gsc_prf_el">Name</div>
-        <div  class="gsc_prf_ev">
-          <div [formGroup]="form" class="gs_in_txtf">
-            <input
-              [(ngModel)]="this.profile && this.profile.userName"
-              type="text"
-              class="gs_in_txt"
-              name="userName"
-              maxlength="250"
-              formControlName="name">
-            <div class="gs_in_txts gs_gray"></div>
-          </div>
+  <!-- ##################### Edit Mode ############################# -->
+  <div style="width:400px;">
+    <form *ngIf="editMode" >
+      <div class="gsc_prf_el">Name</div>
+      <div  class="gsc_prf_ev">
+        <div [formGroup]="form" class="gs_in_txtf">
+          <input
+            [(ngModel)]="this.profile && this.profile.userName"
+            type="text"
+            class="gs_in_txt"
+            name="userName"
+            maxlength="250"
+            formControlName="name">
+          <div class="gs_in_txts gs_gray"></div>
         </div>
-        <div class="gsc_prf_el">Orcid ID</div>
-        <div class="gsc_prf_ev">
-          <div class="gs_in_txtf">
-            <input
-              [(ngModel)]="this.profile && this.profile.orcid"
-              type="text"
-              class="gs_in_txt"
-              name="orcid"
-              maxlength="250" autocapitalize="off">
-            <div class="gs_in_txts gs_gray"></div>
-          </div>
+      </div>
+      <div class="gsc_prf_el">Orcid ID</div>
+      <div class="gsc_prf_ev">
+        <div class="gs_in_txtf">
+          <input
+            [(ngModel)]="this.profile && this.profile.orcid"
+            type="text"
+            class="gs_in_txt"
+            name="orcid"
+            maxlength="250" autocapitalize="off">
+          <div class="gs_in_txts gs_gray"></div>
         </div>
-        <div class="gsc_prf_el">Affiliation</div>
-        <div class="gsc_prf_ev">
-          <div class="gs_in_txtf">
-            <input
-              [(ngModel)]="this.profile && this.profile.affiliation"
-              type="text"
-              class="gs_in_txt"
-              name="affiliation"
-              maxlength="250" autocapitalize="off">
-            <div class="gs_in_txts gs_gray"></div>
-          </div>
+      </div>
+      <div class="gsc_prf_el">Affiliation</div>
+      <div class="gsc_prf_ev">
+        <div class="gs_in_txtf">
+          <input
+            [(ngModel)]="this.profile && this.profile.affiliation"
+            type="text"
+            class="gs_in_txt"
+            name="affiliation"
+            maxlength="250" autocapitalize="off">
+          <div class="gs_in_txts gs_gray"></div>
         </div>
-        <div class="gsc_prf_el">Primary email</div>
-        <div class="gsc_prf_ev">
-          <div class="gs_in_txtf">
-            <input type="text" class="gs_in_txt"
-                   [(ngModel)]="this.profile && this.profile.email"
-                   name="email"
-                   maxlength="250" autocapitalize="off" autocorrect="off">
-            <div class="gs_in_txts gs_gray"></div>
-          </div>
+      </div>
+      <div class="gsc_prf_el">Primary email</div>
+      <div class="gsc_prf_ev">
+        <div class="gs_in_txtf">
+          <input type="text" class="gs_in_txt"
+                 [(ngModel)]="this.profile && this.profile.email"
+                 name="email"
+                 maxlength="250" autocapitalize="off" autocorrect="off">
+          <div class="gs_in_txts gs_gray"></div>
         </div>
-        <div class="gsc_prf_el">Homepage</div>
-        <div class="gsc_prf_ev">
-          <div class="gs_in_txtf">
-            <input type="text" class="gs_in_txt" name="homepage"
-                   [(ngModel)]="this.profile && this.profile.homepage"
-                   maxlength="250"
-                   autocapitalize="off" autocorrect="off">
-            <div class="gs_in_txts gs_gray"></div>
-          </div>
+      </div>
+      <div class="gsc_prf_el">Homepage</div>
+      <div class="gsc_prf_ev">
+        <div class="gs_in_txtf">
+          <input type="text" class="gs_in_txt" name="homepage"
+                 [(ngModel)]="this.profile && this.profile.homepage"
+                 maxlength="250"
+                 autocapitalize="off" autocorrect="off">
+          <div class="gs_in_txts gs_gray"></div>
         </div>
-        <div class="gsc_prf_el">Bio</div>
-        <div class="gsc_prf_ev">
-          <div class="gs_in_txtf">
+      </div>
+      <div class="gsc_prf_el">Bio</div>
+      <div class="gsc_prf_ev">
+        <div class="gs_in_txtf">
                     <textarea [(ngModel)]="this.profile && this.profile.bio"
                               style="height:100px;"
                               class="gs_in_txt"
                               name="bio"></textarea>
-            <div class="gs_in_txts gs_gray"></div>
-          </div>
+          <div class="gs_in_txts gs_gray"></div>
         </div>
-        <div id="gsc_prf_ep">
-          <input [(ngModel)]="this.profile && this.profile.isPublic" type="checkbox" name="isPublic" id="gsc_prf_p"
-                 value="1" checked="" style="opacity:100;" >
-          <label for="gsc_prf_p" style="padding-left:20px;">Make my profile public</label>
-        </div>
+      </div>
+      <div id="gsc_prf_ep">
+        <input [(ngModel)]="this.profile && this.profile.isPublic" type="checkbox" name="isPublic" id="gsc_prf_p"
+               value="1" checked="" style="opacity:100;" >
+        <label for="gsc_prf_p" style="padding-left:20px;">Make my profile public</label>
+      </div>
 
 
-        <div id="gsc_prf_eb">
-          <button (click)="submitClicked()" type="submit" id="gsc_prf_ebs" name="save_profile_btn" class=" gs_btn_act">
+      <div id="gsc_prf_eb">
+        <button (click)="submitClicked()" type="submit" id="gsc_prf_ebs" name="save_profile_btn" class=" gs_btn_act">
                 <span class="gs_wr">
                 <span class="gs_lbl">Save</span>
                 <span class="gs_bsc">
                 <span class="gs_bs"></span></span></span>
-          </button>
-          <button (click)="cancelClicked()" type="button" id="gsc_prf_btni" aria-controls="gsc_prf_i" class="">
-            <span class="gs_wr"><span class="gs_lbl">Cancel</span></span>
-          </button>
-        </div>
-      </form>
+        </button>
+        <button (click)="cancelClicked()" type="button" id="gsc_prf_btni" aria-controls="gsc_prf_i" class="">
+          <span class="gs_wr"><span class="gs_lbl">Cancel</span></span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+
+</div>
+
+  <div class="contactInfo" *ngIf="!editMode">
+    <div class="contactInfoCaption">Contact Info</div>
+
+    <p class="affiliation">
+      <a class="icon icon-generic" data-icon="]" href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date"> {{this.profile && this.profile.affiliation}}</a>
+    </p>
+
+    <p class="email">
+      <a class="icon icon-generic" data-icon="E" href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date"> {{this.profile && this.profile.email}}</a>
+    </p>
+
+    <p class="homepage">
+      <a class="icon icon-generic" data-icon="y" href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date"> {{this.profile && this.profile.homepage}}</a>
+    </p>
+
+    <p class="orcid">
+      <a href="http://orcid.org" title="ORCID - Connecting Research and Researchers" class="image"><img src="http://www.ebi.ac.uk/web_guidelines/images/logos/orcid/orcid_16x16.png"></a> ORCID iD: <a href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date">{{this.profile && this.profile.orcid}}</a>
+    </p>
+  </div>
+
+
+
+
+
 

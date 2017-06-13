@@ -1,3 +1,79 @@
+.caption{
+  color:rgb(0,153,204);
+  font-size:32px;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: 300;
+}
+
+.pictureFrame{
+  margin-right:20px;
+  text-align: center;
+  padding-top: 20px;
+  background-color:rgb(234, 234, 234);
+  width:200px;
+  min-height:200px;
+  display: inline-block;
+  position: relative;
+  left: 0;
+}
+
+.bioContainer {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  text-align: justify;
+  min-height:200px;
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  width:calc(100% - 470px);
+  vertical-align: top;
+}
+
+.bio {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  text-align: justify;
+  min-height:200px;
+  width:100%;
+}
+
+a.editBioLink{
+  float:right;
+  color:rgb(102, 102, 102);
+  font-size: 16px;
+  border-bottom-color: rgb(102, 102, 102);
+}
+
+a.editBioLink:after {
+  content: " >";
+  font-family: "EBI-Functional";
+  font-size: .85em;
+}
+
+div.contactInfo {
+  padding-top: 20px;
+  font-family: Helvetica Neue;
+  color: rgb(34, 34, 34);
+  font-weight: 300;
+  font-size: 16px;
+  display:block;
+  width:500px;
+}
+
+div.contactInfoCaption {
+  padding-top: 20px;
+  font-family: Helvetica Neue;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+
+div.contactInfo p.affiliation {
+  padding-top: 20px;
+}
+
+
 html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
   margin: 0;
   padding: 0;
@@ -74,16 +150,6 @@ button .gs_bsc {
   top: 0;
   right: 50%;
   width: 25px;
-}
-
-a:link {
-  color: #1a0dab;
-  text-decoration: none;
-}
-
-a:visited {
-  color: #660099;
-  text-decoration: none;
 }
 
 .gs_gray {
@@ -242,11 +308,6 @@ button.gs_btn_mini .gs_lbl, button.gs_btn_half .gs_lbl, button.gs_btn_eml .gs_lb
 
 #gsc_prf_i, #gsc_prf_e, #gsc_prf_iv {
   margin: 0 16px 0 166px;
-}
-
-#gsc_prf_pup {
-  width: 98px;
-  height: 98px;
 }
 
 #gsc_prf_pu form {

@@ -1,3 +1,11 @@
+div#gsc_rsb{
+  background-color: rgb(0, 153, 204);
+  padding-bottom: 20px;
+  padding-top: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .gsc_rsb_a {
   position: relative;
   list-style: none;
@@ -11,4 +19,10 @@
 
 .gsc_rsb_lc {
   font-weight: normal;
+}
+
+h3.caption {
+  font-family: Helvetica Neue;
+  color: rgb(34, 34, 34);
+  font-weight: 300;
 }

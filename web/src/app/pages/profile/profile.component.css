@@ -1,3 +1,12 @@
+div.datasetsCaption{
+  padding-top: 20px;
+  font-family: Helvetica Neue;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+
+
 html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
   margin: 0;
   padding: 0;
@@ -517,4 +526,60 @@ td.gsc_a_c {
 .gsc_rsb_lc {
   margin-left: 12px;
   font-weight: normal;
+}
+
+/* related / popular */
+.related {
+  background: #222;
+  margin-top: 4.25rem;
+  color: white;
+  padding: .5rem 0 0 1.1rem; }
+.related h3 {
+  color: white;
+  background: none;
+  margin-bottom: 0; }
+.related ul {
+  margin-left: 0;
+  margin-top: .25rem; }
+.related ul li {
+  display: inline-block;
+  width: 49%;
+  padding-right: 0;
+  font-size: .9rem;
+  min-width: 7rem; }
+.related ul li a {
+  color: white;
+  border-bottom: none; }
+.related ul li a:hover {
+  text-decoration: underline; }
+.related ul li a:after {
+  content: " >"; }
+.related ul:after {
+  content: " ";
+  height: .5rem;
+  display: block;
+  clear: both; }
+
+.rightNav{
+  float:right;
+  margin-left:20px;
+}
+
+ul.rightNavMenu li{
+  list-style-type:none;
+  line-height: 24px;
+}
+
+ul.rightNavMenu li a{
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  border-bottom-color: rgb(102, 102, 102);
+  font-weight:normal;
+  font-size: 14.4px;
+  width: 100%;
+  display: block;
+  width: 200px;
+  padding-left:10px;
+  padding-bottom:11px;
+  padding-top: 11.2px;
+
 }

@@ -1,18 +1,22 @@
-<table style="border:none;">
-  <td style="vertical-align: top; border:none; min-width: 300px; width:300px;">
+<div style="width:80%; margin-left: auto; margin-right: auto;">
+
+  <div class="rightNav">
+    <ul class="rightNavMenu">
+      <li class=""><a class="active" href="https://github.com/ebiwd/EBI-Framework">Profile</a></li>
+      <li class=""><a href="https://github.com/ebiwd/EBI-Framework/issues">My Datasets</a></li>
+    </ul>
+
+    <app-profile-connections [profile]="profileService.profile"></app-profile-connections>
+  </div>
+
     <app-profile-info [profile]="profileService.profile"></app-profile-info>
 
-    <app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors>
-    <app-profile-connections [profile]="profileService.profile"></app-profile-connections>
+    <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
+    <!-- app-delete-all-button></app-delete-all-button -->
 
-  </td>
-  <td style="vertical-align: top; border:none;">
-    <div style="float:right; padding-right: 20px;">
-      <app-delete-all-button></app-delete-all-button>
-    </div><br/><br/>
-    <app-profile-pager></app-profile-pager>
-    <app-profile-result [profile]="profileService.profile" (change)="updateProfile()"></app-profile-result>  </td>
-  <tr>
 
-  </tr>
-</table>
+
+  <div class="datasetsCaption">Datasets</div>
+<app-profile-pager></app-profile-pager>
+<app-profile-result [profile]="profileService.profile" (change)="updateProfile()"></app-profile-result>
+</div>
