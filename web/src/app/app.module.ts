@@ -50,6 +50,8 @@ import { TweetsNewsComponent } from './pages/home/charts/tweets-news/tweets-news
 import { StatisticsPanelComponent } from './pages/home/charts/statistics-panel/statistics-panel.component';
 import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.component';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 /*import { DisqusModule } from 'angular2-disqus';*/
 import {DisqusModule} from "ng2-awesome-disqus";
 
@@ -189,7 +191,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SlimLoadingBarModule.forRoot(),
     NgxPaginationModule,
     TooltipModule,
-    UiSwitchModule
+    UiSwitchModule,
+    BrowserAnimationsModule
   ],
   exports: [
     RouterModule
