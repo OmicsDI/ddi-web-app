@@ -27,6 +27,7 @@ import {DataSetService} from "./services/dataset.service";
 import {PublicationService} from "./services/publication.service";
 import {SimilarityService} from "./services/similarity.service";
 import {DatabaseListService} from './services/database-list.service';
+import {SimilarMoleculeService} from './services/similar-molecule.service';
 
 import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
@@ -89,6 +90,8 @@ import { DeleteAllButtonComponent } from './controls/delete-all-button/delete-al
 import {UiSwitchModule} from "../../node_modules/angular2-ui-switch";
 import {OntologyService} from "./services/ontology.service";
 import { FacetOmicsComponent } from './controls/facet-omics/facet-omics.component';
+import { SimilarMoleculeComponent } from './pages/dataset/similar-molecule/similar-molecule.component';
+import { LimitDatasetNumbersPipe } from './pipes/limit-dataset-numbers.pipe';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -167,7 +170,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     OmicsImageComponent,
     DeleteButtonComponent,
     DeleteAllButtonComponent,
-    FacetOmicsComponent
+    FacetOmicsComponent,
+    SimilarMoleculeComponent,
+    LimitDatasetNumbersPipe
   ],
   imports: [
     BrowserModule,
@@ -203,6 +208,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , EnrichmentService
     , OntologyService
     , DatabaseListService
+    , SimilarMoleculeService
     , AppConfig],
   bootstrap: [AppComponent]
 })

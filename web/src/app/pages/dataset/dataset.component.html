@@ -124,6 +124,8 @@
 
       <app-publication [ids]="d.publicationIds"></app-publication>
 
+      <similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></similar-molecule>
+
       <!--dataset_upper -->
 
       <div class="panel panel-default">

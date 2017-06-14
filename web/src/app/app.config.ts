@@ -80,6 +80,12 @@ export class AppConfig{
   getConnectUrl(provider:string){
     return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
   }
+  getSimilarityMoleculesUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}`;
+  }
+  getSimilarityDatasetsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}`;
+  }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";
