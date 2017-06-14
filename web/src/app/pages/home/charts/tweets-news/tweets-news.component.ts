@@ -68,8 +68,8 @@ export class TweetsNewsComponent implements OnInit {
         let content = that.find('p.timeline-Tweet-text')
           , tags = content.find('*');
 
-        tags.each(function(i, ele) {
-          let self = $(this), k = 0, del = [];
+        tags.each(function(k, ele) {
+          let self = $(this);
           for (let m in ele.attribs) {
             if (m != 'href') {
               self.removeAttr(m);
@@ -77,10 +77,12 @@ export class TweetsNewsComponent implements OnInit {
           }
         })
 
-        t['content'] = content.html();
+        t['content'] = decodeURIComponent(content.html());
         output.push(t);
+        t = {};
       });
     
+    console.log(output);
     return output;
   }
 
