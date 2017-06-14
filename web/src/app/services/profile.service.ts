@@ -124,11 +124,15 @@ export class ProfileService extends BaseService {
       });
   }
 
-  setCookie(name, value)
+  setCookie(name, value, path)
   {
+    if (null==path)
+      path="/";
+
     var today = new Date();
     var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
-    document.cookie=name + "=" + value + "; path=/; expires=" + expiry.toUTCString();
+
+    document.cookie=name + "=" + value + "; path="+ path +"; expires=" + expiry.toUTCString();
   }
 
   public connect(provider: string) {
@@ -139,13 +143,13 @@ export class ProfileService extends BaseService {
     form.method = "POST";
     form.action = this.appConfig.getConnectUrl(provider);
 
-    element1.value = localStorage.getItem("id_token");
-    element1.name = "X-AUTH-TOKEN";
-    form.appendChild(element1);
+    ///element1.value = localStorage.getItem("id_token");
+    ///element1.name = "X-AUTH-TOKEN";
+    ///form.appendChild(element1);
 
     document.body.appendChild(form);
 
-    this.setCookie("X-AUTH-TOKEN", localStorage.getItem("id_token"));
+    this.setCookie("X-AUTH-TOKEN", localStorage.getItem("id_token"), this.appConfig.getConnectPath(provider));
 
     form.submit();
   }

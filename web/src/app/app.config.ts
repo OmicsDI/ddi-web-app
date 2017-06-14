@@ -24,15 +24,15 @@ export class AppConfig{
   }
   getProfileUrl(username:string):string{
     if(username)
-      return `${environment.userServiceUrl}user?username=${username}`;
+      return `${environment.userServiceUrl}user?username=${username}?r=${Math.random()}`;
     else
-      return `${environment.userServiceUrl}user/current`;
+      return `${environment.userServiceUrl}user/current?random=` +  Math.random();
   }
   getUserConnectionsUrl(userId:string):string{
-    return `${environment.userServiceUrl}users/${userId}/connections`;
+    return `${environment.userServiceUrl}users/${userId}/connections?r=${Math.random()}`;
   }
   getUserCoAuthorsUrl(userId:string):string{
-    return `${environment.userServiceUrl}users/${userId}/coauthors`;
+    return `${environment.userServiceUrl}users/${userId}/coauthors?r=${Math.random()}`;
   }
   getEnrichmentUrl(acc:string,repository:string):string{
     return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}`;
@@ -78,7 +78,13 @@ export class AppConfig{
     return `${environment.userServiceUrl}users/${userId}/connections/${provider}`;
   }
   getConnectUrl(provider:string){
-    return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
+    if(provider=="orcid")
+      return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=/authenticate`;
+    else
+      return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
+  }
+  getConnectPath(provider:string){
+    return `/Tools/omicsdi/profilews/connect/${provider}`;
   }
   getSimilarityMoleculesUrl(acc: string, repository: string){
     return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}`;

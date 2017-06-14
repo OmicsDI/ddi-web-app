@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit(provider: string, scope: string) {
-    window.location.href = this.appConfig.getLoginUrl(provider,scope);
+    window.location.href = this.appConfig.getLoginUrl(provider,scope) + "&" + Math.random().toString(36).substring(7);
   }
 
   subminForm(provider: string, scope: string) {

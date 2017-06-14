@@ -49,6 +49,9 @@
     <link type="text/css" href="./css/ngProgress.css" rel="stylesheet">
     <link type="text/css" href="./css/ddi.css" rel="stylesheet">
     <link type="text/css" href="./css/autocomplete.css" rel="stylesheet">
+
+
+
     <!--favico end -->
     <base href="/">
 
@@ -88,15 +91,27 @@
     var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
     return b ? b.pop() : '';
   }
-  var authToken = getCookieValue('AUTH-TOKEN');
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+  var authToken = getParameterByName('AUTH_TOKEN');
   if(authToken){
-    console.log(authToken);
+    console.log("AUTH-TOKEN:"+authToken);
+
+    //document.cookie='AUTH-TOKEN=; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;;';
 
     localStorage.setItem('id_token', authToken);
 
-    document.cookie='AUTH-TOKEN=;expires=Thu, 01 Jan 1970 00:00:00 GMT;;';
+    // window.location.href=window.location.href.replace(authToken,'XXXX');
+
+    //console.log("AUTH-TOKEN after it deleted:" + getCookieValue('AUTH-TOKEN'));
   }
-  document.cookie='X-AUTH-TOKEN=;expires=Thu, 01 Jan 1970 00:00:00 GMT;;';
 </script>
 
 <body class="level2">

@@ -2,6 +2,7 @@ package uk.ac.ebi.ddi.security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 import uk.ac.ebi.ddi.security.TokenHandler;
@@ -27,6 +28,9 @@ public class TokenAuthenticationService {
 		tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
 	}
 
+	@Autowired
+	Environment env;
+
 	public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
 		final MongoUser user = authentication.getDetails();
 		user.setExpires(System.currentTimeMillis() + TEN_DAYS);
@@ -35,7 +39,15 @@ public class TokenAuthenticationService {
 		// Put the token into a cookie because the client can't capture response
 		// headers of redirects / full page reloads.
 		// (Its reloaded as a result of this response triggering a redirect back to "/")
-		response.addCookie(createCookieForToken(token));
+		//response.addCookie(createCookieForToken(token));
+
+		final String targetUrl = env.getRequiredProperty("security.targetUrl");
+
+		try {
+			response.sendRedirect(targetUrl + "?AUTH_TOKEN=" + token);
+		}catch(Exception ex){
+			System.out.print("exception sending redirect" + ex.getMessage());
+		}
 	}
 
 	public UserAuthentication getAuthentication(HttpServletRequest request) {
@@ -69,9 +81,10 @@ public class TokenAuthenticationService {
 		return null;
 	}
 
+	/****
 	private Cookie createCookieForToken(String token) {
 		final Cookie authCookie = new Cookie(AUTH_COOKIE_NAME, token);
 		authCookie.setPath("/");
 		return authCookie;
-	}
+	}***/
 }

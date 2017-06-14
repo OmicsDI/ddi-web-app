@@ -43,6 +43,7 @@ export class LoginLauncherComponent implements OnInit {
   }
 
   LogOut() {
+    //this.deleteCookie("AUTH-TOKEN");
     localStorage.removeItem('id_token');
     this.router.navigate(['home']);
   }
