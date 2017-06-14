@@ -89,6 +89,7 @@ import { DeleteAllButtonComponent } from './controls/delete-all-button/delete-al
 import {UiSwitchModule} from "../../node_modules/angular2-ui-switch";
 import {OntologyService} from "./services/ontology.service";
 import { FacetOmicsComponent } from './controls/facet-omics/facet-omics.component';
+import { SimilarMoleculeComponent } from './pages/dataset/similar-molecule/similar-molecule.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -167,7 +168,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     OmicsImageComponent,
     DeleteButtonComponent,
     DeleteAllButtonComponent,
-    FacetOmicsComponent
+    FacetOmicsComponent,
+    SimilarMoleculeComponent
   ],
   imports: [
     BrowserModule,
