@@ -70,6 +70,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.info("DatasetComponent init");
     this.subscription = this.route.params.subscribe(params => {
           this.acc = params['acc'];
           this.repository = params['domain'];

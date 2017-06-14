@@ -31,7 +31,8 @@ export class ReposOmicsComponent implements OnInit {
   private omicsDataNum = [];
 
   constructor(dataSetService: DataSetService) {
-    this.webServiceUrl = dataSetService.getWebServiceUrl();
+    // this.webServiceUrl = dataSetService.getWebServiceUrl();
+    this.webServiceUrl = "http://www.omicsdi.org/ws/";
     this.proteomicsList = dataSetService.getProteomicsList();
     this.metabolomicsList = dataSetService.getMetabolomicsList();
     this.genomicsList = dataSetService.getGenomicsList();
