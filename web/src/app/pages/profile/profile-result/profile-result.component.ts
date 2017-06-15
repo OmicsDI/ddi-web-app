@@ -2,6 +2,7 @@ import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
 import {ProfileService} from "../../../services/profile.service";
 import {Profile} from "../../../model/Profile";
 import {AppConfig} from "../../../app.config";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile-result',
@@ -14,7 +15,8 @@ export class ProfileResultComponent implements OnInit {
   @Output() change = new EventEmitter();
 
   constructor(private profileService: ProfileService
-    , private appConfig: AppConfig) { }
+    , private appConfig: AppConfig
+    , private router: Router) { }
 
   ngOnInit() {
     //this.profileService.getDataSetDetails(this.profileService.profile);

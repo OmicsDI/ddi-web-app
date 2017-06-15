@@ -12,23 +12,51 @@
   background-color:rgb(234, 234, 234);
   width:200px;
   min-height:200px;
+  /* display: inline-block;
+  position: relative;
+  left: 0; */
+  float:left;
+}
+
+.pictureFrameEdit{
+  margin-right:20px;
+  text-align: center;
+  padding-top: 20px;
+  background-color:rgb(234, 234, 234);
+  width:200px;
+  min-height:200px;
   display: inline-block;
   position: relative;
   left: 0;
 }
+
 
 .bioContainer {
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   font-size: 16px;
   text-align: justify;
   min-height:200px;
-  display: inline-block;
+/*  display: inline-block;
   position: relative;
   left: 0;
   top: 0;
   width:calc(100% - 480px);
-  vertical-align: top;
+  vertical-align: top; */
 }
+
+.editContainer {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  text-align: justify;
+  min-height:200px;
+   display: inline-block;
+    position: relative;
+    left: 0;
+    top: 0;
+    width:480px;
+    vertical-align: top;
+}
+
 
 .bio {
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
@@ -66,13 +94,8 @@ div.contactInfoCaption {
   font-family: Helvetica Neue;
   font-size: 24px;
   font-weight: 300;
+  padding-bottom:10px;
 }
-
-
-div.contactInfo p.affiliation {
-  padding-top: 20px;
-}
-
 
 html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
   margin: 0;

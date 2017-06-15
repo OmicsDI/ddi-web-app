@@ -14,6 +14,7 @@ import {UnauthorizedComponent} from "./pages/unauthorized/unauthorized.component
 import { AuthGuardService } from './services/auth-guard.service';
 import {DatasetComponent} from "./pages/dataset/dataset.component";
 import {TermsComponent} from "./pages/terms/terms.component";
+import {ClaimedComponent} from "./pages/claimed/claimed.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'claimed', component: ClaimedComponent, canActivate: [AuthGuardService] },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },
   { path: 'api', component: ApiComponent },

@@ -26,7 +26,7 @@
       </div>
 
       <div style="float:right; position: relative; top:-25px;">
-        <!-- app-delete-button (click)="delete($event)" [source]="d.source" [id]="d.id"></app-delete-button -->
+        <app-delete-button *ngIf="router.url === '/claimed'" (click)="delete($event)" [source]="d.source" [id]="d.id"></app-delete-button>
       </div>
     </div>
   </li>

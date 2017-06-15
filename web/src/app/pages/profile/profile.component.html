@@ -2,8 +2,8 @@
 
   <div class="rightNav">
     <ul class="rightNavMenu">
-      <li class=""><a class="active" href="https://github.com/ebiwd/EBI-Framework">Profile</a></li>
-      <li class=""><a href="https://github.com/ebiwd/EBI-Framework/issues">My Datasets</a></li>
+      <li class=""><a [routerLink]="['/profile']" >Profile</a></li>
+      <li class=""><a [routerLink]="['/claimed']" >My Datasets</a></li>
     </ul>
 
     <app-profile-connections [profile]="profileService.profile"></app-profile-connections>
@@ -16,7 +16,7 @@
 
 
 
-  <div class="datasetsCaption">Datasets</div>
+  <div *ngIf="profileService.profile.dataSets?.length>0" class="datasetsCaption">Datasets</div>
 <app-profile-pager></app-profile-pager>
 <app-profile-result [profile]="profileService.profile" (change)="updateProfile()"></app-profile-result>
 </div>

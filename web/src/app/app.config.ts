@@ -1,5 +1,6 @@
 import {environment} from "../environments/environment";
 import {Injectable} from "@angular/core";
+import {Profile} from "./model/Profile";
 /**
  * Created by user on 4/9/2017.
  */
@@ -91,6 +92,9 @@ export class AppConfig{
   }
   getSimilarityDatasetsUrl(acc: string, repository: string){
     return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}`;
+  }
+  getPublicProfileUrl(profile:Profile){
+    return window.location.href.split("#")[0] + `/#/profile/${profile.userName}`;
   }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";

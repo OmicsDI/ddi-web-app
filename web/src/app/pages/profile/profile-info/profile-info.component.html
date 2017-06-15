@@ -1,6 +1,7 @@
 <div class="caption">{{this.profile && this.profile.userName}}</div>
 
 
+<div *ngIf="!editMode">
 <div class="pictureFrame" style="">
 
 <img
@@ -19,11 +20,25 @@
 </div>
 
 <div class="bioContainer">
-<div class="bio" *ngIf="!editMode">{{this.profile && this.profile.bio}}<a class="editBioLink" (click)="editClicked()">Edit Bio</a>
+<div class="bio">{{this.profile && this.profile.bio}}<a class="editBioLink" (click)="editClicked()">Edit Bio</a>
+</div>
+</div>
 </div>
 
+
+<div *ngIf="editMode">
+
+  <div class="pictureFrameEdit" style="">
+
+    <img
+      [src]="this.profileImageUrl"
+      width="150"
+      id="gsc_prf_pup"
+      style="width:150px;">
+  </div>
+
   <!-- ##################### Edit Mode ############################# -->
-  <div style="width:400px;">
+  <div class="editContainer">
     <form *ngIf="editMode" >
       <div class="gsc_prf_el">Name</div>
       <div  class="gsc_prf_ev">
@@ -112,30 +127,35 @@
       </div>
     </form>
   </div>
-
-
-
 </div>
 
-  <div class="contactInfo" *ngIf="!editMode">
+
+<div class="contactInfo" *ngIf="contactInfoPresent()">
     <div class="contactInfoCaption">Contact Info</div>
 
-    <p class="affiliation">
-      <a class="icon icon-generic" data-icon="]" href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date"> {{this.profile && this.profile.affiliation}}</a>
+    <p class="affiliation" *ngIf="this.profile?.affiliation">
+      <span class="icon icon-generic" data-icon="]"> {{this.profile && this.profile.affiliation}}</span>
     </p>
 
-    <p class="email">
-      <a class="icon icon-generic" data-icon="E" href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date"> {{this.profile && this.profile.email}}</a>
+    <p class="email" *ngIf="this.profile?.email">
+      <a class="icon icon-generic" data-icon="E" href="mailto:{{this.profile && this.profile.email}}"> {{this.profile && this.profile.email}}</a>
     </p>
 
-    <p class="homepage">
-      <a class="icon icon-generic" data-icon="y" href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date"> {{this.profile && this.profile.homepage}}</a>
+    <p class="homepage" *ngIf="this.profile?.homepage">
+      <a class="icon icon-generic" data-icon="y" href="{{this.profile && this.profile.homepage}}"> {{this.profile && this.profile.homepage}}</a>
     </p>
 
-    <p class="orcid">
-      <a href="http://orcid.org" title="ORCID - Connecting Research and Researchers" class="image"><img src="http://www.ebi.ac.uk/web_guidelines/images/logos/orcid/orcid_16x16.png"></a> ORCID iD: <a href="http://europepmc.org/search?query=AUTHORID:%220000-0002-5542-4623%22&amp;sortby=Date">{{this.profile && this.profile.orcid}}</a>
+    <p class="orcid" *ngIf="this.profile?.orcid">
+      <a href="http://europepmc.org/search?query=AUTHORID:%22{{this.profile.orcid}}%22&amp;sortby=Date">
+        <img src="http://www.ebi.ac.uk/web_guidelines/images/logos/orcid/orcid_16x16.png" style="position:relative; top:-3px;"> {{this.profile && this.profile.orcid}}</a>
     </p>
-  </div>
+
+  <p class="publicProfile" *ngIf="this.profile?.isPublic">
+    <a href="{{this.publicProfileUrl()}}" title="OmicsDI public profile">
+      <img src="/img/logo/OmicsDI-icon-3.png" style="width:16px; height:16px;position:relative; top:-3px;"> {{this.publicProfileUrl()}}</a>
+  </p>
+
+</div>
 
 
 

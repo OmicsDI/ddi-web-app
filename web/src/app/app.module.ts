@@ -94,6 +94,7 @@ import {OntologyService} from "./services/ontology.service";
 import { FacetOmicsComponent } from './controls/facet-omics/facet-omics.component';
 import { SimilarMoleculeComponent } from './pages/dataset/similar-molecule/similar-molecule.component';
 import { LimitDatasetNumbersPipe } from './pipes/limit-dataset-numbers.pipe';
+import { ClaimedComponent } from './pages/claimed/claimed.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -174,7 +175,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DeleteAllButtonComponent,
     FacetOmicsComponent,
     SimilarMoleculeComponent,
-    LimitDatasetNumbersPipe
+    LimitDatasetNumbersPipe,
+    ClaimedComponent
   ],
   imports: [
     BrowserModule,
