@@ -8,12 +8,24 @@ import {Component, OnInit, Input} from '@angular/core';
 export class OmicsImageComponent implements OnInit {
 
   @Input() omics: string[];
+  @Input() size: string;
+  width: string = "";
+  length: string = "";
 
   constructor() { }
 
   ngOnInit() {
-    if(!this.omics)
+    if (this.size=="small"){
+      this.width="15px";
+      this.length="15px";
+    }
+
+    if(!this.omics){
+      if(this.size=="large"){
+        this.omicsImage = "img/omics/Unknomics.png";
+      }
       return;
+    }
 
     if(this.omics.indexOf('Multiomics') != -1)
       this.omicsImage = "img/omics/Multipleomics2.png";
@@ -27,6 +39,11 @@ export class OmicsImageComponent implements OnInit {
       this.omicsImage = "img/omics/Genomics2.png";
     else
       this.omicsImage = "img/omics/Unknomics2.png";
+
+    if(this.size=="large"){
+      this.omicsImage = this.omicsImage.replace("2.png",".png");
+    }
+
   }
 
   omicsImage: string = "img/omics/Unknomics2.png";

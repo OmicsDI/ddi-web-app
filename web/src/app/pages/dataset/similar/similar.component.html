@@ -4,11 +4,7 @@
 <li *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope" style="">
   <div class="project-widget  list-group-item ddi-card-panel">
     <div class="project-widget-accession">
-      <img src="./static/images/omics/Multipleomics2.png" *ngIf="omicsTest(ds,'Multi-Omics')">
-      <img src="./static/images/omics/Proteomics2.png" *ngIf="omicsTest(ds,'Proteomics')">
-      <img src="./static/images/omics/Metabolomics2.png" *ngIf="omicsTest(ds,'Metabolomics')">
-      <img src="./static/images/omics/Genomics2.png" *ngIf="omicsTest(ds,'Genomics')">
-      <img src="./static/images/omics/Transcriptomics2.png" *ngIf="omicsTest(ds,'Transcriptomics')">
+      <app-omics-image [omics]="ds?.omicsType"> </app-omics-image>
       <a target="" class="align-justify ng-binding" href="/dataset/{{ds.source}}/{{ds.id}}">
         {{ds.title}}</a>
     </div>

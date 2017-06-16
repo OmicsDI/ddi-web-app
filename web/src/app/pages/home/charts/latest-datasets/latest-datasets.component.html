@@ -9,15 +9,7 @@
         Sorry, the accessing to this datasets list was temporally failed.
       </li>
       <li *ngFor="let _dataset of latestDatasets" class="title_one_line">
-        
-        <img src="./img/omics/Proteomics2.png" *ngIf="proteomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
-          title="Proteomics" />
-        <img src="./img/omics/Metabolomics2.png" *ngIf="metabolomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
-          title="Metabolomics" />
-        <img src="./img/omics/Genomics2.png" *ngIf="genomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
-          title="Gemonics" />
-        <img src="./img/omics/Transcriptomics2.png" *ngIf="transcriptomics_list.indexOf(_dataset.source)>-1" style="width:15px;height:15px"
-          title="Transcriptomics" />
+        <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"> </app-omics-image>
         <a href="./dataset/{{_dataset.source}}/{{_dataset.id}}" title={{_dataset.title}}>
               {{getMonthDay(_dataset.publicationDate)}}{{_dataset.title}}
           <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->

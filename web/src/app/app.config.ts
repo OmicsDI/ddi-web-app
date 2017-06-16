@@ -12,22 +12,22 @@ export class AppConfig{
     return `${environment.webServiceUrl}`;
   }
   getStatisticsUrl():string{
-    return `${environment.webServiceUrl}statistics/general`;
+    return `${environment.webServiceUrl}statistics/general?r=${Math.random()}`;
   }
   getSimilarUrl(acc:string,repository:string):string{
-    return `${environment.webServiceUrl}dataset/getSimilar?acc=${acc}&database=${repository}`;
+    return `${environment.webServiceUrl}dataset/getSimilar?acc=${acc}&database=${repository}&r=${Math.random()}`;
   }
   getSearchUrl(query:string,facetcount:number,size:number,sortBy:string,sortOrder:string,start:number):string{
     return `${environment.webServiceUrl}dataset/search?query=${query}&facetcount=${facetcount}&size=${size}&sortfield=${sortBy}&order=${sortOrder}&start=${start}`;
   }
   getPublicationUrl(acc:string):string{
-    return `${environment.webServiceUrl}publication/list?acc=${acc}`;
+    return `${environment.webServiceUrl}publication/list?acc=${acc}&r=${Math.random()}`;
   }
   getProfileUrl(username:string):string{
     if(username)
       return `${environment.userServiceUrl}user?username=${username}?r=${Math.random()}`;
     else
-      return `${environment.userServiceUrl}user/current?random=` +  Math.random();
+      return `${environment.userServiceUrl}user/current?r=${Math.random()}`;
   }
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections?r=${Math.random()}`;
@@ -36,47 +36,47 @@ export class AppConfig{
     return `${environment.userServiceUrl}users/${userId}/coauthors?r=${Math.random()}`;
   }
   getEnrichmentUrl(acc:string,repository:string):string{
-    return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}`;
+    return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
   }
   getSynonymsUrl(acc:string,repository:string):string{
-    return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}`;
+    return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}&r=${Math.random()}`;
   }
   getDatasetUrl(acc:string,repository:string):string{
-    return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}`;
+    return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}&r=${Math.random()}`;
   }
   getDatasetLatestUrl():string{
-    return `${environment.webServiceUrl}dataset/latest?size=10`;
+    return `${environment.webServiceUrl}dataset/latest?size=10&r=${Math.random()}`;
   }
   getDatasetMostAccessedUrl():string{
-    return `${environment.webServiceUrl}dataset/mostAccessed?size=20`;
+    return `${environment.webServiceUrl}dataset/mostAccessed?size=20&r=${Math.random()}`;
   }
   getAutocompleteUrl(keyword:string):string{
-    return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10`;
+    return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10&r=${Math.random()}`;
   }
   getProfileClaimDatasetUrl(userId:string){
-    return `${environment.userServiceUrl}users/${userId}/datasets`;
+    return `${environment.userServiceUrl}users/${userId}/datasets?r=${Math.random()}`;
   }
   getProfileSaveDatasetsUrl(userId:string){
-    return `${environment.userServiceUrl}users/${userId}/datasets`;
+    return `${environment.userServiceUrl}users/${userId}/datasets?r=${Math.random()}`;
   }
   getProfileUploadImageUrl(userId:string){
-    return `${environment.userServiceUrl}users/${userId}/picture`;
+    return `${environment.userServiceUrl}users/${userId}/picture?r=${Math.random()}`;
   }
   getOntologyLookupUrl(keys: string[]) {
-    return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}`;
+    return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}&r=${Math.random()}`;
   }
   getDatabasesUrl(){
-    return `${environment.userServiceUrl}database/all`;
+    return `${environment.userServiceUrl}database/all&?=${Math.random()}`;
   }
   getLoginUrl(provider: string, scope: string){
     return `${environment.userServiceUrl.replace("api","auth")}${provider}?scope=${scope}`;
   }
   getProfileImageUrl(userId: string){
     //TODO: interpolate?
-    return `${environment.userServiceUrl}users/${userId}/picture?random=` + Math.random();
+    return `${environment.userServiceUrl}users/${userId}/picture?&r=${Math.random()}`;
   }
   getDeleteConnectionUrl(userId: string, provider: string){
-    return `${environment.userServiceUrl}users/${userId}/connections/${provider}`;
+    return `${environment.userServiceUrl}users/${userId}/connections/${provider}?r=${Math.random()}`;
   }
   getConnectUrl(provider:string){
     if(provider=="orcid")
@@ -84,14 +84,15 @@ export class AppConfig{
     else
       return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
   }
+  /*******TODO:*******/
   getConnectPath(provider:string){
     return `/Tools/omicsdi/profilews/connect/${provider}`;
   }
   getSimilarityMoleculesUrl(acc: string, repository: string){
-    return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}`;
+    return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}?r=${Math.random()}`;
   }
   getSimilarityDatasetsUrl(acc: string, repository: string){
-    return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}`;
+    return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}?r=${Math.random()}`;
   }
   getPublicProfileUrl(profile:Profile){
     return window.location.href.split("#")[0] + `/#/profile/${profile.userName}`;
