@@ -10,14 +10,14 @@ export class OmicsImageComponent implements OnInit {
   @Input() omics: string[];
   @Input() size: string;
   width: string = "";
-  length: string = "";
+  height: string = "";
 
   constructor() { }
 
   ngOnInit() {
     if (this.size=="small"){
       this.width="15px";
-      this.length="15px";
+      this.height="15px";
     }
 
     if(!this.omics){
