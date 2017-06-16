@@ -18,6 +18,7 @@ export class SimilarMoleculeComponent implements OnInit {
   @Input() acc: string;
   @Input() repository: string;
 
+  show = true;
   threshold: any = 0.50;
   minimumThreshold = 0.50;
   biological_similarity_info: SimilarMolecule;
@@ -101,15 +102,17 @@ export class SimilarMoleculeComponent implements OnInit {
     let self = this;
 
     if (self.similarityData.scores.length < 1) {
-      d3.select('#dataset_bottom_chord_diagram').style('visibility', 'hidden');
-      d3.select('#dataset_bottom_chord_diagram').remove();
+      // d3.select('#dataset_bottom_chord_diagram').style('visibility', 'hidden');
+      // d3.select('#dataset_bottom_chord_diagram').remove();
+      self.show = false;
       return;
     }
 
     if (!this.findAScoreBiggerThan(self.similarityData.scores, this.minimumThreshold)) {
-      d3.select('#dataset_bottom_chord_diagram').style('visibility', 'hidden');
-      d3.select('#dataset_bottom_chord_diagram').remove();
-      d3.select('#chord_diagram_fa-spinner').remove();
+      // d3.select('#dataset_bottom_chord_diagram').style('visibility', 'hidden');
+      // d3.select('#dataset_bottom_chord_diagram').remove();
+      // d3.select('#chord_diagram_fa-spinner').remove();
+      self.show = false;
       return;
     }
 
