@@ -130,32 +130,7 @@
 </div>
 
 
-<div class="contactInfo" *ngIf="contactInfoPresent()">
-    <div class="contactInfoCaption">Contact Info</div>
 
-    <p class="affiliation" *ngIf="this.profile?.affiliation">
-      <span class="icon icon-generic" data-icon="]"> {{this.profile && this.profile.affiliation}}</span>
-    </p>
-
-    <p class="email" *ngIf="this.profile?.email">
-      <a class="icon icon-generic" data-icon="E" href="mailto:{{this.profile && this.profile.email}}"> {{this.profile && this.profile.email}}</a>
-    </p>
-
-    <p class="homepage" *ngIf="this.profile?.homepage">
-      <a class="icon icon-generic" data-icon="y" href="{{this.profile && this.profile.homepage}}"> {{this.profile && this.profile.homepage}}</a>
-    </p>
-
-    <p class="orcid" *ngIf="this.profile?.orcid">
-      <a href="http://europepmc.org/search?query=AUTHORID:%22{{this.profile.orcid}}%22&amp;sortby=Date">
-        <img src="http://www.ebi.ac.uk/web_guidelines/images/logos/orcid/orcid_16x16.png" style="position:relative; top:-3px;"> {{this.profile && this.profile.orcid}}</a>
-    </p>
-
-  <p class="publicProfile" *ngIf="this.profile?.isPublic">
-    <a href="{{this.publicProfileUrl()}}" title="OmicsDI public profile">
-      <img src="img/logo/OmicsDI-icon-3.png" style="width:16px; height:16px;position:relative; top:-3px;"> {{this.publicProfileUrl()}}</a>
-  </p>
-
-</div>
 
 
 

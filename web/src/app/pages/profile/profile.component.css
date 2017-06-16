@@ -575,9 +575,8 @@ ul.rightNavMenu li a{
   border-bottom-color: rgb(102, 102, 102);
   font-weight:normal;
   font-size: 14.4px;
-  width: 100%;
   display: block;
-  width: 200px;
+  width: 300px;
   padding-left:10px;
   padding-bottom:11px;
   padding-top: 11.2px;

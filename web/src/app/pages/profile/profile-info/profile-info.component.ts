@@ -107,11 +107,5 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
     }
   }
 
-  publicProfileUrl(): string{
-    return this.appConfig.getPublicProfileUrl(this.profile);
-  }
 
-  contactInfoPresent():boolean{
-    return this.profile.isPublic || `${this.profile.affiliation}${this.profile.email}${this.profile.homepage}${this.profile.orcid}`!="";
-  }
 }
