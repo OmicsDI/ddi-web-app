@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, OnChanges, SimpleChange, SimpleChanges} from '@angular/core';
-import {ProfileService} from "../../../services/profile.service";
-import {Profile} from "../../../model/Profile";
-import {AppConfig} from "../../../app.config";
+import {ProfileService} from "../../../../services/profile.service";
+import {Profile} from "../../../../model/Profile";
+import {AppConfig} from "../../../../app.config";
 
 @Component({
   selector: 'app-profile-connections',

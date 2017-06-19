@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
-import {ProfileService} from "../../../services/profile.service";
-import {Profile} from "../../../model/Profile";
-import {AppConfig} from "../../../app.config";
+import {ProfileService} from "../../../../services/profile.service";
+import {Profile} from "../../../../model/Profile";
+import {AppConfig} from "../../../../app.config";
 import {Router} from "@angular/router";
 
 @Component({

@@ -1,0 +1,124 @@
+<div class="content">
+
+  <div class="rightNav">
+    <ul class="rightNavMenu">
+      <li class=""><a [routerLink]="['/profile']" >Profile</a></li>
+      <li class=""><a [routerLink]="['/profile/update']" >Edit Profile</a></li>
+      <li class=""><a [routerLink]="['/profile/claimed']" >Edit Datasets</a></li>
+    </ul>
+  </div>
+
+<div class="caption">{{profileService.profile && profileService.profile.userName}}</div>
+
+  <div>
+
+    <div class="pictureFrameEdit" style="">
+
+      <img
+        [src]="this.profileImageUrl"
+        width="150"
+        id="gsc_prf_pup"
+        style="width:150px;">
+
+
+      <form method="post" enctype="multipart/form-data"
+            action="#">
+        <div style="text-align: center; font-size: 10px; font-style: italic; font-weight: normal;">
+          <input type="file" id="file" name="file" ng2FileSelect [uploader]="uploader" (change)="fileChangeEvent($event)" class="inputfile" />
+          <label for="file" style="font-size: 10px; font-style: italic; font-weight: normal;">change photo</label>
+        </div>
+      </form>
+    </div>
+
+
+
+
+    <div class="editContainer">
+      <form *ngIf="this.profileService.profile">
+        <div>Name</div>
+        <div>
+          <div [formGroup]="form">
+            <input
+              [(ngModel)]="this.profileService.profile.userName"
+              type="text"
+              name="userName"
+              maxlength="250"
+              formControlName="name">
+            <div></div>
+          </div>
+        </div>
+        <div>Orcid ID</div>
+        <div>
+          <div>
+            <input
+              [(ngModel)]="this.profileService.profile.orcid"
+              type="text"
+              name="orcid"
+              maxlength="250" autocapitalize="off">
+            <div></div>
+          </div>
+        </div>
+        <div>Affiliation</div>
+        <div>
+          <div>
+            <input
+              [(ngModel)]="this.profileService.profile.affiliation"
+              type="text"
+              name="affiliation"
+              maxlength="250" autocapitalize="off">
+            <div></div>
+          </div>
+        </div>
+        <div>Primary email</div>
+        <div>
+          <div>
+            <input type="text"
+                   [(ngModel)]="this.profileService.profile.email"
+                   name="email"
+                   maxlength="250" autocapitalize="off" autocorrect="off">
+            <div class="gs_in_txts gs_gray"></div>
+          </div>
+        </div>
+        <div>Homepage</div>
+        <div>
+          <div>
+            <input type="text" name="homepage"
+                   [(ngModel)]="this.profileService.profile.homepage"
+                   maxlength="250"
+                   autocapitalize="off" autocorrect="off">
+            <div></div>
+          </div>
+        </div>
+        <div>Bio</div>
+        <div>
+          <div>
+                  <textarea [(ngModel)]="this.profileService.profile.bio"
+                            style="height:100px; width:100%"
+                            name="bio"></textarea>
+            <div></div>
+          </div>
+        </div>
+        <div>
+          <input [(ngModel)]="this.profileService.profile.isPublic" type="checkbox" name="isPublic" id="chkPublic"
+                 value="1" checked="" style="opacity:100;" >
+          <label for="chkPublic" style="padding-left:20px;">Make my profile public</label>
+        </div>
+
+
+        <div id="gsc_prf_eb">
+          <button (click)="submitClicked()" type="submit" id="gsc_prf_ebs" name="save_profile_btn" class=" gs_btn_act">
+              <span>
+              <span>Save</span>
+              <span>
+              <span></span></span></span>
+          </button>
+          <button (click)="cancelClicked()" type="button" id="gsc_prf_btni">
+            <span><span>Cancel</span></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+</div>

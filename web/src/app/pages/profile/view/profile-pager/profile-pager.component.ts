@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {PagingService} from "../../../services/paging.service";
-import {SearchService} from "../../../services/search.service";
-import {DataSet} from "../../../model/DataSet";
+import {PagingService} from "../../../../services/paging.service";
+import {SearchService} from "../../../../services/search.service";
+import {DataSet} from "../../../../model/DataSet";
 import {Observable, Subscription} from "rxjs";
-import {SearchResult} from "../../../model/SearchResult";
+import {SearchResult} from "../../../../model/SearchResult";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 
 @Component({

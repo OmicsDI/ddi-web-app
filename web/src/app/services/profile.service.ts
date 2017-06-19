@@ -72,10 +72,12 @@ export class ProfileService extends BaseService {
       headers.append('X-AUTH-TOKEN', authToken);
     }**/
 
+    this.profile = profile;
+
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...
     return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), config)
-      .map(res => res.json());
+      .map(res => "");
   }
 
   private handleError (error: Response | any) {

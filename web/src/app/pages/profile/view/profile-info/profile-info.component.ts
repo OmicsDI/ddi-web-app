@@ -1,11 +1,11 @@
 import {Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges} from '@angular/core';
-import {ProfileService} from "../../../services/profile.service";
+import {ProfileService} from "../../../../services/profile.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Profile} from "../../../model/Profile";
-import {DataSetShort} from "../../../model/DataSetShort";
-import {DataSetService} from "../../../services/dataset.service";
-import {DataSetDetail} from "../../../model/DataSetDetail";
-import {AppConfig} from "../../../app.config";
+import {Profile} from "../../../../model/Profile";
+import {DataSetShort} from "../../../../model/DataSetShort";
+import {DataSetService} from "../../../../services/dataset.service";
+import {DataSetDetail} from "../../../../model/DataSetDetail";
+import {AppConfig} from "../../../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 
 @Component({
@@ -34,22 +34,7 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
     ,private dataSetService: DataSetService
     ,private formBuilder: FormBuilder
     ,private appConfig: AppConfig) {
-    this.form = formBuilder.group({
-      name: ['', [
-        Validators.required,
-        Validators.minLength(3)
-      ]],
-      email: ['', [
-        Validators.required
-      ]],
-      phone: [],
-      address: formBuilder.group({
-        street: ['', Validators.minLength(3)],
-        suite: [],
-        city: ['', Validators.maxLength(30)],
-        zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
-      })
-    });
+
   }
 
   ngOnInit() {
@@ -78,34 +63,15 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
   editClicked() {
     this.editMode = true;
   }
-  submitClicked() {
-    this.save();
-    this.editMode = false;
-  }
-  cancelClicked() {
-    this.editMode = false;
-  }
 
-  save() {
-    var result;
 
-    result = this.profileService.updateUser(this.profile);
 
-    result.subscribe(); //data => this.router.navigate(['users']));
-  }
 
   getProfileImageUrl(): string{
     return this.appConfig.getProfileImageUrl(this.profile.userId);
   }
 
-  public fileChangeEvent(fileInput: any){
-    if (fileInput.target.files && fileInput.target.files[0]) {
-      setTimeout(() => {
-        console.log('fileChangeEvent hello');
-        this.uploader.uploadAll();
-      }, 100);
-    }
-  }
+
 
 
 }

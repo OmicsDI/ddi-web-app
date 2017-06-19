@@ -4,7 +4,7 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {ProfileComponent} from "./pages/profile/profile.component";
+import {ProfileComponent} from "./pages/profile/view/profile.component";
 import {DatabaseComponent} from "./pages/database/database.component";
 import {HomeComponent} from "./pages/home/home.component";
 import {ApiComponent} from "./pages/api/api.component";
@@ -14,7 +14,8 @@ import {UnauthorizedComponent} from "./pages/unauthorized/unauthorized.component
 import { AuthGuardService } from './services/auth-guard.service';
 import {DatasetComponent} from "./pages/dataset/dataset.component";
 import {TermsComponent} from "./pages/terms/terms.component";
-import {ClaimedComponent} from "./pages/claimed/claimed.component";
+import {ClaimedComponent} from "./pages/profile/claimed/claimed.component";
+import {UpdateProfileComponent} from "./pages/profile/update-profile/update-profile.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -24,9 +25,10 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
-  { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'claimed', component: ClaimedComponent, canActivate: [AuthGuardService] },
+  { path: 'profile/claimed', component: ClaimedComponent, canActivate: [AuthGuardService] },
+  { path: 'profile/update', component: UpdateProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },
   { path: 'api', component: ApiComponent },

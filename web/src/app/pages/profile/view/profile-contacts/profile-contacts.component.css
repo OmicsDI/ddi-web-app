@@ -9,6 +9,11 @@ div.contactInfoCaption {
 div.contactInfo{
   max-width: 300px;
   margin-bottom: 20px;
+  background-color: rgb(234, 234, 234);
+  margin-top:10px;
+  padding-bottom:10px;
+  padding-left:10px;
+  padding-top:20px;
 }
 
 div.contactInfo p{

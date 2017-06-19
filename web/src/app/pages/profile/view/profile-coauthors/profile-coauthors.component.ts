@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
-import {ProfileService} from "../../../services/profile.service";
-import {Profile} from "../../../model/Profile";
-import {UserShort} from "../../../model/UserShort";
+import {ProfileService} from "../../../../services/profile.service";
+import {Profile} from "../../../../model/Profile";
+import {UserShort} from "../../../../model/UserShort";
 
 @Component({
   selector: 'app-profile-coauthors',

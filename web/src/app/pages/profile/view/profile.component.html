@@ -19,12 +19,11 @@
   <div class="rightNav2222" style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;">
     <ul class="rightNavMenu">
       <li class=""><a [routerLink]="['/profile']">Profile</a></li>
-      <li class=""><a [routerLink]="['/claimed']">My Datasets</a></li>
+      <li class=""><a [routerLink]="['/profile/update']">Edit Profile</a></li>
+      <li class=""><a [routerLink]="['/profile/claimed']">Edit Datasets</a></li>
     </ul>
+    <app-profile-contacts></app-profile-contacts>
 
     <app-profile-connections [profile]="profileService.profile"></app-profile-connections>
-
-
-    <app-profile-contacts [profile]="profileService.profile"></app-profile-contacts>
   </div>
 </div>

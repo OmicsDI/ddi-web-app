@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './controls/login/login.component';
 import { LoginLauncherComponent } from './controls/login-launcher/login-launcher.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfileComponent } from './pages/profile/view/profile.component';
 import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
 import {routing} from "./app.routes";
@@ -80,12 +80,12 @@ import {FileSelectDirective} from "ng2-file-upload";
 import { ClaimAllButtonComponent } from './controls/claim-all-button/claim-all-button.component';
 import { SearchQueryComponent } from './pages/search/search-query/search-query.component';
 import { TermsComponent } from './pages/terms/terms.component';
-import { ProfileResultComponent } from './pages/profile/profile-result/profile-result.component';
-import { ProfilePagerComponent } from './pages/profile/profile-pager/profile-pager.component';
-import { ProfileTotalComponent } from './pages/profile/profile-total/profile-total.component';
-import { ProfileInfoComponent } from './pages/profile/profile-info/profile-info.component';
-import { ProfileCoauthorsComponent } from './pages/profile/profile-coauthors/profile-coauthors.component';
-import { ProfileConnectionsComponent } from './pages/profile/profile-connections/profile-connections.component';
+import { ProfileResultComponent } from './pages/profile/view/profile-result/profile-result.component';
+import { ProfilePagerComponent } from './pages/profile/view/profile-pager/profile-pager.component';
+import { ProfileTotalComponent } from './pages/profile/view/profile-total/profile-total.component';
+import { ProfileInfoComponent } from './pages/profile/view/profile-info/profile-info.component';
+import { ProfileCoauthorsComponent } from './pages/profile/view/profile-coauthors/profile-coauthors.component';
+import { ProfileConnectionsComponent } from './pages/profile/view/profile-connections/profile-connections.component';
 import { OmicsImageComponent } from './controls/omics-image/omics-image.component';
 import { DeleteButtonComponent } from './controls/delete-button/delete-button.component';
 import { DeleteAllButtonComponent } from './controls/delete-all-button/delete-all-button.component';
@@ -94,8 +94,9 @@ import {OntologyService} from "./services/ontology.service";
 import { FacetOmicsComponent } from './controls/facet-omics/facet-omics.component';
 import { SimilarMoleculeComponent } from './pages/dataset/similar-molecule/similar-molecule.component';
 import { LimitDatasetNumbersPipe } from './pipes/limit-dataset-numbers.pipe';
-import { ClaimedComponent } from './pages/claimed/claimed.component';
-import { ProfileContactsComponent } from './pages/profile/profile-contacts/profile-contacts.component';
+import { ClaimedComponent } from './pages/profile/claimed/claimed.component';
+import { ProfileContactsComponent } from './pages/profile/view/profile-contacts/profile-contacts.component';
+import { UpdateProfileComponent } from './pages/profile/update-profile/update-profile.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -178,7 +179,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SimilarMoleculeComponent,
     LimitDatasetNumbersPipe,
     ClaimedComponent,
-    ProfileContactsComponent
+    ProfileContactsComponent,
+    UpdateProfileComponent
   ],
   imports: [
     BrowserModule,
