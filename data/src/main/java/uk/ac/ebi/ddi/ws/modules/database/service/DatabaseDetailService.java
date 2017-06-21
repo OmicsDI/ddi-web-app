@@ -1,9 +1,9 @@
-package uk.ac.ebi.ddi.security.service;
+package uk.ac.ebi.ddi.ws.modules.database.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.ac.ebi.ddi.security.model.DatabaseDetail;
-import uk.ac.ebi.ddi.security.repo.DatabaseDetailRepository;
+import uk.ac.ebi.ddi.ws.modules.database.model.DatabaseDetail;
+import uk.ac.ebi.ddi.ws.modules.database.repository.DatabaseDetailRepository;
 
 import java.util.ArrayList;
 import java.util.List;

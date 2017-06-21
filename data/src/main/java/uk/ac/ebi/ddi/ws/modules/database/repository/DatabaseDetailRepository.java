@@ -1,11 +1,9 @@
-package uk.ac.ebi.ddi.security.repo;
+package uk.ac.ebi.ddi.ws.modules.database.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-import uk.ac.ebi.ddi.security.model.DatabaseDetail;
+import uk.ac.ebi.ddi.ws.modules.database.model.DatabaseDetail;
 
 /**
  * Created by root on 16.05.17.

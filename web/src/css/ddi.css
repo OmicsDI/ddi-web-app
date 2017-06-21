@@ -1377,3 +1377,26 @@ $lines-to-show: 3;
 .my-pagination .ngx-pagination li.disable {
   cursor: default;
 }
+
+div#local-masthead ul.dropdown-menu {
+  background-color: white;
+}
+
+div#local-masthead ul.dropdown-menu li{
+  width : 100%;
+}
+
+div#local-masthead ul.dropdown-menu li a{
+  color: black;
+}
+
+
+div#local-masthead ul.dropdown-menu li a:hover, div#local-masthead ul.dropdown-menu li a:focus, div#local-masthead ul.dropdown-menu li a:active {
+  border-bottom: 3px solid #71b360;
+  background-color: white;
+  color: black;
+}
+
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+  background-color: #0099cc;
+}

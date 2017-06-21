@@ -1,6 +1,5 @@
-package uk.ac.ebi.ddi.security.model;
+package uk.ac.ebi.ddi.ws.modules.database.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,7 +14,6 @@ public class DatabaseDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @NotEmpty
     String databaseName;
 
     String title;

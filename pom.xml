@@ -12,4 +12,118 @@
         <module>profile</module>
         <module>data</module>
     </modules>
+
+    <properties>
+        <!-- Project defaults -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+
+
+        <!-- Spring -->
+        <spring.version>4.2.2.RELEASE</spring.version>
+        <spring.batch.version>3.0.5.RELEASE</spring.batch.version>
+        <spring.security.version>3.2.4.RELEASE</spring.security.version>
+        <spring.data.mongo.version>1.9.0.RELEASE</spring.data.mongo.version>
+        <spring.rmqp.version>1.0.0.RELEASE</spring.rmqp.version>
+        <spring.orm.version>4.1.6.RELEASE</spring.orm.version>
+        <spring.social.twitter>1.0.5.RELEASE</spring.social.twitter>
+
+        <!-- Web -->
+        <servlet.version>2.5</servlet.version>
+        <jsp.version>2.1</jsp.version>
+        <jstl.version>1.2</jstl.version>
+        <apache.tiles.version>2.2.2</apache.tiles.version>
+
+        <!--&lt;!&ndash; DB &ndash;&gt;-->
+        <!--<mongo.java.driver.version>3.0.0</mongo.java.driver.version>-->
+
+
+        <!-- Commons -->
+        <commons.dbcp.version>1.2.2</commons.dbcp.version>
+        <commons.lang.version>2.6</commons.lang.version>
+        <commons.lang3.version>3.0</commons.lang3.version>
+        <commons.io.version>1.3.2</commons.io.version>
+        <commons.httpclient.version>4.5</commons.httpclient.version>
+        <commons.fileupload.version>1.2</commons.fileupload.version>
+        <java.validation.api.version>1.1.0.Final</java.validation.api.version>
+        <common.cli.version>1.2</common.cli.version>
+        <commons.configuration.version>1.10</commons.configuration.version>
+        <commons.collections.version>3.2.1</commons.collections.version>
+        <common.net.version>3.3</common.net.version>
+
+        <!-- Misc -->
+        <solrj.version>4.1.0</solrj.version>
+        <cglib.version>2.2.2</cglib.version>
+        <jackson.version>1.9.9</jackson.version>
+        <aspectj.version>1.6.9</aspectj.version>
+
+        <!-- Testing -->
+        <junit.version>4.10</junit.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <mockito.version>1.9.5</mockito.version>
+
+        <!-- Logging -->
+        <slf4j.version>1.6.4</slf4j.version>
+        <log4j.version>1.2.14</log4j.version>
+        <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
+        <logback.version>1.0.7</logback.version>
+
+        <!-- Maven -->
+        <maven.resources.plugin.version>2.5</maven.resources.plugin.version>
+        <maven.jar.plugin>2.3.2</maven.jar.plugin>
+        <maven.compiler.plugin>2.5.1</maven.compiler.plugin>
+        <maven.source.plugin>2.1.2</maven.source.plugin>
+        <maven.javadoc.plugin>2.8.1</maven.javadoc.plugin>
+        <maven.war.plugin>2.1.1</maven.war.plugin>
+        <maven.surefire.plugin>2.12</maven.surefire.plugin>
+        <maven.jetty.plugin>6.1.10</maven.jetty.plugin>
+
+        <!-- JAXB -->
+        <jaxb-xjc.version>2.2.7</jaxb-xjc.version>
+        <jackson.databind.version>2.5.2</jackson.databind.version>
+        <fastutil.version>6.5.1</fastutil.version>
+        <woodstox.version>4.4.1</woodstox.version>
+
+        <org.json.version>20090211</org.json.version>
+        <gson.version>2.3.1</gson.version>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>4.3.7.RELEASE</version>
+        </dependency>
+        <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>4.3.7.RELEASE</version>
+        </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>4.3.7.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <scope>provided</scope>
+                <version>${servlet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>jsp-api</artifactId>
+                <version>${jsp.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+    </dependencies>
+    </dependencyManagement>
 </project>

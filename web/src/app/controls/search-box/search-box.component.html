@@ -1,4 +1,4 @@
-<div style="height: 29px;float:right;margin-top:0px;z-index:1;" xmlns:width="http://www.w3.org/1999/xhtml"
+<div style="height: 29px;float:right;margin-top:0px;z-index:1;margin-bottom:10px;" xmlns:width="http://www.w3.org/1999/xhtml"
      xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml">
   <form novalidate name="queryForm" class="local-search">
     <div class="form-group ">
@@ -6,7 +6,7 @@
         <app-autocomplete-n></app-autocomplete-n>
         <div class="input-group-btn">
           <button [mdMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
+            <i class="fa {{this.caret_class()}}" aria-hidden="true"></i>
             Advanced
           </button>
           <button type="submit" ng-disab class="btn btn-primary ddi-btn" (click)="search()" >

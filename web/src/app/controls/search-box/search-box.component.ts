@@ -3,6 +3,7 @@ import {AutocompleteNComponent} from "../autocomplete-n/autocomplete-n.component
 import {SearchService} from "../../services/search.service";
 import {Router} from "@angular/router";
 import {SearchQuery} from "../../model/SearchQuery";
+import {MdMenuTrigger} from "@angular/material";
 
 @Component({
   selector: '[AppSearchBox]',
@@ -12,11 +13,16 @@ import {SearchQuery} from "../../model/SearchQuery";
 export class SearchBoxComponent implements OnInit {
 
   @ViewChild(AutocompleteNComponent) autocompleteComponent:AutocompleteNComponent;
+  @ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
 
   constructor(private searchService: SearchService, private router: Router) {
   }
 
   ngOnInit() {
+  }
+
+  caret_class(): string{
+    return this.trigger.menuOpen ? "fa-caret-up" : "fa-caret-down" ;
   }
 
   doSearch(query: string){

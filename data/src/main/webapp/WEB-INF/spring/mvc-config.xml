@@ -3,9 +3,10 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:mongo="http://www.springframework.org/schema/data/mongo"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 
     <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
@@ -26,5 +27,7 @@
     <resources mapping="/**" location="/resources/" />
     <!-- pick up the properties needed for our Swagger configuration -->
     <!--<context:property-placeholder location="classpath:META-INF/props/swagger.properties" ignore-unresolvable="true"/>-->
+
+    <mongo:repositories base-package="uk.ac.ebi.ddi.ws.modules.database.repository" />
 
 </beans:beans>

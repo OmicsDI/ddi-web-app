@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.security.controller;
+package uk.ac.ebi.ddi.ws.modules.database.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -6,8 +6,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import uk.ac.ebi.ddi.security.model.DatabaseDetail;
-import uk.ac.ebi.ddi.security.service.DatabaseDetailService;
+import uk.ac.ebi.ddi.ws.modules.database.model.DatabaseDetail;
+import uk.ac.ebi.ddi.ws.modules.database.service.DatabaseDetailService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by root on 16.05.17.
  */
 @RestController
-@RequestMapping("/api/database")
+@RequestMapping("/database")
 public class DatabaseController {
 
     @Autowired

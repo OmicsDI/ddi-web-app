@@ -58,7 +58,6 @@ import {DisqusModule} from "ng2-awesome-disqus";
 
 import { SearchPagerComponent } from './pages/search/search-pager/search-pager.component';
 import { SearchTotalComponent } from './pages/search/search-total/search-total.component';
-import { SearchAdvancedComponent } from './pages/search/search-advanced/search-advanced.component';
 
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {DropdownModule} from "ng2-dropdown";
@@ -143,7 +142,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PublicationComponent,
     SearchPagerComponent,
     SearchTotalComponent,
-    SearchAdvancedComponent,
     OntologyTooltipPipe,
     AnnotatedTextComponent,
     ReposOmicsComponent,
@@ -156,7 +154,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     StatisticsPanelComponent,
     AboutComponent,
     HomeAboutComponent,
-    SearchAdvancedComponent,
     QueryBuilderComponent,
     DropDownComponent,
     MegaNumberPipe,

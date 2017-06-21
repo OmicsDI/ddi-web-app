@@ -66,7 +66,7 @@ export class AppConfig{
     return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}&r=${Math.random()}`;
   }
   getDatabasesUrl(){
-    return `${environment.userServiceUrl}database/all&?=${Math.random()}`;
+    return `${environment.webServiceUrl}database/all?=${Math.random()}`;
   }
   getLoginUrl(provider: string, scope: string){
     return `${environment.userServiceUrl.replace("api","auth")}${provider}?scope=${scope}`;

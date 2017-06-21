@@ -9,11 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>uk.ac.ebi.ddi</groupId>
-    <artifactId>ddi-web-service</artifactId>
+    <artifactId>data</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>ddi-web-service</name>
 
     <!--
         To build, require the following maven profiles
@@ -182,6 +179,18 @@
             <artifactId>mockito-core</artifactId>
             <version>1.9.5</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
         </dependency>
     </dependencies>
     <repositories>
