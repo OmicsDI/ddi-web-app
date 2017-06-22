@@ -12,7 +12,7 @@
       <li *ngFor="let _dataset of mostAccessedDatasets " class="title_one_line">
         <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"> </app-omics-image>
         <span class="icon icon-functional" data-icon="4">{{_dataset.visitCount|megaNumber}}</span>
-        <a href="/dataset/{{_dataset.source}}/{{_dataset.id}}" title={{_dataset.title}}>
+        <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" title={{_dataset.title}}>
               {{_dataset.title}}
         </a>
       </li>
