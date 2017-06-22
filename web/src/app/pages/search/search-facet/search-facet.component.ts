@@ -17,7 +17,20 @@ export class SearchFacetComponent implements OnInit {
   omicsFacets: Facet[];
 
   constructor(private searchService: SearchService, private ontolotyService: OntologyService) {
-    this.subscription = searchService.searchResult$.subscribe(
+    this.subscribeToSearch();
+
+  }
+
+  ngOnInit() {
+  }
+
+  facetValueSelected(value: string) {
+      this.searchService.callSearchByFacets();
+      this.subscribeToSearch();
+  }
+
+  subscribeToSearch(){
+    this.subscription = this.searchService.searchResult$.subscribe(
       searchResult => {
         this.searchCount = searchResult.count.toString();
         this.facets = searchResult.facets;
@@ -27,20 +40,13 @@ export class SearchFacetComponent implements OnInit {
         let values: string[] = this.organismFacets[0].facetValues.map(x => x.value).concat(",");
 
         this.ontolotyService.lookup(values).subscribe(x => {
-            this.organismFacets[0].facetValues = this.organismFacets[0].facetValues.map(x => {
-              x.label = this.ontolotyService.resolve(x.label);
-              x.value = this.ontolotyService.resolve(x.value);
-              return x;
-            });
+          this.organismFacets[0].facetValues = this.organismFacets[0].facetValues.map(x => {
+            x.label = this.ontolotyService.resolve(x.label);
+            x.value = this.ontolotyService.resolve(x.value);
+            return x;
           });
+        });
       });
-  }
-
-  ngOnInit() {
-  }
-
-  facetValueSelected(value: string) {
-      this.searchService.callSearchByFacets();
   }
 
 }

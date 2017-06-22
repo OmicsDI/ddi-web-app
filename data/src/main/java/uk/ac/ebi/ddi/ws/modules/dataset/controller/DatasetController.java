@@ -34,6 +34,7 @@ import uk.ac.ebi.ddi.ws.modules.dataset.model.DataSetResult;
 import uk.ac.ebi.ddi.ws.modules.dataset.model.DatasetDetail;
 import uk.ac.ebi.ddi.ws.modules.dataset.model.DatasetSummary;
 import uk.ac.ebi.ddi.ws.modules.dataset.model.OmicsDataset;
+import uk.ac.ebi.ddi.ws.modules.dataset.repository.FacetSettingsRepository;
 import uk.ac.ebi.ddi.ws.modules.dataset.util.FacetViewAdapter;
 import uk.ac.ebi.ddi.ws.modules.dataset.util.RepoDatasetMapper;
 import uk.ac.ebi.ddi.ws.util.Constants;
@@ -77,6 +78,9 @@ public class DatasetController {
 
     @Autowired
     IDatasetService datasetService;
+
+    @Autowired
+    FacetSettingsRepository facetSettingsRepository;
 
 
     //@CrossOrigin
@@ -136,7 +140,7 @@ public class DatasetController {
            taxonomies   = dataWsClient.getDatasetsById(Constants.TAXONOMY_DOMAIN, Constants.TAXONOMY_FIELDS, taxonomyIds);
         }
 
-        queryResult.setFacets(FacetViewAdapter.process(queryResult.getFacets()));
+        queryResult.setFacets((new FacetViewAdapter(facetSettingsRepository)).process(queryResult.getFacets()));
 
         return RepoDatasetMapper.asDataSummary(queryResult, taxonomies);
 

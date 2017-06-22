@@ -29,5 +29,7 @@
     <!--<context:property-placeholder location="classpath:META-INF/props/swagger.properties" ignore-unresolvable="true"/>-->
 
     <mongo:repositories base-package="uk.ac.ebi.ddi.ws.modules.database.repository" />
+    <!-- settings repository -->
+    <mongo:repositories base-package="uk.ac.ebi.ddi.ws.modules.dataset.repository" />
 
 </beans:beans>
