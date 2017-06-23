@@ -37,8 +37,11 @@ export class SearchFacetComponent implements OnInit {
         this.organismFacets = searchResult.facets.filter(x => x.label === 'Organisms');
         this.omicsFacets = searchResult.facets.filter(x => x.label === 'Omics type');
 
-        let values: string[] = this.organismFacets[0].facetValues.map(x => x.value).concat(",");
+        if(this.organismFacets.length < 1){
+          return;
+        }
 
+        let values: string[] = this.organismFacets[0].facetValues.map(x => x.value).concat(",");
         this.ontolotyService.lookup(values).subscribe(x => {
           this.organismFacets[0].facetValues = this.organismFacets[0].facetValues.map(x => {
             x.label = this.ontolotyService.resolve(x.label);

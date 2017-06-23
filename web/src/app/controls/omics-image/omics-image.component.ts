@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, SimpleChange} from '@angular/core';
 
 @Component({
   selector: 'app-omics-image',
@@ -15,6 +15,9 @@ export class OmicsImageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  calculateOmics(){
     if (this.size=="small"){
       this.width="15px";
       this.height="15px";
@@ -37,13 +40,25 @@ export class OmicsImageComponent implements OnInit {
       this.omicsImage = "img/omics/Metabolomics2.png";
     else if(this.omics.indexOf('Genomics') != -1)
       this.omicsImage = "img/omics/Genomics2.png";
+    else if(this.omics.indexOf('Models') != -1)
+      this.omicsImage = "img/omics/BioModel2.png";
     else
       this.omicsImage = "img/omics/Unknomics2.png";
 
     if(this.size=="large"){
       this.omicsImage = this.omicsImage.replace("2.png",".png");
     }
+  }
 
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    let log: string[] = [];
+    for (let propName in changes) {
+      if(propName=="omics"){
+        if(null!=changes[propName].currentValue){
+          this.calculateOmics();
+        }
+      }
+    }
   }
 
   omicsImage: string = "img/omics/Unknomics2.png";
