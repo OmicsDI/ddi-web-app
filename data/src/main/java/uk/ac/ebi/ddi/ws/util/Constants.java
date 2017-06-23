@@ -208,7 +208,7 @@ public class Constants {
     };
 
     public enum Database{
-        PRIDE("pride", "pride"),
+        PRIDE("pride", "Pride"),
         PEPTIDEATLAS("PeptideAtlas", "peptide_atlas"),
         MASSIVE("Massive", "massive"),
         METABOLIGHTS("MetaboLights", "metabolights_dataset"),

@@ -1,4 +1,4 @@
-package uk.ac.ebi.ddi.ws.modules.stats.model;
+package uk.ac.ebi.pride.cluster.ws.modules.stats.model;
 
 /**
  * A list of RepoStatistics

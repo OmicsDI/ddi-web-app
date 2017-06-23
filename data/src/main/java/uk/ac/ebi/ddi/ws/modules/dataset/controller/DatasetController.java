@@ -287,6 +287,7 @@ public class DatasetController {
         result.setDatasets(datasetSummaryList);
         result.setCount(datasetSummaryList.size());
 
+        //eventService.moreAccessedDataset(20);
         return result;
     }
 
@@ -527,4 +528,11 @@ public class DatasetController {
         return  argSet.toArray((T[]) Array.newInstance(type, argSet.size()));
     }
 
+    @ApiOperation(value = "Retrieve all similar dataset based on pubmed id", position = 1, notes = "Retrieve all datasets which have same pubmed id")
+    @RequestMapping(value = "/getSimilarByPubmed", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK) // 200
+    public @ResponseBody List<Dataset> getSimilarDatasets(@ApiParam(value = "Pubmed Id of the Dataset in the resource, e.g : 16585740")
+                                                @RequestParam(value = "pubmed", required = true) String pubmed){
+        return datasetService.getSimilarByPubmed(pubmed);
+    }
 }

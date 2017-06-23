@@ -31,7 +31,7 @@ import java.util.*;
 
 public class PublicationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PublicationController.class);
+    private static final Logger logger = LoggerFactory.getLogger(uk.ac.ebi.ddi.ws.modules.publication.controller.PublicationController.class);
 
     @Autowired
     PublicationWsClient publicationWsClient;

@@ -28,6 +28,8 @@ public class OmicsDataset implements Serializable {
 
     private ArrayList<Ref> crossReferences;
 
+    private boolean isClaimed;
+
     public OmicsDataset(){}
 
     public OmicsDataset(Dataset dataset) {
@@ -38,6 +40,9 @@ public class OmicsDataset implements Serializable {
         this.dates = new ArrayList<OmicsDate>(convert(dataset.getDates()));
         this.additionals = new ArrayList<Additional>(convertAdditional(dataset.getAdditional()));
         this.crossReferences = new ArrayList<>(convertRef(dataset.getCrossReferences()));
+        this.isClaimed = dataset.isClaimed();
+
+
     }
 
     private ArrayList<Ref> convertRef(Map<String, Set<String>> crossReferences) {
@@ -124,5 +129,13 @@ public class OmicsDataset implements Serializable {
 
     public void setCrossReferences(ArrayList<Ref> crossReferences) {
         this.crossReferences = crossReferences;
+    }
+
+    public boolean isClaimed() {
+        return isClaimed;
+    }
+
+    public void setClaimed(boolean claimed) {
+        isClaimed = claimed;
     }
 }

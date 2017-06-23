@@ -10,14 +10,22 @@ import com.wordnik.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.ddi.ebe.ws.dao.client.dataset.DatasetWsClient;
 import uk.ac.ebi.ddi.ebe.ws.dao.model.common.QueryResult;
+import uk.ac.ebi.ddi.service.db.model.dataset.DatasetSimilars;
 import uk.ac.ebi.ddi.service.db.model.enrichment.DatasetEnrichmentInfo;
 import uk.ac.ebi.ddi.service.db.model.enrichment.WordInField;
+import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
+import uk.ac.ebi.ddi.service.db.model.logger.ResourceStatVisit;
 import uk.ac.ebi.ddi.service.db.model.similarity.DatasetStatInfo;
 import uk.ac.ebi.ddi.service.db.model.similarity.IntersectionInfo;
 import uk.ac.ebi.ddi.service.db.service.enrichment.IEnrichmentInfoService;
@@ -35,11 +43,17 @@ import uk.ac.ebi.ddi.ws.util.WsUtilities;
 
 import java.util.*;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.aggregation.Fields.fields;
+
 @Api(value = "enrichment", description = "Retrieve the information about the enrichment and synonyms ", position = 0)
 @Controller
 @RequestMapping(value = "/enrichment")
 
 public class EnrichmentController {
+
+    @Autowired
+    MongoTemplate mongoTemplate;
 
     private static final Logger logger = LoggerFactory.getLogger(EnrichmentController.class);
 
@@ -320,6 +334,13 @@ public class EnrichmentController {
                 }
             }
         }
+    }
+
+    @ApiOperation(value = "get reanalysis count for dataset", position = 1, notes = "retrieve reanalysis count")
+    @RequestMapping(value = "/getReanalysis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK) // 200
+    private void reanalysisScore(){
+        //datasetStatInfoService.reanalysisCount();
     }
 
 
