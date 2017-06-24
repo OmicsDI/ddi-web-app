@@ -96,6 +96,9 @@ import { LimitDatasetNumbersPipe } from './pipes/limit-dataset-numbers.pipe';
 import { ClaimedComponent } from './pages/profile/claimed/claimed.component';
 import { ProfileContactsComponent } from './pages/profile/view/profile-contacts/profile-contacts.component';
 import { UpdateProfileComponent } from './pages/profile/update-profile/update-profile.component';
+import { ProfileDisqusComponent } from './pages/profile/profile-disqus/profile-disqus.component';
+import {FeedbackComponent} from "./controls/feedback/feedback.component";
+import {FeedbackService} from "./services/feedback.service";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -177,7 +180,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     LimitDatasetNumbersPipe,
     ClaimedComponent,
     ProfileContactsComponent,
-    UpdateProfileComponent
+    UpdateProfileComponent,
+    ProfileDisqusComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
@@ -215,6 +220,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , OntologyService
     , DatabaseListService
     , SimilarMoleculeService
+    , FeedbackService
     , AppConfig],
   bootstrap: [AppComponent]
 })

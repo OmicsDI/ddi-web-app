@@ -16,6 +16,7 @@ import {DatasetComponent} from "./pages/dataset/dataset.component";
 import {TermsComponent} from "./pages/terms/terms.component";
 import {ClaimedComponent} from "./pages/profile/claimed/claimed.component";
 import {UpdateProfileComponent} from "./pages/profile/update-profile/update-profile.component";
+import {ProfileDisqusComponent} from "./pages/profile/profile-disqus/profile-disqus.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -28,7 +29,8 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'profile/claimed', component: ClaimedComponent, canActivate: [AuthGuardService] },
   { path: 'profile/update', component: UpdateProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuardService] },
+  { path: 'profile/feedback', component: ProfileDisqusComponent, canActivate: [AuthGuardService] },
+  { path: 'profile/:username', component: ProfileComponent },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },
   { path: 'api', component: ApiComponent },

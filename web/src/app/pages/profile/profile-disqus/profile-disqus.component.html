@@ -1,0 +1,25 @@
+<div style="width:80%; margin-left: auto; margin-right: auto;">
+
+  <div class="rightNav">
+    <ul class="rightNavMenu">
+      <li class=""><a [routerLink]="['/profile']" >Profile</a></li>
+      <li class=""><a [routerLink]="['/profile/update']" >Edit Profile</a></li>
+      <li class=""><a [routerLink]="['/profile/claimed']" >Edit Datasets</a></li>
+      <li class=""><a [routerLink]="['/profile/feedback']" >Feedback</a></li>
+    </ul>
+  </div>
+
+  <div class="caption">Feedback</div>
+  share your thoughts with developers and see your ideas implemented in next release. Thread is monitored daily, you comments are visible to everyone in community.
+  <br/><br/>
+  <div class="caption2">Discussion board</div>
+
+  you need to login to DISQS separately, sorry for inconvenience
+
+  <disqus [shortname]="datasetpage" [identifier]="page_identifier" ></disqus>
+
+  <div class="caption2">Developers feedback</div>
+
+  <app-feedback></app-feedback>
+
+</div>

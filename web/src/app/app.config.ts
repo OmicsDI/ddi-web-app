@@ -97,6 +97,9 @@ export class AppConfig{
   getPublicProfileUrl(profile:Profile){
     return window.location.href.split("#")[0] + `/#/profile/${profile.userName}`;
   }
+  getFeedbackUrl(){
+    return `${environment.webServiceUrl}feedback/saveFeedback`;
+  }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";
