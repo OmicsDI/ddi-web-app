@@ -25,10 +25,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.router.events.subscribe(x => {
-      this.homePage = (x.toString() == "/" || x.toString() == "/home");
+      this.homePage = (this.router.url === "/home");
     });
   }
-
 
   getTitle(): string{
     let result = 'Omics DI 2.0';

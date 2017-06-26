@@ -4,6 +4,7 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { HotwordsComponent } from './charts/hotwords/hotwords.component';
 import { TissuesOrganismsComponent } from './charts/tissues-organisms/tissues-organisms.component';
 import { ReposOmicsComponent } from './charts/repos-omics/repos-omics.component';
+import {SearchService} from "../../services/search.service";
 
 @Component({
   selector: 'app-home',
@@ -22,11 +23,12 @@ export class HomeComponent implements OnInit {
     statistics: false
   }
 
-  constructor(private loadingBarService: SlimLoadingBarService) {
+  constructor(private loadingBarService: SlimLoadingBarService, private searchService: SearchService) {
     this.loadingBarService.start();
   }
 
   ngOnInit() {
+    this.searchService.callSearch("*:*");
   }
 
   loadOnePart($partName): void {
@@ -37,6 +39,10 @@ export class HomeComponent implements OnInit {
       if (!this.isLoaded[item]) return;
     }
     this.loadingBarService.complete();
+  }
+
+  submitTestQuery(){
+    alert("submitted");
   }
 
 }

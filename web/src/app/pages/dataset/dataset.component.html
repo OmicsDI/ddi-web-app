@@ -71,7 +71,7 @@
           <p class="align-justify" *ngIf="null!=d.organisms">
             <b>ORGANISM(S):</b>
               <span *ngFor="let o of d.organisms">
-                <a class="biological" href="/search?q=*:* AND TAXONOMY:&quot;{{o.acc}}&quot;">
+                <a class="biological" [routerLink]="['/search']" [queryParams]="{q: '*:* AND TAXONOMY:&quot;'+o.acc+'&quot;'}">
                        {{o.name}}
                 </a>&nbsp;
               </span>
@@ -85,9 +85,13 @@
           <p class="align-justify" *ngIf="null!=d.submitter">
             <b>SUBMITTER:</b>
               <span *ngFor="let o of d.submitter; let i = index;" >
-                <span>
-                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img *ngIf="d.submitterMail && d.submitterMail[i]" src="static/images/logo/rsz_mail.png">{{o}}</a>
-                </span>&nbsp;
+                <span *ngIf="d.submitterMail && d.submitterMail[i]">
+                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img src="static/images/logo/rsz_mail.png">{{o}}</a>
+                </span>
+                <span *ngIf="!(d.submitterMail && d.submitterMail[i])">
+                  {{o}}
+                </span>
+                &nbsp;
               </span>
 
               <span *ngFor="let o of d.submitterMail">
@@ -99,7 +103,7 @@
           <p class="align-justify">
             <b>PROVIDER:</b>
             <a [href]="d.full_dataset_link">{{d.id}}</a>  |
-            <a [href]="databaseUrl"> {{d.source}} </a>
+            <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> {{d.source}} </a>
             <span>| {{d.publicationDate}} </span>
           </p>
           <!--dataset_protocol_bottom-->

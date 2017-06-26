@@ -18,12 +18,13 @@ export class SearchQueryComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.searchService.searchResult$.subscribe(
       searchResult => {
-        this.searchQuery = this.searchService.getFullQuery();
+        this.searchQuery = this.searchService.currentQuery;
       });
   }
 
   showAllClick(){
     this.searchService.paramQuery = new SearchQuery();
+    this.searchService.textQuery = null;
     this.searchService.callSearch("*:*");
   }
 

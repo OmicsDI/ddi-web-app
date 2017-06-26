@@ -35,7 +35,7 @@ export class SearchBoxComponent implements OnInit {
   }
 
   search(){
-    let searchString = this.autocompleteComponent.selected;
+    let searchString = this.searchService.fullQuery;
     this.doSearch(searchString);
   }
 
@@ -48,4 +48,6 @@ export class SearchBoxComponent implements OnInit {
   doNotPropagate(event){
     event.stopPropagation();
   }
+
+
 }

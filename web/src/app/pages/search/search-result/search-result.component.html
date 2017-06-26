@@ -23,16 +23,16 @@
 
         <div class="project-widget-paragraph">
         </div>
-        <div class="project-widget-paragraph">
+        <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
           ORGANISM(S): <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
           <span *ngIf="!d.organisms">Not available</span>
         </div>
 
-        <div class="project-widget-paragraph ng-hide">
+        <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
           TISSUE(S):  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
           <span *ngIf="!d.tissues">Not available</span>
         </div>
-        <div class="project-widget-paragraph ng-hide">
+        <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
           DISEASE(S): <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
           <span *ngIf="!d.diseases">Not available</span>
         </div>
@@ -41,7 +41,7 @@
       <div class="project-widget-paragraph">
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
           <span class="ng-binding">{{d.publicationDate | toDateString }}</span> | </span>
-        <a href="dataset/{{d.source}}/{{d.id}}"><span class="ng-binding">{{d.id}}</span></a> |
+        <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding">{{d.id}}</span></a> |
         <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> <span class="ng-binding">{{appConfig.repositories[d.source]}}</span> </a>
       </div>
 

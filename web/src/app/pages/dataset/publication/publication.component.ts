@@ -3,6 +3,7 @@ import {PublicationService} from "../../../services/publication.service";
 import {Subscription} from "rxjs";
 import {Publication} from "../../../model/Publication";
 import {TruncatePipe} from '../../../pipes/truncate.pipe';
+import {AltmetricEntity} from "../../../model/AltmetricEntity";
 
 @Component({
   selector: 'app-publication',
@@ -16,8 +17,10 @@ export class PublicationComponent implements OnInit {
   current_idx: number = 0;
   ids_length: string = "";
   toggle: boolean = true;
+  altmetric_entities: AltmetricEntity[] = new Array();
 
-  constructor(private publicationService: PublicationService) {
+
+ constructor(private publicationService: PublicationService) {
     this.subscription = this.publicationService.searchResult$.subscribe(
       result => {
         this.d = result.publications[0];
@@ -73,5 +76,17 @@ export class PublicationComponent implements OnInit {
 
   moreOrLess() {
     this.toggle = !this.toggle;
+  }
+
+  leftAvailable(): boolean{
+    if(!this.ids)
+      return false;
+    return this.current_idx > 0;
+  }
+
+  rightAvailable():boolean{
+    if(!this.ids)
+      return false;
+    return this.current_idx < this.ids.length - 1;
   }
 }

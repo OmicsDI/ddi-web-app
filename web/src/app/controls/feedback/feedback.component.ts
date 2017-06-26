@@ -29,7 +29,7 @@ export class FeedbackComponent implements OnInit {
     feedback.message = `${this.messageData} ${this.selectMessage}`; //$scope.feedback.messageData + ' '+$scope.feedback.selectMessage
     feedback.userInfo = "testuser";
     feedback.satisfied = this.isSatisfiedVal === "true"; //$scope.feedback.isSatisfiedVal
-    feedback.searchQuery = this.searhcService.getFullQuery(); //$scope.query_for_show
+    feedback.searchQuery = this.searhcService.currentQuery; //$scope.query_for_show
 
     this.feedbackService.submit(feedback);
 

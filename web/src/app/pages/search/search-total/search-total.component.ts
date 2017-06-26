@@ -18,7 +18,7 @@ export class SearchTotalComponent implements OnInit {
     this.subscription = this.searchService.searchResult$.subscribe(
       searchResult => {
         this.searchCount = searchResult.count.toString();
-        this.searchQuery = this.searchService.getFullQuery();
+        this.searchQuery = this.searchService.currentQuery;
       });
   }
 

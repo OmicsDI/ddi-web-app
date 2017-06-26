@@ -1,6 +1,8 @@
 import {environment} from "../environments/environment";
 import {Injectable} from "@angular/core";
 import {Profile} from "./model/Profile";
+import {INamed} from "./model/INamed";
+import {forEach} from "@angular/router/src/utils/collection";
 /**
  * Created by user on 4/9/2017.
  */
@@ -167,6 +169,16 @@ export class AppConfig{
   "LINCS":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=lincs&query=domain_source:lincs",
   "PAXDB":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=PAXDB&query=domain_source:PAXDB",
   "JPOST Repository" :"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=JPOST Repository&query=domain_source:jpost"
+  }
+
+  public isEmpty(items: INamed[]): boolean{
+    if(!items)
+      return true;
+    for(var i of items){
+      if((i.name)&&(i.name.trim()!=""))
+        return false;
+    }
+    return true;
   }
 
 }

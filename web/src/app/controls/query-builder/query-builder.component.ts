@@ -19,9 +19,17 @@ export class QueryBuilderComponent implements OnInit {
 
   @Input() parent: QueryBuilderComponent;
   @Input() index: number;
-  @Output() changed = new EventEmitter<void>();
 
-  @Input() query: SearchQuery;
+
+  private _query: SearchQuery;
+  @Output() queryChange = new EventEmitter<SearchQuery>();
+  @Input() get query(): SearchQuery{
+    return this._query;
+  }
+  set query(val) {
+    this._query = val;
+    this.queryChange.emit(this._query);
+  }
 
   hideBasicInfo: boolean;
 
@@ -45,6 +53,13 @@ export class QueryBuilderComponent implements OnInit {
     // { name: 'not' },
   ];
 
+  public notify(){
+    this.queryChange.emit(this._query);
+    if(this.parent) {
+      this.parent.notify();
+    }
+  }
+
   addCondition() {
     this.hideBasicInfo = false;
     if(null==this.query.rules){
@@ -57,10 +72,12 @@ export class QueryBuilderComponent implements OnInit {
       data2: null,
       query: null
     });
+    this.notify();
   };
 
   removeCondition(index) {
     this.query.rules.splice(index, 1);
+    this.notify();
   };
 
   addGroup() {
@@ -80,6 +97,7 @@ export class QueryBuilderComponent implements OnInit {
       data:null,
       data2:null
     });
+    this.notify();
   };
 
   selectField = function (rule) {
@@ -92,27 +110,33 @@ export class QueryBuilderComponent implements OnInit {
       }
       this.clearData(rule);
     }
+    this.notify();
   };
 
   clearData(rule) {
     rule.data = '';
     rule.data2 = '';
+    this.notify();
   };
 
   removeGroup() {
     this.parent.removeGroupByIndex(this.index);
+    this.queryChange.emit(this._query);
   };
 
   removeGroupByIndex(index: number){
     this.query.rules.splice(index, 1);
+    this.notify();
   }
 
   getFieldsData(field:string) : FacetValue[]
   {
     return this.searchService.getFacetValues(field);
+
   }
 
   dropDownValueChange(){
+    this.notify();
   }
 }
 

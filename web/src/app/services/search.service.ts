@@ -15,8 +15,29 @@ export class SearchService extends BaseService{
 
   searchResult$ = this.searchResultSource.asObservable();
 
-  public textQuery: string;
-  public paramQuery: SearchQuery = new SearchQuery();
+  private _textQuery: string;
+
+  public get textQuery() : string {
+    return this._textQuery;
+  }
+  public set textQuery(value){
+      this._textQuery = value;
+      this.fullQuery = this.getFullQuery();
+  }
+
+  public _paramQuery: SearchQuery = new SearchQuery();
+  public get paramQuery() : SearchQuery {
+    return this._paramQuery;
+  }
+  public set paramQuery(value){
+    this._paramQuery = value;
+    this.fullQuery = this.getFullQuery();
+  }
+
+  /*** fullQuery can be set explicitely, textQuery,paramQuery not updated ***/
+  public fullQuery: string; //textQuery + paramQuery;
+  public currentQuery: string; //fullQuery after you press search;
+
 
   currentPage: number = 1;
 
@@ -32,7 +53,7 @@ export class SearchService extends BaseService{
     super()
   }
 
-  public getFullQuery(): string{
+  private getFullQuery(): string{
     let result: string = "";
     if(this.textQuery){
       result += this.textQuery;
@@ -55,9 +76,9 @@ export class SearchService extends BaseService{
     return result;
   }
 
-  public callSearch(searchQuery: string ){
-    this.textQuery = searchQuery;
-    this.callSearch1(this.getFullQuery(),1);
+  public callSearch(searchQuery: string = null){
+    this.currentQuery = (null==searchQuery ? this.fullQuery : searchQuery);
+    this.callSearch1(this.currentQuery,1);
   }
 
   public callSearch1(searchQuery: string, page: number ){
@@ -69,7 +90,7 @@ export class SearchService extends BaseService{
     /** TODO: handle error **/
   }
 
-  search(searchQuery: string, page: number): Observable<SearchResult> {
+  private search(searchQuery: string, page: number): Observable<SearchResult> {
     return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.selectedPageSize,this.sortBy,this.sortOrder,(page-1)*15))
       .map(x => this.extractData<SearchResult>(x));
   }
@@ -139,7 +160,9 @@ export class SearchService extends BaseService{
       }
       this.paramQuery.rules.push(rule);
     }
-    this.callSearch(this.textQuery);
+
+    this.fullQuery = this.getFullQuery();
+    this.callSearch();
   }
 
   getFacetValues(facet: string):FacetValue[]{
