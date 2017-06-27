@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 
 import { FrequentlyTerm } from 'app/model/FrequentlyTerm';
 import { DataSetService } from 'app/services/dataset.service';
+import {Router} from "@angular/router";
 
 const cloud = require('d3-cloud');
 
@@ -29,7 +30,7 @@ export class HotwordsComponent implements OnInit {
   private fill: string[];
   private field: string;
 
-  constructor(datasetService: DataSetService) {
+  constructor(datasetService: DataSetService, private router: Router) {
     this.webServiceUrl = datasetService.getWebServiceUrl();
     this.body = d3.select('#' + this.hotwordsName);
     this.fill = d3.schemeCategory20b;
@@ -37,7 +38,7 @@ export class HotwordsComponent implements OnInit {
     this.terms = {
       Omics_description: [],
       Omics_data_protocol: [],
-      Omics_sample_protocol: [] 
+      Omics_sample_protocol: []
     }
   }
 
@@ -71,14 +72,14 @@ export class HotwordsComponent implements OnInit {
     self.terms.Omics_data_protocol = omicsDatap;
     self.terms.Omics_sample_protocol = omicsSamp;
     self.field = '';
-    
+
     self.addWordCloudOrChange();  //draw wordcloud
     self.addInputAndLabel();      //draw form input and label
     self.addWordCloudToolTip();   //draw wordcloud tooltip
 
     // give different namespace after 'resize' to add window listener
     d3.select(window).on('resize.hotwords', function() { self.addWordCloudOrChange() });  //add window resize event listener
-    
+
   }
 
   private addWordCloudToolTip(): void {
@@ -146,7 +147,7 @@ export class HotwordsComponent implements OnInit {
       .attr('for', 'data')
       .append('span')
       .append('span');
-    
+
     d3.select("#hotwords_form").select('input[value=description]').property('checked', true);
 
     d3.select("#hotwords_form")
@@ -205,7 +206,7 @@ export class HotwordsComponent implements OnInit {
       })
       .on("end", function(ws) { self.draw(ws, fontSizePara); })
       .start();
-    
+
   }
 
   private draw(words: any[], fontSizePara: number): void{
@@ -242,9 +243,10 @@ export class HotwordsComponent implements OnInit {
           .duration(500)
           .style("opacity", 0);
 
-        // var searchWord = "\"" + d.label + "\"";
+        var searchWord = "\"" + d.label + "\"";
         // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
         // redirect logic remains to do
+        self.router.navigate(['search'],{ queryParams: { q: searchWord }});
       })
       .on("mousemove", function (d, i) {
         let wordcloud_tooltip = d3.select('#word_cloud_chart_tooltip')

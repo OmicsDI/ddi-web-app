@@ -4,6 +4,7 @@ import { Selection } from 'd3-selection';
 
 import { DataSetService } from '../../../../services/dataset.service';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'repos-omics',
@@ -20,7 +21,7 @@ export class ReposOmicsComponent implements OnInit {
   private genomicsList: string;
   private metabolomicsList: string;
   private transcriptomicsList: string;
-  
+
   private pieChartName = 'chart_repos_omics';
   private body;
   private retryLimitTimes = 2;
@@ -30,9 +31,9 @@ export class ReposOmicsComponent implements OnInit {
   private omicsDataSimple = [];
   private omicsDataNum = [];
 
-  constructor(dataSetService: DataSetService) {
+  constructor(dataSetService: DataSetService, private router: Router ) {
     // this.webServiceUrl = dataSetService.getWebServiceUrl();
-    this.webServiceUrl = "http://www.omicsdi.org/ws/";
+    this.webServiceUrl = dataSetService.getWebServiceUrl();
     this.proteomicsList = dataSetService.getProteomicsList();
     this.metabolomicsList = dataSetService.getMetabolomicsList();
     this.genomicsList = dataSetService.getGenomicsList();
@@ -73,7 +74,7 @@ export class ReposOmicsComponent implements OnInit {
     omicsType.pop();
     omicsType = self.dealCaseSensitiveIds(omicsType);
 
-    
+
     omicsType.sort((a, b) => {
       return a.value - b.value;
     })
@@ -194,7 +195,7 @@ export class ReposOmicsComponent implements OnInit {
       .attr('id', pieChartName + '_formdiv')
       .attr('class', 'center')
       .attr('style', 'width: 180px; position: absolute; bottom: 15px; left:' + (divWidth / 2 - 60) + 'px');
-    
+
     let radioForm = d3.select('#' + pieChartName + '_radio_form');
     if (radioForm.empty()) {
       radioForm = formDiv.append('form');
@@ -240,13 +241,13 @@ export class ReposOmicsComponent implements OnInit {
     d3.select("#" + this.pieChartName + "_radio_form")
       .select('input[value=Resources]')
       .property('checked', true);
-    
+
     let self = this;
     function change() {
       let value = this.value || 'Resources'
         , d: any[]
         , searchWordPre: string;
-      
+
       if (value == 'Omics') {
         d = omicsDataNum;
         searchWordPre = '*:* AND omics_type:"';
@@ -259,12 +260,12 @@ export class ReposOmicsComponent implements OnInit {
 
         self.drawBarGraphic(d, reposDataSimple);
         self.showTip(searchWordPre, reposDataSimple);
-        
+
       }
     }
   }
 
-// 
+//
   private drawBarGraphic(dataNow: any[],dataAddKey: any[]): void {
     let body = d3.select('#' + this.pieChartName);
 
@@ -282,7 +283,7 @@ export class ReposOmicsComponent implements OnInit {
         upper = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
         most = d3.scaleLinear().domain([5001, 80000]).range([rectHeight + 8, 8]).clamp(true),
         color = d3.schemeCategory10;
-    
+
     let svg = body
                 .append("svg")
                 .attr("width", divWidth)
@@ -413,6 +414,8 @@ export class ReposOmicsComponent implements OnInit {
                 searchWord = searchWordPre + "MetabolomicsWorkbench" + '"';
             if (dataAddKey[i].name.toString() == "Expression Atlas Experiments")
                 searchWord = searchWordPre + "ExpressionAtlas" + '"';
+
+            self.router.navigate(['search'],{ queryParams: { q: searchWord }});
             // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
             //---------------------------------------- redirect ----------------------------------------//
         })
@@ -421,7 +424,7 @@ export class ReposOmicsComponent implements OnInit {
   private getLength(name: string, value: string): number {
     let nameLen = name.toString().length
       , valueLen = (value.toString() + ' datasets').length;
-    
+
     return nameLen > valueLen ? nameLen : valueLen;
   }
 
@@ -433,7 +436,7 @@ export class ReposOmicsComponent implements OnInit {
       m.id = m.id.toLowerCase();
       m.value = parseInt(m.value);
 
-      if (singleOmicsType.length <= 0) {  
+      if (singleOmicsType.length <= 0) {
         singleOmicsType.push(m);
       }else {
         let isRepeated = false;

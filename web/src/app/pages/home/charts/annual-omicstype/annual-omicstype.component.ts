@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import * as d3 from 'd3';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-annual-omicstype',
@@ -15,9 +16,9 @@ export class AnnualOmicstypeComponent implements OnInit {
   private web_service_url = "http://www.omicsdi.org/ws/";
   private retryLimitTimes = 2;
 
-  constructor() {
-   
-   }
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit() {
      this.startRequest();
@@ -39,7 +40,7 @@ export class AnnualOmicstypeComponent implements OnInit {
           this.notifyHomeLoader.emit('annual_omicstype');
           ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
           let processedData = this.prepareData(annualData);
-          this.draw(processedData); 
+          this.draw(processedData);
         }
       });
   }
@@ -54,6 +55,7 @@ export class AnnualOmicstypeComponent implements OnInit {
       .on('resize.annual_omicstype', function() { self.drawGraph(processedData) })
   }
   private drawGraph(processedData : any): void {
+    let self = this;
 
     let body = d3.select('#barchart_omicstype_annual');
     let svgProperties: any = this.initSvg(body);
@@ -123,7 +125,7 @@ export class AnnualOmicstypeComponent implements OnInit {
         return y1(parseInt(d["value"]));
       });
 
-    svg.append("path")      
+    svg.append("path")
       .style("stroke", "steelblue")
       .attr("d", valueline(genomicsList));
 
@@ -198,10 +200,12 @@ export class AnnualOmicstypeComponent implements OnInit {
         let searchWord = "*:* AND omics_type:\""
           + AnnualOmicstypeComponent.getName(d["year"], d["value"], annualDataExtends)
           + "\" AND publication_date:\"" + d["year"] + "\"";
-        // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved****/
+
+        console.log("router.navigate>>");
+        self.router.navigate(['search'],{ queryParams: { q: searchWord }});
       });
 
-    svg.append("g")         
+    svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + (height - heightOffset) + ")")
       .call(xAxis);
@@ -225,7 +229,9 @@ export class AnnualOmicstypeComponent implements OnInit {
       })
       .on("click", function (d) {
         var searchWord = "*:* AND omics_type:\"" + d + "\"";
-        // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/ 
+        // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
+        console.log("this.router.navigate");
+        self.router.navigate(['search'],{ queryParams: { q: searchWord }});
       });
 
     let legend_coords = {

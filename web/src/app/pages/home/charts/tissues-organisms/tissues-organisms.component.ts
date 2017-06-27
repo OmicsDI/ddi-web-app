@@ -5,6 +5,7 @@ import { PackLayout } from 'd3';
 import { StatisticsDomainsDetail } from 'app/model/StatisticsDomainsDetail';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
 import { DataSetService } from 'app/services/dataset.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tissues-organisms',
@@ -22,14 +23,14 @@ export class TissuesOrganismsComponent implements OnInit {
 
   private bubChartName = 'chart_tissues_organisms';
   private field = 'Tissues';
-  
+
   private tissues: StatisticsDomainsDetail[];
   private organisms: StatisticsDomainsDetail[];
   private diseases: StatisticsDomainsDetail[];
 
   private bubble: any;
 
-  constructor(datasetService: DataSetService) { 
+  constructor(datasetService: DataSetService, private router: Router) {
     this.webServiceUrl = datasetService.getWebServiceUrl();
     this.retryLimitTimes = 2;
     this.chartsErrorHandler = new ChartsErrorHandler();
@@ -41,7 +42,7 @@ export class TissuesOrganismsComponent implements OnInit {
 
   private startRequest(): void {
     let self = this;
-    
+
     d3.queue()
       .defer(d3.json, this.webServiceUrl + 'statistics/tissues?size=100')
       .defer(d3.json, this.webServiceUrl + 'statistics/organisms?size=100') // geojson points
@@ -55,7 +56,7 @@ export class TissuesOrganismsComponent implements OnInit {
             ChartsErrorHandler.outputErrorInfo(self.bubChartName);
             return;
           }
-          
+
           ChartsErrorHandler.outputGettingInfo(self.bubChartName);
           self.startRequest();
         }else {
@@ -81,7 +82,7 @@ export class TissuesOrganismsComponent implements OnInit {
     let totalTissues = self.tissues.shift()
       , totalOrganisms = self.organisms.shift()
       , totalDiseases = self.diseases.shift();
-    
+
     self.tissues.sort((a, b) => parseInt(a.value) - parseInt(b.value));
     self.organisms.sort((a, b) => parseInt(a.value) - parseInt(b.value));
     self.diseases.sort((a, b) => parseInt(a.value) - parseInt(b.value));
@@ -99,7 +100,7 @@ export class TissuesOrganismsComponent implements OnInit {
       , divWidth: number = parseInt(body.style('width'))
       , divHeight: number = parseInt(body.style('height'))
       , diameter = Math.min(divWidth, divHeight) / 1.15;
-    
+
     body.selectAll("svg").remove();
     let svg = body.append("svg")
           .attr("width", diameter * 1.3)
@@ -109,7 +110,7 @@ export class TissuesOrganismsComponent implements OnInit {
 
     d3.select(window.frameElement)
       .style("height", diameter + "px");
-    
+
     let tooltip: any = document.getElementById("tissue_organism_chart_tooltip");
 
     if (tooltip == null) {
@@ -190,14 +191,14 @@ export class TissuesOrganismsComponent implements OnInit {
         .attr('for', 'Diseases')
         .append('span')
         .append('span');
-    
+
     d3.select("#" + self.bubChartName + "_radio_form")
       .select('input[value=Tissues]')
       .property('checked', true);
 
     d3.select("#" + self.bubChartName + "_radio_form")
       .selectAll('input')
-      .on('change', function(d: any) {  
+      .on('change', function(d: any) {
         console.log(d);
         self.field = d3.select(this).attr('value')    // ignore this exception raised by editor
         self.change();
@@ -267,6 +268,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     searchWord = searchWord_pre + d.data.taxonomyid + '"';
                 }
                 console.log(searchWord)
+                self.router.navigate(['search'],{ queryParams: { q: searchWord }});
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 // -------------------------------  redirect --------------------------------------------
             });
@@ -282,14 +284,14 @@ export class TissuesOrganismsComponent implements OnInit {
           .text(function(d: any) {
             return d.r / d.data.className.length < 2.5 ? '' : d.data.className;
           })
-        
+
         node_inside.on('mousemove', function(d: any) {
           let tooltip = d3.select('#tissue_organism_chart_tooltip');
 
           tooltip.transition()
             .duration(200)
             .style('opacity', .9);
-          
+
           let mouse_coords = d3.mouse(document.getElementById('tissue_organism_chart_tooltip').parentElement);
 
           tooltip.html("<div><strong>" + d.data.className + ": </strong></div><div>" + format(d.data.value_before_log_calc) + "&nbsp;datasets</div>")
