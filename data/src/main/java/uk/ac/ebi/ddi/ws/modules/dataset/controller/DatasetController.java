@@ -46,8 +46,9 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import org.springframework.data.domain.Page;
 import static uk.ac.ebi.ddi.ws.util.WsUtilities.*;
+import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
 
 
 @Api(value = "dataset", description = "Retrieve the information about the dataset including search functionalities", position = 0)
@@ -82,6 +83,8 @@ public class DatasetController {
     @Autowired
     FacetSettingsRepository facetSettingsRepository;
 
+    @Autowired
+    IMostAccessedDatasetService mostAccessedDatasetService;
 
     //@CrossOrigin
     @ApiOperation(value = "Search for datasets in the resource", position = 1, notes = "retrieve datasets in the resource using different queries")
