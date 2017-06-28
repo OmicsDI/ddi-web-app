@@ -268,26 +268,21 @@ public class DatasetController {
             @RequestParam(value = "size", required = true, defaultValue = "20") int size
     ) {
 
+
         DataSetResult result = new DataSetResult();
         List<DatasetSummary> datasetSummaryList = new ArrayList<>();
-        Map<Tuple<String, String>, Integer> mostAccesedIds = eventService.moreAccessedDatasetResource(size);
-        Map<String, Set<String>> currentIds = new HashMap<>();
-
-        for(Tuple<String, String> dataset: mostAccesedIds.keySet()){
-            Set<String> ids = currentIds.get(dataset.getValue());
-            if(ids == null)
-                ids = new HashSet<>();
-            ids.add(dataset.getKey());
-            currentIds.put(dataset.getValue(), ids);
-        }
-        for(String domain: currentIds.keySet()){
-                QueryResult datasetResult = dataWsClient.getDatasetsById(domain, Constants.DATASET_DETAIL, currentIds.get(domain));
-                datasetSummaryList.addAll(transformDatasetSummary(datasetResult, domain, mostAccesedIds));
+        Page<MostAccessedDatasets> datasets = mostAccessedDatasetService.readAll(0,size);
+        for(MostAccessedDatasets dataset:datasets.getContent())
+        {
+            DatasetSummary datasetSummary = new DatasetSummary();
+            datasetSummary.setTitle(dataset.getName());
+            datasetSummary.setVisitCount(dataset.getTotal());
+            datasetSummary.setSource(Constants.Database.retriveSorlName(dataset.getDatabase()));
+            datasetSummary.setId(dataset.getAccession());
+            datasetSummaryList.add(datasetSummary);
         }
         result.setDatasets(datasetSummaryList);
-        result.setCount(datasetSummaryList.size());
-
-        //eventService.moreAccessedDataset(20);
+        result.setCount(size);
         return result;
     }
 

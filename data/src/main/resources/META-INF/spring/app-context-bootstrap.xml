@@ -71,6 +71,7 @@
     <bean id="enrichmentService" class="uk.ac.ebi.ddi.service.db.service.enrichment.EnrichmentInfoService"/>
     <bean id="datasetStatInfoService" class="uk.ac.ebi.ddi.service.db.service.similarity.DatasetStatInfoService"/>
     <bean id="datasetSimilarsService" class="uk.ac.ebi.ddi.service.db.service.dataset.DatasetSimilarsService" />
+    <bean id="mostAccessedDatasetService" class="uk.ac.ebi.ddi.service.db.service.dataset.MostAccessedDatasetService"/>
 
     <bean class="uk.ac.ebi.ddi.service.db.utils.CascadingMongoEventListener" />
 
