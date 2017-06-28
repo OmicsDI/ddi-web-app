@@ -150,4 +150,8 @@ export class ProfileComponent implements OnInit {
 
     this.save();
   }
+
+  isMy(): boolean{
+    return (null==this.username)
+  }
 }

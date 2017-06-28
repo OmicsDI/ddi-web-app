@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from "@angular/http";
 import {AppConfig} from "../app.config";
+import {Observable} from "rxjs/Observable";
+import {DomainStat} from "../model/DomainStat";
 
 @Injectable()
 export class StatisticsService {
@@ -12,5 +14,10 @@ export class StatisticsService {
     return this.http.get(this.appConfig.getStatisticsUrl())
              .map(res => res.json())
              .toPromise();
+  }
+
+  public getDatasetStats(): Observable<DomainStat[]>{
+    return this.http.get(this.appConfig.getDatasetStatsUrl())
+      .map(res => res.json());
   }
 }

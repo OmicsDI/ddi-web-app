@@ -121,6 +121,10 @@ export class SearchService extends BaseService{
     this.selectedFacets[id].splice(this.selectedFacets[id].indexOf(value),1);
   }
 
+  unselectFacets(){
+    this.selectedFacets = new Object();
+  }
+
   isFacetSelected(id:string, value:string):boolean{
     if(null == this.selectedFacets[id])
       return false;

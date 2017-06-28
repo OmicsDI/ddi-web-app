@@ -3,6 +3,8 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { DatabaseListService } from '../../services/database-list.service';
 import { Database } from '../../model/Database';
 import { environment } from '../../../environments/environment';
+import {StatisticsService} from "../../services/statistics.service";
+import {DomainStat} from "../../model/DomainStat";
 
 @Component({
   selector: 'app-database',
@@ -11,15 +13,17 @@ import { environment } from '../../../environments/environment';
 })
 export class DatabaseComponent implements OnInit {
   public databases: Database[];
+  public domainStats: DomainStat[];
   public p: number = 1;
-  public config = { 
-    itemsPerPage: 8, 
+  public config = {
+    itemsPerPage: 8,
     currentPage: this.p
   };
   public url: string;
 
   constructor(
     private databaseListService: DatabaseListService,
+    private statisticsService: StatisticsService,
     private loadingService: SlimLoadingBarService) {
       this.loadingService.start();
       this.url = environment.userServiceUrl;
@@ -27,6 +31,7 @@ export class DatabaseComponent implements OnInit {
 
   ngOnInit() {
     this.getDBs();
+    this.getDBStats();
   }
 
   getDBs() {
@@ -39,5 +44,23 @@ export class DatabaseComponent implements OnInit {
           this.loadingService.complete();
         }
       )
+  }
+
+  getDBStats(){
+    this.statisticsService
+      .getDatasetStats()
+      .subscribe(
+        result => {
+          this.domainStats = result;
+        }
+      )
+  }
+
+  getDatasetCount(source: string){
+    for(var d of this.domainStats){
+      if(d.domain.name.toLowerCase() == source.toLowerCase())
+        return d.domain.value;
+    }
+   return source;
   }
 }

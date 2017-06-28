@@ -4,8 +4,7 @@ import { StatisticsService } from 'app/services/statistics.service';
 @Component({
   selector: 'app-statistics-panel',
   templateUrl: './statistics-panel.component.html',
-  styleUrls: ['./statistics-panel.component.css'],
-  providers: [StatisticsService]
+  styleUrls: ['./statistics-panel.component.css']
 })
 export class StatisticsPanelComponent implements OnInit {
 

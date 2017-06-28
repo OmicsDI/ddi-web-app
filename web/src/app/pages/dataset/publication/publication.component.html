@@ -18,7 +18,7 @@
         {{d.title}}</h4>
       <p style="margin-right:20px" class="align-justify">
         <span *ngFor="let a of d.authors">
-        <a class="ng-binding" href="/search?q={{a}}">
+        <a [routerLink]="['/search']" [queryParams]="{q:a}">
           {{a}}
         </a>&nbsp;
         </span></p>
@@ -28,10 +28,10 @@
     <hr style="margin-right:30px">
     <p *ngIf="!d.id" class="align-justify" style="">
       Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to
-      <a href="http://www.ncbi.nlm.nih.gov/pubmed/?term=26404089">
+      <a href="http://www.ncbi.nlm.nih.gov/pubmed/?term={{d.id}}">
         PUBMED
       </a> or
-      <a href="http://www.altmetric.com/details.php?citation_id=4555849">Altmetric</a>.
+      <a href="http://www.altmetric.com/details.php?citation_id={{d.id}}">Altmetric</a>.
     </p>
     <div style="margin-right: 20px;"  class="">
       <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding">

@@ -16,15 +16,16 @@
     </div>
   </div>
 
-  <div class="rightNav2222" style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;">
-    <ul class="rightNavMenu">
+  <div class="rightNav2222"  style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;">
+    <ul class="rightNavMenu" *ngIf="isMy()">
       <li class=""><a [routerLink]="['/profile']">Profile</a></li>
       <li class=""><a [routerLink]="['/profile/update']">Edit Profile</a></li>
       <li class=""><a [routerLink]="['/profile/claimed']">Edit Datasets</a></li>
       <li class=""><a [routerLink]="['/profile/feedback']">Feedback</a></li>
     </ul>
+
     <app-profile-contacts></app-profile-contacts>
 
-    <app-profile-connections [profile]="profileService.profile"></app-profile-connections>
+    <app-profile-connections *ngIf="isMy()" [profile]="profileService.profile"></app-profile-connections>
   </div>
 </div>

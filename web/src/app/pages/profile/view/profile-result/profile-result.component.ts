@@ -17,6 +17,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
   @Input() profile: Profile;
   @Output() change = new EventEmitter();
 
+
   constructor(private profileService: ProfileService
               ,private dataSetService: DataSetService
     , private appConfig: AppConfig

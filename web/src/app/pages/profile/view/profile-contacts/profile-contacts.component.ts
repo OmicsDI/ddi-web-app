@@ -20,6 +20,9 @@ export class ProfileContactsComponent implements OnInit {
   }
 
   contactInfoPresent():boolean{
+    if(!this.profileService.profile)
+      return false;
+
     return this.profileService.profile.isPublic || `${this.profileService.profile.affiliation}${this.profileService.profile.email}${this.profileService.profile.homepage}${this.profileService.profile.orcid}`!="";
   }
 }

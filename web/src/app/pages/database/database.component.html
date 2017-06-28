@@ -15,7 +15,7 @@
             </div>
 
             <div class="expert-db-card-logo">
-              <a [title]="db.title" 
+              <a [title]="db.title"
                  [href]="db.source"
                  class="pull-right  image_a">
                 <img [alt]="db.imgAlt"
@@ -32,7 +32,7 @@
 
             <div class="panel-footer small">
               <a rel="nofollow"
-                 [href]="db.searchUrl">datasets</a>
+                 [href]="db.searchUrl">{{ this.getDatasetCount(db.databaseName) }} datasets</a>
             </div>
           </div>
         </div>
@@ -43,10 +43,10 @@
   <pagination-controls (pageChange)="p = $event"
                        previousLabel=""
                        nextLabel=""
-                       *ngIf="databases" 
+                       *ngIf="databases"
                        class="my-pagination">
   </pagination-controls>
 </div>
-    
+
 <!--</div>-->
 

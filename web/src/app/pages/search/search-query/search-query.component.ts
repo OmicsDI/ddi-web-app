@@ -25,6 +25,7 @@ export class SearchQueryComponent implements OnInit {
   showAllClick(){
     this.searchService.paramQuery = new SearchQuery();
     this.searchService.textQuery = null;
+    this.searchService.unselectFacets();
     this.searchService.callSearch("*:*");
   }
 

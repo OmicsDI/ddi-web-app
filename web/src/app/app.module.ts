@@ -99,6 +99,7 @@ import { UpdateProfileComponent } from './pages/profile/update-profile/update-pr
 import { ProfileDisqusComponent } from './pages/profile/profile-disqus/profile-disqus.component';
 import {FeedbackComponent} from "./controls/feedback/feedback.component";
 import {FeedbackService} from "./services/feedback.service";
+import {StatisticsService} from "./services/statistics.service";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -221,7 +222,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , DatabaseListService
     , SimilarMoleculeService
     , FeedbackService
-    , AppConfig],
+    , AppConfig
+    , StatisticsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

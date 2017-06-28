@@ -12,7 +12,7 @@
            style=" position:relative; left: 0px; opacity: 50; visibility: visible;"
            [checked]="isChecked(v.value)"
            (click)="checkBoxClicked(v.value, $event)" >
-    <a (click)="labelClicked(v.value, $event, checkbox.checked)" href="" class="metasearch-facet-link ng-binding">{{v.label}}
+    <a (click)="labelClicked(v.value, $event, checkbox.checked)" href="" class="metasearch-facet-link ng-binding"><span style="overflow: hidden;white-space: nowrap; text-overflow: ellipsis;max-width:120px;width:100px;">{{v.label}}</span>
       <small class="ng-binding">({{v.count}})</small>
     </a>
   </li>
