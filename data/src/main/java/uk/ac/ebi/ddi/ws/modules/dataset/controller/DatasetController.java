@@ -47,6 +47,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import static uk.ac.ebi.ddi.ws.util.WsUtilities.*;
 import uk.ac.ebi.ddi.service.db.model.dataset.MostAccessedDatasets;
@@ -283,6 +285,8 @@ public class DatasetController {
             datasetSummary.setVisitCount(dataset.getTotal());
             datasetSummary.setSource(Constants.Database.retriveSorlName(dataset.getDatabase()));
             datasetSummary.setId(dataset.getAccession());
+            List<String> omics_type = Collections.list(Collections.enumeration(dataset.getAdditional().get(Constants.OMICS_TYPE_FIELD)));
+            datasetSummary.setOmicsType(omics_type);
             datasetSummaryList.add(datasetSummary);
         }
         result.setDatasets(datasetSummaryList);
