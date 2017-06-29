@@ -18,11 +18,11 @@ public class DatabaseDetail implements Serializable {
 
     String title;
 
-    String source;
+    String sourceUrl;
 
     String imgAlt;
 
-    String searchUrl;
+    String repository;
 
     String description;
 
@@ -45,12 +45,12 @@ public class DatabaseDetail implements Serializable {
         this.title = title;
     }
 
-    public String getSource() {
-        return source;
+    public String getRepository() {
+        return repository;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setRepository(String source) {
+        this.repository = source;
     }
 
     public String getImgAlt() {
@@ -61,12 +61,12 @@ public class DatabaseDetail implements Serializable {
         this.imgAlt = imgAlt;
     }
 
-    public String getSearchUrl() {
-        return searchUrl;
+    public String getSourceUrl() {
+        return sourceUrl;
     }
 
-    public void setSearchUrl(String searchUrl) {
-        this.searchUrl = searchUrl;
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 
     public String getDescription() {

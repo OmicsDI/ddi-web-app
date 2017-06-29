@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  webServiceUrl : 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
+  webServiceUrl : 'http://localhost:8080/data-1.0-SNAPSHOT',
   userServiceUrl : 'http://localhost:8080/profile-1.0-SNAPSHOT/api/'
 };

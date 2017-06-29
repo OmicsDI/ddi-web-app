@@ -4,9 +4,9 @@
 
 export class Database {
   title: string;
-  source: string;
+  sourceUrl: string;
   imgAlt: string;
-  searchUrl: string;
+  repository: string;
   description: string;
   image: { $binary: string, $type:string };
 }

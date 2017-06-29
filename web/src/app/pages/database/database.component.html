@@ -19,7 +19,7 @@
                  [href]="db.source"
                  class="pull-right  image_a">
                 <img [alt]="db.imgAlt"
-                     [src]="url + 'database/' + db.databaseName + '/picture'"
+                     [src]="appConfig.getDatabaseImageUrl(db.databaseName)"
                      class="img-rounded hvr-grow"
                      style="max-width: 130px;max-height: 100px">
               </a>
@@ -32,7 +32,7 @@
 
             <div class="panel-footer small">
               <a rel="nofollow"
-                 [href]="db.searchUrl">{{ this.getDatasetCount(db.databaseName) }} datasets</a>
+                 [routerLink]="['/search']" [queryParams]="{q:'*:* AND repository:' + db.repository}">{{ this.getDatasetCount(db.databaseName) }} datasets</a>
             </div>
           </div>
         </div>

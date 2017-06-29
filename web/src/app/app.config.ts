@@ -70,6 +70,9 @@ export class AppConfig{
   getDatabasesUrl(){
     return `${environment.webServiceUrl}database/all?=${Math.random()}`;
   }
+  getDatabaseImageUrl(databaseName: string){
+    return `${environment.webServiceUrl}database/${databaseName}/picture?=${Math.random()}`;
+  }
   getLoginUrl(provider: string, scope: string){
     return `${environment.userServiceUrl.replace("api","auth")}${provider}?scope=${scope}`;
   }

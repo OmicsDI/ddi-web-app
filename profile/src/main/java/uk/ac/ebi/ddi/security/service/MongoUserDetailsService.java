@@ -13,6 +13,7 @@ import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by user on 3/12/2017.
@@ -28,9 +29,9 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
         this.mongoUserDetailsRepository = mongoUserDetailsRepository;
     }
 
-    public MongoUser findById(Long Id){
+    public MongoUser findById(String Id){
 
-        MongoUser mongoUser = mongoUserDetailsRepository.findByUserId(Id.toString());
+        MongoUser mongoUser = mongoUserDetailsRepository.findByUserId(Id);
 
         if(null==mongoUser)
             return null;
@@ -71,7 +72,7 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
         String UserId = u.getUserId();
 
         if(null==UserId){
-            Long newUserId = 0L;
+            /*** Long newUserId = 0L;
             PageRequest request = new PageRequest(0, 1, new Sort(Sort.Direction.DESC, "userId"));
             List<MongoUser> foundUsers = mongoUserDetailsRepository.findByUserIdNotNull(request).getContent();
             if(foundUsers.size() > 0) {
@@ -80,7 +81,8 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
                     newUserId = Long.parseLong(mongoUser.getUserId()) + 1;
                 }
             }
-            UserId = newUserId.toString();
+            UserId = newUserId.toString(); ***/
+            UserId = UUID.randomUUID().toString();
             u.setUserId(UserId);
         }
         //TODO: roles
@@ -109,6 +111,6 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
 
     @Override
     public SocialUserDetails loadUserByUserId(String s) throws UsernameNotFoundException {
-        return findById(Long.parseLong(s));
+        return findById(s);
     }
 }

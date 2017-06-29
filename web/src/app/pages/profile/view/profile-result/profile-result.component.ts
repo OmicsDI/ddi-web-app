@@ -44,6 +44,10 @@ export class ProfileResultComponent implements OnInit, OnChanges {
   }
 
   reloadDataSets(){
+    if(!this.profile)
+      return;
+    if(!this.profile.dataSets)
+      return;
     Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
       y => {this.dataSets = y}
     )
@@ -51,12 +55,13 @@ export class ProfileResultComponent implements OnInit, OnChanges {
 
 
   delete($event){
-    console.log(`deleting ${$event.source} ${$event.id}`)
+    console.log(`finding ${$event.source} ${$event.id}`)
     let i: number = this.profile.dataSets.findIndex( x => x.source == $event.source && x.id == $event.id);
     if(i!=-1){
+      console.log(`deleting ${$event.source} ${$event.id}`)
       this.profile.dataSets.splice(i,1);
     }
     this.change.emit({});
-    this.reloadDataSets();
+    //this.reloadDataSets();
   }
 }

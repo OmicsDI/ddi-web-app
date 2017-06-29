@@ -44,7 +44,6 @@ public class MongoUser implements SocialUserDetails {
 
     String imageUrl;
 
-    String SomethingNew;
 
     byte[] image;
 
@@ -59,14 +58,6 @@ public class MongoUser implements SocialUserDetails {
     }
 
     UserShort[] coauthors;
-
-    public String getSomethingNew() {
-        return SomethingNew;
-    }
-
-    public void setSomethingNew(String somethingNew) {
-        SomethingNew = somethingNew;
-    }
 
     public String getImageUrl() {
         return imageUrl;

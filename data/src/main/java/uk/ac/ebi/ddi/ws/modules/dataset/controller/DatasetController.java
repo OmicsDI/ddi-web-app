@@ -27,6 +27,7 @@ import uk.ac.ebi.ddi.service.db.model.logger.DatasetResource;
 import uk.ac.ebi.ddi.service.db.model.logger.HttpEvent;
 import uk.ac.ebi.ddi.service.db.service.dataset.IDatasetService;
 import uk.ac.ebi.ddi.service.db.service.dataset.IDatasetSimilarsService;
+import uk.ac.ebi.ddi.service.db.service.dataset.IMostAccessedDatasetService;
 import uk.ac.ebi.ddi.service.db.service.logger.DatasetResourceService;
 import uk.ac.ebi.ddi.service.db.service.logger.HttpEventService;
 import uk.ac.ebi.ddi.service.db.utils.Tuple;

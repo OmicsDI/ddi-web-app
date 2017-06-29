@@ -208,7 +208,7 @@ public class Constants {
     };
 
     public enum Database{
-        PRIDE("pride", "Pride"),
+        PRIDE("Pride", "pride"),
         PEPTIDEATLAS("PeptideAtlas", "peptide_atlas"),
         MASSIVE("Massive", "massive"),
         METABOLIGHTS("MetaboLights", "metabolights_dataset"),
@@ -220,9 +220,9 @@ public class Constants {
         EXPRESSION_ATLAS("ExpressionAtlas", "atlas-experiments"),
         METABOLOMICSWORKBENCH("MetabolomicsWorkbench", "metabolomics_workbench"),
         BIOMODELS("BioModels Database","biomodels"),
-        LINCS("LINCS","LINCS"),
-        PAXDB("PAXDB","PAXDB"),
-        JPOST("JPOST Repository","JPOST");
+        LINCS("LINCS","lincs"),
+        PAXDB("PAXDB","paxdb"),
+        JPOST("JPOST Repository","jpost");
 
         String databaseName;
         String solarName;

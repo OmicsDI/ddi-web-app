@@ -17,7 +17,7 @@ export class ClaimedComponent implements OnInit {
   }
 
   updateProfile(){
-    this.profileService.updateUser(this.profileService.profile).subscribe();
+    this.profileService.updateUser().subscribe();
   }
 
 }

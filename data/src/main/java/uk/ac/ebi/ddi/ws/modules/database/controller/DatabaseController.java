@@ -70,8 +70,8 @@ public class DatabaseController {
             }
             databaseDetail.setImage(imgBytes);
             databaseDetail.setImgAlt(database.getString("imgAlt"));
-            databaseDetail.setSearchUrl(database.getString("searchUrl"));
-            databaseDetail.setSource(database.getString("source"));
+            databaseDetail.setSourceUrl(database.getString("sourceUrl"));
+            databaseDetail.setRepository(database.getString("repository"));
             databaseDetail.setDescription(database.getString("description"));
             databaseDetailService.saveDatabase(databaseDetail);
         }

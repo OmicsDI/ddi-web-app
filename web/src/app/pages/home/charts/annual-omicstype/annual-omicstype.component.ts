@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import * as d3 from 'd3';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
 import {Router} from "@angular/router";
+import {DataSetService} from "../../../../services/dataset.service";
 
 @Component({
   selector: 'app-annual-omicstype',
@@ -16,12 +17,13 @@ export class AnnualOmicstypeComponent implements OnInit {
   private web_service_url = "http://www.omicsdi.org/ws/";
   private retryLimitTimes = 2;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private dataSetService: DataSetService) {
 
   }
 
   ngOnInit() {
      this.startRequest();
+     this.web_service_url = this.dataSetService.getWebServiceUrl();
   }
   private startRequest() {
     d3.queue()

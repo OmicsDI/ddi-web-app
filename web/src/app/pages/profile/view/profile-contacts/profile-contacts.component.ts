@@ -12,17 +12,19 @@ export class ProfileContactsComponent implements OnInit {
   constructor(private appConfig: AppConfig,
               private profileService: ProfileService) { }
 
+  @Input() profile: Profile = new Profile();
+
   ngOnInit() {
   }
 
   publicProfileUrl(): string{
-    return this.appConfig.getPublicProfileUrl(this.profileService.profile);
+    return this.appConfig.getPublicProfileUrl(this.profile);
   }
 
   contactInfoPresent():boolean{
     if(!this.profileService.profile)
       return false;
 
-    return this.profileService.profile.isPublic || `${this.profileService.profile.affiliation}${this.profileService.profile.email}${this.profileService.profile.homepage}${this.profileService.profile.orcid}`!="";
+    return this.profile.isPublic || `${this.profile.affiliation}${this.profileService.profile.email}${this.profileService.profile.homepage}${this.profileService.profile.orcid}`!="";
   }
 }

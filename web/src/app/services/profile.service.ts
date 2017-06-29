@@ -1,6 +1,6 @@
 import { Injectable }       from '@angular/core';
 import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Observable, ObservableInput} from 'rxjs/Observable';
 import { Profile } from '../model/Profile';
 import { AuthHttp } from 'angular2-jwt';
 import {AppConfig} from "../app.config";
@@ -26,8 +26,8 @@ export class ProfileService extends BaseService {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
   }
 
-  getProfile (username: string = null): Observable<Profile> {
-    return this.http.get(this.appConfig.getProfileUrl(username)) //,config //{ withCredentials: true }
+  getProfile(): Observable<Profile> {
+    return this.http.get(this.appConfig.getProfileUrl(null)) //,config //{ withCredentials: true }
         .map(x => {
           this.profile = this.extractData<Profile>(x);
           if(!this.profile){
@@ -40,6 +40,21 @@ export class ProfileService extends BaseService {
           return this.profile;
         })
         .catch(this.handleError);
+  }
+
+  getPublicProfile(username): Observable<Profile>{
+    var _profile;
+    return this.http.get(this.appConfig.getProfileUrl(username)) //,config //{ withCredentials: true }
+      .map(x => {
+        _profile = this.extractData<Profile>(x);
+        if(!_profile){
+          console.log("public profile not received");
+        }else {
+          console.log("public profile received:" + _profile.userId);
+        }
+        return _profile;
+      })
+      .catch(this.handleError);
   }
 
   getUserConnections (userId: string): Observable<string[]>{
@@ -61,7 +76,7 @@ export class ProfileService extends BaseService {
         .catch(this.handleError);
   }
 
-  public updateUser(profile:Profile){
+  public updateUser(): Observable<string>{
 
     let headers = new Headers();
     /**
@@ -72,12 +87,11 @@ export class ProfileService extends BaseService {
       headers.append('X-AUTH-TOKEN', authToken);
     }**/
 
-    this.profile = profile;
-
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...
-    return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), config)
-      .map(res => "");
+    console.log("deleting user with datasets:" + this.profile.dataSets.length);
+    return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(this.profile), config)
+      .map(res => "OK");
   }
 
   private handleError (error: Response | any) {

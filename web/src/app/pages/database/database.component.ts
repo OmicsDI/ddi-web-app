@@ -5,6 +5,7 @@ import { Database } from '../../model/Database';
 import { environment } from '../../../environments/environment';
 import {StatisticsService} from "../../services/statistics.service";
 import {DomainStat} from "../../model/DomainStat";
+import {AppConfig} from "../../app.config";
 
 @Component({
   selector: 'app-database',
@@ -24,7 +25,8 @@ export class DatabaseComponent implements OnInit {
   constructor(
     private databaseListService: DatabaseListService,
     private statisticsService: StatisticsService,
-    private loadingService: SlimLoadingBarService) {
+    private loadingService: SlimLoadingBarService,
+    private appConfig: AppConfig) {
       this.loadingService.start();
       this.url = environment.userServiceUrl;
     }

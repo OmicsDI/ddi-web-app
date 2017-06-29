@@ -80,7 +80,6 @@ import { ClaimAllButtonComponent } from './controls/claim-all-button/claim-all-b
 import { SearchQueryComponent } from './pages/search/search-query/search-query.component';
 import { TermsComponent } from './pages/terms/terms.component';
 import { ProfileResultComponent } from './pages/profile/view/profile-result/profile-result.component';
-import { ProfilePagerComponent } from './pages/profile/view/profile-pager/profile-pager.component';
 import { ProfileTotalComponent } from './pages/profile/view/profile-total/profile-total.component';
 import { ProfileInfoComponent } from './pages/profile/view/profile-info/profile-info.component';
 import { ProfileCoauthorsComponent } from './pages/profile/view/profile-coauthors/profile-coauthors.component';
@@ -168,7 +167,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SearchQueryComponent,
     TermsComponent,
     ProfileResultComponent,
-    ProfilePagerComponent,
     ProfileTotalComponent,
     ProfileInfoComponent,
     ProfileCoauthorsComponent,

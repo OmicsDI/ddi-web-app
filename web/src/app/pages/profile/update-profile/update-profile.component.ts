@@ -69,19 +69,17 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   submitClicked() {
-    this.save();
-    //this.editMode = false;
-    this.router.navigate(["/profile"]);
+    this.profileService.updateUser().subscribe();
+    var self = this;
+    setTimeout(function() {
+      self.router.navigate(["/profile"]);
+    }, 1000);
 
   }
+
   cancelClicked() {
     //this.editMode = false;
+    this.profileService.getProfile();
+    this.router.navigate(["/profile"]);
   }
-
-  save() {
-    var result;
-    result = this.profileService.updateUser(this.profileService.profile);
-    result.subscribe(); //data => this.router.navigate(['users']));
-  }
-
 }

@@ -64,48 +64,47 @@ export class ProfileComponent implements OnInit {
   getProfile(username: string  = null){
     console.log("current username:" + username);
 
-    this.profileService.getProfile(username)
-      .subscribe(
-        profile => {
-          console.log('getting profile')
-
-          this.profileX = profile;
-          this.name = profile.userName;
-          this.dataSetDetails = [];
-
-          this.userId =  profile.userId;
-          //this.getConnections(this.userId);
-          //this.getCoAuthors(this.userId);
-
-          this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
-
-          this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+    if(username){
+      this.profileService.getPublicProfile(username)
+        .subscribe(
+          profile => {
+            this.profileX = profile;
             this.profileImageUrl = this.getProfileImageUrl();
-          };
+          }
+        )
+    }else{
+      this.profileService.getProfile()
+        .subscribe(
+          profile => {
+            console.log('getting profile')
 
-          this.profileImageUrl = this.getProfileImageUrl();
-        }
-      );
+            this.profileX = profile;
+            this.name = profile.userName;
+            this.dataSetDetails = [];
+
+            this.userId =  profile.userId;
+            //this.getConnections(this.userId);
+            //this.getCoAuthors(this.userId);
+
+            this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
+
+            this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+              this.profileImageUrl = this.getProfileImageUrl();
+            };
+
+            this.profileImageUrl = this.getProfileImageUrl();
+          }
+        );
+    }
   }
 
-  editClicked() {
-    this.editMode = true;
-  }
-  submitClicked() {
-    this.save();
-    this.editMode = false;
-  }
-  cancelClicked() {
-    this.editMode = false;
-  }
 
+  /*
   save() {
     var result;
-
-    result = this.profileService.updateUser(this.profileX);
-
+    result = this.profileService.updateUser();
     result.subscribe(); //data => this.router.navigate(['users']));
-  }
+  }*/
 
   checkAll(ev) {
     console.log("checking select all" + ev);
@@ -143,12 +142,6 @@ export class ProfileComponent implements OnInit {
         this.uploader.uploadAll();
       }, 100);
     }
-  }
-
-  updateProfile(){
-    console.log("updateProfile called");
-
-    this.save();
   }
 
   isMy(): boolean{
