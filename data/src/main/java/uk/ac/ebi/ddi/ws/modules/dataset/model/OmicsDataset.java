@@ -40,7 +40,7 @@ public class OmicsDataset implements Serializable {
         this.dates = new ArrayList<OmicsDate>(convert(dataset.getDates()));
         this.additionals = new ArrayList<Additional>(convertAdditional(dataset.getAdditional()));
         this.crossReferences = new ArrayList<>(convertRef(dataset.getCrossReferences()));
-        this.isClaimable = dataset.isClaimed();
+        this.isClaimable = dataset.isClaimable();
 
 
     }

@@ -409,7 +409,7 @@ public class DatasetController {
 
             datasetDetail.setDescription((inputDataset.getDescription() != null) ? inputDataset.getDescription() : null);
 
-            datasetDetail.setClaimable(inputDataset.isClaimed());
+            datasetDetail.setClaimable(inputDataset.isClaimable());
 
             Set<String> omics_type = inputDataset.getAdditional().get("omics_type");
 
