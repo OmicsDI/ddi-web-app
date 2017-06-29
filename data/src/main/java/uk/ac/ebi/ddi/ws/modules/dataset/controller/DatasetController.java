@@ -403,7 +403,7 @@ public class DatasetController {
 
             datasetDetail.setId(argDataset.getAccession());
 
-            datasetDetail.setSource(inputDataset.getDatabase());
+            datasetDetail.setSource(Constants.Database.retriveSorlName(argDataset.getDatabase()));
 
             datasetDetail.setName(inputDataset.getName());
 
