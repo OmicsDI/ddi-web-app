@@ -28,7 +28,7 @@ public class OmicsDataset implements Serializable {
 
     private ArrayList<Ref> crossReferences;
 
-    private boolean isClaimed;
+    private boolean isClaimable;
 
     public OmicsDataset(){}
 
@@ -40,7 +40,7 @@ public class OmicsDataset implements Serializable {
         this.dates = new ArrayList<OmicsDate>(convert(dataset.getDates()));
         this.additionals = new ArrayList<Additional>(convertAdditional(dataset.getAdditional()));
         this.crossReferences = new ArrayList<>(convertRef(dataset.getCrossReferences()));
-        this.isClaimed = dataset.isClaimed();
+        this.isClaimable = dataset.isClaimed();
 
 
     }
@@ -131,11 +131,11 @@ public class OmicsDataset implements Serializable {
         this.crossReferences = crossReferences;
     }
 
-    public boolean isClaimed() {
-        return isClaimed;
+    public boolean isClaimable() {
+        return isClaimable;
     }
 
-    public void setClaimed(boolean claimed) {
-        isClaimed = claimed;
+    public void setClaimable(boolean claimable) {
+        isClaimable = claimable;
     }
 }
