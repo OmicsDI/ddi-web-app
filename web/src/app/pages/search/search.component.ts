@@ -31,5 +31,14 @@ export class SearchComponent implements OnInit {
         this.searchService.callSearch("*:*");
       }
     })
+
+    setTimeout(() => {
+      this._dataLoaded = true;
+    }, 500);
+  }
+
+  _dataLoaded : boolean = false;
+  dataLoaded(): boolean{
+    return this._dataLoaded;
   }
 }

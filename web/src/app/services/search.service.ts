@@ -96,16 +96,16 @@ export class SearchService extends BaseService{
   }
 
   page(page: number){
-    this.callSearch1(this.getFullQuery(), page); //page
+    this.callSearch1(this.currentQuery, page); //page
   }
 
   sort(){
     this.currentPage = 1;
-    this.callSearch(this.textQuery); //page
+    this.callSearch(); //page
   }
 
   changePageSize(){
-    this.callSearch1(this.getFullQuery(),1);
+    this.callSearch1(this.currentQuery,1);
   }
 
   selectedFacets: Object = new Object; //string=>string[]

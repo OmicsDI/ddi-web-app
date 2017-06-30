@@ -7,6 +7,10 @@ export class BaseService {
  constructor(){}
 
  protected extractData<T>(res: Response): T {
+    if(""==res.text()){
+      return null;
+    }
+
     let body = res.json();
     var result: T;
     result = (body || {}) as T;

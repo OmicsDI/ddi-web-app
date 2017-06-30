@@ -18,6 +18,9 @@ public interface MongoUserDetailsRepository extends PagingAndSortingRepository<M
     @Query("{userName: ?0}")
     MongoUser findByName(String name);
 
+    @Query("{_id: ?0, 'isPublic':true}")
+    MongoUser findPublicById(String name);
+
     @Query("{UserId: ?0}")
     MongoUser findByUserId(String UserId);
 

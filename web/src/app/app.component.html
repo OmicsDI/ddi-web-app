@@ -16,7 +16,7 @@
             <ul class="dropdown-menu">
               <li><a href="http://blog.omicsdi.org/" alt="Help">Omics Help</a></li>
               <li><a href="/about" alt="About">About Omicsdi</a></li>
-              <li><a data-icon="\" class="icon icon-static" href="http://www.ebi.ac.uk/support/index.php?query=omicsdi" alt="Feedback">Feedback</a></li>
+              <li *ngIf="auth.loggedIn()"><a data-icon="\" class="icon icon-static" routerLink="/profile/feedback" alt="Feedback">Feedback</a></li>
             </ul>
           </li>
           <!-- li *ngIf="auth.loggedIn()"><a [routerLink]="['/profile']">Profile</a></li -->

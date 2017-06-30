@@ -38,6 +38,7 @@ export class UpdateProfileComponent implements OnInit {
   public uploader:FileUploader;
   form: FormGroup;
   public profileImageUrl: string;
+  public profile = this.profileService.profile;
 
   ngOnInit() {
 
@@ -69,17 +70,24 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   submitClicked() {
-    this.profileService.updateUser().subscribe();
-    var self = this;
-    setTimeout(function() {
-      self.router.navigate(["/profile"]);
-    }, 1000);
-
+    this.profileService.updateUser().subscribe(
+      ()=> {
+        this.router.navigate(["/profile"]);
+      }
+    );
   }
 
   cancelClicked() {
     //this.editMode = false;
     this.profileService.getProfile();
     this.router.navigate(["/profile"]);
+  }
+
+  onSubmit() {
+    alert("submitd");
+  }
+
+  onCancel(){
+    alert("canceld");
   }
 }

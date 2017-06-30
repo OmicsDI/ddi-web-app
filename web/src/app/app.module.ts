@@ -38,7 +38,6 @@ import {FacetComponent} from "./controls/facet/facet.component";
 import {Ng2AutoCompleteModule} from "ng2-auto-complete";
 import { SocialnetworksComponent } from './controls/socialnetworks/socialnetworks.component';
 import { SimilarComponent } from './pages/dataset/similar/similar.component';
-import { DisqusComponent } from './pages/dataset/disqus/disqus.component';
 import { PublicationComponent } from './pages/dataset/publication/publication.component';
 import { ReposOmicsComponent } from './pages/home/charts/repos-omics/repos-omics.component';
 import { HotwordsComponent } from './pages/home/charts/hotwords/hotwords.component';
@@ -99,6 +98,7 @@ import { ProfileDisqusComponent } from './pages/profile/profile-disqus/profile-d
 import {FeedbackComponent} from "./controls/feedback/feedback.component";
 import {FeedbackService} from "./services/feedback.service";
 import {StatisticsService} from "./services/statistics.service";
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -141,7 +141,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FacetComponent,
     SocialnetworksComponent,
     SimilarComponent,
-    DisqusComponent,
     PublicationComponent,
     SearchPagerComponent,
     SearchTotalComponent,
@@ -181,7 +180,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ProfileContactsComponent,
     UpdateProfileComponent,
     ProfileDisqusComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,

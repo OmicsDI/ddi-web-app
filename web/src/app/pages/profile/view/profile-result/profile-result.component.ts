@@ -44,10 +44,13 @@ export class ProfileResultComponent implements OnInit, OnChanges {
   }
 
   reloadDataSets(){
-    if(!this.profile)
+    this.dataSets = new Array();
+    if(!this.profile){
       return;
-    if(!this.profile.dataSets)
+    }
+    if(!this.profile.dataSets){
       return;
+    }
     Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
       y => {this.dataSets = y}
     )
@@ -62,6 +65,6 @@ export class ProfileResultComponent implements OnInit, OnChanges {
       this.profile.dataSets.splice(i,1);
     }
     this.change.emit({});
-    //this.reloadDataSets();
+    this.reloadDataSets();
   }
 }

@@ -18,6 +18,7 @@ export class DataSet{
   publicationDate: string;
   score?: any;
   omicsType: string[];
+  claimable: boolean;
 
   constructor(){
     this.omicsType = [];

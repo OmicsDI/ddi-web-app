@@ -8,7 +8,7 @@ import {DataSetService} from "../../../services/dataset.service";
 import {DataSetDetail} from "../../../model/DataSetDetail";
 import {AppConfig} from "../../../app.config";
 import {FileUploader} from 'ng2-file-upload';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -35,6 +35,7 @@ export class ProfileComponent implements OnInit {
               ,private dataSetService: DataSetService
               ,private formBuilder: FormBuilder
               ,private appConfig: AppConfig
+              ,private router: Router
               ,private route: ActivatedRoute) {
     this.form = formBuilder.group({
       name: ['', [
@@ -68,6 +69,11 @@ export class ProfileComponent implements OnInit {
       this.profileService.getPublicProfile(username)
         .subscribe(
           profile => {
+            if(!profile){
+              this.router.navigate(["/notfound"]);
+              return;
+            }
+
             this.profileX = profile;
             this.profileImageUrl = this.getProfileImageUrl();
           }
@@ -97,14 +103,6 @@ export class ProfileComponent implements OnInit {
         );
     }
   }
-
-
-  /*
-  save() {
-    var result;
-    result = this.profileService.updateUser();
-    result.subscribe(); //data => this.router.navigate(['users']));
-  }*/
 
   checkAll(ev) {
     console.log("checking select all" + ev);

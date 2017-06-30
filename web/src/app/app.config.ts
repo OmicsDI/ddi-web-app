@@ -100,7 +100,7 @@ export class AppConfig{
     return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}?r=${Math.random()}`;
   }
   getPublicProfileUrl(profile:Profile){
-    return window.location.href.split("#")[0] + `#/profile/${profile.userName}`;
+    return window.location.href.split("#")[0] + `#/profile/${profile.userId}`;
   }
   getFeedbackUrl(){
     return `${environment.webServiceUrl}feedback/saveFeedback`;

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -43,10 +42,11 @@ public class UserController {
 	@RequestMapping(value = "/api/user", method = RequestMethod.GET)
 	@CrossOrigin
 	public MongoUser getUser(@RequestParam(value="username", required=true) String username) {
-		return mongoUserDetailsRepository.findByName(username);
+		return mongoUserDetailsRepository.findPublicById(username);
 	}
 
-	//@RequestMapping(value = "/api/mongo", method = RequestMethod.GET)
+	//@RequestMapping(value = "/api/mongo", method = Re
+	// questMethod.GET)
 	//@CrossOrigin
 	//public MongoUser getMongoUser() {
 	//	return mongoUserDetailsRepository.findByUserId("0");

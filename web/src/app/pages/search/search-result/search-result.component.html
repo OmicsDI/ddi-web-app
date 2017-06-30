@@ -48,10 +48,6 @@
       <div *ngIf="d.keywords" class="project-widget-paragraph">
         <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" [routerLink]="['/search']"  [queryParams]="{q:o}">{{o}}&nbsp;</a>
       </div>
-
-      <div style="float:right; position: relative; top:-25px;">
-        <claim-button [dataSet]="d"></claim-button>
-      </div>
     </div>
   </li>
 </ul>

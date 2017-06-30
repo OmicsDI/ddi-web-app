@@ -89,9 +89,10 @@ export class ProfileService extends BaseService {
 
     var config: RequestOptionsArgs = { headers: headers };
     //$http.post(url, config) .success ...
-    console.log("deleting user with datasets:" + this.profile.dataSets.length);
+    //console.log("deleting user with datasets:" + this.profile.dataSets.length);
+
     return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(this.profile), config)
-      .map(res => "OK");
+      .map(res => {return "OK"})
   }
 
   private handleError (error: Response | any) {

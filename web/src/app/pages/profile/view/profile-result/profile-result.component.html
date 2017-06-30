@@ -22,17 +22,17 @@
 
         <div class="project-widget-paragraph">
         </div>
-        <div *ngIf="d.organisms" class="project-widget-paragraph">
-          ORGANISM(S): <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
+        <div *ngIf="d.organisms && d.organisms.length>0" class="project-widget-paragraph">
+          ORGANISM(S): <span *ngFor="let o of d.organisms;let isLast=last;">{{o.name}}{{isLast ? '' : ', '}}</span>
           <span *ngIf="!d.organisms">Not available</span>
         </div>
 
-        <div *ngIf="d.tissues" class="project-widget-paragraph ng-hide">
-          TISSUE(S):  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
+        <div *ngIf="d.tissues && d.tissues.length>0" class="project-widget-paragraph ng-hide">
+          TISSUE(S):  <span *ngFor="let o of d.tissues;let isLast=last;">{{o}}{{isLast ? '' : ', '}}</span>
           <span *ngIf="!d.tissues">Not available</span>
         </div>
-        <div *ngIf="d.diseases" class="project-widget-paragraph ng-hide">
-          DISEASE(S): <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
+        <div *ngIf="d.diseases && d.diseases.length>0" class="project-widget-paragraph ng-hide">
+          DISEASE(S): <span *ngFor="let o of d.diseases;let isLast=last;">{{o}}{{isLast ? '' : ', '}}</span>
           <span *ngIf="!d.diseases">Not available</span>
         </div>
       </blockquote>

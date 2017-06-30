@@ -18,6 +18,7 @@ export class ClaimButtonComponent implements OnInit,OnChanges {
   @Input() dataSet: DataSet;
 
   claimed:boolean;
+  claimable:boolean = true;
 
   constructor(private auth: AuthService, private profileService: ProfileService, private router: Router) {
   }
@@ -39,6 +40,9 @@ export class ClaimButtonComponent implements OnInit,OnChanges {
 
       if(propName=="dataSet"){
         if(null!=changes[propName].currentValue){
+
+          this.claimable = this.dataSet.claimable!=null && this.dataSet.claimable;
+
           if(null!=this.profileService.profile) {
             let profile: Profile = this.profileService.profile;
             let obj: any;

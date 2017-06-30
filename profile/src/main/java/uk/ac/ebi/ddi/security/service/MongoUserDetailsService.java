@@ -13,7 +13,7 @@ import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Random;
 
 /**
  * Created by user on 3/12/2017.
@@ -82,12 +82,22 @@ public class MongoUserDetailsService implements UserDetailsService, SocialUserDe
                 }
             }
             UserId = newUserId.toString(); ***/
-            UserId = UUID.randomUUID().toString();
+            UserId = getToken(8); //UUID.randomUUID().toString();
             u.setUserId(UserId);
         }
         //TODO: roles
         u.setRoles("USER,ADMIN");
         mongoUserDetailsRepository.save(u);
+    }
+
+    static public String getToken(int chars) {
+        String CharSet = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890";
+        String Token = "";
+        Random random = new Random();
+        for (int a = 1; a <= chars; a++) {
+            Token += CharSet.charAt(random.nextInt(CharSet.length()));
+        }
+        return Token;
     }
 
     public void saveAndFlush(MongoUser u){

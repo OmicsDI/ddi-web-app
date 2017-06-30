@@ -17,6 +17,7 @@ import {TermsComponent} from "./pages/terms/terms.component";
 import {ClaimedComponent} from "./pages/profile/claimed/claimed.component";
 import {UpdateProfileComponent} from "./pages/profile/update-profile/update-profile.component";
 import {ProfileDisqusComponent} from "./pages/profile/profile-disqus/profile-disqus.component";
+import {NotfoundComponent} from "./pages/notfound/notfound.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -37,7 +38,8 @@ export const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'dataset/:domain/:acc', component: DatasetComponent },
-  { path: 'terms', component: TermsComponent }
+  { path: 'terms', component: TermsComponent },
+  { path: 'notfound', component: NotfoundComponent }
 ];
 
 // Deprecated provide

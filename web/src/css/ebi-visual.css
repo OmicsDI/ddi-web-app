@@ -220,6 +220,24 @@ a.access-data:hover a.profile-data:hover{
   background-color:#fff;
   transition:0.6s}
 
+a.claim-data,
+a.claim-data:link{
+  color:#777;
+  float:left;
+  margin-left: 9px;
+  padding:4px 15px;
+  cursor: pointer
+  }
+
+a.disabled-data:hover{
+  color:#0099cc;
+  background-color:gray;
+  transition:0.6s}
+
+
+a.claim-data:hover{
+  color:black;
+}
 
 a.special{background-color:#fff}pre{background-color:#F2F2EC;border-color:#999}code{background-color:#F2F2EC;border-color:#999}kbd{-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px
 solid #777;color:#222;background-color:#ccc;background-image:-moz-linear-gradient(top, #ccc, #666);background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0, #ccc),color-stop(1, #666));background-image:-webkit-linear-gradient(#ccc, #666);background-image:linear-gradient(top, #ccc, #666);filter:progid:DXImageTransform.Microsoft.gradient(startColorStr='#ccc', EndColorStr='#666');padding:0.2em 0.3em}.mute{color:#666}div.alert{border-left:3px solid #FFB3CA}h2.alert,h3.alert,h4.alert{color:#FFB3CA}html.fontface  h2.alert:before,
