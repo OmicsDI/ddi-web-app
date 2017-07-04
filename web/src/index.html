@@ -16,6 +16,8 @@
 
     <title>OmicsDI: Home</title>
 
+   <base href="/">
+
 
     <!-- favico -->
     <link rel="apple-touch-icon" sizes="57x57" href="./img/favico/apple-icon-57x57.png">
@@ -39,21 +41,21 @@
     <link rel="canonical" href={{meta_originalURL}}>
     <link rel="canonical" href={{meta_ddiURL}}>
 
-    <link rel="stylesheet" href='./css/bootstrap.min.css'>
-    <link rel="stylesheet" href="./css/boilerplate-style.css">
-    <link rel="stylesheet" href="./css/ebi-global.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="./css/ebi-visual.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="./css/984-24-col-fluid.css" type="text/css" media="screen">
+    <link rel="stylesheet" href='css/bootstrap.min.css'>
+    <link rel="stylesheet" href="css/boilerplate-style.css">
+    <link rel="stylesheet" href="css/ebi-global.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/ebi-visual.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/984-24-col-fluid.css" type="text/css" media="screen">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!--link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'--->
-    <link type="text/css" href="./css/ngProgress.css" rel="stylesheet">
-    <link type="text/css" href="./css/ddi.css" rel="stylesheet">
-    <link type="text/css" href="./css/autocomplete.css" rel="stylesheet">
+    <link type="text/css" href="css/ngProgress.css" rel="stylesheet">
+    <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
 
 
 
     <!--favico end -->
-    <base href="/">
+
 
   <style>
     [ng2-tooltip] {margin: 40px; border: 1px solid #ccc}
@@ -102,15 +104,8 @@
   }
   var authToken = getParameterByName('AUTH_TOKEN');
   if(authToken){
-    console.log("AUTH-TOKEN:"+authToken);
-
-    //document.cookie='AUTH-TOKEN=; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;;';
-
     localStorage.setItem('id_token', authToken);
-
     window.location.href=window.location.href.replace('AUTH_TOKEN='+authToken,'');
-
-    //console.log("AUTH-TOKEN after it deleted:" + getCookieValue('AUTH-TOKEN'));
   }
 </script>
 
@@ -138,5 +133,6 @@
 
 </script>
 <script src="//omicsdi.disqus.com/embed.js"></script>
+
 </body>
 </html>

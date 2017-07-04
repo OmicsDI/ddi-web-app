@@ -53,7 +53,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     this.current_url = route.pathFromRoot.toString();
     this.index_dataset = this.current_url.indexOf("dataset");
-    this.page_identifier = this.current_url.substr(this.index_dataset);//"dataset/paxdb/10090102";
+
     this.subscription = this.dataSetService.dataSetDetail$.subscribe(
       result => {
         console.info("dataSetDetail$ subscribtion");
@@ -61,6 +61,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         //TODO: update with canonical id
         this.acc = result.id;
         this.repository = result.source;
+        //this.page_identifier = '${repository}/${source}';
         this.repositoryName = this.appConfig.repositories[result.source];
         this.databaseUrl = this.appConfig.database_urls[this.appConfig.repositories[result.source]];
         console.info("dataSetDetailResult:" + result);

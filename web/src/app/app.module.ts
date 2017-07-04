@@ -99,6 +99,8 @@ import {FeedbackComponent} from "./controls/feedback/feedback.component";
 import {FeedbackService} from "./services/feedback.service";
 import {StatisticsService} from "./services/statistics.service";
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { AltmetricImageComponent } from './controls/altmetric-image/altmetric-image.component';
+import {AltmetricService} from "./services/altmetric.service";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -181,7 +183,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     UpdateProfileComponent,
     ProfileDisqusComponent,
     FeedbackComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    AltmetricImageComponent
   ],
   imports: [
     BrowserModule,
@@ -221,7 +224,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , SimilarMoleculeService
     , FeedbackService
     , AppConfig
-    , StatisticsService],
+    , StatisticsService
+    , AltmetricService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

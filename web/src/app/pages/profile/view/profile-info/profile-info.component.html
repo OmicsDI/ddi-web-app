@@ -18,12 +18,12 @@
   <div *ngIf="!this.profile?.bio" class="bio" style="position:relative; left:10px;">
     Congratulations! You are created OmicsDI profile. Next? <br/> <br/>
     <ul>
-      <li>Upload best <a href="#">photo</a>
-      <li>White short <a href="#">Bio</a> to stand out of colleagues
-      <li>Use <a href="#">search</a> and claim your datasets!
-      <li>When happy with content - make profile <a href="#">public</a> and twit short URL
-      <li>Please consult <a href="#">help</a> for detailed step-by-step instructions
-      <li>We are waiting for your <a href="#">feedback</a>
+      <li>Upload best <a [routerLink]="['/profile','update']">photo</a>
+      <li>White short <a [routerLink]="['/profile','update']">Bio</a> to stand out of colleagues
+      <li>Use <a [routerLink]="['/search']" [queryParams]="{q: this.profile?.userName}">search</a> and claim your datasets!
+      <li>When happy with content - make profile <a [routerLink]="['/profile','update']">public</a> and twit short URL
+      <li>Please consult <a href="http://blog.omicsdi.org/post/claiming-datasests/">help</a> for detailed step-by-step instructions
+      <li>We are waiting for your <a [routerLink]="['/profile','feedback']">feedback</a>
     </ul>
   </div>
   <div class="bio">{{this.profile?.bio}}</div>

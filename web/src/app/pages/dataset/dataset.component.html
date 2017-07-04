@@ -128,9 +128,10 @@
 
       <!--dataset_upper -->
 
+      {{repository}}/{{acc}}
       <div class="panel panel-default">
         <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
-        <disqus [shortname]="datasetpage" [identifier]="page_identifier" ></disqus>
+        <disqus [shortname]="datasetpage" [identifier]="'${repository}/${acc}'" ></disqus>
       </div>
     </div>
     <!-- col-md-8 centerpanel-->

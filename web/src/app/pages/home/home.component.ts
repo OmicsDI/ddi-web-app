@@ -28,7 +28,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchService.callSearch("*:*");
+
+    this.searchService.textQuery="*:*";
+    this.searchService.callSearch();
   }
 
   loadOnePart($partName): void {

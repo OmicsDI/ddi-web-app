@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {Facet} from "../../../model/Facet";
 import {SearchService} from "../../../services/search.service";
 import {OntologyService} from "../../../services/ontology.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search-facet',
@@ -16,7 +17,7 @@ export class SearchFacetComponent implements OnInit {
   organismFacets: Facet[];
   omicsFacets: Facet[];
 
-  constructor(private searchService: SearchService, private ontolotyService: OntologyService) {
+  constructor(private searchService: SearchService, private ontolotyService: OntologyService, private router: Router) {
     this.subscribeToSearch();
 
   }
@@ -27,6 +28,7 @@ export class SearchFacetComponent implements OnInit {
   facetValueSelected(value: string) {
       this.searchService.callSearchByFacets();
       this.subscribeToSearch();
+      //this.router.navigate(['/search']);
   }
 
   subscribeToSearch(){

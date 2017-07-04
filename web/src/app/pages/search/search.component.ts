@@ -3,6 +3,7 @@ import {Http} from "@angular/http";
 import {SearchService} from "../../services/search.service";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 import {ActivatedRoute} from "@angular/router";
+import {SearchQuery} from "../../model/SearchQuery";
 
 @Component({
   selector: 'app-search',
@@ -17,18 +18,15 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.slimLoadingBarService.start();
 
-    /***null==this.searchService.searchQuery***/
-    /*** if(true){
-      this.searchService.callSearch("*:*");
-    }***/
-
     this.route.queryParams.subscribe(params => {
       let q: string = params['q'];
       if(null!=q){
-        this.searchService.callSearch(q);
-      }
-      else{
-        this.searchService.callSearch("*:*");
+        this.searchService.textQuery = q;
+        this.searchService.paramQuery = new SearchQuery();
+        this.searchService.selectedFacets = new Object();
+        this.searchService.callSearch();
+      }else{
+        this.searchService.callSearch();
       }
     })
 

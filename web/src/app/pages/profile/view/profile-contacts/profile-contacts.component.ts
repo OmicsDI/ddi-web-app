@@ -17,9 +17,6 @@ export class ProfileContactsComponent implements OnInit {
   ngOnInit() {
   }
 
-  publicProfileUrl(): string{
-    return this.appConfig.getPublicProfileUrl(this.profile);
-  }
 
   contactInfoPresent():boolean{
     if(!this.profileService.profile)

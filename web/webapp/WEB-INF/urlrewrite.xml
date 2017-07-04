@@ -1,0 +1,47 @@
+
+<urlrewrite>
+  <rule match-type="wildcard">
+    <from>/home</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/profile</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/profile/*</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/database</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/about</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/api</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/search*</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/unauthorized</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/dataset/**</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/terms</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/notfound</from>
+    <to>/</to>
+  </rule>
+</urlrewrite>

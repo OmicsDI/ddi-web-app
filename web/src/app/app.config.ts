@@ -99,14 +99,14 @@ export class AppConfig{
   getSimilarityDatasetsUrl(acc: string, repository: string){
     return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}?r=${Math.random()}`;
   }
-  getPublicProfileUrl(profile:Profile){
-    return window.location.href.split("#")[0] + `#/profile/${profile.userId}`;
-  }
   getFeedbackUrl(){
     return `${environment.webServiceUrl}feedback/saveFeedback`;
   }
   getDatasetStatsUrl(){
     return `${environment.webServiceUrl}statistics/domains`;
+  }
+  getAltmetricUrl(PMID){
+    return `http://api.altmetric.com/v1/pmid/${PMID}`;
   }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";

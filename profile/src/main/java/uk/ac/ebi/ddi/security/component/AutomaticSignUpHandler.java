@@ -70,11 +70,9 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
 
             imageUrl = "/assets/orcid.png";
             affiliation = "Orcid user";
-            bio = personalDetails.getBiography().getContent();
-
-
-
-
+            if(null!=personalDetails.getBiography()) {
+                bio = personalDetails.getBiography().getContent();
+            }
 
         }else if(connection.getApi() instanceof GitHub){
         	email = ((GitHub)connection.getApi()).userOperations().getUserProfile().getEmail();

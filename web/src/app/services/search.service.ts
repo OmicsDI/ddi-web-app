@@ -22,7 +22,7 @@ export class SearchService extends BaseService{
   }
   public set textQuery(value){
       this._textQuery = value;
-      this.fullQuery = this.getFullQuery();
+      this._fullQuery = this.getFullQuery();
   }
 
   public _paramQuery: SearchQuery = new SearchQuery();
@@ -31,11 +31,23 @@ export class SearchService extends BaseService{
   }
   public set paramQuery(value){
     this._paramQuery = value;
-    this.fullQuery = this.getFullQuery();
+    this._fullQuery = this.getFullQuery();
   }
 
+  private _fullQuery: string;
+
+
   /*** fullQuery can be set explicitely, textQuery,paramQuery not updated ***/
-  public fullQuery: string; //textQuery + paramQuery;
+  public get fullQuery(): string{
+    return this._fullQuery;
+  }
+  public set fullQuery(value){
+    this._textQuery = value;
+    this._paramQuery = new SearchQuery();
+    this.selectedFacets = new Object();
+    this._fullQuery = this.getFullQuery();
+  }
+
   public currentQuery: string; //fullQuery after you press search;
 
 
@@ -76,14 +88,10 @@ export class SearchService extends BaseService{
     return result;
   }
 
-  public callSearch(searchQuery: string = null){
-    this.currentQuery = (null==searchQuery ? this.fullQuery : searchQuery);
-    this.callSearch1(this.currentQuery,1);
-  }
-
-  public callSearch1(searchQuery: string, page: number ){
+  public callSearch(page: number = 1 ){
+    this.currentQuery = this.fullQuery;
     this.currentPage = page;
-    this.search(searchQuery, page).subscribe(searchResult => {
+    this.search(this.fullQuery, page).subscribe(searchResult => {
       this.searchResultSource.next(searchResult);
       this.facets = (JSON.parse(JSON.stringify(searchResult.facets)));
     });
@@ -96,7 +104,7 @@ export class SearchService extends BaseService{
   }
 
   page(page: number){
-    this.callSearch1(this.currentQuery, page); //page
+    this.callSearch(page); //page
   }
 
   sort(){
@@ -105,7 +113,7 @@ export class SearchService extends BaseService{
   }
 
   changePageSize(){
-    this.callSearch1(this.currentQuery,1);
+    this.callSearch(1);
   }
 
   selectedFacets: Object = new Object; //string=>string[]
@@ -165,7 +173,7 @@ export class SearchService extends BaseService{
       this.paramQuery.rules.push(rule);
     }
 
-    this.fullQuery = this.getFullQuery();
+    this._fullQuery = this.getFullQuery();
     this.callSearch();
   }
 
