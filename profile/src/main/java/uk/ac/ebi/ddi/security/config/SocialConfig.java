@@ -32,6 +32,8 @@ import org.europepmc.springframework.social.orcid.api.OrcidApi;
 import org.europepmc.springframework.social.orcid.connect.OrcidConnectionFactory;
 import org.europepmc.springframework.social.orcid.utils.OrcidConfig;
 import org.europepmc.springframework.social.orcid.utils.OrcidConfigBroker;
+import org.springframework.social.linkedin.api.LinkedIn;
+import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
@@ -97,6 +99,10 @@ public class SocialConfig extends SocialConfigurerAdapter {
 				env.getProperty("elixir.clientId"),
 				env.getProperty("elixir.clientSecret")));
 
+		cfConfig.addConnectionFactory(new LinkedInConnectionFactory(
+				env.getProperty("linkedin.clientId"),
+				env.getProperty("linkedin.clientSecret")));
+
 	}
 
 	@Override
@@ -159,6 +165,13 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	@Scope(value="request",proxyMode = ScopedProxyMode.INTERFACES)
 	public Elixir elixir(ConnectionRepository repository){
 		Connection<Elixir> connection = repository.findPrimaryConnection(Elixir.class);
+		return connection != null ? connection.getApi() : null;
+	}
+
+	@Bean
+	@Scope(value="request",proxyMode = ScopedProxyMode.INTERFACES)
+	public LinkedIn linkedin(ConnectionRepository repository){
+		Connection<LinkedIn> connection = repository.findPrimaryConnection(LinkedIn.class);
 		return connection != null ? connection.getApi() : null;
 	}
 
