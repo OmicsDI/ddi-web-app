@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 import {Facet} from "../../../model/Facet";
 import {SearchService} from "../../../services/search.service";
-import {OntologyService} from "../../../services/ontology.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -17,7 +16,7 @@ export class SearchFacetComponent implements OnInit {
   organismFacets: Facet[];
   omicsFacets: Facet[];
 
-  constructor(private searchService: SearchService, private ontolotyService: OntologyService, private router: Router) {
+  constructor(private searchService: SearchService, private router: Router) {
     this.subscribeToSearch();
 
   }
@@ -43,6 +42,7 @@ export class SearchFacetComponent implements OnInit {
           return;
         }
 
+        /***********
         let values: string[] = this.organismFacets[0].facetValues.map(x => x.value).concat(",");
         this.ontolotyService.lookup(values).subscribe(x => {
           this.organismFacets[0].facetValues = this.organismFacets[0].facetValues.map(x => {
@@ -51,6 +51,7 @@ export class SearchFacetComponent implements OnInit {
             return x;
           });
         });
+        ***********/
       });
   }
 

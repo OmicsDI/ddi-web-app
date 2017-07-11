@@ -78,7 +78,10 @@ export class HotwordsComponent implements OnInit {
     self.addWordCloudToolTip();   //draw wordcloud tooltip
 
     // give different namespace after 'resize' to add window listener
-    d3.select(window).on('resize.hotwords', function() { self.addWordCloudOrChange() });  //add window resize event listener
+    d3.select(window).on('resize.hotwords', function() {
+      if(self.router.url === "/home") {
+        self.addWordCloudOrChange()
+      }});  //add window resize event listener
 
   }
 

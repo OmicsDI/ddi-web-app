@@ -30,7 +30,7 @@ export class ProfileService extends BaseService {
     return this.http.get(this.appConfig.getProfileUrl(null)) //,config //{ withCredentials: true }
         .map(x => {
           this.profile = this.extractData<Profile>(x);
-          if(!this.profile){
+          if(!this.profile || !this.profile.userId){
             console.log("profile not received");
           }else {
             console.log("profile received:" + this.profile.userId);
@@ -166,7 +166,7 @@ export class ProfileService extends BaseService {
 
     document.body.appendChild(form);
 
-    this.setCookie("X-AUTH-TOKEN", localStorage.getItem("id_token"), this.appConfig.getConnectPath(provider));
+    this.setCookie("X-AUTH-TOKEN", localStorage.getItem("id_token"), this.appConfig.getConnectCookiePath(provider));
 
     form.submit();
   }

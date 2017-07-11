@@ -35,3 +35,8 @@ h3.caption {
   color: rgb(34, 34, 34);
   font-weight: 300;
 }
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

@@ -29,9 +29,13 @@ export class TweetsNewsComponent implements OnInit {
   private fetchTweets(): Promise<Response> {
     let id = '599190509341515776';
     let date = new Date().getTime();
+    //Access-Control-Allow-Origin
     let url = '//cdn.syndication.twimg.com/widgets/timelines/' + encodeURIComponent(id) +
       '?&lang=en&callback=' + encodeURIComponent('tf_' + date + '.parse') +
-      '&suppress_response_codes=true&rnd=' + (date);
+      '&suppress_response_codes=true&domain=omicsdi.org&rnd=' + (date);
+    url = "static/twitter.json";
+
+
     return this.http.get(url)
       .toPromise();
   }
@@ -81,7 +85,7 @@ export class TweetsNewsComponent implements OnInit {
         output.push(t);
         t = {};
       });
-    
+
     console.log(output);
     return output;
   }
@@ -101,7 +105,7 @@ export class TweetsNewsComponent implements OnInit {
           .text(function (d) {
             return d["time"].month;
           });
-          
+
         datebox.append("span").attr("class", "day")
           .text(function (d) {
             return d["time"].day;

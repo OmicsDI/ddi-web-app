@@ -90,8 +90,8 @@ export class AppConfig{
       return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
   }
   /*******TODO:*******/
-  getConnectPath(provider:string){
-    return `/Tools/omicsdi/profilews/connect/${provider}`;
+  getConnectCookiePath(provider:string){
+    return `${environment.userServiceCookiePath}connect/${provider}`;
   }
   getSimilarityMoleculesUrl(acc: string, repository: string){
     return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}?r=${Math.random()}`;

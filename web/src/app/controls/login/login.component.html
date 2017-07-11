@@ -14,9 +14,9 @@
    </div>
 
   <div style="padding:5px">
-    <!-- openid,profile,email -->
-    <button (click)="submit('elixir','openid,profile,email');" type="submit" style="background: #ff7a04; height:60px; width:225px; vertical-align: top; cursor: pointer; border: none;">
-      <img style="float:left; height:50px;" src="./img/login/elixir.png" height="50" />
+    <!-- openid,profile,email #ff7a04-->
+    <button XclickX="submit('elixir','openid,profile,email');" title="Elixir integration disabled" type="submit" style="background: #999; height:60px; width:225px; vertical-align: top; cursor: default; border: none;">
+      <img style="float:left; height:50px; filter: grayscale(100%);" src="./img/login/elixir.png" height="50" />
       <div style="float:left; border:none; margin-top:17px; margin-left: 5px;" >
         <strong>Sign in with ELIXIR</strong>
       </div>
@@ -29,7 +29,7 @@
 </div>
 <div style="text-align: center; border:none;">
     <img (click)="submit('facebook','email,public_profile');" type="image" src="./img/login/facebook.png" style="padding:2px; cursor: pointer;"/>
-    <img (click)="submit('twitter','public_profile');" type="image" src="./img/login/twitter.png" style="padding:2px; cursor: pointer;"/>
+    <img XclickX="submit('twitter','public_profile');" type="image" src="./img/login/twitter.png" style="padding:2px; cursor: default; filter: grayscale(100%);" title="Twitter integration disabled"/>
     <img (click)="submit('github','public_profile');" type="image" src="./img/login/github.png" style="padding:2px; cursor: pointer;"/>
 </div>
 
@@ -37,3 +37,6 @@
 <div style="margin-bottom:5px; font-style:italic; font-size: x-small; text-align: center">more to come...</div>
 
 </div>
+
+
+

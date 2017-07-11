@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import * as d3 from 'd3';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DataSetService} from "../../../../services/dataset.service";
 
 @Component({
@@ -17,7 +17,7 @@ export class AnnualOmicstypeComponent implements OnInit {
   private web_service_url = "http://www.omicsdi.org/ws/";
   private retryLimitTimes = 2;
 
-  constructor(private router: Router, private dataSetService: DataSetService) {
+  constructor(private router: Router, private dataSetService: DataSetService,private route: ActivatedRoute) {
 
   }
 
@@ -54,7 +54,10 @@ export class AnnualOmicstypeComponent implements OnInit {
     //   self.drawGraph(processedData);
     // });
     d3.select(window)
-      .on('resize.annual_omicstype', function() { self.drawGraph(processedData) })
+      .on('resize.annual_omicstype', function() {
+        if(self.router.url === "/home")
+        self.drawGraph(processedData)
+      })
   }
   private drawGraph(processedData : any): void {
     let self = this;

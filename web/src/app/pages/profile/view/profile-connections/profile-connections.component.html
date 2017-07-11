@@ -9,10 +9,10 @@
             </span>
           </span>
       </li>
-      <li><span class="connection"><img src="assets/elixir.png" style="height:16px;width:16px;"/>&nbsp;<a href="#">Elixir</a>
+      <li><span class="connection"><img src="assets/elixir-small.png"/>&nbsp;<a href="#" class="disabled">Elixir</a>
             <span *ngIf="elixirConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
             <span style="float:right; padding-right:10px;">
-              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="elixirConnected" (change)="connectedChanged(elixirConnected,'elixir')"></ui-switch>
+              <ui-switch disabled="true" size="small" color="rgb(66, 139, 202)" [ngModel]="false" XchangeX="connectedChanged(elixirConnected,'elixir')"></ui-switch>
             </span>
       </span></li>
       <li><span class="connection"><img src="assets/facebook.png"/>&nbsp;<a href="#">Facebook</a>

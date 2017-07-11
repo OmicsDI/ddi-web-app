@@ -14,6 +14,7 @@ import {Synonym} from "../../model/EnrichmentInfo/Synonym";
 import { DisqusModule } from 'angular2-disqus';
 import {AppConfig} from "../../app.config";
 import {ProfileService} from "../../services/profile.service";
+import {DisqusComponent} from "ng2-awesome-disqus/disqus.component";
 
 
 @Component({
@@ -43,6 +44,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
   index_dataset:number;
   databaseUrl: string;
   web_service_url: string;
+
+  @ViewChild(DisqusComponent) disqus: DisqusComponent;
 
   constructor(private dataSetService: DataSetService
       ,private route: ActivatedRoute
@@ -76,6 +79,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
           this.acc = params['acc'];
           this.repository = params['domain'];
           this.dataSetService.getDataSetDetail(this.acc,this.repository);
+
+          this.disqus.reset();
+          this.disqus.identifier = '${repository}/${acc}';
+          this.disqus.url = '${repository}/${acc}';
+
     })
   }
 

@@ -16,7 +16,7 @@
           <!--
               <b>Project description:</b>
           -->
-          <span>{{d.description | truncate : 200 : '...'}}</span>
+           <span *ngIf="d.description">{{d.description | truncate : 200 : '...'}}</span>
 
           <span *ngIf="!!!d.description">Not available</span>
         </div>

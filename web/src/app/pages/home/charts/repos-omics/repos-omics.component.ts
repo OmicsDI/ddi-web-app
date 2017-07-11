@@ -172,8 +172,10 @@ export class ReposOmicsComponent implements OnInit {
 
     // give different namespace after 'resize' to add window listener
     d3.select(window).on('resize.repos_omics', function() {
-      self.drawBarGraphic(self.data, self.reposDataSimple);
-      self.showTip('*:* AND repository:"', self.reposDataSimple);
+      if(self.router.url === "/home") {
+        self.drawBarGraphic(self.data, self.reposDataSimple);
+        self.showTip('*:* AND repository:"', self.reposDataSimple);
+      }
     });
   }
 
