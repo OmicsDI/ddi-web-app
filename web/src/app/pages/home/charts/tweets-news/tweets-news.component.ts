@@ -13,10 +13,11 @@ export class TweetsNewsComponent implements OnInit {
   @Output()
   notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private http: Http) { }
+  constructor() { }
 
   ngOnInit() {
-    this.fetchTweets()
+    this.fetchTweets();
+    /*
         .then(res => {
            this.notifyHomeLoader.emit('tweet_news');
            this.publishtweets(this.parseTweets(res, 4));
@@ -24,24 +25,40 @@ export class TweetsNewsComponent implements OnInit {
         .catch(reason => {
           console.warn(reason);
         })
+        */
+    var self = this;
+
+    setTimeout(function(){
+      self.checkTweets();
+    }, 100);
   }
 
-  private fetchTweets(): Promise<Response> {
-    let id = '599190509341515776';
-    let date = new Date().getTime();
-    //Access-Control-Allow-Origin
-    let url = '//cdn.syndication.twimg.com/widgets/timelines/' + encodeURIComponent(id) +
-      '?&lang=en&callback=' + encodeURIComponent('tf_' + date + '.parse') +
-      '&suppress_response_codes=true&domain=omicsdi.org&rnd=' + (date);
-    url = "static/twitter.json";
-
-
-    return this.http.get(url)
-      .toPromise();
+  checkTweets(){
+    var self = this;
+    var t = localStorage.getItem("__twttr");
+    if(t){
+      self.publishtweets(self.parseTweets(localStorage.getItem("__twttr"), 4));
+    }
+    else{
+      setTimeout(function(){
+        self.checkTweets();
+      }, 100);
+    }
   }
 
-  private parseTweets(res: Response, limit: number) {
-    const $ = cheerio.load(JSON.parse(res["_body"])["body"]);
+  id = '599190509341515776';
+  private fetchTweets() {
+    var s = document.createElement('script');
+    s.src = '//cdn.syndication.twimg.com/widgets/timelines/' + encodeURIComponent(this.id) +
+      '?&lang=en&callback=__twttr.parse' +
+      '&suppress_response_codes=true&rnd=' + (new Date().getTime());
+    document.getElementsByTagName('head')[0].appendChild(s);
+  }
+
+  private parseTweets(res:string, limit: number) {
+    //console.log(res);
+    //console.log(res["body"]);
+    const $ = cheerio.load(JSON.parse(res)["body"]);
     let tweets = $("li.timeline-TweetList-tweet");
     limit = tweets.length < limit ? tweets.length : limit;
     let output = []

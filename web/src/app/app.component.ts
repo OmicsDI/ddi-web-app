@@ -5,6 +5,7 @@ import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 import {QueryBuilderComponent} from "./controls/query-builder/query-builder.component";
 import {SearchQuery} from "./model/SearchQuery";
 import {ActivatedRoute, Router} from "@angular/router";
+import {SelectedService} from "./services/selected.service";
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
 
   constructor(private auth: AuthService, private slimLoadingBarService: SlimLoadingBarService
     , private route: ActivatedRoute
-    , private router: Router){
+    , private router: Router
+    , private selectedService: SelectedService){
 
     this.title =this.getTitle();
   }

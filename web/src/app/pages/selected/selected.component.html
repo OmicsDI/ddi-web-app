@@ -1,3 +1,12 @@
+<div style="width:80%; margin-left: auto; margin-right: auto;">
+<div class="caption">Selected Datasets</div>
+
+  <div style="float:right;">
+
+    <img src="img/subscribe.png" title="subscribe to updates">
+    <img src="img/claim.png" title="claim">
+    <img src="img/excel.png" title="export to Excel">
+  </div>
 <ul class="list-unstyled" style="display:inline-block; width:100%">
   <li *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }"
       class="repeated-item ng-scope"
@@ -5,6 +14,7 @@
 
     <div class="ddi-card-panel  list-group-item">
       <div class="project-widget-accession">
+        <img src="img/delete.jpeg" title="delete">
         <app-omics-image [omics]="d.omics_type"> </app-omics-image>
 
         <a [routerLink]="['/dataset',d.source, d.id]" >
@@ -38,6 +48,8 @@
       </blockquote>
 
       <div class="project-widget-paragraph">
+        <input type="checkbox" style="position:relative; left: 0px; opacity: 50; visibility: visible; width:10px; top: 1px;" (click)="clicked(d.source,d.id)" /> |
+
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
           <span class="ng-binding">{{d.publicationDate }}</span> | </span>
         <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding">{{d.id}}</span></a> |
@@ -48,9 +60,6 @@
         <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" [routerLink]="['/search']" [queryParams]="{q:o}">{{o}}&nbsp;</a>
       </div>
 
-      <div style="float:right; position: relative; top:-25px;">
-        <app-delete-button *ngIf="router.url === '/profile/claimed'" (click)="delete($event)" [source]="d.source" [id]="d.id"></app-delete-button>
-      </div>
     </div>
 
 
@@ -63,4 +72,4 @@
                      *ngIf="this.dataSets && this.dataSets.length > 10"
                      class="my-pagination">
 </pagination-controls>
-
+</div>

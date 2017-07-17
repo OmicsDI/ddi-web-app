@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     latest_datasets: false,
     most_accessed: false,
     annual_omicstype: false,
-    tweet_news: false,
     statistics: false
   }
 

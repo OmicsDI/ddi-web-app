@@ -44,4 +44,12 @@
     <from>/notfound</from>
     <to>/</to>
   </rule>
+  <rule match-type="wildcard">
+  <from>/selected</from>
+  <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/dashboard</from>
+    <to>/</to>
+  </rule>
 </urlrewrite>

@@ -18,6 +18,9 @@ import {ClaimedComponent} from "./pages/profile/claimed/claimed.component";
 import {UpdateProfileComponent} from "./pages/profile/update-profile/update-profile.component";
 import {ProfileDisqusComponent} from "./pages/profile/profile-disqus/profile-disqus.component";
 import {NotfoundComponent} from "./pages/notfound/notfound.component";
+import {AdminComponent} from "./pages/admin/admin.component";
+import {SelectedComponent} from "./pages/selected/selected.component";
+import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -39,7 +42,10 @@ export const routes: Routes = [
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'dataset/:domain/:acc', component: DatasetComponent },
   { path: 'terms', component: TermsComponent },
-  { path: 'notfound', component: NotfoundComponent }
+  { path: 'notfound', component: NotfoundComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'selected', component: SelectedComponent },
+  { path: 'dashboard', component: DashboardComponent }
 ];
 
 // Deprecated provide

@@ -1,14 +1,14 @@
 <app-search-total></app-search-total>
 <app-search-query></app-search-query>
-<table style="border:none;">
-  <td style="vertical-align: top; border:none; min-width: 300px; max-width: 300px;"><app-search-facet></app-search-facet></td>
-  <td style="vertical-align: top; border:none;">
-    <app-search-pager></app-search-pager>
-    <app-search-result></app-search-result>
-    <app-search-pager></app-search-pager>
-    <app-feedback *ngIf="dataLoaded()"></app-feedback>
-  </td>
-  <tr>
+<div class="col-md-3 col-sm-4 hidden-xs metasearch-facets" style="width:300px;">
+  <div style="vertical-align: top; border:none; min-width: 300px; max-width: 300px;"><app-search-facet></app-search-facet></div>
+</div>
+<div class="col-md-9 col-sm-8 col-xs-12  metasearch-results" style="border-left: none;">
+  <app-search-pager></app-search-pager>
 
-  </tr>
-</table>
+
+
+  <app-search-result></app-search-result>
+  <app-search-pager></app-search-pager>
+  <app-feedback *ngIf="dataLoaded()"></app-feedback>
+</div>

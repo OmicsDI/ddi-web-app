@@ -101,6 +101,11 @@ import {StatisticsService} from "./services/statistics.service";
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { AltmetricImageComponent } from './controls/altmetric-image/altmetric-image.component';
 import {AltmetricService} from "./services/altmetric.service";
+import { CitationDialogComponent } from './pages/dataset/citation-dialog/citation-dialog.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import {SelectedService} from "./services/selected.service";
+import { SelectedComponent } from './pages/selected/selected.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -184,7 +189,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ProfileDisqusComponent,
     FeedbackComponent,
     NotfoundComponent,
-    AltmetricImageComponent
+    AltmetricImageComponent,
+    CitationDialogComponent,
+    AdminComponent,
+    SelectedComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -225,7 +234,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , FeedbackService
     , AppConfig
     , StatisticsService
-    , AltmetricService],
+    , AltmetricService
+    , SelectedService],
+  entryComponents: [
+    CitationDialogComponent,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

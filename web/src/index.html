@@ -52,8 +52,6 @@
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
     <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
 
-
-
     <!--favico end -->
 
 
@@ -106,6 +104,12 @@
   if(authToken){
     localStorage.setItem('id_token', authToken);
     window.location.href=window.location.href.replace('AUTH_TOKEN='+authToken,'');
+  }
+
+  //obsolete twitter integration on frontpage
+  var __twttr = { parse : function(response) {
+      localStorage.setItem('__twttr', JSON.stringify(response));
+    }
   }
 </script>
 

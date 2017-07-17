@@ -24,6 +24,8 @@
           <li AppLoginLauncher>
           </li>
 
+          <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/selected">({{this.selectedService.selected()}} selected)</a></li>
+
           <li *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
 
           </li>
@@ -43,7 +45,7 @@
   </div>
   <!-- </div> ResultsListCtrl -->
   <footer>
-    <div class="row" id="global-footer">
+    <div class="row" id="global-footer" style="border-top:none;">
 
       <nav class="col-md-12" id="global-nav-expanded">
 

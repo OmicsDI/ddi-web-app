@@ -15,6 +15,8 @@ import { DisqusModule } from 'angular2-disqus';
 import {AppConfig} from "../../app.config";
 import {ProfileService} from "../../services/profile.service";
 import {DisqusComponent} from "ng2-awesome-disqus/disqus.component";
+import {MdDialog, MdDialogRef} from "@angular/material";
+import {CitationDialogComponent} from "./citation-dialog/citation-dialog.component";
 
 
 @Component({
@@ -51,7 +53,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
       ,private route: ActivatedRoute
       ,private enrichmentService: EnrichmentService
       ,private appConfig: AppConfig
-      ,private profileService: ProfileService) {
+      ,private profileService: ProfileService
+      ,private dialog: MdDialog) {
     console.info("DatasetComponent constructor");
 
     this.current_url = route.pathFromRoot.toString();
@@ -171,5 +174,16 @@ export class DatasetComponent implements OnInit, OnDestroy {
       )
       console.log("add hightlighting");
     }
+  }
+
+
+  citation(){
+    let dialogRef: MdDialogRef<CitationDialogComponent>;
+
+    dialogRef = this.dialog.open(CitationDialogComponent);
+    dialogRef.componentInstance.title = "Dataset citation string";
+    dialogRef.componentInstance.datasetDetail = this.d ;
+
+    return dialogRef.afterClosed();
   }
 }

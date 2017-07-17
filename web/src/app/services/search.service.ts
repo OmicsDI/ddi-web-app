@@ -56,8 +56,8 @@ export class SearchService extends BaseService{
   sortOrder: string = "ascending";
   sortBy: string = "id";
 
-  selectedPageSize = 10;
-  pageSizes = ["10","20","50","100" ];
+  selectedPageSize = 30;
+  pageSizes = ["10","20","30","50","100" ];
 
   public facets: Facet[];
 

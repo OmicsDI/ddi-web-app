@@ -1,20 +1,20 @@
-<div *ngFor="let f of omicsFacets" style="width:300px">
+<div *ngFor="let f of omicsFacets" style="width:250px">
     <app-facet-omics [id]="f.id" [label]="f.label" [facetValues]="f.facetValues" (facetValueSelected)="facetValueSelected($event)"></app-facet-omics>
 </div>
 
 <div *ngFor="let f of organismFacets" style="width:400px">
 <h3>{{f.label}}</h3>
     <div class="metasearch-organism-facet force-scrollbars list-group-item"
-         style="overflow-x:hidden; width:300px;">
+         style="overflow-x:hidden; width:250px;">
       <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues" (facetValueSelected)="facetValueSelected($event)"></app-facet>
     </div>
 </div>
 
-<div *ngFor="let f of facets" style="width:400px">
+<div *ngFor="let f of facets">
 <ng-container *ngIf="f.label != 'Organisms'">
 <h3>{{f.label}}</h3>
 <div class="metasearch-organism-facet force-scrollbars list-group-item"
-     style="overflow-x:hidden; width:300px;">
+     style="overflow-x:hidden; width:250px;">
   <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues" (facetValueSelected)="facetValueSelected($event)"></app-facet>
 </div>
 </ng-container>
