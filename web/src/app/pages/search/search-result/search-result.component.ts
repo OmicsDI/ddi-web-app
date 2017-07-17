@@ -9,6 +9,7 @@ import {SearchResult} from "../../../model/SearchResult";
 import {AppConfig} from "../../../app.config";
 import {Profile} from "../../../model/Profile";
 import {ProfileService} from "../../../services/profile.service";
+import {SelectedService} from "../../../services/selected.service";
 
 @Component({
   selector: 'app-search-result',
@@ -27,7 +28,8 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   constructor(private appConfig: AppConfig
     , private searchService: SearchService
     , private slimLoadingBarService: SlimLoadingBarService
-    , private profileService: ProfileService) {
+    , private profileService: ProfileService
+    , private selectedService: SelectedService) {
 
     console.log("SearchResultComponent ctor");
     this.slimLoadingBarService.start();
@@ -67,5 +69,10 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
       return false;
 
     return (d.omicsType.indexOf(omics) != -1);
+  }
+
+  clicked(source:string,id:string){
+    //console.log(`clicked ${source} ${id}`);
+    this.selectedService.select(source,id);
   }
 }

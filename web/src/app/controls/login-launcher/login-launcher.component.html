@@ -12,7 +12,7 @@
     <button [routerLink]="['/profile']" md-menu-item>
       Profile
     </button>
-    <button md-menu-item disabled>
+    <button md-menu-item disabled [routerLink]="['/dashboard']">
       Dashboard
     </button>
     <button md-menu-item (click)="LogOut()">
