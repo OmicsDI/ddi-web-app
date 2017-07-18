@@ -7,3 +7,12 @@
   display: block;
 }
 
+.grey{
+  background-color: silver;
+  cursor:pointer;
+}
+
+.white{
+  background-color: white;
+  cursor:pointer;
+}

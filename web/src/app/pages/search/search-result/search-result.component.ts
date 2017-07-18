@@ -75,4 +75,9 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     //console.log(`clicked ${source} ${id}`);
     this.selectedService.select(source,id);
   }
+
+  toggle(source:string,id:string){
+    this.selectedService.toggle(source,id);
+    console.log(`toggle ${source} ${id}`);
+  }
 }

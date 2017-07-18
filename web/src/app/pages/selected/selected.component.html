@@ -14,7 +14,7 @@
 
     <div class="ddi-card-panel  list-group-item">
       <div class="project-widget-accession">
-        <img src="img/delete.jpeg" title="delete">
+        <img style="float:right;cursor:pointer;" src="img/delete.png" title="delete" (click)="selectedService.unselect(d.source, d.id)">
         <app-omics-image [omics]="d.omics_type"> </app-omics-image>
 
         <a [routerLink]="['/dataset',d.source, d.id]" >

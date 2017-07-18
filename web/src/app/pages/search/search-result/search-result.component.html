@@ -4,7 +4,7 @@
       class="repeated-item ng-scope"
       style="">
 
-    <div class="ddi-card-panel  list-group-item">
+    <div class="ddi-card-panel list-group-item" style="cursor:pointer;" [ngClass]="this.selectedService.isSelected(d.source,d.id) ? 'grey' : 'white'" (click)="toggle(d.source,d.id)">
       <div class="project-widget-accession">
         <app-omics-image [omics]="d.omicsType"> </app-omics-image>
 

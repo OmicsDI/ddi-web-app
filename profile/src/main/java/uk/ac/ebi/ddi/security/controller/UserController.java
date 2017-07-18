@@ -148,4 +148,10 @@ public class UserController {
 
 		return result.toArray(new UserShort[0]);
 	}
+
+	@RequestMapping(value = "/api/users", method = RequestMethod.GET)
+	@CrossOrigin
+	public Iterable<MongoUser> getUsers() {
+		return mongoUserDetailsRepository.findAll();
+	}
 }
