@@ -16,12 +16,12 @@
 
 
   <div *ngIf="!this.profile?.bio" class="bio" style="position:relative; left:10px;">
-    Congratulations! You are created OmicsDI profile. Next? <br/> <br/>
+    Congratulations! You have created OmicsDI profile. What next? <br/> <br/>
     <ul>
       <li>Upload best <a [routerLink]="['/profile','update']">photo</a>
-      <li>White short <a [routerLink]="['/profile','update']">Bio</a> to stand out of colleagues
+      <li>Write short <a [routerLink]="['/profile','update']">bio</a> to stand out of colleagues
       <li>Use <a [routerLink]="['/search']" [queryParams]="{q: this.profile?.userName}">search</a> and claim your datasets!
-      <li>When happy with content - make profile <a [routerLink]="['/profile','update']">public</a> and twit short URL
+      <li>When you are happy with the content, you can make your profile <a [routerLink]="['/profile','update']">public</a> and use short URL in communication
       <li>Please consult <a href="http://blog.omicsdi.org/post/claiming-datasests/">help</a> for detailed step-by-step instructions
       <li>We are waiting for your <a [routerLink]="['/profile','feedback']">feedback</a>
     </ul>
