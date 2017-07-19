@@ -57,6 +57,21 @@ export class ProfileService extends BaseService {
       .catch(this.handleError);
   }
 
+  getAllProfiles(): Observable<Profile[]>{
+    var _profiles;
+    return this.http.get(this.appConfig.getAllProfilesUrl()) //,config //{ withCredentials: true }
+      .map(x => {
+        _profiles = this.extractData<Profile[]>(x);
+        if(!_profiles){
+          console.log("public profile not received");
+        }else {
+          console.log("public profilesreceived:" + _profiles.length);
+        }
+        return _profiles;
+      })
+      .catch(this.handleError);
+  }
+
   getUserConnections (userId: string): Observable<string[]>{
     return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) //{ withCredentials: true }
       .map(x => this.extractData<String[]>(x))

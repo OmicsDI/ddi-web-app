@@ -31,6 +31,9 @@ export class AppConfig{
     else
       return `${environment.userServiceUrl}user/current?r=${Math.random()}`;
   }
+  getAllProfilesUrl():string{
+    return `${environment.userServiceUrl}users?r=${Math.random()}`;
+  }
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections?r=${Math.random()}`;
   }

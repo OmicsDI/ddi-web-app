@@ -106,6 +106,10 @@ import { AdminComponent } from './pages/admin/admin.component';
 import {SelectedService} from "./services/selected.service";
 import { SelectedComponent } from './pages/selected/selected.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SavedSearchComponent } from './pages/dashboard/saved-search/saved-search.component';
+import { UpdateNotificationsComponent } from './pages/dashboard/update-notifications/update-notifications.component';
+import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
+import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -193,7 +197,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CitationDialogComponent,
     AdminComponent,
     SelectedComponent,
-    DashboardComponent
+    DashboardComponent,
+    SavedSearchComponent,
+    UpdateNotificationsComponent,
+    DashboardSelectedComponent,
+    DashboardFeedbackComponent
   ],
   imports: [
     BrowserModule,

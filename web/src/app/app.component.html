@@ -24,7 +24,7 @@
           <li AppLoginLauncher>
           </li>
 
-          <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/selected">({{this.selectedService.selected()}} selected)</a></li>
+          <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
 
           <li *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
 
