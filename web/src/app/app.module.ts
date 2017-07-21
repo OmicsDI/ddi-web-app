@@ -110,6 +110,7 @@ import { SavedSearchComponent } from './pages/dashboard/saved-search/saved-searc
 import { UpdateNotificationsComponent } from './pages/dashboard/update-notifications/update-notifications.component';
 import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
 import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
+import {SimpleNotificationsModule} from "angular2-notifications";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -219,7 +220,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     NgxPaginationModule,
     TooltipModule,
     UiSwitchModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot()
   ],
   exports: [
     RouterModule

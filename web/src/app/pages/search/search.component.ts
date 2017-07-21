@@ -4,6 +4,7 @@ import {SearchService} from "../../services/search.service";
 import {SlimLoadingBarService} from "ng2-slim-loading-bar";
 import {ActivatedRoute} from "@angular/router";
 import {SearchQuery} from "../../model/SearchQuery";
+import {NotificationsService} from "angular2-notifications/dist";
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,7 @@ import {SearchQuery} from "../../model/SearchQuery";
 export class SearchComponent implements OnInit {
   content : string;
 
-  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService, private route: ActivatedRoute) { }
+  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService, private route: ActivatedRoute, private notificationService: NotificationsService) { }
 
   ngOnInit() {
     this.slimLoadingBarService.start();
@@ -39,4 +40,7 @@ export class SearchComponent implements OnInit {
   dataLoaded(): boolean{
     return this._dataLoaded;
   }
+
+  public simpleNotificationsOptions = {timeOut:100,position: ["bottom", "right"],animate:"scale"};
+
 }

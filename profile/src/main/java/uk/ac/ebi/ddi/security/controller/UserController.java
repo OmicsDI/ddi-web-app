@@ -9,11 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import uk.ac.ebi.ddi.security.model.DataSet;
-import uk.ac.ebi.ddi.security.model.MongoUser;
-import uk.ac.ebi.ddi.security.model.UserAuthentication;
-import uk.ac.ebi.ddi.security.model.UserShort;
+import uk.ac.ebi.ddi.security.model.*;
 import uk.ac.ebi.ddi.security.repo.MongoUserDetailsRepository;
+import uk.ac.ebi.ddi.security.repo.SavedSearchRepository;
+import uk.ac.ebi.ddi.security.repo.WatchedDatasetsRepository;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +26,12 @@ public class UserController {
 
 	@Autowired
 	MongoUserDetailsRepository mongoUserDetailsRepository;
+
+	@Autowired
+	SavedSearchRepository savedSearchRepository;
+
+	@Autowired
+	WatchedDatasetsRepository watchedDatasetsRepository;
 
 	@RequestMapping(value = "/api/user/current", method = RequestMethod.GET)
 	@CrossOrigin
@@ -154,4 +159,41 @@ public class UserController {
 	public Iterable<MongoUser> getUsers() {
 		return mongoUserDetailsRepository.findAll();
 	}
+
+	@RequestMapping(value = "/api/users/{userId}/savedsearches", method = RequestMethod.GET)
+	@CrossOrigin
+	public Iterable<SavedSearch> getSavedSearches(@PathVariable String userId) {
+		return savedSearchRepository.findByUserId(userId);
+	}
+
+	@RequestMapping(value = "/api/users/{userId}/savedsearches", method = RequestMethod.POST)
+	@CrossOrigin
+	public void saveSavedSearch(@RequestBody SavedSearch savedSearch) {
+		savedSearchRepository.save(savedSearch);
+	}
+
+	@RequestMapping(value = "/api/users/{userId}/savedsearches/{id}", method = RequestMethod.DELETE)
+	@CrossOrigin
+	public void deleteSavedSearch(@PathVariable String userId,@PathVariable String id) {
+		savedSearchRepository.delete(id);
+	}
+
+	@RequestMapping(value = "/api/users/{userId}/watches", method = RequestMethod.GET)
+	@CrossOrigin
+	public Iterable<WatchedDataset> getWatchedDatasets(@PathVariable String userId) {
+		return watchedDatasetsRepository.findByUserId(userId);
+	}
+
+	@RequestMapping(value = "/api/users/{userId}/watches", method = RequestMethod.POST)
+	@CrossOrigin
+	public void saveWatchedDataset(@RequestBody WatchedDataset watchedDataset) {
+		watchedDatasetsRepository.save(watchedDataset);
+	}
+
+	@RequestMapping(value = "/api/users/{userId}/watches/{id}", method = RequestMethod.DELETE)
+	@CrossOrigin
+	public void deleteWatchedDataset(@PathVariable String userId,@PathVariable String id) {
+		watchedDatasetsRepository.delete(id);
+	}
+
 }

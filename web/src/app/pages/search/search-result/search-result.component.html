@@ -45,7 +45,11 @@
         <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> <span class="ng-binding">{{appConfig.repositories[d.source]}}</span> </a>
       </div>
 
-      <span style="float:right;position:relative; top:-18px;"><a href="#">Cite</a>&nbsp;&nbsp;&nbsp;<a href="#">Claim</a>&nbsp;&nbsp;&nbsp;<a href="#">Get Updates</a>&nbsp;&nbsp;&nbsp;<a href="#">Select</a></span>
+
+      <span style="float:right;position:relative; top:-18px;" *ngIf="this.profileService.profile"><a class="unselected" (click)="citeClicked($event,d.source,d.id)">Cite</a>
+        &nbsp;<a [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'" (click)="claimClicked($event,d.source,d.id)">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}}</a>
+        &nbsp;<a [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'" (click)="notifyClicked($event,d.source,d.id)">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}}</a>
+        &nbsp;<a [ngClass]="this.selectedService.isSelected(d.source,d.id) ? 'selected' : 'unselected'" (click)="selectClicked($event,d.source,d.id)">{{this.selectedService.isSelected(d.source,d.id) ? 'Selected' : 'Select'}}</a></span>
 
       <div *ngIf="d.keywords" class="project-widget-paragraph">
         <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" [routerLink]="['/search']"  [queryParams]="{q:o}">{{o}}&nbsp;</a>

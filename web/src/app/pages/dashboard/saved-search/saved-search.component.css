@@ -1,0 +1,28 @@
+.caption{
+  color:rgb(0,153,204);
+  font-size:32px;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: 300;
+}
+
+.rightNav{
+  float:right;
+  margin-left:20px;
+}
+
+ul.rightNavMenu li{
+  list-style-type:none;
+  line-height: 24px;
+}
+
+ul.rightNavMenu li a{
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  border-bottom-color: rgb(102, 102, 102);
+  font-weight:normal;
+  font-size: 14.4px;
+  display: block;
+  width: 300px;
+  padding-left:10px;
+  padding-bottom:11px;
+  padding-top: 11.2px;
+}

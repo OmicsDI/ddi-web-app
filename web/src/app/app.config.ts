@@ -86,9 +86,23 @@ export class AppConfig{
   getDeleteConnectionUrl(userId: string, provider: string){
     return `${environment.userServiceUrl}users/${userId}/connections/${provider}?r=${Math.random()}`;
   }
+  getUserSavedSearchesUrl(userId: string){
+    return `${environment.userServiceUrl}users/${userId}/savedsearches?r=${Math.random()}`;
+  }
+  getUserSavedSearchesDeleteUrl(userId: string, id: string){
+    return `${environment.userServiceUrl}users/${userId}/savedsearches/${id}?r=${Math.random()}`;
+  }
+  getWatchedDatasetsUrl(userId: string){
+    return `${environment.userServiceUrl}users/${userId}/watches?r=${Math.random()}`;
+  }
+  getWatchedDatasetsDeleteUrl(userId: string, id: string){
+    return `${environment.userServiceUrl}users/${userId}/watches/${id}?r=${Math.random()}`;
+  }
   getConnectUrl(provider:string){
     if(provider=="orcid")
       return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=/authenticate`;
+    else if(provider=="google")
+      return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=https://www.googleapis.com/auth/userinfo.email`
     else
       return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
   }

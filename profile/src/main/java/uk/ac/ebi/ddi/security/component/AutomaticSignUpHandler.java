@@ -9,6 +9,8 @@ import org.springframework.social.connect.UserProfile;
 import org.springframework.social.elixir.api.ElixirProfile;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.github.api.GitHub;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.userinfo.GoogleUserInfo;
 import org.springframework.social.twitter.api.Twitter;
 import org.europepmc.springframework.social.orcid.api.OrcidApi;
 import org.springframework.social.elixir.api.Elixir;
@@ -89,6 +91,15 @@ public class AutomaticSignUpHandler implements ConnectionSignUp {
             email = elixirProfile.getEmail();
 
             affiliation = "Elixir user";
+        }else if(connection.getApi() instanceof Google){
+            GoogleUserInfo googleUserInfo = ((Google)connection.getApi()).userOperations().getUserInfo();
+
+            String givenName = googleUserInfo.getFirstName();
+            String familyName = googleUserInfo.getLastName();
+            name = givenName + " " + familyName;
+            email = googleUserInfo.getEmail();
+
+            affiliation = "Google user";
         }
 
         user.setUserName(generateUniqueUserName(name));
