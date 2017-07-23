@@ -94,10 +94,10 @@ export class AppConfig{
     return `${environment.userServiceCookiePath}connect/${provider}`;
   }
   getSimilarityMoleculesUrl(acc: string, repository: string){
-    return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}?r=${Math.random()}`;
+    return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
   }
   getSimilarityDatasetsUrl(acc: string, repository: string){
-    return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}?r=${Math.random()}`;
+    return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&database=${repository}&r=${Math.random()}`;
   }
   getFeedbackUrl(){
     return `${environment.webServiceUrl}feedback/saveFeedback`;
