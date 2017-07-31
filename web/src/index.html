@@ -113,7 +113,51 @@
   }
 </script>
 
+
 <body class="level2">
+
+<script>
+  function XhrGet(url){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",url, true);
+    xhr.onload = function (e) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log(xhr.responseText);
+
+          var obj = JSON.parse(xhr.responseText);
+
+          var script = document.createElement('script');
+          script.type = "application/ld+json";
+          script.innerHTML = JSON.stringify(obj);
+
+          document.getElementsByTagName('head')[0].appendChild(script);
+
+        } else {
+          console.error(xhr.statusText);
+        }
+      }
+    };
+    xhr.onerror = function (e) {
+      console.error(xhr.statusText);
+    };
+    xhr.send(null);
+  }
+
+  (function(){
+    var loc = window.location.href;
+    var baseURL = document.getElementsByTagName('base')[0].href;
+    var path = loc.replace(baseURL,"");
+
+    if(path===""){
+      path="home?r=" + Math.random();
+    }
+
+    console.log("relative path: "+path);
+
+    XhrGet('ws/seo/' + path);
+  })(document);
+</script>
 
 <app-root>Loading...</app-root>
 <!--wraper of page -->
