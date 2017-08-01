@@ -106,6 +106,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import {SelectedService} from "./services/selected.service";
 import { SelectedComponent } from './pages/selected/selected.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -211,7 +212,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     NgxPaginationModule,
     TooltipModule,
     UiSwitchModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ClipboardModule
   ],
   exports: [
     RouterModule
