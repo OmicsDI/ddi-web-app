@@ -1,0 +1,2 @@
+#!/bin/bash
+mvn clean && mvn install && rm -rf /usr/local/apache-tomcat-8.5.5/webapps/ROOT/* && cp -r target/ddi-web-app/ /usr/local/apache-tomcat-8.5.5/webapps/ROOT/
