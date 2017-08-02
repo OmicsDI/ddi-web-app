@@ -30,26 +30,82 @@ export class CitationDialogComponent implements OnInit {
   ***********************************************************************/
 
   ngOnInit() {
-    var r: string = "";
+    var p: string = "[dataset] ";
+    var m: string = "[dataset] ";
     var i: number = 0;
+
+
+    var submitters = "";
     for (var s of this.datasetDetail.submitter) {
       i++;
       if(i<10) {
-        r += (r == "" ? "" : ",") + s;
-      }else if ((i<this.datasetDetail.submitter.length) && (!r.endsWith("..."))) {
-        r + ",..."
+        submitters += (submitters == "" ? "" : ",") + s;
+      }else if ((i<this.datasetDetail.submitter.length) && (!submitters.endsWith("..."))) {
+        submitters + ",..."
       }
     }
-    r += ". ";
-    r += this.datasetDetail.name;
-    r += " ";
+
+    p+=submitters;
+    m+=submitters;
+
+    var publicationDate = new Date(this.datasetDetail.publicationDate);
+
+    p+= " (" + publicationDate.getFullYear() +"). ";
+    m += ". ";
+
+    p += this.datasetDetail.name + ", ";
+    m += this.datasetDetail.name + ", ";
+
+    p += this.datasetDetail.source + ", V1.";
+    m += this.datasetDetail.source + ", V1; " + publicationDate.getFullYear() + ".";
+
+    /****r += " ";
     if(null!=this.datasetDetail.organization && this.datasetDetail.organization.length > 0) {
       r += this.datasetDetail.organization[0];
     }
     r += ". ";
-    r += this.datasetDetail.publicationDate;
-    this.messageAPA = r;
-    this.messageAMA = r;
+    r += this.datasetDetail.publicationDate;****/
+
+    p += " " + this.datasetDetail.full_dataset_link + ".";
+    m += " " + this.datasetDetail.full_dataset_link + ".";
+
+    this.messageAPA = p;
+    this.messageAMA = m;
+  }
+
+  Pselected: boolean;
+  Pcopied: boolean;
+  Mselected: boolean;
+  Mcopied: boolean;
+
+  mouseOverP(event) {
+    event.target.style = "border:solid 1px black;";
+    this.Pselected = true;
+  }
+
+  mouseOutP(event){
+    event.target.style = "border:none";
+    this.Pselected = false;
+  }
+
+  mouseClickP(event){
+    this.Pcopied = true;
+    this.Mcopied = false;
+  }
+
+  mouseOverM(event) {
+    event.target.style = "border:solid 1px black;";
+    this.Mselected = true;
+  }
+
+  mouseOutM(event){
+    event.target.style = "border:none";
+    this.Mselected = false;
+  }
+
+  mouseClickM(event){
+    this.Mcopied = true;
+    this.Pcopied = false;
   }
 
 }

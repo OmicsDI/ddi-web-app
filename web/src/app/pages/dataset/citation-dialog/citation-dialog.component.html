@@ -1,8 +1,10 @@
 <h3 class="icon icon-generic" data-icon="d">{{ title }}</h3>
-<div style="margin-top:20px; padding:20px; max-width:600px;"><span style="padding:10px; font-weight: bold;">APA:</span> <span style="border:solid 1px black">{{ messageAPA }}</span>
-  <span class="icon icon-generic" data-icon=";" style="color: #1a0dab;"></span>
+<div style="margin-top:20px; padding:20px; max-width:600px;"><span style="padding:10px; font-weight: bold;">APA:</span> <span ngxClipboard [cbContent]="messageAPA" (mouseover)="mouseOverP($event)" (mouseout)="mouseOutP($event)" (click)="mouseClickP($event)" >{{ messageAPA }}</span>
+  <span *ngIf="Pselected || Pcopied" class="icon icon-generic" data-icon=";" style="color: silver;"><span *ngIf="!Pcopied">click to copy</span><span *ngIf="Pcopied">copied</span></span>
 </div>
-<div style="margin-bottom:20px; padding:20px; max-width:600px;"><span style="padding:10px; font-weight: bold;">AMA:</span> <span>{{ messageAMA }}</span></div>
+<div style="margin-bottom:20px; padding:20px; max-width:600px;"><span style="padding:10px; font-weight: bold;">AMA:</span> <span ngxClipboard [cbContent]="messageAMA" (mouseover)="mouseOverM($event)" (mouseout)="mouseOutM($event)" (click)="mouseClickM($event)">{{ messageAMA }}</span>
+  <span *ngIf="Mselected || Mcopied" class="icon icon-generic" data-icon=";" style="color: silver;" ><span *ngIf="!Mcopied">click to copy</span><span *ngIf="Mcopied">copied</span></span>
+</div>
 <div style="margin: 0 auto; width: 30%; text-align: center;">
 <button type="button" md-raised-button
         (click)="dialogRef.close(true)">OK</button>
