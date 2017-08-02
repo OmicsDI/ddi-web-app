@@ -1,71 +1,31 @@
-![](https://travis-ci.org/PRIDE-Cluster/cluster-web-app.svg?branch=master)
+# Web
 
-Omics Discovery Index web-app
-=====================
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
 
-##Prerequisite
+## Development server
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-`Tomcat 8.5.5`
-`jdk    1.8`
-`Apache Maven 3.3.9`
+## Code scaffolding
 
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
 
-A web application for the *Omics Discovery Index* resource. We use mostly [`AngularJS`](https://angularjs.org/) as
-a front-end framework for a *Spring MVC* container-based web jsp app. For visualisation [NVD3](https://github.com/novus/nvd3) and
-[Angularjs-nvd3-directives](http://cmaurer.github.io/angularjs-nvd3-directives/) are used.
+## Build
 
-In-dev prototype deployed here: [http://wwwdev.ebi.ac.uk/ddi](http://wwwdev.ebi.ac.uk/ddi).
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-### Project structure
+## Running unit tests
 
-The web application code is contained within the `src/main/webapp` folder. The structure is as follows:
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-**`/WEB-INF/views`**
+## Running end-to-end tests
 
-Defines main views , as well as jsp files for templating and data binding.
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Before running the tests make sure you are serving the app via `ng serve`.
 
-**`/static/`**
+## Deploying to GitHub Pages
 
-Defines source files we need: `css/` `images/` `js/`
+Run `ng github-pages:deploy` to deploy to GitHub Pages.
 
-## Services
+## Further help
 
-`DDIService`
-
-Provides methods to query the *DDI web services* web-service at the `datasetsummary`  and `datasetdetail` end points.
-
-##Back-end Spring MVC
-
-Defines the routing and pre-render meta tags and ld+json to be SEO friendly.They are defined in the `org/omicsdi/springmvc` folder.
-
-**`configuration/`**
-
-Defines basic config for Spring MVC.
-
-**`controller/`**
-
-Defines the corresponding pages and controll the render logic.
-
-**`http/`**
-
-Defines the request class.
-
-### Install Dependencies
-
-After cloning the repository，you only need to install the java dependencies by Maven(download from here[`Maven`](http://maven.apache.org/download.cgi)), after that our application is packaged inside the new `target/ddi-web-app` folder:
-
-**`mvn clean && mvn install`**
-
-### Run the Application
-
-We have pre-configured the project with a simple development web server.  The simplest way to start
-this server is(assuming that you are in the root of application and started the Tomcat[`Tomcat`](http://tomcat.apache.org/download-80.cgi)):
-
-```
-cp -r target/ddi-web-app/* /path/to/Tomcat/webapps/ROOT/
-```
-
-Now browse to the app at `http://localhost:8080/`.
-
-
-
+To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

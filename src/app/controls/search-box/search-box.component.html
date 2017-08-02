@@ -1,0 +1,32 @@
+<div style="height: 29px;float:right;margin-top:0px;z-index:1;margin-bottom:10px;" xmlns:width="http://www.w3.org/1999/xhtml"
+     xmlns:width="http://www.w3.org/1999/xhtml" xmlns:width="http://www.w3.org/1999/xhtml">
+  <form novalidate name="queryForm" class="local-search">
+    <div class="form-group ">
+      <div class="input-group ">
+        <app-autocomplete-n (submit)="search()"></app-autocomplete-n>
+        <div class="input-group-btn">
+          <button [mdMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
+            <i class="fa {{this.caret_class()}}" aria-hidden="true"></i>
+            Advanced
+          </button>
+          <button type="submit" value="submit" class="btn btn-primary ddi-btn" (click)="search()" >
+            <i class="fa fa-search"></i> Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<md-menu id="advancedSearchMenu" #advancedSearchMenu="mdMenu" [overlapTrigger]="false">
+  <div class="mat-menu-content" style="width:550px">
+  <div class="alert alert-info" (click)="doNotPropagate($event);">
+    <div style="position: relative;">
+      <strong>Full Text Query:</strong><br/>
+      <input type="text" [(ngModel)]="searchService.textQuery" />
+    </div>
+
+  </div>
+  <query-builder [(query)]="searchService.paramQuery" (click)="doNotPropagate($event);"></query-builder>
+  </div>
+</md-menu>

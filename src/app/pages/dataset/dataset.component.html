@@ -1,0 +1,151 @@
+<div class="container ng-scope" id="datasetCtrl">
+  <div id="" class="row">
+  </div>
+  <div id="error-row" class="row">
+    <p>
+    </p>
+  </div>
+  <div class="row" style="">
+    <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
+      <app-socialnetworks></app-socialnetworks>
+    </div>
+    <!-- col-md-1-->
+    <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
+      <div id="dataset-error-row" class="row error-info ng-hide">
+        <p class="ng-binding">
+
+        </p>
+      </div>
+      <div class="panel panel-default" id="dataset_upper" >
+        <div class="panel-footer ">
+          <h3>Dataset Information
+          </h3>
+        </div>
+        <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
+          <app-omics-image [omics]="d?.omics_type" [size]="'large'"> </app-omics-image>
+          <br>
+          <br>
+          <br>
+        </div>
+        <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
+          <div>
+            <h4>
+              <annotated-text [text]="d.name" [sections]="title_sections"></annotated-text>
+            </h4>
+            <p id="ontology_highlight_box" (click)="enrich_click()" class="hotword" style="">
+              <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
+            </p>
+          </div>
+          <hr style="margin-right:10px">
+          <div>
+            <div>
+              <p class="align-justify"><b>ABSTRACT</b>:
+                <annotated-text [text]="d.description" [sections]="abstract_sections"></annotated-text>
+              </p>
+            </div>
+          </div>
+          <p class="align-justify" *ngIf="null!=d.sample_protocol">
+            <span><b>SAMPLE PROTOCOL:</b></span>
+              <span class="ng-scope">
+                  <annotated-text [text]="d.sample_protocol" [sections]="sample_protocol"></annotated-text>
+              </span>
+          </p>
+          <p class="align-justify" *ngIf="null!=d.data_protocol">
+            <span><b>DATA PROTOCOL:</b></span>
+              <span class="ng-scope">
+                  <annotated-text [text]="d.data_protocol" [sections]="data_protocol"></annotated-text>
+              </span>
+          </p>
+          <p class="align-justify ng-hide" *ngIf="null!=d.reanalysis_of">
+            <b>REANALYSIS of:</b>reanalysis_of
+          </p>
+          <p class="align-justify ng-hide" *ngIf="null!=d.reanalised_by">
+            <b>REANALYZED by:</b>reanalised_by
+          </p>
+          <p class="align-justify ng-hide" *ngIf="null!=d.related_omics">
+            <b>OTHER RELATED OMICS DATASETS IN:</b>related_omics
+          </p>
+          <p class="align-justify" *ngIf="null!=d.instruments">
+            <b>INSTRUMENT(S):</b>{{d.instruments}}
+          </p>
+          <p class="align-justify" *ngIf="null!=d.organisms">
+            <b>ORGANISM(S):</b>
+              <span *ngFor="let o of d.organisms">
+                <a class="biological" [routerLink]="['/search']" [queryParams]="{q: '*:* AND TAXONOMY:&quot;'+o.acc+'&quot;'}">
+                       {{o.name}}
+                </a>&nbsp;
+              </span>
+          </p>
+          <p class="align-justify ng-hide" *ngIf="null!=d.tissues"><b>TISSUE(S):</b>
+              {{d.tissues}}
+          </p>
+          <p class="align-justify ng-hide" *ngIf="null!=d.diseases"><b>DISEASE(S):</b>
+              {{d.diseases}}
+          </p>
+          <p class="align-justify" *ngIf="null!=d.submitter">
+            <b>SUBMITTER:</b>
+              <span *ngFor="let o of d.submitter; let i = index;" >
+                <span *ngIf="d.submitterMail && d.submitterMail[i]">
+                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img src="static/images/logo/rsz_mail.png">{{o}}</a>
+                </span>
+                <span *ngIf="!(d.submitterMail && d.submitterMail[i])">
+                  {{o}}
+                </span>
+                &nbsp;
+              </span>
+
+              <span *ngFor="let o of d.submitterMail">
+                <span>
+                  <a href="#">{{o.name}}</a>
+                </span>&nbsp;
+              </span>
+          </p>
+          <p class="align-justify">
+            <b>PROVIDER:</b>
+            <a [href]="d.full_dataset_link">{{d.id}}</a>  |
+            <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> {{d.source}} </a>
+            <span>| {{d.publicationDate}} </span>
+          </p>
+          <!--dataset_protocol_bottom-->
+          <div id="buttons_highlight_box">
+            <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
+
+
+            <claim-button [dataSet]="d"></claim-button>
+
+
+            <a (click)="citation()" class="citation-button" style="">&lt;CITE&gt;</a>&nbsp;
+            <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>&nbsp;
+            <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
+          </div>
+        </div>
+        <!--dataset_protocol_bottom-->
+        <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
+        </div>
+        <!--dataset_bottom-->
+      </div>
+
+      <app-publication [ids]="d.publicationIds"></app-publication>
+
+      <similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></similar-molecule>
+
+      <!--dataset_upper -->
+      <div class="panel panel-default">
+        <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
+        <disqus [shortname]="dataset" [identifier]="repository+'/'+acc" [url]="repository+'/'+acc" ></disqus>
+      </div>
+    </div>
+    <!-- col-md-8 centerpanel-->
+    <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" >
+      <p>
+      </p><h4>
+      Similar Datasets
+    </h4>
+      <p></p>
+
+        <app-similar [acc]="acc" [repository]="repository"></app-similar>
+    </div>
+  </div>
+</div>
+
+

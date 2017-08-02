@@ -1,0 +1,91 @@
+<script>
+  document.title = "OmicsDI Home";
+
+</script>
+
+
+<div ng-show="web_service_fail==='false'" class="container">
+
+
+  <div id="" class="row" style="margin:10px">
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div ng-controller="QueryCtrl" class="ng-scope panel panel-default" style="">
+        <!--      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">   -->
+        <h3 style="margin-top:10px">
+        </h3>
+
+        <search-box-large></search-box-large>
+        <!-- /form -->
+      </div>
+      <!--/controller-->
+    </div>
+
+    <div class="col-md-4">
+    </div>
+
+
+  </div>
+
+  <!-- <div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style=""> -->
+  <div class="row">
+
+    <div class="col-md-4">
+      <app-hotwords (notifyHomeLoader)="loadOnePart($event)"></app-hotwords>
+    </div>
+
+
+    <div class="col-md-4">
+      <app-tissues-organisms (notifyHomeLoader)="loadOnePart($event)"></app-tissues-organisms>
+    </div>
+
+    <div class="col-md-4">
+      <!--<div id="chart_repos_omics" class="panel panel-default" style="height:360px">
+      </div>-->
+      <repos-omics (notifyHomeLoader)="loadOnePart($event)"></repos-omics>
+    </div>
+
+
+  </div>
+  <!-- row -->
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <app-latest-datasets (notifyHomeLoader)="loadOnePart($event)"></app-latest-datasets>
+    </div>
+
+    <div class="col-md-4">
+      <app-most-accessed (notifyHomeLoader)="loadOnePart($event)"></app-most-accessed>
+    </div>
+
+    <div class="col-md-4">
+      <app-annual-omicstype (notifyHomeLoader)="loadOnePart($event)"></app-annual-omicstype>
+    </div>
+  </div>
+  <!--row -->
+
+  <hr>
+
+  <div class="row">
+
+    <div class="col-md-4">
+      <app-tweets-news (notifyHomeLoader)="loadOnePart($event)"></app-tweets-news>
+    </div>
+
+    <div class="col-md-4">
+      <app-statistics-panel (notifyHomeLoader)="loadOnePart($event)"></app-statistics-panel>
+    </div>
+
+    <div class="col-md-4">
+      <app-home-about></app-home-about>
+    </div>
+
+
+  </div>
+  <!--row -->
+</div>

@@ -1,0 +1,12 @@
+<div class="autocomplete">
+<input
+  type="text"
+  placeholder="organism, repository, gene, tissue, accession"
+  class="ng-touched"
+  ng2-auto-complete
+        [(ngModel)]="this.searchService.fullQuery"
+        [source]="observableSource.bind(this)"
+        min-chars="3"
+  (keydown)="keydown($event)"
+/>
+</div>

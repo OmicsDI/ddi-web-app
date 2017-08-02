@@ -1,0 +1,31 @@
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "wwww.omicsdi.org"
+  },
+  "headline": "this is meta from the webbb",
+  "image": {
+    "@type": "ImageObject",
+    "url": "img.gg",
+    "height": 413,
+    "width": 1159
+  },
+  "datePublished": "01/01/2012",
+  "author": {
+    "@type": "Person",
+    "name": "Hello"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "SERPs.com",
+    "logo" : {
+      "@type": "ImageObject",
+      "url": "https://serps.com/app/uploads/2016/05/serps-logo-60.png",
+      "height": 60,
+      "width": 300
+    }
+  },
+  "description": "{{SCHEMA - Article Description}}"
+}

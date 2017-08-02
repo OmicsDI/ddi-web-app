@@ -1,0 +1,24 @@
+<a [mdMenuTriggerFor]="menu" *ngIf="!auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Menu">Login</a>
+
+<md-menu #menu="mdMenu" [overlapTrigger]="false" style="width:400px;">
+    <app-login-dialog></app-login-dialog>
+</md-menu>
+
+
+<a [mdMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Dialog">{{name}}</a>
+
+
+  <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
+    <button [routerLink]="['/profile']" md-menu-item>
+      Profile
+    </button>
+    <button md-menu-item disabled [routerLink]="['/dashboard']">
+      Dashboard
+    </button>
+    <button md-menu-item (click)="LogOut()">
+      Log Out
+    </button>
+  </md-menu>
+
+
+

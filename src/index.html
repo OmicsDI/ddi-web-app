@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app"
+      class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width" name="viewport">
+    <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
+          name="description">
+
+    <meta content={{meta_dataset_title}} name="dataset_title">
+    <meta content={{meta_dataset_abstract}} name="dataset_abstract">
+    <meta content={{meta_dataset_identifier}} name="dataset_identifier">
+    <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
+
+
+    <title>OmicsDI: Home</title>
+
+   <base href="/">
+
+
+    <!-- favico -->
+    <link rel="apple-touch-icon" sizes="57x57" href="./img/favico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./img/favico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./img/favico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./img/favico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./img/favico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./img/favico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./img/favico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./img/favico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/favico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./img/favico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./img/favico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favico/favicon-16x16.png">
+    <link rel="manifest" href="./img/favico/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="./img/favico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="canonical" href={{meta_originalURL}}>
+    <link rel="canonical" href={{meta_ddiURL}}>
+
+    <link rel="stylesheet" href='css/bootstrap.min.css'>
+    <link rel="stylesheet" href="css/boilerplate-style.css">
+    <link rel="stylesheet" href="css/ebi-global.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/ebi-visual.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/984-24-col-fluid.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'--->
+    <link type="text/css" href="css/ngProgress.css" rel="stylesheet">
+    <link type="text/css" href="css/ddi.css" rel="stylesheet">
+    <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
+
+    <!--favico end -->
+
+
+  <style>
+    [ng2-tooltip] {margin: 40px; border: 1px solid #ccc}
+
+    [ng2-tooltip] .tooltip-contents {
+      border: 1px solid #ccc; padding: 5px
+    }
+    [ng2-tooltip] .tooltip-down-arrow {
+      height: 10px;
+    }
+    [ng2-tooltip] .tooltip-down-arrow:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      left: 45%;
+      bottom: 5px;
+      background: #FFFFFF;
+      border-left:1px solid #ccc;
+      border-bottom:1px solid #ccc;
+      transform:rotate(-45deg);
+    }
+
+
+    div.mat-menu-panel{
+      max-width: 1500px;
+      overflow: visible;
+    }
+  </style>
+
+</head>
+<script>
+  function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+  }
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+  var authToken = getParameterByName('AUTH_TOKEN');
+  if(authToken){
+    localStorage.setItem('id_token', authToken);
+    window.location.href=window.location.href.replace('AUTH_TOKEN='+authToken,'');
+  }
+
+  //obsolete twitter integration on frontpage
+  var __twttr = { parse : function(response) {
+      localStorage.setItem('__twttr', JSON.stringify(response));
+    }
+  }
+</script>
+
+
+<body class="level2">
+
+<script>
+  function XhrGet(url){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",url, true);
+    xhr.onload = function (e) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          console.log(xhr.responseText);
+
+          var obj = JSON.parse(xhr.responseText);
+
+          var script = document.createElement('script');
+          script.type = "application/ld+json";
+          script.innerHTML = JSON.stringify(obj);
+
+          document.getElementsByTagName('head')[0].appendChild(script);
+
+        } else {
+          console.error(xhr.statusText);
+        }
+      }
+    };
+    xhr.onerror = function (e) {
+      console.error(xhr.statusText);
+    };
+    xhr.send(null);
+  }
+
+  (function(){
+    var loc = window.location.href;
+    var baseURL = document.getElementsByTagName('base')[0].href;
+    var path = loc.replace(baseURL,"");
+
+    if(path===""){
+      path="home?r=" + Math.random();
+    }
+
+    console.log("relative path: "+path);
+
+    XhrGet('ws/seo/' + path);
+  })(document);
+</script>
+
+<app-root>Loading...</app-root>
+<!--wraper of page -->
+<!-- To have google analytics-->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new
+                        Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-70417662-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<script src="//omicsdi.disqus.com/embed.js"></script>
+
+</body>
+</html>

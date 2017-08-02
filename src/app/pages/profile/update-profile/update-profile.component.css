@@ -1,0 +1,38 @@
+.pictureFrameEdit{
+  margin-right:20px;
+  text-align: center;
+  padding-top: 20px;
+  background-color:rgb(234, 234, 234);
+  width:200px;
+  min-height:200px;
+  display: inline-block;
+  position: relative;
+  left: 0;
+}
+
+.editContainer {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  text-align: justify;
+  min-height:200px;
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  width:480px;
+  vertical-align: top;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  display: inline-block;
+  text-decoration: underline;
+}

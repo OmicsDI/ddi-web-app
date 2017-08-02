@@ -1,0 +1,11 @@
+<div id="statisticspanel" class="panel panel-default" style="height:260px">
+
+  <div class="">
+    <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
+  </div>
+  <blockquote>
+    <p *ngFor="let statisticdata of statisticsList " style="margin:8px">
+      {{statisticdata.value|number}} {{statisticdata.name}}
+    </p>
+  </blockquote>
+</div>

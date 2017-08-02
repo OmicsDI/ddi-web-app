@@ -1,0 +1,11 @@
+.ddi-card-panel2 {
+  background-color: #fff;
+  border-radius: 2px;
+  margin: 1rem 0rem 0.8rem 1rem;
+  padding: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.list-group-item2{
+  margin-top: 10px;
+}
