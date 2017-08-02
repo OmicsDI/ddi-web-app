@@ -181,7 +181,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     let dialogRef: MdDialogRef<CitationDialogComponent>;
 
     dialogRef = this.dialog.open(CitationDialogComponent);
-    dialogRef.componentInstance.title = "Dataset citation string";
+    dialogRef.componentInstance.title = "Dataset citation";
     dialogRef.componentInstance.datasetDetail = this.d ;
 
     return dialogRef.afterClosed();
