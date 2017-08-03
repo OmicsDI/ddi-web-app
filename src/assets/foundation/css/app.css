@@ -1,0 +1,126 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.top-bar{
+  background-color: #0099cc;
+}
+
+.top-bar-left ul{
+  background-color: #0099cc;
+  color: white;
+  /*font-size: 14px;*/
+  font-weight: bold;
+}
+
+.top-bar-left a{
+  background-color: #0099cc;
+  color: white;
+  /*font-size: 14px;*/
+  font-weight: bold;
+}
+
+.top-bar-left a::after{
+  background-color: #0099cc;
+  color: white;
+  /*font-size: 14px;*/
+  font-weight: bold;
+}
+
+.top-bar-right ul{
+  background-color: #0099cc;
+  color: white;
+  font-size: 14px;
+}
+
+.top-bar-right a{
+  background-color: #0099cc;
+  color: white;
+  /*font-size: 14px;*/
+  font-weight: bold;
+}
+
+.top-bar-right button{
+  color: white;
+  /*font-size: 14px;*/
+  font-weight: bold;
+}
+
+/****************
+.menu search {
+  width: 400px;
+}
+
+.top-bar input {
+ max-width: 400px;
+  width: 400px;
+}
+****************/
+
+/*
+.multilevel-accordion-menu .is-accordion-submenu-parent a {
+  background: #4d5158;
+}*/
+
+.multilevel-accordion-menu .is-accordion-submenu a {
+  background: #F0F0F0;
+}
+
+
+.multilevel-accordion-menu .sublevel-1 {
+  text-indent: 1rem;
+}
+
+.multilevel-accordion-menu .sublevel-2 {
+  text-indent: 2rem;
+}
+
+.multilevel-accordion-menu .sublevel-3 {
+  text-indent: 3rem;
+}
+
+.multilevel-accordion-menu .sublevel-4 {
+  text-indent: 4rem;
+}
+
+.multilevel-accordion-menu .sublevel-5 {
+  text-indent: 5rem;
+}
+
+.multilevel-accordion-menu .sublevel-6 {
+  text-indent: 6rem;
+}
+
+.multilevel-accordion-menu a {
+  /*color: #fefefe;
+  box-shadow: inset 0 -1px #41444a;
+  */
+}
+
+.multilevel-accordion-menu a::after {
+  border-color: #fefefe transparent transparent;
+
+}
+
+.multilevel-accordion-menu .menu > li:not(.menu-text) > a {
+  padding: 1.2rem 1rem;
+}
+
+.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="true"] a.subitem::before {
+  content: "\f016";
+  font-family: FontAwesome;
+  margin-right: 1rem;
+}
+
+.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="true"] a::before {
+  content: "\f07c";
+  font-family: FontAwesome;
+  margin-right: 1rem;
+}
+
+.multilevel-accordion-menu .is-accordion-submenu-parent[aria-expanded="false"] a::before {
+  content: "\f07b";
+  font-family: FontAwesome;
+  margin-right: 1rem;
+}
+
