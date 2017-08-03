@@ -1,4 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ProfileService} from "../../services/profile.service";
+import {Profile} from "../../model/Profile";
+import {AppConfig} from "../../app.config";
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +10,12 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private profileService: ProfileService, private appConfig: AppConfig) { }
+
+  public profiles: Profile[];
 
   ngOnInit() {
+    this.profileService.getAllProfiles().subscribe(x => this.profiles = x);
   }
 
 }

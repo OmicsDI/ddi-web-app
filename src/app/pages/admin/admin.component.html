@@ -1,85 +1,30 @@
-<div id="content" role="main" class="row">
+<div style="width:80%; margin-left:auto; margin-right: auto;">
+<div class="caption">{{this.profiles.length}} profiles created
 
-  <!-- Suggested layout containers -->
-  <section>
 
-    <!-- Your menu structure should make a breadcrumb redundant, but if a breadcrump is needed uncomment the below -->
-    <nav aria-label="You are here:" role="navigation">
-      <ul class="breadcrumbs">
-        <li><a href="../../">EBI Framework</a></li>
-        <li><a href="../">Sample pages</a></li>
-        <li>
-          <span class="show-for-sr">Current: </span> Search results boilerplate
-        </li>
-      </ul>
-    </nav>
+</div>
 
-    <div id="main-content-area" class="row">
-      <div class="small-12 columns">
-        <h2>Search results</h2>
-        <p>Showing X results from a total of Y (page 1 of 13). You can also use the <a href="#">advanced search</a>.</p>
-      </div>
+<div *ngFor="let u of this.profiles" style="display: block; padding:10px;">
 
-      <div class="small-12 medium-7 medium-push-2 columns">
+  <table>
+    <tr>
+      <td style="width:160px;">
+  <img
+    [src]="this.appConfig.getProfileImageUrl(u.userId)"
+    width="150"
+    id="gsc_prf_pup"
+    style="width:150px;">
+    </td>
+    <td>
 
-        <section>
+  <div style="font-size: larger; font-weight: bold;">{{u.userName}}</div>
+  {{u.bio}}
 
-          <p>Your results go here in whatever format is most suitable: list, table, tiled images... etc</p>
-          <p>You may wish to precede them with pagination and details of which page out of how many this is.</p>
-        </section>
+      <app-profile-contacts [profile]="u"></app-profile-contacts>
+    </td>
+  </tr>
+  </table>
 
-        <ul class="pagination" role="navigation" aria-label="Pagination">
-          <li class="pagination-previous disabled">Previous <span class="show-for-sr">page</span></li>
-          <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-          <li><a href="#" aria-label="Page 2">2</a></li>
-          <li><a href="#" aria-label="Page 3">3</a></li>
-          <li><a href="#" aria-label="Page 4">4</a></li>
-          <li class="ellipsis" aria-hidden="true"></li>
-          <li><a href="#" aria-label="Page 12">12</a></li>
-          <li><a href="#" aria-label="Page 13">13</a></li>
-          <li class="pagination-next"><a href="#" aria-label="Next page">Next <span class="show-for-sr">page</span></a></li>
-        </ul>
-
-      </div> <!-- /medium-7 -->
-
-      <div class="small-12 medium-2 medium-pull-7 columns">
-
-        <section>
-          <h5>Facets</h5>
-          <div class="">
-            <ul class="menu vertical">
-              <li><a href="#">Facet One</a></li>
-              <li><a href="#">Facet Two</a></li>
-              <ul class="nested menu vertical">
-                <li><a href="#">Sub-facet One</a></li>
-                <li><a href="#">Sub-facet Two</a></li>
-                <li><a href="#">Sub-facet Three</a></li>
-                <li><a href="#">Sub-facet Four</a></li>
-              </ul>
-              <li><a href="#">Facet Three</a></li>
-              <li><a href="#">Facet Four</a></li>
-            </ul>
-          </div>
-        </section>
-
-      </div> <!-- /medium-7 -->
-
-      <div class="small-12 medium-3 columns sidebar" data-sticky-container>
-
-        <h4>Right sidebar</h4>
-        <p>This is a sample item with a vertical menu.</p>
-        <ul class="menu vertical">
-          <li class=""><a href="https://github.com/ebiwd/EBI-Framework">Sample link</a></li>
-          <li class=""><a href="https://github.com/ebiwd/EBI-Framework/issues">Sample link</a></li>
-          <li class=""><a class="active" href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/sample-site/">Active link</a></li>
-          <li class=""><a href="https://www.ebi.ac.uk/web_guidelines/EBI-Framework/v1.1/fonts/index.html">Sample link</a></li>
-        </ul>
-
-      </div> <!-- /medium-3 -->
-
-    </div>
-
-  </section>
-  <!-- End suggested layout containers -->
+</div>
 
 </div>

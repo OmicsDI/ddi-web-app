@@ -1,7 +1,36 @@
-<div style="width:80%; margin-left:auto; margin-right:auto;">
-<div class="caption">Dataset update subscriptions</div>
+<div style="width:80%; margin-left: auto; margin-right: auto; display:block;">
 
-<br/><br/><br/><br/><br/>
+    <div style="display:flex;">
+    <div style="border:solid 1px red; min-height:400px; min-width:400px; display: block; flex: 1; margin:10px; padding:10px;">
+      <div class="caption">Saved Searches</div>
 
-<div class="caption">Saved queries</div>
+      <div *ngFor="let s of savedSearches">
+        {{s.count}} results for <a [routerLink]="['/search']" [queryParams]="{q: s.search}" >{{s.search}}</a>
+        <a (click)="delete(s.id)" title="delete">x</a><br/><br/>
+      </div>
+    </div>
+
+    <div style="border:solid 1px blue; min-height:400px; min-width:400px;display: block; flex: 1; margin:10px; padding:10px;">
+      <div class="caption">Watch Notifications</div>
+      <div *ngFor="let s of watchedDatasets">
+        <a [routerLink]="['/dataset',s.source, s.accession]" >{{s.source}}\{{s.accession}}</a>
+        <a (click)="deleteWatch(s.id)" title="delete">x</a><br/><br/>
+      </div>
+    </div>
+    </div>
+
+
+  <div style="display:flex;">
+    <div style="border:solid 1px green; min-height:400px; min-width:400px;display: block;flex: 1; margin:10px; padding:10px;">
+      <div class="caption">Selected Datasets</div>
+      <a [routerLink]="['/dashboard/selected']">details</a>
+    </div>
+
+    <div style="border:solid 1px orange; min-height:400px; min-width:400px;display: block;flex: 1; margin:10px; padding:10px;">
+      <div class="caption">Feedback</div>
+      <a [routerLink]="['/dashboard/feedback']">details</a>
+    </div>
+  </div>
+
+
 </div>

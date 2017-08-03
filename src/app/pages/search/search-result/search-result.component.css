@@ -7,3 +7,22 @@
   display: block;
 }
 
+.grey{
+  background-color: silver;
+  cursor:pointer;
+}
+
+.white{
+  background-color: white;
+  cursor:pointer;
+}
+
+
+a.selected{
+  font-weight: bold;
+}
+
+a.unselected{
+  font-weight: normal;
+  margin-right: 22px;
+}

@@ -21,6 +21,10 @@ import {NotfoundComponent} from "./pages/notfound/notfound.component";
 import {AdminComponent} from "./pages/admin/admin.component";
 import {SelectedComponent} from "./pages/selected/selected.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
+import {SavedSearchComponent} from "./pages/dashboard/saved-search/saved-search.component";
+import {UpdateNotificationsComponent} from "./pages/dashboard/update-notifications/update-notifications.component";
+import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
+import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -45,7 +49,11 @@ export const routes: Routes = [
   { path: 'notfound', component: NotfoundComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'selected', component: SelectedComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard/savedsearch', component: SavedSearchComponent },
+  { path: 'dashboard/notifications', component: UpdateNotificationsComponent },
+  { path: 'dashboard/selected', component: DashboardSelectedComponent },
+  { path: 'dashboard/feedback', component: DashboardFeedbackComponent }
 ];
 
 // Deprecated provide

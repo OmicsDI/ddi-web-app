@@ -12,7 +12,7 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
 
   @Input() profile: Profile;
 
-  facebookConnected: boolean = false;
+  googleConnected: boolean = false;
   orcidConnected : boolean = false;
   twitterConnected : boolean = false;
   elixirConnected : boolean = false;
@@ -47,7 +47,7 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
     this.profileService.getUserConnections(userId)
       .subscribe(
         connections => {
-          this.facebookConnected = connections.some(x=>x=="facebook");
+          this.googleConnected = connections.some(x=>x=="google");
           this.orcidConnected = connections.some(x=>x=="orcid");
           this.twitterConnected = connections.some(x=>x=="twitter");
           this.elixirConnected = connections.some(x=>x=="elixir");

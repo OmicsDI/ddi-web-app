@@ -1,4 +1,4 @@
-import { Injectable }       from '@angular/core';
+import {EventEmitter, Injectable}       from '@angular/core';
 import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@angular/http';
 import {Observable, ObservableInput} from 'rxjs/Observable';
 import { Profile } from '../model/Profile';
@@ -9,17 +9,23 @@ import {DataSetShort} from "../model/DataSetShort";
 import {UserShort} from "../model/UserShort";
 import {DataSetDetail} from "../model/DataSetDetail";
 import {DataSetService} from "./dataset.service";
+import {SavedSearch} from "../model/SavedSearch";
+import {WatchedDataset} from "../model/WatchedDataset";
+
 
 @Injectable()
 export class ProfileService extends BaseService {
 
   public profile: Profile; //this.profile.userId
   public userId: string;
+  public watchedDatasets: WatchedDataset[];
 
   constructor (private http: AuthHttp, private appConfig: AppConfig, private dataSetService: DataSetService) {
     super();
     console.log("ProfileService ctor");
   }
+
+  onProfileReceived: EventEmitter <Profile> =  new EventEmitter();
 
   getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -36,6 +42,10 @@ export class ProfileService extends BaseService {
             console.log("profile received:" + this.profile.userId);
             this.userId = this.profile.userId;
             this.getCoAuthors(this.profile.userId);
+            this.getWatchedDatasets(this.profile.userId).subscribe(
+              d => { this.watchedDatasets = d }
+            );
+            this.onProfileReceived.emit(this.profile);
           }
           return this.profile;
         })
@@ -53,6 +63,21 @@ export class ProfileService extends BaseService {
           console.log("public profile received:" + _profile.userId);
         }
         return _profile;
+      })
+      .catch(this.handleError);
+  }
+
+  getAllProfiles(): Observable<Profile[]>{
+    var _profiles;
+    return this.http.get(this.appConfig.getAllProfilesUrl()) //,config //{ withCredentials: true }
+      .map(x => {
+        _profiles = this.extractData<Profile[]>(x);
+        if(!_profiles){
+          console.log("public profile not received");
+        }else {
+          console.log("public profilesreceived:" + _profiles.length);
+        }
+        return _profiles;
       })
       .catch(this.handleError);
   }
@@ -136,8 +161,8 @@ export class ProfileService extends BaseService {
       let r:string;
 
       this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID),JSON.stringify(dataset))
-      .map(res => res.json()).subscribe(data => {
-        r = data;
+      .subscribe(x => {
+        this.profile.dataSets.push(dataset);
       });
   }
 
@@ -160,6 +185,8 @@ export class ProfileService extends BaseService {
     form.method = "POST";
     form.action = this.appConfig.getConnectUrl(provider);
 
+
+
     ///element1.value = localStorage.getItem("id_token");
     ///element1.name = "X-AUTH-TOKEN";
     ///form.appendChild(element1);
@@ -169,5 +196,62 @@ export class ProfileService extends BaseService {
     this.setCookie("X-AUTH-TOKEN", localStorage.getItem("id_token"), this.appConfig.getConnectCookiePath(provider));
 
     form.submit();
+  }
+
+  public isClaimed(source,id){
+    let obj: any;
+    if (null != this.profile.dataSets) {
+      obj = this.profile.dataSets.find(x => x.id == id && x.source == source);
+    }
+    return(null != obj);
+  }
+
+  public isWatched(source,id){
+    let obj: any;
+    if (null != this.watchedDatasets) {
+      obj = this.watchedDatasets.find(x => x.accession == id && x.source == source);
+    }
+    return(null != obj);
+  }
+
+  getSavedSearches (userId: string): Observable<SavedSearch[]> {
+    return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//
+      .map(x => this.extractData<SavedSearch[]>(x))
+      .catch(this.handleError);
+  }
+
+  saveSavedSearch(savedSearch: SavedSearch){
+    console.log("saving saved search");
+    this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId),JSON.stringify(savedSearch)).subscribe(
+      x => { console.log("saved search saved") }
+    );
+  }
+
+  deleteSavedSearch(id:string): Observable<String>{
+    return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(this.userId,id)).map(
+      x => "ok"
+    ).catch(this.handleError);
+  }
+
+  getWatchedDatasets (userId: string): Observable<WatchedDataset[]> {
+    return this.http.get(this.appConfig.getWatchedDatasetsUrl(userId))//
+      .map(x => this.extractData<WatchedDataset[]>(x))
+      .catch(this.handleError);
+  }
+
+  saveWatchedDataset(watchedDataset: WatchedDataset){
+    console.log("saving saved search");
+    this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId),JSON.stringify(watchedDataset)).subscribe(
+      x => {
+        console.log("watched dataset saved");
+        this.watchedDatasets.push(watchedDataset);
+      }
+    );
+  }
+
+  deleteWatchedDataset(id:string): Observable<String>{
+    return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(this.userId,id)).map(
+      x => "ok"
+    ).catch(this.handleError);
   }
 }

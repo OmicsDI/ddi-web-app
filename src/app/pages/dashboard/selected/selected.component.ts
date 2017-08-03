@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {DataSetDetail} from "../../model/DataSetDetail";
+import {DataSetDetail} from "../../../model/DataSetDetail";
+import {SelectedService} from "../../../services/selected.service";
+import {DataSetService} from "../../../services/dataset.service";
+import {AppConfig} from "../../../app.config";
 import {Observable} from "rxjs/Observable";
-import {SelectedService} from "../../services/selected.service";
-import {DataSetService} from "../../services/dataset.service";
-import {AppConfig} from "../../app.config";
 
 @Component({
-  selector: 'app-selected',
+  selector: 'app-dashboard-selected',
   templateUrl: './selected.component.html',
   styleUrls: ['./selected.component.css']
 })
-export class SelectedComponent implements OnInit {
+export class DashboardSelectedComponent implements OnInit {
 
   dataSets: DataSetDetail[];
 
   constructor(private selectedService:SelectedService
-              ,private dataSetService: DataSetService
-              ,private appConfig: AppConfig) { }
+    ,private dataSetService: DataSetService
+    ,private appConfig: AppConfig) { }
 
   ngOnInit() {
     this.reloadDataSets();
@@ -38,6 +38,4 @@ export class SelectedComponent implements OnInit {
       this.dataSets.splice(i,1);
     }
   }
-
-
 }
