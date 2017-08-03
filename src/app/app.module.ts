@@ -111,6 +111,7 @@ import { UpdateNotificationsComponent } from './pages/dashboard/update-notificat
 import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
 import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
 import {SimpleNotificationsModule} from "angular2-notifications";
+import {ClipboardModule} from "ngx-clipboard/dist";
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -221,7 +222,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     TooltipModule,
     UiSwitchModule,
     BrowserAnimationsModule,
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
+    ClipboardModule
   ],
   exports: [
     RouterModule

@@ -150,7 +150,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     this.dataSetService.getDataSetDetail_private(id,source).subscribe(
       x => {
         dialogRef = this.dialog.open(CitationDialogComponent);
-        dialogRef.componentInstance.title = "Dataset citation string";
+        dialogRef.componentInstance.title = "Dataset citation";
         dialogRef.componentInstance.datasetDetail = x;
         return dialogRef.afterClosed();
       }
