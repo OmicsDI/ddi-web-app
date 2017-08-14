@@ -1,43 +1,45 @@
-  <div id="" class="container" style="margin:0px;background-color: #0099cc;">
-    <div id="local-masthead" class="masthead row" style="margin-left:-15px;margin-right:-15px;margin-top: 15px">
-      <!-- local-nav -->
-      <nav style="float:bottom" class="col-md-12 col-sm-12 col-xs-12">
-        <ul class="nav navbar-nav" id="local-nav">
-          <li class=" first" id="home-image">
-            <div>
-              <a [routerLink]="['/']" title="OmicsDI Homepage"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;width: 41.848px;height: 28px;padding-right: 0px;padding-left: 20px;padding-right: 0px;padding-top: 1px;"></a>
-            </div></li>
-          <li><a [routerLink]="['/home']">Home</a></li>
-          <li><a [routerLink]="['/search']">Browse</a></li>
-          <li><a [routerLink]="['/api']">API</a></li>
-          <li><a [routerLink]="['/database']">Databases</a></li>
-          <li dropdown class="dropdown">
-            <a dropdown-open class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Help <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="http://blog.omicsdi.org/" alt="Help">Omics Help</a></li>
-              <li><a href="/about" alt="About">About Omicsdi</a></li>
-              <li *ngIf="auth.loggedIn()"><a data-icon="\" class="icon icon-static" routerLink="/profile/feedback" alt="Feedback">Feedback</a></li>
-            </ul>
-          </li>
-          <!-- li *ngIf="auth.loggedIn()"><a [routerLink]="['/profile']">Profile</a></li -->
+  <div id="wrapper" class="container" style="margin:0px;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;width: 41.848px;height: 28px;padding-right: 0px;padding-left: 20px;padding-right: 0px;padding-top: 1px;"></a>
+      </div>
+      <ul class="nav navbar-left top-nav">
+        <li><a [routerLink]="['/home']">Home</a></li>
+        <li><a [routerLink]="['/search']">Browse</a></li>
+        <li><a [routerLink]="['/api']">API</a></li>
+        <li><a [routerLink]="['/database']">Database</a></li>
+        <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
+      </ul>
+      <!-- Top Menu Items -->
+      <ul class="nav navbar-right top-nav">
+        <li dropdown class="dropdown">
+          <a dropdown-open class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i>Help <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="http://blog.omicsdi.org/" alt="Help">Omics Help</a></li>
+            <li><a [routerLink]="['about']" alt="About">About Omicsdi</a></li>
+            <li *ngIf="auth.loggedIn()"><a data-icon="\" class="icon icon-static" [routerLink]="['profile','feedback']" alt="Feedback">Feedback</a></li>
+          </ul>
+        </li>
 
-          <li AppLoginLauncher>
-          </li>
-
-          <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
-
-          <li *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
-
-          </li>
-
-        </ul>
-
-      </nav>
-    </div>
+        <li AppLoginLauncher>
+        </li>
+      </ul>
+    </nav>
     <!-- /local-nav -->
   </div>
 
-<div id="wrapper" class="container" ng-show="true">
+<div style="width:100%; background-color: #1a0dab">
+  hello
+</div>
+
+<div class="container">
   <ng2-slim-loading-bar></ng2-slim-loading-bar>
   <!--main container of page -->
   <div style="min-height: 600px;">

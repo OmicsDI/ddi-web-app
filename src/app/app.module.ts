@@ -112,6 +112,7 @@ import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.co
 import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ClipboardModule} from "ngx-clipboard/dist";
+import { NavComponent } from './pages/dashboard/nav/nav.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -203,7 +204,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SavedSearchComponent,
     UpdateNotificationsComponent,
     DashboardSelectedComponent,
-    DashboardFeedbackComponent
+    DashboardFeedbackComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,

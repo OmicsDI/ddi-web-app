@@ -1,0 +1,6 @@
+.navbar-inverse {
+    background-color: #0099cc;
+}
+.navbar-inverse li a {
+    color: white;
+}
