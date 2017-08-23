@@ -54,7 +54,7 @@ export class SearchService extends BaseService{
   currentPage: number = 1;
 
   sortOrder: string = "ascending";
-  sortBy: string = "id";
+  sortBy: string = "";
 
   selectedPageSize = 30;
   pageSizes = ["10","20","30","50","100" ];
@@ -154,7 +154,7 @@ export class SearchService extends BaseService{
       let rule: Rule = new Rule();
       if(this.selectedFacets[id].length > 1){
         let q: SearchQuery = new SearchQuery();
-        q.operator = "OR";
+        q.operator = (id=="omics_type"?"AND":"OR");
         q.rules = new Array<Rule>();
         for(let i of this.selectedFacets[id]){
           let r:Rule = new Rule();
