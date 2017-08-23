@@ -94,7 +94,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
       console.log("source not found:"+source);
     }
     else {
-      return db.title;
+      return db.databaseName;
     }
   }
 }

@@ -22,7 +22,7 @@ export class DatabaseListService extends BaseService {
       .map(x => {
         var d1: Database[] = this.extractData<Database[]>(x);
         for(let d of d1){
-          this.databases[d.repository] = d;
+          this.databases[d.source] = d;
         }
         return d1;
       });

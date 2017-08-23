@@ -9,6 +9,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable()
 export class AppConfig{
+
   /***OBSOLETE***/
   getWebServiceUrl():string{
     return `${environment.webServiceUrl}`;
