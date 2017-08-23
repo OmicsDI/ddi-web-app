@@ -12,10 +12,19 @@ export class DatabaseListService extends BaseService {
     private http: Http,
     private appConfig: AppConfig) { 
       super();
+      this.getDatabaseList().subscribe();
     }
+
+  public databases = {};
   
   public getDatabaseList(): Observable<Database[]> {
     return this.http.get(this.appConfig.getDatabasesUrl())
-      .map(x => this.extractData<Database[]>(x));
+      .map(x => {
+        var d1: Database[] = this.extractData<Database[]>(x);
+        for(let d of d1){
+          this.databases[d.repository] = d;
+        }
+        return d1;
+      });
   }
 }

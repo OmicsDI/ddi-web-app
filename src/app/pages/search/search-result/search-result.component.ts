@@ -10,6 +10,7 @@ import {AppConfig} from "../../../app.config";
 import {Profile} from "../../../model/Profile";
 import {ProfileService} from "../../../services/profile.service";
 import {SelectedService} from "../../../services/selected.service";
+import {DatabaseListService} from "../../../services/database-list.service";
 
 @Component({
   selector: 'app-search-result',
@@ -29,7 +30,8 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     , private searchService: SearchService
     , private slimLoadingBarService: SlimLoadingBarService
     , private profileService: ProfileService
-    , private selectedService: SelectedService) {
+    , private selectedService: SelectedService
+    , private databaseListServce: DatabaseListService) {
 
     console.log("SearchResultComponent ctor");
     this.slimLoadingBarService.start();
@@ -74,5 +76,25 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   clicked(source:string,id:string){
     //console.log(`clicked ${source} ${id}`);
     this.selectedService.select(source,id);
+  }
+
+  getDatabaseUrl(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.sourceUrl;
+    }
+  }
+
+  getDatabaseTitle(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.title;
+    }
   }
 }

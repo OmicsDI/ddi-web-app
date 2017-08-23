@@ -23,6 +23,7 @@ export class SimilarMoleculeComponent implements OnInit {
   minimumThreshold = 0.50;
   biological_similarity_info: SimilarMolecule;
   related_datasets_by_biological: DataSet[];
+  filteredDatasets: DataSet[];
   related_datasets_by_biological_limit = 0;
   inputdata = {
     connections: [],
@@ -51,12 +52,14 @@ export class SimilarMoleculeComponent implements OnInit {
             this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
           }
           this.drawTheChord();
+          //this.filteredDatasets = this.getRelatedDatasets();
         })
 
       this.simiMoleService
         .searchSimilarityDatasets(this.acc, this.repository)
         .subscribe(data => {
           this.related_datasets_by_biological = data.datasets;
+          this.filteredDatasets = this.related_datasets_by_biological;
         })
     }
   }
@@ -82,6 +85,7 @@ export class SimilarMoleculeComponent implements OnInit {
   }
 
   thresholdChange(step_value: number) {
+    console.log("thresholdChange");
     this.threshold = (this.threshold * 100 + step_value * 100) / 100 * 1.00;
     this.threshold = this.threshold.toPrecision(2);
 
@@ -96,6 +100,10 @@ export class SimilarMoleculeComponent implements OnInit {
     if (this.biological_similarity_info != null) {
       this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
     }
+  }
+
+  thresholdChanged(){
+      this.getRelatedDatasets(this.threshold);
   }
 
   drawTheChord() {
@@ -262,6 +270,16 @@ export class SimilarMoleculeComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  getRelatedDatasets(threshold: number){
+      this.filteredDatasets=new Array();
+      for(var d of this.related_datasets_by_biological){
+          if(d.score>=threshold){
+              this.filteredDatasets.push(d);
+          }
+      }
+      console.log("this.filteredDatasets.length:"+this.filteredDatasets.length);
   }
 
 }

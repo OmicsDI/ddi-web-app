@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-md-1" id="chord_diagram_input">
       <h5 style="margin-top: 100px">Threshold:<br> <span id="threshold_text2" style="color: darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h5>
-      <input id="slider1" style="margin-left: 30px" type="range" class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" [(ngModel)]="threshold" ng-change="threshold_change(0)" />
+      <input id="slider1" style="margin-left: 30px" type="range" class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" [(ngModel)]="threshold" (ngModelChange)="thresholdChanged()" />
     </div>
 
     <div class="col-md-6" id="chord_diagram" style="text-align:center;">
@@ -29,21 +29,14 @@
     <div class="col-md-5" style="text-align:center;" *ngIf="related_datasets_by_biological != null">
       <div class="panel-body ">
           <ul class="nobullet">
-              <!-- ngRepeat: dataset in result.datasets -->
-              <li *ngFor="let relatedDataset of related_datasets_by_biological | limitDatasetNumbers : related_datasets_by_biological_limit" class="title_one_line" style="height: 2.0em">
-                  <img src="static/images/omics/Multipleomics2.png" *ngIf="relatedDataset.omicsType.indexOf('Multi-Omics') != -1" />
-                  <img src="static/images/omics/Proteomics2.png" *ngIf="relatedDataset.omicsType.indexOf('Proteomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
-                  <img src="static/images/omics/Metabolomics2.png" *ngIf="relatedDataset.omicsType.indexOf('Metabolomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
-                  <img src="static/images/omics/Genomics2.png" *ngIf="relatedDataset.omicsType.indexOf('Genomics') == 0 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1 " />
-                  <img src="static/images/omics/Transcriptomics2.png" *ngIf="(relatedDataset.omicsType.indexOf('Transcriptomics') == 0 || relatedDataset.omicsType.indexOf('transcriptomics') == 0) && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
-                  <img src="static/images/omics/BioModel2.png" *ngIf="relatedDataset.omicsType.indexOf('Models') != -1 && relatedDataset.omicsType.indexOf('Multi-Omics') == -1" />
-                  <img src="static/images/omics/rsz_newcircle.jpg" *ngIf="relatedDataset.omicsType.indexOf('UNKNOWN') != -1" />
-                  <a target="" class="align-justify" [href]="'dataset/' + relatedDataset.source + '/' + relatedDataset.id">
+              <li *ngFor="let relatedDataset of filteredDatasets" class="title_one_line" style="margin-bottom: 2px; height:22px;">
+
+                  <app-omics-image [omics]="relatedDataset.omicsType" ></app-omics-image>
+                  <a target="" class="align-justify" [routerLink]="['/dataset',relatedDataset.source, relatedDataset.id]">
                       {{relatedDataset.title}}
-                      <!--{{relatedDataset.title|limitTo:40}} {{relatedDataset.title.length>40?'...':''}}-->
                   </a>
               </li>
-              <!-- end ngRepeat: -->
+              <!-- this.appConfig.getDatasetUrl(relatedDataset.id,relatedDataset.source) -->
           </ul>
       </div>
     </div>

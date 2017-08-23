@@ -35,7 +35,7 @@ import {SearchFacetComponent} from "./pages/search/search-facet/search-facet.com
 import {AutocompleteNComponent} from "./controls/autocomplete-n/autocomplete-n.component";
 import {TruncatePipe} from "./pipes/truncate.pipe";
 import {FacetComponent} from "./controls/facet/facet.component";
-import {Ng2AutoCompleteModule} from "ng2-auto-complete";
+import {NguiAutoCompleteModule} from "@ngui/auto-complete";
 import { SocialnetworksComponent } from './controls/socialnetworks/socialnetworks.component';
 import { SimilarComponent } from './pages/dataset/similar/similar.component';
 import { PublicationComponent } from './pages/dataset/publication/publication.component';
@@ -204,7 +204,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     routing,
     FormsModule,
     ReactiveFormsModule,
-    Ng2AutoCompleteModule,
+    NguiAutoCompleteModule,
     DisqusModule,
     AlertModule.forRoot(),
     DropdownModule,
