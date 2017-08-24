@@ -58,11 +58,12 @@ export class DatabaseComponent implements OnInit {
       )
   }
 
-  getDatasetCount(source: string){
+  getDatasetCount(domain: string){
     for(var d of this.domainStats){
-      if(d.domain.name.toLowerCase() == source.toLowerCase())
+
+      if(d.domain.name == domain)
         return d.domain.value;
     }
-   return source;
+   return domain;
   }
 }
