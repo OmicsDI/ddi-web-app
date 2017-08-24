@@ -36,12 +36,14 @@ export class CitationDialogComponent implements OnInit {
 
 
     var submitters = "";
-    for (var s of this.datasetDetail.submitter) {
-      i++;
-      if(i<10) {
-        submitters += (submitters == "" ? "" : ",") + s;
-      }else if ((i<this.datasetDetail.submitter.length) && (!submitters.endsWith("..."))) {
-        submitters + ",..."
+    if(this.datasetDetail.submitter) {
+      for (var s of this.datasetDetail.submitter) {
+        i++;
+        if (i < 10) {
+          submitters += (submitters == "" ? "" : ",") + s;
+        } else if ((i < this.datasetDetail.submitter.length) && (!submitters.endsWith("..."))) {
+          submitters + ",..."
+        }
       }
     }
 
