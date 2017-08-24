@@ -17,6 +17,7 @@ import {DataSetShort} from "../../../model/DataSetShort";
 import {Router} from "@angular/router";
 import {NotificationsService} from "angular2-notifications/dist";
 import {WatchedDataset} from "../../../model/WatchedDataset";
+import {DatabaseListService} from "../../../services/database-list.service";
 
 @Component({
   selector: 'app-search-result',
@@ -40,7 +41,8 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     , private dataSetService: DataSetService
     , private dialog: MdDialog
     , private router: Router
-    , private notificationService: NotificationsService) {
+    , private notificationService: NotificationsService
+    , private databaseListServce: DatabaseListService) {
 
     console.log("SearchResultComponent ctor");
     this.slimLoadingBarService.start();
@@ -144,16 +146,36 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     $event.preventDefault();
   }
 
-  citation(source,id){
-    let dialogRef: MdDialogRef<CitationDialogComponent>;
+  citation(source,id) {
+      let dialogRef: MdDialogRef<CitationDialogComponent>;
 
-    this.dataSetService.getDataSetDetail_private(id,source).subscribe(
-      x => {
-        dialogRef = this.dialog.open(CitationDialogComponent);
-        dialogRef.componentInstance.title = "Dataset citation";
-        dialogRef.componentInstance.datasetDetail = x;
-        return dialogRef.afterClosed();
-      }
-    )
+      this.dataSetService.getDataSetDetail_private(id, source).subscribe(
+          x => {
+              dialogRef = this.dialog.open(CitationDialogComponent);
+              dialogRef.componentInstance.title = "Dataset citation";
+              dialogRef.componentInstance.datasetDetail = x;
+              return dialogRef.afterClosed();
+          }
+      )
+  }
+
+  getDatabaseUrl(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.sourceUrl;
+    }
+  }
+
+  getDatabaseTitle(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.databaseName;
+    }
   }
 }

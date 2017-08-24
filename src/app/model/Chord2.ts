@@ -27,6 +27,9 @@ export class Chord2 {
   colorschemeArcs = ["#000000", "#FFDD89", "#957244", "#F26223", "#d9d9d9"];
   fillChords = d3.schemeCategory20;
 
+  public constructor(){
+  }
+
   public init(selection: any) {
     let self = this;
     let tooltip: any = document.getElementById("chord_diagram_tooltip");
@@ -174,7 +177,8 @@ export class Chord2 {
           if (domain == 'MetabolomicsWorkbench') {
             domain = 'metabolomics_workbench';
           }
-          location.href = "#/dataset/" + domain + "/" + acc;
+          //TODO: routerLink
+          location.href = "dataset/" + domain + "/" + acc;
         })
         .on("mouseover", function (d) {
           var acc = d.label.replace(/@.*/, "");

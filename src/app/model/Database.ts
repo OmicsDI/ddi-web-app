@@ -3,10 +3,13 @@
  */
 
 export class Database {
+  databaseName: string;
+  source: string;
+  repository: string;
+  domain: string;
   title: string;
   sourceUrl: string;
   imgAlt: string;
-  repository: string;
   description: string;
   image: { $binary: string, $type:string };
 }

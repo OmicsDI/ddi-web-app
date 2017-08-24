@@ -32,7 +32,7 @@
 
             <div class="panel-footer small">
               <a rel="nofollow"
-                 [routerLink]="['/search']" [queryParams]="{q:'*:* AND repository:' + db.repository}">{{ this.getDatasetCount(db.databaseName) }} datasets</a>
+                 [routerLink]="['/search']" [queryParams]="{q:'*:* AND repository:' + db.repository}">{{ this.getDatasetCount(db.domain) }} datasets</a>
             </div>
           </div>
         </div>
