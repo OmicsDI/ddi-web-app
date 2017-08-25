@@ -262,3 +262,7 @@ table.data {
 html.fontface .icon-static:before, html.fontface .icon-generic:before {
     color: #fff !important;
 }
+
+ul.side-nav li a:hover, a:focus, a:active {
+    border-bottom-style: dotted;
+}

@@ -1,5 +1,5 @@
   <div id="wrapper1" class="container_ddi" style="margin:0px;">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navbar-ex1-collapse">
@@ -9,7 +9,7 @@
           <span class="icon-bar"></span>
         </button>
       </div>
-      <ul class="nav navbar-left top-nav">
+      <ul class="nav navbar-left top-nav col-lg-6 col-md-12 col-sm-12 hidden-xs" >
         <li>
         <a [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
         </li>
@@ -31,8 +31,8 @@
         <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
       </ul>
       <!-- Top Menu Items -->
-      <ul class="nav navbar-right top-nav">
-        search here
+      <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-6">
+        <li style="width:100%;" *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
       </ul>
     </nav>
     <!-- /local-nav -->
