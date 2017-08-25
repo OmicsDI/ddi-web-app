@@ -1,39 +1,52 @@
+<div id="wrapper">
 <app-nav></app-nav>
 <div id="page-wrapper">
-        <div class="container-fluid">
-
-    <div style="display:flex;">
-    <div style="border:solid 1px red; min-height:400px; min-width:400px; display: block; flex: 1; margin:10px; padding:10px;">
-      <div class="caption">Saved Searches</div>
-
-      <div *ngFor="let s of savedSearches">
-        {{s.count}} results for <a [routerLink]="['/search']" [queryParams]="{q: s.search}" >{{s.search}}</a>
-        <a (click)="delete(s.id)" title="delete">x</a><br/><br/>
-      </div>
-    </div>
-
-    <div style="border:solid 1px blue; min-height:400px; min-width:400px;display: block; flex: 1; margin:10px; padding:10px;">
-      <div class="caption">Watch Notifications</div>
-      <div *ngFor="let s of watchedDatasets">
-        <a [routerLink]="['/dataset',s.source, s.accession]" >{{s.source}}\{{s.accession}}</a>
-        <a (click)="deleteWatch(s.id)" title="delete">x</a><br/><br/>
-      </div>
-    </div>
-    </div>
+        <div class="container-fluid3">
 
 
-  <div style="display:flex;">
-    <div style="border:solid 1px green; min-height:400px; min-width:400px;display: block;flex: 1; margin:10px; padding:10px;">
-      <div class="caption">Selected Datasets</div>
-      <a [routerLink]="['/dashboard/selected']">details</a>
-    </div>
+            <div class="col-lg-12">
+                <div class="caption">Saved Searches</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Search</th>
+                            <th># Results</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let s of savedSearches">
+                            <td><a [routerLink]="['/search']" [queryParams]="{q: s.search}" >{{s.search}}</a></td>
+                            <td> {{s.count}}</td>
+                            <td><a (click)="delete(s.id)" title="delete">x</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    <div style="border:solid 1px orange; min-height:400px; min-width:400px;display: block;flex: 1; margin:10px; padding:10px;">
-      <div class="caption">Feedback</div>
-      <a [routerLink]="['/dashboard/feedback']">details</a>
-    </div>
-  </div>
 
+            <div class="col-lg-12">
+                <div class="caption">Watch Notifications</div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Dataset</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let s of watchedDatasets">
+                            <td><a [routerLink]="['/dataset',s.source, s.accession]" >{{s.source}}\{{s.accession}}</a></td>
+                            <td><a (click)="deleteWatch(s.id)" title="delete">x</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
+</div>
 </div>
 </div>

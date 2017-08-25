@@ -43,6 +43,9 @@ body {
 }
 
 /* Top Navigation */
+nav.navbar-inverse {
+    background-color: #0099cc;
+}
 
 .top-nav {
     padding: 0 15px;
@@ -57,7 +60,8 @@ body {
     padding-top: 15px;
     padding-bottom: 15px;
     line-height: 20px;
-    color: #999;
+    color: white;
+    border-bottom:none;
 }
 
 .top-nav>li>a:hover,
@@ -66,7 +70,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #000;
+    background-color: #2e6da4;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -122,7 +126,7 @@ ul.alert-dropdown {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #222;
+        background-color: aliceblue;
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;
@@ -135,7 +139,7 @@ ul.alert-dropdown {
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
-        background-color: #000 !important;
+        background-color: #2e6da4;
     }
 }
 
@@ -224,4 +228,37 @@ ul.alert-dropdown {
 
 .panel-yellow > a:hover {
     color: #df8a13;
+}
+
+/********* override bootstrap.css ***********/
+.navbar-inverse {
+    border-color: #0099cc;
+    border-top-color: #0099cc;
+    border-right-color: #0099cc;
+    border-bottom-color: #0099cc;
+    border-left-color: #0099cc;
+}
+
+a.navbar-brand:hover{
+    border-bottom: none !Important;
+    background-color: #2e6da4 !Important;
+}
+
+/********* override ebi_visual ***********/
+
+th, body.table-layout table.data
+th {
+    font-weight: bold;
+    background-color: white !important;
+    /*border-bottom: 3px solid #f7f7f7;*/
+    /*color: black*/
+}
+
+table, body.table-layout
+table.data {
+    border: 1px solid #DDD !important;
+}
+
+html.fontface .icon-static:before, html.fontface .icon-generic:before {
+    color: #fff !important;
 }

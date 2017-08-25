@@ -1,4 +1,4 @@
-  <div id="wrapper" class="container_ddi" style="margin:0px;">
+  <div id="wrapper1" class="container_ddi" style="margin:0px;">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -8,17 +8,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;width: 41.848px;height: 28px;padding-right: 0px;padding-left: 20px;padding-right: 0px;padding-top: 1px;"></a>
       </div>
       <ul class="nav navbar-left top-nav">
+        <li>
+        <a [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
+        </li>
         <li><a [routerLink]="['/home']">Home</a></li>
         <li><a [routerLink]="['/search']">Browse</a></li>
         <li><a [routerLink]="['/api']">API</a></li>
         <li><a [routerLink]="['/database']">Database</a></li>
-        <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
-      </ul>
-      <!-- Top Menu Items -->
-      <ul class="nav navbar-right top-nav">
         <li dropdown class="dropdown">
           <a dropdown-open class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i>Help <b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -30,12 +28,15 @@
 
         <li AppLoginLauncher>
         </li>
+        <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
+      </ul>
+      <!-- Top Menu Items -->
+      <ul class="nav navbar-right top-nav">
+        search here
       </ul>
     </nav>
     <!-- /local-nav -->
-  </div>
 
-<div>
   <ng2-slim-loading-bar></ng2-slim-loading-bar>
   <!--main container of page -->
   <div style="min-height: 600px;">
@@ -154,6 +155,5 @@
   </footer>
 
 </div>
-
 
 
