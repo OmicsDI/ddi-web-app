@@ -113,6 +113,7 @@ import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.co
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ClipboardModule} from "ngx-clipboard/dist";
 import { NavComponent } from './pages/dashboard/nav/nav.component';
+import { ScoreComponent } from './controls/score/score.component';
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -205,7 +206,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     UpdateNotificationsComponent,
     DashboardSelectedComponent,
     DashboardFeedbackComponent,
-    NavComponent
+    NavComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule,
