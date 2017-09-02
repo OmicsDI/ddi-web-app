@@ -41,9 +41,15 @@ export class AutocompleteNComponent implements OnInit {
     }
   }
 
-  keydown(event){
-    if(13 == event.keyCode){
-      this.submit.emit();
+  downArrowPressed: Boolean = false;
+  keydown(event) {
+    switch (event.keyCode) {
+      case 40:
+        this.downArrowPressed = true;
+      case 13: {
+        if(!this.downArrowPressed)
+          this.submit.emit();
+      }
     }
   }
 

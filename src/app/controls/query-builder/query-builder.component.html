@@ -19,7 +19,7 @@
         <div *ngIf="null==rule.query">
           <div class="form-inline" style="margin-top:3px">
             <select [(ngModel)]="rule.field" class="form-control input-sm" (click)="selectField(rule)" >
-              <option *ngFor="let field of searchService.facets" [ngValue]="field.id">{{field.label}}</option>
+              <option *ngFor="let field of searchService.allFacets" [ngValue]="field.id">{{field.label}}</option>
             </select>
             <select style="margin-left: 3px" [(ngModel)]="rule.condition" class="form-control input-sm">
               <option *ngFor="let condition of conditions">{{condition.name}}</option>

@@ -60,6 +60,7 @@ export class SearchService extends BaseService{
   pageSizes = ["10","20","30","50","100" ];
 
   public facets: Facet[];
+  public allFacets: Facet[] = [];
 
   constructor(private http: Http, private appConfig: AppConfig) {
     super()
@@ -94,6 +95,9 @@ export class SearchService extends BaseService{
     this.search(this.fullQuery, page).subscribe(searchResult => {
       this.searchResultSource.next(searchResult);
       this.facets = (JSON.parse(JSON.stringify(searchResult.facets)));
+      if(this.allFacets.length==0){
+        this.allFacets=this.facets;
+      }
     });
     /** TODO: handle error **/
   }
@@ -177,18 +181,18 @@ export class SearchService extends BaseService{
     this.callSearch();
   }
 
-  getFacetValues(facet: string):FacetValue[]{
+  getAllFacetValues(facet: string):FacetValue[]{
     let result: FacetValue[];
     result = new Array<FacetValue>();
 
-    if(null == this.facets){
+    if(null == this.allFacets){
       let v:FacetValue = new FacetValue();
       v.label = "label1";
       v.value = "value1";
       result.push(v);
     }
     else{
-      for(let f of this.facets)
+      for(let f of this.allFacets)
       {
         if(f.id == facet){
           for(let w of f.facetValues) {

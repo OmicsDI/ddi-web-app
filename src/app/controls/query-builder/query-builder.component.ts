@@ -131,7 +131,7 @@ export class QueryBuilderComponent implements OnInit {
 
   getFieldsData(field:string) : FacetValue[]
   {
-    return this.searchService.getFacetValues(field);
+    return this.searchService.getAllFacetValues(field);
 
   }
 
