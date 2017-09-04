@@ -85,21 +85,28 @@ export class SimilarMoleculeComponent implements OnInit {
   }
 
   thresholdChange(step_value: number) {
-    console.log("thresholdChange");
-    this.threshold = (this.threshold * 100 + step_value * 100) / 100 * 1.00;
-    this.threshold = this.threshold.toPrecision(2);
+      console.log("thresholdChange");
+      if(step_value==0) {
+          this.threshold = 0.5;
+      }
+      else {
 
-    if (this.threshold >= 1) {
-      this.threshold = 1.00;
-      this.threshold = this.threshold.toPrecision(3);
-    }
-    if (this.threshold < 0.5) {
-      this.threshold = 0.50;
-      this.threshold = this.threshold.toPrecision(2);
-    }
-    if (this.biological_similarity_info != null) {
-      this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
-    }
+          this.threshold = (this.threshold * 100 + step_value * 100) / 100 * 1.00;
+          this.threshold = this.threshold.toPrecision(2);
+
+          if (this.threshold >= 1) {
+              this.threshold = 1.00;
+              this.threshold = this.threshold.toPrecision(3);
+          }
+          if (this.threshold < 0.5) {
+              this.threshold = 0.50;
+              this.threshold = this.threshold.toPrecision(2);
+          }
+      }
+      if (this.biological_similarity_info != null) {
+          this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
+      }
+      this.getRelatedDatasets(this.threshold);
   }
 
   thresholdChanged(){
