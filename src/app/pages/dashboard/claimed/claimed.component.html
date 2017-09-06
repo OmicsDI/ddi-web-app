@@ -1,0 +1,16 @@
+<div id="wrapper">
+  <app-nav></app-nav>
+  <div id="page-wrapper">
+    <div class="container-fluid3">
+
+      <div *ngIf="profileService.profile?.dataSets?.length>0" class="caption">Edit Datasets</div>
+      <app-profile-result [profile]="profileService.profile" (change)="updateProfile()"></app-profile-result>
+
+      <div *ngIf="!(profileService.profile?.dataSets?.length>0)">
+        <div  class="datasetsCaption">No Datasets Claimed</div>
+        please use <a [routerLink]="['/search']" [queryParams]="{q:profileService.profile.userName}">search</a> to find and claim your dataset.
+      </div>
+
+    </div>
+  </div>
+</div>

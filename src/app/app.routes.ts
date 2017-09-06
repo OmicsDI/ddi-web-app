@@ -25,6 +25,11 @@ import {SavedSearchComponent} from "./pages/dashboard/saved-search/saved-search.
 import {UpdateNotificationsComponent} from "./pages/dashboard/update-notifications/update-notifications.component";
 import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
 import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
+import {DashboardProfileComponent} from "./pages/dashboard/profile/profile.component";
+import {DashboardUpdateComponent} from "./pages/dashboard/update/update.component";
+import {DashboardClaimedComponent} from "./pages/dashboard/claimed/claimed.component";
+import {DashboardPictureComponent} from "./pages/dashboard/picture/picture.component";
+import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -53,7 +58,13 @@ export const routes: Routes = [
   { path: 'dashboard/savedsearch', component: SavedSearchComponent },
   { path: 'dashboard/notifications', component: UpdateNotificationsComponent },
   { path: 'dashboard/selected', component: DashboardSelectedComponent },
-  { path: 'dashboard/feedback', component: DashboardFeedbackComponent }
+  { path: 'dashboard/feedback', component: DashboardFeedbackComponent },
+  { path: 'dashboard/profile', component: DashboardProfileComponent },
+  { path: 'dashboard/update', component: DashboardUpdateComponent },
+  { path: 'dashboard/claimed', component: DashboardClaimedComponent },
+  { path: 'dashboard/picture', component: DashboardPictureComponent },
+  { path: 'dashboard/settings', component: SettingsComponent }
+
 ];
 
 // Deprecated provide

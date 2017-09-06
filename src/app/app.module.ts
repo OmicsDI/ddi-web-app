@@ -104,16 +104,22 @@ import {AltmetricService} from "./services/altmetric.service";
 import { CitationDialogComponent } from './pages/dataset/citation-dialog/citation-dialog.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import {SelectedService} from "./services/selected.service";
-import { SelectedComponent } from './pages/selected/selected.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { SavedSearchComponent } from './pages/dashboard/saved-search/saved-search.component';
-import { UpdateNotificationsComponent } from './pages/dashboard/update-notifications/update-notifications.component';
+import {SelectedComponent } from './pages/selected/selected.component';
+import {DashboardComponent } from './pages/dashboard/dashboard.component';
+import {SavedSearchComponent } from './pages/dashboard/saved-search/saved-search.component';
+import {UpdateNotificationsComponent } from './pages/dashboard/update-notifications/update-notifications.component';
 import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
 import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
 import {SimpleNotificationsModule} from "angular2-notifications";
 import {ClipboardModule} from "ngx-clipboard/dist";
-import { NavComponent } from './pages/dashboard/nav/nav.component';
-import { ScoreComponent } from './controls/score/score.component';
+import {NavComponent } from './pages/dashboard/nav/nav.component';
+import {ScoreComponent } from './controls/score/score.component';
+import {DashboardProfileComponent} from "./pages/dashboard/profile/profile.component";
+import {DashboardUpdateComponent } from './pages/dashboard/update/update.component';
+import {DashboardClaimedComponent } from './pages/dashboard/claimed/claimed.component';
+import {DashboardPictureComponent } from './pages/dashboard/picture/picture.component';
+import { SettingsComponent } from './pages/dashboard/settings/settings.component';
+
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -206,8 +212,15 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     UpdateNotificationsComponent,
     DashboardSelectedComponent,
     DashboardFeedbackComponent,
+    DashboardProfileComponent,
     NavComponent,
-    ScoreComponent
+    ScoreComponent,
+    DashboardUpdateComponent,
+    DashboardClaimedComponent,
+    DashboardFeedbackComponent,
+    DashboardSelectedComponent,
+    DashboardPictureComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,22 @@
     <td style="width: 100%; border:none;">&nbsp;
     </td>
     <td style="white-space: nowrap; border:none;">
-      <span style="border:none;">Sort by:
-                            <a style="margin-left: 5px;" (click)="sort('id')">Accession
+
+      <span style="border:none;">Sort
+              <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+              <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i> by:
+      <select>
+        <option>Relevance</option>
+        <option>Accession</option>
+        <option>Pub.Date</option>
+        <option>Views</option>
+        <option>Citations</option>
+        <option>Reanalysis</option>
+        <option>Connections</option>
+      </select>
+
+
+                            <!--a style="margin-left: 5px;" (click)="sort('id')">Accession
                               <span *ngIf="searchService.sortBy=='id'">
                                 <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
                                 <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
@@ -27,7 +41,7 @@
                                 <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
                                 <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i>
                               </span>
-                            </a>
+                            </a -->
       </span>
       &nbsp;&nbsp;&nbsp;
       <span>

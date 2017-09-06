@@ -143,6 +143,11 @@ ul.alert-dropdown {
     }
 }
 
+.side-nav>li.active>a {
+    background-color: #2e6da4;
+    color: #000;
+}
+
 .side-nav>li>ul {
     padding: 0;
 }

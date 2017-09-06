@@ -6,20 +6,20 @@
 
     <div class="ddi-card-panel list-group-item" style="cursor:pointer;" [ngClass]="this.selectedService.isSelected(d.source,d.id) ? 'grey' : 'white'" (click)="toggle(d.source,d.id)">
 
-      <div style="float: right; width: 300px; text-align: right">
+      <div style="float: right; width: 200px; text-align: right">
         <app-score [source]="d.source" [accession]="d.id"></app-score>
       </div>
 
       <div class="project-widget-accession">
         <app-omics-image [omics]="d.omicsType"> </app-omics-image>
 
-        <a [routerLink]="['/dataset',d.source, d.id]" >
-          <span class="ng-binding">{{d.title}}</span></a>
+        <a [routerLink]="['/dataset',d.source, d.id]" ><span class="ng-binding">{{d.title}}</span></a>
+
       </div>
 
 
 
-      <blockquote class="ddi-blockquote">
+      <div class="ddi-blockquote" style="padding-left: 0px; margin-left: 0px;">
         <div class="project-widget-paragraph align-justify ng-binding">
           <!--
               <b>Project description:</b>
@@ -32,21 +32,21 @@
         <div class="project-widget-paragraph">
         </div>
         <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
-          ORGANISM(S): <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
+          <strong>ORGANISM(S):</strong> <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
           <span *ngIf="!d.organisms">Not available</span>
         </div>
 
         <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
-          TISSUE(S):  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
+          <strong>TISSUE(S):</strong>  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
           <span *ngIf="!d.tissues">Not available</span>
         </div>
         <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
-          DISEASE(S): <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
+          <strong>DISEASE(S):</strong> <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
           <span *ngIf="!d.diseases">Not available</span>
         </div>
-      </blockquote>
+      </div>
 
-      <div class="project-widget-paragraph">
+      <div class="project-widget-paragraph" style="padding-left: 0px;">
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
           <span class="ng-binding">{{d.publicationDate | toDateString }}</span> | </span>
         <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding">{{d.id}}</span></a> |
@@ -54,12 +54,28 @@
       </div>
 
 
-      <span style="float:right;position:relative; top:-18px;" *ngIf="this.profileService.profile"><a class="unselected" (click)="citeClicked($event,d.source,d.id)">Cite</a>
-        &nbsp;<a [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'" (click)="claimClicked($event,d.source,d.id)">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}}</a>
-        &nbsp;<a [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'" (click)="notifyClicked($event,d.source,d.id)">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}}</a>
-        &nbsp;<a [ngClass]="this.selectedService.isSelected(d.source,d.id) ? 'selected' : 'unselected'" (click)="selectClicked($event,d.source,d.id)">{{this.selectedService.isSelected(d.source,d.id) ? 'Selected' : 'Select'}}</a></span>
 
-      <div *ngIf="d.keywords" class="project-widget-paragraph">
+
+
+      <span style="float:right;position:relative;">
+
+        <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black;"  (click)="citeClicked($event,d.source,d.id)">
+            <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+       <div  *ngIf="this.profileService.profile" class="score" style="background-color: #FFF; color: black; border: dotted 1px black;"  (click)="claimClicked($event,d.source,d.id)">
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
+        <span [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
+      </div>
+
+      <div  *ngIf="this.profileService.profile" class="score" style="background-color: #FFF; color: black; border: dotted 1px black;"  (click)="notifyClicked($event,d.source,d.id)">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        <span [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
+      </div>
+
+      </span>
+
+      <div *ngIf="d.keywords" class="project-widget-paragraph" style="padding-top:5px;">
         <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" [routerLink]="['/search']"  [queryParams]="{q:o}">{{o}}&nbsp;</a>
       </div>
 

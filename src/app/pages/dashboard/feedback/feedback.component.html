@@ -1,23 +1,20 @@
-<div style="width:80%; margin-left: auto; margin-right: auto; display:block;">
+<div id="wrapper">
+  <app-nav></app-nav>
+  <div id="page-wrapper">
+    <div class="container-fluid3">
 
+      <div class="caption">Feedback</div>
 
-  <div style="display:inline-block; position:relative;">
+      <div style="width:50%; display:inline-block;"> <app-feedback></app-feedback> </div>
+      <div class="caption">Discussion board</div>
+      Share your thoughts with developers and see your ideas implemented in next release. Thread is monitored daily, you comments are visible to everyone in community (You need to login to DISQS)
 
-    <div class="caption">Dashboard - Feedback</div>
+      <disqus [shortname]="datasetpage" [identifier]="'profile_problems'" ></disqus>
 
-    <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
-    <!-- app-delete-all-button></app-delete-all-button -->
-
-  </div>
-
-  <div class="rightNav"  style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;">
-    <ul class="rightNavMenu">
-      <li class=""><a [routerLink]="['/dashboard']">Dashboard</a></li>
-      <li class=""><a [routerLink]="['/dashboard/savedsearch']">Saved Searches</a></li>
-      <li class=""><a [routerLink]="['/dashboard/notifications']">Watch Notifications</a></li>
-      <li class=""><a [routerLink]="['/dashboard/selected']">Selected datasets</a></li>
-      <li class=""><a [routerLink]="['/dashboard/feedback']">Feedback</a></li>
-    </ul>
-
+    </div>
   </div>
 </div>
+
+
+
+
