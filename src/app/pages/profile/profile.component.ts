@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {ProfileService} from "../../../services/profile.service";
+import {ProfileService} from "../../services/profile.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Profile} from "../../../model/Profile";
+import {Profile} from "../../model/Profile";
 import {forEach} from "@angular/router/src/utils/collection";
-import {DataSetShort} from "../../../model/DataSetShort";
-import {DataSetService} from "../../../services/dataset.service";
-import {DataSetDetail} from "../../../model/DataSetDetail";
-import {AppConfig} from "../../../app.config";
+import {DataSetShort} from "../../model/DataSetShort";
+import {DataSetService} from "../../services/dataset.service";
+import {DataSetDetail} from "../../model/DataSetDetail";
+import {AppConfig} from "../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css',
-              '../profile.css']
+              './profile.css']
 })
 export class ProfileComponent implements OnInit {
   profileX : Profile = new Profile;
@@ -76,6 +77,10 @@ export class ProfileComponent implements OnInit {
 
             this.profileX = profile;
             this.profileImageUrl = this.getProfileImageUrl();
+
+            Observable.forkJoin(this.profileX.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
+                y => {this.dataSetDetails = y}
+            )
           }
         )
     }else{

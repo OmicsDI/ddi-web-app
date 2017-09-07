@@ -41,6 +41,4 @@ export class SearchComponent implements OnInit {
     return this._dataLoaded;
   }
 
-  public simpleNotificationsOptions = {timeOut:100,position: ["bottom", "right"],animate:"scale"};
-
 }

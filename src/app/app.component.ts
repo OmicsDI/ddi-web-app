@@ -49,4 +49,8 @@ export class AppComponent {
   completeLoading() {
     this.slimLoadingBarService.complete();
   }
+
+
+  public simpleNotificationsOptions = {timeOut:1000,position: ["bottom", "right"],animate:"scale"};
+
 }

@@ -1,0 +1,84 @@
+<div class="ddi-card-panel list-group-item"
+     [ngStyle]="{'cursor':  allowSelect ? 'pointer' : 'default'}"
+     [ngClass]="allowSelect && this.selectedService.isSelected(d.source,d.id) ? 'grey' : 'white'"
+     (click)="toggle(d.source,d.id);">
+<!--
+
+    -->
+
+  <div style="float: right; width: 200px; text-align: right">
+    <app-score [source]="d.source" [accession]="d.id"></app-score>
+  </div>
+
+  <div class="project-widget-accession">
+    <app-omics-image [omics]="d.omicsType || d.omics_type"> </app-omics-image>
+
+    <a [routerLink]="['/dataset',d.source, d.id]" ><span class="ng-binding">{{d.title || d.name}}</span></a>
+
+  </div>
+
+  <div class="ddi-blockquote" style="padding-left: 0px; margin-left: 0px;">
+    <div class="project-widget-paragraph align-justify ng-binding">
+      <!--
+          <b>Project description:</b>
+      -->
+      <span *ngIf="d.description">{{d.description | truncate : 200 : '...'}}</span>
+
+      <span *ngIf="!!!d.description">Not available</span>
+    </div>
+
+    <div class="project-widget-paragraph">
+    </div>
+    <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
+      <strong>ORGANISM(S):</strong> <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
+      <span *ngIf="!d.organisms">Not available</span>
+    </div>
+
+    <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
+      <strong>TISSUE(S):</strong>  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
+      <span *ngIf="!d.tissues">Not available</span>
+    </div>
+    <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
+      <strong>DISEASE(S):</strong> <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
+      <span *ngIf="!d.diseases">Not available</span>
+    </div>
+  </div>
+
+  <div class="row row-eq-height">
+      <div class="col-lg-6 col-md-6">
+        <div class="project-widget-paragraph" style="padding-left: 0px;">
+        <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
+          <span>{{d.publicationDate | toDateString }}</span> | </span>
+              <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding">{{d.id}}</span></a> |
+              <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span> </a>
+          </div>
+
+          <div *ngIf="d.keywords" class="project-widget-paragraph" style="padding-top:5px;">
+              <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" [routerLink]="['/search']"  [queryParams]="{q:o}">{{o}}&nbsp;</a>
+          </div>
+
+      </div>
+      <div class="col-lg-6 col-md-6">
+          <span class="pull-right buttons-span">
+          <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor: pointer;"  (click)="citeClicked($event,d.source,d.id)">
+              <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+
+          <div  *ngIf="this.allowClaim && this.profileService.profile" class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor: pointer;"  (click)="claimClicked($event,d.source,d.id)">
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+              <span [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
+          </div>
+
+          <div  *ngIf="this.allowWatch && this.profileService.profile" class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor: pointer;"  (click)="watchClicked($event,d.source,d.id)">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              <span [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
+          </div>
+
+          <div  *ngIf="this.allowDelete && this.profileService.profile" class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor: pointer;"  (click)="deleteClicked($event,d.source,d.id)">
+              <i class="fa fa-times" aria-hidden="true"></i>
+              <span [ngClass]="'unselected'">Delete </span>
+          </div>
+          </span>
+      </div>
+  </div>
+</div>

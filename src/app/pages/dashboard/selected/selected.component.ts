@@ -4,6 +4,10 @@ import {SelectedService} from "../../../services/selected.service";
 import {DataSetService} from "../../../services/dataset.service";
 import {AppConfig} from "../../../app.config";
 import {Observable} from "rxjs/Observable";
+import {DataSetShort} from "../../../model/DataSetShort";
+import {ProfileService} from "../../../services/profile.service";
+import {NotificationsService} from "angular2-notifications/dist";
+import {WatchedDataset} from "../../../model/WatchedDataset";
 
 @Component({
   selector: 'app-dashboard-selected',
@@ -16,7 +20,9 @@ export class DashboardSelectedComponent implements OnInit {
 
   constructor(private selectedService:SelectedService
     ,private dataSetService: DataSetService
-    ,private appConfig: AppConfig) { }
+    ,private appConfig: AppConfig
+    ,private profileService: ProfileService
+    ,private notificationService: NotificationsService) { }
 
   ngOnInit() {
     this.reloadDataSets();
@@ -37,5 +43,63 @@ export class DashboardSelectedComponent implements OnInit {
     if(i>-1){
       this.dataSets.splice(i,1);
     }
+    i = this.selectedService.dataSets.findIndex(x => x.id==id && x.source==source)
+    if(i>-1){
+      this.selectedService.dataSets.splice(i,1);
+    }
+    this.notificationService.success("Dataset removed","from selected");
+  }
+
+  exportClick(){
+    alert("exportClick");
+  }
+
+  claimClick(){
+    for(let dataSet of this.dataSets){
+      var d:DataSetShort = new DataSetShort();
+
+      d.source = dataSet.source;
+      d.id = dataSet.id;
+
+      this.profileService.claimDataset(this.profileService.userId, d);
+    }
+    this.notificationService.success(
+        'Datasets claimed',
+        'to your dashboard'
+    )
+  }
+
+  watchClick(){
+    for(let dataSet of this.dataSets){
+      var d:WatchedDataset = new WatchedDataset();
+
+      d.source = dataSet.source;
+      d.accession = dataSet.id;
+      d.userId = this.profileService.userId;
+
+      this.profileService.saveWatchedDataset(d);
+    }
+    this.notificationService.success(
+        'Datasets watched',
+        'to your dashboard'
+    )
+  }
+
+  deleteClick(){
+    this.selectedService.dataSets = [];
+
+    this.reloadDataSets();
+
+    this.notificationService.success(
+        'Datasets deleted',
+        'from selected'
+    )
   }
 }
+
+
+
+
+
+
+//   <img style="float:right;cursor:pointer;" src="img/delete.png" title="delete" (click)="selectedService.unselect(d.source, d.id); remove(d.source, d.id);">

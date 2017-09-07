@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {DataSetService} from "../../../../services/dataset.service";
 import {Observable} from "rxjs/Observable";
 import {DataSetDetail} from "../../../../model/DataSetDetail";
+import {NotificationsService} from "angular2-notifications/dist";
 
 @Component({
   selector: 'app-profile-result',
@@ -21,7 +22,8 @@ export class ProfileResultComponent implements OnInit, OnChanges {
   constructor(private profileService: ProfileService
               ,private dataSetService: DataSetService
     , private appConfig: AppConfig
-    , private router: Router) { }
+    , private router: Router
+    , private notificationService: NotificationsService) { }
 
   ngOnInit() {
     //this.profileService.getDataSetDetails(this.profileService.profile);
@@ -57,14 +59,15 @@ export class ProfileResultComponent implements OnInit, OnChanges {
   }
 
 
-  delete($event){
-    console.log(`finding ${$event.source} ${$event.id}`)
-    let i: number = this.profile.dataSets.findIndex( x => x.source == $event.source && x.id == $event.id);
+  deleteDataset(source, id){
+    let i: number = this.profile.dataSets.findIndex( x => x.source == source && x.id == id);
     if(i!=-1){
-      console.log(`deleting ${$event.source} ${$event.id}`)
+      console.log(`deleting ${source} ${id}`)
       this.profile.dataSets.splice(i,1);
     }
     this.change.emit({});
     this.reloadDataSets();
+
+    this.notificationService.success("Dataset deleted","from your profile");
   }
 }

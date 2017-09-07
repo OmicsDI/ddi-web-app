@@ -4,7 +4,7 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {ProfileComponent} from "./pages/profile/view/profile.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 import {DatabaseComponent} from "./pages/database/database.component";
 import {HomeComponent} from "./pages/home/home.component";
 import {ApiComponent} from "./pages/api/api.component";
@@ -14,15 +14,10 @@ import {UnauthorizedComponent} from "./pages/unauthorized/unauthorized.component
 import { AuthGuardService } from './services/auth-guard.service';
 import {DatasetComponent} from "./pages/dataset/dataset.component";
 import {TermsComponent} from "./pages/terms/terms.component";
-import {ClaimedComponent} from "./pages/profile/claimed/claimed.component";
-import {UpdateProfileComponent} from "./pages/profile/update-profile/update-profile.component";
-import {ProfileDisqusComponent} from "./pages/profile/profile-disqus/profile-disqus.component";
 import {NotfoundComponent} from "./pages/notfound/notfound.component";
 import {AdminComponent} from "./pages/admin/admin.component";
 import {SelectedComponent} from "./pages/selected/selected.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-import {SavedSearchComponent} from "./pages/dashboard/saved-search/saved-search.component";
-import {UpdateNotificationsComponent} from "./pages/dashboard/update-notifications/update-notifications.component";
 import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
 import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
 import {DashboardProfileComponent} from "./pages/dashboard/profile/profile.component";
@@ -39,10 +34,6 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'profile/claimed', component: ClaimedComponent, canActivate: [AuthGuardService] },
-  { path: 'profile/update', component: UpdateProfileComponent, canActivate: [AuthGuardService] },
-  { path: 'profile/feedback', component: ProfileDisqusComponent, canActivate: [AuthGuardService] },
   { path: 'profile/:username', component: ProfileComponent },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },
@@ -54,16 +45,14 @@ export const routes: Routes = [
   { path: 'notfound', component: NotfoundComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'selected', component: SelectedComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/savedsearch', component: SavedSearchComponent },
-  { path: 'dashboard/notifications', component: UpdateNotificationsComponent },
-  { path: 'dashboard/selected', component: DashboardSelectedComponent },
-  { path: 'dashboard/feedback', component: DashboardFeedbackComponent },
-  { path: 'dashboard/profile', component: DashboardProfileComponent },
-  { path: 'dashboard/update', component: DashboardUpdateComponent },
-  { path: 'dashboard/claimed', component: DashboardClaimedComponent },
-  { path: 'dashboard/picture', component: DashboardPictureComponent },
-  { path: 'dashboard/settings', component: SettingsComponent }
+  { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuardService]},
+  { path: 'dashboard/selected', component: DashboardSelectedComponent , canActivate: [AuthGuardService]},
+  { path: 'dashboard/feedback', component: DashboardFeedbackComponent , canActivate: [AuthGuardService]},
+  { path: 'dashboard/profile', component: DashboardProfileComponent , canActivate: [AuthGuardService]},
+  { path: 'dashboard/update', component: DashboardUpdateComponent, canActivate: [AuthGuardService] },
+  { path: 'dashboard/claimed', component: DashboardClaimedComponent , canActivate: [AuthGuardService]},
+  { path: 'dashboard/picture', component: DashboardPictureComponent , canActivate: [AuthGuardService]},
+  { path: 'dashboard/settings', component: SettingsComponent , canActivate: [AuthGuardService]}
 
 ];
 

@@ -9,8 +9,8 @@
 
 
   <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
-    <button [routerLink]="['/profile']" md-menu-item>
-      Profile
+    <button [routerLink]="['/profile',this.userId]" md-menu-item>
+      Public profile
     </button>
     <button md-menu-item [routerLink]="['/dashboard']">
       Dashboard

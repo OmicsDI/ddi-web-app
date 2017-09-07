@@ -28,7 +28,7 @@
 
         <li AppLoginLauncher>
         </li>
-        <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected">({{this.selectedService.selected()}} selected)</a></li>
+        <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected"><i class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
       </ul>
       <!-- Top Menu Items -->
       <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-6">
@@ -156,4 +156,5 @@
 
 </div>
 
+  <simple-notifications [options]="simpleNotificationsOptions"></simple-notifications>
 

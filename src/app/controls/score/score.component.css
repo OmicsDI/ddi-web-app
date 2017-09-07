@@ -5,11 +5,31 @@
     font-size: 0.9em;
     padding: 2px 8px 2px 17px;
     /*    background: #b7eeba url('../img/favico/tag.png') no-repeat 2px 2px;*/
-    background: lightskyblue;
+    /* background: lightskyblue; */
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     display: inline;
     padding:5px;
+}
+
+.score-views {
+    background-color: #3B5797;
+    color: white;
+}
+
+.score-citations {
+    background-color: #44A9ED;
+    color: white;
+}
+
+.score-reanalysis{
+    background-color: #DC4F3A;
+    color: white;
+}
+
+.score-connections{
+    background-color: #BF3024;
+    color: white;
 }

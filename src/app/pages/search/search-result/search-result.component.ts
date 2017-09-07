@@ -74,6 +74,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     //console.log("search-result.ngAfterViewChecked");
   }
 
+  /*
   omicsTest(d:DataSet, omics:string):boolean{
     if(d == null)
       return false;
@@ -82,7 +83,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
       return false;
 
     return (d.omicsType.indexOf(omics) != -1);
-  }
+  }*/
 
   clicked(source:string,id:string){
     //console.log(`clicked ${source} ${id}`);
@@ -98,46 +99,6 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     this.citation(source,id);
     $event.stopPropagation();
     $event.preventDefault();
-  }
-
-  claimClicked($event,source,id){
-    if(!this.profileService.isClaimed(source,id)){
-      var d:DataSetShort = new DataSetShort();
-
-      d.source = source;
-      d.id = id;
-
-      this.profileService.claimDataset(this.profileService.userId, d);
-    }else{
-      this.router.navigate(['profile']);
-    }
-
-    $event.stopPropagation();
-    $event.preventDefault();
-
-    this.notificationService.success(
-      'Dataset claimed',
-      'to your dashboard'
-    )
-  }
-
-  notifyClicked($event,source,id){
-      var d:WatchedDataset = new WatchedDataset();
-
-      d.source = source;
-      d.accession = id;
-      d.userId = this.profileService.userId;
-
-      this.profileService.saveWatchedDataset(d);
-
-    $event.stopPropagation();
-    $event.preventDefault();
-
-    this.notificationService.success(
-      'Dataset watched',
-      'to your dashboard'
-    )
-
   }
 
   selectClicked($event,source,id){
@@ -159,23 +120,5 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
       )
   }
 
-  getDatabaseUrl(source){
-    var db =  this.databaseListServce.databases[source];
-    if(!db) {
-      console.log("source not found:"+source);
-    }
-    else {
-      return db.sourceUrl;
-    }
-  }
 
-  getDatabaseTitle(source){
-    var db =  this.databaseListServce.databases[source];
-    if(!db) {
-      console.log("source not found:"+source);
-    }
-    else {
-      return db.databaseName;
-    }
-  }
 }
