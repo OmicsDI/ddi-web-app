@@ -51,6 +51,6 @@ export class AppComponent {
   }
 
 
-  public simpleNotificationsOptions = {timeOut:1000,position: ["bottom", "right"],animate:"scale"};
+  public simpleNotificationsOptions = {timeOut:500,position: ["bottom", "right"],animate:"scale"};
 
 }

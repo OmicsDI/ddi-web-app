@@ -34,6 +34,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
+  { path: 'profile', redirectTo:'dashboard/profile'},
   { path: 'profile/:username', component: ProfileComponent },
   { path: 'database', component: DatabaseComponent },
   { path: 'about', component: AboutComponent },

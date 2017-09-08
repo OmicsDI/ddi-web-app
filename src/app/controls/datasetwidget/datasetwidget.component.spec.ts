@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileDisqusComponent } from './profile-disqus.component';
+import { DatasetWidgetComponent } from './datasetwidget.component';
 
-describe('ProfileDisqusComponent', () => {
-  let component: ProfileDisqusComponent;
-  let fixture: ComponentFixture<ProfileDisqusComponent>;
+describe('DatasetComponent', () => {
+  let component: DatasetWidgetComponent;
+  let fixture: ComponentFixture<DatasetWidgetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileDisqusComponent ]
+      declarations: [ DatasetWidgetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileDisqusComponent);
+    fixture = TestBed.createComponent(DatasetWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

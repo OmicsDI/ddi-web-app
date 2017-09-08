@@ -61,7 +61,6 @@ import { SearchTotalComponent } from './pages/search/search-total/search-total.c
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
-import {PagingService} from "./services/paging.service";
 import {NgxPaginationModule} from "ngx-pagination";
 import {EnrichmentService} from "./services/enrichment.service";
 import { OntologyTooltipPipe } from './pipes/ontology-tooltip.pipe';
@@ -117,6 +116,8 @@ import { SettingsComponent } from './pages/dashboard/settings/settings.component
 import {DatasetWidgetComponent} from "./controls/datasetwidget/datasetwidget.component";
 import { ConfirmDialogComponent } from './controls/confirm-dialog/confirm-dialog.component';
 import {DialogService} from "./services/dialog.service";
+import { DatasetwidgetSmallComponent } from './controls/datasetwidget-small/datasetwidget-small.component';
+import {ScoreService} from "./services/score.service";
 
 
 export function getParameterByName(name): string {
@@ -215,7 +216,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DashboardPictureComponent,
     SettingsComponent,
     DatasetWidgetComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DatasetwidgetSmallComponent
   ],
   imports: [
     BrowserModule,
@@ -250,7 +252,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , DataSetService
     , PublicationService
     , SimilarityService
-    , PagingService
     , EnrichmentService
     , OntologyService
     , DatabaseListService
@@ -260,7 +261,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , StatisticsService
     , AltmetricService
     , SelectedService
-    , DialogService],
+    , DialogService
+    , ScoreService],
   entryComponents: [
     CitationDialogComponent,
     ConfirmDialogComponent

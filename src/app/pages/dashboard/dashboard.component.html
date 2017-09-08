@@ -34,12 +34,16 @@
                         <thead>
                         <tr>
                             <th>Dataset</th>
+                            <th>Database</th>
+                            <th>Accession</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let s of watchedDatasets">
-                            <td><a [routerLink]="['/dataset',s.source, s.accession]" >{{s.source}}\{{s.accession}}</a></td>
+                            <td><app-datasetwidget-small [id]="s.accession" [source]="s.source"></app-datasetwidget-small></td>
+                            <td><a [routerLink]="['/dataset',s.source, s.accession]" >{{s.source}}</a></td>
+                            <td><a [routerLink]="['/dataset',s.source, s.accession]" >{{s.accession}}</a></td>
                             <td><a (click)="deleteWatch(s.id)" title="delete">x</a></td>
                         </tr>
                         </tbody>

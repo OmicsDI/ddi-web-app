@@ -126,6 +126,18 @@ export class AppConfig{
   getAltmetricUrl(PMID){
     return `http://api.altmetric.com/v1/pmid/${PMID}`;
   }
+  getScoreViewsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
+  }
+  getScoreCitationsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}scores/citation/${repository}/${acc}?r=${Math.random()}`;
+  }
+  getScoreReanalysisUrl(acc: string, repository: string){
+  return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}?r=${Math.random()}`;
+  }
+  getScoreConnectionsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
+  }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";

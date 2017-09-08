@@ -7,17 +7,19 @@
     </td>
     <td style="white-space: nowrap; border:none;">
 
-      <span style="border:none;">Sort
+      <span style="border:none;"><span (click)="sortOrderChanged();" style="cursor:pointer;">Sort
               <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
-              <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i> by:
-      <select>
-        <option>Relevance</option>
-        <option>Accession</option>
-        <option>Pub.Date</option>
-        <option>Views</option>
+        <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i></span> by:
+
+
+      <select (change)="sortByChanged($event.target.value)" [ngModel]="this.searchService.sortBy">
+        <option value="">Relevance</option>
+        <option value="id">Accession</option>
+        <option value="publication_date">Pub.Date</option>
+        <!--option>Views</option>
         <option>Citations</option>
         <option>Reanalysis</option>
-        <option>Connections</option>
+        <option>Connections</option -->
       </select>
 
 
