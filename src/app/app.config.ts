@@ -135,7 +135,7 @@ export class AppConfig{
   getScoreReanalysisUrl(acc: string, repository: string){
   return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}?r=${Math.random()}`;
   }
-  getScoreConnectionsUrl(acc: string, repository: string){
+  getScoreConnectionsUrl(acc: string){
     return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
   }
   public githubScope = "public_profile";

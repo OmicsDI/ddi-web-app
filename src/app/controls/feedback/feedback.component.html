@@ -1,10 +1,10 @@
-<div id="searchFeedback" class="list-group" style="width:90%; margin:20px;" >
+<div id="searchFeedback" class="list-group" style="width:100%; padding-right:20px" *ngIf="timeout" >
   <!-- feedback.isSatisfiedDiv -->
   <div *ngIf="true" class="ddi-card-panel" style="width:100%;">
     <div>
-      <h4 >
-        <i class="fa fa-info-circle" style="font-size: 17px;"> Search Feedback</i>
-      </h4>
+      <h3>
+        <i class="fa fa-info-circle"> </i> Search Feedback
+      </h3>
       <h4 >
         <i aria-hidden="true" style="font-size: 13px;"> Did you find what you were looking for?</i>
       </h4>
@@ -51,8 +51,5 @@
         <i aria-hidden="true" style="font-size: 13px;"> If you need help or have a question, please visit <a href="http://blog.omicsdi.org/" class="a-button-text" role="button">Help Section</a></i>
       </h4>
     </div>
-  </div>
-  <div *ngIf="thanks" class="ddi-card-panel" style="width:65%;margin-left:28%;">
-    <label>{{labelMessage}}</label>
   </div>
 </div>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {ProfileService} from "../../services/profile.service";
 import {SavedSearch} from "../../model/SavedSearch";
 import {WatchedDataset} from "../../model/WatchedDataset";
+import {DialogService} from "../../services/dialog.service";
+import {NotificationsService} from "angular2-notifications/dist";
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +12,9 @@ import {WatchedDataset} from "../../model/WatchedDataset";
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService
+            ,private dialogService: DialogService
+            ,private notificationService: NotificationsService) { }
 
   private savedSearches: SavedSearch[] = new Array();
   private watchedDatasets: WatchedDataset[] = new Array();
@@ -45,6 +49,7 @@ export class DashboardComponent implements OnInit {
         console.log("savedSearch deleted");
         var i = this.savedSearches.findIndex( x => x.id == id);
         this.savedSearches.splice(i,1);
+        this.notificationService.success("Saved search removed","from dashboard");
       }
     );
   }
@@ -55,6 +60,7 @@ export class DashboardComponent implements OnInit {
         console.log("watchedDataset deleted");
         var i = this.watchedDatasets.findIndex( x => x.id == id);
         this.watchedDatasets.splice(i,1);
+        this.notificationService.success("Watched dataset removed","from dashboard");
       }
     );
   }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 import {ScoreService} from "../../services/score.service";
 import {Observable} from "rxjs/Observable";
 
@@ -7,7 +7,7 @@ import {Observable} from "rxjs/Observable";
   templateUrl: './score.component.html',
   styleUrls: ['./score.component.css']
 })
-export class ScoreComponent implements OnInit {
+export class ScoreComponent implements OnInit, OnChanges {
 
   constructor(private scoreService: ScoreService) { }
 
@@ -37,6 +37,17 @@ export class ScoreComponent implements OnInit {
     console.log("scores retrieved from REST");
 
   }
+
+    ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+        let log: string[] = [];
+        for (let propName in changes) {
+            if(propName=="accession"){
+                if(null!=changes[propName].currentValue){
+                    this.ngOnInit();
+                }
+            }
+        }
+    }
 
 views=0;
 citations=0;

@@ -22,7 +22,7 @@ export class SearchPagerComponent implements OnInit {
 
   p: number = 1;
   total: number;
-  loading: boolean;
+  loading: boolean = true;
 
   constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService ) {
     for (let i = 1; i <= 100; i++) {
@@ -32,16 +32,19 @@ export class SearchPagerComponent implements OnInit {
     this.subscription = searchService.searchResult$.subscribe(
       searchResult => {
         this.total = searchResult.count;
+        this.loading = false;
       });
   }
 
   ngOnInit() {
+    this.loading = true;
   }
 
   getPage(page: number) {
     this.slimLoadingBarService.start();
     this.p = page;
     this.searchService.page(page);
+    this.loading = true;
   }
 
   sort(by: string){
@@ -57,6 +60,7 @@ export class SearchPagerComponent implements OnInit {
       this.searchService.sortOrder = 'ascending';
     }
     this.searchService.sort();
+    this.loading = true;
   }
 
   sortOrderChanged(){
@@ -68,6 +72,7 @@ export class SearchPagerComponent implements OnInit {
     }
     this.slimLoadingBarService.start();
     this.searchService.sort();
+    this.loading = true;
   }
 
   sortByChanged(value){
@@ -75,6 +80,7 @@ export class SearchPagerComponent implements OnInit {
     this.searchService.sortBy = value;
     this.slimLoadingBarService.start();
     this.searchService.sort();
+    this.loading = true;
   }
 
 }

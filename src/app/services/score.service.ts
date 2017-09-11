@@ -44,7 +44,7 @@ export class ScoreService extends BaseService {
   }
 
   public getConnections(source: string, acc: string): Observable<number>{
-    return this.http.get(this.appConfig.getScoreConnectionsUrl(source,acc))
+    return this.http.get(this.appConfig.getScoreConnectionsUrl(acc))
         .map(x => {
           let o = this.extractData<Object>(x);
           if(o) {

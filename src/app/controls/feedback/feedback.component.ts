@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FeedbackService} from "../../services/feedback.service";
 import {Feedback} from "../../model/Feedback";
 import {SearchService} from "../../services/search.service";
+import {NotificationsService} from "angular2-notifications/dist";
+import {setTimeout} from "timers";
 
 @Component({
   selector: 'app-feedback',
@@ -11,9 +13,11 @@ import {SearchService} from "../../services/search.service";
 export class FeedbackComponent implements OnInit {
 
   constructor(private feedbackService: FeedbackService
-             ,private searhcService: SearchService ) { }
+             ,private searhcService: SearchService
+             ,private notificationService: NotificationsService) { }
 
   ngOnInit() {
+    setTimeout(() => {this.timeout = true}, 1000);
   }
 
   isSatisfiedVal: string;
@@ -22,6 +26,7 @@ export class FeedbackComponent implements OnInit {
   labelMessage: string = "thank you for your feedback";
   messageData: string;
   selectMessage: string;
+  timeout: boolean = false;
 
   save_feedback(){
     var feedback= new Feedback();
@@ -38,9 +43,7 @@ export class FeedbackComponent implements OnInit {
     this.messageData = null;
     this.selectMessage = null;
 
-    setTimeout (() => {
-      this.thanks = false;
-    }, 1500)
+    this.notificationService.success("Feedback sent","to application support team");
   }
 
   satisfiedClick(){

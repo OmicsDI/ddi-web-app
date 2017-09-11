@@ -416,13 +416,14 @@ input[type=radio]:not(old):checked + label > span > span {
     margin-top: 10px;
 }
 
+/**
 .metasearch-facets {
     margin-left: 10px;
 }
 
 .metasearch-results {
-    margin-left: -10px;
-}
+   margin-left: -10px;
+}**/
 
 a.keywords {
     margin-left: 2px;
@@ -1406,3 +1407,30 @@ a {
 }
 
 ul li.no-match-found {display: none;}
+
+.dot-button{
+ /*   margin-left: 2px;
+    margin-right: 2px;
+    font-style: italic;
+    font-size: 0.9em;
+    padding: 2px 8px 2px 17px;
+    background: lightskyblue;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+
+
+    */
+    border-radius: 5px;
+    display: inline-block;
+    padding:2px 8px 2px 17px;
+
+    background-color: #FFF; color: black; border: dotted 1px black; cursor: pointer;
+}
+
+.align-bottom{
+    position: absolute;
+    bottom:0;
+    right:0;
+    margin-bottom: 10px;
+}

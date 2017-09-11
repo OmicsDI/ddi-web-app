@@ -8,6 +8,7 @@ import {DataSetShort} from "../../../model/DataSetShort";
 import {ProfileService} from "../../../services/profile.service";
 import {NotificationsService} from "angular2-notifications/dist";
 import {WatchedDataset} from "../../../model/WatchedDataset";
+import {DialogService} from "../../../services/dialog.service";
 
 @Component({
   selector: 'app-dashboard-selected',
@@ -22,7 +23,8 @@ export class DashboardSelectedComponent implements OnInit {
     ,private dataSetService: DataSetService
     ,private appConfig: AppConfig
     ,private profileService: ProfileService
-    ,private notificationService: NotificationsService) { }
+    ,private notificationService: NotificationsService
+    ,private dialogService: DialogService) { }
 
   ngOnInit() {
     this.reloadDataSets();
@@ -85,15 +87,22 @@ export class DashboardSelectedComponent implements OnInit {
     )
   }
 
+
+
   deleteClick(){
-    this.selectedService.dataSets = [];
+    var confirm = this.dialogService.confirm('Unselect all datasets', 'Are you sure you want to do this?')
+        .subscribe(res => {
+          if(res){
+            this.selectedService.dataSets = [];
 
-    this.reloadDataSets();
+            this.reloadDataSets();
 
-    this.notificationService.success(
-        'Datasets deleted',
-        'from selected'
-    )
+            this.notificationService.success(
+                'Datasets deleted',
+                'from selected'
+            )
+
+          }});
   }
 }
 
