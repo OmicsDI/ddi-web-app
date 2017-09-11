@@ -4,51 +4,7 @@
       class="repeated-item ng-scope"
       style="">
 
-    <div class="ddi-card-panel  list-group-item">
-      <div class="project-widget-accession">
-        <app-omics-image [omics]="d.omicsType"> </app-omics-image>
-
-        <a [routerLink]="['/dataset',d.source, d.id]" >
-          <span class="ng-binding">{{d.title}}</span></a>
-      </div>
-      <blockquote class="ddi-blockquote">
-        <div class="project-widget-paragraph align-justify ng-binding">
-          <!--
-              <b>Project description:</b>
-          -->
-           <span *ngIf="d.description">{{d.description | truncate : 200 : '...'}}</span>
-
-          <span *ngIf="!!!d.description">Not available</span>
-        </div>
-
-        <div class="project-widget-paragraph">
-        </div>
-        <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
-          ORGANISM(S): <span *ngFor="let o of d.organisms">{{o.name}}&nbsp;</span>
-          <span *ngIf="!d.organisms">Not available</span>
-        </div>
-
-        <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
-          TISSUE(S):  <span *ngFor="let o of d.tissues">{{o.name}}&nbsp;</span>
-          <span *ngIf="!d.tissues">Not available</span>
-        </div>
-        <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
-          DISEASE(S): <span *ngFor="let o of d.diseases">{{o.name}}&nbsp;</span>
-          <span *ngIf="!d.diseases">Not available</span>
-        </div>
-      </blockquote>
-
-      <div class="project-widget-paragraph">
-        <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
-          <span class="ng-binding">{{d.publicationDate | toDateString }}</span> | </span>
-        <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding">{{d.id}}</span></a> |
-        <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span> </a>
-      </div>
-
-      <div *ngIf="d.keywords" class="project-widget-paragraph">
-        <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope" [routerLink]="['/search']"  [queryParams]="{q:o}">{{o}}&nbsp;</a>
-      </div>
-    </div>
+    <app-datasetwidget [d]="d" [allowDelete]="false"></app-datasetwidget>
   </li>
 </ul>
 

@@ -1,0 +1,51 @@
+.caption{
+    color:rgb(0,153,204);
+    font-size:32px;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-weight: 300;
+}
+
+.score {
+    margin-left: 2px;
+    margin-right: 2px;
+    font-style: italic;
+    font-size: 0.9em;
+    padding: 2px 8px 2px 17px;
+    /*    background: #b7eeba url('../img/favico/tag.png') no-repeat 2px 2px;*/
+    background: lightskyblue;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: inline;
+    padding:5px;
+}
+
+span.selected{
+    font-weight: bold;
+    color:black;
+}
+
+span.unselected{
+    font-weight: normal;
+    margin-right: 22px;
+    color: black;
+}
+
+.grey{
+    background-color: silver;
+    cursor:pointer;
+}
+
+.white{
+    background-color: white;
+    cursor:pointer;
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+}
+

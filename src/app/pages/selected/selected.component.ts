@@ -32,5 +32,12 @@ export class SelectedComponent implements OnInit {
     )
   }
 
+  remove(source, id){
+    var i = this.dataSets.findIndex(x => x.id==id && x.source==source);
+    if(i>-1){
+      this.dataSets.splice(i,1);
+    }
+  }
+
 
 }

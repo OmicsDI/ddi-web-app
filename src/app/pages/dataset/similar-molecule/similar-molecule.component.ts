@@ -85,7 +85,6 @@ export class SimilarMoleculeComponent implements OnInit {
   }
 
   thresholdChange(step_value: number) {
-      console.log("thresholdChange");
       if(step_value==0) {
           this.threshold = 0.5;
       }
@@ -103,10 +102,10 @@ export class SimilarMoleculeComponent implements OnInit {
               this.threshold = this.threshold.toPrecision(2);
           }
       }
-      if (this.biological_similarity_info != null) {
-          this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
-      }
-      this.getRelatedDatasets(this.threshold);
+    if (this.biological_similarity_info != null) {
+      this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
+    }
+    this.getRelatedDatasets(this.threshold);
   }
 
   thresholdChanged(){

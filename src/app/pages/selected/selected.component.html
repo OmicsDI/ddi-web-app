@@ -14,7 +14,7 @@
 
     <div class="ddi-card-panel  list-group-item">
       <div class="project-widget-accession">
-        <img src="img/delete.jpeg" title="delete">
+        <img style="float:right;cursor:pointer;" src="img/delete.png" title="delete" (click)="selectedService.unselect(d.source, d.id); remove(d.source, d.id);">
         <app-omics-image [omics]="d.omics_type"> </app-omics-image>
 
         <a [routerLink]="['/dataset',d.source, d.id]" >
@@ -48,7 +48,6 @@
       </blockquote>
 
       <div class="project-widget-paragraph">
-        <input type="checkbox" style="position:relative; left: 0px; opacity: 50; visibility: visible; width:10px; top: 1px;" (click)="clicked(d.source,d.id)" /> |
 
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
           <span class="ng-binding">{{d.publicationDate }}</span> | </span>

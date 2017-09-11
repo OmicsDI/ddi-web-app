@@ -42,19 +42,23 @@
     <link rel="canonical" href={{meta_originalURL}}>
     <link rel="canonical" href={{meta_ddiURL}}>
 
-    <link rel="stylesheet" href='css/bootstrap.min.css'>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="assets/bootstrap/css/sb-admin.css" rel="stylesheet" type="text/css">
+    <!-- Morris Charts CSS -->
+    <link href="assets/bootstrap/css/plugins/morris.css" rel="stylesheet" type="text/css">
+    <!-- Custom Fonts -->
+    <!--link href="assets/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"--->
+
     <link rel="stylesheet" href="css/boilerplate-style.css">
     <link rel="stylesheet" href="css/ebi-global.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/ebi-visual.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/984-24-col-fluid.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!--link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" -->
     <!--link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'--->
     <link type="text/css" href="css/ngProgress.css" rel="stylesheet">
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
     <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
-
-    <!--favico end -->
-
 
   <style>
     [ng2-tooltip] {margin: 40px; border: 1px solid #ccc}
@@ -115,7 +119,7 @@
 </script>
 
 
-<body class="level2">
+<body class="level22" style="padding-top: 70px; background-color: #FFF;">
 
 <script>
   function XhrGet(url){
@@ -160,7 +164,8 @@
   })(document);
 </script>
 
-<app-root>Loading...</app-root>
+<app-root><div style="text-align:center; position: fixed; top: 50%; left:50%;">Loading OmicsDI...</div></app-root>
+
 <!--wraper of page -->
 <!-- To have google analytics-->
 <script>
@@ -182,5 +187,15 @@
 
 </script>
 <script src="//omicsdi.disqus.com/embed.js"></script>
+
+<script src="assets/bootstrap/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>
+<script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>
+<script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>
 </body>
 </html>

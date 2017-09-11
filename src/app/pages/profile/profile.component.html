@@ -1,0 +1,36 @@
+<div style="width:80%; margin-left: auto; margin-right: auto; display:block;">
+
+
+  <div style="display:inline-block; position:relative; width: calc(100% - 330px);">
+
+    <app-profile-info [profile]="profileX"></app-profile-info>
+
+    <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
+
+    <div *ngIf="profileX?.dataSets?.length>0" class="datasetsCaption">Datasets</div>
+    <div style="display:inline-block; width:100%">
+
+      <ul *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0" class="list-unstyled" style="display:inline-block; width:100%">
+        <li *ngFor="let d of this.dataSetDetails | paginate: { itemsPerPage: 10, currentPage: p }"
+            class="repeated-item ng-scope"
+            style="min-width:400px;">
+
+          <app-datasetwidget [d]="d" [allowSelect]="false" [allowClaim]="false" [allowWatch]="false" [allowDelete]="false"></app-datasetwidget>
+
+
+        </li>
+      </ul>
+      <pagination-controls (pageChange)="p = $event"
+                           previousLabel=""
+                           nextLabel=""
+                           *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length > 10"
+                           class="my-pagination">
+      </pagination-controls>
+    </div>
+  </div>
+
+  <div class="rightNav2222"  style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;">
+    <app-profile-contacts [profile]="profileX"></app-profile-contacts>
+  </div>
+
+</div>

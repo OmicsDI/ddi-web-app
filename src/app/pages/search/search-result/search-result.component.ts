@@ -10,6 +10,13 @@ import {AppConfig} from "../../../app.config";
 import {Profile} from "../../../model/Profile";
 import {ProfileService} from "../../../services/profile.service";
 import {SelectedService} from "../../../services/selected.service";
+import {CitationDialogComponent} from "../../dataset/citation-dialog/citation-dialog.component";
+import {MdDialog, MdDialogRef} from "@angular/material";
+import {DataSetService} from "../../../services/dataset.service";
+import {DataSetShort} from "../../../model/DataSetShort";
+import {Router} from "@angular/router";
+import {NotificationsService} from "angular2-notifications/dist";
+import {WatchedDataset} from "../../../model/WatchedDataset";
 import {DatabaseListService} from "../../../services/database-list.service";
 
 @Component({
@@ -31,6 +38,10 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     , private slimLoadingBarService: SlimLoadingBarService
     , private profileService: ProfileService
     , private selectedService: SelectedService
+    , private dataSetService: DataSetService
+    , private dialog: MdDialog
+    , private router: Router
+    , private notificationService: NotificationsService
     , private databaseListServce: DatabaseListService) {
 
     console.log("SearchResultComponent ctor");
@@ -63,6 +74,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     //console.log("search-result.ngAfterViewChecked");
   }
 
+  /*
   omicsTest(d:DataSet, omics:string):boolean{
     if(d == null)
       return false;
@@ -71,30 +83,42 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
       return false;
 
     return (d.omicsType.indexOf(omics) != -1);
-  }
+  }*/
 
   clicked(source:string,id:string){
     //console.log(`clicked ${source} ${id}`);
     this.selectedService.select(source,id);
   }
 
-  getDatabaseUrl(source){
-    var db =  this.databaseListServce.databases[source];
-    if(!db) {
-      console.log("source not found:"+source);
-    }
-    else {
-      return db.sourceUrl;
-    }
+  toggle(source:string,id:string){
+    this.selectedService.toggle(source,id);
+    console.log(`toggle ${source} ${id}`);
   }
 
-  getDatabaseTitle(source){
-    var db =  this.databaseListServce.databases[source];
-    if(!db) {
-      console.log("source not found:"+source);
-    }
-    else {
-      return db.databaseName;
-    }
+  citeClicked($event,source,id){
+    this.citation(source,id);
+    $event.stopPropagation();
+    $event.preventDefault();
   }
+
+  selectClicked($event,source,id){
+    this.toggle(source,id);
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
+  citation(source,id) {
+      let dialogRef: MdDialogRef<CitationDialogComponent>;
+
+      this.dataSetService.getDataSetDetail_private(id, source).subscribe(
+          x => {
+              dialogRef = this.dialog.open(CitationDialogComponent);
+              dialogRef.componentInstance.title = "Dataset citation";
+              dialogRef.componentInstance.datasetDetail = x;
+              return dialogRef.afterClosed();
+          }
+      )
+  }
+
+
 }

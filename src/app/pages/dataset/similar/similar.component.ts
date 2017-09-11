@@ -4,6 +4,7 @@ import {SimilarityResult} from "../../../model/SimilarityResult";
 import {Subscription} from "rxjs";
 import {DataSet} from "../../../model/DataSet";
 import {AppConfig} from "../../../app.config";
+import {DatabaseListService} from "../../../services/database-list.service";
 
 @Component({
   selector: 'app-similar',
@@ -24,7 +25,7 @@ export class SimilarComponent implements OnInit {
 
   loadMoreButtonText: string = "Load More";
 
-  constructor(private similarityService: SimilarityService, private appConfig: AppConfig) {
+  constructor(private similarityService: SimilarityService, private appConfig: AppConfig,private databaseListServce: DatabaseListService) {
     this.subscription = this.similarityService.searchResult$.subscribe(
       result => {
         this.d = result;
@@ -72,6 +73,16 @@ export class SimilarComponent implements OnInit {
       return false;
 
     return (d.omicsType.indexOf(omics) != -1);
+  }
+
+  getDatabaseTitle(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.databaseName;
+    }
   }
 
 }

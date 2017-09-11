@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 import {SearchService} from "../../../services/search.service";
 import {SearchQuery} from "../../../model/SearchQuery";
+import {NotificationsService} from "angular2-notifications/dist";
+import {SavedSearch} from "../../../model/SavedSearch";
+import {ProfileService} from "../../../services/profile.service";
 
 @Component({
   selector: 'app-search-query',
@@ -12,13 +15,15 @@ export class SearchQueryComponent implements OnInit {
 
   searchQuery: string;
   subscription: Subscription;
+  numberOfResults: number;
 
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService, private notificationService: NotificationsService, private profileService: ProfileService) { }
 
   ngOnInit() {
     this.subscription = this.searchService.searchResult$.subscribe(
       searchResult => {
         this.searchQuery = this.searchService.currentQuery;
+        this.numberOfResults = searchResult.count;
       });
   }
 
@@ -28,5 +33,21 @@ export class SearchQueryComponent implements OnInit {
     this.searchService.unselectFacets();
     this.searchService.callSearch();
   }
+
+  saveSearchClick(){
+      var savedSearch: SavedSearch = new SavedSearch();
+
+      savedSearch.userId = this.profileService.userId;
+      savedSearch.search = this.searchQuery;
+      savedSearch.count = this.numberOfResults;
+
+
+      this.profileService.saveSavedSearch(savedSearch);
+
+      this.notificationService.success(
+        'Search saved',
+        'to your dashboard'
+      )
+    }
 
 }

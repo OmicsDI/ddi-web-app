@@ -32,6 +32,9 @@ export class AppConfig{
     else
       return `${environment.userServiceUrl}user/current?r=${Math.random()}`;
   }
+  getAllProfilesUrl():string{
+    return `${environment.userServiceUrl}users?r=${Math.random()}`;
+  }
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections?r=${Math.random()}`;
   }
@@ -84,9 +87,23 @@ export class AppConfig{
   getDeleteConnectionUrl(userId: string, provider: string){
     return `${environment.userServiceUrl}users/${userId}/connections/${provider}?r=${Math.random()}`;
   }
+  getUserSavedSearchesUrl(userId: string){
+    return `${environment.userServiceUrl}users/${userId}/savedsearches?r=${Math.random()}`;
+  }
+  getUserSavedSearchesDeleteUrl(userId: string, id: string){
+    return `${environment.userServiceUrl}users/${userId}/savedsearches/${id}?r=${Math.random()}`;
+  }
+  getWatchedDatasetsUrl(userId: string){
+    return `${environment.userServiceUrl}users/${userId}/watches?r=${Math.random()}`;
+  }
+  getWatchedDatasetsDeleteUrl(userId: string, id: string){
+    return `${environment.userServiceUrl}users/${userId}/watches/${id}?r=${Math.random()}`;
+  }
   getConnectUrl(provider:string){
     if(provider=="orcid")
       return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=/authenticate`;
+    else if(provider=="google")
+      return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=https://www.googleapis.com/auth/userinfo.email`
     else
       return `${environment.userServiceUrl.replace("api","connect")}${provider}`;
   }
@@ -108,6 +125,18 @@ export class AppConfig{
   }
   getAltmetricUrl(PMID){
     return `http://api.altmetric.com/v1/pmid/${PMID}`;
+  }
+  getScoreViewsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
+  }
+  getScoreCitationsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}scores/citation/${repository}/${acc}?r=${Math.random()}`;
+  }
+  getScoreReanalysisUrl(acc: string, repository: string){
+  return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}?r=${Math.random()}`;
+  }
+  getScoreConnectionsUrl(acc: string, repository: string){
+    return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
   }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";

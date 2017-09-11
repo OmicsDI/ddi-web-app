@@ -5,14 +5,14 @@
 </md-menu>
 
 
-<a [mdMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Dialog">{{name}}</a>
+<a [mdMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Dialog">{{name}} <b class="caret"></b></a>
 
 
   <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
-    <button [routerLink]="['/profile']" md-menu-item>
-      Profile
+    <button [routerLink]="['/profile',this.userId]" md-menu-item>
+      Public profile
     </button>
-    <button md-menu-item disabled [routerLink]="['/dashboard']">
+    <button md-menu-item [routerLink]="['/dashboard']">
       Dashboard
     </button>
     <button md-menu-item (click)="LogOut()">

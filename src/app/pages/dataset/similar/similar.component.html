@@ -19,7 +19,7 @@
     <div class="project-widget-paragraph ng-binding">
       <span class="ng-binding"> {{ds.publicationDate | toDateString}}| </span>
         {{ds.id}} |
-        {{appConfig.repositories[ds.source]}}
+        {{this.getDatabaseTitle(ds.source)}}
     </div>
   </div>
 </li>

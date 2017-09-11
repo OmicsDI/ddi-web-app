@@ -1,4 +1,4 @@
-<div class="container ng-scope" id="datasetCtrl">
+<div class="container_ddi" id="datasetCtrl">
   <div id="" class="row">
   </div>
   <div id="error-row" class="row">
@@ -17,10 +17,16 @@
         </p>
       </div>
       <div class="panel panel-default" id="dataset_upper" >
-        <div class="panel-footer ">
-          <h3>Dataset Information
-          </h3>
+        <div class="panel-footer">
+          <div  style="float: right; width: 400px; text-align: right; position: relative; top:0px;">
+            <!--app-score [source]="d.source" [accession]="d.id"></app-score-->
+          </div>
+
+            <h3>Dataset Information</h3>
+
+
         </div>
+
         <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
           <app-omics-image [omics]="d?.omics_type" [size]="'large'"> </app-omics-image>
           <br>

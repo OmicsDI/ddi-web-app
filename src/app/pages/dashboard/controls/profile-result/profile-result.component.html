@@ -1,0 +1,17 @@
+<ul *ngIf="this.profile?.dataSets && this.profile?.dataSets.length>0" class="list-unstyled" style="display:inline-block; width:100%">
+  <li *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }"
+      class="repeated-item ng-scope"
+      style="min-width:400px;">
+
+    <app-datasetwidget [d]="d" [allowSelect]="false" [allowClaim]="false" (buttonClicked)="this.deleteDataset(d.source, d.id)"></app-datasetwidget>
+
+
+  </li>
+</ul>
+<pagination-controls (pageChange)="p = $event"
+                     previousLabel=""
+                     nextLabel=""
+                     *ngIf="this.dataSets && this.dataSets.length > 10"
+                     class="my-pagination">
+</pagination-controls>
+

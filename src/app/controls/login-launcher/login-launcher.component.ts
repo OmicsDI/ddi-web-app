@@ -13,6 +13,7 @@ export class LoginLauncherComponent implements OnInit {
 
   public profile : Profile;
   public name : string;
+  public userId: string;
 
   constructor(private profileService: ProfileService, private router: Router, private auth: AuthService) {
     this.name = null;
@@ -27,6 +28,7 @@ export class LoginLauncherComponent implements OnInit {
         profile => {
           this.profile = profile;
           this.name = profile.userName;
+          this.userId=profile.userId;
         }
       );
   }
@@ -45,6 +47,7 @@ export class LoginLauncherComponent implements OnInit {
   LogOut() {
     //this.deleteCookie("AUTH-TOKEN");
     localStorage.removeItem('id_token');
+    this.profileService.profile = null;
     this.router.navigate(['home']);
   }
 }

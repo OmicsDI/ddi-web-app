@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {PagingService} from "../../../services/paging.service";
 import {SearchService} from "../../../services/search.service";
 import {DataSet} from "../../../model/DataSet";
 import {Observable, Subscription} from "rxjs";
@@ -25,7 +24,7 @@ export class SearchPagerComponent implements OnInit {
   total: number;
   loading: boolean;
 
-  constructor(private pagingService: PagingService, private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService ) {
+  constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService ) {
     for (let i = 1; i <= 100; i++) {
       this.collection.push(`item ${i}`);
     }
@@ -57,6 +56,24 @@ export class SearchPagerComponent implements OnInit {
       this.searchService.sortBy = by;
       this.searchService.sortOrder = 'ascending';
     }
+    this.searchService.sort();
+  }
+
+  sortOrderChanged(){
+    if(this.searchService.sortOrder == 'ascending') {
+      this.searchService.sortOrder = 'descending';
+    }
+    else{
+      this.searchService.sortOrder = 'ascending';
+    }
+    this.slimLoadingBarService.start();
+    this.searchService.sort();
+  }
+
+  sortByChanged(value){
+    //console.log(value);
+    this.searchService.sortBy = value;
+    this.slimLoadingBarService.start();
     this.searchService.sort();
   }
 

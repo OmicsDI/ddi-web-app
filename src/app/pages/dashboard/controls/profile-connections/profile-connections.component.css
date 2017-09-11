@@ -1,0 +1,43 @@
+.connectionBox{
+  background-color: rgba(0, 153, 204, 0.49); /**/
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  max-width: 300px;
+}
+
+.connectionList {
+  position: relative;
+  list-style: none;
+}
+
+ul.connectionList {
+  padding-left:14px;
+
+}
+
+ul.connectionList li a{
+  color:black;
+}
+
+.connection {
+  display: block;
+  padding: 4px 0;
+  line-height: 17px;
+}
+
+.gsc_rsb_lc {
+  font-weight: normal;
+}
+
+h3.caption {
+  font-family: Helvetica Neue;
+  color: rgb(34, 34, 34);
+  font-weight: 300;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

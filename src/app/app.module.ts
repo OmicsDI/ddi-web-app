@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './controls/login/login.component';
 import { LoginLauncherComponent } from './controls/login-launcher/login-launcher.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ProfileComponent } from './pages/profile/view/profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
 import {routing} from "./app.routes";
@@ -61,7 +61,6 @@ import { SearchTotalComponent } from './pages/search/search-total/search-total.c
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {DropdownModule} from "ng2-dropdown";
 import {SlimLoadingBarModule} from "ng2-slim-loading-bar";
-import {PagingService} from "./services/paging.service";
 import {NgxPaginationModule} from "ngx-pagination";
 import {EnrichmentService} from "./services/enrichment.service";
 import { OntologyTooltipPipe } from './pipes/ontology-tooltip.pipe';
@@ -78,11 +77,11 @@ import {FileSelectDirective} from "ng2-file-upload";
 import { ClaimAllButtonComponent } from './controls/claim-all-button/claim-all-button.component';
 import { SearchQueryComponent } from './pages/search/search-query/search-query.component';
 import { TermsComponent } from './pages/terms/terms.component';
-import { ProfileResultComponent } from './pages/profile/view/profile-result/profile-result.component';
-import { ProfileTotalComponent } from './pages/profile/view/profile-total/profile-total.component';
-import { ProfileInfoComponent } from './pages/profile/view/profile-info/profile-info.component';
-import { ProfileCoauthorsComponent } from './pages/profile/view/profile-coauthors/profile-coauthors.component';
-import { ProfileConnectionsComponent } from './pages/profile/view/profile-connections/profile-connections.component';
+import { ProfileResultComponent } from './pages/dashboard/controls/profile-result/profile-result.component';
+import { ProfileTotalComponent } from './pages/dashboard/controls/profile-total/profile-total.component';
+import { ProfileInfoComponent } from './pages/dashboard/controls/profile-info/profile-info.component';
+import { ProfileCoauthorsComponent } from './pages/dashboard/controls/profile-coauthors/profile-coauthors.component';
+import { ProfileConnectionsComponent } from './pages/dashboard/controls/profile-connections/profile-connections.component';
 import { OmicsImageComponent } from './controls/omics-image/omics-image.component';
 import { DeleteButtonComponent } from './controls/delete-button/delete-button.component';
 import { DeleteAllButtonComponent } from './controls/delete-all-button/delete-all-button.component';
@@ -91,10 +90,7 @@ import {OntologyService} from "./services/ontology.service";
 import { FacetOmicsComponent } from './controls/facet-omics/facet-omics.component';
 import { SimilarMoleculeComponent } from './pages/dataset/similar-molecule/similar-molecule.component';
 import { LimitDatasetNumbersPipe } from './pipes/limit-dataset-numbers.pipe';
-import { ClaimedComponent } from './pages/profile/claimed/claimed.component';
-import { ProfileContactsComponent } from './pages/profile/view/profile-contacts/profile-contacts.component';
-import { UpdateProfileComponent } from './pages/profile/update-profile/update-profile.component';
-import { ProfileDisqusComponent } from './pages/profile/profile-disqus/profile-disqus.component';
+import { ProfileContactsComponent } from './pages/dashboard/controls/profile-contacts/profile-contacts.component';
 import {FeedbackComponent} from "./controls/feedback/feedback.component";
 import {FeedbackService} from "./services/feedback.service";
 import {StatisticsService} from "./services/statistics.service";
@@ -104,9 +100,25 @@ import {AltmetricService} from "./services/altmetric.service";
 import { CitationDialogComponent } from './pages/dataset/citation-dialog/citation-dialog.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import {SelectedService} from "./services/selected.service";
-import { SelectedComponent } from './pages/selected/selected.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { ClipboardModule } from 'ngx-clipboard';
+import {SelectedComponent } from './pages/selected/selected.component';
+import {DashboardComponent } from './pages/dashboard/dashboard.component';
+import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
+import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
+import {SimpleNotificationsModule} from "angular2-notifications";
+import {ClipboardModule} from "ngx-clipboard/dist";
+import {NavComponent } from './pages/dashboard/nav/nav.component';
+import {ScoreComponent } from './controls/score/score.component';
+import {DashboardProfileComponent} from "./pages/dashboard/profile/profile.component";
+import {DashboardUpdateComponent } from './pages/dashboard/update/update.component';
+import {DashboardClaimedComponent } from './pages/dashboard/claimed/claimed.component';
+import {DashboardPictureComponent } from './pages/dashboard/picture/picture.component';
+import { SettingsComponent } from './pages/dashboard/settings/settings.component';
+import {DatasetWidgetComponent} from "./controls/datasetwidget/datasetwidget.component";
+import { ConfirmDialogComponent } from './controls/confirm-dialog/confirm-dialog.component';
+import {DialogService} from "./services/dialog.service";
+import { DatasetwidgetSmallComponent } from './controls/datasetwidget-small/datasetwidget-small.component';
+import {ScoreService} from "./services/score.service";
+
 
 export function getParameterByName(name): string {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
@@ -184,17 +196,28 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FacetOmicsComponent,
     SimilarMoleculeComponent,
     LimitDatasetNumbersPipe,
-    ClaimedComponent,
     ProfileContactsComponent,
-    UpdateProfileComponent,
-    ProfileDisqusComponent,
     FeedbackComponent,
     NotfoundComponent,
     AltmetricImageComponent,
     CitationDialogComponent,
     AdminComponent,
     SelectedComponent,
-    DashboardComponent
+    DashboardComponent,
+    DashboardSelectedComponent,
+    DashboardFeedbackComponent,
+    DashboardProfileComponent,
+    NavComponent,
+    ScoreComponent,
+    DashboardUpdateComponent,
+    DashboardClaimedComponent,
+    DashboardFeedbackComponent,
+    DashboardSelectedComponent,
+    DashboardPictureComponent,
+    SettingsComponent,
+    DatasetWidgetComponent,
+    ConfirmDialogComponent,
+    DatasetwidgetSmallComponent
   ],
   imports: [
     BrowserModule,
@@ -213,6 +236,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     TooltipModule,
     UiSwitchModule,
     BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot(),
     ClipboardModule
   ],
   exports: [
@@ -228,7 +252,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , DataSetService
     , PublicationService
     , SimilarityService
-    , PagingService
     , EnrichmentService
     , OntologyService
     , DatabaseListService
@@ -237,9 +260,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , AppConfig
     , StatisticsService
     , AltmetricService
-    , SelectedService],
+    , SelectedService
+    , DialogService
+    , ScoreService],
   entryComponents: [
     CitationDialogComponent,
+    ConfirmDialogComponent
   ],
   bootstrap: [AppComponent]
 })

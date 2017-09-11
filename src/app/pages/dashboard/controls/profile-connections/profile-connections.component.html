@@ -1,0 +1,41 @@
+<!--div id="gsc_rsb" -->
+  <div class="connectionBox" id="gsc_rsb_co"><h3 class="caption" role="navigation">Social connections
+  </h3>
+    <ul class="connectionList">
+      <li><span class="connection"><img src="assets/orcid.png"/>&nbsp;<a (click)="connectedChanged(orcidConnected,'orcid')">Orcid</a>
+            <span *ngIf="orcidConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
+            <span style="float:right; padding-right:10px;">
+              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="orcidConnected" (change)="connectedChanged(orcidConnected, 'orcid')"></ui-switch>
+            </span>
+          </span>
+      </li>
+      <li><span class="connection"><img src="assets/elixir-small.png"/>&nbsp;<a (click)="connectedChanged(elixirConnected,'elixir')" >Elixir</a>
+            <span *ngIf="elixirConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
+            <span style="float:right; padding-right:10px;">
+              <!-- a.class="disabled" ui-switch.disabled="true"-->
+              <ui-switch size="small" color="rgb(66, 139, 202)" [ngModel]="elixirConnected" (change)="connectedChanged(elixirConnected,'elixir')"></ui-switch>
+            </span>
+      </span></li>
+      <li><span class="connection"><img src="assets/google.png"/>&nbsp;<a (click)="connectedChanged(googleConnected,'google')">Google</a>
+            <span *ngIf="googleConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
+            <span style="float:right; padding-right:10px;">
+              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="googleConnected" (change)="connectedChanged(googleConnected,'google')"></ui-switch>
+            </span>
+          </span></li>
+      <li><span class="connection"><img src="assets/twitter.png"/>&nbsp;<a (click)="connectedChanged(twitterConnected,'twitter')">Twitter</a>
+                    <span *ngIf="twitterConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
+            <span style="float:right; padding-right:10px;">
+              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="twitterConnected" (change)="connectedChanged(twitterConnected,'twitter')"></ui-switch>
+            </span>
+      </span></li>
+      <li><span class="connection"><img src="assets/github.png"/>&nbsp;<a (click)="connectedChanged(githubConnected,'github')">GitHub</a>
+                    <span *ngIf="githubConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
+            <span style="float:right; padding-right:10px;">
+              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="githubConnected" (change)="connectedChanged(githubConnected,'github')"></ui-switch>
+            </span>
+      </span></li>
+
+      <li class="gsc_rsb_fade"></li>
+    </ul>
+  </div>
+<!--/div -->
