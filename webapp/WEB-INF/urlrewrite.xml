@@ -13,6 +13,10 @@
     <to>/</to>
   </rule>
   <rule match-type="wildcard">
+    <from>/dashboard/*</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
     <from>/database</from>
     <to>/</to>
   </rule>
