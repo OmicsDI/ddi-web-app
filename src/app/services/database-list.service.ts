@@ -27,4 +27,17 @@ export class DatabaseListService extends BaseService {
         return d1;
       });
   }
+
+  public  getSourceByDatabaseName(database:string):string{
+      var self = this;
+      var source = null;
+      Object.keys(this.databases).forEach(key => {
+          var d = self.databases[key];
+          if(d.databaseName==database){
+              source= d.source;
+              return;
+          }
+      });
+      return source;
+  }
 }

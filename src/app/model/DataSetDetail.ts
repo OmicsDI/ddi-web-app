@@ -1,6 +1,7 @@
 import {Protocol} from "./Protocol";
 import {Organism} from "./Organism";
 import {Dates} from "./Dates";
+import {SimilarDataset} from "./SimilarDataset";
 /**
  * Created by user on 3/25/2017.
  */
@@ -21,13 +22,16 @@ import {Dates} from "./Dates";
     tissues?: any;
     diseases?: any;
     omics_type: string[];
-    similars?: any;
+    similars: SimilarDataset[];
     organization?: any;
     dates: Dates;
     submitter: string[];
     submitterMail: string[];
     labHead?: any;
     labHeadMail?: any;
+    reanalysis_of: string = "reanalysis_of";
+    reanalised_by: string = "reanalised_by";
+    related_omics: string = "related_omics";
 
     constructor(){
       this.omics_type = [];
@@ -38,6 +42,8 @@ import {Dates} from "./Dates";
       return false;
     return (this.omics_type.indexOf(omics) != -1);
   }
+
+
 
 }
 

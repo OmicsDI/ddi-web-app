@@ -14,6 +14,7 @@ export class LoginLauncherComponent implements OnInit {
   public profile : Profile;
   public name : string;
   public userId: string;
+  public isPublic: boolean;
 
   constructor(private profileService: ProfileService, private router: Router, private auth: AuthService) {
     this.name = null;
@@ -29,6 +30,7 @@ export class LoginLauncherComponent implements OnInit {
           this.profile = profile;
           this.name = profile.userName;
           this.userId=profile.userId;
+          this.isPublic=profile.isPublic;
         }
       );
   }

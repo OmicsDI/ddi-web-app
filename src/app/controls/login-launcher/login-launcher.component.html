@@ -9,7 +9,7 @@
 
 
   <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
-    <button [routerLink]="['/profile',this.userId]" md-menu-item>
+    <button *ngIf="this.isPublic" [routerLink]="['/profile',this.userId]" md-menu-item>
       Public profile
     </button>
     <button md-menu-item [routerLink]="['/dashboard']">

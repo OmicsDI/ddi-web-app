@@ -17,6 +17,8 @@ import {ProfileService} from "../../services/profile.service";
 import {DisqusComponent} from "ng2-awesome-disqus/disqus.component";
 import {MdDialog, MdDialogRef} from "@angular/material";
 import {CitationDialogComponent} from "./citation-dialog/citation-dialog.component";
+import {SimilarDataset} from "../../model/SimilarDataset";
+import {DatabaseListService} from "../../services/database-list.service";
 
 
 @Component({
@@ -54,7 +56,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
       ,private enrichmentService: EnrichmentService
       ,private appConfig: AppConfig
       ,private profileService: ProfileService
-      ,private dialog: MdDialog) {
+      ,private dialog: MdDialog
+      ,private databaseListService: DatabaseListService) {
     console.info("DatasetComponent constructor");
 
     this.current_url = route.pathFromRoot.toString();
@@ -74,6 +77,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         console.info("publicationIds:" + result.publicationIds);
       });
     this.web_service_url = dataSetService.getWebServiceUrl();
+    //this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});
   }
 
   ngOnInit() {
@@ -186,4 +190,93 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     return dialogRef.afterClosed();
   }
+
+  reanalysis_of(d: DataSetDetail): SimilarDataset[]{
+    let r = new Array();
+    if(d.similars) {
+      for (let s of d.similars) {
+        if (s.relationType == "Reanalysis of") {
+          r.push(s);
+        }
+      }
+    }
+    if(r.length>0){
+      return r;
+    }
+    else {
+      return null;
+    }
+  }
+  reanalised_by(d: DataSetDetail):  SimilarDataset[] {
+    let r = new Array();
+    if(d.similars) {
+      for (let s of d.similars) {
+        if (s.relationType == "Reanalyzed by") {
+          r.push(s);
+        }
+      }
+    }
+    if(r.length>0){
+      return r;
+    }
+    else {
+      return null;
+    }
+  }
+  related_omics(d: DataSetDetail): SimilarDataset[]{
+    let r = new Array();
+    if(d.similars) {
+      for (let s of d.similars) {
+        if (((s.relationType != "Reanalyzed by") && (s.relationType != "Reanalysis of"))) {
+          r.push(s);
+        }
+      }
+    }
+    if(r.length>0){
+      return r;
+    }
+    else {
+      return null;
+    }
+  }
+
+  getSourceByDatabaseName(database: string ):string{
+    return this.databaseListService.getSourceByDatabaseName(database);
+  }
+
 }
+
+/*public reanalysis_of(): string
+ {
+
+ }
+ public reanalised_by(): string
+ {
+ let r = "";
+ for(let s of this.similars){
+ if(s.relationType == "Reanalysed by"){
+ r+= (s.accession+" ");
+ }
+ }
+ if(r!=""){
+ return r;
+ }
+ else {
+ return null;
+ }
+ }
+ public related_omics(): string
+ {
+ let r = "";
+ for(let s of this.similars){
+ if((s.relationType != "Reanalysed by")&&(s.relationType != "Reanalysis of")){
+ r+= (s.accession+" ");
+ }
+ }
+ if(r!=""){
+ return r;
+ }
+ else {
+ return null;
+ }
+ }*/

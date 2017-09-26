@@ -53,4 +53,8 @@ export class AppComponent {
 
   public simpleNotificationsOptions = {timeOut:500,position: ["bottom", "right"],animate:"scale"};
 
+  gotoHelp(){
+    window.location.href='http://blog.omicsdi.org/';
+  }
+
 }

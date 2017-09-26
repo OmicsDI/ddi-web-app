@@ -17,18 +17,25 @@
         <li><a [routerLink]="['/search']">Browse</a></li>
         <li><a [routerLink]="['/api']">API</a></li>
         <li><a [routerLink]="['/database']">Database</a></li>
+
         <li dropdown class="dropdown">
-          <a dropdown-open class="dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i>Help <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="http://blog.omicsdi.org/" alt="Help">Omics Help</a></li>
-            <li><a [routerLink]="['about']" alt="About">About Omicsdi</a></li>
-            <li *ngIf="auth.loggedIn()"><a data-icon="\" class="icon icon-static" [routerLink]="['profile','feedback']" alt="Feedback">Feedback</a></li>
-          </ul>
+          <a [mdMenuTriggerFor]="helpMenu" ><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
         </li>
+        <md-menu #helpMenu="mdMenu" [overlapTrigger]="false">
+          <button (click)="gotoHelp()" md-menu-item>
+            Omics Help
+          </button>
+          <button md-menu-item [routerLink]="['about']">
+            About Omicsdi
+          </button>
+          <button *ngIf="auth.loggedIn()" md-menu-item [routerLink]="['dashboard','feedback']">
+            Feedback
+          </button>
+        </md-menu>
 
         <li AppLoginLauncher>
         </li>
-        <li *ngIf="this.selectedService.selected() > 0"><a routerLink="/dashboard/selected"><i class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
+        <li *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a routerLink="/dashboard/selected"><i class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
       </ul>
       <!-- Top Menu Items -->
       <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">

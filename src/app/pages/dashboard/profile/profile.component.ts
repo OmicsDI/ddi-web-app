@@ -99,6 +99,10 @@ export class DashboardProfileComponent implements OnInit {
     }
   }
 
+  updateProfile(){
+    this.profileService.updateUser().subscribe();
+  }
+
   checkAll(ev) {
     console.log("checking select all" + ev);
     this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked)

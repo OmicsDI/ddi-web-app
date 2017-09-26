@@ -38,28 +38,33 @@ export class SimilarMoleculeComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.acc && this.repository) {
-      if (this.repository == 'metabolomics_workbench') {
-        this.repository = 'MetabolomicsWorkbench';
+    var self = this;
+    if (self.acc && self.repository) {
+      if (self.repository == 'metabolomics_workbench') {
+          self.repository = 'MetabolomicsWorkbench';
       }
 
+      if(!self.threshold)
+          self.threshold = 0.5;
+
       this.simiMoleService
-        .search(this.acc, this.repository)
+        .search(self.acc, self.repository)
         .subscribe(result => {
-          this.similarityData = result;
-          this.biological_similarity_info = result;
-          if (this.biological_similarity_info != null) {
-            this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
+            self.similarityData = result;
+            self.biological_similarity_info = result;
+          if (self.biological_similarity_info != null) {
+              self.related_datasets_by_biological_limit = self.find_similarity_limit(self.biological_similarity_info.scores, self.threshold);
           }
-          this.drawTheChord();
+            self.drawTheChord();
           //this.filteredDatasets = this.getRelatedDatasets();
         })
 
-      this.simiMoleService
-        .searchSimilarityDatasets(this.acc, this.repository)
+        self.simiMoleService
+        .searchSimilarityDatasets(self.acc, self.repository)
         .subscribe(data => {
-          this.related_datasets_by_biological = data.datasets;
-          this.filteredDatasets = this.related_datasets_by_biological;
+            self.related_datasets_by_biological = data.datasets;
+            //self.filteredDatasets = self.related_datasets_by_biological;
+            this.getRelatedDatasets(self.threshold);
         })
     }
   }
