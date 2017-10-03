@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import {Observable} from "rxjs";
 import {Http, Response} from "@angular/http";
 import {AutocompleteResult} from "../../model/AutocompleteResult";
@@ -15,6 +15,7 @@ import {SearchService} from "../../services/search.service";
 export class AutocompleteNComponent implements OnInit {
   selected: string;
   @Output() submit = new EventEmitter();
+  @ViewChild('txtInput') txtInput: ElementRef;
 
   constructor(private http:Http, private appConfig: AppConfig, private searchService: SearchService) {
   }
@@ -49,6 +50,13 @@ export class AutocompleteNComponent implements OnInit {
       case 13: {
         if(!this.downArrowPressed)
           this.submit.emit();
+          event.stopPropagation();
+          var self = this;
+          var searchText = self.searchService.fullQuery;
+          setTimeout(function () {
+            self.txtInput.nativeElement.value = searchText;
+            self.searchService.fullQuery = searchText;
+          }, 100);
       }
     }
   }
