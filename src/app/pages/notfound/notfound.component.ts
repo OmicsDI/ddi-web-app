@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Http} from "@angular/http";
+import {Observable} from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
 
 
 @Component({
@@ -6,14 +10,47 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './notfound.component.html',
   styleUrls: ['./notfound.component.css']
 })
-export class NotfoundComponent implements OnInit {
+export class NotfoundComponent {
+  title = 'app';
 
-  constructor() { }
+  downArrowPressed: Boolean = false;
+  selected: string = 'oh mama';
+  @ViewChild('txtInput') input: ElementRef;
 
-  ngOnInit() {
+  constructor(public http: Http) {}
 
+  observableSource = (keyword: any): Observable<any[]> => {
+    const url: string =
+        'https://maps.googleapis.com/maps/api/geocode/json?address=' + keyword
+    if (keyword) {
+      return this.http.get(url)
+          .map(res => {
+            const json = res.json();
+            return json.results;
+          });
+    } else {
+      return Observable.of([]);
+    }
   }
 
 
+  keydown(event) {
+    console.log("keydown:" + event.keyCode + " query:" + this.selected + " value:" + this.input.nativeElement.value );
+    switch (event.keyCode) {
+      case 40:
+        this.downArrowPressed = true;
+      case 13: {
+        if(!this.downArrowPressed) {
+          console.log("this.input.nativeElement.value");
+          //this.searchService.fullQuery = this.input.nativeElement.value;
+          //this.input.nativeElement.value = this.query;
+          //event.stopPropagation();
+          this.selected = this.input.nativeElement.value;
+          event.stopPropagation();
+          alert("search:"+this.selected);
+        }
+      }
+    }
+  }
 
 }

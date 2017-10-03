@@ -38,6 +38,9 @@ export class AppConfig{
   getUserConnectionsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/connections?r=${Math.random()}`;
   }
+  getUserConnectionUrl(userId:string, provider: string):string{
+    return `${environment.userServiceUrl}users/${userId}/connections/${provider}?r=${Math.random()}`;
+  }
   getUserCoAuthorsUrl(userId:string):string{
     return `${environment.userServiceUrl}users/${userId}/coauthors?r=${Math.random()}`;
   }
@@ -137,6 +140,10 @@ export class AppConfig{
   }
   getScoreConnectionsUrl(acc: string){
     return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
+  }
+  getThorUrl(orcid: string, database: string){
+    return `${environment.userServiceUrl}thor/${orcid}?srcDatabase=${database}`;
+    //return `https://www.ebi.ac.uk/europepmc/hubthor/api/dataclaiming/claimBatchBehalf/${orcid}?srcDatabase=${database}`
   }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";

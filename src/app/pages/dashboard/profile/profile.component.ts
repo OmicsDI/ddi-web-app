@@ -9,6 +9,10 @@ import {DataSetDetail} from "../../../model/DataSetDetail";
 import {AppConfig} from "../../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from "@angular/router";
+import {NotificationsService} from "angular2-notifications/dist";
+import {OrcidWork} from "../../../model/OrcidWork";
+import {OrcidExternalIdentifier} from "../../../model/OrcidExternalIdentifier";
+import {ThorService} from "../../../services/thor.service";
 
 @Component({
   selector: 'app-profile',
@@ -35,7 +39,9 @@ export class DashboardProfileComponent implements OnInit {
       ,private formBuilder: FormBuilder
       ,private appConfig: AppConfig
       ,private router: Router
-      ,private route: ActivatedRoute) {
+      ,private route: ActivatedRoute
+      ,private notificationsService: NotificationsService
+      ,private thorService: ThorService) {
     this.form = formBuilder.group({
       name: ['', [
         Validators.required,
@@ -130,5 +136,33 @@ export class DashboardProfileComponent implements OnInit {
 
   isMy(): boolean{
     return (null==this.username)
+  }
+
+  syncToOrcidClick(){
+    this.profileService.getUserConnection(this.profileX.userId,"orcid")
+        .subscribe(
+            connectionData => {
+                var accessToken = connectionData.accessToken;
+                var orcid = connectionData.providerUserId;
+
+                for(let d of this.profileX.dataSets)
+                {
+                  let w: OrcidWork = new OrcidWork();
+                  w.title = d.name;
+                  w.publicationYear = "1999";
+                  w.workExternalIdentifiers = [new OrcidExternalIdentifier()];
+                  w.workExternalIdentifiers[0].workExternalIdentifierId = d.id;
+                  w.url = `http://www.omicsdi.org/dataset/${d.source}/${d.id}`;
+
+                  this.thorService.claimBatchBehalf(orcid,d.source,accessToken,[w]).subscribe(
+                      x => {
+                        this.notificationsService.success("Ok","orcid connected:" + connectionData.accessToken);
+                      }
+                  );
+                }
+
+
+              }
+        );
   }
 }

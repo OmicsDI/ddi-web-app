@@ -11,6 +11,7 @@ import {DataSetDetail} from "../model/DataSetDetail";
 import {DataSetService} from "./dataset.service";
 import {SavedSearch} from "../model/SavedSearch";
 import {WatchedDataset} from "../model/WatchedDataset";
+import {ConnectionData} from "../model/ConnectionData";
 
 
 @Injectable()
@@ -86,6 +87,12 @@ export class ProfileService extends BaseService {
     return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) //{ withCredentials: true }
       .map(x => this.extractData<String[]>(x))
       .catch(this.handleError);
+  }
+
+  getUserConnection (userId: string,provider: string): Observable<ConnectionData>{
+    return this.http.get(this.appConfig.getUserConnectionUrl(userId,provider)) //{ withCredentials: true }
+        .map(x => this.extractData<ConnectionData>(x))
+        .catch(this.handleError);
   }
 
   deleteConnection(userId: string, provider: string): Observable<any>{
