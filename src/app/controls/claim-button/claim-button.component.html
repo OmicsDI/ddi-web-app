@@ -1,4 +1,13 @@
 <ng-container *ngIf="auth.loggedIn()">
-  <a *ngIf="claimable && !claimed" (click)="claimDataset()" class="claim-data">Claim dataset</a>
-  <a *ngIf="claimed" (click)="viewInProfile()" class="profile-data">VIEW IN PROFILE</a>
+
+  <div *ngIf="claimable && !claimed" class="dot-button" style="background-color: #FA8B7A" (click)="claimDataset()">
+    <i class="fa fa-user-circle" aria-hidden="true"></i>
+    <span [ngClass]="unselected">Claim</span>
+  </div>
+
+  <div *ngIf="claimed" class="dot-button" style="background-color: #DC4F3A" (click)="viewInProfile()">
+    <i class="fa fa-user-circle" aria-hidden="true"></i>
+    <span [ngClass]="unselected">View in profile</span>
+  </div>
+
 </ng-container>

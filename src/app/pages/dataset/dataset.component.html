@@ -7,7 +7,9 @@
   </div>
   <div class="row" style="">
     <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
-      <app-socialnetworks></app-socialnetworks>
+      <span class="visible-lg">
+        <app-socialnetworks></app-socialnetworks>
+      </span>
     </div>
     <!-- col-md-1-->
     <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
@@ -19,7 +21,7 @@
       <div class="panel panel-default" id="dataset_upper" >
         <div class="panel-footer">
           <div  style="float: right; width: 400px; text-align: right; position: relative; top:0px;">
-            <app-score [source]="d.source" [accession]="d.id"></app-score>
+            <app-score [dataset]="d" ></app-score>
           </div>
 
             <h3>Dataset Information</h3>
@@ -85,7 +87,7 @@
           <p class="align-justify ng-hide" *ngIf="null!=d.tissues"><b>TISSUE(S):</b>
               {{d.tissues}}
           </p>
-          <p class="align-justify ng-hide" *ngIf="null!=d.diseases"><b>DISEASE(S):</b>
+          <p class="align-justify ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0"><b>DISEASE(S):</b>
               {{d.diseases}}
           </p>
           <p class="align-justify" *ngIf="null!=d.submitter">
@@ -112,8 +114,8 @@
             <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> {{d.source}} </a>
             <span>| {{d.publicationDate}} </span>
           </p>
-          <!--dataset_protocol_bottom-->
-          <div id="buttons_highlight_box">
+          <!-- dataset_protocol_bottom-->
+          <!-- div id="buttons_highlight_box">
             <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
 
 
@@ -123,12 +125,40 @@
             <a (click)="citation()" class="citation-button" style="">&lt;CITE&gt;</a>&nbsp;
             <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>&nbsp;
             <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
-          </div>
+          </div -->
         </div>
-        <!--dataset_protocol_bottom-->
+
         <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
         </div>
         <!--dataset_bottom-->
+
+        <div class="row" style="margin-bottom:10px; margin-right: 0px; margin-left:40px;">
+          <div class="col-lg-2">
+            <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap">ACCESS DATA</a>
+          </div>
+          <div class="col-lg-10">
+          <span class="pull-right">
+          <div class="dot-button" style="background-color: #87CEFA" (click)="citation()">
+              <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+
+          <claim-button [dataSet]="d"></claim-button>
+
+          <a class="dot-button" style="background-color: #94D67A; color:black;" href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" >
+              <i class="fa fa-file-text-o" aria-hidden="true"></i>
+              <span [ngClass]="unselected"> Json&nbsp;&nbsp; </span>
+          </a>
+
+          <a class="dot-button" style="background-color: #E69E7A; color:black;" href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML">
+              <i class="fa fa-file-code-o" aria-hidden="true"></i>
+              <span [ngClass]="'unselected'"> Xml&nbsp;&nbsp; </span>
+          </a>
+          </span>
+          </div>
+        </div>
+
+
+
       </div>
 
       <app-publication [ids]="d.publicationIds"></app-publication>
@@ -142,11 +172,12 @@
       </div>
     </div>
     <!-- col-md-8 centerpanel-->
-    <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" >
+    <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" style="margin-top:20px;" >
       <p>
-      </p><h4>
+      </p><h3>
       Similar Datasets
-    </h4>
+    </h3>
+      <p></p>
       <p></p>
 
         <app-similar [acc]="acc" [repository]="repository"></app-similar>

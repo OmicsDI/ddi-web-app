@@ -7,7 +7,7 @@
     -->
 
   <div style="float: right; width: 200px; text-align: right">
-    <app-score [source]="d.source" [accession]="d.id"></app-score>
+    <app-score [dataset]="d"></app-score>
   </div>
 
   <div class="project-widget-accession">
@@ -60,16 +60,16 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 align-bottom">
           <span class="pull-right">
-          <div class="dot-button" (click)="citeClicked($event,d.source,d.id)">
+          <div style="background-color: #87CEFA" class="dot-button" (click)="citeClicked($event,d.source,d.id)">
               <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
 
-          <div  *ngIf="this.allowClaim && this.profileService.profile" class="dot-button"  (click)="claimClicked($event,d.source,d.id)">
+          <div  style="background-color: #FA8B7A;" *ngIf="this.allowClaim && this.profileService.profile && d.claimable" class="dot-button"  (click)="claimClicked($event,d.source,d.id)">
               <i class="fa fa-user-circle" aria-hidden="true"></i>
               <span [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
           </div>
 
-          <div  *ngIf="this.allowWatch && this.profileService.profile" class="dot-button"  (click)="watchClicked($event,d.source,d.id)">
+          <div style="background-color: #94D67A" *ngIf="this.allowWatch && this.profileService.profile" class="dot-button"  (click)="watchClicked($event,d.source,d.id)">
               <i class="fa fa-envelope-o" aria-hidden="true"></i>
               <span [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
           </div>
