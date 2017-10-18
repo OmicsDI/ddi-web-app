@@ -1,0 +1,18 @@
+<div class="connectionBox"  style="margin-top:20px;"><h3 class="caption" role="navigation">ORCID data exchange
+</h3>
+  <div style="padding:10px; padding-left:15px;">
+  <div style="background-color: #A6CE39" class="dot-button" (click)="openLoginScreen()">
+    <i class="fa fa-exchange" aria-hidden="true"></i> Sync to ORCID&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+
+  <div style="padding-top: 10px;">
+    logged in as: {{this.thorService.orcIdRecord.name}}
+    <br/>
+    claimed works: {{this.thorService.orcIdRecord.works.length}}
+    <br/>
+    <span *ngIf="this.thorService.isUserLoggedIn" style="text-decoration: underline; cursor: pointer;" (click)="forget()">forget me</span>
+  </div>
+  </div>
+
+</div>
+

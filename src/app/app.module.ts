@@ -118,6 +118,8 @@ import { ConfirmDialogComponent } from './controls/confirm-dialog/confirm-dialog
 import {DialogService} from "./services/dialog.service";
 import { DatasetwidgetSmallComponent } from './controls/datasetwidget-small/datasetwidget-small.component';
 import {ScoreService} from "./services/score.service";
+import { ClaimOrcidComponent } from './pages/dashboard/controls/claim-orcid/claim-orcid.component';
+import {ThorService} from "./services/thor.service";
 
 
 export function getParameterByName(name): string {
@@ -217,7 +219,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SettingsComponent,
     DatasetWidgetComponent,
     ConfirmDialogComponent,
-    DatasetwidgetSmallComponent
+    DatasetwidgetSmallComponent,
+    ClaimOrcidComponent
   ],
   imports: [
     BrowserModule,
@@ -262,7 +265,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , AltmetricService
     , SelectedService
     , DialogService
-    , ScoreService],
+    , ScoreService
+    , ThorService],
   entryComponents: [
     CitationDialogComponent,
     ConfirmDialogComponent

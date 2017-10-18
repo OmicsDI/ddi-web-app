@@ -7,12 +7,14 @@
       <div class="col-lg-9 col-md-8 col-sm-6">
         <app-profile-info [profile]="profileX"></app-profile-info>
         <div *ngIf="profileX?.dataSets?.length>0" class="caption">Datasets</div>
+
         <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-6">
         <app-profile-contacts [profile]="profileX"></app-profile-contacts>
         <app-profile-connections *ngIf="isMy()" [profile]="profileService.profile"></app-profile-connections>
+        <app-claim-orcid></app-claim-orcid>
       </div>
       </div>
 

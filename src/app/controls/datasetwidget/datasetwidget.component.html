@@ -74,7 +74,7 @@
               <span [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
           </div>
 
-          <div  *ngIf="this.allowDelete && this.profileService.profile" class="dot-button" (click)="deleteClicked($event,d.source,d.id)">
+          <div  *ngIf="this.allowDelete && this.profileService.profile" class="dot-button" style="background-color: silver;" (click)="deleteClicked($event,d.source,d.id)">
               <i class="fa fa-times" aria-hidden="true"></i>
               <span [ngClass]="'unselected'">Delete </span>
           </div>

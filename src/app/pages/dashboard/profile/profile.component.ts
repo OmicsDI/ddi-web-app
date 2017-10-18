@@ -131,4 +131,8 @@ export class DashboardProfileComponent implements OnInit {
   isMy(): boolean{
     return (null==this.username)
   }
+
+  claimDatasetsToOrcid(){
+    alert("claimDatasetsToOrcid");
+  }
 }

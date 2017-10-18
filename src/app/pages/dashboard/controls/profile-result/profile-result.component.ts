@@ -7,6 +7,7 @@ import {DataSetService} from "../../../../services/dataset.service";
 import {Observable} from "rxjs/Observable";
 import {DataSetDetail} from "../../../../model/DataSetDetail";
 import {NotificationsService} from "angular2-notifications/dist";
+import {ThorService} from "../../../../services/thor.service";
 
 @Component({
   selector: 'app-profile-result',
@@ -23,7 +24,8 @@ export class ProfileResultComponent implements OnInit, OnChanges {
               ,private dataSetService: DataSetService
     , private appConfig: AppConfig
     , private router: Router
-    , private notificationService: NotificationsService) { }
+    , private notificationService: NotificationsService
+    , private thorService: ThorService) { }
 
   ngOnInit() {
     //this.profileService.getDataSetDetails(this.profileService.profile);
