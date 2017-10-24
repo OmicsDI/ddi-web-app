@@ -61,6 +61,7 @@ export class SearchService extends BaseService{
 
   public facets: Facet[];
   public allFacets: Facet[] = [];
+  public total: number;
 
   constructor(private http: Http, private appConfig: AppConfig) {
     super()
@@ -92,8 +93,10 @@ export class SearchService extends BaseService{
   public callSearch(page: number = 1 ){
     this.currentQuery = this.fullQuery;
     this.currentPage = page;
+    this.total = 0;
     this.search(this.fullQuery, page).subscribe(searchResult => {
       this.searchResultSource.next(searchResult);
+      this.total = searchResult.count;
       this.facets = (JSON.parse(JSON.stringify(searchResult.facets)));
       if(this.allFacets.length==0){
         this.allFacets=this.facets;

@@ -99,6 +99,9 @@ export class AppConfig{
   getWatchedDatasetsDeleteUrl(userId: string, id: string){
     return `${environment.userServiceUrl}users/${userId}/watches/${id}?r=${Math.random()}`;
   }
+  getUserCountUrl(){
+    return `${environment.userServiceUrl}users/count?r=${Math.random()}`;
+  }
   getConnectUrl(provider:string){
     if(provider=="orcid")
       return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=/authenticate`;

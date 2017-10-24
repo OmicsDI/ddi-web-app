@@ -56,7 +56,10 @@ export class ProfileResultComponent implements OnInit, OnChanges {
       return;
     }
     Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
-      y => {this.dataSets = y}
+      y => {
+        this.dataSets = y;
+        this.thorService.datasets = y;
+      }
     )
   }
 

@@ -7,6 +7,8 @@ import {OrcidRecord} from "../model/Thor/OrcidRecord";
 import {DataSetDetail} from "../model/DataSetDetail";
 import {Observable} from "rxjs/Observable";
 import {NotificationsService} from "angular2-notifications/dist";
+import {SyncResult} from "../model/Thor/SyncResult";
+import {DatabaseListService} from "./database-list.service";
 
 @Injectable()
 export class ThorService {
@@ -15,8 +17,12 @@ export class ThorService {
   public logoutUrl: string;
   public isUserLoggedIn: boolean;
   public orcIdRecord: OrcidRecord;
+  public syncResult: SyncResult;
+  public datasets: DataSetDetail[];
 
-  constructor(private http: Http, private notificationsService: NotificationsService) { }
+  constructor(private http: Http,
+              private notificationsService: NotificationsService,
+              private databaseListService: DatabaseListService) { }
 
   isClaimed(source: string, id: string): boolean{
 
@@ -38,11 +44,16 @@ export class ThorService {
 
     var self = this;
 
+    this.syncResult = new SyncResult();
+
+
     function checkChild() {
       if (child.closed) {
         clearInterval(timer);
         self.getUserInfo().subscribe(x => {
-          self.claim(datasets);
+          self.syncResult.oldOrcid = self.orcIdRecord.works.length;
+          self.syncResult.oldOmicsDI = self.datasets.length;
+          self.claim();
         });
       }
     }
@@ -62,8 +73,8 @@ export class ThorService {
     });
   }
 
-  claim(datasets: DataSetDetail[]){
-    if(!datasets)
+  claim(){
+    if(!this.datasets)
       return;
 
     var claimUrl = "https://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/claimWorkBatch";
@@ -82,7 +93,7 @@ export class ThorService {
     var orcidWorkList = new OrcidWorkList();
     orcidWorkList.orcIdWorkLst = new Array<OrcidWork>();
 
-    for(let dataset of datasets){
+    for(let dataset of this.datasets){
       if(this.orcIdRecord && this.orcIdRecord.works) {
         if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId == dataset.id)) {
           continue;
@@ -96,7 +107,7 @@ export class ThorService {
           publicationYear = (new Date(dataset.publicationDate)).getFullYear().toString();
         }catch(ex){
         }
-        o.publicationYear = publicationYear; //TODO:
+        o.publicationYear = publicationYear;
         o.workExternalIdentifiers = new Array<WorkExternalIdentifier>();
 
         var i = new WorkExternalIdentifier();
@@ -104,7 +115,9 @@ export class ThorService {
         o.workExternalIdentifiers.push(i);
 
         o.shortDescription = dataset.description;
-        o.clientDbName = "OMICSDI"; //TODO
+        var orcidName = this.databaseListService.databases[dataset.source].orcidName;
+        console.log(`orcidName ${orcidName}` );
+        o.clientDbName = orcidName; //TODO
 
         orcidWorkList.orcIdWorkLst.push(o);
       }
@@ -112,13 +125,21 @@ export class ThorService {
 
     this.http.post(claimUrl,JSON.stringify(orcidWorkList),options).subscribe(
         data => {
-          this.notificationsService.success("many datasets claimed");
+          this.syncResult.newOrcid = orcidWorkList.orcIdWorkLst.length;
+          this.syncResult.newOmicsDI = 0;
+
+          this.getUserInfo().subscribe();
+
+          this.notificationsService.success(orcidWorkList.orcIdWorkLst.length + " datasets claimed");
         },
         err => this.notificationsService.error("error in claiming datasets")
     );
   }
 
   forget(){
+
+    this.syncResult = null;
+
     let options = new RequestOptions();
     options.withCredentials = true;
 

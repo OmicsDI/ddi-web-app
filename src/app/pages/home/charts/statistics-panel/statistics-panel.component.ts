@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { StatisticsService } from 'app/services/statistics.service';
+import {ProfileService} from "../../../../services/profile.service";
 
 @Component({
   selector: 'app-statistics-panel',
@@ -12,7 +13,7 @@ export class StatisticsPanelComponent implements OnInit {
   notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   statisticsList: any;
-  constructor(private statisticsService: StatisticsService) { }
+  constructor(private statisticsService: StatisticsService, private profileService: ProfileService) { }
 
   repositories:number;
     datasets:number;
@@ -36,12 +37,18 @@ export class StatisticsPanelComponent implements OnInit {
                 case "Different Diseases" : this.diseases = this.statisticsList[i].value; break;
                 case "Different Tissues" : this.tissues = this.statisticsList[i].value; break;
                 case "Different Species/Organisms" : this.organisms = this.statisticsList[i].value; break;
-                case "Users" : this.users = this.statisticsList[i].value; break;
+                //case "Users" : this.users = this.statisticsList[i].value; break;
             }
           }
 
       })
       .catch(this.handleError);
+
+    this.profileService.getUsersCount().subscribe(
+        data => {
+            this.users = data;
+        }
+    );
   }
  private handleError(error: any) {
 

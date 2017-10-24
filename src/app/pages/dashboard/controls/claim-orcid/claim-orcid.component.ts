@@ -16,6 +16,7 @@ import {DataSetDetail} from "../../../../model/DataSetDetail";
 export class ClaimOrcidComponent implements OnInit {
 
   isUserLoggedIn: Boolean;
+  @Input() datasetNumber: number;
   @Input() datasets: DataSetDetail[];
 
   constructor(private http: Http

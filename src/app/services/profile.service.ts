@@ -254,4 +254,8 @@ export class ProfileService extends BaseService {
       x => "ok"
     ).catch(this.handleError);
   }
+
+  getUsersCount(): Observable<number>{
+    return this.http.get(this.appConfig.getUserCountUrl()).map(x => this.extractData<number>(x));
+  }
 }

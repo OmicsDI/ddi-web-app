@@ -1,4 +1,4 @@
-<div class="row" *ngIf="!loading" style="margin-top:10px;">
+<div class="row" *ngIf="!loading && (this.searchService.total > 0)" style="margin-top:10px;">
   <div class="col-lg-8">
       <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
   </div>
@@ -17,7 +17,7 @@
         <option value="view_count">Views</option>
         <option value="citation_count">Citations</option>
         <option value="reanalysis_count">Reanalysis</option>
-        <!--option value="connections_count">Connections</option-->
+        <option value="search_count">Connections</option>
       </select>
       </span>
       &nbsp;&nbsp;&nbsp;
