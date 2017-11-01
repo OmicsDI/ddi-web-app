@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {AppConfig} from "../../../app.config";
 import {ProfileService} from "../../../services/profile.service";
 import {NotificationsService} from "angular2-notifications/dist";
-import {MdDialog} from "@angular/material";
 import {DialogService} from "../../../services/dialog.service";
 
 @Component({

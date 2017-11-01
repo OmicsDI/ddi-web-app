@@ -56,6 +56,9 @@ export class AppConfig{
   getDatasetMostAccessedUrl():string{
     return `${environment.webServiceUrl}dataset/mostAccessed?size=20&r=${Math.random()}`;
   }
+  getDatasetByUrl():string{
+    return `${environment.webServiceUrl}dataset/getDatasetByUrl?r=${Math.random()}`;
+  }
   getAutocompleteUrl(keyword:string):string{
     return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10&r=${Math.random()}`;
   }

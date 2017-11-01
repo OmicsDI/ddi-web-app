@@ -9,6 +9,9 @@ import {Observable} from "rxjs/Observable";
 import {NotificationsService} from "angular2-notifications/dist";
 import {SyncResult} from "../model/Thor/SyncResult";
 import {DatabaseListService} from "./database-list.service";
+import {DataSetService} from "./dataset.service";
+import {DataSetShort} from "../model/DataSetShort";
+import {ProfileService} from "./profile.service";
 
 @Injectable()
 export class ThorService {
@@ -22,7 +25,9 @@ export class ThorService {
 
   constructor(private http: Http,
               private notificationsService: NotificationsService,
-              private databaseListService: DatabaseListService) { }
+              private databaseListService: DatabaseListService,
+              private datasetService: DataSetService,
+              private profileService: ProfileService) { }
 
   isClaimed(source: string, id: string): boolean{
 
@@ -51,8 +56,8 @@ export class ThorService {
       if (child.closed) {
         clearInterval(timer);
         self.getUserInfo().subscribe(x => {
-          self.syncResult.oldOrcid = self.orcIdRecord.works.length;
-          self.syncResult.oldOmicsDI = self.datasets.length;
+          self.syncResult.oldOrcid = self.orcIdRecord.works? self.orcIdRecord.works.length : 0;
+          self.syncResult.oldOmicsDI = self.datasets? self.datasets.length : 0;
           self.claim();
         });
       }
@@ -74,25 +79,16 @@ export class ThorService {
   }
 
   claim(){
-    if(!this.datasets)
-      return;
-
     var claimUrl = "https://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/claimWorkBatch";
-
-    //let options = new RequestOptions();
-
-
     let headers = new Headers({ 'Content-Type': 'application/json' });
-
-    //options.headers = headers;
-    //options.headers.append("Content-Type","application/json");
     let options = new RequestOptions({ headers: headers });
-
-    options.withCredentials = true;
+    options.withCredentials = true; //session id must be passed to europepmc
 
     var orcidWorkList = new OrcidWorkList();
     orcidWorkList.orcIdWorkLst = new Array<OrcidWork>();
 
+    //omicsdi to orcid
+    if(this.datasets)
     for(let dataset of this.datasets){
       if(this.orcIdRecord && this.orcIdRecord.works) {
         if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId == dataset.id)) {
@@ -123,17 +119,39 @@ export class ThorService {
       }
     }
 
-    this.http.post(claimUrl,JSON.stringify(orcidWorkList),options).subscribe(
-        data => {
-          this.syncResult.newOrcid = orcidWorkList.orcIdWorkLst.length;
-          this.syncResult.newOmicsDI = 0;
+    if(orcidWorkList.orcIdWorkLst.length>0) {
+      this.http.post(claimUrl, JSON.stringify(orcidWorkList), options).subscribe(
+          data => {
+            this.syncResult.newOrcid = orcidWorkList.orcIdWorkLst.length;
+            this.syncResult.newOmicsDI = 0;
 
-          this.getUserInfo().subscribe();
+            this.getUserInfo().subscribe();
 
-          this.notificationsService.success(orcidWorkList.orcIdWorkLst.length + " datasets claimed");
-        },
-        err => this.notificationsService.error("error in claiming datasets")
-    );
+            this.notificationsService.success(orcidWorkList.orcIdWorkLst.length + " datasets claimed in orcid");
+          },
+          err => this.notificationsService.error("error in claiming datasets")
+      );
+    }
+
+    //orcid to omicsdi
+    for(let orcidWork of this.orcIdRecord.works){
+      if(orcidWork.url){
+        this.datasetService.getDatasetByUrl(orcidWork.url).subscribe(
+            x => {if(x){
+              if(!this.datasets.find(y => x.id == y.id && x.source == y.source)){
+
+                var d = new DataSetShort();
+                d.source = x.source;
+                d.id = x.id;
+                d.name = x.title;
+                d.omics_type = x.omicsType;
+
+                this.profileService.claimDataset(this.profileService.userId, d);
+              }
+            }}
+        )
+      }
+    }
   }
 
   forget(){
@@ -148,7 +166,7 @@ export class ThorService {
           this.notificationsService.success("ORCID credentials removed");
           this.getUserInfo().subscribe();
         },
-        err => alert(err));
+        err => this.notificationsService.error(err.toString()));
   }
 
 }

@@ -11,7 +11,7 @@ import {Profile} from "../../../model/Profile";
 import {ProfileService} from "../../../services/profile.service";
 import {SelectedService} from "../../../services/selected.service";
 import {CitationDialogComponent} from "../../dataset/citation-dialog/citation-dialog.component";
-import {MdDialog, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material";
 import {DataSetService} from "../../../services/dataset.service";
 import {DataSetShort} from "../../../model/DataSetShort";
 import {Router} from "@angular/router";
@@ -39,7 +39,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
     , private profileService: ProfileService
     , private selectedService: SelectedService
     , private dataSetService: DataSetService
-    , private dialog: MdDialog
+    , private dialog: MatDialog
     , private router: Router
     , private notificationService: NotificationsService
     , private databaseListServce: DatabaseListService) {
@@ -108,7 +108,7 @@ export class SearchResultComponent implements OnInit, OnDestroy ,AfterViewChecke
   }
 
   citation(source,id) {
-      let dialogRef: MdDialogRef<CitationDialogComponent>;
+      let dialogRef: MatDialogRef<CitationDialogComponent>;
 
       this.dataSetService.getDataSetDetail_private(id, source).subscribe(
           x => {

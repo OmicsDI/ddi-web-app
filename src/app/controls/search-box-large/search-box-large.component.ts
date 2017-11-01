@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AutocompleteNComponent} from "../autocomplete-n/autocomplete-n.component";
 import {Router} from "@angular/router";
 import {SearchService} from "../../services/search.service";
-import {MdMenuTrigger} from "@angular/material";
+import {MatMenuTrigger} from "@angular/material";
 
 @Component({
   selector: 'search-box-large',
@@ -14,7 +14,7 @@ export class SearchBoxLargeComponent implements OnInit {
   constructor(private searchService: SearchService, private router: Router) { }
 
   @ViewChild(AutocompleteNComponent) autocompleteComponent:AutocompleteNComponent;
-  @ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   ngOnInit() {
   }

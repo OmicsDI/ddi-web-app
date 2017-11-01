@@ -74,4 +74,9 @@ export class DataSetService extends BaseService{
     return month + " " + day_int+" ";
   }
 
+  public getDatasetByUrl(url: string): Observable<DataSet>{
+    return this.http.post(this.appConfig.getDatasetByUrl(), url)
+        .map(x => this.extractData<DataSet>(x));
+  }
+
 }

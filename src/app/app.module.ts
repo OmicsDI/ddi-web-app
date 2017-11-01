@@ -11,7 +11,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { DatabaseComponent } from './pages/database/database.component';
 import { AboutComponent } from './pages/about/about.component';
 import {routing} from "./app.routes";
-import {MaterialModule} from "@angular/material";
 import {ProfileService} from "./services/profile.service";
 import { AUTH_PROVIDERS, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
@@ -50,6 +49,7 @@ import { StatisticsPanelComponent } from './pages/home/charts/statistics-panel/s
 import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDialogModule, MatMenuModule} from "@angular/material";
 
 /*import { DisqusModule } from 'angular2-disqus';*/
 import {DisqusModule} from "ng2-awesome-disqus";
@@ -226,7 +226,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule,
+    MatDialogModule,
+    MatMenuModule,
     routing,
     FormsModule,
     ReactiveFormsModule,
@@ -266,7 +267,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , SelectedService
     , DialogService
     , ScoreService
-    , ThorService],
+    , ThorService
+    , MatDialogModule
+    , MatMenuModule],
   entryComponents: [
     CitationDialogComponent,
     ConfirmDialogComponent

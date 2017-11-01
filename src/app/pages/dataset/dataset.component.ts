@@ -15,7 +15,7 @@ import { DisqusModule } from 'angular2-disqus';
 import {AppConfig} from "../../app.config";
 import {ProfileService} from "../../services/profile.service";
 import {DisqusComponent} from "ng2-awesome-disqus/disqus.component";
-import {MdDialog, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material";
 import {CitationDialogComponent} from "./citation-dialog/citation-dialog.component";
 import {SimilarDataset} from "../../model/SimilarDataset";
 import {DatabaseListService} from "../../services/database-list.service";
@@ -56,7 +56,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
       ,private enrichmentService: EnrichmentService
       ,private appConfig: AppConfig
       ,private profileService: ProfileService
-      ,private dialog: MdDialog
+      ,private dialog: MatDialog
       ,private databaseListService: DatabaseListService) {
     console.info("DatasetComponent constructor");
 
@@ -184,7 +184,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
 
   citation(){
-    let dialogRef: MdDialogRef<CitationDialogComponent>;
+    let dialogRef: MatDialogRef<CitationDialogComponent>;
 
     dialogRef = this.dialog.open(CitationDialogComponent);
     dialogRef.componentInstance.title = "Dataset citation";

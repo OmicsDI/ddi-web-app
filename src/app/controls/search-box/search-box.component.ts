@@ -3,7 +3,7 @@ import {AutocompleteNComponent} from "../autocomplete-n/autocomplete-n.component
 import {SearchService} from "../../services/search.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SearchQuery} from "../../model/SearchQuery";
-import {MdMenuTrigger} from "@angular/material";
+import {MatMenuTrigger} from "@angular/material";
 
 @Component({
   selector: '[AppSearchBox]',
@@ -13,7 +13,7 @@ import {MdMenuTrigger} from "@angular/material";
 export class SearchBoxComponent implements OnInit {
 
   @ViewChild(AutocompleteNComponent) autocompleteComponent:AutocompleteNComponent;
-  @ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   constructor(private searchService: SearchService, private router: Router, private route: ActivatedRoute) {
   }

@@ -8,7 +8,7 @@ import {DataSetShort} from "../../model/DataSetShort";
 import {WatchedDataset} from "../../model/WatchedDataset";
 import {NotificationsService} from "angular2-notifications/dist";
 import {Router} from "@angular/router";
-import {MdDialog, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material";
 import {CitationDialogComponent} from "../../pages/dataset/citation-dialog/citation-dialog.component";
 import {DataSetService} from "../../services/dataset.service";
 
@@ -33,7 +33,7 @@ export class DatasetWidgetComponent implements OnInit {
             , private router: Router
             , private notificationService: NotificationsService
             , private dataSetService: DataSetService
-            , private dialog: MdDialog) { }
+            , private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -72,7 +72,7 @@ export class DatasetWidgetComponent implements OnInit {
   }*/
 
   citation(source,id) {
-    let dialogRef: MdDialogRef<CitationDialogComponent>;
+    let dialogRef: MatDialogRef<CitationDialogComponent>;
 
     this.dataSetService.getDataSetDetail_private(id, source).subscribe(
         x => {

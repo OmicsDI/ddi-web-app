@@ -19,19 +19,19 @@
         <li><a [routerLink]="['/database']">Database</a></li>
 
         <li dropdown class="dropdown">
-          <a [mdMenuTriggerFor]="helpMenu" ><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
+          <a [matMenuTriggerFor]="helpMenu" ><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
         </li>
-        <md-menu #helpMenu="mdMenu" [overlapTrigger]="false">
-          <button (click)="gotoHelp()" md-menu-item>
+        <mat-menu #helpMenu="matMenu" [overlapTrigger]="false">
+          <button (click)="gotoHelp()" mat-menu-item>
             Omics Help
           </button>
-          <button md-menu-item [routerLink]="['about']">
+          <button mat-menu-item [routerLink]="['about']">
             About Omicsdi
           </button>
-          <button *ngIf="auth.loggedIn()" md-menu-item [routerLink]="['dashboard','feedback']">
+          <button *ngIf="auth.loggedIn()" mat-menu-item [routerLink]="['dashboard','feedback']">
             Feedback
           </button>
-        </md-menu>
+        </mat-menu>
 
         <li AppLoginLauncher>
         </li>

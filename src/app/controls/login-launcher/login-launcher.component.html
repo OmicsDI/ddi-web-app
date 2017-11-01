@@ -1,24 +1,24 @@
-<a [mdMenuTriggerFor]="menu" *ngIf="!auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Menu">Login</a>
+<a [matMenuTriggerFor]="menu" *ngIf="!auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Menu">Login</a>
 
-<md-menu #menu="mdMenu" [overlapTrigger]="false" style="width:400px;">
+<mat-menu #menu="matMenu" [overlapTrigger]="false" style="width:400px;">
     <app-login-dialog></app-login-dialog>
-</md-menu>
+</mat-menu>
 
 
-<a [mdMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Dialog">{{name}} <b class="caret"></b></a>
+<a [matMenuTriggerFor]="loggedInMenu" *ngIf="auth.loggedIn()" data-icon="\" class="icon icon-generic" data-icon="M" alt="Open Login Dialog">{{name}} <b class="caret"></b></a>
 
 
-  <md-menu #loggedInMenu="mdMenu" [overlapTrigger]="false">
-    <button *ngIf="this.isPublic" [routerLink]="['/profile',this.userId]" md-menu-item>
+  <mat-menu #loggedInMenu="matMenu" [overlapTrigger]="false">
+    <button *ngIf="this.isPublic" [routerLink]="['/profile',this.userId]" mat-menu-item>
       Public profile
     </button>
-    <button md-menu-item [routerLink]="['/dashboard']">
+    <button mat-menu-item [routerLink]="['/dashboard']">
       Dashboard
     </button>
-    <button md-menu-item (click)="LogOut()">
+    <button mat-menu-item (click)="LogOut()">
       Log Out
     </button>
-  </md-menu>
+  </mat-menu>
 
 
 
