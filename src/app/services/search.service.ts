@@ -106,7 +106,7 @@ export class SearchService extends BaseService{
   }
 
   private search(searchQuery: string, page: number): Observable<SearchResult> {
-    return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.selectedPageSize,this.sortBy,this.sortOrder,(page-1)*15))
+    return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.selectedPageSize,this.sortBy,this.sortOrder,(page-1)*this.selectedPageSize))
       .map(x => this.extractData<SearchResult>(x));
   }
 
