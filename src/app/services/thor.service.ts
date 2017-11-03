@@ -12,6 +12,7 @@ import {DatabaseListService} from "./database-list.service";
 import {DataSetService} from "./dataset.service";
 import {DataSetShort} from "../model/DataSetShort";
 import {ProfileService} from "./profile.service";
+import {AppConfig} from "../app.config";
 
 @Injectable()
 export class ThorService {
@@ -27,7 +28,8 @@ export class ThorService {
               private notificationsService: NotificationsService,
               private databaseListService: DatabaseListService,
               private datasetService: DataSetService,
-              private profileService: ProfileService) { }
+              private profileService: ProfileService,
+              private appConfig: AppConfig) { }
 
   isClaimed(source: string, id: string): boolean{
 
@@ -42,7 +44,8 @@ export class ThorService {
   }
 
   openLoginScreen(datasets: DataSetDetail[]){
-    var url = "http://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/loginDEFAULT?clientAddress=https://www.ebi.ac.uk";
+
+    var url = this.appConfig.getThorUrl()+"loginDEFAULT?clientAddress=https://www.ebi.ac.uk";
 
     var child = window.open(url,'','toolbar=0,status=0,width=626,height=436');
     var timer = setInterval(checkChild, 500);
@@ -65,7 +68,7 @@ export class ThorService {
   }
 
   getUserInfo(): Observable<any>{
-    var claimUrl = "https://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/claiming?clientAddress=https://www.ebi.ac.uk&ordIdWorkJson={}";
+    var claimUrl = this.appConfig.getThorUrl()+"claiming?clientAddress=https://www.ebi.ac.uk&ordIdWorkJson={}";
 
     let options = new RequestOptions();
     options.withCredentials = true;
@@ -79,7 +82,7 @@ export class ThorService {
   }
 
   claim(){
-    var claimUrl = "https://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/claimWorkBatch";
+    var claimUrl = this.appConfig.getThorUrl()+"claimWorkBatch";
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     options.withCredentials = true; //session id must be passed to europepmc

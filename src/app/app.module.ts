@@ -49,7 +49,7 @@ import { StatisticsPanelComponent } from './pages/home/charts/statistics-panel/s
 import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule, MatMenuModule} from "@angular/material";
+import {MatButtonModule, MatDialogModule, MatMenuModule} from "@angular/material";
 
 /*import { DisqusModule } from 'angular2-disqus';*/
 import {DisqusModule} from "ng2-awesome-disqus";
@@ -137,6 +137,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     noJwtError: true
   }), http, options);
 }
+
 
 @NgModule({
   declarations: [
@@ -228,6 +229,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HttpModule,
     MatDialogModule,
     MatMenuModule,
+    MatButtonModule,
     routing,
     FormsModule,
     ReactiveFormsModule,
@@ -247,9 +249,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     RouterModule
   ],
   providers: [ProfileService
-    ,{provide: AuthHttp,
-     useFactory: authHttpServiceFactory,
-     deps: [Http, RequestOptions]}
+    , {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    }
     , AuthService
     , AuthGuardService
     , SearchService
@@ -269,7 +273,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , ScoreService
     , ThorService
     , MatDialogModule
-    , MatMenuModule],
+    , MatMenuModule
+    , MatButtonModule],
   entryComponents: [
     CitationDialogComponent,
     ConfirmDialogComponent

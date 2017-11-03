@@ -159,8 +159,12 @@
     }
 
     console.log("relative path: "+path);
+    switch(path){
+        case "dashboard/selected": console.log("no seo");
+        default: XhrGet('ws/seo/' + path);
+    }
 
-    XhrGet('ws/seo/' + path);
+
   })(document);
 </script>
 

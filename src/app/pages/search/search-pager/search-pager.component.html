@@ -1,4 +1,6 @@
-<div class="row" *ngIf="!loading && (this.searchService.total > 0)" style="margin-top:10px;">
+<div style="min-height: 60px;">
+
+<div class="row" *ngIf="!loading && (this.searchService.total > 0)"  style="margin-top:10px;">
   <div class="col-lg-8">
       <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
   </div>
@@ -31,7 +33,4 @@
   </div>
 </div>
 
-<!---  -->
-
-
-
+</div>

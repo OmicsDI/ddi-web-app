@@ -258,4 +258,22 @@ export class ProfileService extends BaseService {
   getUsersCount(): Observable<number>{
     return this.http.get(this.appConfig.getUserCountUrl()).map(x => this.extractData<number>(x));
   }
+
+  setSelected(userId: string, datasets: DataSetShort[]): Observable<String>{
+    return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets)).map(
+        x => "ok"
+    ).catch(this.handleError);
+  }
+
+  getSelected(userId: string): Observable<DataSetShort[]>{
+    return this.http.get(this.appConfig.getSelectedDatasetsUrl(userId))//
+        .map(x => this.extractData<DataSetShort[]>(x))
+        .catch(this.handleError);
+  }
 }
+
+
+
+
+
+

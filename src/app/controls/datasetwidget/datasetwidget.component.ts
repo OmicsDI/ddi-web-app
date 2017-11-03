@@ -127,6 +127,9 @@ export class DatasetWidgetComponent implements OnInit {
     if(!this.allowSelect)
       return;
 
+    if(!this.profileService.userId)
+      return;
+
     this.selectedService.toggle(source,id);
     console.log(`toggle ${source} ${id}`);
   }

@@ -144,6 +144,12 @@ export class AppConfig{
   getScoreConnectionsUrl(acc: string){
     return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
   }
+  getThorUrl(){
+    return `${environment.thorUrl}`;
+  }
+  getSelectedDatasetsUrl(userId: string){
+    return `${environment.userServiceUrl}users/${userId}/selected?r=${Math.random()}`;
+  }
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";
