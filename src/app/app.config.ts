@@ -156,69 +156,6 @@ export class AppConfig{
   public orcidScope = "/authenticate";
   public elixirScope = "openid,profile,email";
 
-  public repositories = {
-  "pride": "PRIDE",
-  "PRIDE": "PRIDE",
-  "peptideatlas": "PeptideAtlas",
-  "peptide_atlas": "PeptideAtlas",
-  "PeptideAtlas": "PeptideAtlas",
-  "massive": "MassIVE",
-  "MassIVE": "MassIVE",
-  "Massive": "MassIVE",
-  "metabolights": "MetaboLights",
-  "metabolights_dataset": "MetaboLights",
-  "MetaboLights": "MetaboLights",
-  "metabolome_workbench": "MetabolomicsWorkbench",
-  "metabolomics_workbench": "MetabolomicsWorkbench",
-  "Metabolomics Workbench": "MetabolomicsWorkbench",
-  "MetabolomicsWorkbench": "MetabolomicsWorkbench",
-  "ega": "EGA",
-  "EGA": "EGA",
-  "GPMDB": "GPMDB",
-  "gpmdb": "GPMDB",
-  "GNPS": "GNPS",
-  "metabolome_express": "MetabolomeExpress MetaPhenDB",
-  "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
-  "MetabolomeExpress": "MetabolomeExpress MetaPhenDB",
-  "ArrayExpress": "ArrayExpress",
-  "arrayexpress": "ArrayExpress",
-  "arrayexpress-repository": "ArrayExpress",
-  "expression-atlas": "ExpressionAtlas",
-  "ExpressionAtlas": "ExpressionAtlas",
-  "atlas-experiments": "ExpressionAtlas",
-  "Expression Atlas Experiments": "ExpressionAtlas",
-  "BioModels Database":"BioModels Database",
-  "LINCS":"LINCS",
-  "JPOST Repository":"JPOST Repository",
-  "PAXDB":"PAXDB",
-  "Biomodels":"BioModels Database",
-  "jPOST":"JPOST Repository",
-  "Paxdb":"PAXDB",
-  "biomodels":"BioModels Database",
-  "lincs":"LINCS",
-  "jpost":"JPOST Repository",
-  "paxdb":"PAXDB",
-  "Pride": "PRIDE"
-  }
-
-  public database_urls = {
-  "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
-  "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-  "MetabolomicsWorkbench": "http://www.metabolomicsworkbench.org/",
-  "PeptideAtlas": "http://www.peptideatlas.org/",
-  "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-  "GPMDB": "http://gpmdb.thegpm.org/",
-  "GNPS": "http://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp",
-  "EGA": "https://www.ebi.ac.uk/ega/",
-  "MetabolomeExpress": "https://www.metabolome-express.org/",
-  "ArrayExpress": "https://www.ebi.ac.uk/arrayexpress/",
-  "ExpressionAtlas": "http://www.ebi.ac.uk/gxa/home",
-  "BioModels Database":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=BioModels Database&query=domain_source:BioModels Database",
-  "LINCS":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=lincs&query=domain_source:lincs",
-  "PAXDB":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=PAXDB&query=domain_source:PAXDB",
-  "JPOST Repository" :"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=JPOST Repository&query=domain_source:jpost"
-  }
-
   public isEmpty(items: INamed[]): boolean{
     if(!items)
       return true;

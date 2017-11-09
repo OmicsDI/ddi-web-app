@@ -111,7 +111,7 @@
           <p class="align-justify">
             <b>PROVIDER:</b>
             <a [href]="d.full_dataset_link">{{d.id}}</a>  |
-            <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> {{d.source}} </a>
+            <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span> </a>
             <span>| {{d.publicationDate}} </span>
           </p>
           <!-- dataset_protocol_bottom-->

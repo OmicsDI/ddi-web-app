@@ -71,8 +71,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
         this.acc = result.id;
         this.repository = result.source;
         //this.page_identifier = '${repository}/${source}';
-        this.repositoryName = this.appConfig.repositories[result.source];
-        this.databaseUrl = this.appConfig.database_urls[this.appConfig.repositories[result.source]];
+        this.repositoryName = this.getDatabaseTitle(result.source);
+        this.databaseUrl = this.getDatabaseUrl(result.source);
+
         console.info("dataSetDetailResult:" + result);
         console.info("publicationIds:" + result.publicationIds);
       });
@@ -244,6 +245,26 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
   getSourceByDatabaseName(database: string ):string{
     return this.databaseListService.getSourceByDatabaseName(database);
+  }
+
+  getDatabaseUrl(source){
+    var db =  this.databaseListService.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.sourceUrl;
+    }
+  }
+
+  getDatabaseTitle(source){
+    var db =  this.databaseListService.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.databaseName;
+    }
   }
 
 }
