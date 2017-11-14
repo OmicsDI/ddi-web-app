@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  webServiceUrl : 'http://www.omicsdi.org/ws/',
-  userServiceUrl : 'http://www.omicsdi.org/profilews/api/',
+  webServiceUrl : 'https://www.omicsdi.org/ws/',
+  userServiceUrl : 'https://www.omicsdi.org/profilews/api/',
   userServiceCookiePath: "/profilews/",
   thorUrl: "https://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/"
 };
