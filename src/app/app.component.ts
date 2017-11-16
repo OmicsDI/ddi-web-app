@@ -22,6 +22,10 @@ export class AppComponent {
     , private router: Router
     , private selectedService: SelectedService){
 
+      if (window.location.href.startsWith("http://www.omicsdi.org")) {
+        window.location.href = window.location.href.replace("http:", "https:");
+      }
+
     this.title =this.getTitle();
   }
 
