@@ -25,6 +25,7 @@ import {DashboardUpdateComponent} from "./pages/dashboard/update/update.componen
 import {DashboardClaimedComponent} from "./pages/dashboard/claimed/claimed.component";
 import {DashboardPictureComponent} from "./pages/dashboard/picture/picture.component";
 import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
+import {WelcomeComponent} from "./pages/welcome/welcome.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -53,7 +54,8 @@ export const routes: Routes = [
   { path: 'dashboard/update', component: DashboardUpdateComponent, canActivate: [AuthGuardService] },
   { path: 'dashboard/claimed', component: DashboardClaimedComponent , canActivate: [AuthGuardService]},
   { path: 'dashboard/picture', component: DashboardPictureComponent , canActivate: [AuthGuardService]},
-  { path: 'dashboard/settings', component: SettingsComponent , canActivate: [AuthGuardService]}
+  { path: 'dashboard/settings', component: SettingsComponent , canActivate: [AuthGuardService]},
+  { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];
 

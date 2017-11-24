@@ -29,6 +29,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     //this.profileService.getDataSetDetails(this.profileService.profile);
+    this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
   }
 
   dataSets: DataSetDetail[];

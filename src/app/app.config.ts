@@ -150,6 +150,10 @@ export class AppConfig{
   getSelectedDatasetsUrl(userId: string){
     return `${environment.userServiceUrl}users/${userId}/selected?r=${Math.random()}`;
   }
+  getInviteUrl(id: string){
+    return `${environment.userServiceUrl}invites/${id}?r=${Math.random()}`;
+  }
+
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";

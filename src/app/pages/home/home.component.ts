@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 import { HotwordsComponent } from './charts/hotwords/hotwords.component';
 import { TissuesOrganismsComponent } from './charts/tissues-organisms/tissues-organisms.component';
 import { ReposOmicsComponent } from './charts/repos-omics/repos-omics.component';
 import {SearchService} from "../../services/search.service";
+import {MatDialog, MatDialogRef} from "@angular/material";
+import {InviteComponent} from "../dashboard/controls/invite/invite.component";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +25,10 @@ export class HomeComponent implements OnInit {
     statistics: false
   }
 
-  constructor(private loadingBarService: SlimLoadingBarService, private searchService: SearchService) {
+  constructor(private loadingBarService: SlimLoadingBarService
+        , private searchService: SearchService
+      ,private dialog: MatDialog
+    ) {
     this.loadingBarService.start();
   }
 
@@ -43,6 +49,14 @@ export class HomeComponent implements OnInit {
 
   submitTestQuery(){
     alert("submitted");
+  }
+
+  private showWelcomeDialog(){
+    let dialogRef: MatDialogRef<InviteComponent>;
+
+    dialogRef = this.dialog.open(InviteComponent, { data: { inviteId: '000deace5d6a'
+      , userName: "Hello World"
+      , email : "hello@world.com"  } });
   }
 
 }

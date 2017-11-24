@@ -9,6 +9,8 @@ import {DataSetDetail} from "../../../model/DataSetDetail";
 import {AppConfig} from "../../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from "@angular/router";
+import {MatDialog, MatDialogRef} from "@angular/material";
+import {InviteComponent} from "../controls/invite/invite.component";
 
 @Component({
   selector: 'app-profile',
@@ -28,14 +30,14 @@ export class DashboardProfileComponent implements OnInit {
   userId: string = "xxx";
   username: string = null;
 
-
-
   constructor(private profileService: ProfileService
       ,private dataSetService: DataSetService
       ,private formBuilder: FormBuilder
       ,private appConfig: AppConfig
       ,private router: Router
-      ,private route: ActivatedRoute) {
+      ,private route: ActivatedRoute
+      ,private dialog: MatDialog) {
+
     this.form = formBuilder.group({
       name: ['', [
         Validators.required,
@@ -52,6 +54,8 @@ export class DashboardProfileComponent implements OnInit {
         zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
       })
     });
+
+    console.log("DashboardProfileComponent:ctor");
   }
 
   ngOnInit() {
@@ -59,6 +63,23 @@ export class DashboardProfileComponent implements OnInit {
       this.username = params['username'];
       this.getProfile(this.username);
     })
+  }
+
+
+  private showWelcomeDialog(){
+    let dialogRef: MatDialogRef<InviteComponent>;
+
+    var inviteId = this.route.snapshot.queryParams["state"];
+
+    if(inviteId) {
+
+      console.log("open dialog with inviteId :" + inviteId);
+
+      if(inviteId.length==12) {
+        dialogRef = this.dialog.open(InviteComponent, {data: {inviteId: inviteId}});
+      }
+    }
+
   }
 
   getProfile(username: string  = null){
@@ -89,11 +110,9 @@ export class DashboardProfileComponent implements OnInit {
 
                 this.userId =  profile.userId;
 
-                //this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
-                //this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-                //  this.profileImageUrl = this.getProfileImageUrl();
-                //};
-                //this.profileImageUrl = this.getProfileImageUrl();
+                if(window.location.search) {
+                  this.showWelcomeDialog();
+                }
               }
           );
     }

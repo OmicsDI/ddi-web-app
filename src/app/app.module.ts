@@ -49,7 +49,7 @@ import { StatisticsPanelComponent } from './pages/home/charts/statistics-panel/s
 import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatDialogModule, MatMenuModule} from "@angular/material";
+import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from "@angular/material";
 
 /*import { DisqusModule } from 'angular2-disqus';*/
 import {DisqusModule} from "ng2-awesome-disqus";
@@ -120,6 +120,9 @@ import { DatasetwidgetSmallComponent } from './controls/datasetwidget-small/data
 import {ScoreService} from "./services/score.service";
 import { ClaimOrcidComponent } from './pages/dashboard/controls/claim-orcid/claim-orcid.component';
 import {ThorService} from "./services/thor.service";
+import { InviteComponent } from './pages/dashboard/controls/invite/invite.component';
+import {InviteService} from "./services/invite.service";
+import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 
 export function getParameterByName(name): string {
@@ -221,7 +224,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DatasetWidgetComponent,
     ConfirmDialogComponent,
     DatasetwidgetSmallComponent,
-    ClaimOrcidComponent
+    ClaimOrcidComponent,
+    InviteComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
@@ -230,6 +235,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MatDialogModule,
     MatMenuModule,
     MatButtonModule,
+    MatCheckboxModule,
     routing,
     FormsModule,
     ReactiveFormsModule,
@@ -274,10 +280,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , ThorService
     , MatDialogModule
     , MatMenuModule
-    , MatButtonModule],
+    , MatButtonModule
+    , InviteService],
   entryComponents: [
     CitationDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    InviteComponent
   ],
   bootstrap: [AppComponent]
 })
