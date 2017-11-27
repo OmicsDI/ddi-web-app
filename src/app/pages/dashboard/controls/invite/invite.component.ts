@@ -42,12 +42,7 @@ export class InviteComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
-
     this.inviteService.getInvite(this.data.inviteId).subscribe( x => {
-      //this.userName = x.userName;
-      //this.email = x.email;
       if(x) {
         Observable.forkJoin(x.dataSets.map(x => {
           return this.dataSetService.getDataSetDetail_private(x.id, x.source)
@@ -111,17 +106,21 @@ export class InviteComponent implements OnInit {
   }
 
   ok(){
-
-
-    this.profileService.profile.dataSets = this.dataSetDetails.map( x => {
-      var y = new DataSetShort();
-      y.source = x.source;
-      y.id = x.id;
-      y.claimed = (new Date()).toDateString();
-      if (!x["unchecked"]) {
-        return y;
+    if(this.dataSetDetails) {
+      for(var ds of this.dataSetDetails.map(x => {
+        var y = new DataSetShort();
+        y.source = x.source;
+        y.id = x.id;
+        y.claimed = (new Date()).toDateString();
+        if (!x["unchecked"]) {
+          return y;
+        }
+      }).filter(x => x)){
+        if(!this.profileService.profile.dataSets.find(x => (x.source == ds.source && x.id == ds.id))){
+          this.profileService.profile.dataSets.push(ds);
+        }
       }
-    }).filter(x => x);
+    }
 
     this.profileService.updateUser().subscribe(x => {
       console.log("user updated" + x);

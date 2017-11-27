@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AppConfig} from "../../app.config";
+import {InviteService} from "../../services/invite.service";
 
 @Component({
   selector: 'app-welcome',
@@ -11,11 +12,21 @@ export class WelcomeComponent implements OnInit {
 
   inviteId : string;
 
-  constructor(private route: ActivatedRoute, private appConfig: AppConfig) { }
+  constructor(private route: ActivatedRoute
+      , private appConfig: AppConfig
+      , private inviteService: InviteService
+      , private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.inviteId = params['inviteId'];
+      this.inviteService.getInvite(this.inviteId).subscribe(
+          x => {
+            if(!x){
+              this.router.navigate(["/notfound"]);
+            }
+          }
+      )
     })
   }
 
