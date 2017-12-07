@@ -154,7 +154,27 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     var str = this.enrichmentInfo.originalAttributes.name;
     this.ontology_highlighted = true;
+    this.remove_tags();
   }
+
+    remove_tags() {
+        let count = 0;
+        for (const section of this.abstract_sections) {
+            section.text = section.text.replace(/<\/?[ib]*(br|span|h|u|strike|pre|code|tt|blockquote|small|center|em|strong)*\/?>/g,"");
+               section.text = section.text.replace(/<[\s\S]*>/g,"");
+                   if(section.text.indexOf("<") != -1 && section.text.indexOf(">") == -1){
+                        console.log("+1");
+                            section.text = section.text.replace(/<[\s\S]*/g,"");
+                                count = count + 1;
+                        }else if(section.text.indexOf(">") != -1 && section.text.indexOf("<") == -1){
+                                console.log("-1");
+                                section.text = section.text.replace(/[\s\S]*>/g,"");
+                                count = count - 1;
+                            }else  if(section.text.indexOf(">") == -1 && section.text.indexOf("<") == -1 && count > 0){
+                                section.text = section.text.replace(/[\s\S]*/g,"");
+                            }
+                    };
+            }
 
   enrich_click(){
     if(this.ontology_highlighted){
