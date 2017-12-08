@@ -2,41 +2,51 @@
     <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="navbar-ex1-collapse">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex1-collapse1">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
       </div>
-      <ul class="nav navbar-left top-nav col-lg-7 col-md-12 col-sm-12 hidden-xs" >
-        <li>
-        <a [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
+      <div class="nav navbar-left top-nav col-lg-7 col-md-12 col-sm-12" >
+      <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 collapse navbar-collapse" id ="navbar-ex1-collapse1">
+        <li class="nav-item">
+        <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand" id="item7"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
         </li>
-        <li><a [routerLink]="['/home']">Home</a></li>
-        <li><a [routerLink]="['/search']">Browse</a></li>
-        <li><a [routerLink]="['/api']">API</a></li>
-        <li><a [routerLink]="['/database']">Database</a></li>
+        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/home']" id="item1">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/search']" id="item2">Browse</a></li>
+        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/api']" id="item3">API</a></li>
+        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/database']" id="item4">Database</a></li>
 
-        <li dropdown class="dropdown">
-          <a [matMenuTriggerFor]="helpMenu" ><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
-        </li>
-        <mat-menu #helpMenu="matMenu" [overlapTrigger]="false">
-          <button (click)="gotoHelp()" mat-menu-item>
+        <li dropdown class="nav-item dropdown">
+          <a class="nav-link text-center dropdown-toggle" id="navbardrop" data-toggle="dropdown" id="item5"><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
+
+        <div class="dropdown-menu" style="background-color: #ffffff">
+          <ul nav navbar-nav>
+            <li class="nav-item" id="li1">
+          <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
             Omics Help
-          </button>
-          <button mat-menu-item [routerLink]="['about']">
+          </div>
+            </li>
+            <li class="nav-item" id="li2">
+          <div class="text-center" mat-menu-item [routerLink]="['about']" id="item-div2">
             About Omicsdi
-          </button>
-          <button *ngIf="auth.loggedIn()" mat-menu-item [routerLink]="['dashboard','feedback']">
+          </div>
+            </li>
+            <li class="nav-item" id="li3">
+          <div class="text-center" *ngIf="auth.loggedIn()" mat-menu-item [routerLink]="['dashboard','feedback']" id="item-div3">
             Feedback
-          </button>
-        </mat-menu>
-
-        <li AppLoginLauncher>
+          </div>
+            </li>
+            </ul>
+        </div>
         </li>
-        <li *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a routerLink="/dashboard/selected"><i class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
+        <li AppLoginLauncher class="nav-item dropdown text-center" id="item6">
+        </li>
+        <li class="nav-item" *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a routerLink="/dashboard/selected"><i class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
       </ul>
+      </div>
       <!-- Top Menu Items -->
       <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">
         <li style="width:100%;" *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
