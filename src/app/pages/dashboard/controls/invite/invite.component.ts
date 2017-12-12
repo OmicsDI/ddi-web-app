@@ -116,6 +116,9 @@ export class InviteComponent implements OnInit {
           return y;
         }
       }).filter(x => x)){
+        if(!this.profileService.profile.dataSets)
+          this.profileService.profile.dataSets = new Array<DataSetShort>();
+
         if(!this.profileService.profile.dataSets.find(x => (x.source == ds.source && x.id == ds.id))){
           this.profileService.profile.dataSets.push(ds);
         }
