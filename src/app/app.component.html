@@ -44,7 +44,7 @@
         </li>
         <li AppLoginLauncher class="nav-item dropdown text-center" id="item6">
         </li>
-        <li class="nav-item" *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a routerLink="/dashboard/selected"><i class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
+        <li class="nav-item" *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a routerLink="/dashboard/selected" style="color:white !important;text-decoration:none;border-color: transparent;"><i class="fa fa-fw fa-shopping-basket" ></i> {{this.selectedService.selected()}}</a></li>
       </ul>
       </div>
       <!-- Top Menu Items -->

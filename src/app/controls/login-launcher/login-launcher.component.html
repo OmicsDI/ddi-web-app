@@ -1,11 +1,11 @@
-<a id="navbardrop" data-toggle="dropdown" *ngIf="!auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle icon icon-generic" data-icon="M" alt="Open Login Menu">Login</a>
+<a id="navbardrop" data-toggle="dropdown" *ngIf="!auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle" data-icon="M" alt="Open Login Menu" style="color:white !important;"><span class="glyphicon glyphicon-user"></span> Login</a>
 
 <div *ngIf="!auth.loggedIn()" class="dropdown-menu" style="background-color: #ffffff">
     <app-login-dialog></app-login-dialog>
 </div>
 
 
-<a  *ngIf="auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle icon icon-generic" data-icon="M" alt="Open Login Dialog">{{name}} <b class="caret"></b></a>
+<a  *ngIf="auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle" data-icon="M" alt="Open Login Dialog" style="color:white !important;"><span class="glyphicon glyphicon-user"></span> {{name}} <b class="caret"></b></a>
 
 
   <div *ngIf="auth.loggedIn()" class="dropdown-menu" style="background-color: #ffffff">
