@@ -40,4 +40,24 @@ export class DatabaseListService extends BaseService {
       });
       return source;
   }
+
+  public getDatabaseByAccession(accession:string):Database {
+      var self=this;
+      for(var key of Object.keys(this.databases)){
+          var database = self.databases[key];
+
+          //console.log("database:" + database);
+
+          if (database.accessionPrefix) {
+              for (let prefix of database.accessionPrefix) {
+                  console.log("compare " + prefix + " and " + accession );
+                  if (accession.startsWith(prefix)) {
+                      console.log("success");
+                      return database;
+                  }
+              }
+          }};
+
+      return null;
+  }
 }

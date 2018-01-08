@@ -13,4 +13,7 @@ export class Database {
   description: string;
   image: { $binary: string, $type:string };
   orcidName: string;
+  accessionPrefix: string[];
+  urlTemplate: string;
+  icon: string;
 }

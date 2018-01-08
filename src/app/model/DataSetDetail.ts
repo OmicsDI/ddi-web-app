@@ -32,6 +32,8 @@ import {SimilarDataset} from "./SimilarDataset";
     reanalysis_of: string = "reanalysis_of";
     reanalised_by: string = "reanalised_by";
     related_omics: string = "related_omics";
+    secondary_accession: string[];
+    repositories: string[];
 
     constructor(){
       this.omics_type = [];
