@@ -114,6 +114,29 @@
             <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span> </a>
             <span>| {{d.publicationDate}} </span>
           </p>
+
+          <p class="align-justify" *ngIf="null!=d.secondary_accession">
+            <b>SECONDARY ACCESSION(S):</b>&nbsp;
+
+            <span *ngFor="let o of d.secondary_accession;">
+              <span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">
+                <a *ngIf="this.databaseByAccession[o].urlTemplate" class="biological" href="{{this.databaseByAccession[o].urlTemplate.replace('{accession}',o)}}" >
+                  <img height="32" width="32" src="{{this.databaseByAccession[o].icon}}">&nbsp;{{o}}
+                </a>
+              </span>
+              <span *ngIf="this.databaseByAccession && !this.databaseByAccession[o]">
+                {{o}}
+              </span>
+            </span>
+          </p>
+
+          <p class="align-justify" *ngIf="null!=d.repositories">
+            <b>REPOSITORIES:</b>
+            <span *ngFor="let o of d.repositories; let isLast=last">
+                {{o}}{{isLast ? '' : ', '}}
+            </span>
+          </p>
+
           <!-- dataset_protocol_bottom-->
           <!-- div id="buttons_highlight_box">
             <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>

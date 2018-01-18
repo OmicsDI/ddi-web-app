@@ -49,6 +49,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
   databaseUrl: string;
   web_service_url: string;
 
+  databaseByAccession: Object = new Object();
+
   @ViewChild(DisqusComponent) disqus: DisqusComponent;
 
   constructor(private dataSetService: DataSetService
@@ -63,6 +65,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
     this.current_url = route.pathFromRoot.toString();
     this.index_dataset = this.current_url.indexOf("dataset");
 
+    var self = this;
+
     this.subscription = this.dataSetService.dataSetDetail$.subscribe(
       result => {
         console.info("dataSetDetail$ subscribtion");
@@ -76,6 +80,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         console.info("dataSetDetailResult:" + result);
         console.info("publicationIds:" + result.publicationIds);
+
+        this.d.secondary_accession.forEach(item => {
+          self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
+        });
       });
     this.web_service_url = dataSetService.getWebServiceUrl();
     //this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});

@@ -75,7 +75,7 @@ export class AppConfig{
     return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}&r=${Math.random()}`;
   }
   getDatabasesUrl(){
-    return `${environment.webServiceUrl}database/all?=${Math.random()}`;
+    return `${environment.webServiceUrl}database/all?r=${Math.random()}`;
   }
   getDatabaseImageUrl(databaseName: string){
     return `${environment.webServiceUrl}database/${databaseName}/picture?=${Math.random()}`;
