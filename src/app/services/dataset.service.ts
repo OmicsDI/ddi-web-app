@@ -39,6 +39,10 @@ export class DataSetService extends BaseService{
     return this.appConfig.getWebServiceUrl();
   }
 
+    public getProfileServiceUrl(): string {
+        return this.appConfig.getProfileServiceUrl();
+    }
+
   public getProteomicsList(): string {
     return this.proteomicsList;
   }
