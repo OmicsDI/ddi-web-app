@@ -130,7 +130,7 @@ export class AppConfig{
     return `${environment.webServiceUrl}statistics/domains`;
   }
   getAltmetricUrl(PMID){
-    return `http://api.altmetric.com/v1/pmid/${PMID}`;
+    return `https://api.altmetric.com/v1/pmid/${PMID}`;
   }
   getScoreViewsUrl(acc: string, repository: string){
     return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
