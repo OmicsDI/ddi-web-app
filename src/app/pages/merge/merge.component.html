@@ -1,0 +1,30 @@
+Total merge candidates: {{this.count}}
+
+<div *ngFor="let d of mergeCandidates | paginate: { id: 'server', itemsPerPage: 10, currentPage: currentPage, totalItems: count}
+      "style="width:100%; margin:10px;">
+  <table style="background-color: silver;">
+    <tr>
+      <td style="width:50px"><input type="checkbox" style="opacity:10" (change)="check(d.database,d.accession,$event.target.checked)"></td>
+      <td style="width:100px"><input type="button" value="merge" (click)="merge(d.database,d.accession)"></td>
+      <td style="width:100px">{{d.database}}</td>
+      <td style="width:100px">{{d.accession}}</td>
+      <td>{{d.name}}</td>
+
+    </tr>
+
+    <tr *ngFor="let c of d.similars" style="width:100%; border: none;">
+      <td style="width:50px"><input type="checkbox" style="opacity:10" (change)="check(c.database,c.accession,$event.target.checked)"></td>
+      <td style="width:100px"><input type="button" value="merge" (click)="merge(c.database,c.accession)"></td>
+      <td style="width:100px">{{c.database}}</td>
+      <td style="width:100px">{{c.accession}}</td>
+      <td>{{c.name}}</td>
+
+    </tr>
+
+  </table>
+</div>
+
+<pagination-controls (pageChange)="getPage($event)"
+                     class="my-pagination"
+                     id="server">
+</pagination-controls>

@@ -123,6 +123,7 @@ import {ThorService} from "./services/thor.service";
 import { InviteComponent } from './pages/dashboard/controls/invite/invite.component';
 import {InviteService} from "./services/invite.service";
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { MergeComponent } from './pages/merge/merge.component';
 
 
 export function getParameterByName(name): string {
@@ -226,7 +227,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DatasetwidgetSmallComponent,
     ClaimOrcidComponent,
     InviteComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    MergeComponent
   ],
   imports: [
     BrowserModule,

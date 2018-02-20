@@ -160,7 +160,8 @@
 
     console.log("relative path: "+path);
     switch(path){
-        case "dashboard/selected": console.log("no seo");
+        case "dashboard/selected": console.log("no seo"); break;
+        case "merge": console.log("no seo"); break;
         default: XhrGet('ws/seo/' + path);
     }
 

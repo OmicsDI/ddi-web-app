@@ -26,6 +26,7 @@ import {DashboardClaimedComponent} from "./pages/dashboard/claimed/claimed.compo
 import {DashboardPictureComponent} from "./pages/dashboard/picture/picture.component";
 import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
 import {WelcomeComponent} from "./pages/welcome/welcome.component";
+import {MergeComponent} from "./pages/merge/merge.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -47,6 +48,7 @@ export const routes: Routes = [
   { path: 'notfound', component: NotfoundComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'selected', component: SelectedComponent },
+  { path: 'merge', component: MergeComponent },
   { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuardService]},
   { path: 'dashboard/selected', component: DashboardSelectedComponent , canActivate: [AuthGuardService]},
   { path: 'dashboard/feedback', component: DashboardFeedbackComponent , canActivate: [AuthGuardService]},

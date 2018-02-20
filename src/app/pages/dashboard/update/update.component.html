@@ -36,13 +36,13 @@
             <div class="form-group">
               <label for="orcid">Orcid ID</label>
               <input type="text" id="orcid" class="form-control"
-                     pattern="\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d"
+                     pattern="\d\d\d\d-\d\d\d\d-\d\d\d\d-\d\d\d\d|X"
                      name="orcid" [(ngModel)]="profile.orcid"
                      #orcid="ngModel" >
 
               <div *ngIf="orcid.errors && (orcid.dirty || orcid.touched)" class="alert alert-danger">
                 <div [hidden]="!orcid.errors.pattern">
-                  Orcid ID is 0000-0000-0000-0000
+                  Orcid ID is 0000-0000-0000-000[0|X]
                 </div>
               </div>
             </div>

@@ -81,9 +81,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
         console.info("dataSetDetailResult:" + result);
         console.info("publicationIds:" + result.publicationIds);
 
-        this.d.secondary_accession.forEach(item => {
-          self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
-        });
+        if(this.d.secondary_accession) {
+          this.d.secondary_accession.forEach(item => {
+            self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
+          });
+        }
       });
     this.web_service_url = dataSetService.getWebServiceUrl();
     //this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});
@@ -254,6 +256,13 @@ export class DatasetComponent implements OnInit, OnDestroy {
       return null;
     }
   }
+  reanalysisoverflow(d: DataSetDetail): boolean{
+    if(!d.similars)
+      return false;
+
+    return (d.similars.length > 99);
+  }
+
   related_omics(d: DataSetDetail): SimilarDataset[]{
     let r = new Array();
     if(d.similars) {

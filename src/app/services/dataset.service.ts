@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { SimilarityResult } from "../model/SimilarityResult";
 import { SearchResult } from "../model/SearchResult";
 import { Subject, Observable } from "rxjs";
-import { Http, Response } from "@angular/http";
+import {Http, RequestOptions, RequestOptionsArgs, Response,Headers} from "@angular/http";
 import { DataSetDetail } from "../model/DataSetDetail";
 import { DataSet } from "../model/DataSet";
 import {AppConfig} from "../app.config";
 import {BaseService} from "./base.service";
+import {MergeCandidate} from "../model/MergeCandidate";
 
 @Injectable()
 export class DataSetService extends BaseService{
@@ -78,5 +79,28 @@ export class DataSetService extends BaseService{
     return this.http.post(this.appConfig.getDatasetByUrl(), url)
         .map(x => this.extractData<DataSet>(x));
   }
+
+  public getMergeCandidates(start: number, size: number): Observable<MergeCandidate[]>{
+     return this.http.get(this.appConfig.getMergeCandidateUrl(start,size)).map(x => this.extractData<MergeCandidate[]>(x))
+  }
+
+  public getMergeCandidateCount(): Observable<number>{
+    return this.http.get(this.appConfig.getMergeCandidateCountUrl()).map(x => this.extractData<number>(x))
+  }
+
+  public merge(result: MergeCandidate) : Observable<String> {
+    var url = this.appConfig.getMergeUrl();
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(url, JSON.stringify(result), options)
+        .map(res => {
+          return "OK"
+        }).catch(err=>{
+          return Observable.throw(err);
+        })
+  }
+
 
 }

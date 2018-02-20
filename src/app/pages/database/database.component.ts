@@ -42,7 +42,7 @@ export class DatabaseComponent implements OnInit {
       .subscribe(
         result => {
           console.log(result);
-          this.databases = result;
+          this.databases = result.filter(d => d.source !== 'NCBI'); //AZ:TODO: add "display on database page" bit in mongo
           this.loadingService.complete();
         }
       )

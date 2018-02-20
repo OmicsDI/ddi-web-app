@@ -153,6 +153,15 @@ export class AppConfig{
   getInviteUrl(id: string){
     return `${environment.userServiceUrl}invites/${id}?r=${Math.random()}`;
   }
+  getMergeCandidateUrl(start: number, size: number){
+    return `${environment.webServiceUrl}dataset/getMergeCandidates?start=${start}&size=${size}&r=${Math.random()}`;
+  }
+  getMergeCandidateCountUrl(){
+    return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
+  }
+  getMergeUrl(){
+    return `${environment.webServiceUrl}dataset/merge`;
+  }
 
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
