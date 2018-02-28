@@ -98,11 +98,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
           this.repository = params['domain'];
           this.dataSetService.getDataSetDetail(this.acc,this.repository);
 
-          if(this.disqus) {
-            this.disqus.reset();
-            this.disqus.identifier = '${repository}/${acc}';
-            this.disqus.url = '${repository}/${acc}';
-          }
+          // if(this.disqus) {
+          //   this.disqus.reset();
+          //   this.disqus.identifier = '${repository}/${acc}';
+          //   this.disqus.url = '${repository}/${acc}';
+          // }
 
     })
   }

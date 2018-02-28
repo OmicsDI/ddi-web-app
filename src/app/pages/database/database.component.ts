@@ -53,6 +53,7 @@ export class DatabaseComponent implements OnInit {
       .getDatasetStats()
       .subscribe(
         result => {
+            console.log(result);
           this.domainStats = result;
         }
       )

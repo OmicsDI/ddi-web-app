@@ -14,6 +14,9 @@ export class AppConfig{
   getWebServiceUrl():string{
     return `${environment.webServiceUrl}`;
   }
+  getProfileServiceUrl():string{
+    return `${environment.userServiceUrl}`;
+  }
   getStatisticsUrl():string{
     return `${environment.webServiceUrl}statistics/general?r=${Math.random()}`;
   }
@@ -32,6 +35,7 @@ export class AppConfig{
     else
       return `${environment.userServiceUrl}user/current?r=${Math.random()}`;
   }
+
   getAllProfilesUrl():string{
     return `${environment.userServiceUrl}users?r=${Math.random()}`;
   }

@@ -278,7 +278,7 @@ export class ReposOmicsComponent implements OnInit {
 
     let svgHeight = divHeight - 40;
     let rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 3;
-    let rectWidth = (divWidth - 70) * 0.06514;
+    let rectWidth = (divWidth - 70) * 0.04514;
     let marginValueBefore = (divWidth - 70 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
     let marginValue = marginValueBefore > 65 ? 65 : marginValueBefore;
     let lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
