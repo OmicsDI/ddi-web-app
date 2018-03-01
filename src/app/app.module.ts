@@ -231,9 +231,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ClaimOrcidComponent,
     InviteComponent,
     WelcomeComponent,
-      ProfileRepoOmicsComponent,
-    ProfileAnnualOmicstypeComponent,
     MergeComponent,
+      ProfileRepoOmicsComponent,
+      ProfileAnnualOmicstypeComponent,
     DashboardProfileAnnualOmicstypeComponent
   ],
   imports: [
