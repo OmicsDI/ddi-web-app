@@ -51,6 +51,9 @@ import { HomeAboutComponent } from './pages/home/charts/home-about/home-about.co
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from "@angular/material";
 
+import { ProfileRepoOmicsComponent } from './pages/profile/charts/profile-repo-omics/profile-repo-omics.component';
+import { ProfileAnnualOmicstypeComponent } from './pages/profile/charts/profile-annual-omicstype/profile-annual-omicstype.component';
+
 /*import { DisqusModule } from 'angular2-disqus';*/
 import {DisqusModule} from "ng2-awesome-disqus";
 
@@ -228,7 +231,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ClaimOrcidComponent,
     InviteComponent,
     WelcomeComponent,
-    MergeComponent
+      MergeComponent,
+      ProfileRepoOmicsComponent,
+      ProfileAnnualOmicstypeComponent
   ],
   imports: [
     BrowserModule,
