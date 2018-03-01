@@ -125,6 +125,7 @@ import {InviteService} from "./services/invite.service";
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { ProfileRepoOmicsComponent } from './pages/profile/charts/profile-repo-omics/profile-repo-omics.component';
 import { ProfileAnnualOmicstypeComponent } from './pages/profile/charts/profile-annual-omicstype/profile-annual-omicstype.component';
+import { DashboardProfileAnnualOmicstypeComponent } from './pages/dashboard/profile/dashboard-profile-annual-omicstype/dashboard-profile-annual-omicstype.component';
 
 
 export function getParameterByName(name): string {
@@ -230,7 +231,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     InviteComponent,
     WelcomeComponent,
     ProfileRepoOmicsComponent,
-    ProfileAnnualOmicstypeComponent
+    ProfileAnnualOmicstypeComponent,
+    DashboardProfileAnnualOmicstypeComponent
   ],
   imports: [
     BrowserModule,
