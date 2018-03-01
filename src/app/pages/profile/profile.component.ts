@@ -70,10 +70,10 @@ export class ProfileComponent implements OnInit {
       this.profileService.getPublicProfile(username)
         .subscribe(
           profile => {
-            if(!profile){
-              this.router.navigate(["/notfound"]);
-              return;
-            }
+            // if(!profile){
+            //   this.router.navigate(["/notfound"]);
+            //   return;
+            // }
 
             this.profileX = profile;
             this.profileImageUrl = this.getProfileImageUrl();
