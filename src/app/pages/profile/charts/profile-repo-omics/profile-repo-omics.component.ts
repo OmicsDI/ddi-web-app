@@ -174,16 +174,20 @@ export class ProfileRepoOmicsComponent implements OnInit {
 
         let body = self.body = d3.select('#' + self.pieChartName);
 
-        self.setTheRadio();
+
         self.drawBarGraphic(self.data, self.reposDataSimple);
+        //move under BarGraphic for a better looking
+        self.setTheRadio();
         self.showTip('*:* AND repository:"', self.reposDataSimple);
 
         // give different namespace after 'resize' to add window listener
         d3.select(window).on('resize.repos_omics', function() {
-            if(self.router.url === "/home") {
+            // if(self.router.url === "/home") {
                 self.drawBarGraphic(self.data, self.reposDataSimple);
+                d3.select('#chart_repos_omics_formdiv').remove();
+            self.setTheRadio();
                 self.showTip('*:* AND repository:"', self.reposDataSimple);
-            }
+            // }
         });
     }
 
@@ -204,7 +208,7 @@ export class ProfileRepoOmicsComponent implements OnInit {
         formDiv
             .attr('id', pieChartName + '_formdiv')
             .attr('class', 'center')
-            .attr('style', 'width: 180px; position: absolute; bottom: 15px; left:' + (divWidth / 2 - 60) + 'px');
+            .attr('style', 'width: 180px; position: relative; bottom: 15px; margin: auto');
 
         let radioForm = d3.select('#' + pieChartName + '_radio_form');
         if (radioForm.empty()) {
@@ -366,7 +370,7 @@ export class ProfileRepoOmicsComponent implements OnInit {
         //     .style('fill', function(d, i) { return color[i % 10] });
 
 
-        svg.append("g").attr("transform", "translate(60,0)")
+        svg.append("g").attr("transform", "translate(20,0)")
             .call(d3.axisLeft(lower).ticks(4));
 
         // svg.append("g").attr("transform", "translate(60,0)")

@@ -64,7 +64,7 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
         // });
         d3.select(window)
             .on('resize.annual_omicstype', function() {
-                if(self.router.url === "/home")
+                // if(self.router.url === "/home")
                     self.drawGraph(processedData)
             })
     }
@@ -249,8 +249,8 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
             });
 
         let legend_coords = {
-            "genomics": { x: 30, y: 25, color: "steelblue" },
-            "transcriptomics": { x: 30, y: 45, color: "steelblue" },
+            "genomics": { x: -15, y: 25, color: "steelblue" },
+            "transcriptomics": { x: -15, y: 45, color: "steelblue" },
             "metabolomics": { x: (width + 10) / 2, y: 25, color: "red" },
             "proteomics": { x: (width + 10) / 2, y: 45, color: "red" }
         };
@@ -300,7 +300,7 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
         divWidth = parseInt(body.style("width"));
 
         let heightOffset = 50;
-        let margin = { top: 20, right: 20, bottom: 20, left: 60 },
+        let margin = { top: 20, right: 15, bottom: 20, left: 15 },
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
         body.attr("position", "relative");
