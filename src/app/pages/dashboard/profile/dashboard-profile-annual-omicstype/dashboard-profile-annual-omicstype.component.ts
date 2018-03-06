@@ -324,7 +324,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         divWidth = parseInt(body.style("width"));
 
         let heightOffset = 50;
-        let margin = { top: 20, right: 0, bottom: 20, left: 80 },
+        let margin = { top: 20, right: 0, bottom: 20, left: 20 },
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
         body.attr("position", "relative");
