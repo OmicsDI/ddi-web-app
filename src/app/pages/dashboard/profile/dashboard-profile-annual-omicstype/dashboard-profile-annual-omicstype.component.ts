@@ -95,6 +95,8 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
     private drawGraph(processedData : any): void {
         let self = this;
 
+        console.log(processedData);
+
         let body = d3.select('#barchart_omicstype_annual_dashboard');
         let svgProperties: any = this.initSvg(body);
 
@@ -112,12 +114,14 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = processedData.get("omicsTypes");
 
-        let x0 = d3.scaleTime().range([0, width - 30]);
+        console.log(Array.from(annualDataExtends).length);
+
+        let x0 = d3.scaleTime().range([15, width - 45]);
         let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let xAxis = d3.axisBottom(x0).ticks(4).tickFormat(d3.timeFormat("%Y"));
-        let yAxisLeft = d3.axisLeft(y0).ticks(9);
-        let yAxisRight = d3.axisRight(y1).ticks(9);
+        let xAxis = d3.axisBottom(x0).ticks(Array.from(annualDataExtends).length).tickFormat(d3.timeFormat("%Y"));
+        let yAxisLeft = d3.axisLeft(y0).ticks(2);
+        let yAxisRight = d3.axisRight(y1).ticks(2);
         let yLine = d3.scaleLinear().range([15, 0]);
         let yNavLine = d3.axisBottom(yLine).ticks(0);
 
@@ -214,16 +218,41 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             .style("cursor", "pointer")
             .on("mouseover", function (d: any, i: number) {
                 let mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
-                toolTip.transition()
-                    .duration(200)
-                    .style("opacity", .9);
+                console.log(mouse_coords[0]+','+mouse_coords[1]);
+
+                let profile_div = d3.select('#profile_div').style('height');
+                let profile_div_height = profile_div.substring(0,profile_div.indexOf('px'));
+
+                let barchart_omicstype_annual_dashboard = d3.select('#barchart_omicstype_annual_dashboard').style('height');
+                let barchart_omicstype_annual_dashboard_height = barchart_omicstype_annual_dashboard.substring(0,barchart_omicstype_annual_dashboard.indexOf('px'));
+
+                let position = Number(profile_div_height) - Number(barchart_omicstype_annual_dashboard_height) + mouse_coords[1] - 40;
+                console.log('position:'+position);
 
                 toolTip.html(d.name.toString() + ": <br>" + d.value.toString() + " datasets")
                     .style("left", ((mouse_coords[0] + 5) + "px"))
-                    .style("top", (parseInt(d3.select(this).attr("cy")) - 13 + "px"))
-                    .style("height", "2.5em")
+                    .style("top", (position + "px"))
+                    .style("height", "3em")
                     .style("width", ((d.year.toString().length + 9) * 8 + "px"))
                     .style("padding", "5px");
+
+                toolTip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                // contactInfo,gsc_rsb_co,connectionBox
+
+                // let contactInfo = d3.select('#contactInfo').style('height');
+                // let contactInfo_height = contactInfo.substring(0,contactInfo.indexOf('px'));
+                // let gsc_rsb_co = d3.select('#gsc_rsb_co').style('height');
+                // let gsc_rsb_co_height = contactInfo.substring(0,contactInfo.indexOf('px'));
+                // let connectionBox = d3.select('#connectionBox').style('height');
+                // let connectionBox_height = contactInfo.substring(0,contactInfo.indexOf('px'));
+                // let sum = Number(contactInfo)+Number(gsc_rsb_co)+Number(connectionBox);
+                // let coordy = mouse_coords[1].valueOf();
+                // console.log('????:'+contactInfo_height);
+                // console.log(mouse_coords[0]+","+mouse_coords[1]);
+                // console.log(coordy+sum);
+
             })
             .on("mouseout", function () {
                 toolTip.transition()
@@ -320,17 +349,18 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2));
         let latestDatasetsDivHeightPx = d3.select('#barchart_omicstype_annual_dashboard').style('height');
         let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2));
-        divHeight = 288;
+        divHeight = 100;
         divWidth = parseInt(body.style("width"));
 
         let heightOffset = 50;
-        let margin = { top: 20, right: 0, bottom: 20, left: 20 },
+        let margin = { top: 20, right: 0, bottom: -20, left: 20 },
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
         body.attr("position", "relative");
 
         let tool_tip = null;
         if (!tool_tip) {
+            // tool_tip = document.getElementById('barchart_omicstype_annual_dashboard_svg')
             tool_tip = body.append("div")
                 .attr("id", "bar_chart_tooltip")
                 .attr("class", "chart_tooltip")

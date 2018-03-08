@@ -208,7 +208,7 @@ export class ProfileRepoOmicsComponent implements OnInit {
         formDiv
             .attr('id', pieChartName + '_formdiv')
             .attr('class', 'center')
-            .attr('style', 'width: 180px; position: relative; bottom: 15px; margin: auto');
+            .attr('style', 'width: 180px; position: absolute; bottom: 15px; margin: auto');
 
         let radioForm = d3.select('#' + pieChartName + '_radio_form');
         if (radioForm.empty()) {
