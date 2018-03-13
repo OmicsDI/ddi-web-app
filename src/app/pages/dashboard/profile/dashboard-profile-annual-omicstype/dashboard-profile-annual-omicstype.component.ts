@@ -94,7 +94,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
     }
     private drawGraph(processedData : any): void {
         let self = this;
-
+        console.log('processedData');
         console.log(processedData);
 
         let body = d3.select('#barchart_omicstype_annual_dashboard');
@@ -114,17 +114,9 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = processedData.get("omicsTypes");
 
+        console.log(proteomiList);
+
         console.log(Array.from(annualDataExtends).length);
-
-        let x0 = d3.scaleTime().range([15, width - 45]);
-        let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let xAxis = d3.axisBottom(x0).ticks(Array.from(annualDataExtends).length).tickFormat(d3.timeFormat("%Y"));
-        let yAxisLeft = d3.axisLeft(y0).ticks(2);
-        let yAxisRight = d3.axisRight(y1).ticks(2);
-        let yLine = d3.scaleLinear().range([15, 0]);
-        let yNavLine = d3.axisBottom(yLine).ticks(0);
-
         var minDate = new Date(d3.min(annualDataExtends, d => {
             return parseInt(d["year"]);
         }), 0, 0);
@@ -132,7 +124,18 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             return parseInt(d["year"]);
         }), 0, 1);
 
-        x0.domain([minDate, maxDate]);
+        let x0 = d3.scaleTime().range([0, width - 30]);
+        let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
+        let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
+        let xAxis = d3.axisBottom(x0).ticks(new Date().getFullYear()-(minDate.getFullYear())).tickFormat(d3.timeFormat("%Y"));
+        let yAxisLeft = d3.axisLeft(y0).ticks(2);
+        let yAxisRight = d3.axisRight(y1).ticks(2);
+        let yLine = d3.scaleLinear().range([15, 0]);
+        let yNavLine = d3.axisBottom(yLine).ticks(0);
+
+
+
+        x0.domain([new Date((minDate.getFullYear()).toString()), new Date()]);
 
         y0.domain([0, d3.max(annualDataExtends, d => {
             return d3.max(d["omics"], p => {
@@ -153,17 +156,22 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
 
         var valueline = d3.line()
             .x(d => {
+
                 return x0(new Date(d["year"], 0, 0));
             })
             .y(d => {
+
                 return y0(parseInt(d["value"]));
             });
 
         var valueline2 = d3.line()
             .x(d => {
+                console.log('Line:');
+                console.log(x0(new Date(d["year"], 0, 0)));
                 return x0(new Date(d["year"], 0, 0));
             })
             .y(d => {
+                console.log(y1(parseInt(d["value"])));
                 return y1(parseInt(d["value"]));
             });
 
@@ -219,7 +227,16 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             .on("mouseover", function (d: any, i: number) {
                 let mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
                 console.log(mouse_coords[0]+','+mouse_coords[1]);
-
+                /*
+                for d3 tooltip
+                if a tooltip is inside angular component inside a div like this
+                ----div-----
+                [component]
+                [component]
+                [component]
+                ----div-----
+                the tooltip will show at the div,not the component ,so we have to fix it
+                 */
                 let profile_div = d3.select('#profile_div').style('height');
                 let profile_div_height = profile_div.substring(0,profile_div.indexOf('px'));
 
@@ -454,6 +471,12 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         processedData.set("metaboloList", metaboloList);
         processedData.set("proteomiList", proteomiList);
         processedData.set("omicsTypes", omicsTypes);
+        // const arrays = new Array();
+        // for(let i = 0;i<proteomiList.length;i++){
+        //     arrays.push(proteomiList[i]);
+        // }
+        // arrays.sort();
+        // console.log(arrays)
 
         return processedData;
     }

@@ -11,6 +11,7 @@ import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material";
 import {InviteComponent} from "../controls/invite/invite.component";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-profile',
@@ -63,6 +64,14 @@ export class DashboardProfileComponent implements OnInit {
       this.username = params['username'];
       this.getProfile(this.username);
     })
+
+      Observable.fromEvent(window, 'resize')
+          .debounceTime(100) //timer
+          .subscribe((event) => {
+              // restartRequest
+              // document.getElementById("chart44").style.width = document.getElementById("profile_div").clientWidth.toString();
+              document.getElementById("chart44").style.width = '0px';
+          });
   }
 
 
