@@ -127,6 +127,15 @@ import { ProfileRepoOmicsComponent } from './pages/profile/charts/profile-repo-o
 import { ProfileAnnualOmicstypeComponent } from './pages/profile/charts/profile-annual-omicstype/profile-annual-omicstype.component';
 import { MergeComponent } from './pages/merge/merge.component';
 import { DashboardProfileAnnualOmicstypeComponent } from './pages/dashboard/profile/dashboard-profile-annual-omicstype/dashboard-profile-annual-omicstype.component';
+import { DashboardViewsCountComponent } from './pages/dashboard/profile/dashboard-views-count/dashboard-views-count.component';
+import { DashboardCitationsCountComponent } from './pages/dashboard/profile/dashboard-citations-count/dashboard-citations-count.component';
+import { DashboardReanalisysCountComponent } from './pages/dashboard/profile/dashboard-reanalisys-count/dashboard-reanalisys-count.component';
+import { DashboardConnectionsCountComponent } from './pages/dashboard/profile/dashboard-connections-count/dashboard-connections-count.component';
+// import { DashboardCountingChartsComponent } from './pages/dashboard/profile/dashboard-counting-charts/dashboard-counting-charts.component';
+// import { CitationsCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/citations-count/citations-count.component';
+// import { ConnectionsCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/connections-count/connections-count.component';
+// import { ReanalisysCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/reanalisys-count/reanalisys-count.component';
+// import { ViewCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/view-count/view-count.component';
 
 
 export function getParameterByName(name): string {
@@ -234,7 +243,16 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MergeComponent,
       ProfileRepoOmicsComponent,
       ProfileAnnualOmicstypeComponent,
-    DashboardProfileAnnualOmicstypeComponent
+    DashboardProfileAnnualOmicstypeComponent,
+    DashboardViewsCountComponent,
+    DashboardCitationsCountComponent,
+    DashboardReanalisysCountComponent,
+    DashboardConnectionsCountComponent,
+    // DashboardCountingChartsComponent,
+    // CitationsCountComponent,
+    // ConnectionsCountComponent,
+    // ReanalisysCountComponent,
+    // ViewCountComponent
   ],
   imports: [
     BrowserModule,

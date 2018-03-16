@@ -59,7 +59,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
 
     private startRequest() {
         d3.queue()
-            .defer(d3.json, this.userServiceUrl + 'users/' + this.profile.userId + '/omicsbyyears') // geojson points
+            .defer(d3.json, this.userServiceUrl + 'users/' + this.profile.userId + '/omicsbyyears?r='+Math.random()) // geojson points
             .await((err: any, annualData: any[]) => {
                 if (err) {
                     this.retryLimitTimes--;
@@ -74,7 +74,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
                     this.notifyHomeLoader.emit('annual_omicstype');
                     ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
                     let processedData = this.prepareData(annualData);
-                    console.log(annualData);
+                    // console.log(annualData);
                     this.draw(processedData);
                 }
             });
@@ -94,8 +94,8 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
     }
     private drawGraph(processedData : any): void {
         let self = this;
-        console.log('processedData');
-        console.log(processedData);
+        // console.log('processedData');
+        // console.log(processedData);
 
         let body = d3.select('#barchart_omicstype_annual_dashboard');
         let svgProperties: any = this.initSvg(body);
@@ -114,9 +114,9 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = processedData.get("omicsTypes");
 
-        console.log(proteomiList);
-
-        console.log(Array.from(annualDataExtends).length);
+        // console.log(proteomiList);
+        //
+        // console.log(Array.from(annualDataExtends).length);
         var minDate = new Date(d3.min(annualDataExtends, d => {
             return parseInt(d["year"]);
         }), 0, 0);
@@ -166,12 +166,12 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
 
         var valueline2 = d3.line()
             .x(d => {
-                console.log('Line:');
-                console.log(x0(new Date(d["year"], 0, 0)));
+                // console.log('Line:');
+                // console.log(x0(new Date(d["year"], 0, 0)));
                 return x0(new Date(d["year"], 0, 0));
             })
             .y(d => {
-                console.log(y1(parseInt(d["value"])));
+                // console.log(y1(parseInt(d["value"])));
                 return y1(parseInt(d["value"]));
             });
 
@@ -179,21 +179,21 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             .style("stroke", "steelblue")
             .attr("d", valueline(genomicsList));
 
-        svg.append("path")
-            .style("stroke", "steelblue")
-            .style("stroke-dasharray", ("3, 3"))
-            .attr("d", valueline(transcriList));
+            svg.append("path")
+                .style("stroke", "steelblue")
+                .style("stroke-dasharray", ("3, 3"))
+                .attr("d", valueline(transcriList));
 
-        svg.append("path")        // Add the valueline2 path.
-            .attr("class", "line")
-            .style("stroke", "red")
-            .attr("d", valueline2(metaboloList));
+                svg.append("path")        // Add the valueline2 path.
+                    .attr("class", "line")
+                    .style("stroke", "red")
+                    .attr("d", valueline2(metaboloList));
 
-        svg.append("path")
-            .attr("class", "line")
-            .style("stroke", "red")
-            .style("stroke-dasharray", ("3, 3"))
-            .attr("d", valueline2(proteomiList));
+                    svg.append("path")
+                        .attr("class", "line")
+                        .style("stroke", "red")
+                        .style("stroke-dasharray", ("3, 3"))
+                        .attr("d", valueline2(proteomiList));
 
         svg.selectAll("path")
             .style('stroke-width', '2')
@@ -226,7 +226,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             .style("cursor", "pointer")
             .on("mouseover", function (d: any, i: number) {
                 let mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
-                console.log(mouse_coords[0]+','+mouse_coords[1]);
+                // console.log(mouse_coords[0]+','+mouse_coords[1]);
                 /*
                 for d3 tooltip
                 if a tooltip is inside angular component inside a div like this
@@ -243,8 +243,21 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
                 let barchart_omicstype_annual_dashboard = d3.select('#barchart_omicstype_annual_dashboard').style('height');
                 let barchart_omicstype_annual_dashboard_height = barchart_omicstype_annual_dashboard.substring(0,barchart_omicstype_annual_dashboard.indexOf('px'));
 
-                let position = Number(profile_div_height) - Number(barchart_omicstype_annual_dashboard_height) + mouse_coords[1] - 40;
-                console.log('position:'+position);
+                //barchart_citations_dashboard height
+                let barchart_citations_dashboard = d3.select('#barchart_citations_dashboard').style('height');
+                let barchart_citations_dashboard_height = barchart_citations_dashboard.substring(0,barchart_citations_dashboard.indexOf('px'));
+                //barchart_connections_dashboard
+                let barchart_connections_dashboard = d3.select('#barchart_connections_dashboard').style('height');
+                let barchart_connections_dashboard_height = barchart_connections_dashboard.substring(0,barchart_connections_dashboard.indexOf('px'));
+                //barchart_views_dashboard
+                let barchart_views_dashboard = d3.select('#barchart_views_dashboard').style('height');
+                let barchart_views_dashboard_height = barchart_views_dashboard.substring(0,barchart_views_dashboard.indexOf('px'));
+                //barchart_reanalisys_dashboard
+                let barchart_reanalisys_dashboard = d3.select('#barchart_reanalisys_dashboard').style('height');
+                let barchart_reanalisys_dashboard_height = barchart_reanalisys_dashboard.substring(0,barchart_reanalisys_dashboard.indexOf('px'));
+
+                let position = Number(profile_div_height) - Number(barchart_omicstype_annual_dashboard_height)-Number(barchart_citations_dashboard_height)-Number(barchart_connections_dashboard_height)-Number(barchart_views_dashboard_height)-Number(barchart_reanalisys_dashboard_height) + mouse_coords[1] - 40;
+                // console.log('position:'+position);
 
                 toolTip.html(d.name.toString() + ": <br>" + d.value.toString() + " datasets")
                     .style("left", ((mouse_coords[0] + 5) + "px"))
@@ -285,7 +298,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
                     + DashboardProfileAnnualOmicstypeComponent.getName(d["year"], d["value"], annualDataExtends)
                     + "\" AND publication_date:\"" + d["year"] + "\"";
 
-                console.log("router.navigate>>");
+                // console.log("router.navigate>>");
                 self.router.navigate(['search'],{ queryParams: { q: searchWord }});
             });
 
@@ -314,7 +327,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             .on("click", function (d) {
                 var searchWord = "*:* AND omics_type:\"" + d + "\"";
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
-                console.log("this.router.navigate");
+                // console.log("this.router.navigate");
                 self.router.navigate(['search'],{ queryParams: { q: searchWord }});
             });
 
@@ -423,6 +436,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
             d.omics = omicsTypes.map(name => {
                 if (name !== "year") return { name: name, value: +d[name], year: d["year"] };
             });
+            console.log(d);
             //calculate the log value
             for (var i = 0; i < d.omics.length; i++) {
 
@@ -430,28 +444,36 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
 
                 switch (currOmic.name) {
                     case "genomics":
+                        if(currOmic.value != 0){
                         genomicsList.push({
                             year: +currOmic.year,
                             value: +currOmic.value
                         })
+                        }
                         break;
                     case "transcriptomics":
-                        transcriList.push({
-                            year: +currOmic.year,
-                            value: +currOmic.value
-                        })
+                        if(currOmic.value != 0) {
+                            transcriList.push({
+                                year: +currOmic.year,
+                                value: +currOmic.value
+                            })
+                        }
                         break;
                     case "metabolomics":
-                        metaboloList.push({
-                            year: +currOmic.year,
-                            value: +currOmic.value
-                        })
+                            if(currOmic.value != 0) {
+                                metaboloList.push({
+                                    year: +currOmic.year,
+                                    value: +currOmic.value
+                                })
+                            }
                         break;
                     case "proteomics":
-                        proteomiList.push({
-                            year: +currOmic.year,
-                            value: +currOmic.value
-                        })
+                                if(currOmic.value != 0) {
+                                    proteomiList.push({
+                                        year: +currOmic.year,
+                                        value: +currOmic.value
+                                    })
+                                }
                         break;
                     default:
                         break;

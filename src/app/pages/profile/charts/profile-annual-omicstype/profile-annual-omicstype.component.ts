@@ -1,9 +1,13 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output,Input,SimpleChanges,OnChanges } from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
 import * as d3 from 'd3';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
-import {ActivatedRoute, Router} from "@angular/router";
 import {DataSetService} from "../../../../services/dataset.service";
 import {AppConfig} from "../../../../app.config";
+import {Profile} from "../../../../model/Profile";
+import {ProfileService} from "../../../../services/profile.service";
+
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile-annual-omicstype',
@@ -19,8 +23,10 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
     private retryLimitTimes = 2;
     private userServiceUrl: string;
 
+    @Input() profile: Profile = new Profile();
 
-    constructor(private router: Router, private dataSetService: DataSetService,private route: ActivatedRoute,private appConfig: AppConfig) {
+
+    constructor(private router: Router, private dataSetService: DataSetService,private route: ActivatedRoute,private appConfig: AppConfig,private profileService: ProfileService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 
@@ -29,13 +35,36 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
             this.username = params['username'];
             console.log(this.username);
         });
+
         this.startRequest();
+
+        // Listen page size
+        Observable.fromEvent(window, 'resize')
+            .debounceTime(100) //timer
+            .subscribe((event) => {
+                // restartRequest
+                this.startRequest();
+            });
+
         this.web_service_url = this.dataSetService.getWebServiceUrl();
 
     }
+
+    ngOnChanges(changes: SimpleChanges) {
+        for (let propName in changes) {
+            let chng = changes[propName];
+            let cur  = JSON.stringify(chng.currentValue);
+            let prev = JSON.stringify(chng.previousValue);
+            if(propName=="profile"){
+                this.profile = chng.currentValue;
+            }
+            this.startRequest();
+        }
+    }
+
     private startRequest() {
         d3.queue()
-            .defer(d3.json, this.userServiceUrl + 'users/' + this.username + '/omicsbyyears') // geojson points
+            .defer(d3.json, this.userServiceUrl + 'users/' + this.username + '/omicsbyyears?r='+Math.random()) // geojson points
             .await((err: any, annualData: any[]) => {
                 if (err) {
                     this.retryLimitTimes--;
@@ -64,7 +93,7 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
         // });
         d3.select(window)
             .on('resize.annual_omicstype', function() {
-                // if(self.router.url === "/home")
+                if(self.router.url === "/home")
                     self.drawGraph(processedData)
             })
     }
@@ -88,14 +117,6 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = processedData.get("omicsTypes");
 
-        let x0 = d3.scaleTime().range([0, width - 30]);
-        let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let xAxis = d3.axisBottom(x0).ticks(4).tickFormat(d3.timeFormat("%Y"));
-        let yAxisLeft = d3.axisLeft(y0).ticks(9);
-        let yAxisRight = d3.axisRight(y1).ticks(9);
-        let yLine = d3.scaleLinear().range([15, 0]);
-        let yNavLine = d3.axisBottom(yLine).ticks(0);
 
         var minDate = new Date(d3.min(annualDataExtends, d => {
             return parseInt(d["year"]);
@@ -104,7 +125,18 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
             return parseInt(d["year"]);
         }), 0, 1);
 
-        x0.domain([minDate, maxDate]);
+        let x0 = d3.scaleTime().range([0, width - 30]);
+        let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
+        let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
+        let xAxis = d3.axisBottom(x0).ticks(new Date().getFullYear()-(minDate.getFullYear())).tickFormat(d3.timeFormat("%Y"));
+        let yAxisLeft = d3.axisLeft(y0).ticks(2);
+        let yAxisRight = d3.axisRight(y1).ticks(2);
+        let yLine = d3.scaleLinear().range([15, 0]);
+        let yNavLine = d3.axisBottom(yLine).ticks(0);
+
+
+
+        x0.domain([new Date((minDate.getFullYear()).toString()), new Date()]);
 
         y0.domain([0, d3.max(annualDataExtends, d => {
             return d3.max(d["omics"], p => {
@@ -190,16 +222,48 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
             .style("cursor", "pointer")
             .on("mouseover", function (d: any, i: number) {
                 let mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
-                toolTip.transition()
-                    .duration(200)
-                    .style("opacity", .9);
+                /*
+                for d3 tooltip
+                if a tooltip is inside angular component inside a div like this
+                ----div-----
+                [component]
+                [component]
+                [component]
+                ----div-----
+                the tooltip will show at the div,not the component ,so we have to fix it
+                 */
+                let profile_div = d3.select('#profile_div').style('height');
+                let profile_div_height = profile_div.substring(0,profile_div.indexOf('px'));
+
+                let barchart_omicstype_annual = d3.select('#barchart_omicstype_annual').style('height');
+                let barchart_omicstype_annual_height = barchart_omicstype_annual.substring(0,barchart_omicstype_annual.indexOf('px'));
+
+                //barchart_citations_dashboard height
+                let barchart_citations_dashboard = d3.select('#barchart_citations_dashboard').style('height');
+                let barchart_citations_dashboard_height = barchart_citations_dashboard.substring(0,barchart_citations_dashboard.indexOf('px'));
+                //barchart_connections_dashboard
+                let barchart_connections_dashboard = d3.select('#barchart_connections_dashboard').style('height');
+                let barchart_connections_dashboard_height = barchart_connections_dashboard.substring(0,barchart_connections_dashboard.indexOf('px'));
+                //barchart_views_dashboard
+                let barchart_views_dashboard = d3.select('#barchart_views_dashboard').style('height');
+                let barchart_views_dashboard_height = barchart_views_dashboard.substring(0,barchart_views_dashboard.indexOf('px'));
+                //barchart_reanalisys_dashboard
+                let barchart_reanalisys_dashboard = d3.select('#barchart_reanalisys_dashboard').style('height');
+                let barchart_reanalisys_dashboard_height = barchart_reanalisys_dashboard.substring(0,barchart_reanalisys_dashboard.indexOf('px'));
+
+                let position = Number(profile_div_height) - Number(barchart_omicstype_annual_height)-Number(barchart_citations_dashboard_height)-Number(barchart_connections_dashboard_height)-Number(barchart_views_dashboard_height)-Number(barchart_reanalisys_dashboard_height) + mouse_coords[1] - 40;
+                console.log('position:'+position);
 
                 toolTip.html(d.name.toString() + ": <br>" + d.value.toString() + " datasets")
                     .style("left", ((mouse_coords[0] + 5) + "px"))
-                    .style("top", (parseInt(d3.select(this).attr("cy")) - 13 + "px"))
-                    .style("height", "2.5em")
+                    .style("top", (position + "px"))
+                    .style("height", "3em")
                     .style("width", ((d.year.toString().length + 9) * 8 + "px"))
                     .style("padding", "5px");
+
+                toolTip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
             })
             .on("mouseout", function () {
                 toolTip.transition()
@@ -294,19 +358,20 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
         // let body = d3.select('#barchart_omicstype_annual');
         let divWidthPx = body.style("width");
         let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2));
-        let latestDatasetsDivHeightPx = d3.select('#chart_repos_omics').style('height');
+        let latestDatasetsDivHeightPx = d3.select('#barchart_omicstype_annual').style('height');
         let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2));
-        divHeight = 288;
+        divHeight = 100;
         divWidth = parseInt(body.style("width"));
 
         let heightOffset = 50;
-        let margin = { top: 20, right: 15, bottom: 20, left: 15 },
+        let margin = { top: 20, right: 0, bottom: -20, left: 20 },
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
         body.attr("position", "relative");
 
         let tool_tip = null;
         if (!tool_tip) {
+            // tool_tip = document.getElementById('barchart_omicstype_annual_dashboard_svg')
             tool_tip = body.append("div")
                 .attr("id", "bar_chart_tooltip")
                 .attr("class", "chart_tooltip")
@@ -320,7 +385,7 @@ export class ProfileAnnualOmicstypeComponent implements OnInit {
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + 20 + "," + margin.top + ")");
 
         svgProperties.set("width", width);
         svgProperties.set("height", height);

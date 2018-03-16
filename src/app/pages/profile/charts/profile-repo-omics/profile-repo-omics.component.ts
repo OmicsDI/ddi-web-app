@@ -54,8 +54,8 @@ export class ProfileRepoOmicsComponent implements OnInit {
 
     public startRequest() {
         d3.queue()
-            .defer(d3.json, this.userServiceUrl + 'users/' + this.username + '/domain')
-            .defer(d3.json, this.userServiceUrl + 'users/' + this.username + '/omics')
+            .defer(d3.json, this.userServiceUrl + 'users/' + this.username + '/domain?r='+Math.random())
+            .defer(d3.json, this.userServiceUrl + 'users/' + this.username + '/omics?r='+Math.random())
             .await((err: any, domains: any[], omicstype: any[]) => {
                 if (err) {
                     this.retryLimitTimes--;
