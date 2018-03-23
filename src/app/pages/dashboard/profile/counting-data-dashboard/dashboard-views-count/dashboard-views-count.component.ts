@@ -1,25 +1,25 @@
 import { Component, OnInit, EventEmitter, Output,Input,SimpleChanges,OnChanges } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import * as d3 from 'd3';
-import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
-import {DataSetService} from "../../../../services/dataset.service";
-import {AppConfig} from "../../../../app.config";
-import {Profile} from "../../../../model/Profile";
-import {DatasetCount} from "../../../../model/DatasetCount";
-import {ProfileService} from "../../../../services/profile.service";
+import { ChartsErrorHandler } from '../../charts-error-handler/charts-error-handler';
+import {DataSetService} from "../../../../../services/dataset.service";
+import {AppConfig} from "../../../../../app.config";
+import {Profile} from "../../../../../model/Profile";
+import {DatasetCount} from "../../../../../model/DatasetCount";
+import {ProfileService} from "../../../../../services/profile.service";
 
 
 import { Observable } from 'rxjs';
-import {DataSetDetail} from "../../../../model/DataSetDetail";
+import {DataSetDetail} from "../../../../../model/DataSetDetail";
 import {NotificationsService} from "angular2-notifications/dist";
-import {ThorService} from "../../../../services/thor.service";
+import {ThorService} from "../../../../../services/thor.service";
 
 @Component({
-  selector: 'app-dashboard-citations-count',
-  templateUrl: './dashboard-citations-count.component.html',
-  styleUrls: ['./dashboard-citations-count.component.css']
+  selector: 'app-dashboard-views-count',
+  templateUrl: './dashboard-views-count.component.html',
+  styleUrls: ['./dashboard-views-count.component.css']
 })
-export class DashboardCitationsCountComponent implements OnInit {
+export class DashboardViewsCountComponent implements OnInit {
 
     @Output()
     notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
@@ -29,7 +29,7 @@ export class DashboardCitationsCountComponent implements OnInit {
     private userServiceUrl: string;
     private dataOfViewCount: DatasetCount;
 
-    @Input() profile: Profile = new Profile();
+    @Input() datasets: DataSetDetail[] = [];
 
 
     constructor( private dataSetService: DataSetService,private route: ActivatedRoute,private appConfig: AppConfig,private profileService: ProfileService
@@ -66,8 +66,13 @@ export class DashboardCitationsCountComponent implements OnInit {
             let cur  = JSON.stringify(chng.currentValue);
             let prev = JSON.stringify(chng.previousValue);
             //console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-            if(propName=="profile"){
+            if(propName=="datasets"){
+                // console.log(chng.currentValue);
+                this.datasets = chng.currentValue;
+                // console.log(this.datasets);
                 if(null!=chng.currentValue){
+                    // console.log('hey reload!');
+                    // console.log(this.datasets);
                     this.reloadDataSets();
                 }
             }
@@ -76,37 +81,29 @@ export class DashboardCitationsCountComponent implements OnInit {
 
     reloadDataSets(){
         // this.dataSets = new Array();
-        if(!this.profile){
-            return;
-        }
-        if(!this.profile.dataSets){
-            return;
-        }
-        Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
-            y => {
-                // console.log(x);
-                console.log(y);
-                this.dataSets = y;
-                this.thorService.datasets = y;
-                console.log(this.dataSets);
-
-                this.startRequest(this.dataSets);
-
-            }
-        )
+        this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[] ) {
         let test= [];
         let id: string;
         for(let i = 0;i<datasetDetail.length;i++){
+            // let
+            let publicationDate = datasetDetail[i]['publicationDate'];
+            let year;
+            if(publicationDate.indexOf('-')>= 1){
+                year = publicationDate.substring(0,4);
+                console.log(year);
+            }else{
+                year = publicationDate.substr(publicationDate.lastIndexOf(' ')+1,4);
+            }
             test.push({
-                id: datasetDetail[i].id,count: +datasetDetail[i]['scores']['citationCount'],pointer: i+1
+                id: datasetDetail[i].id,count: +datasetDetail[i]['scores']['viewCount'],pointer: i+1,year: year
             })
 
         }
         console.log(test);
-        let processedData = this.prepareData(test);
+        // let processedData = this.prepareData(test);
         this.draw(test);
     }
     private draw(processedData : any){
@@ -124,26 +121,60 @@ export class DashboardCitationsCountComponent implements OnInit {
     }
     private drawGraph(processedData : any): void {
         let self = this;
-        console.log('processedData');
-        console.log(processedData);
-        console.log(processedData.length);
+        // console.log('processedData');
+        // console.log(processedData);
+        // console.log(processedData.length);
         let dataCollection: number[] = [];
         let idCollection:string[] = [];
         let pointerCollection: number[] = [];
+        let yearSet: Set<string> = new Set();
         for(let data of processedData){
-            console.log(Number(data['count'].toString()));
+            console.log(data['year']);
+            yearSet.add(data['year']);
+        }
+        let yearArray = Array.from(yearSet);
+        yearArray.sort();
+        console.log(yearArray);
+
+        let dataOfYear = [];
+
+        let yearCollections: number[] = [];
+        let countCollections: number[] = [];
+        console.log('yearyearyear');
+        for(let year of yearArray){
+            console.log(year);
+            let totalCount = 0;
+            let datasetsCount = 0;
+            for(let data of processedData){
+                if(data['year'] == year){
+                    totalCount = totalCount + data['count'];
+                    datasetsCount = datasetsCount + 1;
+                }
+            }
+            yearCollections.push(Number(year));
+            countCollections.push(totalCount);
+            dataOfYear.push({
+                year: Number(year),count: totalCount,datasetsCount :datasetsCount
+            })
+        }
+        console.log(yearCollections);
+        console.log(countCollections);
+
+        for(let data of processedData){
+            // console.log(Number(data['count'].toString()));
             let count: number = Number(data['count']);
             dataCollection.push(count);
             idCollection.push(data['id']);
             pointerCollection.push(data['pointer']);
         }
-        console.log(dataCollection);
-        let max = Math.max(...dataCollection);
-        let maxpointer = Math.max(...pointerCollection);
+
+        let max = Math.max(...countCollections);
+        let maxpointer = Math.max(...yearCollections);
+        let minpointer = Math.min(...yearCollections);
         console.log(max);
 
 
-        let body = d3.select('#barchart_citations_dashboard');
+        let body = d3.select('#barchart_views_dashboard');
         let svgProperties: any = this.initSvg(body);
 
         let width = svgProperties.get("width");
@@ -158,7 +189,7 @@ export class DashboardCitationsCountComponent implements OnInit {
         let x0 = d3.scaleLinear().range([0, width - 30]);
         let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let xAxis = d3.axisBottom(x0).ticks(processedData.length+2);
+        let xAxis = d3.axisBottom(x0).ticks(yearSet.size+2);
         let yAxisLeft = d3.axisLeft(y0).ticks(1);
         let yAxisRight = d3.axisRight(y1).ticks(2);
         let yLine = d3.scaleLinear().range([15, 0]);
@@ -166,14 +197,14 @@ export class DashboardCitationsCountComponent implements OnInit {
 
 
 
-        x0.domain([0,maxpointer+1]);
+        x0.domain([minpointer-1,maxpointer+1]);
 
         y1.domain([0, max]);
 
         var valueline = d3.line()
             .x(d => {
-                console.log(d['pointer']);
-                return x0(d['pointer']);
+                console.log(d['year']);
+                return x0(d['year']);
             })
             .y(d => {
                 console.log(d['count']);
@@ -182,23 +213,23 @@ export class DashboardCitationsCountComponent implements OnInit {
         svg.append("path")        // Add the valueline2 path.
             .attr("class", "line")
             .style("stroke", "red")
-            .attr("d", valueline(processedData));
+            .attr("d", valueline(dataOfYear));
         svg.selectAll("path")
             .style('stroke-width', '2')
             .style('fill', 'none');
 
         svg.selectAll("circle")
-            .data(processedData)
+            .data(dataOfYear)
             .enter()
             .append("circle")
             .attr("cx", function (d) {
-                return x0(d['pointer']);
+                return x0(d['year']);
             })
             .attr("cy", function (d) {
                 return y1(d['count']);
             })
             .attr("fill", function (d) {
-                return "red";
+                    return "red";
             });
 
         svg.selectAll("circle")
@@ -223,22 +254,17 @@ export class DashboardCitationsCountComponent implements OnInit {
                 //barchart_citations_dashboard height
                 let barchart_citations_dashboard = d3.select('#barchart_citations_dashboard').style('height');
                 let barchart_citations_dashboard_height = barchart_citations_dashboard.substring(0,barchart_citations_dashboard.indexOf('px'));
-
-                //barchart_citations_dashboard height
                 //barchart_connections_dashboard
                 let barchart_connections_dashboard = d3.select('#barchart_connections_dashboard').style('height');
                 let barchart_connections_dashboard_height = barchart_connections_dashboard.substring(0,barchart_connections_dashboard.indexOf('px'));
                 //barchart_views_dashboard
                 let barchart_views_dashboard = d3.select('#barchart_views_dashboard').style('height');
                 let barchart_views_dashboard_height = barchart_views_dashboard.substring(0,barchart_views_dashboard.indexOf('px'));
-                //barchart_reanalisys_dashboard
-                let barchart_reanalisys_dashboard = d3.select('#barchart_reanalisys_dashboard').style('height');
-                let barchart_reanalisys_dashboard_height = barchart_reanalisys_dashboard.substring(0,barchart_reanalisys_dashboard.indexOf('px'));
 
-                let position = Number(profile_div_height) - Number(barchart_citations_dashboard_height)*5 + mouse_coords[1] - 40;
+                let position = Number(profile_div_height)-Number(barchart_connections_dashboard_height)*5 + mouse_coords[1] - 40;
                 console.log('position:'+position);
 
-                toolTip.html(d['id'] + ": <br>" + d['count'] + " citations")
+                toolTip.html(d['year'] + ": <br>" + d['count'] + " views")
                     .style("left", ((mouse_coords[0] + 5) + "px"))
                     .style("top", (position + "px"))
                     .style("height", "3em")
@@ -289,7 +315,7 @@ export class DashboardCitationsCountComponent implements OnInit {
         // let body = d3.select('#barchart_omicstype_annual');
         let divWidthPx = body.style("width");
         let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2));
-        let latestDatasetsDivHeightPx = d3.select('#barchart_citations_dashboard').style('height');
+        let latestDatasetsDivHeightPx = d3.select('#barchart_views_dashboard').style('height');
         let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2));
         divHeight = 100;
         divWidth = parseInt(body.style("width"));
@@ -310,9 +336,9 @@ export class DashboardCitationsCountComponent implements OnInit {
                 .attr("position", "absolute");
         }
 
-        d3.select("#barchart_citations_dashboard_svg").remove();
-        let svg = d3.select("#barchart_citations_dashboard").append("svg")
-            .attr("id", "barchart_citations_dashboard_svg")
+        d3.select("#barchart_views_dashboard_svg").remove();
+        let svg = d3.select("#barchart_views_dashboard").append("svg")
+            .attr("id", "barchart_views_dashboard_svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -347,5 +373,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             }
         }
     }
+
+
 
 }

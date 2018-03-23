@@ -1,18 +1,18 @@
 import { Component, OnInit, EventEmitter, Output,Input,SimpleChanges,OnChanges } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import * as d3 from 'd3';
-import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
-import {DataSetService} from "../../../../services/dataset.service";
-import {AppConfig} from "../../../../app.config";
-import {Profile} from "../../../../model/Profile";
-import {DatasetCount} from "../../../../model/DatasetCount";
-import {ProfileService} from "../../../../services/profile.service";
+import { ChartsErrorHandler } from '../../charts-error-handler/charts-error-handler';
+import {DataSetService} from "../../../../../services/dataset.service";
+import {AppConfig} from "../../../../../app.config";
+import {Profile} from "../../../../../model/Profile";
+import {DatasetCount} from "../../../../../model/DatasetCount";
+import {ProfileService} from "../../../../../services/profile.service";
 
 
 import { Observable } from 'rxjs';
-import {DataSetDetail} from "../../../../model/DataSetDetail";
+import {DataSetDetail} from "../../../../../model/DataSetDetail";
 import {NotificationsService} from "angular2-notifications/dist";
-import {ThorService} from "../../../../services/thor.service";
+import {ThorService} from "../../../../../services/thor.service";
 @Component({
   selector: 'app-dashboard-connections-count',
   templateUrl: './dashboard-connections-count.component.html',
@@ -28,7 +28,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
     private userServiceUrl: string;
     private dataOfViewCount: DatasetCount;
 
-    @Input() profile: Profile = new Profile();
+    @Input() datasets: DataSetDetail[] = [];
 
 
     constructor( private dataSetService: DataSetService,private route: ActivatedRoute,private appConfig: AppConfig,private profileService: ProfileService
@@ -41,7 +41,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.profileService.getDataSetDetails(this.profileService.profile);
         this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
 
 
@@ -57,15 +56,13 @@ export class DashboardConnectionsCountComponent implements OnInit {
         this.web_service_url = this.dataSetService.getWebServiceUrl();
     }
 
-    dataSets: DataSetDetail[];
-
     ngOnChanges(changes: SimpleChanges) {
         for (let propName in changes) {
             let chng = changes[propName];
             let cur  = JSON.stringify(chng.currentValue);
             let prev = JSON.stringify(chng.previousValue);
-            //console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-            if(propName=="profile"){
+            if(propName=="datasets"){
+                this.datasets = chng.currentValue;
                 if(null!=chng.currentValue){
                     this.reloadDataSets();
                 }
@@ -74,47 +71,33 @@ export class DashboardConnectionsCountComponent implements OnInit {
     }
 
     reloadDataSets(){
-        // this.dataSets = new Array();
-        if(!this.profile){
-            return;
-        }
-        if(!this.profile.dataSets){
-            return;
-        }
-        Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
-            y => {
-                // console.log(x);
-                console.log(y);
-                this.dataSets = y;
-                this.thorService.datasets = y;
-                console.log(this.dataSets);
-
-                this.startRequest(this.dataSets);
-
-            }
-        )
+        this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[] ) {
         let test= [];
         let id: string;
         for(let i = 0;i<datasetDetail.length;i++){
+            // let
+            let publicationDate = datasetDetail[i]['publicationDate'];
+            let year;
+            if(publicationDate.indexOf('-')>= 1){
+                year = publicationDate.substring(0,4);
+                console.log(year);
+            }else{
+                year = publicationDate.substr(publicationDate.lastIndexOf(' ')+1,4);
+            }
             test.push({
-                id: datasetDetail[i].id,count: +datasetDetail[i]['scores']['searchCount'],pointer: i+1
+                id: datasetDetail[i].id,count: +datasetDetail[i]['scores']['searchCount'],pointer: i+1,year: year
             })
 
         }
-        console.log(test);
-        let processedData = this.prepareData(test);
         this.draw(test);
     }
     private draw(processedData : any){
 
         this.drawGraph(processedData);
         let self = this;
-        // d3.select(window).on('resize',function(){
-        //   self.drawGraph(processedData);
-        // });
         d3.select(window)
             .on('resize.annual_omicstype', function() {
                 if(self.router.url === "/home")
@@ -123,26 +106,57 @@ export class DashboardConnectionsCountComponent implements OnInit {
     }
     private drawGraph(processedData : any): void {
         let self = this;
-        console.log('processedData');
-        console.log(processedData);
-        console.log(processedData.length);
         let dataCollection: number[] = [];
         let idCollection:string[] = [];
         let pointerCollection: number[] = [];
+        let yearSet: Set<string> = new Set();
         for(let data of processedData){
-            console.log(Number(data['count'].toString()));
+            console.log(data['year']);
+            yearSet.add(data['year']);
+        }
+        let yearArray = Array.from(yearSet);
+        yearArray.sort();
+        console.log(yearArray);
+
+        let dataOfYear = [];
+
+        let yearCollections: number[] = [];
+        let countCollections: number[] = [];
+        console.log('yearyearyear');
+        for(let year of yearArray){
+            console.log(year);
+            let totalCount = 0;
+            let datasetsCount = 0;
+            for(let data of processedData){
+                if(data['year'] == year){
+                    totalCount = totalCount + data['count'];
+                    datasetsCount = datasetsCount + 1;
+                }
+            }
+            yearCollections.push(Number(year));
+            countCollections.push(totalCount);
+            dataOfYear.push({
+                year: Number(year),count: totalCount,datasetsCount :datasetsCount
+            })
+        }
+        console.log(yearCollections);
+        console.log(countCollections);
+
+        for(let data of processedData){
+            // console.log(Number(data['count'].toString()));
             let count: number = Number(data['count']);
             dataCollection.push(count);
             idCollection.push(data['id']);
             pointerCollection.push(data['pointer']);
         }
-        console.log(dataCollection);
-        let max = Math.max(...dataCollection);
-        let maxpointer = Math.max(...pointerCollection);
+
+        let max = Math.max(...countCollections);
+        let maxpointer = Math.max(...yearCollections);
+        let minpointer = Math.min(...yearCollections);
         console.log(max);
 
 
-        let body = d3.select('#barchart_connections_dashboard');
+        let body = d3.select('#barchart_views_dashboard');
         let svgProperties: any = this.initSvg(body);
 
         let width = svgProperties.get("width");
@@ -157,7 +171,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
         let x0 = d3.scaleLinear().range([0, width - 30]);
         let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
-        let xAxis = d3.axisBottom(x0).ticks(processedData.length+2);
+        let xAxis = d3.axisBottom(x0).ticks(yearSet.size+2);
         let yAxisLeft = d3.axisLeft(y0).ticks(1);
         let yAxisRight = d3.axisRight(y1).ticks(2);
         let yLine = d3.scaleLinear().range([15, 0]);
@@ -165,14 +179,14 @@ export class DashboardConnectionsCountComponent implements OnInit {
 
 
 
-        x0.domain([0,maxpointer+1]);
+        x0.domain([minpointer-1,maxpointer+1]);
 
         y1.domain([0, max]);
 
         var valueline = d3.line()
             .x(d => {
-                console.log(d['pointer']);
-                return x0(d['pointer']);
+                console.log(d['year']);
+                return x0(d['year']);
             })
             .y(d => {
                 console.log(d['count']);
@@ -181,17 +195,17 @@ export class DashboardConnectionsCountComponent implements OnInit {
         svg.append("path")        // Add the valueline2 path.
             .attr("class", "line")
             .style("stroke", "red")
-            .attr("d", valueline(processedData));
+            .attr("d", valueline(dataOfYear));
         svg.selectAll("path")
             .style('stroke-width', '2')
             .style('fill', 'none');
 
         svg.selectAll("circle")
-            .data(processedData)
+            .data(dataOfYear)
             .enter()
             .append("circle")
             .attr("cx", function (d) {
-                return x0(d['pointer']);
+                return x0(d['year']);
             })
             .attr("cy", function (d) {
                 return y1(d['count']);
@@ -225,11 +239,11 @@ export class DashboardConnectionsCountComponent implements OnInit {
                 let position = Number(profile_div_height)-Number(barchart_connections_dashboard_height)*5 + mouse_coords[1] - 40;
                 console.log('position:'+position);
 
-                toolTip.html(d['id'] + ": <br>" + d['count'] + " connections")
+                toolTip.html(d['year'] + ": <br>" + d['count'] + " connections")
                     .style("left", ((mouse_coords[0] + 5) + "px"))
                     .style("top", (position + "px"))
                     .style("height", "3em")
-                    .style("width", (d3.select('#profile_div').style('width') + "px"))
+                    .style("width", (d3.select('#profile_div').style('width')+10 + "px"))
                     .style("padding", "5px");
 
                 toolTip.transition()

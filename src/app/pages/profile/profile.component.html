@@ -31,15 +31,16 @@
     </div>
   </div>
 
-  <div class="col-lg-2 col-md-2 col-sm-2"  style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;">
+  <div class="col-lg-2 col-md-2 col-sm-2"  style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;" id="profile_div">
     <app-profile-contacts [profile]="profileX"></app-profile-contacts>
     <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
     <app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>
+    <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
     <!--<app-profile-repo-omics></app-profile-repo-omics>-->
-    <app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>
-    <app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>
-    <app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>
-    <app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>
+    <!--<app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>-->
+    <!--<app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>-->
+    <!--<app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>-->
+    <!--<app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>-->
 
 
   </div>

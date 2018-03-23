@@ -127,10 +127,11 @@ import { ProfileRepoOmicsComponent } from './pages/profile/charts/profile-repo-o
 import { ProfileAnnualOmicstypeComponent } from './pages/profile/charts/profile-annual-omicstype/profile-annual-omicstype.component';
 import { MergeComponent } from './pages/merge/merge.component';
 import { DashboardProfileAnnualOmicstypeComponent } from './pages/dashboard/profile/dashboard-profile-annual-omicstype/dashboard-profile-annual-omicstype.component';
-import { DashboardViewsCountComponent } from './pages/dashboard/profile/dashboard-views-count/dashboard-views-count.component';
-import { DashboardCitationsCountComponent } from './pages/dashboard/profile/dashboard-citations-count/dashboard-citations-count.component';
-import { DashboardReanalisysCountComponent } from './pages/dashboard/profile/dashboard-reanalisys-count/dashboard-reanalisys-count.component';
-import { DashboardConnectionsCountComponent } from './pages/dashboard/profile/dashboard-connections-count/dashboard-connections-count.component';
+import { DashboardViewsCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-views-count/dashboard-views-count.component';
+import { DashboardCitationsCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-citations-count/dashboard-citations-count.component';
+import { DashboardReanalisysCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-reanalisys-count/dashboard-reanalisys-count.component';
+import { DashboardConnectionsCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-connections-count/dashboard-connections-count.component';
+import { CountingDataDashboardComponent } from './pages/dashboard/profile/counting-data-dashboard/counting-data-dashboard.component';
 // import { DashboardCountingChartsComponent } from './pages/dashboard/profile/dashboard-counting-charts/dashboard-counting-charts.component';
 // import { CitationsCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/citations-count/citations-count.component';
 // import { ConnectionsCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/connections-count/connections-count.component';
@@ -248,6 +249,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DashboardCitationsCountComponent,
     DashboardReanalisysCountComponent,
     DashboardConnectionsCountComponent,
+    CountingDataDashboardComponent,
     // DashboardCountingChartsComponent,
     // CitationsCountComponent,
     // ConnectionsCountComponent,

@@ -15,11 +15,14 @@
         <app-profile-contacts [profile]="profileX"></app-profile-contacts>
         <app-profile-connections *ngIf="isMy()" [profile]="profileService.profile"></app-profile-connections>
         <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length"></app-claim-orcid>
+
         <app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>
-        <app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>
-        <app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>
-        <app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>
-        <app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>
+        
+        <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
+        <!--<app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>-->
+        <!--<app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>-->
+        <!--<app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>-->
+        <!--<app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>-->
       </div>
       </div>
 
