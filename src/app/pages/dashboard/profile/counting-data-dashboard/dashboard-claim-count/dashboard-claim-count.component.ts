@@ -15,11 +15,11 @@ import {NotificationsService} from "angular2-notifications/dist";
 import {ThorService} from "../../../../../services/thor.service";
 
 @Component({
-  selector: 'app-dashboard-citations-count',
-  templateUrl: './dashboard-citations-count.component.html',
-  styleUrls: ['./dashboard-citations-count.component.css']
+  selector: 'app-dashboard-claim-count',
+  templateUrl: './dashboard-claim-count.component.html',
+  styleUrls: ['./dashboard-claim-count.component.css']
 })
-export class DashboardCitationsCountComponent implements OnInit {
+export class DashboardClaimCountComponent implements OnInit {
 
     @Output()
     notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
@@ -81,13 +81,14 @@ export class DashboardCitationsCountComponent implements OnInit {
 
     reloadDataSets(){
         // this.dataSets = new Array();
+        console.log(this.datasets);
         this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[] ) {
 
         let processedData = this.prepareData(datasetDetail);
-        // console.log(processedData);
+        console.log(processedData);
         this.draw(processedData);
     }
     private draw(processedData : any){
@@ -109,7 +110,7 @@ export class DashboardCitationsCountComponent implements OnInit {
         // console.log('processedData');
         // console.log(processedData);
 
-        let body = d3.select('#barchart_citations_dashboard');
+        let body = d3.select('#barchart_claim_dashboard');
         let svgProperties: any = this.initSvg(body);
 
         let width = svgProperties.get("width");
@@ -125,10 +126,7 @@ export class DashboardCitationsCountComponent implements OnInit {
         let metaboloList = processedData.get("metaboloList");
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = [{omicstype:'genomicsList'},{omicstype:'transcriList'},{omicstype:'metaboloList'},{omicstype:'proteomiList'}];
-        console.log(proteomiList);
-        console.log(metaboloList);
-        console.log(transcriList);
-        console.log(genomicsList);
+        // console.log(allYear);
 
         let yearSet = processedData.get("yearSet");
 
@@ -144,6 +142,18 @@ export class DashboardCitationsCountComponent implements OnInit {
             // idCollection.push(data['id']);
             yearCollections.push(data['year']);
         });
+        console.log(allYear);
+        let allFullYear = [];
+        allYear.forEach(a=>{
+            if(a['value']!=0){
+               allFullYear.push({
+                   omics_type:a['omics_type'],
+                   year:+a['year'],
+                   value:+a['value']
+               })
+            }
+        });
+        console.log(allFullYear);
 
         // console.log(genomicsList);
         //
@@ -159,16 +169,19 @@ export class DashboardCitationsCountComponent implements OnInit {
         let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
         let xAxis = d3.axisBottom(x0).ticks(yearSet.size+2);
-        let yAxisLeft = d3.axisLeft(y0).ticks(1);
-        let yAxisRight = d3.axisRight(y1).ticks(1);
+        let yAxisLeft = d3.axisLeft(y0).ticks(2);
+        let yAxisRight = d3.axisRight(y1).ticks(2);
         let yLine = d3.scaleLinear().range([15, 0]);
         let yNavLine = d3.axisBottom(yLine).ticks(0);
 
 
         let minpointer = processedData.get("minYear");
-        console.log(minpointer);
-        let max_G_T = processedData.get("max_G_T");
+        // console.log(minpointer);
         let max_M_P = processedData.get("max_M_P");
+        let max_G_T = processedData.get("max_G_T");
+        console.log(max_G_T);
+        console.log(max_M_P);
+        // console.log(max);
         x0.domain([new Date(Number(minpointer)-1,0,0), new Date()]);
 
         y0.domain([0, Number(max_G_T)]);
@@ -199,11 +212,7 @@ export class DashboardCitationsCountComponent implements OnInit {
         if(genomicsList){
             svg.append("path")
                 .style("stroke", "steelblue")
-                .attr("d", valueline(genomicsList))
-                .style("fill",d=>{
-                    console.log(d);
-                });
-            console.log(d3.selectAll('path'));
+                .attr("d", valueline(genomicsList));
         }
         if(transcriList){
             svg.append("path")
@@ -229,7 +238,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             .style('fill', 'none');
 
         svg.selectAll("circle")
-            .data(allYear)
+            .data(allFullYear)
             .enter()
             .append("circle")
             .attr("cx", function (d, i) {
@@ -238,19 +247,22 @@ export class DashboardCitationsCountComponent implements OnInit {
             .attr("cy", function (d) {
                 // console.log(d);
                 if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
+                    // console.log(y0(d['value']));
                     return y0(d['value']);
                 } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
+                    // console.log(y1(d['value']));
                     return y1(d['value']);
                 }
             })
             .attr("fill", function (d) {
                 if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
+                    // console.log(y0(d['value']));
                     return "steelblue";
                 } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
+                    // console.log(y1(d['value']));
                     return "red";
                 }
             });
-
 
         svg.selectAll("circle")
             .attr("r", 4)
@@ -326,7 +338,7 @@ export class DashboardCitationsCountComponent implements OnInit {
                     .style("opacity", 0);
 
                 let searchWord = "*:* AND omics_type:\""
-                    + DashboardCitationsCountComponent.getName(d["year"], d["value"], annualDataExtends)
+                    + DashboardClaimCountComponent.getName(d["year"], d["value"], annualDataExtends)
                     + "\" AND publication_date:\"" + d["year"] + "\"";
 
                 // console.log("router.navigate>>");
@@ -408,7 +420,7 @@ export class DashboardCitationsCountComponent implements OnInit {
         // let body = d3.select('#barchart_omicstype_annual');
         let divWidthPx = body.style("width");
         let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2));
-        let latestDatasetsDivHeightPx = d3.select('#barchart_citations_dashboard').style('height');
+        let latestDatasetsDivHeightPx = d3.select('#barchart_claim_dashboard').style('height');
         let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2));
         divHeight = 100;
         divWidth = parseInt(body.style("width"));
@@ -429,9 +441,9 @@ export class DashboardCitationsCountComponent implements OnInit {
                 .attr("position", "absolute");
         }
 
-        d3.select("#barchart_citations_dashboard_svg").remove();
-        let svg = d3.select("#barchart_citations_dashboard").append("svg")
-            .attr("id", "barchart_citations_dashboard_svg")
+        d3.select("#barchart_claim_dashboard_svg").remove();
+        let svg = d3.select("#barchart_claim_dashboard").append("svg")
+            .attr("id", "barchart_claim_dashboard_svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -446,7 +458,6 @@ export class DashboardCitationsCountComponent implements OnInit {
         return svgProperties;
     }
     private prepareData(annualData: any[]): any {
-        //get the latest year and acient year
         let years: number[] = [];
         annualData.forEach(d=>{
             let date = d['dates']['publication'];
@@ -459,7 +470,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             years.push(Number(year));
         })
         let maxYear = Math.max(...years);
-        console.log(maxYear);
+        // console.log(maxYear);
         let minYear = Math.min(...years);
         let allList = [];
         let allList_g = [];
@@ -485,7 +496,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             })
         }
 
-        console.log(allList_g);
+        // console.log(allList_g);
 
 
 
@@ -494,6 +505,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             proteomiList = [],
             transcriList = [],
             allYearData = [];
+        let allFullYearData = [];
         annualData.forEach(d=>{
             // console.log(d);
             let date = d['dates']['publication'];
@@ -505,32 +517,52 @@ export class DashboardCitationsCountComponent implements OnInit {
             }
             switch (d['omics_type'].toString()) {
                 case "Genomics":
+                    allList_g.forEach(g=>{
 
-                    genomicsList.push({
-                        year: +year,
-                        value: +d['scores']['citationCount']
-                    });
+                        if(Number(g['year'])==Number(year)){
+                            console.log(g['year']);
+                            console.log(Number(year));
+                          g['value']=g['value']+1;
+                          console.log(g['value']);
+                        }
+                    })
+                    // genomicsList.push({
+                    //     year: +year,
+                    //     value: +d['scores']['viewCount']
+                    // });
                     break;
                 case "Transcriptomics":
-
-                    transcriList.push({
-                        year: +year,
-                        value: +d['scores']['citationCount']
-                    });
+                    allList_t.forEach(g=>{
+                        if(Number(g['year'])==Number(year)){
+                            g['value']=g['value']+1;
+                        }
+                    })
+                    // transcriList.push({
+                    //     year: +year,
+                    //     value: +d['scores']['viewCount']
+                    // });
                     break;
                 case "Metabolomics":
-
-                    metaboloList.push({
-                        year: +year,
-                        value: +d['scores']['citationCount']
-                    });
+                    allList_m.forEach(g=>{
+                        if(Number(g['year'])==Number(year)){
+                            g['value']=g['value']+1;
+                        }
+                    })
+                    // metaboloList.push({
+                    //     year: +year,
+                    //     value: +d['scores']['viewCount']
+                    // });
                     break;
                 case "Proteomics":
-
-                    proteomiList.push({
-                        year: +year,
-                        value: +d['scores']['citationCount']
-                    });
+                    allList_p.forEach(g=>{
+                        if(Number(g['year'])==Number(year)){
+                            g['value']=g['value']+1;
+                        }
+                    })
+                    // proteomiList.push({
+                    //     year: +year,
+                    //     value: +d['scores']['viewCount']
+                    // });
                     break;
                 default:
                     break;
@@ -539,142 +571,147 @@ export class DashboardCitationsCountComponent implements OnInit {
 
         let processedData = new Map<string, any>();
 
-        let genomics = this.groupByYear(genomicsList);
-        let transcri = this.groupByYear(transcriList);
-        let metabolo = this.groupByYear(metaboloList);
-        let proteomi = this.groupByYear(proteomiList);
+        // let genomics = this.groupByYear(genomicsList);
+        // let transcri = this.groupByYear(transcriList);
+        // let metabolo = this.groupByYear(metaboloList);
+        // let proteomi = this.groupByYear(proteomiList);
+        // //
+        // // console.log(genomics);
+        // // console.log(transcri);
+        // // console.log(metabolo);
+        // // console.log(proteomi);
+        //
+        //
+        // allList_g.forEach(g=>{
+        //     if(genomics)
+        //         genomics.forEach(d=>{
+        //             if(g['year']==d['year']){
+        //                 g['value']=d['value'];
+        //             }
+        //         })
+        // })
+        //
+        // allList_t.forEach(g=>{
+        //     if(transcri)
+        //         transcri.forEach(d=>{
+        //             if(g['year']==d['year']){
+        //                 g['value']=d['value'];
+        //             }
+        //         })
+        // })
+        // allList_m.forEach(g=>{
+        //     if(metabolo)
+        //         metabolo.forEach(d=>{
+        //             if(g['year']==d['year']){
+        //                 g['value']=d['value'];
+        //             }
+        //         })
+        // })
+        // allList_p.forEach(g=>{
+        //     if(proteomi)
+        //         proteomi.forEach(d=>{
+        //             if(g['year']==d['year']){
+        //                 g['value']=d['value'];
+        //             }
+        //         })
+        // })
 
-        console.log(genomics);
-        console.log(transcri);
-        console.log(metabolo);
-        console.log(proteomi);
-
-
-        allList_g.forEach(g=>{
-            if(genomics)
-            genomics.forEach(d=>{
-                if(g['year']==d['year']){
-                    g['value']=d['value'];
-                }
-            })
-        })
-
-        allList_t.forEach(g=>{
-            if(transcri)
-            transcri.forEach(d=>{
-                if(g['year']==d['year']){
-                    g['value']=d['value'];
-                }
-            })
-        })
-        allList_m.forEach(g=>{
-            if(metabolo)
-            metabolo.forEach(d=>{
-                if(g['year']==d['year']){
-                    g['value']=d['value'];
-                }
-            })
-        })
-        allList_p.forEach(g=>{
-            if(proteomi)
-            proteomi.forEach(d=>{
-                if(g['year']==d['year']){
-                    g['value']=d['value'];
-                }
-            })
-        })
-
-        let allFullYearData = [];
         let data_M_P = [];
         let data_G_T = [];
 
         if(allList_g)
             allList_g.forEach(d=>{
-                    allFullYearData.push({
-                        omics_type:'Genomics',year:d['year'],value:d['value']
-                    });
+                allFullYearData.push({
+                    omics_type:'Genomics',year:d['year'],value:d['value']
+                });
                 data_G_T.push(Number(d['value']));
             })
         if(allList_t)
             allList_t.forEach(d=>{
                 allFullYearData.push({
-                        omics_type:'Transcriptomics',year:d['year'],value:d['value']
-                    });
+                    omics_type:'Transcriptomics',year:d['year'],value:d['value']
+                });
                 data_G_T.push(Number(d['value']));
             })
         if(allList_m)
             allList_m.forEach(d=>{
                 allFullYearData.push({
-                        omics_type:'Metabolomics',year:d['year'],value:d['value']
-                    });
+                    omics_type:'Metabolomics',year:d['year'],value:d['value']
+                });
                 data_M_P.push(Number(d['value']));
             })
         if(allList_p)
             allList_p.forEach(d=>{
                 allFullYearData.push({
-                        omics_type:'Proteomics',year:d['year'],value:d['value']
-                    });
+                    omics_type:'Proteomics',year:d['year'],value:d['value']
+                });
                 data_M_P.push(Number(d['value']));
             })
 
-        let dataCollection = [];
+
         let yearSet = new Set();
         allFullYearData.forEach(data=>{
-            // console.log(Number(data['count'].toString()));
-            let count: number = Number(data['value']);
-            dataCollection.push(count);
             yearSet.add(data['year']);
         });
 
         let max_G_T = Math.max(...data_G_T);
         let max_M_P = Math.max(...data_M_P);
 
-
-
-
-
-        if(allList_g)
-            allList_g.forEach(d=>{
-                if(d['value']!=0)
-                allYearData.push({
-                    omics_type:'Genomics',year:d['year'],value:d['value']
-                });
-            })
-        if(allList_t)
-            allList_t.forEach(d=>{
-                if(d['value']!=0)
-                allYearData.push({
-                    omics_type:'Transcriptomics',year:d['year'],value:d['value']
-                });
-            })
-        if(allList_m)
-            allList_m.forEach(d=>{
-                if(d['value']!=0)
-                allYearData.push({
-                    omics_type:'Metabolomics',year:d['year'],value:d['value']
-                });
-            })
-        if(allList_p)
-            allList_p.forEach(d=>{
-                if(d['value']!=0)
-                allYearData.push({
-                    omics_type:'Proteomics',year:d['year'],value:d['value']
-                });
-            })
+        console.log(max_G_T);
+        console.log(max_M_P);
 
 
 
 
 
-        processedData.set("allYear", allYearData);
+
+
+        // if(allList_g)
+        //     allList_g.forEach(d=>{
+        //         if(d['value']!=0)
+        //             allYearData.push({
+        //                 omics_type:'Genomics',year:d['year'],value:d['value']
+        //             });
+        //     })
+        // if(allList_t)
+        //     allList_t.forEach(d=>{
+        //         if(d['value']!=0)
+        //             allYearData.push({
+        //                 omics_type:'Transcriptomics',year:d['year'],value:d['value']
+        //             });
+        //     })
+        // if(allList_m)
+        //     allList_m.forEach(d=>{
+        //         if(d['value']!=0)
+        //             allYearData.push({
+        //                 omics_type:'Metabolomics',year:d['year'],value:d['value']
+        //             });
+        //     })
+        // if(allList_p)
+        //     allList_p.forEach(d=>{
+        //         if(d['value']!=0)
+        //             allYearData.push({
+        //                 omics_type:'Proteomics',year:d['year'],value:d['value']
+        //             });
+        //     })
+
+
+        console.log(allFullYearData);
+        console.log(allList_g);
+        console.log(allList_t);
+        console.log(allList_m);
+        console.log(allList_p);
+
+
+        processedData.set("allYear", allFullYearData);
         processedData.set("genomicsList", allList_g);
         processedData.set("transcriList", allList_t);
         processedData.set("metaboloList", allList_m);
         processedData.set("proteomiList", allList_p);
         processedData.set("minYear", minYear);
-        processedData.set("max_G_T", max_G_T);
-        processedData.set("max_M_P", max_M_P);
         processedData.set("yearSet",yearSet);
+        processedData.set("max_G_T",max_G_T);
+        processedData.set("max_M_P",max_M_P);
 
         return processedData;
 

@@ -67,12 +67,8 @@ export class DashboardViewsCountComponent implements OnInit {
             let prev = JSON.stringify(chng.previousValue);
             //console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if(propName=="datasets"){
-                // console.log(chng.currentValue);
                 this.datasets = chng.currentValue;
-                // console.log(this.datasets);
                 if(null!=chng.currentValue){
-                    // console.log('hey reload!');
-                    // console.log(this.datasets);
                     this.reloadDataSets();
                 }
             }
@@ -80,99 +76,28 @@ export class DashboardViewsCountComponent implements OnInit {
     }
 
     reloadDataSets(){
-        // this.dataSets = new Array();
         this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[] ) {
-        let test= [];
-        let id: string;
-        for(let i = 0;i<datasetDetail.length;i++){
-            // let
-            let publicationDate = datasetDetail[i]['publicationDate'];
-            let year;
-            if(publicationDate.indexOf('-')>= 1){
-                year = publicationDate.substring(0,4);
-                console.log(year);
-            }else{
-                year = publicationDate.substr(publicationDate.lastIndexOf(' ')+1,4);
-            }
-            test.push({
-                id: datasetDetail[i].id,count: +datasetDetail[i]['scores']['viewCount'],pointer: i+1,year: year
-            })
 
-        }
-        console.log(test);
-        // let processedData = this.prepareData(test);
-        this.draw(test);
+        let processedData = this.prepareData(datasetDetail);
+        console.log(processedData);
+        this.draw(processedData);
     }
     private draw(processedData : any){
 
         this.drawGraph(processedData);
         let self = this;
-        // d3.select(window).on('resize',function(){
-        //   self.drawGraph(processedData);
-        // });
         d3.select(window)
             .on('resize.annual_omicstype', function() {
                 if(self.router.url === "/home")
                     self.drawGraph(processedData)
             })
     }
+
     private drawGraph(processedData : any): void {
         let self = this;
-        // console.log('processedData');
-        // console.log(processedData);
-        // console.log(processedData.length);
-        let dataCollection: number[] = [];
-        let idCollection:string[] = [];
-        let pointerCollection: number[] = [];
-        let yearSet: Set<string> = new Set();
-        for(let data of processedData){
-            console.log(data['year']);
-            yearSet.add(data['year']);
-        }
-        let yearArray = Array.from(yearSet);
-        yearArray.sort();
-        console.log(yearArray);
-
-        let dataOfYear = [];
-
-        let yearCollections: number[] = [];
-        let countCollections: number[] = [];
-        console.log('yearyearyear');
-        for(let year of yearArray){
-            console.log(year);
-            let totalCount = 0;
-            let datasetsCount = 0;
-            for(let data of processedData){
-                if(data['year'] == year){
-                    totalCount = totalCount + data['count'];
-                    datasetsCount = datasetsCount + 1;
-                }
-            }
-            yearCollections.push(Number(year));
-            countCollections.push(totalCount);
-            dataOfYear.push({
-                year: Number(year),count: totalCount,datasetsCount :datasetsCount
-            })
-        }
-        console.log(yearCollections);
-        console.log(countCollections);
-
-        for(let data of processedData){
-            // console.log(Number(data['count'].toString()));
-            let count: number = Number(data['count']);
-            dataCollection.push(count);
-            idCollection.push(data['id']);
-            pointerCollection.push(data['pointer']);
-        }
-
-        let max = Math.max(...countCollections);
-        let maxpointer = Math.max(...yearCollections);
-        let minpointer = Math.min(...yearCollections);
-        console.log(max);
-
 
         let body = d3.select('#barchart_views_dashboard');
         let svgProperties: any = this.initSvg(body);
@@ -183,53 +108,118 @@ export class DashboardViewsCountComponent implements OnInit {
         let svg = svgProperties.get("svg");
         let toolTip = svgProperties.get("toolTip");
 
+        let annualDataExtends = processedData.get("annualDataExtends");
+        let allYear = processedData.get("allYear");
+        let genomicsList = processedData.get("genomicsList");
+        let transcriList = processedData.get("transcriList");
+        let metaboloList = processedData.get("metaboloList");
+        let proteomiList = processedData.get("proteomiList");
+        let omicsTypes = [{omicstype:'genomicsList'},{omicstype:'transcriList'},{omicstype:'metaboloList'},{omicstype:'proteomiList'}];
 
-        let countList = processedData;
+        let yearSet = processedData.get("yearSet");
 
-        let x0 = d3.scaleLinear().range([0, width - 30]);
+        let dataCollection: number[] = [];
+        let yearCollections: number[] = [];
+        let countCollections: number[] = [];
+        allYear.forEach(data=>{
+            let count: number = Number(data['value']);
+            dataCollection.push(count);
+            yearCollections.push(data['year']);
+        });
+        let x0 = d3.scaleTime().range([0, width - 30]);
         let y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         let y1 = d3.scaleLinear().range([height - heightOffset, 0]);
         let xAxis = d3.axisBottom(x0).ticks(yearSet.size+2);
-        let yAxisLeft = d3.axisLeft(y0).ticks(1);
+        let yAxisLeft = d3.axisLeft(y0).ticks(2);
         let yAxisRight = d3.axisRight(y1).ticks(2);
         let yLine = d3.scaleLinear().range([15, 0]);
         let yNavLine = d3.axisBottom(yLine).ticks(0);
 
 
+        let minpointer = processedData.get("minYear");
+        let max_G_T = processedData.get("max_G_T");
+        let max_M_P = processedData.get("max_M_P");
 
-        x0.domain([minpointer-1,maxpointer+1]);
+        x0.domain([new Date(Number(minpointer)-1,0,0), new Date()]);
 
-        y1.domain([0, max]);
+        y0.domain([0, Number(max_G_T)]);
+        y1.domain([0, Number(max_M_P)]);
+
 
         var valueline = d3.line()
             .x(d => {
-                console.log(d['year']);
-                return x0(d['year']);
+
+                return x0(new Date(d["year"], 0, 0));
             })
             .y(d => {
-                console.log(d['count']);
-                return y1(d['count']);
+
+                return y0(parseInt(d["value"]));
             });
+
+        var valueline2 = d3.line()
+            .x(d => {
+                // console.log('Line:');
+                // console.log(x0(new Date(d["year"], 0, 0)));
+                return x0(new Date(d["year"], 0, 0));
+            })
+            .y(d => {
+                // console.log(y1(parseInt(d["value"])));
+                return y1(parseInt(d["value"]));
+            });
+
+        if(genomicsList){
+        svg.append("path")
+            .style("stroke", "steelblue")
+            .attr("d", valueline(genomicsList));
+        }
+        if(transcriList){
+        svg.append("path")
+            .style("stroke", "steelblue")
+            .style("stroke-dasharray", ("3, 3"))
+            .attr("d", valueline(transcriList));
+        }
+        if(metaboloList){
         svg.append("path")        // Add the valueline2 path.
             .attr("class", "line")
             .style("stroke", "red")
-            .attr("d", valueline(dataOfYear));
+            .attr("d", valueline2(metaboloList));
+    }
+        if(proteomiList){
+        svg.append("path")
+            .attr("class", "line")
+            .style("stroke", "red")
+            .style("stroke-dasharray", ("3, 3"))
+            .attr("d", valueline2(proteomiList));
+        }
         svg.selectAll("path")
             .style('stroke-width', '2')
             .style('fill', 'none');
 
         svg.selectAll("circle")
-            .data(dataOfYear)
+            .data(allYear)
             .enter()
             .append("circle")
-            .attr("cx", function (d) {
-                return x0(d['year']);
+            .attr("cx", function (d, i) {
+                return x0(new Date(d["year"], 0, 0));
             })
             .attr("cy", function (d) {
-                return y1(d['count']);
+                console.log(d);
+                if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
+                    console.log(y0(d['value']));
+                    return y0(d['value']);
+                } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
+                    console.log(y1(d['value']));
+                    return y1(d['value']);
+                }
             })
             .attr("fill", function (d) {
+                if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
+                    console.log(y0(d['value']));
+                    return "steelblue";
+                } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
+                    console.log(y1(d['value']));
                     return "red";
+                }
             });
 
         svg.selectAll("circle")
@@ -237,7 +227,7 @@ export class DashboardViewsCountComponent implements OnInit {
             .style("cursor", "pointer")
             .on("mouseover", function (d: any, i: number) {
                 let mouse_coords = d3.mouse(document.getElementById("bar_chart_tooltip").parentElement);
-                console.log(mouse_coords[0]+','+mouse_coords[1]);
+                // console.log(mouse_coords[0]+','+mouse_coords[1]);
                 /*
                 for d3 tooltip
                 if a tooltip is inside angular component inside a div like this
@@ -251,6 +241,9 @@ export class DashboardViewsCountComponent implements OnInit {
                 let profile_div = d3.select('#profile_div').style('height');
                 let profile_div_height = profile_div.substring(0,profile_div.indexOf('px'));
 
+                let barchart_omicstype_annual_dashboard = d3.select('#barchart_claim_dashboard').style('height');
+                let barchart_claim_dashboard_height = barchart_omicstype_annual_dashboard.substring(0,barchart_omicstype_annual_dashboard.indexOf('px'));
+
                 //barchart_citations_dashboard height
                 let barchart_citations_dashboard = d3.select('#barchart_citations_dashboard').style('height');
                 let barchart_citations_dashboard_height = barchart_citations_dashboard.substring(0,barchart_citations_dashboard.indexOf('px'));
@@ -260,38 +253,42 @@ export class DashboardViewsCountComponent implements OnInit {
                 //barchart_views_dashboard
                 let barchart_views_dashboard = d3.select('#barchart_views_dashboard').style('height');
                 let barchart_views_dashboard_height = barchart_views_dashboard.substring(0,barchart_views_dashboard.indexOf('px'));
+                //barchart_reanalisys_dashboard
+                let barchart_reanalisys_dashboard = d3.select('#barchart_reanalisys_dashboard').style('height');
+                let barchart_reanalisys_dashboard_height = barchart_reanalisys_dashboard.substring(0,barchart_reanalisys_dashboard.indexOf('px'));
 
-                let position = Number(profile_div_height)-Number(barchart_connections_dashboard_height)*5 + mouse_coords[1] - 40;
-                console.log('position:'+position);
+                let position = Number(profile_div_height) - Number(barchart_claim_dashboard_height)-Number(barchart_citations_dashboard_height)-Number(barchart_connections_dashboard_height)-Number(barchart_views_dashboard_height)-Number(barchart_reanalisys_dashboard_height) + mouse_coords[1] - 40;
+                // console.log('position:'+position);
 
-                toolTip.html(d['year'] + ": <br>" + d['count'] + " views")
+                toolTip.html(d.omics_type.toString() + ": <br>" + d.value.toString() + " datasets")
                     .style("left", ((mouse_coords[0] + 5) + "px"))
                     .style("top", (position + "px"))
                     .style("height", "3em")
-                    .style("width", (d3.select('#profile_div').style('width') + "px"))
+                    .style("width", ((d.year.toString().length + 9) * 8 + "px"))
                     .style("padding", "5px");
 
                 toolTip.transition()
                     .duration(200)
                     .style("opacity", .9);
+
             })
             .on("mouseout", function () {
                 toolTip.transition()
                     .duration(500)
                     .style("opacity", 0);
             })
-        //     .on("click", function (d) {
-        //         toolTip.transition()
-        //             .duration(500)
-        //             .style("opacity", 0);
-        //
-        //         let searchWord = "*:* AND omics_type:\""
-        //             + DashboardViewsCountComponent.getName(d["year"], d["value"], processedData)
-        //             + "\" AND publication_date:\"" + d["year"] + "\"";
-        //
-        //         console.log("router.navigate>>");
-        //         self.router.navigate(['search'],{ queryParams: { q: searchWord }});
-        //     });
+            .on("click", function (d) {
+                toolTip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+
+                let searchWord = "*:* AND omics_type:\""
+                    + DashboardViewsCountComponent.getName(d["year"], d["value"], annualDataExtends)
+                    + "\" AND publication_date:\"" + d["year"] + "\"";
+
+                // console.log("router.navigate>>");
+                self.router.navigate(['search'],{ queryParams: { q: searchWord }});
+            });
 
         svg.append("g")
             .attr("class", "x axis")
@@ -308,6 +305,59 @@ export class DashboardViewsCountComponent implements OnInit {
             .style("stroke", "red")
             .attr("transform", "translate(" + (width - 30) + " ,0)")
             .call(yAxisRight);
+        // let legend = svg.selectAll(".legend")
+        //     .data(omicsTypes.slice().reverse())
+        //     .enter().append("g")
+        //     .attr("class", "legend")
+        //     .attr("transform", function (d, i) {
+        //         return "translate(" + (i * 0) + ",200)";
+        //     })
+        //     .on("click", function (d) {
+        //         var searchWord = "*:* AND omics_type:\"" + d + "\"";
+        //         // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
+        //         // console.log("this.router.navigate");
+        //         self.router.navigate(['search'],{ queryParams: { q: searchWord }});
+        //     });
+        //
+        // let legend_coords = {
+        //     "genomics": { x: -15, y: 25, color: "steelblue" },
+        //     "transcriptomics": { x: -15, y: 45, color: "steelblue" },
+        //     "metabolomics": { x: (width + 10) / 2, y: 25, color: "red" },
+        //     "proteomics": { x: (width + 10) / 2, y: 45, color: "red" }
+        // };
+        //
+        // legend.append("path")
+        //     .attr("class", "omics-line")
+        //     .style("stroke-width", "2")
+        //     .attr("d", d => {
+        //         return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
+        //             " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
+        //     })
+        //     .style("stroke", d => {
+        //         return legend_coords[d]["color"];
+        //     })
+        //     .style("stroke-dasharray", d => {
+        //         if (d === "transcriptomics" || d === "proteomics") {
+        //             return ("3, 3");
+        //         } else {
+        //             return ("0, 0");
+        //         }
+        //     });
+        //
+        // legend.append("text")
+        //     .attr("x", d => {
+        //         return legend_coords[d]['x'] + 20
+        //     })
+        //     .attr("y", d => {
+        //         return legend_coords[d]['y']
+        //     })
+        //     .attr("dy", ".85em")
+        //     .style("text-anchor", "start")
+        //     .text(d => {
+        //         return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
+        //     });
+
+
     }
     private initSvg(body : any): any {
 
@@ -353,6 +403,226 @@ export class DashboardViewsCountComponent implements OnInit {
         return svgProperties;
     }
     private prepareData(annualData: any[]): any {
+        let years: number[] = [];
+        annualData.forEach(d=>{
+            let date = d['dates']['publication'];
+            let year;
+            if(date.toString().indexOf('-')>=0){
+                year = date.toString().substr(0,4);
+            }else{
+                year = date.toString().substr(date.toString().lastIndexOf(' '),4);
+            }
+            years.push(Number(year));
+        })
+        let maxYear = Math.max(...years);
+        console.log(maxYear);
+        let minYear = Math.min(...years);
+        let allList = [];
+        let allList_g = [];
+        let allList_m = [];
+        let allList_p = [];
+        let allList_t = [];
+        for(let i = minYear;i<maxYear+1;i++){
+            allList_g.push({
+                year: +i,
+                value: 0
+            })
+            allList_m.push({
+                year: +i,
+                value: 0
+            })
+            allList_p.push({
+                year: +i,
+                value: 0
+            })
+            allList_t.push({
+                year: +i,
+                value: 0
+            })
+        }
+
+
+        let genomicsList = [],
+            metaboloList = [],
+            proteomiList = [],
+            transcriList = [],
+            allYearData = [];
+        annualData.forEach(d=>{
+            // console.log(d);
+            let date = d['dates']['publication'];
+            let year;
+            if(date.toString().indexOf('-')>=0){
+                year = date.toString().substr(0,4);
+            }else{
+                year = date.toString().substr(date.toString().lastIndexOf(' '),4);
+            }
+            switch (d['omics_type'].toString()) {
+                case "Genomics":
+
+                    genomicsList.push({
+                        year: +year,
+                        value: +d['scores']['viewCount']
+                    });
+                    break;
+                case "Transcriptomics":
+
+                    transcriList.push({
+                        year: +year,
+                        value: +d['scores']['viewCount']
+                    });
+                    break;
+                case "Metabolomics":
+
+                    metaboloList.push({
+                        year: +year,
+                        value: +d['scores']['viewCount']
+                    });
+                    break;
+                case "Proteomics":
+
+                    proteomiList.push({
+                        year: +year,
+                        value: +d['scores']['viewCount']
+                    });
+                    break;
+                default:
+                    break;
+            }
+        })
+
+        let processedData = new Map<string, any>();
+
+        let genomics = this.groupByYear(genomicsList);
+        let transcri = this.groupByYear(transcriList);
+        let metabolo = this.groupByYear(metaboloList);
+        let proteomi = this.groupByYear(proteomiList);
+
+        console.log(genomics);
+        console.log(transcri);
+        console.log(metabolo);
+        console.log(proteomi);
+
+
+        allList_g.forEach(g=>{
+            if(genomics)
+                genomics.forEach(d=>{
+                    if(g['year']==d['year']){
+                        g['value']=d['value'];
+                    }
+                })
+        })
+
+        allList_t.forEach(g=>{
+            if(transcri)
+                transcri.forEach(d=>{
+                    if(g['year']==d['year']){
+                        g['value']=d['value'];
+                    }
+                })
+        })
+        allList_m.forEach(g=>{
+            if(metabolo)
+                metabolo.forEach(d=>{
+                    if(g['year']==d['year']){
+                        g['value']=d['value'];
+                    }
+                })
+        })
+        allList_p.forEach(g=>{
+            if(proteomi)
+                proteomi.forEach(d=>{
+                    if(g['year']==d['year']){
+                        g['value']=d['value'];
+                    }
+                })
+        })
+
+        let allFullYearData = [];
+        let data_M_P = [];
+        let data_G_T = [];
+
+        if(allList_g)
+            allList_g.forEach(d=>{
+                allFullYearData.push({
+                    omics_type:'Genomics',year:d['year'],value:d['value']
+                });
+                data_G_T.push(Number(d['value']));
+            })
+        if(allList_t)
+            allList_t.forEach(d=>{
+                allFullYearData.push({
+                    omics_type:'Transcriptomics',year:d['year'],value:d['value']
+                });
+                data_G_T.push(Number(d['value']));
+            })
+        if(allList_m)
+            allList_m.forEach(d=>{
+                allFullYearData.push({
+                    omics_type:'Metabolomics',year:d['year'],value:d['value']
+                });
+                data_M_P.push(Number(d['value']));
+            })
+        if(allList_p)
+            allList_p.forEach(d=>{
+                allFullYearData.push({
+                    omics_type:'Proteomics',year:d['year'],value:d['value']
+                });
+                data_M_P.push(Number(d['value']));
+            })
+
+        let dataCollection = [];
+        let yearSet = new Set();
+        allFullYearData.forEach(data=>{
+            yearSet.add(data['year']);
+        });
+        let max_G_T = Math.max(...data_G_T);
+        let max_M_P = Math.max(...data_M_P);
+
+
+
+        if(allList_g)
+            allList_g.forEach(d=>{
+                if(d['value']!=0)
+                allYearData.push({
+                    omics_type:'Genomics',year:d['year'],value:d['value']
+                });
+            })
+        if(allList_t)
+            allList_t.forEach(d=>{
+                if(d['value']!=0)
+                allYearData.push({
+                    omics_type:'Transcriptomics',year:d['year'],value:d['value']
+                });
+            })
+        if(allList_m)
+            allList_m.forEach(d=>{
+                if(d['value']!=0)
+                allYearData.push({
+                    omics_type:'Metabolomics',year:d['year'],value:d['value']
+                });
+            })
+        if(allList_p)
+            allList_p.forEach(d=>{
+                if(d['value']!=0)
+                allYearData.push({
+                    omics_type:'Proteomics',year:d['year'],value:d['value']
+                });
+            })
+
+
+
+        processedData.set("allYear", allYearData);
+        processedData.set("genomicsList", allList_g);
+        processedData.set("transcriList", allList_t);
+        processedData.set("metaboloList", allList_m);
+        processedData.set("proteomiList", allList_p);
+        processedData.set("minYear", minYear);
+        processedData.set("max_G_T", max_G_T);
+        processedData.set("max_M_P", max_M_P);
+        processedData.set("yearSet",yearSet);
+
+        return processedData;
+
     }
     private prepareAllDate(priData: any, nameString: string, allYearData: any[]) {
         for (var i = 0; i < priData.length; i++) {
@@ -374,6 +644,29 @@ export class DashboardViewsCountComponent implements OnInit {
         }
     }
 
+    private groupByYear(data : any){
+        if(data.length<=0){
+            return;
+        }
+        let yearSet = new Set();
+        data.forEach(d=>{
+            yearSet.add(d['year']);
+        })
+        let groupedByYear = [];
+        let years = Array.from(yearSet);
+        years.forEach(y=>{
+            let totalCount = 0;
+            data.forEach(d=>{
+                if(Number(d['year']) == Number(y)){
+                    totalCount = totalCount + Number(d['value']);
+                }
+            })
+            groupedByYear.push({
+                value: totalCount,year:Number(y)
+            })
+        })
+        return groupedByYear;
 
+    }
 
 }

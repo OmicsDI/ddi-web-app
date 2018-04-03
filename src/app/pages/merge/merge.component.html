@@ -6,6 +6,8 @@ Total merge candidates: {{this.count}}
     <tr>
       <td style="width:50px"><input type="checkbox" style="opacity:10" (change)="check(d.database,d.accession,$event.target.checked)"></td>
       <td style="width:100px"><input type="button" value="merge" (click)="merge(d.database,d.accession)"></td>
+      <td style="width:100px"><input type="button" value="skip" (click)="skipMerge(d.database,d.accession)"></td>
+      <td style="width:100px"><input type="button" value="multiomics" (click)="multiomicsMerge(d.database,d.accession)"></td>
       <td style="width:100px">{{d.database}}</td>
       <td style="width:100px">{{d.accession}}</td>
       <td>{{d.name}}</td>
@@ -15,6 +17,8 @@ Total merge candidates: {{this.count}}
     <tr *ngFor="let c of d.similars" style="width:100%; border: none;">
       <td style="width:50px"><input type="checkbox" style="opacity:10" (change)="check(c.database,c.accession,$event.target.checked)"></td>
       <td style="width:100px"><input type="button" value="merge" (click)="merge(c.database,c.accession)"></td>
+      <td style="width:100px"><input type="button" value="skip" (click)="skipMerge(d.database,d.accession)"></td>
+      <td style="width:100px"><input type="button" value="multiomics" (click)="multiomicsMerge(d.database,d.accession)"></td>
       <td style="width:100px">{{c.database}}</td>
       <td style="width:100px">{{c.accession}}</td>
       <td>{{c.name}}</td>

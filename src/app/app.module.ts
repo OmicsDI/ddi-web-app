@@ -132,6 +132,7 @@ import { DashboardCitationsCountComponent } from './pages/dashboard/profile/coun
 import { DashboardReanalisysCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-reanalisys-count/dashboard-reanalisys-count.component';
 import { DashboardConnectionsCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-connections-count/dashboard-connections-count.component';
 import { CountingDataDashboardComponent } from './pages/dashboard/profile/counting-data-dashboard/counting-data-dashboard.component';
+import { DashboardClaimCountComponent } from './pages/dashboard/profile/counting-data-dashboard/dashboard-claim-count/dashboard-claim-count.component';
 // import { DashboardCountingChartsComponent } from './pages/dashboard/profile/dashboard-counting-charts/dashboard-counting-charts.component';
 // import { CitationsCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/citations-count/citations-count.component';
 // import { ConnectionsCountComponent } from './pages/dashboard/profile/dashboard-counting-charts/connections-count/connections-count.component';
@@ -250,6 +251,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DashboardReanalisysCountComponent,
     DashboardConnectionsCountComponent,
     CountingDataDashboardComponent,
+    DashboardClaimCountComponent,
     // DashboardCountingChartsComponent,
     // CitationsCountComponent,
     // ConnectionsCountComponent,

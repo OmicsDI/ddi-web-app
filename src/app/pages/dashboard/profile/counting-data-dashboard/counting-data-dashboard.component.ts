@@ -46,16 +46,10 @@ export class CountingDataDashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.profileService.getDataSetDetails(this.profileService.profile);
           this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
-
-
-
         // Listen page size
         Observable.fromEvent(window, 'resize')
-            // .debounceTime(100) //timer
             .subscribe((event) => {
-                // restartRequest
                 this.reloadDataSets();
             });
 
@@ -68,7 +62,6 @@ export class CountingDataDashboardComponent implements OnInit {
             let chng = changes[propName];
             let cur  = JSON.stringify(chng.currentValue);
             let prev = JSON.stringify(chng.previousValue);
-            //console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if(propName=="profile"){
                 if(null!=chng.currentValue){
                     this.reloadDataSets();
@@ -87,12 +80,8 @@ export class CountingDataDashboardComponent implements OnInit {
         }
         Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
             y => {
-                // console.log(x);
-                console.log(y);
                 this.dataSets = y;
                 this.thorService.datasets = y;
-                console.log(this.dataSets);
-
             }
         )
     }

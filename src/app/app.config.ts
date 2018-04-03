@@ -167,6 +167,13 @@ export class AppConfig{
     return `${environment.webServiceUrl}dataset/merge`;
   }
 
+    skipMergeUrl(){
+        return `${environment.webServiceUrl}dataset/skipMerge`;
+    }
+    multiomicsMerge(){
+        return `${environment.webServiceUrl}dataset/multiomicsMerge`;
+    }
+
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";

@@ -37,7 +37,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         Observable.fromEvent(window, 'resize')
             .debounceTime(100) //timer
             .subscribe((event) => {
-                // restartRequest
                 this.startRequest();
             });
 
@@ -74,7 +73,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
                     this.notifyHomeLoader.emit('annual_omicstype');
                     ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
                     let processedData = this.prepareData(annualData);
-                    // console.log(annualData);
                     this.draw(processedData);
                 }
             });
@@ -83,9 +81,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
 
         this.drawGraph(processedData);
         let self = this;
-        // d3.select(window).on('resize',function(){
-        //   self.drawGraph(processedData);
-        // });
         d3.select(window)
             .on('resize.annual_omicstype', function() {
                 if(self.router.url === "/home")
@@ -94,8 +89,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
     }
     private drawGraph(processedData : any): void {
         let self = this;
-        // console.log('processedData');
-        // console.log(processedData);
 
         let body = d3.select('#barchart_omicstype_annual_dashboard');
         let svgProperties: any = this.initSvg(body);
@@ -114,9 +107,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = processedData.get("omicsTypes");
 
-        // console.log(proteomiList);
-        //
-        // console.log(Array.from(annualDataExtends).length);
         var minDate = new Date(d3.min(annualDataExtends, d => {
             return parseInt(d["year"]);
         }), 0, 0);
@@ -269,20 +259,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
                 toolTip.transition()
                     .duration(200)
                     .style("opacity", .9);
-                // contactInfo,gsc_rsb_co,connectionBox
-
-                // let contactInfo = d3.select('#contactInfo').style('height');
-                // let contactInfo_height = contactInfo.substring(0,contactInfo.indexOf('px'));
-                // let gsc_rsb_co = d3.select('#gsc_rsb_co').style('height');
-                // let gsc_rsb_co_height = contactInfo.substring(0,contactInfo.indexOf('px'));
-                // let connectionBox = d3.select('#connectionBox').style('height');
-                // let connectionBox_height = contactInfo.substring(0,contactInfo.indexOf('px'));
-                // let sum = Number(contactInfo)+Number(gsc_rsb_co)+Number(connectionBox);
-                // let coordy = mouse_coords[1].valueOf();
-                // console.log('????:'+contactInfo_height);
-                // console.log(mouse_coords[0]+","+mouse_coords[1]);
-                // console.log(coordy+sum);
-
             })
             .on("mouseout", function () {
                 toolTip.transition()
@@ -390,7 +366,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
 
         let tool_tip = null;
         if (!tool_tip) {
-            // tool_tip = document.getElementById('barchart_omicstype_annual_dashboard_svg')
             tool_tip = body.append("div")
                 .attr("id", "bar_chart_tooltip")
                 .attr("class", "chart_tooltip")
@@ -420,36 +395,61 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         let omicsTypes = d3.keys(annualData[0]).filter(key => {
             return key !== "year";
         });
-
-        // console.log(omicsTypes);
-        //     omicsTypes = _.without(omicsTypes, "omics");//***unclear question  */
-
         let data = annualData;
+        let years = [];
+
+        data.forEach(d=>{
+            years.push(Number(d["year"]) );
+        })
+
+        let max = Math.max(...years);
+        let min = Math.min(...years);
+
+
+
         let genomicsList = [],
             metaboloList = [],
             proteomiList = [],
             transcriList = [],
             allYearData = [];
 
+        for(let i = min;i<=max;i++){
+            genomicsList.push({
+                year: +i,
+                value: 0
+            });
+            metaboloList.push({
+                year: +i,
+                value: 0
+            });
+            proteomiList.push({
+                year: +i,
+                value: 0
+            });
+            transcriList.push({
+                year: +i,
+                value: 0
+            });
+        }
+
         data.forEach(d => {
 
             d.omics = omicsTypes.map(name => {
                 if (name !== "year") return { name: name, value: +d[name], year: d["year"] };
             });
-            console.log(d);
-            //calculate the log value
             for (var i = 0; i < d.omics.length; i++) {
 
                 var currOmic = d.omics[i];
 
                 switch (currOmic.name) {
                     case "genomics":
-                        if(currOmic.value != 0){
-                        genomicsList.push({
-                            year: +currOmic.year,
-                            value: +currOmic.value
-                        })
+                        if(currOmic.value != 0) {
+                            genomicsList.push({
+                                year: +currOmic.year,
+                                value: +currOmic.value
+                            })
                         }
+
                         break;
                     case "transcriptomics":
                         if(currOmic.value != 0) {
@@ -480,7 +480,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
                 }
             }
         });
-        // console.log(data[0].omics);
         this.prepareAllDate(genomicsList, "Genomics", allYearData);
         this.prepareAllDate(transcriList, "Transcriptomics", allYearData);
         this.prepareAllDate(metaboloList, "Metabolomics", allYearData);
@@ -493,13 +492,6 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit {
         processedData.set("metaboloList", metaboloList);
         processedData.set("proteomiList", proteomiList);
         processedData.set("omicsTypes", omicsTypes);
-        // const arrays = new Array();
-        // for(let i = 0;i<proteomiList.length;i++){
-        //     arrays.push(proteomiList[i]);
-        // }
-        // arrays.sort();
-        // console.log(arrays)
-
         return processedData;
     }
     private prepareAllDate(priData: any, nameString: string, allYearData: any[]) {

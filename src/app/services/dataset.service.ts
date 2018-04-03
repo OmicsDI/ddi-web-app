@@ -106,5 +106,34 @@ export class DataSetService extends BaseService{
         })
   }
 
+    public skipMerge(result: MergeCandidate) : Observable<String> {
+        var url = this.appConfig.skipMergeUrl();
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, JSON.stringify(result), options)
+            .map(res => {
+                return "OK"
+            }).catch(err=>{
+                return Observable.throw(err);
+            })
+    }
+
+    public multiomicsMerge(result: MergeCandidate) : Observable<String> {
+        var url = this.appConfig.multiomicsMerge();
+
+        let headers = new Headers({ 'Content-Type': 'application/json'});
+        headers.append('Access-Control-Allow-Origin','*' );
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, JSON.stringify(result), options)
+            .map(res => {
+                return "OK"
+            }).catch(err=>{
+                return Observable.throw(err);
+            })
+    }
+
 
 }
