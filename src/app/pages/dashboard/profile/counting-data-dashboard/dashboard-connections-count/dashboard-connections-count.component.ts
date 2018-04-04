@@ -123,7 +123,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
         let transcriList = processedData.get("transcriList");
         let metaboloList = processedData.get("metaboloList");
         let proteomiList = processedData.get("proteomiList");
-        let omicsTypes = [{omicstype:'genomicsList'},{omicstype:'transcriList'},{omicstype:'metaboloList'},{omicstype:'proteomiList'}];
+        let omicsTypes = ['genomics','transcriptomics','metabolomics','proteomics'];
         console.log(allYear);
 
         let yearSet = processedData.get("yearSet");
@@ -343,57 +343,66 @@ export class DashboardConnectionsCountComponent implements OnInit {
             .style("stroke", "red")
             .attr("transform", "translate(" + (width - 30) + " ,0)")
             .call(yAxisRight);
-        // let legend = svg.selectAll(".legend")
-        //     .data(omicsTypes.slice().reverse())
-        //     .enter().append("g")
-        //     .attr("class", "legend")
-        //     .attr("transform", function (d, i) {
-        //         return "translate(" + (i * 0) + ",200)";
-        //     })
-        //     .on("click", function (d) {
-        //         var searchWord = "*:* AND omics_type:\"" + d + "\"";
-        //         // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
-        //         // console.log("this.router.navigate");
-        //         self.router.navigate(['search'],{ queryParams: { q: searchWord }});
-        //     });
-        //
-        // let legend_coords = {
-        //     "genomics": { x: -15, y: 25, color: "steelblue" },
-        //     "transcriptomics": { x: -15, y: 45, color: "steelblue" },
-        //     "metabolomics": { x: (width + 10) / 2, y: 25, color: "red" },
-        //     "proteomics": { x: (width + 10) / 2, y: 45, color: "red" }
-        // };
-        //
-        // legend.append("path")
-        //     .attr("class", "omics-line")
-        //     .style("stroke-width", "2")
-        //     .attr("d", d => {
-        //         return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
-        //             " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
-        //     })
-        //     .style("stroke", d => {
-        //         return legend_coords[d]["color"];
-        //     })
-        //     .style("stroke-dasharray", d => {
-        //         if (d === "transcriptomics" || d === "proteomics") {
-        //             return ("3, 3");
-        //         } else {
-        //             return ("0, 0");
-        //         }
-        //     });
-        //
-        // legend.append("text")
-        //     .attr("x", d => {
-        //         return legend_coords[d]['x'] + 20
-        //     })
-        //     .attr("y", d => {
-        //         return legend_coords[d]['y']
-        //     })
-        //     .attr("dy", ".85em")
-        //     .style("text-anchor", "start")
-        //     .text(d => {
-        //         return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
-        //     });
+
+        let legend = svg.selectAll(".legend")
+            .data(omicsTypes.slice().reverse())
+            .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", function (d, i) {
+                return "translate(" + (i * 0) + ",100)";
+            })
+            .on("click", function (d) {
+                var searchWord = "*:* AND omics_type:\"" + d + "\"";
+                // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
+                console.log("this.router.navigate");
+                self.router.navigate(['search'],{ queryParams: { q: searchWord }});
+            });
+
+        let legend_coords = {
+            "genomics": { x: 0, y: 5, color: "steelblue" },
+            "transcriptomics": { x: 0, y: 35, color: "steelblue" },
+            "metabolomics": { x: (width + 10) / 2, y: 5, color: "red" },
+            "proteomics": { x: (width + 10) / 2, y: 35, color: "red" }
+        };
+
+
+
+        legend.append("path")
+            .attr("class", "omics-line")
+            .style("stroke-width", "2")
+            .attr("d", d => {
+                console.log(d);
+                console.log(legend_coords);
+                console.log(legend_coords[d]);
+                // console.log(d);
+                // console.log(d);
+
+                return "M " + legend_coords[d]["x"] + " " + (legend_coords[d]["y"] + 8) +
+                    " L " + (legend_coords[d]["x"] + 14) + " " + (legend_coords[d]["y"] + 8);
+            })
+            .style("stroke", d => {
+                return legend_coords[d]["color"];
+            })
+            .style("stroke-dasharray", d => {
+                if (d === "transcriptomics" || d === "proteomics") {
+                    return ("3, 3");
+                } else {
+                    return ("0, 0");
+                }
+            });
+
+        legend.append("text")
+            .attr("x", d => {
+                return legend_coords[d]['x'] + 20
+            })
+            .attr("y", d => {
+                return legend_coords[d]['y']
+            })
+            .attr("dy", ".85em")
+            .style("text-anchor", "start")
+            .text(d => {
+                return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
+            });
 
 
     }
@@ -428,7 +437,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
         let svg = d3.select("#barchart_connections_dashboard").append("svg")
             .attr("id", "barchart_connections_dashboard_svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("height", height + margin.top + margin.bottom+80)
             .append("g")
             .attr("transform", "translate(" + 20 + "," + margin.top + ")");
 
