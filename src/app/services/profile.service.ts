@@ -48,8 +48,8 @@ export class ProfileService extends BaseService {
             this.onProfileReceived.emit(this.profile);
           }
           return this.profile;
-        })
-        .catch(this.handleError);
+        });
+        // .catch(this.handleError);
   }
 
   getPublicProfile(username): Observable<Profile>{
@@ -63,8 +63,8 @@ export class ProfileService extends BaseService {
           console.log("public profile received:" + _profile.userId);
         }
         return _profile;
-      })
-      .catch(this.handleError);
+      });
+      // .catch(this.handleError);
   }
 
   getAllProfiles(): Observable<Profile[]>{

@@ -7,7 +7,7 @@ import { TissuesOrganismsComponent } from './charts/tissues-organisms/tissues-or
 import { ReposOmicsComponent } from './charts/repos-omics/repos-omics.component';
 import {SearchService} from "../../services/search.service";
 import {MatDialog, MatDialogRef} from "@angular/material";
-import {InviteComponent} from "../dashboard/controls/invite/invite.component";
+import {InviteComponent} from "../../search/invite/invite.component";
 
 @Component({
   selector: 'app-home',

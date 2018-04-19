@@ -4,7 +4,7 @@
 <li *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope" style="">
   <div class="project-widget  list-group-item ddi-card-panel">
     <div class="project-widget-accession">
-      <app-omics-image [omics]="ds?.omicsType"> </app-omics-image>
+      <app-omics-image-dataset [omics]="ds?.omicsType"> </app-omics-image-dataset>
       <a target="" class="align-justify ng-binding" [routerLink]="['/dataset',ds.source,ds.id]">
         {{ds.title}}</a>
     </div>

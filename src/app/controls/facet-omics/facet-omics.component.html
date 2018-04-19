@@ -5,7 +5,7 @@
 
     <li *ngFor="let v of facetValuesFiltered" [hidden]="!v.visible">
       <a (click)="labelClicked(v.value, $event, false)">
-        <app-omics-image [omics]="[v.value]"></app-omics-image>
+        <app-omics-image-search [omics]="[v.value]"></app-omics-image-search>
         <span style="font-size:15px; font-weight:bold">{{v.label}}</span>
         <small class="ng-binding">
           ({{v.count}})

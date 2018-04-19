@@ -9,8 +9,9 @@ import {WatchedDataset} from "../../model/WatchedDataset";
 import {NotificationsService} from "angular2-notifications/dist";
 import {Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material";
-import {CitationDialogComponent} from "../../pages/dataset/citation-dialog/citation-dialog.component";
+// import {CitationDialogComponent} from "../../pages/dataset/citation-dialog/citation-dialog.component";
 import {DataSetService} from "../../services/dataset.service";
+import {CitationDialogComponent} from "../../search/citation-dialog/citation-dialog.component";
 
 @Component({
   selector: 'app-datasetwidget',

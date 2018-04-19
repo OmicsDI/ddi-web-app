@@ -8,7 +8,7 @@
   <div class="row" style="">
     <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
       <span class="visible-lg">
-        <app-socialnetworks></app-socialnetworks>
+        <app-socialnetworks-dataset></app-socialnetworks-dataset>
       </span>
     </div>
     <!-- col-md-1-->
@@ -21,7 +21,7 @@
       <div class="panel panel-default" id="dataset_upper" >
         <div class="panel-footer">
           <div  style="float: right; width: 400px; text-align: right; position: relative; top:0px;">
-            <app-score [dataset]="d" ></app-score>
+            <app-score-dataset [dataset]="d" ></app-score-dataset>
           </div>
 
             <h3>Dataset Information</h3>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-          <app-omics-image [omics]="d?.omics_type" [size]="'large'"> </app-omics-image>
+          <app-omics-image-dataset [omics]="d?.omics_type" [size]="'large'"> </app-omics-image-dataset>
           <br>
           <br>
           <br>
@@ -38,7 +38,7 @@
         <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
           <div>
             <h4>
-              <annotated-text [text]="d.name" [sections]="title_sections"></annotated-text>
+              <app-annotated-text-dataset [text]="d.name" [sections]="title_sections"></app-annotated-text-dataset>
             </h4>
             <p id="ontology_highlight_box" (click)="enrich_click()" class="hotword" style="">
               <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
@@ -48,20 +48,20 @@
           <div>
             <div>
               <p class="align-justify"><b>ABSTRACT</b>:
-                <annotated-text [text]="d.description" [sections]="abstract_sections"></annotated-text>
+                <app-annotated-text-dataset [text]="d.description" [sections]="abstract_sections"></app-annotated-text-dataset>
               </p>
             </div>
           </div>
           <p class="align-justify" *ngIf="null!=d.sample_protocol">
             <span><b>SAMPLE PROTOCOL:</b></span>
               <span class="ng-scope">
-                  <annotated-text [text]="d.sample_protocol" [sections]="sample_protocol"></annotated-text>
+                  <app-annotated-text-dataset [text]="d.sample_protocol" [sections]="sample_protocol"></app-annotated-text-dataset>
               </span>
           </p>
           <p class="align-justify" *ngIf="null!=d.data_protocol">
             <span><b>DATA PROTOCOL:</b></span>
               <span class="ng-scope">
-                  <annotated-text [text]="d.data_protocol" [sections]="data_protocol"></annotated-text>
+                  <app-annotated-text-dataset [text]="d.data_protocol" [sections]="data_protocol"></app-annotated-text-dataset>
               </span>
           </p>
           <p class="align-justify" *ngIf="reanalysis_of(d)">
@@ -144,7 +144,7 @@
             <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
 
 
-            <claim-button [dataSet]="d"></claim-button>
+            <claim-button-dataset [dataSet]="d"></claim-button-dataset>
 
 
             <a (click)="citation()" class="citation-button" style="">&lt;CITE&gt;</a>&nbsp;
@@ -167,7 +167,7 @@
               <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
 
-          <claim-button [dataSet]="d"></claim-button>
+          <claim-button-dataset [dataSet]="d"></claim-button-dataset>
 
           <a class="dot-button" style="background-color: #94D67A; color:black;" href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" >
               <i class="fa fa-file-text-o" aria-hidden="true"></i>

@@ -8,7 +8,7 @@
   </div>
 
   <div class="project-widget-accession">
-    <app-omics-image [omics]="d.omicsType || d.omics_type"> </app-omics-image>
+    <app-omics-image-search [omics]="d.omicsType || d.omics_type"> </app-omics-image-search>
 
     <a [routerLink]="['/dataset',d.source, d.id]" ><span class="ng-binding">{{d.title || d.name}}</span></a>
 

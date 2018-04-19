@@ -15,7 +15,7 @@
         <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand" id="item7"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
         </li>
         <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/home']" id="item1">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/search']" id="item2">Browse</a></li>
+        <li class="nav-item"><a class="nav-link text-center" routerLink="/search" id="item2">Browse</a></li>
         <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/api']" id="item3">API</a></li>
         <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/database']" id="item4">Database</a></li>
 
@@ -30,7 +30,7 @@
           </div>
             </li>
             <li class="nav-item" id="li2">
-          <div class="text-center" mat-menu-item [routerLink]="['about']" id="item-div2">
+          <div class="text-center" mat-menu-item routerLink="/about" id="item-div2">
             About Omicsdi
           </div>
             </li>

@@ -3,9 +3,9 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { DatabaseListService } from '../../services/database-list.service';
 import { Database } from '../../model/Database';
 import { environment } from '../../../environments/environment';
-import {StatisticsService} from "../../services/statistics.service";
 import {DomainStat} from "../../model/DomainStat";
 import {AppConfig} from "../../app.config";
+import {StatisticsService} from "../../services/statistics.service";
 
 @Component({
   selector: 'app-database',
@@ -60,6 +60,8 @@ export class DatabaseComponent implements OnInit {
   }
 
   getDatasetCount(domain: string){
+      console.log(domain);
+      console.log(this.domainStats);
     for(var d of this.domainStats){
 
       if(d.domain.name == domain)

@@ -1,0 +1,14 @@
+<span *ngIf="null==sections" [innerHTML]="text"></span>
+
+<ng-container *ngIf="null!=sections" >
+  <ng-container *ngFor="let s of sections">
+    <a *ngIf="s.beAnnotated && s.synonyms && s.synonyms.length>0" style="color:darkcyan" [tooltip]="myTooltip">{{s.text}}</a>
+    <tooltip-content #myTooltip>
+      <h5>Synonyms</h5>
+      <ul class="list-unstyled">
+        <li *ngFor="let sy of s.synonyms; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" >{{sy}}</li>
+      </ul>
+    </tooltip-content>
+    <span *ngIf="!s.beAnnotated || !s.synonyms || s.synonyms.length==0">{{s.text}}</span>
+  </ng-container>
+</ng-container>
