@@ -1,5 +1,5 @@
 <div id="wrapper">
-  <app-nav></app-nav>
+  <app-nav-dashboardselected></app-nav-dashboardselected>
   <div id="page-wrapper">
 
     <div class="row align-top">
@@ -53,7 +53,7 @@
         class="repeated-item ng-scope"
         style="min-width:400px;">
 
-      <app-datasetwidget [d]="d" (buttonClicked)="this.remove(d.source,d.id)" [allowSelect]="false"></app-datasetwidget>
+      <app-datasetwidget-datasetselected [d]="d" (buttonClicked)="this.remove(d.source,d.id)" [allowSelect]="false"></app-datasetwidget-datasetselected>
 
 
 

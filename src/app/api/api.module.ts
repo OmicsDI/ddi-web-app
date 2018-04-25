@@ -11,6 +11,7 @@ import {ApiComponent} from "../pages/api/api.component";
   ],
   declarations: [
       ApiComponent
-  ]
+  ],
+    bootstrap: [ApiComponent]
 })
 export class ApiModule { }

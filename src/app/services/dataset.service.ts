@@ -101,9 +101,10 @@ export class DataSetService extends BaseService{
     return this.http.post(url, JSON.stringify(result), options)
         .map(res => {
           return "OK"
-        }).catch(err=>{
-          return Observable.throw(err);
         })
+        // .catch(err=>{
+        //   return Observable.throw(err);
+        // })
   }
 
     public skipMerge(result: MergeCandidate) : Observable<String> {
@@ -115,9 +116,10 @@ export class DataSetService extends BaseService{
         return this.http.post(url, JSON.stringify(result), options)
             .map(res => {
                 return "OK"
-            }).catch(err=>{
-                return Observable.throw(err);
             })
+            // .catch(err=>{
+            //     return Observable.throw(err);
+            // })
     }
 
     public multiomicsMerge(result: MergeCandidate) : Observable<String> {
@@ -130,9 +132,10 @@ export class DataSetService extends BaseService{
         return this.http.post(url, JSON.stringify(result), options)
             .map(res => {
                 return "OK"
-            }).catch(err=>{
-                return Observable.throw(err);
             })
+            // .catch(err=>{
+            //     return Observable.throw(err);
+            // })
     }
 
 

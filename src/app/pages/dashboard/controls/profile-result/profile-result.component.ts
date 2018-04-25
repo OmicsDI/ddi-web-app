@@ -4,7 +4,7 @@ import {Profile} from "../../../../model/Profile";
 import {AppConfig} from "../../../../app.config";
 import {Router} from "@angular/router";
 import {DataSetService} from "../../../../services/dataset.service";
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Rx';
 import {DataSetDetail} from "../../../../model/DataSetDetail";
 import {NotificationsService} from "angular2-notifications/dist";
 import {ThorService} from "../../../../services/thor.service";

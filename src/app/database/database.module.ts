@@ -13,6 +13,7 @@ import {NgxPaginationModule} from "ngx-pagination";
   ],
   declarations: [
       DatabaseComponent
-  ]
+  ],
+    bootstrap: [DatabaseComponent]
 })
 export class DatabaseModule { }

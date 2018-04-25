@@ -48,15 +48,15 @@ export const routes: Routes = [
   { path: 'notfound', component: NotfoundComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   // { path: 'selected', component: SelectedComponent },
-  { path: 'merge', loadChildren: './merge/merge.module#MergeModule' }
-  // { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuardService]},
-  // { path: 'dashboard/selected', component: DashboardSelectedComponent , canActivate: [AuthGuardService]},
-  // { path: 'dashboard/feedback', component: DashboardFeedbackComponent , canActivate: [AuthGuardService]},
-  // { path: 'dashboard/profile', component: DashboardProfileComponent , canActivate: [AuthGuardService]},
-  // { path: 'dashboard/update', component: DashboardUpdateComponent, canActivate: [AuthGuardService] },
-  // { path: 'dashboard/claimed', component: DashboardClaimedComponent , canActivate: [AuthGuardService]},
-  // { path: 'dashboard/picture', component: DashboardPictureComponent , canActivate: [AuthGuardService]},
-  // { path: 'dashboard/settings', component: SettingsComponent , canActivate: [AuthGuardService]},
+  { path: 'merge', loadChildren: './merge/merge.module#MergeModule' },
+  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+  { path: 'dashboard/selected', loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule'},
+  { path: 'dashboard/feedback', loadChildren: './dashboardfeedback/dashboardfeedback.module#DashboardfeedbackModule'},
+  { path: 'dashboard/profile', loadChildren: './dashboardprofile/dashboardprofile.module#DashboardprofileModule'},
+  { path: 'dashboard/update', loadChildren: './dashboardupdate/dashboardupdate.module#DashboardupdateModule'},
+  { path: 'dashboard/claimed', loadChildren: './dashboardclaimed/dashboardclaimed.module#DashboardclaimedModule'},
+  { path: 'dashboard/picture', loadChildren: './dashboardpicture/dashboardpicture.module#DashboardpictureModule'},
+  { path: 'dashboard/settings', loadChildren: './dashboardsettings/dashboardsettings.module#DashboardsettingsModule'}
   // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CitationDialogComponent } from './citation-dialog.component';
+import { NavDashboardpictureComponent } from './nav-dashboardpicture.component';
 
-describe('CitationDialogComponent', () => {
-  let component: CitationDialogComponent;
-  let fixture: ComponentFixture<CitationDialogComponent>;
+describe('NavDashboardpictureComponent', () => {
+  let component: NavDashboardpictureComponent;
+  let fixture: ComponentFixture<NavDashboardpictureComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CitationDialogComponent ]
+      declarations: [ NavDashboardpictureComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CitationDialogComponent);
+    fixture = TestBed.createComponent(NavDashboardpictureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

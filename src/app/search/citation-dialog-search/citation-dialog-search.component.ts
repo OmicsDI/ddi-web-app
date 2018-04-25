@@ -4,12 +4,12 @@ import {MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-citation-dialog',
-  templateUrl: './citation-dialog.component.html',
-  styleUrls: ['./citation-dialog.component.css']
+  templateUrl: './citation-dialog-search.component.html',
+  styleUrls: ['./citation-dialog-search.component.css']
 })
-export class CitationDialogComponent implements OnInit {
+export class CitationDialogSearchComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<CitationDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<CitationDialogSearchComponent>) { }
 
   public title: string;
   public messageAPA: string;

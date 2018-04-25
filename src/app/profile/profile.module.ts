@@ -18,8 +18,8 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {FormsModule} from "@angular/forms";
 import {ClipboardModule} from "ngx-clipboard/dist";
 import {TooltipModule} from "ng2-tooltip";
-import {TruncatePipe} from "../pipes/truncate.pipe";
 import {ToDateStringPipe} from "../pipes/toDateString.pipe";
+import {TruncateProfilePipe} from "./truncate-profile.pipe";
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import {ToDateStringPipe} from "../pipes/toDateString.pipe";
       //for input,select.etc
       FormsModule,
       ClipboardModule,
-      TooltipModule,
+      TooltipModule
   ],
   declarations: [
       ProfileComponent,
@@ -53,8 +53,9 @@ import {ToDateStringPipe} from "../pipes/toDateString.pipe";
 
 
       //pipe
-      TruncatePipe,
+      TruncateProfilePipe,
       ToDateStringPipe
-  ]
+  ],
+    bootstrap: [ProfileComponent]
 })
 export class ProfileModule { }

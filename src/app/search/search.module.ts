@@ -15,7 +15,7 @@ import {ScoreComponent} from "../controls/score/score.component";
 import {OmicsImageComponent} from "../controls/omics-image/omics-image.component";
 import {ConfirmDialogComponent} from "../controls/confirm-dialog/confirm-dialog.component";
 import {InviteService} from "../services/invite.service";
-import {MatButtonModule, MatDialogModule, MatMenuModule} from "@angular/material";
+import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from "@angular/material";
 import {ProfileService} from "../services/profile.service";
 import {AuthHttp} from "angular2-jwt";
 import {authHttpServiceFactory} from "../app.module";
@@ -39,11 +39,11 @@ import {DialogService} from "../services/dialog.service";
 import {ScoreService} from "../services/score.service";
 import {ThorService} from "../services/thor.service";
 import {DatasetWidgetComponent} from "../controls/datasetwidget/datasetwidget.component";
-import {CitationDialogComponent} from "./citation-dialog/citation-dialog.component";
+
 import {InviteComponent} from "./invite/invite.component";
 import {AutocompleteNComponent} from "../controls/autocomplete-n/autocomplete-n.component";
 import {QueryBuilderComponent} from "../controls/query-builder/query-builder.component";
-import {OmicsImageSearchComponent} from "./omics-image/omics-image-search.component";
+import {OmicsImageSearchComponent} from "./datasetwidget-search/omics-image/omics-image-search.component";
 import {NgxPaginationModule} from "ngx-pagination";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
@@ -51,17 +51,25 @@ import {ClipboardModule} from "ngx-clipboard/dist";
 import {TruncatePipe} from "../pipes/truncate.pipe";
 import {ToDateStringPipe} from "../pipes/toDateString.pipe";
 import {TooltipModule} from "ng2-tooltip";
+import {TruncateSearchPipe} from "./truncate-search.pipe";
+import {ToDateStringSearchPipe} from "./toDateString-search.pipe";
+import {ScoreSearchComponent} from "./datasetwidget-search/score-search/score-search.component";
+import {DatasetwidgetSearchComponent} from "./datasetwidget-search/datasetwidget-search.component";
+import {CitationDialogSearchComponent} from "./citation-dialog-search/citation-dialog-search.component";
+import {CitationDialogComponent} from "../pages/dataset/citation-dialog/citation-dialog.component";
 
 @NgModule({
   imports: [
     CommonModule,
     SearchRoutingModule,
       NgxPaginationModule,
+      MatCheckboxModule,
+      MatDialogModule,
       // BrowserModule,
       //for input,select.etc
       FormsModule,
       ClipboardModule,
-      TooltipModule,
+      TooltipModule
   ],
   declarations: [
       SearchComponent,
@@ -73,13 +81,15 @@ import {TooltipModule} from "ng2-tooltip";
       FeedbackComponent,
       FacetOmicsComponent,
       FacetComponent,
-      DatasetWidgetComponent,
+      DatasetwidgetSearchComponent,
       ScoreComponent,
       OmicsImageSearchComponent,
       CitationDialogComponent,
+      ScoreSearchComponent,
+      InviteComponent,
       //pipe
-      TruncatePipe,
-      ToDateStringPipe
+      TruncateSearchPipe,
+      ToDateStringSearchPipe
   ],
     providers: [ProfileService
         , {
@@ -108,6 +118,13 @@ import {TooltipModule} from "ng2-tooltip";
         , MatDialogModule
         , MatMenuModule
         , MatButtonModule
-        , InviteService]
+        , InviteService],
+    entryComponents: [
+        CitationDialogComponent
+    ],
+    // exports: [
+    //     CitationDialogSearchComponent
+    // ],
+    bootstrap: [SearchComponent]
 })
 export class SearchModule { }

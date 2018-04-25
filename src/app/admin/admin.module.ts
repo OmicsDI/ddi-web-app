@@ -13,6 +13,7 @@ import {ProfileContactsComponent} from "./profile-contacts/profile-contacts.comp
   declarations: [
       AdminComponent,
       ProfileContactsComponent
-  ]
+  ],
+    bootstrap: [AdminComponent]
 })
 export class AdminModule { }

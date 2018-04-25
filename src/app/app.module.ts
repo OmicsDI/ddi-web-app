@@ -63,6 +63,8 @@ import {MegaNumberPipe} from "./pipes/mega-number.pipe";
 import {DropDownComponent} from "./controls/drop-down/drop-down.component";
 import {LoginLauncherComponent} from "./controls/login-launcher/login-launcher.component";
 import {LoginComponent} from "./controls/login/login.component";
+import {DialogServiceMerge} from "./merge/dialog-merge.service";
+import {CitationDialogSearchComponent} from "./search/citation-dialog-search/citation-dialog-search.component";
 
 
 export function getParameterByName(name): string {
@@ -88,7 +90,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     HomeComponent,
       UnauthorizedComponent,
       NotfoundComponent,
-      MergeComponent,
       SearchBoxLargeComponent,
       HotwordsComponent,
       TissuesOrganismsComponent,
@@ -151,6 +152,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , SimilarMoleculeService
     , FeedbackService
     , AppConfig
+      , DialogServiceMerge
     , StatisticsService
     , AltmetricService
     , SelectedService
@@ -163,6 +165,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     , InviteService],
   entryComponents: [
     // ConfirmDialogComponent
+    //   CitationDialogSearchComponent
   ],
   bootstrap: [AppComponent]
 })

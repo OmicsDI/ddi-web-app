@@ -3,7 +3,7 @@ import {DataSetDetail} from "../../../model/DataSetDetail";
 import {SelectedService} from "../../../services/selected.service";
 import {DataSetService} from "../../../services/dataset.service";
 import {AppConfig} from "../../../app.config";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs/Rx";
 import {DataSetShort} from "../../../model/DataSetShort";
 import {ProfileService} from "../../../services/profile.service";
 import {NotificationsService} from "angular2-notifications/dist";

@@ -4,6 +4,7 @@ import {MergeCandidate} from "../../model/MergeCandidate";
 import {DataSetShort} from "../../model/DataSetShort";
 import {NotificationsService} from "angular2-notifications/dist";
 import {DialogService} from "../../services/dialog.service";
+import {DialogServiceMerge} from "../../merge/dialog-merge.service";
 
 @Component({
   selector: 'app-merge',
@@ -15,7 +16,7 @@ export class MergeComponent implements OnInit {
   constructor(
       private datasetService: DataSetService,
       private notificationService: NotificationsService,
-      private dialogService: DialogService
+      private dialogService: DialogServiceMerge
   ) { }
 
   mergeCandidates: MergeCandidate[];
@@ -226,7 +227,7 @@ export class MergeComponent implements OnInit {
                 secondary_accessions += d.accession;
             }
 
-            var confirm = this.dialogService.confirm('skip ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be skiped')
+            var confirm = this.dialogService.confirm('skip ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be multiomics')
                 .subscribe(res => {
                     if(res){
 

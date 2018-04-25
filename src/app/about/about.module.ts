@@ -11,6 +11,7 @@ import {AboutComponent} from "../pages/about/about.component";
   ],
   declarations: [
       AboutComponent
-  ]
+  ],
+    bootstrap: [AboutComponent]
 })
 export class AboutModule { }
