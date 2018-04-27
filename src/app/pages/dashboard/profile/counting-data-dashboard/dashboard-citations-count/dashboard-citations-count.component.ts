@@ -125,10 +125,10 @@ export class DashboardCitationsCountComponent implements OnInit {
         let metaboloList = processedData.get("metaboloList");
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = [{omicstype:'genomicsList'},{omicstype:'transcriList'},{omicstype:'metaboloList'},{omicstype:'proteomiList'}];
-        console.log(proteomiList);
-        console.log(metaboloList);
-        console.log(transcriList);
-        console.log(genomicsList);
+        // console.log(proteomiList);
+        // console.log(metaboloList);
+        // console.log(transcriList);
+        // console.log(genomicsList);
 
         let yearSet = processedData.get("yearSet");
 
@@ -166,7 +166,7 @@ export class DashboardCitationsCountComponent implements OnInit {
 
 
         let minpointer = processedData.get("minYear");
-        console.log(minpointer);
+        // console.log(minpointer);
         let max_G_T = processedData.get("max_G_T");
         let max_M_P = processedData.get("max_M_P");
         x0.domain([new Date(Number(minpointer)-1,0,0), new Date()]);
@@ -201,9 +201,9 @@ export class DashboardCitationsCountComponent implements OnInit {
                 .style("stroke", "steelblue")
                 .attr("d", valueline(genomicsList))
                 .style("fill",d=>{
-                    console.log(d);
+                    // console.log(d);
                 });
-            console.log(d3.selectAll('path'));
+            // console.log(d3.selectAll('path'));
         }
         if(transcriList){
             svg.append("path")
@@ -459,7 +459,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             years.push(Number(year));
         })
         let maxYear = Math.max(...years);
-        console.log(maxYear);
+        // console.log(maxYear);
         let minYear = Math.min(...years);
         let allList = [];
         let allList_g = [];
@@ -485,7 +485,7 @@ export class DashboardCitationsCountComponent implements OnInit {
             })
         }
 
-        console.log(allList_g);
+        // console.log(allList_g);
 
 
 
@@ -544,10 +544,10 @@ export class DashboardCitationsCountComponent implements OnInit {
         let metabolo = this.groupByYear(metaboloList);
         let proteomi = this.groupByYear(proteomiList);
 
-        console.log(genomics);
-        console.log(transcri);
-        console.log(metabolo);
-        console.log(proteomi);
+        // console.log(genomics);
+        // console.log(transcri);
+        // console.log(metabolo);
+        // console.log(proteomi);
 
 
         allList_g.forEach(g=>{

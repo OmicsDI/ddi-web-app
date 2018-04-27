@@ -20,6 +20,7 @@ import {ClipboardModule} from "ngx-clipboard/dist";
 import {TooltipModule} from "ng2-tooltip";
 import {ToDateStringPipe} from "../pipes/toDateString.pipe";
 import {TruncateProfilePipe} from "./truncate-profile.pipe";
+import {ToDateStringProfilePipe} from "./toDateString-profile.pipe";
 
 @NgModule({
   imports: [
@@ -54,7 +55,7 @@ import {TruncateProfilePipe} from "./truncate-profile.pipe";
 
       //pipe
       TruncateProfilePipe,
-      ToDateStringPipe
+      ToDateStringProfilePipe
   ],
     bootstrap: [ProfileComponent]
 })

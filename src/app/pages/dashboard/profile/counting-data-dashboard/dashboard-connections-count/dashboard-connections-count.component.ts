@@ -86,7 +86,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
     private startRequest(datasetDetail: DataSetDetail[] ) {
 
         let processedData = this.prepareData(datasetDetail);
-        console.log(processedData);
+        // console.log(processedData);
         this.draw(processedData);
     }
     private draw(processedData : any){
@@ -124,7 +124,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
         let metaboloList = processedData.get("metaboloList");
         let proteomiList = processedData.get("proteomiList");
         let omicsTypes = ['genomics','transcriptomics','metabolomics','proteomics'];
-        console.log(allYear);
+        // console.log(allYear);
 
         let yearSet = processedData.get("yearSet");
 
@@ -162,7 +162,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
 
 
         let minpointer = processedData.get("minYear");
-        console.log(minpointer);
+        // console.log(minpointer);
         let max_G_T = processedData.get("max_G_T");
         let max_M_P = processedData.get("max_M_P");
         x0.domain([new Date(Number(minpointer)-1,0,0), new Date()]);
@@ -228,21 +228,21 @@ export class DashboardConnectionsCountComponent implements OnInit {
                 return x0(new Date(d["year"], 0, 0));
             })
             .attr("cy", function (d) {
-                console.log(d);
+                // console.log(d);
                 if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
-                    console.log(y0(d['value']));
+                    // console.log(y0(d['value']));
                     return y0(d['value']);
                 } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
-                    console.log(y1(d['value']));
+                    // console.log(y1(d['value']));
                     return y1(d['value']);
                 }
             })
             .attr("fill", function (d) {
                 if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
-                    console.log(y0(d['value']));
+                    // console.log(y0(d['value']));
                     return "steelblue";
                 } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
-                    console.log(y1(d['value']));
+                    // console.log(y1(d['value']));
                     return "red";
                 }
             });
@@ -354,7 +354,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
             .on("click", function (d) {
                 var searchWord = "*:* AND omics_type:\"" + d + "\"";
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
-                console.log("this.router.navigate");
+                // console.log("this.router.navigate");
                 self.router.navigate(['search'],{ queryParams: { q: searchWord }});
             });
 
@@ -371,9 +371,9 @@ export class DashboardConnectionsCountComponent implements OnInit {
             .attr("class", "omics-line")
             .style("stroke-width", "2")
             .attr("d", d => {
-                console.log(d);
-                console.log(legend_coords);
-                console.log(legend_coords[d]);
+                // console.log(d);
+                // console.log(legend_coords);
+                // console.log(legend_coords[d]);
                 // console.log(d);
                 // console.log(d);
 
@@ -462,7 +462,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
             years.push(Number(year));
         })
         let maxYear = Math.max(...years);
-        console.log(maxYear);
+        // console.log(maxYear);
         let minYear = Math.min(...years);
         let allList = [];
         let allList_g = [];
@@ -488,7 +488,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
             })
         }
 
-        console.log(allList_g);
+        // console.log(allList_g);
 
 
 
@@ -547,10 +547,10 @@ export class DashboardConnectionsCountComponent implements OnInit {
         let metabolo = this.groupByYear(metaboloList);
         let proteomi = this.groupByYear(proteomiList);
 
-        console.log(genomics);
-        console.log(transcri);
-        console.log(metabolo);
-        console.log(proteomi);
+        // console.log(genomics);
+        // console.log(transcri);
+        // console.log(metabolo);
+        // console.log(proteomi);
 
 
         allList_g.forEach(g=>{
@@ -709,13 +709,13 @@ export class DashboardConnectionsCountComponent implements OnInit {
         let years = Array.from(yearSet);
         years.forEach(y=>{
             let totalCount = 0;
-            console.log(y);
+            // console.log(y);
             data.forEach(d=>{
-                console.log(d['year']);
+                // console.log(d['year']);
                 if(Number(d['year']) == Number(y)){
-                    console.log(totalCount);
+                    // console.log(totalCount);
                     totalCount = totalCount + Number(d['value']);
-                    console.log(totalCount);
+                    // console.log(totalCount);
                 }
             })
             groupedByYear.push({

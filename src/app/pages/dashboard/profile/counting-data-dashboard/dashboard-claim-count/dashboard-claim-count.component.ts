@@ -81,14 +81,14 @@ export class DashboardClaimCountComponent implements OnInit {
 
     reloadDataSets(){
         // this.dataSets = new Array();
-        console.log(this.datasets);
+        // console.log(this.datasets);
         this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[] ) {
 
         let processedData = this.prepareData(datasetDetail);
-        console.log(processedData);
+        // console.log(processedData);
         this.draw(processedData);
     }
     private draw(processedData : any){
@@ -142,7 +142,7 @@ export class DashboardClaimCountComponent implements OnInit {
             // idCollection.push(data['id']);
             yearCollections.push(data['year']);
         });
-        console.log(allYear);
+        // console.log(allYear);
         let allFullYear = [];
         allYear.forEach(a=>{
             if(a['value']!=0){
@@ -153,7 +153,7 @@ export class DashboardClaimCountComponent implements OnInit {
                })
             }
         });
-        console.log(allFullYear);
+        // console.log(allFullYear);
 
         // console.log(genomicsList);
         //
@@ -179,8 +179,8 @@ export class DashboardClaimCountComponent implements OnInit {
         // console.log(minpointer);
         let max_M_P = processedData.get("max_M_P");
         let max_G_T = processedData.get("max_G_T");
-        console.log(max_G_T);
-        console.log(max_M_P);
+        // console.log(max_G_T);
+        // console.log(max_M_P);
         // console.log(max);
         x0.domain([new Date(Number(minpointer)-1,0,0), new Date()]);
 
@@ -520,10 +520,10 @@ export class DashboardClaimCountComponent implements OnInit {
                     allList_g.forEach(g=>{
 
                         if(Number(g['year'])==Number(year)){
-                            console.log(g['year']);
-                            console.log(Number(year));
+                            // console.log(g['year']);
+                            // console.log(Number(year));
                           g['value']=g['value']+1;
-                          console.log(g['value']);
+                          // console.log(g['value']);
                         }
                     })
                     // genomicsList.push({
@@ -657,8 +657,8 @@ export class DashboardClaimCountComponent implements OnInit {
         let max_G_T = Math.max(...data_G_T);
         let max_M_P = Math.max(...data_M_P);
 
-        console.log(max_G_T);
-        console.log(max_M_P);
+        // console.log(max_G_T);
+        // console.log(max_M_P);
 
 
 
@@ -696,11 +696,11 @@ export class DashboardClaimCountComponent implements OnInit {
         //     })
 
 
-        console.log(allFullYearData);
-        console.log(allList_g);
-        console.log(allList_t);
-        console.log(allList_m);
-        console.log(allList_p);
+        // console.log(allFullYearData);
+        // console.log(allList_g);
+        // console.log(allList_t);
+        // console.log(allList_m);
+        // console.log(allList_p);
 
 
         processedData.set("allYear", allFullYearData);

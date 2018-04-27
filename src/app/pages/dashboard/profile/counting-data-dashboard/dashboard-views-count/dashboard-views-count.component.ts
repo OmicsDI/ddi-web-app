@@ -82,7 +82,7 @@ export class DashboardViewsCountComponent implements OnInit {
     private startRequest(datasetDetail: DataSetDetail[] ) {
 
         let processedData = this.prepareData(datasetDetail);
-        console.log(processedData);
+        // console.log(processedData);
         this.draw(processedData);
     }
     private draw(processedData : any){
@@ -203,21 +203,21 @@ export class DashboardViewsCountComponent implements OnInit {
                 return x0(new Date(d["year"], 0, 0));
             })
             .attr("cy", function (d) {
-                console.log(d);
+                // console.log(d);
                 if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
-                    console.log(y0(d['value']));
+                    // console.log(y0(d['value']));
                     return y0(d['value']);
                 } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
-                    console.log(y1(d['value']));
+                    // console.log(y1(d['value']));
                     return y1(d['value']);
                 }
             })
             .attr("fill", function (d) {
                 if (d['omics_type'] == "Genomics" || d['omics_type'] == "Transcriptomics") {
-                    console.log(y0(d['value']));
+                    // console.log(y0(d['value']));
                     return "steelblue";
                 } else if (d['omics_type'] == "Metabolomics" || d['omics_type'] == "Proteomics") {
-                    console.log(y1(d['value']));
+                    // console.log(y1(d['value']));
                     return "red";
                 }
             });
@@ -415,7 +415,7 @@ export class DashboardViewsCountComponent implements OnInit {
             years.push(Number(year));
         })
         let maxYear = Math.max(...years);
-        console.log(maxYear);
+        // console.log(maxYear);
         let minYear = Math.min(...years);
         let allList = [];
         let allList_g = [];
@@ -496,11 +496,11 @@ export class DashboardViewsCountComponent implements OnInit {
         let transcri = this.groupByYear(transcriList);
         let metabolo = this.groupByYear(metaboloList);
         let proteomi = this.groupByYear(proteomiList);
-
-        console.log(genomics);
-        console.log(transcri);
-        console.log(metabolo);
-        console.log(proteomi);
+        //
+        // console.log(genomics);
+        // console.log(transcri);
+        // console.log(metabolo);
+        // console.log(proteomi);
 
 
         allList_g.forEach(g=>{
