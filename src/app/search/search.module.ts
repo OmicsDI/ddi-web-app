@@ -57,6 +57,12 @@ import {ScoreSearchComponent} from "./datasetwidget-search/score-search/score-se
 import {DatasetwidgetSearchComponent} from "./datasetwidget-search/datasetwidget-search.component";
 import {CitationDialogSearchComponent} from "./citation-dialog-search/citation-dialog-search.component";
 import {CitationDialogComponent} from "../pages/dataset/citation-dialog/citation-dialog.component";
+import {SearchBoxComponent} from "../controls/search-box/search-box.component";
+import {AutocompleteNSearchComponent} from "./search-box-search/autocomplete-n-search/autocomplete-n-search.component";
+import {SearchBoxSearchComponent} from "./search-box-search/search-box-search.component";
+import {QueryBuilderSearchComponent} from "./search-box-search/query-builder-search/query-builder-search.component";
+import {DropDownSearchComponent} from "./search-box-search/query-builder-search/drop-down-search/drop-down-search.component";
+import {NguiAutoCompleteModule} from "@ngui/auto-complete";
 
 @NgModule({
   imports: [
@@ -65,6 +71,8 @@ import {CitationDialogComponent} from "../pages/dataset/citation-dialog/citation
       NgxPaginationModule,
       MatCheckboxModule,
       MatDialogModule,
+      MatMenuModule,
+      NguiAutoCompleteModule,
       // BrowserModule,
       //for input,select.etc
       FormsModule,
@@ -87,12 +95,16 @@ import {CitationDialogComponent} from "../pages/dataset/citation-dialog/citation
       CitationDialogComponent,
       ScoreSearchComponent,
       InviteComponent,
+      SearchBoxSearchComponent,
+      AutocompleteNSearchComponent,
+      QueryBuilderSearchComponent,
+      DropDownSearchComponent,
       //pipe
       TruncateSearchPipe,
       ToDateStringSearchPipe
   ],
     providers: [ProfileService
-        , {
+        , {  
             provide: AuthHttp,
             useFactory: authHttpServiceFactory,
             deps: [Http, RequestOptions]

@@ -65,6 +65,7 @@ import {LoginLauncherComponent} from "./controls/login-launcher/login-launcher.c
 import {LoginComponent} from "./controls/login/login.component";
 import {DialogServiceMerge} from "./merge/dialog-merge.service";
 import {CitationDialogSearchComponent} from "./search/citation-dialog-search/citation-dialog-search.component";
+import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 
 
 export function getParameterByName(name): string {
@@ -106,7 +107,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       MegaNumberPipe,
       DropDownComponent,
       LoginLauncherComponent,
-      LoginComponent
+      LoginComponent,
+      SearchBoxComponent
   ],
   imports: [
     BrowserModule,

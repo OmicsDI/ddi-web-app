@@ -91,9 +91,11 @@ export class SearchService extends BaseService{
   }
 
   public callSearch(page: number = 1 ){
+      console.log('!!!!!!!!is here?!!!!!!!!!!!');
     this.currentQuery = this.fullQuery;
     this.currentPage = page;
     this.total = 0;
+    console.log(this.fullQuery);
     this.search(this.fullQuery, page).subscribe(searchResult => {
       this.searchResultSource.next(searchResult);
       this.total = searchResult.count;
@@ -106,6 +108,10 @@ export class SearchService extends BaseService{
   }
 
   private search(searchQuery: string, page: number): Observable<SearchResult> {
+    console.log(searchQuery);
+    if(searchQuery==null){
+        searchQuery = '';
+    };
     return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.selectedPageSize,this.sortBy,this.sortOrder,(page-1)*this.selectedPageSize))
       .map(x => this.extractData<SearchResult>(x));
   }
