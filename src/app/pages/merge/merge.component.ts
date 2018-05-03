@@ -21,7 +21,7 @@ export class MergeComponent implements OnInit {
 
   mergeCandidates: MergeCandidate[];
   count: number;
-  checkedDatasets: {database:string, accession:string}[] = new Array<{database:string, accession:string}>();
+  checkedDatasets: {basedatabase:string, baseaccession:string, database:string, accession:string}[] = new Array<{basedatabase:string, baseaccession:string, database:string, accession:string}>();
   currentPage: number = 1;
 
   ngOnInit() {
@@ -47,12 +47,12 @@ export class MergeComponent implements OnInit {
           )
   }
 
-  isChecked(database: string, accession: string): boolean{
-      const index: number = this.checkedDatasets.findIndex(function(obj) { return obj.accession == accession && obj.database == database });
+  isChecked(basedatabase: string, baseaccession: string, database: string, accession: string): boolean{
+      const index: number = this.checkedDatasets.findIndex(function(obj) { return obj.baseaccession == baseaccession && obj.basedatabase == basedatabase && obj.accession == accession && obj.database == database });
       return (index !== -1)
   }
 
-  merge(database: string, accession: string){
+  merge(basedatabase: string, baseaccession: string, database: string, accession: string){
       var result = new MergeCandidate();
       result.database = database;
       result.accession = accession;
@@ -60,15 +60,18 @@ export class MergeComponent implements OnInit {
 
     for(let m of this.mergeCandidates)
     {
+        //if itis main dataset
         if(m.database==database && m.accession == accession)
         {
             for(let d of m.similars){
-                if(this.isChecked(d.database,d.accession)){
+                if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
                     result.similars.push({"database":d.database,"accession":d.accession});
                 }
             }
             break;
-        } else {
+        }
+        else
+            {
             var found = false;
             for(let d of m.similars){
                 if(d.accession==accession && d.database == database){
@@ -77,17 +80,17 @@ export class MergeComponent implements OnInit {
                 }
             }
             if(found){
-                if(this.isChecked(m.database,m.accession)) {
+                if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
                     result.similars.push({"database": m.database, "accession": m.accession});
                 }
                 for(let d of m.similars){
-                    if(this.isChecked(d.database,d.accession)) {
+                    if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
                         if (!(accession == d.accession && database == d.database)) {
                             result.similars.push({"database": d.database, "accession": d.accession});
                         }
                     }
                 }
-
+                break;
             }
         }
     }
@@ -116,7 +119,7 @@ export class MergeComponent implements OnInit {
   }
 
 
-    skipMerge(database: string, accession: string){
+    skipMerge(basedatabase: string, baseaccession: string, database: string, accession: string){
         var result = new MergeCandidate();
         result.database = database;
         result.accession = accession;
@@ -127,7 +130,7 @@ export class MergeComponent implements OnInit {
             if(m.database==database && m.accession == accession)
             {
                 for(let d of m.similars){
-                    if(this.isChecked(d.database,d.accession)){
+                    if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
                         result.similars.push({"database":d.database,"accession":d.accession});
                     }
                 }
@@ -141,17 +144,17 @@ export class MergeComponent implements OnInit {
                     }
                 }
                 if(found){
-                    if(this.isChecked(m.database,m.accession)) {
+                    if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
                         result.similars.push({"database": m.database, "accession": m.accession});
                     }
                       for(let d of m.similars){
-                        if(this.isChecked(d.database,d.accession)) {
+                        if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
                             if (!(accession == d.accession && database == d.database)) {
                                 result.similars.push({"database": d.database, "accession": d.accession});
                             }
                         }
                     }
-
+                    break;
                 }
             }
         }
@@ -179,7 +182,7 @@ export class MergeComponent implements OnInit {
         }
     }
 
-    multiomicsMerge(database: string, accession: string){
+    multiomicsMerge(basedatabase: string, baseaccession: string, database: string, accession: string){
         var result = new MergeCandidate();
         result.database = database;
         result.accession = accession;
@@ -190,7 +193,7 @@ export class MergeComponent implements OnInit {
             if(m.database==database && m.accession == accession)
             {
                 for(let d of m.similars){
-                    if(this.isChecked(d.database,d.accession)){
+                    if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
                         result.similars.push({"database":d.database,"accession":d.accession});
                     }
                 }
@@ -204,17 +207,17 @@ export class MergeComponent implements OnInit {
                     }
                 }
                 if(found){
-                    if(this.isChecked(m.database,m.accession)) {
+                    if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
                         result.similars.push({"database": m.database, "accession": m.accession});
                     }
                     for(let d of m.similars){
-                        if(this.isChecked(d.database,d.accession)) {
+                        if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
                             if (!(accession == d.accession && database == d.database)) {
                                 result.similars.push({"database": d.database, "accession": d.accession});
                             }
                         }
                     }
-
+                    break;
                 }
             }
         }
@@ -249,13 +252,13 @@ export class MergeComponent implements OnInit {
       return null;
   }
 
- check(database: string, accession: string, checked:Boolean){
-     var o = {"database":database, "accession":accession};
+ check(basedatabase: string, baseaccession: string,database: string, accession: string, checked:Boolean){
+     var o = {"basedatabase":basedatabase, "baseaccession":baseaccession, "database":database, "accession":accession};
      if(checked){
          this.checkedDatasets.push(o);
      }
      else{
-         const index: number = this.checkedDatasets.findIndex(function(obj) { return obj.accession == accession && obj.database == database });
+         const index: number = this.checkedDatasets.findIndex(function(obj) { return obj.baseaccession == baseaccession && obj.basedatabase == basedatabase && obj.accession == accession && obj.database == database });
          if (index !== -1) {
              this.checkedDatasets.splice(index, 1);
          }
