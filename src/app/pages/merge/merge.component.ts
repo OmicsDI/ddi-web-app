@@ -4,6 +4,7 @@ import {MergeCandidate} from "../../model/MergeCandidate";
 import {DataSetShort} from "../../model/DataSetShort";
 import {NotificationsService} from "angular2-notifications/dist";
 import {DialogService} from "../../services/dialog.service";
+import {debug} from "util";
 
 @Component({
   selector: 'app-merge',
@@ -179,13 +180,15 @@ export class MergeComponent implements OnInit {
     }
 
     multiomicsMerge(database: string, accession: string){
+        //debugger;
         var result = new MergeCandidate();
         result.database = database;
         result.accession = accession;
         result.similars = new Array();
-
+        result.similars.push({"database":database,"accession":accession});
         for(let m of this.mergeCandidates)
         {
+
             if(m.database==database && m.accession == accession)
             {
                 for(let d of m.similars){
@@ -219,17 +222,17 @@ export class MergeComponent implements OnInit {
         }
 
         if(result.similars.length > 0) {
-
+            //debugger;
             var secondary_accessions = "";
             for(let d of result.similars){
                 secondary_accessions += secondary_accessions.length > 0 ? "," : "";
                 secondary_accessions += d.accession;
             }
 
-            var confirm = this.dialogService.confirm('skip ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be skiped')
+            var confirm = this.dialogService.confirm('These ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be skiped and converted to multiomics')
                 .subscribe(res => {
                     if(res){
-
+                    //debugger;
                         this.datasetService.multiomicsMerge(result).subscribe(data=>{
                                 this.notificationService.success("Datasets skiped","sucessfully");
                                 this.load();
