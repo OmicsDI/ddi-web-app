@@ -92,7 +92,7 @@ import {NguiAutoCompleteModule} from "@ngui/auto-complete";
       DatasetwidgetSearchComponent,
       ScoreComponent,
       OmicsImageSearchComponent,
-      CitationDialogComponent,
+      CitationDialogSearchComponent,
       ScoreSearchComponent,
       InviteComponent,
       SearchBoxSearchComponent,
@@ -132,7 +132,7 @@ import {NguiAutoCompleteModule} from "@ngui/auto-complete";
         , MatButtonModule
         , InviteService],
     entryComponents: [
-        CitationDialogComponent
+        CitationDialogSearchComponent
     ],
     // exports: [
     //     CitationDialogSearchComponent

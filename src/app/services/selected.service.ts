@@ -7,12 +7,17 @@ import {NotificationsService} from "angular2-notifications/dist";
 @Injectable()
 export class SelectedService {
 
+  private userId :string;
+
   constructor(private profileService: ProfileService
       , private notificationService: NotificationsService) {
 
     this.profileService.onProfileReceived.subscribe( x => {
       this.profileService.getSelected(this.profileService.userId).subscribe(
-          x => { this.dataSets = x }
+          x => {
+            console.log("is here??????");
+            this.dataSets = x;
+          }
       );
     })
   }
@@ -31,7 +36,7 @@ export class SelectedService {
     //return this.profileService.setSelected(this.profileService.userId,this.dataSets).subscribe(x => {
     //
     //});
-    this.notificationService.success("Dataset Selected","in your dashboard");
+    this.notificationService.success("Dataset UnSelected","in your dashboard");
   }
 
   public isSelected(source, id):boolean{

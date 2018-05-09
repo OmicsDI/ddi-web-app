@@ -33,8 +33,10 @@ export class ProfileService extends BaseService {
   }
 
   getProfile(): Observable<Profile> {
+    console.log(this.appConfig.getProfileUrl(null));
     return this.http.get(this.appConfig.getProfileUrl(null)) //,config //{ withCredentials: true }
         .map(x => {
+          console.log(x);
           this.profile = this.extractData<Profile>(x);
           if(!this.profile || !this.profile.userId){
             console.log("profile not received");
@@ -46,6 +48,7 @@ export class ProfileService extends BaseService {
               d => { this.watchedDatasets = d }
             );
             this.onProfileReceived.emit(this.profile);
+            console.log("lucky");
           }
           return this.profile;
         });

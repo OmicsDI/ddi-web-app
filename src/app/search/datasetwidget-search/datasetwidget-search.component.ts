@@ -13,6 +13,8 @@ import {DataSetShort} from "../../model/DataSetShort";
 import {WatchedDataset} from "../../model/WatchedDataset";
 import {CitationDialogSearchComponent} from "../citation-dialog-search/citation-dialog-search.component";
 import {CitationDialogComponent} from "../../pages/dataset/citation-dialog/citation-dialog.component";
+import {Profile} from "../../model/Profile";
+import {Observable} from "rxjs/Observable";
 // import {CitationDialogComponent} from "../../pages/dataset/citation-dialog-search/citation-dialog-search.component";
 
 @Component({
@@ -29,6 +31,9 @@ export class DatasetwidgetSearchComponent implements OnInit {
   @Input() allowClaim: boolean = true;
   @Input() allowWatch: boolean = true;
 
+  private profile:Observable<Profile>;
+  private userId:string;
+
   constructor(private selectedService: SelectedService
             , private appConfig: AppConfig
             , private profileService: ProfileService
@@ -36,7 +41,13 @@ export class DatasetwidgetSearchComponent implements OnInit {
             , private router: Router
             , private notificationService: NotificationsService
             , private dataSetService: DataSetService
-            , private dialog: MatDialog) { }
+            , private dialog: MatDialog) {
+
+      this.profile = this.profileService.getProfile();
+      this.profile.subscribe(x => {
+        this.userId = x.userId;
+      });
+  }
 
   ngOnInit() {
   }
@@ -127,12 +138,15 @@ export class DatasetwidgetSearchComponent implements OnInit {
   }
 
   toggle(source:string,id:string){
+    console.log(source,id);
     if(!this.allowSelect)
       return;
-
-    if(!this.profileService.userId)
+      console.log("bbbb");
+      console.log(this.profileService.userId);
+    // if(!this.profileService.userId)
+      if(!this.userId)
       return;
-
+      console.log("cccc");
     this.selectedService.toggle(source,id);
     console.log(`toggle ${source} ${id}`);
   }

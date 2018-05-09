@@ -58,41 +58,48 @@ export class MergeComponent implements OnInit {
       result.accession = accession;
       result.similars = new Array();
 
-    for(let m of this.mergeCandidates)
+    for(let m of this.checkedDatasets)
     {
-        //if itis main dataset
-        if(m.database==database && m.accession == accession)
-        {
-            for(let d of m.similars){
-                if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
-                    result.similars.push({"database":d.database,"accession":d.accession});
-                }
-            }
-            break;
+
+        if(m.baseaccession==baseaccession && m.basedatabase==basedatabase && m.accession!=accession){
+            console.log(m.database+"???"+m.accession);
+            result.similars.push({"database":m.database,"accession":m.accession});
         }
-        else
-            {
-            var found = false;
-            for(let d of m.similars){
-                if(d.accession==accession && d.database == database){
-                    found = true;
-                    break;
-                }
-            }
-            if(found){
-                if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
-                    result.similars.push({"database": m.database, "accession": m.accession});
-                }
-                for(let d of m.similars){
-                    if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
-                        if (!(accession == d.accession && database == d.database)) {
-                            result.similars.push({"database": d.database, "accession": d.accession});
-                        }
-                    }
-                }
-                break;
-            }
-        }
+
+
+        // //if itis main dataset
+        // if(m.database==database && m.accession == accession)
+        // {
+        //     for(let d of m.similars){
+        //         if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
+        //             result.similars.push({"database":d.database,"accession":d.accession});
+        //         }
+        //     }
+        //     break;
+        // }
+        // else
+        //     {
+        //     var found = false;
+        //     for(let d of m.similars){
+        //         if(d.accession==accession && d.database == database){
+        //             found = true;
+        //             break;
+        //         }
+        //     }
+        //     if(found){
+        //         if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
+        //             result.similars.push({"database": m.database, "accession": m.accession});
+        //         }
+        //         for(let d of m.similars){
+        //             if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
+        //                 if (!(accession == d.accession && database == d.database)) {
+        //                     result.similars.push({"database": d.database, "accession": d.accession});
+        //                 }
+        //             }
+        //         }
+        //         break;
+        //     }
+        // }
     }
 
     if(result.similars.length > 0) {
@@ -125,38 +132,42 @@ export class MergeComponent implements OnInit {
         result.accession = accession;
         result.similars = new Array();
 
-        for(let m of this.mergeCandidates)
+        for(let m of this.checkedDatasets)
         {
-            if(m.database==database && m.accession == accession)
-            {
-                for(let d of m.similars){
-                    if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
-                        result.similars.push({"database":d.database,"accession":d.accession});
-                    }
-                }
-                break;
-            } else {
-                var found = false;
-                for(let d of m.similars){
-                    if(d.accession==accession && d.database == database){
-                        found = true;
-                        break;
-                    }
-                }
-                if(found){
-                    if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
-                        result.similars.push({"database": m.database, "accession": m.accession});
-                    }
-                      for(let d of m.similars){
-                        if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
-                            if (!(accession == d.accession && database == d.database)) {
-                                result.similars.push({"database": d.database, "accession": d.accession});
-                            }
-                        }
-                    }
-                    break;
-                }
+            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase){
+                console.log(m.database+"???"+m.accession);
+                result.similars.push({"database":m.database,"accession":m.accession});
             }
+            // if(m.database==database && m.accession == accession)
+            // {
+            //     for(let d of m.similars){
+            //         if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
+            //             result.similars.push({"database":d.database,"accession":d.accession});
+            //         }
+            //     }
+            //     break;
+            // } else {
+            //     var found = false;
+            //     for(let d of m.similars){
+            //         if(d.accession==accession && d.database == database){
+            //             found = true;
+            //             break;
+            //         }
+            //     }
+            //     if(found){
+            //         if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
+            //             result.similars.push({"database": m.database, "accession": m.accession});
+            //         }
+            //           for(let d of m.similars){
+            //             if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
+            //                 if (!(accession == d.accession && database == d.database)) {
+            //                     result.similars.push({"database": d.database, "accession": d.accession});
+            //                 }
+            //             }
+            //         }
+            //         break;
+            //     }
+            // }
         }
 
         if(result.similars.length > 0) {
@@ -188,38 +199,42 @@ export class MergeComponent implements OnInit {
         result.accession = accession;
         result.similars = new Array();
 
-        for(let m of this.mergeCandidates)
+        for(let m of this.checkedDatasets)
         {
-            if(m.database==database && m.accession == accession)
-            {
-                for(let d of m.similars){
-                    if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
-                        result.similars.push({"database":d.database,"accession":d.accession});
-                    }
-                }
-                break;
-            } else {
-                var found = false;
-                for(let d of m.similars){
-                    if(d.accession==accession && d.database == database){
-                        found = true;
-                        break;
-                    }
-                }
-                if(found){
-                    if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
-                        result.similars.push({"database": m.database, "accession": m.accession});
-                    }
-                    for(let d of m.similars){
-                        if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
-                            if (!(accession == d.accession && database == d.database)) {
-                                result.similars.push({"database": d.database, "accession": d.accession});
-                            }
-                        }
-                    }
-                    break;
-                }
+            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase && m.accession!=accession){
+                console.log(m.database+"???"+m.accession);
+                result.similars.push({"database":m.database,"accession":m.accession});
             }
+            // if(m.database==database && m.accession == accession)
+            // {
+            //     for(let d of m.similars){
+            //         if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
+            //             result.similars.push({"database":d.database,"accession":d.accession});
+            //         }
+            //     }
+            //     break;
+            // } else {
+            //     var found = false;
+            //     for(let d of m.similars){
+            //         if(d.accession==accession && d.database == database){
+            //             found = true;
+            //             break;
+            //         }
+            //     }
+            //     if(found){
+            //         if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
+            //             result.similars.push({"database": m.database, "accession": m.accession});
+            //         }
+            //         for(let d of m.similars){
+            //             if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
+            //                 if (!(accession == d.accession && database == d.database)) {
+            //                     result.similars.push({"database": d.database, "accession": d.accession});
+            //                 }
+            //             }
+            //         }
+            //         break;
+            //     }
+            // }
         }
 
         if(result.similars.length > 0) {
