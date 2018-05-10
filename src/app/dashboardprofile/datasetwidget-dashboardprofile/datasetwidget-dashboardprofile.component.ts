@@ -12,6 +12,7 @@ import {MatDialog, MatDialogRef} from "@angular/material";
 // import {CitationDialogComponent} from "../../pages/dataset/citation-dialog-search/citation-dialog-search.component";
 import {DataSetService} from "../../services/dataset.service";
 import {CitationDialogSearchComponent} from "../../search/citation-dialog-search/citation-dialog-search.component";
+import {CitationDialogDashboardprofileComponent} from "./citation-dialog-dashboardprofile/citation-dialog-dashboardprofile.component";
 
 @Component({
   selector: 'app-datasetwidget-dashboardprofile',
@@ -73,11 +74,11 @@ export class DatasetwidgetDashboardprofileComponent implements OnInit {
   }*/
 
   citation(source,id) {
-    let dialogRef: MatDialogRef<CitationDialogSearchComponent>;
+    let dialogRef: MatDialogRef<CitationDialogDashboardprofileComponent>;
 
     this.dataSetService.getDataSetDetail_private(id, source).subscribe(
         x => {
-          dialogRef = this.dialog.open(CitationDialogSearchComponent);
+          dialogRef = this.dialog.open(CitationDialogDashboardprofileComponent);
           dialogRef.componentInstance.title = "Dataset citation";
           dialogRef.componentInstance.datasetDetail = x;
           return dialogRef.afterClosed();

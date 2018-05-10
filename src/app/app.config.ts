@@ -164,14 +164,14 @@ export class AppConfig{
     return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
   }
   getMergeUrl(){
-    return `${environment.webServiceUrl}dataset/merge`;
+    return `${environment.webServiceUrl}dataset/merge?r=${Math.random()}`;
   }
 
     skipMergeUrl(){
-        return `${environment.webServiceUrl}dataset/skipMerge`;
+        return `${environment.webServiceUrl}dataset/skipMerge?r=${Math.random()}`;
     }
     multiomicsMerge(){
-        return `${environment.webServiceUrl}dataset/multiomicsMerge`;
+        return `${environment.webServiceUrl}dataset/multiomicsMerge?r=${Math.random()}`;
     }
 
   public githubScope = "public_profile";

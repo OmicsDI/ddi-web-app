@@ -86,11 +86,11 @@ export class DatasetwidgetSearchComponent implements OnInit {
   }*/
 
   citation(source,id) {
-    let dialogRef: MatDialogRef<CitationDialogComponent>;
+    let dialogRef: MatDialogRef<CitationDialogSearchComponent>;
 
     this.dataSetService.getDataSetDetail_private(id, source).subscribe(
         x => {
-          dialogRef = this.dialog.open(CitationDialogComponent);
+          dialogRef = this.dialog.open(CitationDialogSearchComponent);
           dialogRef.componentInstance.title = "Dataset citation";
           dialogRef.componentInstance.datasetDetail = x;
           return dialogRef.afterClosed();

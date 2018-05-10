@@ -31,7 +31,6 @@ import {TooltipModule} from "ng2-tooltip";
   ],
   declarations: [
       DatasetComponent,
-      CitationDialogComponent,
       PublicationComponent,
       SimilarComponent,
       SimilarMoleculeComponent,

@@ -15,7 +15,7 @@ export class DataSetService extends BaseService{
   private proteomicsList = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, gpmdb, GPMDB, GPMdb,LINCS,LINCS,paxdb,PAXDB,jpost,JPOST Repository,jPOST,Paxdb,BioModels";
   private metabolomicsList = "MetaboLights Dataset, MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench, metabolome_express, MetabolomeExpress, Metabolomics Workbench, GNPS, gnps";
   private transcriptomicsList = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments,GEO";
-  private genomicsList = "ega,EGA";
+  private genomicsList = "ega,EGA,EVA,dbGaP";
 
   constructor(private http:Http, private appConfig: AppConfig) {
     super();

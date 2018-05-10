@@ -67,6 +67,8 @@ import {DialogServiceMerge} from "./merge/dialog-merge.service";
 import {CitationDialogSearchComponent} from "./search/citation-dialog-search/citation-dialog-search.component";
 import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 import {HashLocationStrategy,LocationStrategy} from '@angular/common';
+import {CitationDialogDashboardprofileComponent} from "./dashboardprofile/datasetwidget-dashboardprofile/citation-dialog-dashboardprofile/citation-dialog-dashboardprofile.component";
+import {CitationDialogComponent} from "./pages/dataset/citation-dialog/citation-dialog.component";
 
 
 
@@ -110,6 +112,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       DropDownComponent,
       LoginLauncherComponent,
       LoginComponent,
+      CitationDialogDashboardprofileComponent,
+      CitationDialogSearchComponent,
+      CitationDialogComponent,
       SearchBoxComponent
   ],
   imports: [
@@ -171,6 +176,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   entryComponents: [
     // ConfirmDialogComponent
     //   CitationDialogSearchComponent
+      //in some case dialog will not be loaded in lazy-load module,so we'd better put those component in here
+      CitationDialogDashboardprofileComponent,
+      CitationDialogSearchComponent,
+      CitationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -105,23 +105,35 @@ export class MergeComponent implements OnInit {
     if(result.similars.length > 0) {
 
         var secondary_accessions = "";
+        var checkMaster = true;
         for(let d of result.similars){
             secondary_accessions += secondary_accessions.length > 0 ? "," : "";
             secondary_accessions += d.accession;
+            if(d.accession === baseaccession){
+                checkMaster = false;
+            }
+        }
+        if(checkMaster){
+            var confirmMaster = this.dialogService.confirm("Warning","You didn't sleect master dataset,do you want to continue?")
+                .subscribe(res => {
+                    if(res){
+                        var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
+                            .subscribe(res => {
+                                if(res){
+
+                                    this.datasetService.merge(result).subscribe(data=>{
+                                            this.notificationService.success("Datasets merged","sucessfully");
+                                            this.load();
+                                        },
+                                        err=>{
+                                            this.notificationService.error("Error occured",err);
+                                        });
+                                }});
+                    }
+                });
         }
 
-        var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
-            .subscribe(res => {
-                if(res){
 
-                    this.datasetService.merge(result).subscribe(data=>{
-                            this.notificationService.success("Datasets merged","sucessfully");
-                            this.load();
-                        },
-                        err=>{
-                            this.notificationService.error("Error occured",err);
-                        });
-                }});
     }
   }
 

@@ -27,6 +27,7 @@ import {OmicsImageDashboardprofileComponent} from "./omics-image-dashboardprofil
 import {ScoreDashboardprofileComponent} from "./score-dashboardprofile/score-dashboardprofile.component";
 import {UiSwitchModule} from "angular2-ui-switch";
 import {TruncateDashboardprofilePipe} from "./truncate-dashboardprofile.pipe";
+import {CitationDialogDashboardprofileComponent} from "./datasetwidget-dashboardprofile/citation-dialog-dashboardprofile/citation-dialog-dashboardprofile.component";
 
 @NgModule({
   imports: [
@@ -65,6 +66,6 @@ import {TruncateDashboardprofilePipe} from "./truncate-dashboardprofile.pipe";
       ToDateStringPipe
 
 
-  ]
+  ],
 })
 export class DashboardprofileModule { }
