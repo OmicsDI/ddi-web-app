@@ -27,6 +27,9 @@ import {NotfoundComponent} from "./pages/notfound/notfound.component";
 // import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
 import {WelcomeComponent} from "./pages/welcome/welcome.component";
 import {MergeComponent} from "./pages/merge/merge.component";
+import {SearchModule} from "./search/search.module";
+import {TermsComponent} from "./pages/terms/terms.component";
+import {SelectedComponent} from "./pages/selected/selected.component";
 
 // Route Configuration
 export const routes: Routes = [
@@ -41,13 +44,15 @@ export const routes: Routes = [
   { path: 'database', loadChildren: './database/database.module#DatabaseModule' },
   { path: 'about', loadChildren: './about/about.module#AboutModule' },
   { path: 'api', loadChildren: './api/api.module#ApiModule'  },
-  { path: 'search', loadChildren: './search/search.module#SearchModule' },
+  // { path: 'search', loadChildren: './search/search.module#SearchModule' },
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'dataset/:domain/:acc', loadChildren: './dataset/dataset.module#DatasetModule' },
-  // { path: 'terms', component: TermsComponent },
+    // { path: 'search', loadChildren: () => SearchModule },
+    { path: 'search', component: SearchComponent },
+  { path: 'terms', component: TermsComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
-  // { path: 'selected', component: SelectedComponent },
+  { path: 'selected', component: SelectedComponent },
   { path: 'merge', loadChildren: './merge/merge.module#MergeModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
   { path: 'dashboard/selected', loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule'},

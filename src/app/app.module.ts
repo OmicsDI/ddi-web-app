@@ -69,6 +69,21 @@ import {SearchBoxComponent} from "./controls/search-box/search-box.component";
 import {HashLocationStrategy,LocationStrategy} from '@angular/common';
 import {CitationDialogDashboardprofileComponent} from "./dashboardprofile/datasetwidget-dashboardprofile/citation-dialog-dashboardprofile/citation-dialog-dashboardprofile.component";
 import {CitationDialogComponent} from "./pages/dataset/citation-dialog/citation-dialog.component";
+import {TermsComponent} from "./pages/terms/terms.component";
+import {SelectedComponent} from "./pages/selected/selected.component";
+import {SearchComponent} from "./pages/search/search.component";
+import {TruncatePipe} from "./pipes/truncate.pipe";
+import {ToDateStringPipe} from "./pipes/toDateString.pipe";
+import {SearchTotalComponent} from "./pages/search/search-total/search-total.component";
+import {SearchFacetComponent} from "./pages/search/search-facet/search-facet.component";
+import {SearchPagerComponent} from "./pages/search/search-pager/search-pager.component";
+import {SearchResultComponent} from "./pages/search/search-result/search-result.component";
+import {FeedbackComponent} from "./controls/feedback/feedback.component";
+import {FacetOmicsComponent} from "./controls/facet-omics/facet-omics.component";
+import {FacetComponent} from "./controls/facet/facet.component";
+import {DatasetwidgetSearchComponent} from "./search/datasetwidget-search/datasetwidget-search.component";
+import {OmicsImageSearchComponent} from "./search/datasetwidget-search/omics-image/omics-image-search.component";
+import {ScoreSearchComponent} from "./search/datasetwidget-search/score-search/score-search.component";
 
 
 
@@ -115,6 +130,22 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       CitationDialogDashboardprofileComponent,
       CitationDialogSearchComponent,
       CitationDialogComponent,
+      TermsComponent,
+      NotfoundComponent,
+      SelectedComponent,
+      SearchComponent,
+      SearchTotalComponent,
+      SearchFacetComponent,
+      SearchPagerComponent,
+      SearchResultComponent,
+      FeedbackComponent,
+      FacetOmicsComponent,
+      FacetComponent,
+      DatasetwidgetSearchComponent,
+      OmicsImageSearchComponent,
+      ScoreSearchComponent,
+      TruncatePipe,
+      ToDateStringPipe,
       SearchBoxComponent
   ],
   imports: [
