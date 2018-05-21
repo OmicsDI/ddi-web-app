@@ -108,45 +108,45 @@ export class DatasetComponent implements OnInit, OnDestroy {
           // }
 
     });
-      this.dataSetService.dataSetDetail$.subscribe(x => {
-          this.d = x;
-          const s = this.renderer2.createElement('script');
-          s.type = `application/ld+json`;
-          s.text = '\n' +
-              ' {\n' +
-              '        "@context": "http://schema.org",\n' +
-              '        "@type": "Dataset", \n' +
-              '        "name": "'+this.acc+'",\n' +
-              '        "description": "'+this.d.name+'",\n' +
-              '        "sameAs": "'+this.d.full_dataset_link+'",\n' +
-              '        "keywords": "'+this.d.keywords+'",\n' +
-              '        "variableMeasured": "'+this.d.omics_type+'",\n' +
-              '        "creator": [\n' +
-              '\t{\n' +
-              '            "@type" : "Person",\n' +
-              '            "name" : "'+this.d.labMembers+'"\n' +
-              '        },\n' +
-              '\t{\n' +
-              '            "@type":"Organization",\n' +
-              '            "name":"'+this.d.organization+'"\n' +
-              '        },\n' +
-              '        "citation": \n' +
-              '\t{\n' +
-              '        "@type":"CreativeWork",\n' +
-              '        "author"?\n' +
-              '                    "@type":"Person",\n' +
-              '                    "name":"'+this.d.submitter+'"\n' +
-              '         },\n' +
-              '        "publisher": \n' +
-              '\t{\n' +
-              '            "@type":"Organization",\n' +
-              '            "name":"'+this.d.organization+'"\n' +
-              '         },\n' +
-              '        "name":"'+this.d.name+'",\n' +
-              '        "url":"'+this.d.full_dataset_link+'",\n' +
-              '    }';
-          this.renderer2.appendChild(this.document.body, s);
-      });
+      // this.dataSetService.dataSetDetail$.subscribe(x => {
+      //     this.d = x;
+      //     const s = this.renderer2.createElement('script');
+      //     s.type = `application/ld+json`;
+      //     s.text = '\n' +
+      //         ' {\n' +
+      //         '        "@context": "http://schema.org",\n' +
+      //         '        "@type": "Dataset", \n' +
+      //         '        "name": "'+this.acc+'",\n' +
+      //         '        "description": "'+this.d.name+'",\n' +
+      //         '        "sameAs": "'+this.d.full_dataset_link+'",\n' +
+      //         '        "keywords": "'+this.d.keywords+'",\n' +
+      //         '        "variableMeasured": "'+this.d.omics_type+'",\n' +
+      //         '        "creator": [\n' +
+      //         '\t{\n' +
+      //         '            "@type" : "Person",\n' +
+      //         '            "name" : "'+this.d.labMembers+'"\n' +
+      //         '        },\n' +
+      //         '\t{\n' +
+      //         '            "@type":"Organization",\n' +
+      //         '            "name":"'+this.d.organization+'"\n' +
+      //         '        },\n' +
+      //         '        "citation": \n' +
+      //         '\t{\n' +
+      //         '        "@type":"CreativeWork",\n' +
+      //         '        "author"?\n' +
+      //         '                    "@type":"Person",\n' +
+      //         '                    "name":"'+this.d.submitter+'"\n' +
+      //         '         },\n' +
+      //         '        "publisher": \n' +
+      //         '\t{\n' +
+      //         '            "@type":"Organization",\n' +
+      //         '            "name":"'+this.d.organization+'"\n' +
+      //         '         },\n' +
+      //         '        "name":"'+this.d.name+'",\n' +
+      //         '        "url":"'+this.d.full_dataset_link+'",\n' +
+      //         '    }';
+      //     this.renderer2.appendChild(this.document.body, s);
+      // });
   }
 
   ngOnDestroy() {
