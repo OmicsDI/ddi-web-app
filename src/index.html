@@ -18,58 +18,7 @@
 
     <title>OmicsDI: Home</title>
     <script type="application/ld+json">
-    {
-    "@context": "http://schema.org",
-    "@type": "WebPage",
-    "name": "Databases",
-    "url": "http://www.omicsdi.org/databases",
-    "description" : "Databases and Providers",
-    "image": "http://www.omicsdi.org/static/images/logo/help.png",
-    "keywords" : "OmicsDI Help Page, Training, Examples"
-    }
     </script>
-
-    <!--<div itemscope itemtype="http://schema.org/WebSite">-->
-        <!--<meta itemprop="name" content="OmicsDI"/>-->
-        <!--<meta itemprop="alternateName" content="DDI"/>-->
-        <!--<meta itemprop="url" content="https://www.omicsdi.org/"/>-->
-        <!--<span itemscope itemtype="http://schema.org/Organization">-->
-        <!--<meta itemprop="name" content="The European Bioinformatics Institute (EMBL-EBI)"/>-->
-        <!--<meta itemprop="alternateName" content="EBI"/>-->
-        <!--<link itemprop="url" href=""/>-->
-        <!--<img itemprop="logo" src=""/>-->
-            <!--<ol itemscope itemtype="http://schema.org/BreadcrumbList">-->
-  <!--<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">-->
-    <!--<meta itemprop="position" content="1"/>-->
-    <!--<a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.omicsdi.org/search">-->
-      <!--<span itemprop="name">Dataset Search</span>-->
-    <!--</a>-->
-  <!--</li>-->
-  <!--›-->
-  <!--<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">-->
-    <!--<meta itemprop="position" content="2"/>-->
-    <!--<a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.omicsdi.org/about">-->
-      <!--<span itemprop="name">About OmicsDI</span>-->
-    <!--</a>-->
-  <!--</li>-->
-  <!--›-->
-  <!--<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">-->
-    <!--<meta itemprop="position" content="3"/>-->
-    <!--<a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.omicsdi.org/api">-->
-      <!--<span itemprop="name">API</span>-->
-    <!--</a>-->
-  <!--</li>-->
-  <!--›-->
-  <!--<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">-->
-    <!--<meta itemprop="position" content="4"/>-->
-    <!--<a itemscope itemtype="http://schema.org/Thing" itemprop="item" href="https://www.omicsdi.org/home">-->
-      <!--<span itemprop="name">OmicsDI Home</span>-->
-    <!--</a>-->
-  <!--</li>-->
-<!--</ol>-->
-<!--</span>-->
-    <!--</div>-->
-
 
    <base href="/">
 
@@ -193,14 +142,14 @@
           document.getElementsByTagName('head')[0].appendChild(script);
 
         } else {
-//          console.error(xhr.statusText);
+          console.error(xhr.statusText);
         }
       }
     };
     xhr.onerror = function (e) {
       console.error(xhr.statusText);
     };
-//    xhr.send(null);
+    xhr.send(null);
   }
 
   (function(){
@@ -257,10 +206,10 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- Morris Charts JavaScript
+<!-- Morris Charts JavaScript-->
 <script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>
 <script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>
 <script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>
--->
+
 </body>
 </html>
