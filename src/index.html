@@ -17,8 +17,6 @@
 
 
     <title>OmicsDI: Home</title>
-    <script type="application/ld+json">
-    </script>
 
    <base href="/">
 
@@ -161,11 +159,18 @@
       path="home?r=" + Math.random();
     }
 
+      if(path.indexOf('#')>=0){
+          var split = path.split('#');
+          console.log(split);
+          path = split[split.length-1];
+          console.log(path);
+      }
+
     console.log("relative path: "+path);
     switch(path){
         case "dashboard/selected": console.log("no seo"); break;
         case "merge": console.log("no seo"); break;
-        default: XhrGet('ws/seo/' + path);
+        default: XhrGet('ws/seo' + path);
     }
 
 
