@@ -106,6 +106,11 @@ export class MergeComponent implements OnInit {
 
         var secondary_accessions = "";
         var checkMaster = true;
+        for(let m of this.checkedDatasets){
+            if(m.accession==baseaccession){
+                checkMaster = false;
+            }
+        }
         for(let d of result.similars){
             secondary_accessions += secondary_accessions.length > 0 ? "," : "";
             secondary_accessions += d.accession;
@@ -131,6 +136,19 @@ export class MergeComponent implements OnInit {
                                 }});
                     }
                 });
+        }else{
+            var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
+                .subscribe(res => {
+                    if(res){
+
+                        this.datasetService.merge(result).subscribe(data=>{
+                                this.notificationService.success("Datasets merged","sucessfully");
+                                this.load();
+                            },
+                            err=>{
+                                this.notificationService.error("Error occured",err);
+                            });
+                    }});
         }
 
 
@@ -213,7 +231,7 @@ export class MergeComponent implements OnInit {
 
         for(let m of this.checkedDatasets)
         {
-            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase && m.accession!=accession){
+            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase ){
                 console.log(m.database+"???"+m.accession);
                 result.similars.push({"database":m.database,"accession":m.accession});
             }
