@@ -19,12 +19,14 @@ export class MergeComponent implements OnInit {
       private dialogService: DialogServiceMerge
   ) { }
 
+  test: boolean;
   mergeCandidates: MergeCandidate[];
   count: number;
-  checkedDatasets: {basedatabase:string, baseaccession:string, database:string, accession:string}[] = new Array<{basedatabase:string, baseaccession:string, database:string, accession:string}>();
+  checkedDatasets: {basedatabase:string, baseaccession:string, database:string, accession:string }[] = new Array<{basedatabase:string, baseaccession:string, database:string, accession:string }>();
   currentPage: number = 1;
 
   ngOnInit() {
+        this.test = false;
         this.load();
   }
 
@@ -111,32 +113,32 @@ export class MergeComponent implements OnInit {
                 checkMaster = false;
             }
         }
-        for(let d of result.similars){
-            secondary_accessions += secondary_accessions.length > 0 ? "," : "";
-            secondary_accessions += d.accession;
-            if(d.accession === baseaccession){
-                checkMaster = false;
-            }
-        }
-        if(checkMaster){
-            var confirmMaster = this.dialogService.confirm("Warning","You didn't sleect master dataset,do you want to continue?")
-                .subscribe(res => {
-                    if(res){
-                        var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
-                            .subscribe(res => {
-                                if(res){
-
-                                    this.datasetService.merge(result).subscribe(data=>{
-                                            this.notificationService.success("Datasets merged","sucessfully");
-                                            this.load();
-                                        },
-                                        err=>{
-                                            this.notificationService.error("Error occured",err);
-                                        });
-                                }});
-                    }
-                });
-        }else{
+        // for(let d of result.similars){
+        //     secondary_accessions += secondary_accessions.length > 0 ? "," : "";
+        //     secondary_accessions += d.accession;
+        //     if(d.accession === baseaccession){
+        //         checkMaster = false;
+        //     }
+        // }
+        // if(checkMaster){
+        //     var confirmMaster = this.dialogService.confirm("Warning","You didn't sleect master dataset,do you want to continue?")
+        //         .subscribe(res => {
+        //             if(res){
+        //                 var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
+        //                     .subscribe(res => {
+        //                         if(res){
+        //
+        //                             this.datasetService.merge(result).subscribe(data=>{
+        //                                     this.notificationService.success("Datasets merged","sucessfully");
+        //                                     this.load();
+        //                                 },
+        //                                 err=>{
+        //                                     this.notificationService.error("Error occured",err);
+        //                                 });
+        //                         }});
+        //             }
+        //         });
+        // }else{
             var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
                 .subscribe(res => {
                     if(res){
@@ -149,7 +151,7 @@ export class MergeComponent implements OnInit {
                                 this.notificationService.error("Error occured",err);
                             });
                     }});
-        }
+        // }
 
 
     }
@@ -298,8 +300,9 @@ export class MergeComponent implements OnInit {
   }
 
  check(basedatabase: string, baseaccession: string,database: string, accession: string, checked:Boolean){
-     var o = {"basedatabase":basedatabase, "baseaccession":baseaccession, "database":database, "accession":accession};
+
      if(checked){
+         var o = {"basedatabase":basedatabase, "baseaccession":baseaccession, "database":database, "accession":accession,"ischecked":checked};
          this.checkedDatasets.push(o);
      }
      else{
