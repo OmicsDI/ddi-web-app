@@ -121,14 +121,19 @@
             <b>SECONDARY ACCESSION(S):</b>&nbsp;
 
             <span *ngFor="let o of d.secondary_accession;">
-              <span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">
-                <a *ngIf="this.databaseByAccession[o].urlTemplate" class="biological" href="{{this.databaseByAccession[o].urlTemplate.replace('{accession}',o)}}" >
-                  <img height="32" width="32" src="{{this.databaseByAccession[o].icon}}">&nbsp;{{o}}
-                </a>
-              </span>
-              <span *ngIf="this.databaseByAccession && !this.databaseByAccession[o]">
-                {{o}}
-              </span>
+
+              <a *ngIf="o.split('~').length>1" href="{{o.split('~')[1]}}">{{o.split('~')[0]}}</a>
+              <a *ngIf="o.split('~').length<=1" >{{o.split('~')[0]}}</a>
+
+
+              <!--<span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">-->
+                <!--<a *ngIf="this.databaseByAccession[o].urlTemplate" class="biological" href="{{this.databaseByAccession[o].urlTemplate.replace('{accession}',o)}}" >-->
+                  <!--<img height="32" width="32" src="{{this.databaseByAccession[o].icon}}">&nbsp;{{o}}-->
+                <!--</a>-->
+              <!--</span>-->
+              <!--<span *ngIf="this.databaseByAccession && !this.databaseByAccession[o]">-->
+                <!--{{o}}-->
+              <!--</span>-->
             </span>
           </p>
 
