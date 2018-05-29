@@ -271,6 +271,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
   }
 
   reanalysis_of(d: DataSetDetail): SimilarDataset[]{
+
+    console.log(d);
+
     let r = new Array();
     if(d.similars) {
       for (let s of d.similars) {

@@ -64,6 +64,7 @@
                   <app-annotated-text-dataset [text]="d.data_protocol" [sections]="data_protocol"></app-annotated-text-dataset>
               </span>
           </p>
+          <div *ngIf="d.similars">
           <p class="align-justify" *ngIf="reanalysis_of(d)">
             <b>REANALYSIS of:</b> <span *ngFor="let s of reanalysis_of(d)"><a [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a></span>
               <span *ngIf="reanalysisoverflow(d)">(first 100 items shown)</span>
@@ -75,6 +76,7 @@
           <p class="align-justify" *ngIf="null!=related_omics(d)">
             <b>OTHER RELATED OMICS DATASETS IN:</b> <span href="#" *ngFor="let s of related_omics(d)" ><a [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a> </span>
           </p>
+          </div>
           <p class="align-justify" *ngIf="null!=d.instruments">
             <b>INSTRUMENT(S):</b>{{d.instruments}}
           </p>
@@ -122,8 +124,10 @@
 
             <span *ngFor="let o of d.secondary_accession;">
 
-              <a *ngIf="o.split('~').length>1" href="{{o.split('~')[1]}}">{{o.split('~')[0]}}</a>
-              <a *ngIf="o.split('~').length<=1" >{{o.split('~')[0]}}</a>
+              <!--<a *ngIf="o.split('~').length>1" href="{{o.split('~')[1]}}">{{o.split('~')[0]}}</a>-->
+
+              <a *ngIf="o.split('~').length >= 1" href="{{o.substring(o.indexOf('~')+1)}}">{{o.substring(0,o.indexOf('~'))}}</a>
+              <a *ngIf="o.split('~').length < 1" >{{o}}</a>
 
 
               <!--<span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">-->
