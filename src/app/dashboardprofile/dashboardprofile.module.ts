@@ -28,6 +28,7 @@ import {ScoreDashboardprofileComponent} from "./score-dashboardprofile/score-das
 import {UiSwitchModule} from "angular2-ui-switch";
 import {TruncateDashboardprofilePipe} from "./truncate-dashboardprofile.pipe";
 import {CitationDialogDashboardprofileComponent} from "./datasetwidget-dashboardprofile/citation-dialog-dashboardprofile/citation-dialog-dashboardprofile.component";
+import {ToDateStringDashboardProfilePipe} from "./toDateStringDashboardProfile.pipe";
 
 @NgModule({
   imports: [
@@ -63,7 +64,7 @@ import {CitationDialogDashboardprofileComponent} from "./datasetwidget-dashboard
 
       //pipe
       TruncateDashboardprofilePipe,
-      ToDateStringPipe
+      ToDateStringDashboardProfilePipe
 
 
   ],
