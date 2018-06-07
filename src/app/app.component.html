@@ -18,6 +18,8 @@
         <li class="nav-item"><a class="nav-link text-center" routerLink="/search" id="item2">Browse</a></li>
         <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/api']" id="item3">API</a></li>
         <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/database']" id="item4">Database</a></li>
+        <li class="nav-item"><a class="nav-link text-center" (click)="toSubmission();" id="item8">Submission</a></li>
+
 
         <li dropdown class="nav-item dropdown">
           <a class="nav-link text-center dropdown-toggle" id="navbardrop" data-toggle="dropdown" id="item5"><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
@@ -163,6 +165,7 @@
             <li><a target="_blank" href="http://www.ebi.ac.uk/about/terms-of-use" class="no-icon">Terms of
               use</a>
             </li>
+            <li><a href="https://www.ebi.ac.uk/biostudies/">Submission</a></li>
           </ul>
         </div>
 

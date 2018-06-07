@@ -61,4 +61,9 @@ export class AppComponent {
     window.location.href='http://blog.omicsdi.org/';
   }
 
+
+    toSubmission(){
+        window.location.href='https://www.ebi.ac.uk/biostudies/';
+    }
+
 }

@@ -119,15 +119,14 @@
             <span>| {{d.publicationDate}} </span>
           </p>
 
-          <p class="align-justify" *ngIf="null!=d.secondary_accession">
+          <p class="align-justify" *ngIf="d.secondary_accession">
             <b>SECONDARY ACCESSION(S):</b>&nbsp;
 
             <span *ngFor="let o of d.secondary_accession;">
 
               <!--<a *ngIf="o.split('~').length>1" href="{{o.split('~')[1]}}">{{o.split('~')[0]}}</a>-->
-
-              <a *ngIf="o.split('~').length >= 1" href="{{o.substring(o.indexOf('~')+1)}}">{{o.substring(0,o.indexOf('~'))}}</a>
-              <a *ngIf="o.split('~').length < 1" >{{o}}</a>
+              <a *ngIf="o.split('~').length > 1" href="{{o.substring(o.indexOf('~')+1)}}">{{o.substring(0,o.indexOf('~'))}}</a>
+              <a *ngIf="o.split('~').length <= 1" >{{o}}</a>
 
 
               <!--<span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">-->

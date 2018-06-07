@@ -59,8 +59,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
       ,private appConfig: AppConfig
       ,private profileService: ProfileService
       ,private dialog: MatDialog
-      ,private renderer2: Renderer2
-      ,@Inject(DOCUMENT) private document
       ,private databaseListService: DatabaseListService) {
     console.info("DatasetComponent constructor");
 
@@ -71,6 +69,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     this.subscription = this.dataSetService.dataSetDetail$.subscribe(
       result => {
+
+        console.log(result);
         console.info("dataSetDetail$ subscribtion");
         this.d = result;
         //TODO: update with canonical id
@@ -271,9 +271,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
   }
 
   reanalysis_of(d: DataSetDetail): SimilarDataset[]{
-
-    console.log(d);
-
     let r = new Array();
     if(d.similars) {
       for (let s of d.similars) {
