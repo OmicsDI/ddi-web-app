@@ -54,6 +54,7 @@ export const routes: Routes = [
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: 'selected', component: SelectedComponent },
   { path: 'merge', loadChildren: './merge/merge.module#MergeModule' },
+    { path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
   { path: 'dashboard/selected', loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule'},
   { path: 'dashboard/feedback', loadChildren: './dashboardfeedback/dashboardfeedback.module#DashboardfeedbackModule'},

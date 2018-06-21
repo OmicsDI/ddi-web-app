@@ -167,37 +167,88 @@ export class DatasetComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  get_section(str: string, synonyms: Synonym[]): Section[]{
-    let result: Section[] = new Array<Section>();
-    if(null==synonyms){
-      result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
-      return result;
-    }
+    get_section(str: string, synonyms: Synonym[]): Section[]{
 
-    var i: number = 1;
-    for (let entry of synonyms) {
-      if(i<entry.from){
-        let t = str.substr(i-1,entry.from-i);
-        if(t!=" ") {
-          result.push({text:t, beAnnotated: false, tobeReduced: false, synonyms: null});
+        let result: Section[] = new Array<Section>();
+        if(null==synonyms){
+            result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
+            return result;
         }
-      }
-      let original_text = entry.text;
-      let text = str.substr(entry.from-1, entry.to-entry.from+1);
-      result.push(
-        { text:text,
-          beAnnotated:true,
-          tobeReduced:false,
-          synonyms: this.getSynonyms(original_text)
+
+        //array of Strange words
+        let reg = ['ï','®'];
+        var i: number = 0;
+        for(var n = 0;n<synonyms.length;n++){
+            let j = 0;
+            for(let key of reg){
+                let phase = str.substring(0,i);
+                // console.log(phase.indexOf(key));
+                if(phase.indexOf(key)>0){
+                    j += phase.split(key).length-1;
+                    console.log(j);
+                    console.log(phase);
+
+                }
+            }
+
+            if(i<synonyms[n].from-1){
+                let t = str.substr(i+j,synonyms[n].from-i-1);
+                console.log(t);
+
+                result.push({text:t, beAnnotated: false, tobeReduced: false, synonyms: null});
+
+            }
+            let original_text = synonyms[n].text;
+            // let text = str.substr(entry.from-1+j, entry.to-entry.from+1);
+            result.push(
+                { text:original_text,
+                    beAnnotated:true,
+                    tobeReduced:false,
+                    synonyms: this.getSynonyms(original_text)
+                }
+            );
+            i = synonyms[n].to;
+            // console.log(i);
         }
-      );
-      i = entry.to+1;
+
+
+        if(i < str.length){
+            result.push({text:str.substr(i,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
+        }
+        return result;
     }
-    if(i < str.length){
-      result.push({text:str.substr(i,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
-    }
-    return result;
-  }
+    // Backup do not delete
+    // get_section(str: string, synonyms: Synonym[]): Section[]{
+    //     let result: Section[] = new Array<Section>();
+    //     if(null==synonyms){
+    //         result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
+    //         return result;
+    //     }
+    //
+    //     var i: number = 1;
+    //     for (let entry of synonyms) {
+    //         if(i<entry.from){
+    //             let t = str.substr(i-1,entry.from-i);
+    //             if(t!=" ") {
+    //                 result.push({text:t, beAnnotated: false, tobeReduced: false, synonyms: null});
+    //             }
+    //         }
+    //         let original_text = entry.text;
+    //         let text = str.substr(entry.from-1, entry.to-entry.from+1);
+    //         result.push(
+    //             { text:text,
+    //                 beAnnotated:true,
+    //                 tobeReduced:false,
+    //                 synonyms: this.getSynonyms(original_text)
+    //             }
+    //         );
+    //         i = entry.to+1;
+    //     }
+    //     if(i < str.length){
+    //         result.push({text:str.substr(i,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
+    //     }
+    //     return result;
+    // }
 
   process_sections(){
     //TODO: encoding problems
