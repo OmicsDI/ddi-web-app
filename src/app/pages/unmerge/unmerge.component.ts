@@ -3,6 +3,8 @@ import {DataSetService} from "../../services/dataset.service";
 import {NotificationsService} from "angular2-notifications/dist";
 import {DialogServiceMerge} from "../../merge/dialog-merge.service";
 import {MergeCandidate} from "../../model/MergeCandidate";
+import {forEach} from "@angular/router/src/utils/collection";
+import {DialogUnmergeService} from "../../unmerge/dialog-unmerge.service";
 
 @Component({
   selector: 'app-unmerge',
@@ -14,12 +16,12 @@ export class UnmergeComponent implements OnInit {
     constructor(
         private datasetService: DataSetService,
         private notificationService: NotificationsService,
-        private dialogService: DialogServiceMerge
+        private dialogService: DialogUnmergeService
     ) { }
 
     test: boolean;
-    mergeCandidates: MergeCandidate[];
-    count: number;
+    mergeCandidates: any[];
+    counts: number;
     checkedDatasets: {basedatabase:string, baseaccession:string, database:string, accession:string }[] = new Array<{basedatabase:string, baseaccession:string, database:string, accession:string }>();
     currentPage: number = 1;
 
@@ -30,21 +32,23 @@ export class UnmergeComponent implements OnInit {
 
     load() {
         this.datasetService
-            .getMergeCandidates(10 * (this.currentPage - 1) , 10)
+            .getUnMergeCandidates()
             .subscribe(
                 result => {
                     console.log(result);
                     this.mergeCandidates = result;
+                    this.counts = this.mergeCandidates.length;
                 }
             )
 
-        this.datasetService
-            .getMergeCandidateCount()
-            .subscribe(
-                result => {
-                    this.count = result;
-                }
-            )
+        // this.datasetService
+        //     .getUnMergeCandidateCount()
+        //     .subscribe(
+        //         result => {
+        //             this.mergeCandidates = result;
+        //             this.counts = this.mergeCandidates.length;
+        //         }
+        //     )
     }
 
     isChecked(basedatabase: string, baseaccession: string, database: string, accession: string): boolean{
@@ -52,7 +56,7 @@ export class UnmergeComponent implements OnInit {
         return (index !== -1)
     }
 
-    merge(basedatabase: string, baseaccession: string, database: string, accession: string){
+    unmerge(basedatabase: string, baseaccession: string, database: string, accession: string){
         var result = new MergeCandidate();
         result.database = database;
         result.accession = accession;
@@ -137,12 +141,12 @@ export class UnmergeComponent implements OnInit {
             //             }
             //         });
             // }else{
-            var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
+            var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will unmerge secondary accessions ' + result.accession + '(' + result.database + ')')
                 .subscribe(res => {
                     if(res){
 
                         this.datasetService.merge(result).subscribe(data=>{
-                                this.notificationService.success("Datasets merged","sucessfully");
+                                this.notificationService.success("Datasets Unmerged","sucessfully");
                                 this.load();
                             },
                             err=>{
@@ -223,72 +227,7 @@ export class UnmergeComponent implements OnInit {
         }
     }
 
-    multiomicsMerge(basedatabase: string, baseaccession: string, database: string, accession: string){
-        var result = new MergeCandidate();
-        result.database = database;
-        result.accession = accession;
-        result.similars = new Array();
 
-        for(let m of this.checkedDatasets)
-        {
-            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase ){
-                console.log(m.database+"???"+m.accession);
-                result.similars.push({"database":m.database,"accession":m.accession});
-            }
-            // if(m.database==database && m.accession == accession)
-            // {
-            //     for(let d of m.similars){
-            //         if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
-            //             result.similars.push({"database":d.database,"accession":d.accession});
-            //         }
-            //     }
-            //     break;
-            // } else {
-            //     var found = false;
-            //     for(let d of m.similars){
-            //         if(d.accession==accession && d.database == database){
-            //             found = true;
-            //             break;
-            //         }
-            //     }
-            //     if(found){
-            //         if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
-            //             result.similars.push({"database": m.database, "accession": m.accession});
-            //         }
-            //         for(let d of m.similars){
-            //             if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
-            //                 if (!(accession == d.accession && database == d.database)) {
-            //                     result.similars.push({"database": d.database, "accession": d.accession});
-            //                 }
-            //             }
-            //         }
-            //         break;
-            //     }
-            // }
-        }
-
-        if(result.similars.length > 0) {
-
-            var secondary_accessions = "";
-            for(let d of result.similars){
-                secondary_accessions += secondary_accessions.length > 0 ? "," : "";
-                secondary_accessions += d.accession;
-            }
-
-            var confirm = this.dialogService.confirm('skip ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be multiomics')
-                .subscribe(res => {
-                    if(res){
-
-                        this.datasetService.multiomicsMerge(result).subscribe(data=>{
-                                this.notificationService.success("Datasets skiped","sucessfully");
-                                this.load();
-                            },
-                            err=>{
-                                this.notificationService.error("Error occured",err);
-                            });
-                    }});
-        }
-    }
 
 
 

@@ -8,6 +8,7 @@ import { DataSet } from "../model/DataSet";
 import {AppConfig} from "../app.config";
 import {BaseService} from "./base.service";
 import {MergeCandidate} from "../model/MergeCandidate";
+import {UnMergeDatasets} from "../model/Unmerge/UnMergeDatasets";
 
 @Injectable()
 export class DataSetService extends BaseService{
@@ -88,9 +89,17 @@ export class DataSetService extends BaseService{
      return this.http.get(this.appConfig.getMergeCandidateUrl(start,size)).map(x => this.extractData<MergeCandidate[]>(x))
   }
 
+    public getUnMergeCandidates(): Observable<UnMergeDatasets[]>{
+        return this.http.get(this.appConfig.getUnMergeCandidateUrl()).map(x => this.extractData<UnMergeDatasets[]>(x))
+    }
+
   public getMergeCandidateCount(): Observable<number>{
     return this.http.get(this.appConfig.getMergeCandidateCountUrl()).map(x => this.extractData<number>(x))
   }
+//unused
+    // public getUnMergeCandidateCount(): Observable<MergeCandidate[]>{
+    //     return this.http.get(this.appConfig.getUnMergeCandidateCountUrl()).map(x => this.extractData<MergeCandidate[]>(x))
+    // }
 
   public merge(result: MergeCandidate) : Observable<String> {
     var url = this.appConfig.getMergeUrl();
@@ -106,6 +115,21 @@ export class DataSetService extends BaseService{
         //   return Observable.throw(err);
         // })
   }
+
+    public unmerge(result: MergeCandidate) : Observable<String> {
+        var url = this.appConfig.getUnMergeUrl();
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, JSON.stringify(result), options)
+            .map(res => {
+                return "OK"
+            })
+        // .catch(err=>{
+        //   return Observable.throw(err);
+        // })
+    }
 
     public skipMerge(result: MergeCandidate) : Observable<String> {
         var url = this.appConfig.skipMergeUrl();

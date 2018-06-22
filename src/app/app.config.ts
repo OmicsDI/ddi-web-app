@@ -160,12 +160,24 @@ export class AppConfig{
   getMergeCandidateUrl(start: number, size: number){
     return `${environment.webServiceUrl}dataset/getMergeCandidates?start=${start}&size=${size}&r=${Math.random()}`;
   }
+
+    getUnMergeCandidateUrl(){
+        return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
+    }
   getMergeCandidateCountUrl(){
     return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
   }
+    getUnMergeCandidateCountUrl(){
+        return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
+    }
+
   getMergeUrl(){
     return `${environment.webServiceUrl}dataset/merge?r=${Math.random()}`;
   }
+
+    getUnMergeUrl(){
+        return `${environment.webServiceUrl}dataset/unmerge?r=${Math.random()}`;
+    }
 
     skipMergeUrl(){
         return `${environment.webServiceUrl}dataset/skipMerge?r=${Math.random()}`;
