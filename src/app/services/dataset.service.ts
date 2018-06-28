@@ -116,7 +116,7 @@ export class DataSetService extends BaseService{
         // })
   }
 
-    public unmerge(result: MergeCandidate) : Observable<String> {
+    public unmerge(result: Array<UnMergeDatasets>) : Observable<String> {
         var url = this.appConfig.getUnMergeUrl();
 
         let headers = new Headers({ 'Content-Type': 'application/json' });

@@ -5,6 +5,7 @@ import {DialogServiceMerge} from "../../merge/dialog-merge.service";
 import {MergeCandidate} from "../../model/MergeCandidate";
 import {forEach} from "@angular/router/src/utils/collection";
 import {DialogUnmergeService} from "../../unmerge/dialog-unmerge.service";
+import {UnMergeDatasets} from "../../model/Unmerge/UnMergeDatasets";
 
 @Component({
   selector: 'app-unmerge',
@@ -20,7 +21,7 @@ export class UnmergeComponent implements OnInit {
     ) { }
 
     test: boolean;
-    mergeCandidates: any[];
+    unMergeCandidates: UnMergeDatasets[] = [];
     counts: number;
     checkedDatasets: {basedatabase:string, baseaccession:string, database:string, accession:string }[] = new Array<{basedatabase:string, baseaccession:string, database:string, accession:string }>();
     currentPage: number = 1;
@@ -36,8 +37,8 @@ export class UnmergeComponent implements OnInit {
             .subscribe(
                 result => {
                     console.log(result);
-                    this.mergeCandidates = result;
-                    this.counts = this.mergeCandidates.length;
+                    this.unMergeCandidates = result;
+                    this.counts = this.unMergeCandidates.length;
                 }
             )
 
@@ -56,185 +57,36 @@ export class UnmergeComponent implements OnInit {
         return (index !== -1)
     }
 
+
+
     unmerge(basedatabase: string, baseaccession: string, database: string, accession: string){
-        var result = new MergeCandidate();
-        result.database = database;
-        result.accession = accession;
-        result.similars = new Array();
-
-        for(let m of this.checkedDatasets)
-        {
-
-            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase && m.accession!=accession){
-                console.log(m.database+"???"+m.accession);
-                result.similars.push({"database":m.database,"accession":m.accession});
-            }
-
-
-            // //if itis main dataset
-            // if(m.database==database && m.accession == accession)
-            // {
-            //     for(let d of m.similars){
-            //         if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
-            //             result.similars.push({"database":d.database,"accession":d.accession});
-            //         }
-            //     }
-            //     break;
-            // }
-            // else
-            //     {
-            //     var found = false;
-            //     for(let d of m.similars){
-            //         if(d.accession==accession && d.database == database){
-            //             found = true;
-            //             break;
-            //         }
-            //     }
-            //     if(found){
-            //         if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
-            //             result.similars.push({"database": m.database, "accession": m.accession});
-            //         }
-            //         for(let d of m.similars){
-            //             if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
-            //                 if (!(accession == d.accession && database == d.database)) {
-            //                     result.similars.push({"database": d.database, "accession": d.accession});
-            //                 }
-            //             }
-            //         }
-            //         break;
-            //     }
-            // }
+        let list = new Array();
+        for ( let y of this.checkedDatasets ){
+            let unmerge = this.unMergeCandidates.find( x => {
+                return x.masterAccession == y.baseaccession && x.masterDatabase == y.basedatabase && x.dataset.accession == y.accession && x.dataset.database == y.database
+            });
+            list.push(unmerge);
         }
+            console.log(list);
 
-        if(result.similars.length > 0) {
 
-            var secondary_accessions = "";
-            // var checkMaster = true;
-            // for(let m of this.checkedDatasets){
-            //     if(m.accession==baseaccession){
-            //         checkMaster = false;
-            //     }
-            // }
-            for(let d of result.similars){
-                secondary_accessions += secondary_accessions.length > 0 ? "," : "";
-                secondary_accessions += d.accession;
-                // if(d.accession === baseaccession){
-                //     checkMaster = false;
-                // }
-            }
-            // if(checkMaster){
-            //     var confirmMaster = this.dialogService.confirm("Warning","You didn't sleect master dataset,do you want to continue?")
-            //         .subscribe(res => {
-            //             if(res){
-            //                 var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be added as secondary accessions to ' + result.accession + '(' + result.database + ')')
-            //                     .subscribe(res => {
-            //                         if(res){
-            //
-            //                             this.datasetService.merge(result).subscribe(data=>{
-            //                                     this.notificationService.success("Datasets merged","sucessfully");
-            //                                     this.load();
-            //                                 },
-            //                                 err=>{
-            //                                     this.notificationService.error("Error occured",err);
-            //                                 });
-            //                         }});
-            //             }
-            //         });
-            // }else{
-            var confirm = this.dialogService.confirm('Delete ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will unmerge secondary accessions ' + result.accession + '(' + result.database + ')')
+
+            var confirm = this.dialogService.confirm('unmerge datasets', 'unmerge datasets')
                 .subscribe(res => {
                     if(res){
 
-                        this.datasetService.merge(result).subscribe(data=>{
+                        this.datasetService.unmerge(list).subscribe(data=>{
                                 this.notificationService.success("Datasets Unmerged","sucessfully");
                                 this.load();
                             },
                             err=>{
                                 this.notificationService.error("Error occured",err);
-                            });
-                    }});
-            // }
-
-
-        }
-    }
-
-
-    skipMerge(basedatabase: string, baseaccession: string, database: string, accession: string){
-        var result = new MergeCandidate();
-        result.database = database;
-        result.accession = accession;
-        result.similars = new Array();
-
-        for(let m of this.checkedDatasets)
-        {
-            if(m.baseaccession==baseaccession && m.basedatabase==basedatabase){
-                console.log(m.database+"???"+m.accession);
-                result.similars.push({"database":m.database,"accession":m.accession});
-            }
-            // if(m.database==database && m.accession == accession)
-            // {
-            //     for(let d of m.similars){
-            //         if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)){
-            //             result.similars.push({"database":d.database,"accession":d.accession});
-            //         }
-            //     }
-            //     break;
-            // } else {
-            //     var found = false;
-            //     for(let d of m.similars){
-            //         if(d.accession==accession && d.database == database){
-            //             found = true;
-            //             break;
-            //         }
-            //     }
-            //     if(found){
-            //         if(this.isChecked(basedatabase,baseaccession,m.database,m.accession)) {
-            //             result.similars.push({"database": m.database, "accession": m.accession});
-            //         }
-            //           for(let d of m.similars){
-            //             if(this.isChecked(basedatabase,baseaccession,d.database,d.accession)) {
-            //                 if (!(accession == d.accession && database == d.database)) {
-            //                     result.similars.push({"database": d.database, "accession": d.accession});
-            //                 }
-            //             }
-            //         }
-            //         break;
-            //     }
-            // }
-        }
-
-        if(result.similars.length > 0) {
-
-            var secondary_accessions = "";
-            for(let d of result.similars){
-                secondary_accessions += secondary_accessions.length > 0 ? "," : "";
-                secondary_accessions += d.accession;
-            }
-
-            var confirm = this.dialogService.confirm('skip ' + result.similars.length + ' datasets', 'datasets ' + secondary_accessions + ' will be skiped')
-                .subscribe(res => {
-                    if(res){
-
-                        this.datasetService.skipMerge(result).subscribe(data=>{
-                                this.notificationService.success("Datasets skiped","sucessfully");
                                 this.load();
-                            },
-                            err=>{
-                                this.notificationService.error("Error occured",err);
                             });
                     }});
-        }
-    }
+            };
 
 
-
-
-
-    findCheckedSimilars(database: string,accession: string) : {database: string,accession: string}[]
-    {
-        return null;
-    }
 
     check(basedatabase: string, baseaccession: string,database: string, accession: string, checked:Boolean){
 

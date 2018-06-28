@@ -110,46 +110,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
 
 
-      // this.dataSetService.dataSetDetail$.subscribe(x => {
-      //   this.d = x;
-      //     const s = this.renderer2.createElement('script');
-      //     s.type = `application/ld+json`;
-      //     s.text = '\n' +
-      //         ' {\n' +
-      //         '        "@context": "http://schema.org",\n' +
-      //         '        "@type": "Dataset", \n' +
-      //         '        "name": "'+this.acc+'",\n' +
-      //         '        "description": "'+this.d.name+'",\n' +
-      //         '        "sameAs": "'+this.d.full_dataset_link+'",\n' +
-      //         '        "keywords": "'+this.d.keywords+'",\n' +
-      //         '        "variableMeasured": "'+this.d.omics_type+'",\n' +
-      //         '        "creator": [\n' +
-      //         '\t{\n' +
-      //         '            "@type" : "Person",\n' +
-      //         '            "name" : "'+this.d.labMembers+'"\n' +
-      //         '        },\n' +
-      //         '\t{\n' +
-      //         '            "@type":"Organization",\n' +
-      //         '            "name":"'+this.d.organization+'"\n' +
-      //         '        },\n' +
-      //         '        "citation": \n' +
-      //         '\t{\n' +
-      //         '        "@type":"CreativeWork",\n' +
-      //         '        "author"?\n' +
-      //         '                    "@type":"Person",\n' +
-      //         '                    "name":"'+this.d.submitter+'"\n' +
-      //         '         },\n' +
-      //         '        "publisher": \n' +
-      //         '\t{\n' +
-      //         '            "@type":"Organization",\n' +
-      //         '            "name":"'+this.d.organization+'"\n' +
-      //         '         },\n' +
-      //         '        "name":"'+this.d.name+'",\n' +
-      //         '        "url":"'+this.d.full_dataset_link+'",\n' +
-      //         '    }';
-      //     this.renderer2.appendChild(this.document.body, s);
-      // });
-
 
   }
 
@@ -176,7 +136,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
 
         //array of Strange words
-        let reg = ['ï','®'];
+        //hard coded
+        let reg = ['ï','®','µ','å','°'];
         var i: number = 0;
         for(var n = 0;n<synonyms.length;n++){
             let j = 0;
@@ -210,10 +171,14 @@ export class DatasetComponent implements OnInit, OnDestroy {
             i = synonyms[n].to;
             // console.log(i);
         }
-
+        // add space for strange words
+        let s = 0;
+        for (let t of reg){
+            s = s + (str.split(t).length - 1);
+        }
 
         if(i < str.length){
-            result.push({text:str.substr(i,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
+            result.push({text:str.substr(i+s,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
         }
         return result;
     }

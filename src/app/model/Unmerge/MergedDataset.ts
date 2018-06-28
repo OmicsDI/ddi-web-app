@@ -9,7 +9,7 @@ import {ObjectId} from "./ObjectId";
 export class MergedDataset {
     public database: string;
     public additional: any[];
-    public accession: boolean;
+    public accession: string;
     public dates: any[];
     public crossReferences: any[];
     public claimable: boolean;
