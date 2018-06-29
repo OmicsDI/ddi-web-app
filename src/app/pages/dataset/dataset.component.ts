@@ -90,7 +90,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
       });
     this.web_service_url = dataSetService.getWebServiceUrl();
-    //this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});
+    this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});
   }
 
   ngOnInit() {
