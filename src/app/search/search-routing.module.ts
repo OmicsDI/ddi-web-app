@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {SearchComponent} from "../pages/search/search.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SearchComponent} from 'pages/search/search.component';
 
 const routes: Routes = [{
-  path:'',
-    component:SearchComponent
+    path: '',
+    component: SearchComponent
 }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class SearchRoutingModule { }
+export class SearchRoutingModule {
+}

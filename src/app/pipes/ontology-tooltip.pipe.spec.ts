@@ -1,6 +1,6 @@
-import { OntologyTooltipPipe } from './ontology-tooltip.pipe';
+import {OntologyTooltipPipe} from './ontology-tooltip.pipe';
 
 describe('OntologyTooltipPipe', () => {
-  it('create an instance', () => {
-  });
+    it('create an instance', () => {
+    });
 });

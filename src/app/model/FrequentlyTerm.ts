@@ -3,6 +3,6 @@
  */
 
 export class FrequentlyTerm {
-  label: string;
-  frequent: string;
+    label: string;
+    frequent: string;
 }

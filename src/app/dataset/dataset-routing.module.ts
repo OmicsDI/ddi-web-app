@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {DatasetComponent} from "../pages/dataset/dataset.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {DatasetComponent} from 'pages/dataset/dataset.component';
 
 const routes: Routes = [{
-  path:'',
+    path: '',
     component: DatasetComponent
 }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class DatasetRoutingModule { }
+export class DatasetRoutingModule {
+}

@@ -1,10 +1,9 @@
 ///<reference path="../../node_modules/@angular/forms/src/form_providers.d.ts"/>
 ///<reference path="services/ontology.service.ts"/>
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpModule, Http, RequestOptions} from '@angular/http';
-
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Http, HttpModule, RequestOptions} from '@angular/http';
 import { AppComponent } from './app.component';
 import {HomeComponent} from "./pages/home/home.component";
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from "@angular/material";
@@ -93,126 +92,126 @@ export function getParameterByName(name): string {
 }
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
-    tokenName: 'id_token',
-    tokenGetter: (() => localStorage.getItem('id_token')),
-    globalHeaders: [{'Content-Type':'application/json'}],
-    headerName: "X-AUTH-TOKEN",
-    noTokenScheme: true,
-    noJwtError: true
-  }), http, options);
+    return new AuthHttp(new AuthConfig({
+        tokenName: 'id_token',
+        tokenGetter: (() => localStorage.getItem('id_token')),
+        globalHeaders: [{'Content-Type': 'application/json'}],
+        headerName: 'X-AUTH-TOKEN',
+        noTokenScheme: true,
+        noJwtError: true
+    }), http, options);
 }
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-      UnauthorizedComponent,
-      NotfoundComponent,
-      SearchBoxLargeComponent,
-      HotwordsComponent,
-      TissuesOrganismsComponent,
-      ReposOmicsComponent,
-      LatestDatasetsComponent,
-      MostAccessedComponent,
-      AnnualOmicstypeComponent,
-      TweetsNewsComponent,
-      StatisticsPanelComponent,
-      HomeAboutComponent,
-      AutocompleteNComponent,
-      QueryBuilderComponent,
-      OmicsImageComponent,
-      MegaNumberPipe,
-      DropDownComponent,
-      LoginLauncherComponent,
-      LoginComponent,
-      CitationDialogDashboardprofileComponent,
-      CitationDialogSearchComponent,
-      CitationDialogComponent,
-      TermsComponent,
-      NotfoundComponent,
-      SelectedComponent,
-      SearchComponent,
-      SearchTotalComponent,
-      SearchFacetComponent,
-      SearchPagerComponent,
-      SearchResultComponent,
-      FeedbackComponent,
-      FacetOmicsComponent,
-      FacetComponent,
-      DatasetwidgetSearchComponent,
-      OmicsImageSearchComponent,
-      ScoreSearchComponent,
-      TruncatePipe,
-      ToDateStringPipe,
-      SearchBoxComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    routing,
-    FormsModule,
-    ReactiveFormsModule,
-    NguiAutoCompleteModule,
-    DisqusModule,
-    AlertModule.forRoot(),
-    DropdownModule,
-    SlimLoadingBarModule.forRoot(),
-    NgxPaginationModule,
-    TooltipModule,
-    UiSwitchModule,
-    BrowserAnimationsModule,
-    SimpleNotificationsModule.forRoot(),
-    ClipboardModule
-  ],
-  exports: [
-    RouterModule
-  ],
-  providers: [ProfileService
-    , {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
-    },
-      {provide: LocationStrategy,useClass: HashLocationStrategy}
-    , AuthService
-    , AuthGuardService
-    , SearchService
-    , DataSetService
-    , PublicationService
-    , SimilarityService
-    , EnrichmentService
-    , OntologyService
-    , DatabaseListService
-    , SimilarMoleculeService
-    , FeedbackService
-    , AppConfig
-      , DialogServiceMerge
-    , StatisticsService
-    , AltmetricService
-    , SelectedService
-    , DialogService
-    , ScoreService
-    , ThorService
-    , MatDialogModule
-    , MatMenuModule
-    , MatButtonModule
-    , InviteService],
-  entryComponents: [
-    // ConfirmDialogComponent
-    //   CitationDialogSearchComponent
-      //in some case dialog will not be loaded in lazy-load module,so we'd better put those component in here
-      CitationDialogDashboardprofileComponent,
-      CitationDialogSearchComponent,
-      CitationDialogComponent
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        UnauthorizedComponent,
+        NotfoundComponent,
+        SearchBoxLargeComponent,
+        HotwordsComponent,
+        TissuesOrganismsComponent,
+        ReposOmicsComponent,
+        LatestDatasetsComponent,
+        MostAccessedComponent,
+        AnnualOmicstypeComponent,
+        TweetsNewsComponent,
+        StatisticsPanelComponent,
+        HomeAboutComponent,
+        AutocompleteNComponent,
+        QueryBuilderComponent,
+        OmicsImageComponent,
+        MegaNumberPipe,
+        DropDownComponent,
+        LoginLauncherComponent,
+        LoginComponent,
+        CitationDialogDashboardprofileComponent,
+        CitationDialogSearchComponent,
+        CitationDialogComponent,
+        TermsComponent,
+        NotfoundComponent,
+        SelectedComponent,
+        SearchComponent,
+        SearchTotalComponent,
+        SearchFacetComponent,
+        SearchPagerComponent,
+        SearchResultComponent,
+        FeedbackComponent,
+        FacetOmicsComponent,
+        FacetComponent,
+        DatasetwidgetSearchComponent,
+        OmicsImageSearchComponent,
+        ScoreSearchComponent,
+        TruncatePipe,
+        ToDateStringPipe,
+        SearchBoxComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        routing,
+        FormsModule,
+        ReactiveFormsModule,
+        NguiAutoCompleteModule,
+        DisqusModule,
+        AlertModule.forRoot(),
+        DropdownModule,
+        SlimLoadingBarModule.forRoot(),
+        NgxPaginationModule,
+        TooltipModule,
+        UiSwitchModule,
+        BrowserAnimationsModule,
+        SimpleNotificationsModule.forRoot(),
+        ClipboardModule
+    ],
+    exports: [
+        RouterModule
+    ],
+    providers: [ProfileService
+        , {
+            provide: AuthHttp,
+            useFactory: authHttpServiceFactory,
+            deps: [Http, RequestOptions]
+        },
+        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        , AuthService
+        , AuthGuardService
+        , SearchService
+        , DataSetService
+        , PublicationService
+        , SimilarityService
+        , EnrichmentService
+        , OntologyService
+        , DatabaseListService
+        , SimilarMoleculeService
+        , FeedbackService
+        , AppConfig
+        , DialogServiceMerge
+        , StatisticsService
+        , AltmetricService
+        , SelectedService
+        , DialogService
+        , ScoreService
+        , ThorService
+        , MatDialogModule
+        , MatMenuModule
+        , MatButtonModule
+        , InviteService],
+    entryComponents: [
+        // ConfirmDialogComponent
+        //   CitationDialogSearchComponent
+        // in some case dialog will not be loaded in lazy-load module,so we'd better put those component in here
+        CitationDialogDashboardprofileComponent,
+        CitationDialogSearchComponent,
+        CitationDialogComponent
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 

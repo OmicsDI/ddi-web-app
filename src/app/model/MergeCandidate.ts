@@ -6,5 +6,5 @@ export class MergeCandidate {
     public database: string;
     public accession: string;
     public name: string;
-    public similars: {database:string, accession:string}[];
+    public similars: { database: string, accession: string }[];
 }

@@ -1,29 +1,29 @@
-span.selected{
+span.selected {
     font-weight: bold;
-    color:black;
+    color: black;
 }
 
-span.unselected{
+span.unselected {
     font-weight: normal;
     margin-right: 22px;
     color: black;
 }
 
-.grey{
+.grey {
     background-color: silver;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.white{
+.white {
     background-color: white;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .row-eq-height {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
-    display:         flex;
+    display: flex;
 }
 
 span.buttons-span {

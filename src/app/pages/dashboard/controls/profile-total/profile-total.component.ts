@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-profile-total',
-  templateUrl: './profile-total.component.html',
-  styleUrls: ['./profile-total.component.css']
+    selector: 'app-profile-total',
+    templateUrl: './profile-total.component.html',
+    styleUrls: ['./profile-total.component.css']
 })
 export class ProfileTotalComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

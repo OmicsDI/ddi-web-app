@@ -1,181 +1,187 @@
-  <div id="wrapper1" class="container_ddi" style="margin:0px;">
+<div id="wrapper1" class="container_ddi" style="margin:0px;">
     <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex1-collapse1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-      <div class="nav navbar-left top-nav col-lg-7 col-md-12 col-sm-12" >
-      <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 collapse navbar-collapse" id ="navbar-ex1-collapse1">
-        <li class="nav-item">
-        <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand" id="item7"><img src ="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
-        </li>
-        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/home']" id="item1">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-center" routerLink="/search" id="item2">Browse</a></li>
-        <li class="nav-item"><a class="nav-link text-center" (click)="toSubmission();" id="item8">Submit Data</a></li>
-        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/api']" id="item3">API</a></li>
-        <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/database']" id="item4">Database</a></li>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex1-collapse1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="nav navbar-left top-nav col-lg-7 col-md-12 col-sm-12">
+            <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 collapse navbar-collapse" id="navbar-ex1-collapse1">
+                <li class="nav-item">
+                    <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"
+                       id="item7"><img src="./static/images/logo/imageedit_2_3220380406.png" alt="logo"
+                                       style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
+                </li>
+                <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/home']" id="item1">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-center" routerLink="/search" id="item2">Browse</a></li>
+                <li class="nav-item"><a class="nav-link text-center" (click)="toSubmission();" id="item8">Submit
+                    Data</a></li>
+                <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/api']" id="item3">API</a></li>
+                <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/database']"
+                                        id="item4">Database</a></li>
 
 
+                <li dropdown class="nav-item dropdown">
+                    <a class="nav-link text-center dropdown-toggle" id="navbardrop" data-toggle="dropdown" id="item5"><i
+                            class="fa fa-bell"></i> Help <b class="caret"></b></a>
 
-        <li dropdown class="nav-item dropdown">
-          <a class="nav-link text-center dropdown-toggle" id="navbardrop" data-toggle="dropdown" id="item5"><i class="fa fa-bell"></i> Help <b class="caret"></b></a>
-
-        <div class="dropdown-menu" style="background-color: #ffffff">
-          <ul nav navbar-nav>
-            <li class="nav-item" id="li1">
-          <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
-            Omics Help
-          </div>
-            </li>
-            <li class="nav-item" id="li2">
-          <div class="text-center" mat-menu-item routerLink="/about" id="item-div2">
-            About Omicsdi
-          </div>
-            </li>
-            <li class="nav-item" id="li3">
-          <div class="text-center" *ngIf="auth.loggedIn()" mat-menu-item [routerLink]="['dashboard','feedback']" id="item-div3">
-            Feedback
-          </div>
-            </li>
+                    <div class="dropdown-menu" style="background-color: #ffffff">
+                        <ul nav navbar-nav>
+                            <li class="nav-item" id="li1">
+                                <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
+                                    Omics Help
+                                </div>
+                            </li>
+                            <li class="nav-item" id="li2">
+                                <div class="text-center" mat-menu-item routerLink="/about" id="item-div2">
+                                    About Omicsdi
+                                </div>
+                            </li>
+                            <li class="nav-item" id="li3">
+                                <div class="text-center" *ngIf="auth.loggedIn()" mat-menu-item
+                                     [routerLink]="['dashboard','feedback']" id="item-div3">
+                                    Feedback
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li AppLoginLauncher class="nav-item dropdown text-center" id="item6">
+                </li>
+                <li class="nav-item" *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a
+                        routerLink="/dashboard/selected"
+                        style="color:white !important;text-decoration:none;border-color: transparent;"><i
+                        class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
             </ul>
         </div>
-        </li>
-        <li AppLoginLauncher class="nav-item dropdown text-center" id="item6">
-        </li>
-        <li class="nav-item" *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a routerLink="/dashboard/selected" style="color:white !important;text-decoration:none;border-color: transparent;"><i class="fa fa-fw fa-shopping-basket" ></i> {{this.selectedService.selected()}}</a></li>
-      </ul>
-      </div>
-      <!-- Top Menu Items -->
-      <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">
-        <li style="width:100%;" *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
-      </ul>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">
+            <li style="width:100%;" *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
+        </ul>
     </nav>
     <!-- /local-nav -->
 
-  <ng2-slim-loading-bar></ng2-slim-loading-bar>
-  <!--main container of page -->
-  <div style="min-height: 600px;">
-    <router-outlet></router-outlet>
-  </div>
-  <!-- </div> ResultsListCtrl -->
-  <footer>
-    <div class="row" id="global-footer" style="border-top:none;">
-
-      <nav class="col-md-12" id="global-nav-expanded">
-
-        <div class="col-md-2 col-sm-12 col-xs-12">
-          <a title="European Bioinformatics Institute homepage" target="_blank" class="no-icon"
-             href="http://www.ebi.ac.uk/">
-            <img class="img_at_footer ebi-img" alt="EMBL-EBI logo" src="img/logo/embl-ebi.jpg"
-                 style="width:150px; margin-top:9px">
-          </a>
-
-          <a title="BD2K" target="_blank" class="no-icon" href="http://www.heartbd2k.org/">
-            <img class="img_at_footer img" alt="" src="img/logo/bd2k.png"
-                 style="width:150px; margin-top:9px">
-          </a>
-          <a href="http://metabolomexchange.org/" target="_blank">
-            <img src="img/home/metabolome.png" class="img_at_footer"
-                 style="width:150px; margin-top:9px"/></a>
-          <a class="img_at_footer" href="http://www.proteomexchange.org/" target="_blank">
-            <img src="img/home/proteome.png" style="width:150px; margin-top:9px"></a>
-          <a class="img_at_footer" href="https://www.ebi.ac.uk/ega/" target="_blank">
-            <img src="img/db-logos/ega_phenome_logo.jpg" style="width:80px; margin-top:9px">
-          </a>
-        </div>
-
-        <div class="col-md-8 col-sm-8 col-xs-12">
-          <h3 class="about">
-            OmicsDI Databases
-          </h3>
-
-
-          <div class="col-md-3 col-sm-4 col-xs-4">
-            <ul>
-
-              <li><a target="_blank" href="http://www.ebi.ac.uk/pride/archive/" class="no-icon">PRIDE</a>
-              </li>
-
-              <li><a target="_blank" href="http://www.peptideatlas.org/" class="no-icon">PeptideAtlas</a>
-              </li>
-
-              <li><a target="_blank" href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp"
-                     class="no-icon">MassIVE</a>
-              <li><a target="_blank" href="http://gpmdb.thegpm.org/" class="no-icon">GPMDB</a>
-              </li>
-
-            </ul>
-          </div>
-
-          <div class="col-md-3 col-sm-4 col-xs-4">
-            <ul>
-
-              <li><a target="_blank" href="https://www.ebi.ac.uk/ega/" class="no-icon">EGA</a></li>
-
-
-            </ul>
-          </div>
-
-          <div class="col-md-3 col-sm-4 col-xs-4">
-            <ul>
-
-
-              <li><a target="_blank" href="http://www.ebi.ac.uk/metabolights/" class="no-icon">MetaboLights</a>
-              </li>
-
-              <li><a target="_blank" href="http://www.metabolomicsworkbench.org/" class="no-icon">Metabolomics
-                Workbench</a></li>
-              <li><a target="_blank" href="https://www.metabolome-express.org/" class="no-icon">MetabolomeExpress</a>
-              <li><a target="_blank" href="https://GNPS.ucsd.edu" class="no-icon">GNPS</a>
-              </li>
-
-            </ul>
-          </div>
-          <div class="col-md-3 col-sm-4 col-xs-4">
-            <ul>
-              <li><a target="_blank" href="https://www.ebi.ac.uk/arrayexpress/" class="no-icon">ArrayExpress</a>
-              </li>
-              <li><a target="_blank" href="http://www.ebi.ac.uk/gxa/home"
-                     class="no-icon">ExpressionAtlas</a></li>
-
-            </ul>
-          </div>
-
-
-        </div>
-
-
-
-
-        <div class="col-md-2 col-sm-4 col-xs-12">
-          <h3 class="about">Information</h3>
-          <ul>
-            <li><a [routerLink]="['about']">About OmicsDI</a></li>
-            <li><a [routerLink]="['database']">Databases</a></li>
-            <li><a href="http://blog.omicsdi.org/">Help</a></li>
-            <li><a [routerLink]="['api']">API</a></li>
-
-            <li><a href="http://www.ebi.ac.uk/support/index.php?query=omics-di">Contact us</a></li>
-            <li><a target="_blank" href="https://github.com/OmicsDI/" class="no-icon">Code on GitHub</a>
-            </li>
-            <li><a target="_blank" href="http://www.ebi.ac.uk/about/terms-of-use" class="no-icon">Terms of
-              use</a>
-            </li>
-            <li><a href="https://www.ebi.ac.uk/biostudies/">Submit Data</a></li>
-          </ul>
-        </div>
-
-      </nav>
-
+    <ng2-slim-loading-bar></ng2-slim-loading-bar>
+    <!--main container of page -->
+    <div style="min-height: 600px;">
+        <router-outlet></router-outlet>
     </div>
-  </footer>
+    <!-- </div> ResultsListCtrl -->
+    <footer>
+        <div class="row" id="global-footer" style="border-top:none;">
+
+            <nav class="col-md-12" id="global-nav-expanded">
+
+                <div class="col-md-2 col-sm-12 col-xs-12">
+                    <a title="European Bioinformatics Institute homepage" target="_blank" class="no-icon"
+                       href="http://www.ebi.ac.uk/">
+                        <img class="img_at_footer ebi-img" alt="EMBL-EBI logo" src="img/logo/embl-ebi.jpg"
+                             style="width:150px; margin-top:9px">
+                    </a>
+
+                    <a title="BD2K" target="_blank" class="no-icon" href="http://www.heartbd2k.org/">
+                        <img class="img_at_footer img" alt="" src="img/logo/bd2k.png"
+                             style="width:150px; margin-top:9px">
+                    </a>
+                    <a href="http://metabolomexchange.org/" target="_blank">
+                        <img src="img/home/metabolome.png" class="img_at_footer"
+                             style="width:150px; margin-top:9px"/></a>
+                    <a class="img_at_footer" href="http://www.proteomexchange.org/" target="_blank">
+                        <img src="img/home/proteome.png" style="width:150px; margin-top:9px"></a>
+                    <a class="img_at_footer" href="https://www.ebi.ac.uk/ega/" target="_blank">
+                        <img src="img/db-logos/ega_phenome_logo.jpg" style="width:80px; margin-top:9px">
+                    </a>
+                </div>
+
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <h3 class="about">
+                        OmicsDI Databases
+                    </h3>
+
+
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <ul>
+
+                            <li><a target="_blank" href="http://www.ebi.ac.uk/pride/archive/" class="no-icon">PRIDE</a>
+                            </li>
+
+                            <li><a target="_blank" href="http://www.peptideatlas.org/" class="no-icon">PeptideAtlas</a>
+                            </li>
+
+                            <li><a target="_blank" href="https://massive.ucsd.edu/ProteoSAFe/datasets.jsp"
+                                   class="no-icon">MassIVE</a>
+                            <li><a target="_blank" href="http://gpmdb.thegpm.org/" class="no-icon">GPMDB</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <ul>
+
+                            <li><a target="_blank" href="https://www.ebi.ac.uk/ega/" class="no-icon">EGA</a></li>
+
+
+                        </ul>
+                    </div>
+
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <ul>
+
+
+                            <li><a target="_blank" href="http://www.ebi.ac.uk/metabolights/" class="no-icon">MetaboLights</a>
+                            </li>
+
+                            <li><a target="_blank" href="http://www.metabolomicsworkbench.org/" class="no-icon">Metabolomics
+                                Workbench</a></li>
+                            <li><a target="_blank" href="https://www.metabolome-express.org/" class="no-icon">MetabolomeExpress</a>
+                            <li><a target="_blank" href="https://GNPS.ucsd.edu" class="no-icon">GNPS</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-4">
+                        <ul>
+                            <li><a target="_blank" href="https://www.ebi.ac.uk/arrayexpress/" class="no-icon">ArrayExpress</a>
+                            </li>
+                            <li><a target="_blank" href="http://www.ebi.ac.uk/gxa/home"
+                                   class="no-icon">ExpressionAtlas</a></li>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-md-2 col-sm-4 col-xs-12">
+                    <h3 class="about">Information</h3>
+                    <ul>
+                        <li><a [routerLink]="['about']">About OmicsDI</a></li>
+                        <li><a [routerLink]="['database']">Databases</a></li>
+                        <li><a href="http://blog.omicsdi.org/">Help</a></li>
+                        <li><a [routerLink]="['api']">API</a></li>
+
+                        <li><a href="http://www.ebi.ac.uk/support/index.php?query=omics-di">Contact us</a></li>
+                        <li><a target="_blank" href="https://github.com/OmicsDI/" class="no-icon">Code on GitHub</a>
+                        </li>
+                        <li><a target="_blank" href="http://www.ebi.ac.uk/about/terms-of-use" class="no-icon">Terms of
+                            use</a>
+                        </li>
+                        <li><a href="https://www.ebi.ac.uk/biostudies/">Submit Data</a></li>
+                    </ul>
+                </div>
+
+            </nav>
+
+        </div>
+    </footer>
 
 </div>
 
-  <simple-notifications [options]="simpleNotificationsOptions"></simple-notifications>
+<simple-notifications [options]="simpleNotificationsOptions"></simple-notifications>
 

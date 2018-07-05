@@ -6,9 +6,9 @@ import 'rxjs/add/observable/of';
 
 
 @Component({
-  selector: 'app-notfound',
-  templateUrl: './notfound.component.html',
-  styleUrls: ['./notfound.component.css']
+    selector: 'app-notfound',
+    templateUrl: './notfound.component.html',
+    styleUrls: ['./notfound.component.css']
 })
 export class NotfoundComponent {
   title = 'app';
@@ -32,7 +32,7 @@ export class NotfoundComponent {
       return Observable.of([]);
     }
   }
-
+    }
 
   keydown(event) {
     console.log("keydown:" + event.keyCode + " query:" + this.selected + " value:" + this.input.nativeElement.value );

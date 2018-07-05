@@ -1,70 +1,70 @@
-import { Injectable } from '@angular/core';
-import {DataSetDetail} from "../model/DataSetDetail";
-import {DataSetShort} from "../model/DataSetShort";
-import {ProfileService} from "./profile.service";
-import {NotificationsService} from "angular2-notifications/dist";
+import {Injectable} from '@angular/core';
+import {DataSetShort} from 'model/DataSetShort';
+import {ProfileService} from './profile.service';
+import {NotificationsService} from 'angular2-notifications/dist';
 
 @Injectable()
 export class SelectedService {
 
-  private userId :string;
+    private userId: string;
 
-  constructor(private profileService: ProfileService
-      , private notificationService: NotificationsService) {
+    private i = 0;
 
-    this.profileService.onProfileReceived.subscribe( x => {
-      this.profileService.getSelected(this.profileService.userId).subscribe(
-          x => {
-            console.log("is here??????");
-            this.dataSets = x;
-          }
-      );
-    })
-  }
+    public dataSets: DataSetShort[] = [];
 
-  private i: number = 0;
+    constructor(private profileService: ProfileService
+        , private notificationService: NotificationsService) {
 
-  public select(source, accession){
-    this.i+=1;
-  }
-
-  public unselect(source, id){
-    var i: number = this.dataSets.findIndex(x => x.id==id && x.source==source);
-    if(i>-1) {
-      this.dataSets.splice(i, 1);
-    }
-    //return this.profileService.setSelected(this.profileService.userId,this.dataSets).subscribe(x => {
-    //
-    //});
-    this.notificationService.success("Dataset UnSelected","in your dashboard");
-  }
-
-  public isSelected(source, id):boolean{
-    var i: number = this.dataSets.findIndex(x => x.id==id && x.source==source);
-    return(i>-1);
-  }
-
-  public selected(){
-    //this.profileService.getSelected(this.profileService.userId).subscribe(x=>{
-    //  this.dataSets = x;
-    //});
-
-    return this.dataSets.length;
-  }
-
-  public toggle(source, id){
-
-    var i: number = this.dataSets.findIndex(x => x.id==id && x.source==source);
-    if(i>-1){
-      this.dataSets.splice(i,1);
-    }else{
-      this.dataSets.push({id:id, source:source, name: "", claimed: "0", omics_type: null});
+        this.profileService.onProfileReceived.subscribe(x => {
+            this.profileService.getSelected(this.profileService.userId).subscribe(
+                r => {
+                    console.log('is here??????');
+                    this.dataSets = r;
+                }
+            );
+        });
     }
 
-    this.profileService.setSelected(this.profileService.userId,this.dataSets).subscribe(x => {});
+    public select(source, accession) {
+        this.i += 1;
+    }
 
-    this.notificationService.success("Selection saved","in your dashboard");
-  }
+    public unselect(source, id) {
+        const i: number = this.dataSets.findIndex(x => x.id === id && x.source === source);
+        if (i > -1) {
+            this.dataSets.splice(i, 1);
+        }
+        // return this.profileService.setSelected(this.profileService.userId,this.dataSets).subscribe(x => {
+        //
+        // });
+        this.notificationService.success('Dataset UnSelected', 'in your dashboard');
+    }
 
-  public dataSets: DataSetShort[] = new Array();
+    public isSelected(source, id): boolean {
+        const i: number = this.dataSets.findIndex(x => x.id === id && x.source === source);
+        return (i > -1);
+    }
+
+    public selected() {
+        // this.profileService.getSelected(this.profileService.userId).subscribe(x=>{
+        //  this.dataSets = x;
+        // });
+
+        return this.dataSets.length;
+    }
+
+    public toggle(source, id) {
+
+        const i: number = this.dataSets.findIndex(x => x.id === id && x.source === source);
+        if (i > -1) {
+            this.dataSets.splice(i, 1);
+        } else {
+            this.dataSets.push({id: id, source: source, name: '', claimed: '0', omics_type: null});
+        }
+
+        this.profileService.setSelected(this.profileService.userId, this.dataSets).subscribe(x => {
+        });
+
+        this.notificationService.success('Selection saved', 'in your dashboard');
+    }
 }

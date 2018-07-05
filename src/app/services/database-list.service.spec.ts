@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { DatabaseListService } from './database-list.service';
+import {DatabaseListService} from './database-list.service';
 
 describe('DatabaseListService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [DatabaseListService]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [DatabaseListService]
+        });
     });
-  });
 
-  it('should ...', inject([DatabaseListService], (service: DatabaseListService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should ...', inject([DatabaseListService], (service: DatabaseListService) => {
+        expect(service).toBeTruthy();
+    }));
 });

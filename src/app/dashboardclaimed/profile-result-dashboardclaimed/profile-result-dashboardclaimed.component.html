@@ -1,26 +1,26 @@
+<ul *ngIf="this.profile?.dataSets && this.profile?.dataSets.length>0" class="list-unstyled"
+    style="display:inline-block; width:100%">
+
+    <ng-container *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }">
 
 
-<ul *ngIf="this.profile?.dataSets && this.profile?.dataSets.length>0" class="list-unstyled" style="display:inline-block; width:100%">
-
-  <ng-container *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }">
-
-
-    <div class="col-sm-1" *ngIf="this.thorService.isClaimed(d.source,d.id)" class="rotate" style="float:left; position: relative; top: 60px; left:-45px; z-index: 1000; color: #A6CE39; padding-bottom: 5px; display: inline;">
-      linked to orcid <img src="assets/orcid.png">
-    </div>
+        <div class="col-sm-1" *ngIf="this.thorService.isClaimed(d.source,d.id)" class="rotate"
+             style="float:left; position: relative; top: 60px; left:-45px; z-index: 1000; color: #A6CE39; padding-bottom: 5px; display: inline;">
+            linked to orcid <img src="assets/orcid.png">
+        </div>
 
 
-  <li
-      class="repeated-item ng-scope"
-      style="min-width:400px;">
+        <li
+                class="repeated-item ng-scope"
+                style="min-width:400px;">
 
 
+            <app-datasetwidget-dashboardclaimed [d]="d" [allowSelect]="false" [allowClaim]="false"
+                                                (buttonClicked)="this.deleteDataset(d.source, d.id)"></app-datasetwidget-dashboardclaimed>
+        </li>
 
-    <app-datasetwidget-dashboardclaimed [d]="d" [allowSelect]="false" [allowClaim]="false" (buttonClicked)="this.deleteDataset(d.source, d.id)"></app-datasetwidget-dashboardclaimed>
-  </li>
 
-
-  </ng-container>
+    </ng-container>
 
 
 </ul>

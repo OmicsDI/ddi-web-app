@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { QueryBuilderSearchComponent } from './query-builder-search.component';
+import {QueryBuilderSearchComponent} from './query-builder-search.component';
 
 describe('QueryBuilderSearchComponent', () => {
-  let component: QueryBuilderSearchComponent;
-  let fixture: ComponentFixture<QueryBuilderSearchComponent>;
+    let component: QueryBuilderSearchComponent;
+    let fixture: ComponentFixture<QueryBuilderSearchComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ QueryBuilderSearchComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [QueryBuilderSearchComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(QueryBuilderSearchComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(QueryBuilderSearchComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

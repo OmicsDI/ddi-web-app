@@ -1,11 +1,11 @@
 <ul class="list-unstyled">
-  <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.selectedPageSize, currentPage: searchService.currentPage
+    <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.selectedPageSize, currentPage: searchService.currentPage
   , totalItems: total }, let last = last"
-      class="repeated-item ng-scope"
-      style="">
+        class="repeated-item ng-scope"
+        style="">
 
-    <app-datasetwidget-search [d]="d" [allowDelete]="false"></app-datasetwidget-search>
-  </li>
+        <app-datasetwidget-search [d]="d" [allowDelete]="false"></app-datasetwidget-search>
+    </li>
 </ul>
 
 

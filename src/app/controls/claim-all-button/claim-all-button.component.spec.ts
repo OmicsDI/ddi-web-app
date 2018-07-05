@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ClaimAllButtonComponent } from './claim-all-button.component';
+import {ClaimAllButtonComponent} from './claim-all-button.component';
 
 describe('ClaimAllButtonComponent', () => {
-  let component: ClaimAllButtonComponent;
-  let fixture: ComponentFixture<ClaimAllButtonComponent>;
+    let component: ClaimAllButtonComponent;
+    let fixture: ComponentFixture<ClaimAllButtonComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ClaimAllButtonComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ClaimAllButtonComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ClaimAllButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ClaimAllButtonComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

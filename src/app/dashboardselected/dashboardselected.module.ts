@@ -1,41 +1,40 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { DashboardselectedRoutingModule } from './dashboardselected-routing.module';
-import {DashboardSelectedComponent} from "../pages/dashboard/selected/selected.component";
-import {NavDashboardselectedComponent} from "./nav-dashboardselected/nav-dashboardselected.component";
-import {DatasetwidgetDatasetselectedComponent} from "./datasetwidget-datasetselected/datasetwidget-datasetselected.component";
-import {ScoreDatasetselectedComponent} from "./datasetwidget-datasetselected/score-datasetselected/score-datasetselected.component";
-import {OmicsImageSearchDatasetselectedComponent} from "./datasetwidget-datasetselected/omics-image-datasetselected/omics-image-search-datasetselected.component";
-import {MergeRoutingModule} from "../merge/merge-routing.module";
-import {FormsModule} from "@angular/forms";
-import {ClipboardModule} from "ngx-clipboard/dist";
-import {NgxPaginationModule} from "ngx-pagination";
+import {DashboardselectedRoutingModule} from './dashboardselected-routing.module';
+import {DashboardSelectedComponent} from 'pages/dashboard/selected/selected.component';
+import {NavDashboardselectedComponent} from './nav-dashboardselected/nav-dashboardselected.component';
+import {DatasetwidgetDatasetselectedComponent} from './datasetwidget-datasetselected/datasetwidget-datasetselected.component';
+import {ScoreDatasetselectedComponent} from './datasetwidget-datasetselected/score-datasetselected/score-datasetselected.component';
+import {OmicsImageSearchDatasetselectedComponent} from 'omics-image-datasetselected/omics-image-search-datasetselected.component';
+import {FormsModule} from '@angular/forms';
+import {ClipboardModule} from 'ngx-clipboard/dist';
+import {NgxPaginationModule} from 'ngx-pagination';
 // import {TruncatePipe} from "../pipes/truncate.pipe";
-import {ToDateStringPipe} from "../pipes/toDateString.pipe";
-import {TooltipModule} from "ng2-tooltip";
-import {TruncateDashboardselectedPipe} from "./truncate-dashboardselected.pipe";
-import {ToDateStringDashboardselectedPipe} from "./toDateString-dashboardselected.pipe";
+import {TooltipModule} from 'ng2-tooltip';
+import {TruncateDashboardselectedPipe} from './truncate-dashboardselected.pipe';
+import {ToDateStringDashboardselectedPipe} from './toDateString-dashboardselected.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DashboardselectedRoutingModule,
-      NgxPaginationModule,
-      FormsModule,
-      ClipboardModule,
-      TooltipModule
-  ],
-  declarations: [
-      DashboardSelectedComponent,
-      NavDashboardselectedComponent,
-      DatasetwidgetDatasetselectedComponent,
-      ScoreDatasetselectedComponent,
-      OmicsImageSearchDatasetselectedComponent,
+    imports: [
+        CommonModule,
+        DashboardselectedRoutingModule,
+        NgxPaginationModule,
+        FormsModule,
+        ClipboardModule,
+        TooltipModule
+    ],
+    declarations: [
+        DashboardSelectedComponent,
+        NavDashboardselectedComponent,
+        DatasetwidgetDatasetselectedComponent,
+        ScoreDatasetselectedComponent,
+        OmicsImageSearchDatasetselectedComponent,
 
-      //pipe
-      TruncateDashboardselectedPipe,
-      ToDateStringDashboardselectedPipe
-  ]
+        // pipe
+        TruncateDashboardselectedPipe,
+        ToDateStringDashboardselectedPipe
+    ]
 })
-export class DashboardselectedModule { }
+export class DashboardselectedModule {
+}

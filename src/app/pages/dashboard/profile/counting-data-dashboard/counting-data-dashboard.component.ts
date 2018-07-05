@@ -1,29 +1,27 @@
-import { Component, OnInit, EventEmitter, Output,Input,SimpleChanges,OnChanges } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import * as d3 from 'd3';
-import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
-import {DataSetService} from "../../../../services/dataset.service";
-import {AppConfig} from "../../../../app.config";
-import {Profile} from "../../../../model/Profile";
-import {DatasetCount} from "../../../../model/DatasetCount";
-import {ProfileService} from "../../../../services/profile.service";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DataSetService} from 'services/dataset.service';
+import {AppConfig} from '../../../../app.config';
+import {Profile} from 'model/Profile';
+import {DatasetCount} from 'model/DatasetCount';
+import {ProfileService} from 'services/profile.service';
 
 
-import { Observable } from 'rxjs';
-import {DataSetDetail} from "../../../../model/DataSetDetail";
-import {NotificationsService} from "angular2-notifications/dist";
-import {ThorService} from "../../../../services/thor.service";
+import {Observable} from 'rxjs/Observable';
+import {DataSetDetail} from 'model/DataSetDetail';
+import {NotificationsService} from 'angular2-notifications/dist';
+import {ThorService} from 'services/thor.service';
 
 @Component({
-  selector: 'app-counting-data-dashboard',
-  templateUrl: './counting-data-dashboard.component.html',
-  styleUrls: ['./counting-data-dashboard.component.css']
+    selector: 'app-counting-data-dashboard',
+    templateUrl: './counting-data-dashboard.component.html',
+    styleUrls: ['./counting-data-dashboard.component.css']
 })
-export class CountingDataDashboardComponent implements OnInit {
+export class CountingDataDashboardComponent implements OnInit, OnChanges {
 
 
     @Output()
-    notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
+    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
     private username: string;
     private web_service_url = this.appConfig.getWebServiceUrl();
     private retryLimitTimes = 2;
@@ -35,10 +33,8 @@ export class CountingDataDashboardComponent implements OnInit {
     @Input() profile: Profile = new Profile();
 
 
-
-    constructor( private dataSetService: DataSetService,private route: ActivatedRoute,private appConfig: AppConfig,private profileService: ProfileService
-
-
+    constructor(private dataSetService: DataSetService, private route: ActivatedRoute,
+                private appConfig: AppConfig, private profileService: ProfileService
         , private router: Router
         , private notificationService: NotificationsService
         , private thorService: ThorService) {
@@ -46,7 +42,7 @@ export class CountingDataDashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-          this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
+        this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
         // Listen page size
         Observable.fromEvent(window, 'resize')
             .subscribe((event) => {
@@ -58,31 +54,33 @@ export class CountingDataDashboardComponent implements OnInit {
 
 
     ngOnChanges(changes: SimpleChanges) {
-        for (let propName in changes) {
-            let chng = changes[propName];
-            let cur  = JSON.stringify(chng.currentValue);
-            let prev = JSON.stringify(chng.previousValue);
-            if(propName=="profile"){
-                if(null!=chng.currentValue){
+        for (const propName of Object.keys(changes)) {
+            const chng = changes[propName];
+            const cur = JSON.stringify(chng.currentValue);
+            const prev = JSON.stringify(chng.previousValue);
+            if (propName === 'profile') {
+                if (null != chng.currentValue) {
                     this.reloadDataSets();
                 }
             }
         }
     }
 
-    reloadDataSets(){
+    reloadDataSets() {
         // this.dataSets = new Array();
-        if(!this.profile){
+        if (!this.profile) {
             return;
         }
-        if(!this.profile.dataSets){
+        if (!this.profile.dataSets) {
             return;
         }
-        Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
+        Observable.forkJoin(this.profile.dataSets.map(x => {
+            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
+        })).subscribe(
             y => {
                 this.dataSets = y;
                 this.thorService.datasets = y;
             }
-        )
+        );
     }
 }

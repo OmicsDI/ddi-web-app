@@ -1,8 +1,7 @@
-import {environment} from "../environments/environment";
-import {Injectable} from "@angular/core";
-import {Profile} from "./model/Profile";
-import {INamed} from "./model/INamed";
-import {forEach} from "@angular/router/src/utils/collection";
+import {environment} from '../environments/environment';
+import {Injectable} from '@angular/core';
+import {INamed} from 'model/INamed';
+
 /**
  * Created by user on 4/9/2017.
  */
@@ -167,42 +166,41 @@ export class AppConfig{
     getUnMergeCandidateUrl(){
         return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
     }
-  getMergeCandidateCountUrl(){
-    return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
-  }
-    getUnMergeCandidateCountUrl(){
+
+    getMergeCandidateCountUrl() {
+        return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
+    }
+
+    getUnMergeCandidateCountUrl() {
         return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
     }
 
-  getMergeUrl(){
-    return `${environment.webServiceUrl}dataset/merge?r=${Math.random()}`;
-  }
+    getMergeUrl() {
+        return `${environment.webServiceUrl}dataset/merge?r=${Math.random()}`;
+    }
 
-    getUnMergeUrl(){
+    getUnMergeUrl() {
         return `${environment.webServiceUrl}dataset/unmerge?r=${Math.random()}`;
     }
 
-    skipMergeUrl(){
+    skipMergeUrl() {
         return `${environment.webServiceUrl}dataset/skipMerge?r=${Math.random()}`;
     }
-    multiomicsMerge(){
+
+    multiomicsMerge() {
         return `${environment.webServiceUrl}dataset/multiomicsMerge?r=${Math.random()}`;
     }
 
-  public githubScope = "public_profile";
-  public facebookScope = "email,public_profile";
-  public twitterScope = "public_profile";
-  public orcidScope = "/authenticate";
-  public elixirScope = "openid,profile,email";
-
-  public isEmpty(items: INamed[]): boolean{
-    if(!items)
-      return true;
-    for(var i of items){
-      if((i.name)&&(i.name.trim()!=""))
-        return false;
+    public isEmpty(items: INamed[]): boolean {
+        if (!items) {
+            return true;
+        }
+        for (const i of items) {
+            if ((i.name) && (i.name.trim() !== '')) {
+                return false;
+            }
+        }
+        return true;
     }
-    return true;
-  }
 
 }

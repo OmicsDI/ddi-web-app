@@ -3,8 +3,8 @@
  * asnmsl
  */
 
-import {Scores} from "./Scores";
-import {ObjectId} from "./ObjectId";
+import {Scores} from './Scores';
+import {ObjectId} from './ObjectId';
 
 export class MergedDataset {
     public database: string;
