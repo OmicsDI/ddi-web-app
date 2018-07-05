@@ -1,17 +1,16 @@
-import {EventEmitter, Injectable}       from '@angular/core';
-import {Http, Response, RequestOptionsArgs, Headers, RequestOptions}   from '@angular/http';
-import {Observable, ObservableInput} from 'rxjs/Observable';
-import { Profile } from '../model/Profile';
-import { AuthHttp } from 'angular2-jwt';
-import {AppConfig} from "../app.config";
-import {BaseService} from "./base.service";
-import {DataSetShort} from "../model/DataSetShort";
-import {UserShort} from "../model/UserShort";
-import {DataSetDetail} from "../model/DataSetDetail";
-import {DataSetService} from "./dataset.service";
-import {SavedSearch} from "../model/SavedSearch";
-import {WatchedDataset} from "../model/WatchedDataset";
-import {ConnectionData} from "../model/ConnectionData";
+import {EventEmitter, Injectable} from '@angular/core';
+import {Headers, RequestOptionsArgs, Response} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Profile} from 'model/Profile';
+import {AuthHttp} from 'angular2-jwt';
+import {AppConfig} from '../app.config';
+import {BaseService} from './base.service';
+import {DataSetShort} from 'model/DataSetShort';
+import {UserShort} from 'model/UserShort';
+import {DataSetService} from './dataset.service';
+import {SavedSearch} from 'model/SavedSearch';
+import {WatchedDataset} from 'model/WatchedDataset';
+import {ConnectionData} from 'model/ConnectionData';
 
 
 @Injectable()
@@ -56,66 +55,26 @@ export class ProfileService extends BaseService {
                 return this.profile;
             });
         // .catch(this.handleError);
-  }
+    }
 
-  getPublicProfile(username): Observable<Profile>{
-    var _profile;
-    return this.http.get(this.appConfig.getProfileUrl(username)) //,config //{ withCredentials: true }
-      .map(x => {
-        _profile = this.extractData<Profile>(x);
-        if(!_profile){
-          console.log("public profile not received");
-        }else {
-          console.log("public profile received:" + _profile.userId);
-        }
-        return _profile;
-      });
-      // .catch(this.handleError);
-  }
-
-  getAllProfiles(): Observable<Profile[]>{
-    var _profiles;
-    return this.http.get(this.appConfig.getAllProfilesUrl()) //,config //{ withCredentials: true }
-      .map(x => {
-        _profiles = this.extractData<Profile[]>(x);
-        if(!_profiles){
-          console.log("public profile not received");
-        }else {
-          console.log("public profilesreceived:" + _profiles.length);
-        }
-        return _profiles;
-      })
-      .catch(this.handleError);
-  }
-
-  getUserConnections (userId: string): Observable<string[]>{
-    return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) //{ withCredentials: true }
-      .map(x => this.extractData<string[]>(x));
-      // .catch(this.handleError);
-  }
-
-  getUserConnection (userId: string,provider: string): Observable<ConnectionData>{
-    return this.http.get(this.appConfig.getUserConnectionUrl(userId,provider)) //{ withCredentials: true }
-        .map(x => this.extractData<ConnectionData>(x))
-        .catch(this.handleError);
-  }
-
-  deleteConnection(userId: string, provider: string): Observable<any>{
-    let deleteConnectionUrl = this.appConfig.getDeleteConnectionUrl(userId,provider);
-    return this.http.delete(deleteConnectionUrl)
-      .map(res => res.json())
-      .catch(this.handleError);
-  }
-
-  getCoAuthors (userId: string): Observable<UserShort[]> {
-    return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))//
-        .map(x => this.extractData<UserShort[]>(x))
+    getPublicProfile(username): Observable<Profile> {
+        let _profile;
+        return this.http.get(this.appConfig.getProfileUrl(username)) // ,config //{ withCredentials: true }
+            .map(x => {
+                _profile = this.extractData<Profile>(x);
+                if (!_profile) {
+                    console.log('public profile not received');
+                } else {
+                    console.log('public profile received:' + _profile.userId);
+                }
+                return _profile;
+            });
         // .catch(this.handleError);
     }
 
     getAllProfiles(): Observable<Profile[]> {
         let _profiles;
-        return this.http.get(this.appConfig.getAllProfilesUrl()) // ,config // { withCredentials: true }
+        return this.http.get(this.appConfig.getAllProfilesUrl()) // ,config //{ withCredentials: true }
             .map(x => {
                 _profiles = this.extractData<Profile[]>(x);
                 if (!_profiles) {
@@ -132,6 +91,12 @@ export class ProfileService extends BaseService {
         return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) // { withCredentials: true }
             .map(x => this.extractData<string[]>(x));
         // .catch(this.handleError);
+    }
+
+    getUserConnection(userId: string, provider: string): Observable<ConnectionData> {
+        return this.http.get(this.appConfig.getUserConnectionUrl(userId, provider)) // { withCredentials: true }
+            .map(x => this.extractData<ConnectionData>(x))
+            .catch(this.handleError);
     }
 
     deleteConnection(userId: string, provider: string): Observable<any> {
@@ -151,12 +116,12 @@ export class ProfileService extends BaseService {
 
         const headers = new Headers();
         /**
-         headers.append('Content-Type', 'application/json');
-         headers.append('Accept', 'application/json');
-         let authToken = this.getParameterByName("auth");
-         if(authToken) {
-      headers.append('X-AUTH-TOKEN', authToken);
-    }**/
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        let authToken = this.getParameterByName("auth");
+        if(authToken) {
+            headers.append('X-AUTH-TOKEN', authToken);
+        }**/
 
         const config: RequestOptionsArgs = {headers: headers};
         // $http.post(url, config) .success ...
