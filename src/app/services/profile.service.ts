@@ -171,7 +171,7 @@ export class ProfileService extends BaseService {
     }
 
     setCookie(name, value, path) {
-        if (null === path) {
+        if (null == path) {
             path = '/';
         }
 
@@ -203,18 +203,18 @@ export class ProfileService extends BaseService {
 
     public isClaimed(source, id) {
         let obj: any;
-        if (null !== this.profile.dataSets) {
+        if (null != this.profile.dataSets) {
             obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
         }
-        return (null !== obj);
+        return (null != obj);
     }
 
     public isWatched(source, id) {
         let obj: any;
-        if (null !== this.watchedDatasets) {
+        if (null != this.watchedDatasets) {
             obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
         }
-        return (null !== obj);
+        return (null != obj);
     }
 
     getSavedSearches(userId: string): Observable<SavedSearch[]> {

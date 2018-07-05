@@ -51,7 +51,7 @@ export class MostAccessedComponent implements OnInit {
                 // console.log(this.mostAccessedDatasets);
             })
             .then(() => {
-                if (this.mostAccessedDatasets === null) {
+                if (this.mostAccessedDatasets == null) {
                     MostAccessedComponent.requestMostAccessedDatasetFailed = true;
                     console.log('datasets array is empty');
                 }

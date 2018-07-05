@@ -58,7 +58,7 @@ export class OmicsImageDashboardComponent implements OnInit, OnChanges {
         const log: string[] = [];
         for (const propName in changes) {
             if (propName === 'omics') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     this.calculateOmics();
                 }
             }

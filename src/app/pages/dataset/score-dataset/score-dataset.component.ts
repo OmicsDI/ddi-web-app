@@ -25,7 +25,7 @@ export class ScoreDatasetComponent implements OnInit, OnChanges {
         const log: string[] = [];
         for (const propName of Object.keys(changes)) {
             if (propName === 'dataset') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     this.views = this.dataset.viewsCount;
                     this.citations = this.dataset.citationsCount;
                     this.reanalysis = this.dataset.reanalysisCount;

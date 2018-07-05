@@ -123,7 +123,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     get_section(str: string, synonyms: Synonym[]): Section[] {
 
         const result: Section[] = [];
-        if (null === synonyms) {
+        if (null == synonyms) {
             result.push({text: str, beAnnotated: false, tobeReduced: false, synonyms: null});
             return result;
         }

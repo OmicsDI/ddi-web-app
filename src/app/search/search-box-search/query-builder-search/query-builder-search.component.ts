@@ -62,7 +62,7 @@ export class QueryBuilderSearchComponent implements OnInit {
 
     addCondition() {
         this.hideBasicInfo = false;
-        if (null === this.query.rules) {
+        if (null == this.query.rules) {
             this.query.rules = [];
         }
         this.query.rules.push({
@@ -82,7 +82,7 @@ export class QueryBuilderSearchComponent implements OnInit {
 
     addGroup() {
         this.hideBasicInfo = false;
-        if (null === this.query.rules) {
+        if (null == this.query.rules) {
             this.query.rules = [];
         }
 

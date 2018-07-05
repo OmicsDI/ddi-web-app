@@ -8,7 +8,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class ToDateStringProfilePipe implements PipeTransform {
     transform(value: string, args: string[]): string {
-        if (null === value) {
+        if (null == value) {
             return value;
         }
 

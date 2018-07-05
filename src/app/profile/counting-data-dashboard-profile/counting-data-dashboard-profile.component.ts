@@ -59,7 +59,7 @@ export class CountingDataDashboardProfileComponent implements OnInit, OnChanges 
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
             if (propName === 'profile') {
-                if (null !== chng.currentValue) {
+                if (null != chng.currentValue) {
                     this.reloadDataSets();
                 }
             }

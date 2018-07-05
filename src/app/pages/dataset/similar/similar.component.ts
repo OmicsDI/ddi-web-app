@@ -39,7 +39,7 @@ export class SimilarComponent implements OnInit, OnChanges {
         console.log('onChange fired');
         console.log('changing', args);
 
-        if ((this.acc !== null) && (this.repository !== null)) {
+        if ((this.acc != null) && (this.repository != null)) {
             if ((this.acc !== '') && (this.repository !== '')) {
                 this.similarityService.search(this.acc, this.repository);
             }
@@ -57,10 +57,10 @@ export class SimilarComponent implements OnInit, OnChanges {
     }
 
     getDatasets(): DataSet[] {
-        if (null === this.d) {
+        if (null == this.d) {
             return null;
         }
-        if (null === this.d.datasets) {
+        if (null == this.d.datasets) {
             return null;
         }
 
@@ -68,10 +68,10 @@ export class SimilarComponent implements OnInit, OnChanges {
     }
 
     omicsTest(d: DataSet, omics: string): boolean {
-        if (d === null) {
+        if (d == null) {
             return false;
         }
-        if (d.omicsType === null) {
+        if (d.omicsType == null) {
             return false;
         }
 

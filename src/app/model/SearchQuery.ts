@@ -24,7 +24,7 @@ export class SearchQuery {
             if (i > 0) {
                 str += ' ' + this.operator + ' ';
             }
-            if (null !== this.rules[i].query) {
+            if (null != this.rules[i].query) {
                 str += this.rules[i].query.toQueryString();
             } else {
                 const rule = this.rules[i];

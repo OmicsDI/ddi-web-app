@@ -52,7 +52,7 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                 .subscribe(result => {
                     self.similarityData = result;
                     self.biological_similarity_info = result;
-                    if (self.biological_similarity_info !== null) {
+                    if (self.biological_similarity_info != null) {
                         self.related_datasets_by_biological_limit = self.find_similarity_limit(
                             self.biological_similarity_info.scores, self.threshold);
                     }
@@ -74,7 +74,7 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
         // console.log(scores);
         const main_key = this.acc + '@' + this.repository;
         let limit = 0;
-        if (scores !== null) {
+        if (scores != null) {
             for (let i = 0; i < scores.length; i++) {
                 const score = scores[i];
                 const key1 = score.key1;
@@ -107,7 +107,7 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                 this.threshold = this.threshold.toPrecision(2);
             }
         }
-        if (this.biological_similarity_info !== null) {
+        if (this.biological_similarity_info != null) {
             this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
         }
         this.getRelatedDatasets(this.threshold);

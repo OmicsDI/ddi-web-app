@@ -34,7 +34,7 @@ export class PublicationComponent implements OnInit, OnChanges {
         console.log('onChange fired');
         console.log('changing', args);
 
-        if (this.ids !== null) {
+        if (this.ids != null) {
             if (this.ids.length > 0) {
                 this.loadComponent();
             }

@@ -33,7 +33,7 @@ export class Chord2 {
     public init(selection: any) {
         const self = this;
         let tooltip: any = document.getElementById('chord_diagram_tooltip');
-        if (tooltip === null) {
+        if (tooltip == null) {
             tooltip = d3.select('#chord_diagram').append('div')
                 .attr('id', 'chord_diagram_tooltip')
                 .attr('class', 'chart_tooltip')
@@ -43,7 +43,7 @@ export class Chord2 {
         }
 
         let tooltip_click: any = document.getElementById('chord_diagram_tooltip_click');
-        if (tooltip_click === null) {
+        if (tooltip_click == null) {
             tooltip_click = d3.select('#chord_diagram').append('div')
                 .attr('id', 'chord_diagram_tooltip_click')
                 .attr('class', 'chart_tooltip')

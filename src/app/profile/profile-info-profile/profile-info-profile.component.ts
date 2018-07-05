@@ -46,7 +46,7 @@ export class ProfileInfoProfileComponent implements OnInit, OnChanges {
             const prev = JSON.stringify(chng.previousValue);
             // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
-                if (null !== chng.currentValue) {
+                if (null != chng.currentValue) {
                     console.log(`profile-info ngOnChanges: ${chng.currentValue.userId}`);
                     this.profile = chng.currentValue;
                     this.profileImageUrl = this.getProfileImageUrl();

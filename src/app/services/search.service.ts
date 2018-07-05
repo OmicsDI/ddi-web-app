@@ -114,7 +114,7 @@ export class SearchService extends BaseService {
 
     private search(searchQuery: string, page: number): Observable<SearchResult> {
         console.log(searchQuery);
-        if (searchQuery === null) {
+        if (searchQuery == null) {
             searchQuery = '';
         }
         return this.http.get(
@@ -137,7 +137,7 @@ export class SearchService extends BaseService {
     }
 
     selectFacet(id: string, value: string) {
-        if (null === this.selectedFacets[id]) {
+        if (null == this.selectedFacets[id]) {
             this.selectedFacets[id] = [];
         }
         this.selectedFacets[id].push(value);
@@ -152,7 +152,7 @@ export class SearchService extends BaseService {
     }
 
     isFacetSelected(id: string, value: string): boolean {
-        if (null === this.selectedFacets[id]) {
+        if (null == this.selectedFacets[id]) {
             return false;
         }
         const result: boolean = (this.selectedFacets[id].indexOf(value) !== -1);
@@ -198,7 +198,7 @@ export class SearchService extends BaseService {
         let result: FacetValue[];
         result = [];
 
-        if (null === this.allFacets) {
+        if (null == this.allFacets) {
             const v: FacetValue = new FacetValue();
             v.label = 'label1';
             v.value = 'value1';

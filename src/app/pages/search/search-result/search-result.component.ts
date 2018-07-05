@@ -71,10 +71,10 @@ export class SearchResultComponent implements OnInit, OnDestroy, AfterViewChecke
 
     /*
     omicsTest(d:DataSet, omics:string):boolean{
-      if(d === null)
+      if(d == null)
         return false;
 
-      if(d.omicsType === null)
+      if(d.omicsType == null)
         return false;
 
       return (d.omicsType.indexOf(omics) !== -1);

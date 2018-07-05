@@ -5,7 +5,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 export class MegaNumberPipe implements PipeTransform {
     transform(value: number, fractionSize: any): string {
-        if (value === null) {
+        if (value == null) {
             return null;
         }
         if (value === 0) {

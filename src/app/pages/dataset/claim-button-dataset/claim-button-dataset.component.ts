@@ -39,17 +39,17 @@ export class ClaimButtonDatasetComponent implements OnInit, OnChanges {
             }
 
             if (propName === 'dataSet') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
 
-                    this.claimable = this.dataSet.claimable !== null && this.dataSet.claimable;
+                    this.claimable = this.dataSet.claimable != null && this.dataSet.claimable;
 
-                    if (null !== this.profileService.profile) {
+                    if (null != this.profileService.profile) {
                         const profile: Profile = this.profileService.profile;
                         let obj: any;
-                        if (null !== profile.dataSets) {
+                        if (null != profile.dataSets) {
                             obj = profile.dataSets.find(x => x.id === this.dataSet.id && x.source === this.dataSet.source);
                         }
-                        this.claimed = (null !== obj);
+                        this.claimed = (null != obj);
                     }
                 }
             }

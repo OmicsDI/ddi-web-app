@@ -57,7 +57,7 @@ export class OmicsImageDatasetwidgetProfileComponent implements OnInit, OnChange
         const log: string[] = [];
         for (const propName of Object.keys(changes)) {
             if (propName === 'omics') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     this.calculateOmics();
                 }
             }

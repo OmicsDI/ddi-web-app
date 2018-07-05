@@ -11,7 +11,7 @@ export class OntologyTooltipPipe implements PipeTransform {
     }
 
     transform(value: string) {
-        if (null === value) {
+        if (null == value) {
             return null;
         }
 

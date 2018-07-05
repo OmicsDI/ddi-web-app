@@ -72,7 +72,7 @@ export class DashboardViewsCountComponent implements OnInit, OnChanges {
             // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'datasets') {
                 this.datasets = chng.currentValue;
-                if (null !== chng.currentValue) {
+                if (null != chng.currentValue) {
                     this.reloadDataSets();
                 }
             }

@@ -136,7 +136,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     isAllChecked() {
-        if (null === this.profileX.dataSets) {
+        if (null == this.profileX.dataSets) {
             return false;
         }
         return this.profileX.dataSets.every(_ => (_ as any).state);
@@ -157,7 +157,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     isMy(): boolean {
-        return (null === this.username);
+        return (null == this.username);
     }
 
     claimDatasetsToOrcid() {

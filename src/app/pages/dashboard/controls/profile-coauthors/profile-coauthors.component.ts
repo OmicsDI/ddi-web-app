@@ -28,7 +28,7 @@ export class ProfileCoauthorsComponent implements OnInit, OnChanges {
             const prev = JSON.stringify(chng.previousValue);
             // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
-                if (null !== chng.currentValue) {
+                if (null != chng.currentValue) {
                     console.log(`profile-coauthors ngOnChanges: ${chng.currentValue.userId}`);
                     this.profileService.getCoAuthors(chng.currentValue.userId).subscribe(
                         x => this.coauthors = x);

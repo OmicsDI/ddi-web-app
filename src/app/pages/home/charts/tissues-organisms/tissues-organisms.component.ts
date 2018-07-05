@@ -113,7 +113,7 @@ export class TissuesOrganismsComponent implements OnInit {
 
         let tooltip: any = document.getElementById('tissue_organism_chart_tooltip');
 
-        if (tooltip === null) {
+        if (tooltip == null) {
             tooltip = body.append('div')
                 .attr('class', 'chart_tooltip')
                 .attr('id', 'tissue_organism_chart_tooltip')
@@ -340,7 +340,7 @@ export class TissuesOrganismsComponent implements OnInit {
     private classes(arr) {
         const classes = [];
         for (let i = 0; i < arr.length; i++) {
-            const value_before_log_calc = arr[i].value_before_log_calc === null ? +arr[i].value : +arr[i].value_before_log_calc;
+            const value_before_log_calc = arr[i].value_before_log_calc == null ? +arr[i].value : +arr[i].value_before_log_calc;
             classes.push({
                 packageName: arr[i].name,
                 className: arr[i].name,

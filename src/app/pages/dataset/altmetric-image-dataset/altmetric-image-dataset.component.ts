@@ -23,7 +23,7 @@ export class AltmetricImageDatasetComponent implements OnInit, OnChanges {
         const log: string[] = [];
         for (const propName in changes) {
             if (propName === 'PMID') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     const PMID = changes[propName].currentValue;
 
                     this.altmetricService.get(PMID).subscribe(

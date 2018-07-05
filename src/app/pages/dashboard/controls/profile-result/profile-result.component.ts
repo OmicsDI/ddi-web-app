@@ -42,7 +42,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
             const prev = JSON.stringify(chng.previousValue);
             // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
-                if (null !== chng.currentValue) {
+                if (null != chng.currentValue) {
                     this.reloadDataSets();
                 }
             }

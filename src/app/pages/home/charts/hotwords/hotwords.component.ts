@@ -88,7 +88,7 @@ export class HotwordsComponent implements OnInit {
 
     private addWordCloudToolTip(): void {
         const wordcloud_tooltip = document.getElementById('word_cloud_chart_tooltip');
-        if (wordcloud_tooltip === null) {
+        if (wordcloud_tooltip == null) {
             d3.select('#' + this.hotwordsName)
                 .append('div')
                 .attr('class', 'chart_tooltip')

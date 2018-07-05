@@ -39,7 +39,7 @@ export class LatestDatasetsComponent implements OnInit {
                 this.latestDatasets = res['datasets'];
             })
             .then(() => {
-                if (this.latestDatasets === null) {
+                if (this.latestDatasets == null) {
                     LatestDatasetsComponent.requestLatestDatasetFailed = true;
                     console.log('datasets array is empty');
                 }

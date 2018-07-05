@@ -24,7 +24,7 @@ export class AltmetricImageComponent implements OnInit, OnChanges {
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         for (const propName in changes) {
             if (propName === 'PMID') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     const PMID = changes[propName].currentValue;
 
                     this.altmetricService.get(PMID).subscribe(

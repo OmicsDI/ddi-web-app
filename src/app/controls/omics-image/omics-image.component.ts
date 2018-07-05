@@ -56,7 +56,7 @@ export class OmicsImageComponent implements OnInit, OnChanges {
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         for (const propName in changes) {
             if (propName === 'omics') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     this.calculateOmics();
                 }
             }

@@ -26,7 +26,7 @@ export class ScoreDashboardprofileComponent implements OnInit, OnChanges {
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         for (const propName in changes) {
             if (propName === 'dataset') {
-                if (null !== changes[propName].currentValue) {
+                if (null != changes[propName].currentValue) {
                     this.views = this.dataset.viewsCount;
                     this.citations = this.dataset.citationsCount;
                     this.reanalysis = this.dataset.reanalysisCount;

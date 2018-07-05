@@ -73,7 +73,7 @@ export class DashboardReanalisysCountProfileComponent implements OnInit, OnChang
                 // console.log(chng.currentValue);
                 this.datasets = chng.currentValue;
                 // console.log(this.datasets);
-                if (null !== chng.currentValue) {
+                if (null != chng.currentValue) {
                     // console.log('hey reload!');
                     // console.log(this.datasets);
                     this.reloadDataSets();

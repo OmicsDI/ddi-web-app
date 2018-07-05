@@ -31,7 +31,7 @@ export class DataSet {
     }
 
     omicsTest(omics: string): boolean {
-        if (this.omicsType === null) {
+        if (this.omicsType == null) {
             return false;
         }
         return (this.omicsType.indexOf(omics) !== -1);

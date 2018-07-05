@@ -22,7 +22,7 @@ export class SearchComponent implements OnInit {
         this.slimLoadingBarService.start();
         this.route.queryParams.subscribe(params => {
             const q: string = params['q'];
-            if (null !== q) {
+            if (null != q) {
                 this.searchService.textQuery = q;
                 this.searchService.paramQuery = new SearchQuery();
                 this.searchService.selectedFacets = {};
