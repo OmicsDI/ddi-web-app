@@ -1,50 +1,56 @@
 <div style="width:80%; margin-left: auto; margin-right: auto; display:block;">
-  <div id="page-wrapper">
-    <div class="container-fluid3">
+    <div id="page-wrapper">
+        <div class="container-fluid3">
 
-  <div class="col-lg-6 col-md-6 col-sm-6" style="display:inline-block; position:relative; width: calc(100% - 330px);">
+            <div class="col-lg-6 col-md-6 col-sm-6"
+                 style="display:inline-block; position:relative; width: calc(100% - 330px);">
 
-    <app-profile-info-profile [profile]="profileX"></app-profile-info-profile>
+                <app-profile-info-profile [profile]="profileX"></app-profile-info-profile>
 
-    <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
+                <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
 
-    <div *ngIf="profileX?.dataSets?.length>0" class="datasetsCaption">Datasets</div>
+                <div *ngIf="profileX?.dataSets?.length>0" class="datasetsCaption">Datasets</div>
 
-    <div style="display:inline-block; width:100%">
+                <div style="display:inline-block; width:100%">
 
-      <ul *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0" class="list-unstyled" style="display:inline-block; width:100%">
-        <li *ngFor="let d of this.dataSetDetails | paginate: { itemsPerPage: 10, currentPage: p }"
-            class="repeated-item ng-scope"
-            style="min-width:400px;">
+                    <ul *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0" class="list-unstyled"
+                        style="display:inline-block; width:100%">
+                        <li *ngFor="let d of this.dataSetDetails | paginate: { itemsPerPage: 10, currentPage: p }"
+                            class="repeated-item ng-scope"
+                            style="min-width:400px;">
 
-          <app-datasetwidget-profile [d]="d" [allowSelect]="false" [allowClaim]="false" [allowWatch]="false" [allowDelete]="false"></app-datasetwidget-profile>
+                            <app-datasetwidget-profile [d]="d" [allowSelect]="false" [allowClaim]="false"
+                                                       [allowWatch]="false"
+                                                       [allowDelete]="false"></app-datasetwidget-profile>
 
 
-        </li>
-      </ul>
-      <pagination-controls (pageChange)="p = $event"
-                           previousLabel=""
-                           nextLabel=""
-                           *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length > 10"
-                           class="my-pagination">
-      </pagination-controls>
+                        </li>
+                    </ul>
+                    <pagination-controls (pageChange)="p = $event"
+                                         previousLabel=""
+                                         nextLabel=""
+                                         *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length > 10"
+                                         class="my-pagination">
+                    </pagination-controls>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-2 col-sm-2"
+                 style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;"
+                 id="profile_div">
+                <app-profile-contacts-profile [profile]="profileX"></app-profile-contacts-profile>
+                <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
+                <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
+                <app-counting-data-dashboard-profile [profile]="profileX"></app-counting-data-dashboard-profile>
+                <!--<app-profile-repo-omics></app-profile-repo-omics>-->
+                <!--<app-dashboard-citations-count-profile [profile]="profileX"></app-dashboard-citations-count-profile>-->
+                <!--<app-dashboard-reanalisys-count-profile [profile]="profileX"></app-dashboard-reanalisys-count-profile>-->
+                <!--<app-dashboard-views-count-profile [profile]="profileX"></app-dashboard-views-count-profile>-->
+                <!--<app-dashboard-connections-count-profile [profile]="profileX"></app-dashboard-connections-count-profile>-->
+
+
+            </div>
+        </div>
     </div>
-  </div>
-
-  <div class="col-lg-2 col-md-2 col-sm-2"  style="display:inline-block; vertical-align: top; text-align: right; margin-left:20px;" id="profile_div">
-    <app-profile-contacts-profile [profile]="profileX"></app-profile-contacts-profile>
-    <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
-    <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
-    <app-counting-data-dashboard-profile [profile]="profileX"></app-counting-data-dashboard-profile>
-    <!--<app-profile-repo-omics></app-profile-repo-omics>-->
-    <!--<app-dashboard-citations-count-profile [profile]="profileX"></app-dashboard-citations-count-profile>-->
-    <!--<app-dashboard-reanalisys-count-profile [profile]="profileX"></app-dashboard-reanalisys-count-profile>-->
-    <!--<app-dashboard-views-count-profile [profile]="profileX"></app-dashboard-views-count-profile>-->
-    <!--<app-dashboard-connections-count-profile [profile]="profileX"></app-dashboard-connections-count-profile>-->
-
-
-  </div>
-    </div>
-  </div>
 
 </div>

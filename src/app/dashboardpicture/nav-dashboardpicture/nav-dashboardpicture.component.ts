@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-nav-dashboardpicture',
-  templateUrl: './nav-dashboardpicture.component.html',
-  styleUrls: ['./nav-dashboardpicture.component.css']
+    selector: 'app-nav-dashboardpicture',
+    templateUrl: './nav-dashboardpicture.component.html',
+    styleUrls: ['./nav-dashboardpicture.component.css']
 })
 export class NavDashboardpictureComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  profileClicked(){
+    profileClicked() {
 
-  }
+    }
 }

@@ -1,44 +1,53 @@
 <div *ngIf="show" class="panel panel-default" id="dataset_middle_publication">
-  <div class="panel-footer ">
-    <h3>Shared Molecules</h3>
-  </div>
-
-  <h4 style="text-align: center">
-    Only show the datasets with similarity scores above:
-    <span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span>
-  </h4>
-
-  <div class="row">
-    <div class="col-md-1" id="chord_diagram_input">
-      <h5 style="margin-top: 100px">Threshold:<br> <span id="threshold_text2" style="color: darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span></h5>
-      <input id="slider1" style="margin-left: 30px" type="range" class="center" orient="vertical" min="0.50" max="1" step=".01" value="0.50" [(ngModel)]="threshold" (ngModelChange)="thresholdChanged()" />
+    <div class="panel-footer ">
+        <h3>Shared Molecules</h3>
     </div>
 
-    <div class="col-md-6" id="chord_diagram" style="text-align:center;">
-      <button (click)="thresholdChange(-0.10)" class="threshold_botton fa fa-angle-double-left fa-2x ddi-transparent-button"></button>
-      <button (click)="thresholdChange(-0.01)" class="threshold_botton fa fa-angle-left fa-2x ddi-transparent-button "></button>
-      <span>&nbsp;&nbsp; </span>
-      <button (click)="thresholdChange(0)" class="threshold_botton fa fa-refresh fa-2x  ddi-transparent-button"></button>
-      <span>&nbsp;&nbsp; </span>
-      <button (click)="thresholdChange(0.01)" class="threshold_botton fa fa-angle-right fa-2x  ddi-transparent-button "></button>
-      <button (click)="thresholdChange(0.10)" class="threshold_botton fa fa-angle-double-right fa-2x  ddi-transparent-button "></button>
-      <br>
-      <i id="chord_diagram_fa-spinner" style="margin-top:50px" class="fa fa-spinner fa-spin fa-5x"></i>
-    </div>
+    <h4 style="text-align: center">
+        Only show the datasets with similarity scores above:
+        <span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span>
+    </h4>
 
-    <div class="col-md-5" style="text-align:center;" *ngIf="related_datasets_by_biological != null">
-      <div class="panel-body ">
-          <ul class="nobullet">
-              <li *ngFor="let relatedDataset of filteredDatasets" class="title_one_line" style="margin-bottom: 2px; height:22px;">
+    <div class="row">
+        <div class="col-md-1" id="chord_diagram_input">
+            <h5 style="margin-top: 100px">Threshold:<br> <span id="threshold_text2" style="color: darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span>
+            </h5>
+            <input id="slider1" style="margin-left: 30px" type="range" class="center" orient="vertical" min="0.50"
+                   max="1" step=".01" value="0.50" [(ngModel)]="threshold" (ngModelChange)="thresholdChanged()"/>
+        </div>
 
-                  <app-omics-image-dataset [omics]="relatedDataset.omicsType" ></app-omics-image-dataset>
-                  <a target="" class="align-justify" [routerLink]="['/dataset',relatedDataset.source, relatedDataset.id]">
-                      {{relatedDataset.title}}
-                  </a>
-              </li>
-              <!-- this.appConfig.getDatasetUrl(relatedDataset.id,relatedDataset.source) -->
-          </ul>
-      </div>
+        <div class="col-md-6" id="chord_diagram" style="text-align:center;">
+            <button (click)="thresholdChange(-0.10)"
+                    class="threshold_botton fa fa-angle-double-left fa-2x ddi-transparent-button"></button>
+            <button (click)="thresholdChange(-0.01)"
+                    class="threshold_botton fa fa-angle-left fa-2x ddi-transparent-button "></button>
+            <span>&nbsp;&nbsp; </span>
+            <button (click)="thresholdChange(0)"
+                    class="threshold_botton fa fa-refresh fa-2x  ddi-transparent-button"></button>
+            <span>&nbsp;&nbsp; </span>
+            <button (click)="thresholdChange(0.01)"
+                    class="threshold_botton fa fa-angle-right fa-2x  ddi-transparent-button "></button>
+            <button (click)="thresholdChange(0.10)"
+                    class="threshold_botton fa fa-angle-double-right fa-2x  ddi-transparent-button "></button>
+            <br>
+            <i id="chord_diagram_fa-spinner" style="margin-top:50px" class="fa fa-spinner fa-spin fa-5x"></i>
+        </div>
+
+        <div class="col-md-5" style="text-align:center;" *ngIf="related_datasets_by_biological != null">
+            <div class="panel-body ">
+                <ul class="nobullet">
+                    <li *ngFor="let relatedDataset of filteredDatasets" class="title_one_line"
+                        style="margin-bottom: 2px; height:22px;">
+
+                        <app-omics-image-dataset [omics]="relatedDataset.omicsType"></app-omics-image-dataset>
+                        <a target="" class="align-justify"
+                           [routerLink]="['/dataset',relatedDataset.source, relatedDataset.id]">
+                            {{relatedDataset.title}}
+                        </a>
+                    </li>
+                    <!-- this.appConfig.getDatasetUrl(relatedDataset.id,relatedDataset.source) -->
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

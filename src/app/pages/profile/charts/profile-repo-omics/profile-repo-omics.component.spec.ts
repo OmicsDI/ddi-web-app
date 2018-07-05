@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ProfileRepoOmicsComponent } from './profile-repo-omics.component';
+import {ProfileRepoOmicsComponent} from './profile-repo-omics.component';
 
 describe('ProfileRepoOmicsComponent', () => {
-  let component: ProfileRepoOmicsComponent;
-  let fixture: ComponentFixture<ProfileRepoOmicsComponent>;
+    let component: ProfileRepoOmicsComponent;
+    let fixture: ComponentFixture<ProfileRepoOmicsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ProfileRepoOmicsComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ProfileRepoOmicsComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileRepoOmicsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ProfileRepoOmicsComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

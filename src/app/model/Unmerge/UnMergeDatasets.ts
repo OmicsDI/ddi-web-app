@@ -1,7 +1,7 @@
 /**
  * Create by Pan
  */
-import {MergedDataset} from "./MergedDataset";
+import {MergedDataset} from './MergedDataset';
 
 export class UnMergeDatasets {
     public masterDatabase: string;

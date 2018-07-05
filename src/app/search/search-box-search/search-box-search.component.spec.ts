@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SearchBoxSearchComponent } from './search-box-search.component';
+import {SearchBoxSearchComponent} from './search-box-search.component';
 
 describe('SearchBoxSearchComponent', () => {
-  let component: SearchBoxSearchComponent;
-  let fixture: ComponentFixture<SearchBoxSearchComponent>;
+    let component: SearchBoxSearchComponent;
+    let fixture: ComponentFixture<SearchBoxSearchComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SearchBoxSearchComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [SearchBoxSearchComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SearchBoxSearchComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(SearchBoxSearchComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { StatisticsService } from './statistics.service';
+import {StatisticsService} from './statistics.service';
 
 describe('StatisticsService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [StatisticsService]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [StatisticsService]
+        });
     });
-  });
 
-  it('should ...', inject([StatisticsService], (service: StatisticsService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should ...', inject([StatisticsService], (service: StatisticsService) => {
+        expect(service).toBeTruthy();
+    }));
 });

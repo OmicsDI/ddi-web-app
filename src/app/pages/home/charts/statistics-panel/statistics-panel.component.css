@@ -1,7 +1,7 @@
-.huge-smaller
-{
+.huge-smaller {
     font-size: 20px;
 }
+
 i#species_icon.icon-conceptual::before {
     font-family: 'EBI-Conceptual';
     font-size: 40px;

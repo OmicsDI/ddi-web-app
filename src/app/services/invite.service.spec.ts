@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { InviteService } from './invite.service';
+import {InviteService} from './invite.service';
 
 describe('InviteService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [InviteService]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [InviteService]
+        });
     });
-  });
 
-  it('should be created', inject([InviteService], (service: InviteService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should be created', inject([InviteService], (service: InviteService) => {
+        expect(service).toBeTruthy();
+    }));
 });

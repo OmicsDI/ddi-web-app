@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {OmicsImageDatasetwidgetProfileComponent} from "./omics-image-datasetwidget-profile.component";
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {OmicsImageDatasetwidgetProfileComponent} from './omics-image-datasetwidget-profile.component';
 
 
 describe('OmicsImageDatasetwidgetProfileComponent', () => {
-  let component: OmicsImageDatasetwidgetProfileComponent;
-  let fixture: ComponentFixture<OmicsImageDatasetwidgetProfileComponent>;
+    let component: OmicsImageDatasetwidgetProfileComponent;
+    let fixture: ComponentFixture<OmicsImageDatasetwidgetProfileComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ OmicsImageDatasetwidgetProfileComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [OmicsImageDatasetwidgetProfileComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(OmicsImageDatasetwidgetProfileComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(OmicsImageDatasetwidgetProfileComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

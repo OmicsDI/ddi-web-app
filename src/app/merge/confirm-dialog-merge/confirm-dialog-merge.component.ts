@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from "@angular/material";
+import {Component} from '@angular/core';
+import {MatDialogRef} from '@angular/material';
 
 @Component({
-  selector: 'app-confirm-dialog-merge',
-  templateUrl: './confirm-dialog-merge.component.html',
-  styleUrls: ['./confirm-dialog-merge.component.css']
+    selector: 'app-confirm-dialog-merge',
+    templateUrl: './confirm-dialog-merge.component.html',
+    styleUrls: ['./confirm-dialog-merge.component.css']
 })
 export class ConfirmDialogMergeComponent {
 
-  public title: string;
-  public message: string;
+    public title: string;
+    public message: string;
 
-  constructor(public dialogRef: MatDialogRef<ConfirmDialogMergeComponent>) {
+    constructor(public dialogRef: MatDialogRef<ConfirmDialogMergeComponent>) {
 
-  }
+    }
 }

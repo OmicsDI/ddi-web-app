@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DashboardProfileAnnualOmicstypeComponent } from './dashboard-profile-annual-omicstype.component';
+import {DashboardProfileAnnualOmicstypeComponent} from './dashboard-profile-annual-omicstype.component';
 
 describe('DashboardProfileAnnualOmicstypeComponent', () => {
-  let component: DashboardProfileAnnualOmicstypeComponent;
-  let fixture: ComponentFixture<DashboardProfileAnnualOmicstypeComponent>;
+    let component: DashboardProfileAnnualOmicstypeComponent;
+    let fixture: ComponentFixture<DashboardProfileAnnualOmicstypeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DashboardProfileAnnualOmicstypeComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [DashboardProfileAnnualOmicstypeComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardProfileAnnualOmicstypeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DashboardProfileAnnualOmicstypeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

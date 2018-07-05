@@ -1,14 +1,16 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {ApiComponent} from "../pages/api/api.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ApiComponent} from 'pages/api/api.component';
 
 const routes: Routes = [{
-  path:'',
+    path: '',
     component: ApiComponent
 }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class ApiRoutingModule { }
+
+export class ApiRoutingModule {
+}

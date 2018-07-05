@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DashboardClaimCountProfileComponent } from './dashboard-claim-count-profile.component';
+import {DashboardClaimCountProfileComponent} from './dashboard-claim-count-profile.component';
 
 describe('DashboardClaimCountProfileComponent', () => {
-  let component: DashboardClaimCountProfileComponent;
-  let fixture: ComponentFixture<DashboardClaimCountProfileComponent>;
+    let component: DashboardClaimCountProfileComponent;
+    let fixture: ComponentFixture<DashboardClaimCountProfileComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DashboardClaimCountProfileComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [DashboardClaimCountProfileComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardClaimCountProfileComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DashboardClaimCountProfileComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

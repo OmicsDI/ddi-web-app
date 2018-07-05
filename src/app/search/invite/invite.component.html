@@ -1,105 +1,113 @@
-<form #heroForm="ngForm" >
+<form #heroForm="ngForm">
 
-<div *ngIf="!this.secondPage">
-  <div class="caption">User Info</div>
+    <div *ngIf="!this.secondPage">
+        <div class="caption">User Info</div>
 
-  <div style="width:500px; height:300px; overflow: scroll;">
+        <div style="width:500px; height:300px; overflow: scroll;">
 
-    <div *ngIf="this.profileService.profile" class="editContainer">
+            <div *ngIf="this.profileService.profile" class="editContainer">
 
-        <div class="form-group">
-          <label for="userName">Name</label>
-          <input type="text" id="userName" class="form-control"
-                 required minlength="4" maxlength="24"
-                 pattern="[^\/\\\s][^\/\\]*[^\/\\\s]"
-                 name="userName" [(ngModel)]="this.profileService.profile.userName"
-                 #userName="ngModel" >
+                <div class="form-group">
+                    <label for="userName">Name</label>
+                    <input type="text" id="userName" class="form-control"
+                           required minlength="4" maxlength="24"
+                           pattern="[^\/\\\s][^\/\\]*[^\/\\\s]"
+                           name="userName" [(ngModel)]="this.profileService.profile.userName"
+                           #userName="ngModel">
 
-          <div *ngIf="userName.errors && (userName.dirty || userName.touched)"
-               class="alert alert-danger">
-            <div [hidden]="!userName.errors.required">
-              Name is required
+                    <div *ngIf="userName.errors && (userName.dirty || userName.touched)"
+                         class="alert alert-danger">
+                        <div [hidden]="!userName.errors.required">
+                            Name is required
+                        </div>
+                        <div [hidden]="!userName.errors.minlength">
+                            Name must be at least 4 characters long.
+                        </div>
+                        <div [hidden]="!userName.errors.maxlength">
+                            Name cannot be more than 24 characters long.
+                        </div>
+                        <div [hidden]="!userName.errors.pattern">
+                            Name cannot contain special characters or trail with space.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" class="form-control"
+                           maxlength="100"
+                           pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                           name="email" [(ngModel)]="this.profileService.profile.email"
+                           #email="ngModel">
+
+                    <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                        <div [hidden]="!email.errors.maxlength">
+                            Email must not be >100 chars
+                        </div>
+                        <div [hidden]="!email.errors.pattern">
+                            invalid email address format
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <div [hidden]="!userName.errors.minlength">
-              Name must be at least 4 characters long.
+        </div>
+    </div>
+
+    <div *ngIf="this.secondPage">
+        <div class="caption">Datasets</div>
+
+        <div style="width:500px; height:300px; overflow: scroll;">
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>Dataset</th>
+                        <th>Database</th>
+                        <th>Accession</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let s of this.dataSetDetails">
+                        <td>
+                            <app-omics-image-search [omics]="s?.omics_type"></app-omics-image-search>
+                            {{s?.name}}
+                        </td>
+                        <td><a [routerLink]="['/dataset',s.source, s.id]">{{s.source}}</a></td>
+                        <td><a [routerLink]="['/dataset',s.source, s.id]">{{s.id}}</a></td>
+                        <td style="text-align: center">
+                            <mat-checkbox [checked]="true"
+                                          (change)="checkchanged($event.checked, s.source, s.id)"></mat-checkbox>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div [hidden]="!userName.errors.maxlength">
-              Name cannot be more than 24 characters long.
-            </div>
-            <div [hidden]="!userName.errors.pattern">
-              Name cannot contain special characters or trail with space.
-            </div>
-          </div>
         </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" id="email" class="form-control"
-                 maxlength="100"
-                 pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                 name="email" [(ngModel)]="this.profileService.profile.email"
-                 #email="ngModel" >
-
-          <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
-            <div [hidden]="!email.errors.maxlength">
-              Email must not be >100 chars
-            </div>
-            <div [hidden]="!email.errors.pattern">
-              invalid email address format
-            </div>
-          </div>
+        <div style="padding-left:20px;padding-bottom: 20px; width:500px; ">
+            please review datasets we found, and remove ones you do not want to include in profile. You will always can
+            add or remove datasets in your OmicsDI dashboard.
         </div>
-
-
-
     </div>
-  </div>
-</div>
 
-<div *ngIf="this.secondPage">
-<div class="caption">Datasets</div>
+    <div style="text-align: center">
 
-<div style="width:500px; height:300px; overflow: scroll;">
-
-  <div class="table-responsive">
-    <table class="table table-hover table-striped">
-      <thead>
-      <tr>
-        <th>Dataset</th>
-        <th>Database</th>
-        <th>Accession</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let s of this.dataSetDetails">
-        <td>
-          <app-omics-image-search [omics]="s?.omics_type" ></app-omics-image-search> {{s?.name}}
-        </td>
-        <td><a [routerLink]="['/dataset',s.source, s.id]" >{{s.source}}</a></td>
-        <td><a [routerLink]="['/dataset',s.source, s.id]" >{{s.id}}</a></td>
-        <td style="text-align: center"> <mat-checkbox [checked]="true" (change)="checkchanged($event.checked, s.source, s.id)"></mat-checkbox></td>
-      </tr>
-      </tbody>
-    </table>
+        <button type="button" mat-raised-button *ngIf="!(this.secondPage == true)" [disabled]="!heroForm.valid"
+                (click)="next()">Next
+        </button>
+        <button type="button" mat-raised-button *ngIf="this.secondPage == true"
+                (click)="prev()">Previous
+        </button>
+        <button type="button" mat-raised-button *ngIf="this.secondPage == true"
+                (click)="ok()">Save
+        </button>
+        <button type="button" mat-raised-button
+                (click)="cancel()">Cancel
+        </button>
     </div>
-</div>
-
-<div style="padding-left:20px;padding-bottom: 20px; width:500px; ">
-  please review datasets we found, and remove ones you do not want to include in profile. You will always can add or remove datasets in your OmicsDI dashboard.
-</div>
-</div>
-
-<div style="text-align: center">
-
-<button type="button" mat-raised-button *ngIf="!(this.secondPage == true)" [disabled]="!heroForm.valid"
-        (click)="next()">Next</button>
-  <button type="button" mat-raised-button *ngIf="this.secondPage == true"
-          (click)="prev()">Previous</button>
-<button type="button" mat-raised-button *ngIf="this.secondPage == true"
-        (click)="ok()">Save</button>
-<button type="button" mat-raised-button
-        (click)="cancel()">Cancel</button>
-</div>
 
 </form>

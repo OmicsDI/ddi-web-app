@@ -1,22 +1,23 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import {DomSanitizer} from "@angular/platform-browser";
+import {Pipe, PipeTransform} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Pipe({
-  name: 'ontologyTooltip'
-  , pure: false
+    name: 'ontologyTooltip'
+    , pure: false
 })
 export class OntologyTooltipPipe implements PipeTransform {
 
-  constructor(private sanitizer: DomSanitizer){
-  }
+    constructor(private sanitizer: DomSanitizer) {
+    }
 
-  transform(value: string) {
-    if(null==value)
-      return null;
+    transform(value: string) {
+        if (null === value) {
+            return null;
+        }
 
-    let newHtml : string = value.replace('Heart','<span ng2-tooltip="super fast">!1Heart!</span>');
+        const newHtml: string = value.replace('Heart', '<span ng2-tooltip="super fast">!1Heart!</span>');
 
-    return this.sanitizer.bypassSecurityTrustHtml(newHtml);
-  }
+        return this.sanitizer.bypassSecurityTrustHtml(newHtml);
+    }
 
 }

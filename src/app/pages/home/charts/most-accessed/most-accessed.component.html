@@ -1,21 +1,21 @@
 <div id="most_accessed_datasets" class="panel panel-default">
 
-  <div class="">
-    <h4 class="icon icon-functional " data-icon="z"> Most Accessed Datasets</h4>
-  </div>
-  <div class="panel-body ">
-    <ul class="nobullet">
+    <div class="">
+        <h4 class="icon icon-functional " data-icon="z"> Most Accessed Datasets</h4>
+    </div>
+    <div class="panel-body ">
+        <ul class="nobullet">
 
-      <li *ngIf="isRequestMostAccessedDatasetFailed()" class="error-info">
-        Sorry, the accessing to this datasets list was temporally failed.
-      </li>
-      <li *ngFor="let _dataset of mostAccessedDatasets " class="title_one_line">
-        <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"> </app-omics-image>
-        <span class="icon icon-functional" data-icon="4">{{_dataset.viewsCount|megaNumber}}</span>
-        <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" title={{_dataset.title}}>
-              {{_dataset.title}}
-        </a>
-      </li>
-    </ul>
-  </div>
+            <li *ngIf="isRequestMostAccessedDatasetFailed()" class="error-info">
+                Sorry, the accessing to this datasets list was temporally failed.
+            </li>
+            <li *ngFor="let _dataset of mostAccessedDatasets " class="title_one_line">
+                <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"></app-omics-image>
+                <span class="icon icon-functional" data-icon="4">{{_dataset.viewsCount|megaNumber}}</span>
+                <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" title={{_dataset.title}}>
+                    {{_dataset.title}}
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

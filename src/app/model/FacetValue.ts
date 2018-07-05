@@ -3,7 +3,7 @@
  */
 
 export class FacetValue {
-  label: string;
-  value: string;
-  count: string;
+    label: string;
+    value: string;
+    count: string;
 }
