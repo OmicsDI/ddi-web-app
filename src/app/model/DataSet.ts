@@ -20,6 +20,11 @@ export class DataSet{
   omicsType: string[];
   claimable: boolean;
 
+  citationsCount: number;
+  connectionsCount: number;
+  reanalysisCount: number;
+  viewsCount: number;
+
   constructor(){
     this.omicsType = [];
   }

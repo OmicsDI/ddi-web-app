@@ -4,9 +4,10 @@ import {Profile} from "../../../../model/Profile";
 import {AppConfig} from "../../../../app.config";
 import {Router} from "@angular/router";
 import {DataSetService} from "../../../../services/dataset.service";
-import {Observable} from "rxjs/Observable";
+import {Observable} from 'rxjs/Rx';
 import {DataSetDetail} from "../../../../model/DataSetDetail";
 import {NotificationsService} from "angular2-notifications/dist";
+import {ThorService} from "../../../../services/thor.service";
 
 @Component({
   selector: 'app-profile-result',
@@ -23,10 +24,12 @@ export class ProfileResultComponent implements OnInit, OnChanges {
               ,private dataSetService: DataSetService
     , private appConfig: AppConfig
     , private router: Router
-    , private notificationService: NotificationsService) { }
+    , private notificationService: NotificationsService
+    , private thorService: ThorService) { }
 
   ngOnInit() {
     //this.profileService.getDataSetDetails(this.profileService.profile);
+    this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
   }
 
   dataSets: DataSetDetail[];
@@ -54,7 +57,10 @@ export class ProfileResultComponent implements OnInit, OnChanges {
       return;
     }
     Observable.forkJoin(this.profile.dataSets.map(x => { return this.dataSetService.getDataSetDetail_private(x.id,x.source)})).subscribe(
-      y => {this.dataSets = y}
+      y => {
+        this.dataSets = y;
+        this.thorService.datasets = y;
+      }
     )
   }
 

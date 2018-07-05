@@ -48,7 +48,7 @@ export class AutocompleteNComponent implements OnInit {
       case 40:
         this.downArrowPressed = true;
       case 13: {
-        if(!this.downArrowPressed)
+        if(!this.downArrowPressed) {
           this.submit.emit();
           event.stopPropagation();
           var self = this;
@@ -57,6 +57,7 @@ export class AutocompleteNComponent implements OnInit {
             self.txtInput.nativeElement.value = searchText;
             self.searchService.fullQuery = searchText;
           }, 100);
+        }
       }
     }
   }

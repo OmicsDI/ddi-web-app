@@ -264,9 +264,10 @@ table.data {
     border: 1px solid #DDD !important;
 }
 
+/********************* AZ: hides icons on home page *****************************
 html.fontface .icon-static:before, html.fontface .icon-generic:before {
     color: #fff !important;
-}
+} *******************************************************************************/
 
 ul.side-nav li a:hover, a:focus, a:active {
     border-bottom-style: dotted;

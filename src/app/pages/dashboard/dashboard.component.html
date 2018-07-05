@@ -1,5 +1,5 @@
 <div id="wrapper">
-<app-nav></app-nav>
+<app-nav-dashboard></app-nav-dashboard>
 <div id="page-wrapper">
         <div class="container-fluid3">
 
@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                         <tr *ngFor="let s of watchedDatasets">
-                            <td><app-datasetwidget-small [id]="s.accession" [source]="s.source"></app-datasetwidget-small></td>
+                            <td><app-datasetwidget-small-dashboard [id]="s.accession" [source]="s.source"></app-datasetwidget-small-dashboard></td>
                             <td><a [routerLink]="['/dataset',s.source, s.accession]" >{{s.source}}</a></td>
                             <td><a [routerLink]="['/dataset',s.source, s.accession]" >{{s.accession}}</a></td>
                             <td><a (click)="deleteWatch(s.id)" title="delete">x</a></td>

@@ -52,7 +52,7 @@
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide">
           <span class="ng-binding">{{d.publicationDate }}</span> | </span>
         <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding">{{d.id}}</span></a> |
-        <a [href]="appConfig.database_urls[appConfig.repositories[d.source]]"> <span class="ng-binding">{{appConfig.repositories[d.source]}}</span> </a>
+        <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span> </a>
       </div>
 
       <div *ngIf="d.keywords" class="project-widget-paragraph">

@@ -1,5 +1,5 @@
 <div id="wrapper">
-  <app-nav></app-nav>
+  <app-nav-dashboardselected></app-nav-dashboardselected>
   <div id="page-wrapper">
 
     <div class="row align-top">
@@ -14,6 +14,13 @@
              <i class="fa fa-file-excel-o" aria-hidden="true"></i>
              <span> Export to Excel</span>
            </div -->
+
+             <a id="downloadAnchorElem" style="display:none"></a>
+
+          <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="download();">
+                 <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                 <span> Download IDs</span>
+          </div>
 
           <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="claimClick();">
               <i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -46,7 +53,7 @@
         class="repeated-item ng-scope"
         style="min-width:400px;">
 
-      <app-datasetwidget [d]="d" (buttonClicked)="this.remove(d.source,d.id)" [allowSelect]="false"></app-datasetwidget>
+      <app-datasetwidget-datasetselected [d]="d" (buttonClicked)="this.remove(d.source,d.id)" [allowSelect]="false"></app-datasetwidget-datasetselected>
 
 
 

@@ -60,4 +60,12 @@
     <from>/admin</from>
     <to>/</to>
   </rule>
+  <rule match-type="wildcard">
+    <from>/welcome/*</from>
+    <to>/</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/merge</from>
+    <to>/</to>
+  </rule>
 </urlrewrite>

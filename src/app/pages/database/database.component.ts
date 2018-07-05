@@ -3,9 +3,9 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { DatabaseListService } from '../../services/database-list.service';
 import { Database } from '../../model/Database';
 import { environment } from '../../../environments/environment';
-import {StatisticsService} from "../../services/statistics.service";
 import {DomainStat} from "../../model/DomainStat";
 import {AppConfig} from "../../app.config";
+import {StatisticsService} from "../../services/statistics.service";
 
 @Component({
   selector: 'app-database',
@@ -42,7 +42,7 @@ export class DatabaseComponent implements OnInit {
       .subscribe(
         result => {
           console.log(result);
-          this.databases = result;
+          this.databases = result.filter(d => d.source !== 'NCBI'); //AZ:TODO: add "display on database page" bit in mongo
           this.loadingService.complete();
         }
       )
@@ -53,12 +53,15 @@ export class DatabaseComponent implements OnInit {
       .getDatasetStats()
       .subscribe(
         result => {
+            console.log(result);
           this.domainStats = result;
         }
       )
   }
 
   getDatasetCount(domain: string){
+      console.log(domain);
+      console.log(this.domainStats);
     for(var d of this.domainStats){
 
       if(d.domain.name == domain)

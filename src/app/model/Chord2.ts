@@ -112,7 +112,7 @@ export class Chord2 {
             .duration(200)
             .style("opacity", .9);
 
-          tooltip.html("similarity score:" + d.source.value / 100)
+          tooltip.html("similarity score-dataset:" + d.source.value / 100)
             //.style("left", (mouse_coords[0]  ) + "px")
             .style("left", (mouse_coords[0] * 1 + "px"))
             .style("top", ((mouse_coords[1] - 30) + "px"));

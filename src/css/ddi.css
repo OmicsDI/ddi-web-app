@@ -1434,3 +1434,55 @@ ul li.no-match-found {display: none;}
     right:0;
     margin-bottom: 10px;
 }
+
+#item1,#item2,#item3,#item4,#item5,#item6,#item7,#item8{
+    color:white !important;
+    text-decoration:none;
+    border-color: transparent;
+}
+
+
+#item1:hover {
+    background-color:#2e6da4 !important;
+}
+#item2:hover{
+    background-color:#2e6da4 !important;
+}
+#item3:hover{
+    background-color:#2e6da4 !important;
+}
+#item4:hover{
+    background-color:#2e6da4 !important;
+}
+#item5:hover{
+    background-color:#2e6da4 !important;
+}
+#item6:hover{
+    background-color:#2e6da4 !important;
+}
+#item7:hover{
+    background-color:#2e6da4 !important;
+}
+#item8:hover{
+    background-color:#2e6da4 !important;
+}
+
+#item-div1,#item-div2,#item-div3{
+    text-align:center;
+}
+
+#item-div1:hover{
+    background-color:#2e6da4 !important;
+}
+#item-div2:hover{
+    background-color:#2e6da4 !important;
+}
+#item-div3:hover{
+    background-color:#2e6da4 !important;
+}
+
+#navbardrop{
+    color:white !important;
+    text-decoration:none;
+    border-color: transparent;
+}

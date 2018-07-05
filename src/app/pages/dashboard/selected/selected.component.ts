@@ -3,12 +3,13 @@ import {DataSetDetail} from "../../../model/DataSetDetail";
 import {SelectedService} from "../../../services/selected.service";
 import {DataSetService} from "../../../services/dataset.service";
 import {AppConfig} from "../../../app.config";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs/Rx";
 import {DataSetShort} from "../../../model/DataSetShort";
 import {ProfileService} from "../../../services/profile.service";
 import {NotificationsService} from "angular2-notifications/dist";
 import {WatchedDataset} from "../../../model/WatchedDataset";
 import {DialogService} from "../../../services/dialog.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-dashboard-selected',
@@ -103,6 +104,34 @@ export class DashboardSelectedComponent implements OnInit {
             )
 
           }});
+  }
+
+  download(){
+
+    var confirm = this.dialogService.confirm('Download selected.txt', 'Are you sure you want to do this?')
+        .subscribe(res => {
+          if(res){
+            var IDs = "";
+            for(let d of this.selectedService.dataSets){
+              IDs += ((IDs=="" ? "" : ",") + d.source + "/" + d.id);
+            }
+
+            var storageObj = {hello:"world"};
+            var dataStr = "data:text;charset=utf-8," + encodeURIComponent(IDs);
+            var dlAnchorElem = document.getElementById('downloadAnchorElem');
+            dlAnchorElem.setAttribute("href",     dataStr     );
+            dlAnchorElem.setAttribute("download", "selected.txt");
+            dlAnchorElem.click();
+
+            this.notificationService.success(
+                'Dataset IDs downloaded',
+                'to your computer'
+            )
+
+          }});
+
+
+
   }
 }
 

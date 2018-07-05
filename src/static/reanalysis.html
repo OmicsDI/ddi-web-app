@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    .link {
+        fill: none;
+        stroke: #666;
+        stroke-width: 1.5px;
+    }
+
+    #licensing {
+        fill: green;
+    }
+
+    .link.licensing {
+        stroke: green;
+    }
+
+    .link.resolved {
+        stroke-dasharray: 0,2 1;
+    }
+
+    circle {
+        fill: #ccc;
+        stroke: #333;
+        stroke-width: 1.5px;
+    }
+
+    text {
+        font: 10px sans-serif;
+        pointer-events: none;
+        text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+    }
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+    // http://blog.thomsonreuters.com/index.php/mobile-patent-suits-graphic-of-the-day/
+    var links = [
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000151",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000093",
+            "target" : "BIOMD0000000151",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000151",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000151",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000140",
+            "target" : "BIOMD0000000489",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000139",
+            "target" : "BIOMD0000000489",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000597",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000597",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000073",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000073",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000064",
+            "target" : "BIOMD0000000247",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000140",
+            "target" : "BIOMD0000000226",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000139",
+            "target" : "BIOMD0000000226",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1112110003",
+            "target" : "BIOMD0000000621",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000148",
+            "target" : "BIOMD0000000402",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000402",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000402",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000634",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000462",
+            "target" : "BIOMD0000000634",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000634",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000285",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000285",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000299",
+            "target" : "BIOMD0000000214",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1109160000",
+            "target" : "BIOMD0000000340",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1108260015",
+            "target" : "BIOMD0000000340",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1109160001",
+            "target" : "BIOMD0000000340",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000365",
+            "target" : "BIOMD0000000340",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1101100000",
+            "target" : "BIOMD0000000211",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000093",
+            "target" : "BIOMD0000000094",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000588",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000588",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1204060000",
+            "target" : "BIOMD0000000482",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1204060000",
+            "target" : "BIOMD0000000541",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000003",
+            "target" : "BIOMD0000000004",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000055",
+            "target" : "BIOMD0000000095",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000250",
+            "target" : "BIOMD0000000443",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000251",
+            "target" : "BIOMD0000000443",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000251",
+            "target" : "BIOMD0000000443",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000250",
+            "target" : "BIOMD0000000443",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000399",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000055",
+            "target" : "BIOMD0000000096",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000424",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000048",
+            "target" : "BIOMD0000000424",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000424",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000009",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000093",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000048",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000453",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000137",
+            "target" : "BIOMD0000000474",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000137",
+            "target" : "BIOMD0000000474",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000334",
+            "target" : "BIOMD0000000333",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000010",
+            "target" : "BIOMD0000000441",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000009",
+            "target" : "BIOMD0000000441",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000441",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000441",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000598",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000598",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000286",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000188",
+            "target" : "BIOMD0000000286",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000189",
+            "target" : "BIOMD0000000286",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000286",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000203",
+            "target" : "BIOMD0000000210",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000204",
+            "target" : "BIOMD0000000210",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000223",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000048",
+            "target" : "BIOMD0000000223",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000223",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000488",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000462",
+            "target" : "BIOMD0000000488",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000488",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000064",
+            "target" : "BIOMD0000000172",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000175",
+            "target" : "BIOMD0000000250",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1411210000",
+            "target" : "BIOMD0000000554",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL9071122126",
+            "target" : "BIOMD0000000161",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000168",
+            "target" : "BIOMD0000000242",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000140",
+            "target" : "BIOMD0000000227",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000139",
+            "target" : "BIOMD0000000227",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000148",
+            "target" : "BIOMD0000000403",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000403",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000403",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000273",
+            "target" : "BIOMD0000000412",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000273",
+            "target" : "BIOMD0000000412",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000514",
+            "target" : "BIOMD0000000510",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000514",
+            "target" : "BIOMD0000000510",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000343",
+            "target" : "BIOMD0000000448",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000205",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000205",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000048",
+            "target" : "BIOMD0000000205",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000205",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1109160000",
+            "target" : "BIOMD0000000339",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1108260015",
+            "target" : "BIOMD0000000339",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1109160001",
+            "target" : "BIOMD0000000339",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000365",
+            "target" : "BIOMD0000000339",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000091",
+            "target" : "BIOMD0000000344",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000051",
+            "target" : "BIOMD0000000565",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000137",
+            "target" : "BIOMD0000000356",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000343",
+            "target" : "BIOMD0000000356",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000137",
+            "target" : "BIOMD0000000356",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000171",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL9071122126",
+            "target" : "BIOMD0000000049",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000049",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000049",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000049",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000049",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000009",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000093",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000048",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000452",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000074",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000074",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000003",
+            "target" : "BIOMD0000000008",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000442",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000442",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000051",
+            "target" : "BIOMD0000000571",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000140",
+            "target" : "BIOMD0000000147",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000139",
+            "target" : "BIOMD0000000147",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000010",
+            "target" : "BIOMD0000000440",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000009",
+            "target" : "BIOMD0000000440",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000440",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000440",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000091",
+            "target" : "BIOMD0000000105",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000105",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000171",
+            "target" : "BIOMD0000000021",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000171",
+            "target" : "BIOMD0000000021",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000203",
+            "target" : "BIOMD0000000209",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000204",
+            "target" : "BIOMD0000000209",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000175",
+            "target" : "BIOMD0000000251",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000293",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000293",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000167",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000093",
+            "target" : "BIOMD0000000167",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000167",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1112110003",
+            "target" : "BIOMD0000000620",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000055",
+            "target" : "BIOMD0000000097",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000343",
+            "target" : "BIOMD0000000449",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000273",
+            "target" : "BIOMD0000000564",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000273",
+            "target" : "BIOMD0000000564",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000299",
+            "target" : "BIOMD0000000437",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000148",
+            "target" : "BIOMD0000000401",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000401",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000401",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000009",
+            "target" : "BIOMD0000000011",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000010",
+            "target" : "BIOMD0000000146",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000146",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000048",
+            "target" : "BIOMD0000000146",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000146",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000146",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000514",
+            "target" : "BIOMD0000000511",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000514",
+            "target" : "BIOMD0000000511",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000168",
+            "target" : "BIOMD0000000509",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000188",
+            "target" : "BIOMD0000000287",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000189",
+            "target" : "BIOMD0000000287",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000514",
+            "target" : "BIOMD0000000513",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000334",
+            "target" : "BIOMD0000000332",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000089",
+            "target" : "BIOMD0000000273",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000273",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000089",
+            "target" : "BIOMD0000000273",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000148",
+            "target" : "BIOMD0000000279",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000171",
+            "target" : "BIOMD0000000298",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000171",
+            "target" : "BIOMD0000000298",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000299",
+            "target" : "BIOMD0000000295",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000343",
+            "target" : "BIOMD0000000423",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000019",
+            "target" : "BIOMD0000000255",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1101100000",
+            "target" : "BIOMD0000000071",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000089",
+            "target" : "BIOMD0000000476",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000089",
+            "target" : "BIOMD0000000476",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000250",
+            "target" : "BIOMD0000000444",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000251",
+            "target" : "BIOMD0000000444",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000444",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000251",
+            "target" : "BIOMD0000000444",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000250",
+            "target" : "BIOMD0000000444",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000444",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000445",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000412",
+            "target" : "BIOMD0000000445",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1109160000",
+            "target" : "BIOMD0000000338",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1108260015",
+            "target" : "BIOMD0000000338",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1109160001",
+            "target" : "BIOMD0000000338",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000365",
+            "target" : "BIOMD0000000338",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000051",
+            "target" : "MODEL1503050000",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000168",
+            "target" : "BIOMD0000000508",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000078",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000078",
+            "type" : "suit"
+        },
+        {
+            "source" : "MODEL1411210000",
+            "target" : "BIOMD0000000627",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000623",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000083",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000021",
+            "target" : "BIOMD0000000083",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000055",
+            "target" : "BIOMD0000000089",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000273",
+            "target" : "BIOMD0000000089",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000033",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000188",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000171",
+            "target" : "BIOMD0000000016",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000137",
+            "target" : "MODEL1201140005",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000105",
+            "target" : "BIOMD0000000091",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000251",
+            "target" : "BIOMD0000000175",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000250",
+            "target" : "BIOMD0000000175",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000009",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000089",
+            "target" : "BIOMD0000000055",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000279",
+            "target" : "BIOMD0000000148",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "MODEL9071122126",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000019",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "BIOMD0000000019",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000019",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000094",
+            "target" : "BIOMD0000000093",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000010",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000441",
+            "target" : "BIOMD0000000010",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000146",
+            "target" : "BIOMD0000000048",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000205",
+            "target" : "BIOMD0000000048",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "MODEL9070467164",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000137",
+            "target" : "MODEL1201140006",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000049",
+            "target" : "MODEL9079179924",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000286",
+            "target" : "BIOMD0000000189",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000655",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000655",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000149",
+            "target" : "BIOMD0000000655",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000653",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000653",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000149",
+            "target" : "BIOMD0000000653",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000652",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000652",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000149",
+            "target" : "BIOMD0000000652",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000654",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000654",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000149",
+            "target" : "BIOMD0000000654",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000648",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000648",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000149",
+            "target" : "BIOMD0000000648",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000033",
+            "target" : "BIOMD0000000656",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000623",
+            "target" : "BIOMD0000000656",
+            "type" : "suit"
+        },
+        {
+            "source" : "BIOMD0000000149",
+            "target" : "BIOMD0000000656",
+            "type" : "suit"
+        }
+
+
+    ];
+
+    var nodes = {};
+
+    // Compute the distinct nodes from the links.
+    links.forEach(function(link) {
+        link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+        link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+    });
+
+    var width = 1000,
+        height = 1000;
+
+    var force = d3.layout.force()
+        .nodes(d3.values(nodes))
+        .links(links)
+        .size([width, height])
+        .linkDistance(60)
+        .charge(-300)
+        .on("tick", tick)
+        .start();
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    // Per-type markers, as they don't inherit styles.
+    svg.append("defs").selectAll("marker")
+        .data(["suit", "licensing", "resolved"])
+        .enter().append("marker")
+        .attr("id", function(d) { return d; })
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", -1.5)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-5L10,0L0,5");
+
+    var path = svg.append("g").selectAll("path")
+        .data(force.links())
+        .enter().append("path")
+        .attr("class", function(d) { return "link " + d.type; })
+        .attr("marker-end", function(d) { return "url(#" + d.type + ")"; });
+
+    var circle = svg.append("g").selectAll("circle")
+        .data(force.nodes())
+        .enter().append("circle")
+        .attr("r", 6)
+        .call(force.drag);
+
+    var text = svg.append("g").selectAll("text")
+        .data(force.nodes())
+        .enter().append("text")
+        .attr("x", 8)
+        .attr("y", ".31em")
+        .text(function(d) { return d.name; });
+
+    // Use elliptical arc path segments to doubly-encode directionality.
+    function tick() {
+        path.attr("d", linkArc);
+        circle.attr("transform", transform);
+        text.attr("transform", transform);
+    }
+
+    function linkArc(d) {
+        var dx = d.target.x - d.source.x,
+            dy = d.target.y - d.source.y,
+            dr = Math.sqrt(dx * dx + dy * dy);
+        return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+    }
+
+    function transform(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+    }
+
+</script>

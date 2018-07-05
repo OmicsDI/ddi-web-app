@@ -14,6 +14,9 @@ export class AppConfig{
   getWebServiceUrl():string{
     return `${environment.webServiceUrl}`;
   }
+  getProfileServiceUrl():string{
+    return `${environment.userServiceUrl}`;
+  }
   getStatisticsUrl():string{
     return `${environment.webServiceUrl}statistics/general?r=${Math.random()}`;
   }
@@ -32,6 +35,7 @@ export class AppConfig{
     else
       return `${environment.userServiceUrl}user/current?r=${Math.random()}`;
   }
+
   getAllProfilesUrl():string{
     return `${environment.userServiceUrl}users?r=${Math.random()}`;
   }
@@ -59,6 +63,9 @@ export class AppConfig{
   getDatasetMostAccessedUrl():string{
     return `${environment.webServiceUrl}dataset/mostAccessed?size=20&r=${Math.random()}`;
   }
+  getDatasetByUrl():string{
+    return `${environment.webServiceUrl}dataset/getDatasetByUrl?r=${Math.random()}`;
+  }
   getAutocompleteUrl(keyword:string):string{
     return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10&r=${Math.random()}`;
   }
@@ -75,7 +82,7 @@ export class AppConfig{
     return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}&r=${Math.random()}`;
   }
   getDatabasesUrl(){
-    return `${environment.webServiceUrl}database/all?=${Math.random()}`;
+    return `${environment.webServiceUrl}database/all?r=${Math.random()}`;
   }
   getDatabaseImageUrl(databaseName: string){
     return `${environment.webServiceUrl}database/${databaseName}/picture?=${Math.random()}`;
@@ -102,6 +109,9 @@ export class AppConfig{
   getWatchedDatasetsDeleteUrl(userId: string, id: string){
     return `${environment.userServiceUrl}users/${userId}/watches/${id}?r=${Math.random()}`;
   }
+  getUserCountUrl(){
+    return `${environment.userServiceUrl}users/count?r=${Math.random()}`;
+  }
   getConnectUrl(provider:string){
     if(provider=="orcid")
       return `${environment.userServiceUrl.replace("api","connect")}${provider}?scope=/authenticate`;
@@ -127,7 +137,7 @@ export class AppConfig{
     return `${environment.webServiceUrl}statistics/domains`;
   }
   getAltmetricUrl(PMID){
-    return `http://api.altmetric.com/v1/pmid/${PMID}`;
+    return `https://api.altmetric.com/v1/pmid/${PMID}`;
   }
   getScoreViewsUrl(acc: string, repository: string){
     return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
@@ -141,78 +151,49 @@ export class AppConfig{
   getScoreConnectionsUrl(acc: string){
     return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
   }
-  getThorUrl(orcid: string, database: string){
-    return `${environment.userServiceUrl}thor/${orcid}?srcDatabase=${database}`;
-    //return `https://www.ebi.ac.uk/europepmc/hubthor/api/dataclaiming/claimBatchBehalf/${orcid}?srcDatabase=${database}`
+  getThorUrl(){
+    return `${environment.thorUrl}`;
   }
+  getSelectedDatasetsUrl(userId: string){
+    return `${environment.userServiceUrl}users/${userId}/selected?r=${Math.random()}`;
+  }
+  getInviteUrl(id: string){
+    return `${environment.userServiceUrl}invites/${id}?r=${Math.random()}`;
+  }
+  getMergeCandidateUrl(start: number, size: number){
+    return `${environment.webServiceUrl}dataset/getMergeCandidates?start=${start}&size=${size}&r=${Math.random()}`;
+  }
+
+    getUnMergeCandidateUrl(){
+        return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
+    }
+  getMergeCandidateCountUrl(){
+    return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
+  }
+    getUnMergeCandidateCountUrl(){
+        return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
+    }
+
+  getMergeUrl(){
+    return `${environment.webServiceUrl}dataset/merge?r=${Math.random()}`;
+  }
+
+    getUnMergeUrl(){
+        return `${environment.webServiceUrl}dataset/unmerge?r=${Math.random()}`;
+    }
+
+    skipMergeUrl(){
+        return `${environment.webServiceUrl}dataset/skipMerge?r=${Math.random()}`;
+    }
+    multiomicsMerge(){
+        return `${environment.webServiceUrl}dataset/multiomicsMerge?r=${Math.random()}`;
+    }
+
   public githubScope = "public_profile";
   public facebookScope = "email,public_profile";
   public twitterScope = "public_profile";
   public orcidScope = "/authenticate";
   public elixirScope = "openid,profile,email";
-
-  public repositories = {
-  "pride": "PRIDE",
-  "PRIDE": "PRIDE",
-  "peptideatlas": "PeptideAtlas",
-  "peptide_atlas": "PeptideAtlas",
-  "PeptideAtlas": "PeptideAtlas",
-  "massive": "MassIVE",
-  "MassIVE": "MassIVE",
-  "Massive": "MassIVE",
-  "metabolights": "MetaboLights",
-  "metabolights_dataset": "MetaboLights",
-  "MetaboLights": "MetaboLights",
-  "metabolome_workbench": "MetabolomicsWorkbench",
-  "metabolomics_workbench": "MetabolomicsWorkbench",
-  "Metabolomics Workbench": "MetabolomicsWorkbench",
-  "MetabolomicsWorkbench": "MetabolomicsWorkbench",
-  "ega": "EGA",
-  "EGA": "EGA",
-  "GPMDB": "GPMDB",
-  "gpmdb": "GPMDB",
-  "GNPS": "GNPS",
-  "metabolome_express": "MetabolomeExpress MetaPhenDB",
-  "MetabolomeExpress MetaPhenDB": "MetabolomeExpress MetaPhenDB",
-  "MetabolomeExpress": "MetabolomeExpress MetaPhenDB",
-  "ArrayExpress": "ArrayExpress",
-  "arrayexpress": "ArrayExpress",
-  "arrayexpress-repository": "ArrayExpress",
-  "expression-atlas": "ExpressionAtlas",
-  "ExpressionAtlas": "ExpressionAtlas",
-  "atlas-experiments": "ExpressionAtlas",
-  "Expression Atlas Experiments": "ExpressionAtlas",
-  "BioModels Database":"BioModels Database",
-  "LINCS":"LINCS",
-  "JPOST Repository":"JPOST Repository",
-  "PAXDB":"PAXDB",
-  "Biomodels":"BioModels Database",
-  "jPOST":"JPOST Repository",
-  "Paxdb":"PAXDB",
-  "biomodels":"BioModels Database",
-  "lincs":"LINCS",
-  "jpost":"JPOST Repository",
-  "paxdb":"PAXDB",
-  "Pride": "PRIDE"
-  }
-
-  public database_urls = {
-  "PRIDE": "http://www.ebi.ac.uk/pride/archive/",
-  "MetaboLights": "http://www.ebi.ac.uk/metabolights/",
-  "MetabolomicsWorkbench": "http://www.metabolomicsworkbench.org/",
-  "PeptideAtlas": "http://www.peptideatlas.org/",
-  "MassIVE": "https://massive.ucsd.edu/ProteoSAFe/datasets.jsp",
-  "GPMDB": "http://gpmdb.thegpm.org/",
-  "GNPS": "http://gnps.ucsd.edu/ProteoSAFe/static/gnps-splash.jsp",
-  "EGA": "https://www.ebi.ac.uk/ega/",
-  "MetabolomeExpress": "https://www.metabolome-express.org/",
-  "ArrayExpress": "https://www.ebi.ac.uk/arrayexpress/",
-  "ExpressionAtlas": "http://www.ebi.ac.uk/gxa/home",
-  "BioModels Database":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=BioModels Database&query=domain_source:BioModels Database",
-  "LINCS":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=lincs&query=domain_source:lincs",
-  "PAXDB":"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=PAXDB&query=domain_source:PAXDB",
-  "JPOST Repository" :"https://wwwdev.ebi.ac.uk/ebisearch/search.ebi?db=JPOST Repository&query=domain_source:jpost"
-  }
 
   public isEmpty(items: INamed[]): boolean{
     if(!items)

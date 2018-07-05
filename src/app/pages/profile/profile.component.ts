@@ -9,7 +9,7 @@ import {DataSetDetail} from "../../model/DataSetDetail";
 import {AppConfig} from "../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs/Rx";
 
 @Component({
   selector: 'app-profile',
@@ -70,10 +70,10 @@ export class ProfileComponent implements OnInit {
       this.profileService.getPublicProfile(username)
         .subscribe(
           profile => {
-            if(!profile){
-              this.router.navigate(["/notfound"]);
-              return;
-            }
+            // if(!profile){
+            //   this.router.navigate(["/notfound"]);
+            //   return;
+            // }
 
             this.profileX = profile;
             this.profileImageUrl = this.getProfileImageUrl();

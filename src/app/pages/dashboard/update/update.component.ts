@@ -71,7 +71,7 @@ export class DashboardUpdateComponent implements OnInit {
   submitClicked() {
     this.profileService.updateUser().subscribe(
         ()=> {
-          this.router.navigate(["/profile"]);
+          this.router.navigate(["/dashboard/profile"]);
         }
     );
   }
@@ -79,7 +79,7 @@ export class DashboardUpdateComponent implements OnInit {
   cancelClicked() {
     //this.editMode = false;
     this.profileService.getProfile();
-    this.router.navigate(["/profile"]);
+    this.router.navigate(["/dashboard/profile"]);
   }
 
   onSubmit() {

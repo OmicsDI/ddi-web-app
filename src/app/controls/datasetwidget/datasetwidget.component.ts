@@ -8,9 +8,12 @@ import {DataSetShort} from "../../model/DataSetShort";
 import {WatchedDataset} from "../../model/WatchedDataset";
 import {NotificationsService} from "angular2-notifications/dist";
 import {Router} from "@angular/router";
-import {MdDialog, MdDialogRef} from "@angular/material";
-import {CitationDialogComponent} from "../../pages/dataset/citation-dialog/citation-dialog.component";
+import {MatDialog, MatDialogRef} from "@angular/material";
+// import {CitationDialogComponent} from "../../pages/dataset/citation-dialog-search/citation-dialog-search.component";
 import {DataSetService} from "../../services/dataset.service";
+import {
+    CitationDialogSearchComponent
+} from "../../search/citation-dialog-search/citation-dialog-search.component";
 
 @Component({
   selector: 'app-datasetwidget',
@@ -33,7 +36,7 @@ export class DatasetWidgetComponent implements OnInit {
             , private router: Router
             , private notificationService: NotificationsService
             , private dataSetService: DataSetService
-            , private dialog: MdDialog) { }
+            , private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -72,11 +75,11 @@ export class DatasetWidgetComponent implements OnInit {
   }*/
 
   citation(source,id) {
-    let dialogRef: MdDialogRef<CitationDialogComponent>;
+    let dialogRef: MatDialogRef<CitationDialogSearchComponent>;
 
     this.dataSetService.getDataSetDetail_private(id, source).subscribe(
         x => {
-          dialogRef = this.dialog.open(CitationDialogComponent);
+          dialogRef = this.dialog.open(CitationDialogSearchComponent);
           dialogRef.componentInstance.title = "Dataset citation";
           dialogRef.componentInstance.datasetDetail = x;
           return dialogRef.afterClosed();
@@ -125,6 +128,9 @@ export class DatasetWidgetComponent implements OnInit {
 
   toggle(source:string,id:string){
     if(!this.allowSelect)
+      return;
+
+    if(!this.profileService.userId)
       return;
 
     this.selectedService.toggle(source,id);

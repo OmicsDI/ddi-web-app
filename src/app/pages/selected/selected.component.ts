@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Observable";
 import {SelectedService} from "../../services/selected.service";
 import {DataSetService} from "../../services/dataset.service";
 import {AppConfig} from "../../app.config";
+import {DatabaseListService} from "../../services/database-list.service";
 
 @Component({
   selector: 'app-selected',
@@ -16,7 +17,8 @@ export class SelectedComponent implements OnInit {
 
   constructor(private selectedService:SelectedService
               ,private dataSetService: DataSetService
-              ,private appConfig: AppConfig) { }
+              ,private appConfig: AppConfig
+              ,private databaseListServce: DatabaseListService) { }
 
   ngOnInit() {
     this.reloadDataSets();
@@ -36,6 +38,26 @@ export class SelectedComponent implements OnInit {
     var i = this.dataSets.findIndex(x => x.id==id && x.source==source);
     if(i>-1){
       this.dataSets.splice(i,1);
+    }
+  }
+
+  getDatabaseUrl(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.sourceUrl;
+    }
+  }
+
+  getDatabaseTitle(source){
+    var db =  this.databaseListServce.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.databaseName;
     }
   }
 

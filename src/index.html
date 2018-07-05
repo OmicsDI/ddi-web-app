@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
     <meta content="width=device-width" name="viewport">
     <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
           name="description">
@@ -158,9 +159,18 @@
       path="home?r=" + Math.random();
     }
 
-    console.log("relative path: "+path);
+      if(path.indexOf('#')>=0){
+          var split = path.split('#');
+          path = split[split.length-1];
+      }
 
-    XhrGet('ws/seo/' + path);
+    switch(path){
+        case "dashboard/selected": console.log("no seo"); break;
+        case "merge": console.log("no seo"); break;
+        default: XhrGet('ws/seo' + path);
+    }
+
+
   })(document);
 </script>
 
@@ -185,17 +195,23 @@
     ga('create', 'UA-70417662-2', 'auto');
     ga('send', 'pageview');
 
+
+
 </script>
-<script src="//omicsdi.disqus.com/embed.js"></script>
+<!-- warning!
+    async is not supported by IE8
+-->
+<script async src="//omicsdi.disqus.com/embed.js"></script>
 
 <script src="assets/bootstrap/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
+<!-- Morris Charts JavaScript-->
 <script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>
 <script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>
 <script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>
+
 </body>
 </html>

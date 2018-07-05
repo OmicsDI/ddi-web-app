@@ -1,4 +1,4 @@
-<div class="hidden-lg" AppSearchBox style="width:100%; padding-bottom: 20px;"></div>
+<div class="hidden-lg" AppSearchBoxSearch style="width:100%; padding-bottom: 20px;"></div>
 <app-search-total></app-search-total>
 
 <div class="row">
@@ -11,7 +11,7 @@
 
   <app-search-pager></app-search-pager>
   <app-search-result></app-search-result>
-  <app-search-pager></app-search-pager>
+  <app-search-pager *ngIf="dataLoaded()"></app-search-pager>
   <app-feedback *ngIf="dataLoaded()"></app-feedback>
 </div>
 

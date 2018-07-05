@@ -18,7 +18,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.slimLoadingBarService.start();
-
     this.route.queryParams.subscribe(params => {
       let q: string = params['q'];
       if(null!=q){
@@ -30,7 +29,6 @@ export class SearchComponent implements OnInit {
         this.searchService.callSearch();
       }
     })
-
     setTimeout(() => {
       this._dataLoaded = true;
     }, 500);

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, OnDestroy, Renderer2, Inject} from '@angular/core';
 import {Http} from "@angular/http";
 import {DataSetDetail} from "../../model/DataSetDetail";
 import {Subscription, Observable} from 'rxjs/Rx';
@@ -15,10 +15,11 @@ import { DisqusModule } from 'angular2-disqus';
 import {AppConfig} from "../../app.config";
 import {ProfileService} from "../../services/profile.service";
 import {DisqusComponent} from "ng2-awesome-disqus/disqus.component";
-import {MdDialog, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material";
 import {CitationDialogComponent} from "./citation-dialog/citation-dialog.component";
 import {SimilarDataset} from "../../model/SimilarDataset";
 import {DatabaseListService} from "../../services/database-list.service";
+import {DOCUMENT} from "@angular/platform-browser";
 
 
 @Component({
@@ -48,6 +49,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
   index_dataset:number;
   databaseUrl: string;
   web_service_url: string;
+  databaseByAccession: Object = new Object();
 
   @ViewChild(DisqusComponent) disqus: DisqusComponent;
 
@@ -56,28 +58,39 @@ export class DatasetComponent implements OnInit, OnDestroy {
       ,private enrichmentService: EnrichmentService
       ,private appConfig: AppConfig
       ,private profileService: ProfileService
-      ,private dialog: MdDialog
+      ,private dialog: MatDialog
       ,private databaseListService: DatabaseListService) {
     console.info("DatasetComponent constructor");
 
     this.current_url = route.pathFromRoot.toString();
     this.index_dataset = this.current_url.indexOf("dataset");
 
+    var self = this;
+
     this.subscription = this.dataSetService.dataSetDetail$.subscribe(
       result => {
+
+        console.log(result);
         console.info("dataSetDetail$ subscribtion");
         this.d = result;
         //TODO: update with canonical id
         this.acc = result.id;
         this.repository = result.source;
         //this.page_identifier = '${repository}/${source}';
-        this.repositoryName = this.appConfig.repositories[result.source];
-        this.databaseUrl = this.appConfig.database_urls[this.appConfig.repositories[result.source]];
+        this.repositoryName = this.getDatabaseTitle(result.source);
+        this.databaseUrl = this.getDatabaseUrl(result.source);
+
         console.info("dataSetDetailResult:" + result);
         console.info("publicationIds:" + result.publicationIds);
+
+        if(this.d.secondary_accession) {
+          this.d.secondary_accession.forEach(item => {
+            self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
+          });
+        }
       });
     this.web_service_url = dataSetService.getWebServiceUrl();
-    //this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});
+    this.databaseListService.getDatabaseList().subscribe(x => {console.log("database list received")});
   }
 
   ngOnInit() {
@@ -87,11 +100,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
           this.repository = params['domain'];
           this.dataSetService.getDataSetDetail(this.acc,this.repository);
 
-          this.disqus.reset();
-          this.disqus.identifier = '${repository}/${acc}';
-          this.disqus.url = '${repository}/${acc}';
+          // if(this.disqus) {
+          //   this.disqus.reset();
+          //   this.disqus.identifier = '${repository}/${acc}';
+          //   this.disqus.url = '${repository}/${acc}';
+          // }
 
-    })
+    });
+
+
+
+
   }
 
   ngOnDestroy() {
@@ -108,37 +127,93 @@ export class DatasetComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  get_section(str: string, synonyms: Synonym[]): Section[]{
-    let result: Section[] = new Array<Section>();
-    if(null==synonyms){
-      result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
-      return result;
-    }
+    get_section(str: string, synonyms: Synonym[]): Section[]{
 
-    var i: number = 1;
-    for (let entry of synonyms) {
-      if(i<entry.from){
-        let t = str.substr(i-1,entry.from-i);
-        if(t!=" ") {
-          result.push({text:t, beAnnotated: false, tobeReduced: false, synonyms: null});
+        let result: Section[] = new Array<Section>();
+        if(null==synonyms){
+            result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
+            return result;
         }
-      }
-      let original_text = entry.text;
-      let text = str.substr(entry.from-1, entry.to-entry.from+1);
-      result.push(
-        { text:text,
-          beAnnotated:true,
-          tobeReduced:false,
-          synonyms: this.getSynonyms(original_text)
+
+        //array of Strange words
+        //hard coded
+        let reg = ['ï','®','µ','å','°'];
+        var i: number = 0;
+        for(var n = 0;n<synonyms.length;n++){
+            let j = 0;
+            for(let key of reg){
+                let phase = str.substring(0,i);
+                // console.log(phase.indexOf(key));
+                if(phase.indexOf(key)>0){
+                    j += phase.split(key).length-1;
+                    console.log(j);
+                    console.log(phase);
+
+                }
+            }
+
+            if(i<synonyms[n].from-1){
+                let t = str.substr(i+j,synonyms[n].from-i-1);
+                console.log(t);
+
+                result.push({text:t, beAnnotated: false, tobeReduced: false, synonyms: null});
+
+            }
+            let original_text = synonyms[n].text;
+            // let text = str.substr(entry.from-1+j, entry.to-entry.from+1);
+            result.push(
+                { text:original_text,
+                    beAnnotated:true,
+                    tobeReduced:false,
+                    synonyms: this.getSynonyms(original_text)
+                }
+            );
+            i = synonyms[n].to;
+            // console.log(i);
         }
-      );
-      i = entry.to+1;
+        // add space for strange words
+        let s = 0;
+        for (let t of reg){
+            s = s + (str.split(t).length - 1);
+        }
+
+        if(i < str.length){
+            result.push({text:str.substr(i+s,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
+        }
+        return result;
     }
-    if(i < str.length){
-      result.push({text:str.substr(i,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
-    }
-    return result;
-  }
+    // Backup do not delete
+    // get_section(str: string, synonyms: Synonym[]): Section[]{
+    //     let result: Section[] = new Array<Section>();
+    //     if(null==synonyms){
+    //         result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
+    //         return result;
+    //     }
+    //
+    //     var i: number = 1;
+    //     for (let entry of synonyms) {
+    //         if(i<entry.from){
+    //             let t = str.substr(i-1,entry.from-i);
+    //             if(t!=" ") {
+    //                 result.push({text:t, beAnnotated: false, tobeReduced: false, synonyms: null});
+    //             }
+    //         }
+    //         let original_text = entry.text;
+    //         let text = str.substr(entry.from-1, entry.to-entry.from+1);
+    //         result.push(
+    //             { text:text,
+    //                 beAnnotated:true,
+    //                 tobeReduced:false,
+    //                 synonyms: this.getSynonyms(original_text)
+    //             }
+    //         );
+    //         i = entry.to+1;
+    //     }
+    //     if(i < str.length){
+    //         result.push({text:str.substr(i,str.length-i), beAnnotated:false, tobeReduced:false, synonyms:null});
+    //     }
+    //     return result;
+    // }
 
   process_sections(){
     //TODO: encoding problems
@@ -151,7 +226,27 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     var str = this.enrichmentInfo.originalAttributes.name;
     this.ontology_highlighted = true;
+    this.remove_tags();
   }
+
+    remove_tags() {
+        let count = 0;
+        for (const section of this.abstract_sections) {
+            section.text = section.text.replace(/<\/?[ib]*(br|span|h|u|strike|pre|code|tt|blockquote|small|center|em|strong)*\/?>/g,"");
+               section.text = section.text.replace(/<[\s\S]*>/g,"");
+                   if(section.text.indexOf("<") != -1 && section.text.indexOf(">") == -1){
+                        console.log("+1");
+                            section.text = section.text.replace(/<[\s\S]*/g,"");
+                                count = count + 1;
+                        }else if(section.text.indexOf(">") != -1 && section.text.indexOf("<") == -1){
+                                console.log("-1");
+                                section.text = section.text.replace(/[\s\S]*>/g,"");
+                                count = count - 1;
+                            }else  if(section.text.indexOf(">") == -1 && section.text.indexOf("<") == -1 && count > 0){
+                                section.text = section.text.replace(/[\s\S]*/g,"");
+                            }
+                    };
+            }
 
   enrich_click(){
     if(this.ontology_highlighted){
@@ -182,7 +277,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
 
   citation(){
-    let dialogRef: MdDialogRef<CitationDialogComponent>;
+    let dialogRef: MatDialogRef<CitationDialogComponent>;
 
     dialogRef = this.dialog.open(CitationDialogComponent);
     dialogRef.componentInstance.title = "Dataset citation";
@@ -223,6 +318,13 @@ export class DatasetComponent implements OnInit, OnDestroy {
       return null;
     }
   }
+  reanalysisoverflow(d: DataSetDetail): boolean{
+    if(!d.similars)
+      return false;
+
+    return (d.similars.length > 99);
+  }
+
   related_omics(d: DataSetDetail): SimilarDataset[]{
     let r = new Array();
     if(d.similars) {
@@ -242,6 +344,26 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
   getSourceByDatabaseName(database: string ):string{
     return this.databaseListService.getSourceByDatabaseName(database);
+  }
+
+  getDatabaseUrl(source){
+    var db =  this.databaseListService.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.sourceUrl;
+    }
+  }
+
+  getDatabaseTitle(source){
+    var db =  this.databaseListService.databases[source];
+    if(!db) {
+      console.log("source not found:"+source);
+    }
+    else {
+      return db.databaseName;
+    }
   }
 
 }

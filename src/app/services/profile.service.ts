@@ -34,8 +34,10 @@ export class ProfileService extends BaseService {
   }
 
   getProfile(): Observable<Profile> {
+    console.log(this.appConfig.getProfileUrl(null));
     return this.http.get(this.appConfig.getProfileUrl(null)) //,config //{ withCredentials: true }
         .map(x => {
+          console.log(x);
           this.profile = this.extractData<Profile>(x);
           if(!this.profile || !this.profile.userId){
             console.log("profile not received");
@@ -47,10 +49,11 @@ export class ProfileService extends BaseService {
               d => { this.watchedDatasets = d }
             );
             this.onProfileReceived.emit(this.profile);
+            console.log("lucky");
           }
           return this.profile;
-        })
-        .catch(this.handleError);
+        });
+        // .catch(this.handleError);
   }
 
   getPublicProfile(username): Observable<Profile>{
@@ -64,8 +67,8 @@ export class ProfileService extends BaseService {
           console.log("public profile received:" + _profile.userId);
         }
         return _profile;
-      })
-      .catch(this.handleError);
+      });
+      // .catch(this.handleError);
   }
 
   getAllProfiles(): Observable<Profile[]>{
@@ -85,8 +88,8 @@ export class ProfileService extends BaseService {
 
   getUserConnections (userId: string): Observable<string[]>{
     return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) //{ withCredentials: true }
-      .map(x => this.extractData<String[]>(x))
-      .catch(this.handleError);
+      .map(x => this.extractData<string[]>(x));
+      // .catch(this.handleError);
   }
 
   getUserConnection (userId: string,provider: string): Observable<ConnectionData>{
@@ -105,7 +108,7 @@ export class ProfileService extends BaseService {
   getCoAuthors (userId: string): Observable<UserShort[]> {
     return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))//
         .map(x => this.extractData<UserShort[]>(x))
-        .catch(this.handleError);
+        // .catch(this.handleError);
   }
 
   public updateUser(): Observable<string>{
@@ -224,7 +227,7 @@ export class ProfileService extends BaseService {
   getSavedSearches (userId: string): Observable<SavedSearch[]> {
     return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//
       .map(x => this.extractData<SavedSearch[]>(x))
-      .catch(this.handleError);
+      // .catch(this.handleError);
   }
 
   saveSavedSearch(savedSearch: SavedSearch){
@@ -243,7 +246,7 @@ export class ProfileService extends BaseService {
   getWatchedDatasets (userId: string): Observable<WatchedDataset[]> {
     return this.http.get(this.appConfig.getWatchedDatasetsUrl(userId))//
       .map(x => this.extractData<WatchedDataset[]>(x))
-      .catch(this.handleError);
+      // .catch(this.handleError);
   }
 
   saveWatchedDataset(watchedDataset: WatchedDataset){
@@ -258,7 +261,29 @@ export class ProfileService extends BaseService {
 
   deleteWatchedDataset(id:string): Observable<String>{
     return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(this.userId,id)).map(
-      x => "ok"
-    ).catch(this.handleError);
+      x => "ok");
+    // ).catch(this.handleError);
+  }
+
+  getUsersCount(): Observable<number>{
+    return this.http.get(this.appConfig.getUserCountUrl()).map(x => this.extractData<number>(x));
+  }
+
+  setSelected(userId: string, datasets: DataSetShort[]): Observable<String>{
+    return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets)).map(
+        x => "ok");
+    // ).catch(this.handleError);
+  }
+
+  getSelected(userId: string): Observable<DataSetShort[]>{
+    return this.http.get(this.appConfig.getSelectedDatasetsUrl(userId))//
+        .map(x => this.extractData<DataSetShort[]>(x))
+        // .catch(this.handleError);
   }
 }
+
+
+
+
+
+

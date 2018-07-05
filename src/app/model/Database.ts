@@ -12,4 +12,8 @@ export class Database {
   imgAlt: string;
   description: string;
   image: { $binary: string, $type:string };
+  orcidName: string;
+  accessionPrefix: string[];
+  urlTemplate: string;
+  icon: string;
 }

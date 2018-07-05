@@ -1,0 +1,15 @@
+.huge-smaller
+{
+    font-size: 20px;
+}
+i#species_icon.icon-conceptual::before {
+    font-family: 'EBI-Conceptual';
+    font-size: 40px;
+    color: white;
+    content: attr(data-icon);
+    margin: 0 0 0 0;
+    line-height: 1.0;
+    display: block;
+    position: relative;
+    border: none;
+}

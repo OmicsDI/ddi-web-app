@@ -4,7 +4,7 @@
     <div class="input-group">
       <app-autocomplete-n (submit)="search()"></app-autocomplete-n>
       <div class="input-group-btn">
-        <button [mdMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
+        <button [matMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
           <i class="fa {{this.caret_class()}}" aria-hidden="true"></i>
           Advanced
         </button>
@@ -25,7 +25,8 @@
                                  <a rel="nofollow" (click)="doSearch('Orbitrap')">Orbitrap</a>,
                                  <a rel="nofollow" (click)="doSearch('Q9HAU5')">Q9HAU5</a>,
                                  <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,
-                                 <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>
+                                 <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>,
+                                 <a rel="nofollow" (click)="doSearch('PXD001416')">PXD001416</a>
                              </i>
       <!-- </small> -->
                      </span>
@@ -48,7 +49,7 @@
 </form>
 
 
-<md-menu id="advancedSearchMenu" #advancedSearchMenu="mdMenu" [overlapTrigger]="false">
+<mat-menu id="advancedSearchMenu" #advancedSearchMenu="matMenu" [overlapTrigger]="false">
   <div class="mat-menu-content" style="width:550px">
     <div class="alert alert-info" (click)="doNotPropagate($event);">
       <div style="position: relative;">
@@ -59,4 +60,4 @@
     </div>
     <query-builder [(query)]="searchService.paramQuery" (click)="doNotPropagate($event);"></query-builder>
   </div>
-</md-menu>
+</mat-menu>

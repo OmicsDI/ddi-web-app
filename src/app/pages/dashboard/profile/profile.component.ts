@@ -9,10 +9,10 @@ import {DataSetDetail} from "../../../model/DataSetDetail";
 import {AppConfig} from "../../../app.config";
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from "@angular/router";
-import {NotificationsService} from "angular2-notifications/dist";
-import {OrcidWork} from "../../../model/OrcidWork";
-import {OrcidExternalIdentifier} from "../../../model/OrcidExternalIdentifier";
-import {ThorService} from "../../../services/thor.service";
+import {MatDialog, MatDialogRef} from "@angular/material";
+import {InviteComponent} from "../controls/invite/invite.component";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
 
 @Component({
   selector: 'app-profile',
@@ -32,16 +32,14 @@ export class DashboardProfileComponent implements OnInit {
   userId: string = "xxx";
   username: string = null;
 
-
-
   constructor(private profileService: ProfileService
       ,private dataSetService: DataSetService
       ,private formBuilder: FormBuilder
       ,private appConfig: AppConfig
       ,private router: Router
       ,private route: ActivatedRoute
-      ,private notificationsService: NotificationsService
-      ,private thorService: ThorService) {
+      ,private dialog: MatDialog) {
+
     this.form = formBuilder.group({
       name: ['', [
         Validators.required,
@@ -58,6 +56,8 @@ export class DashboardProfileComponent implements OnInit {
         zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
       })
     });
+
+    console.log("DashboardProfileComponent:ctor");
   }
 
   ngOnInit() {
@@ -65,6 +65,31 @@ export class DashboardProfileComponent implements OnInit {
       this.username = params['username'];
       this.getProfile(this.username);
     })
+
+      Observable.fromEvent(window, 'resize')
+          .debounceTime(100) //timer
+          .subscribe((event) => {
+              // restartRequest
+              // document.getElementById("chart44").style.width = document.getElementById("profile_div").clientWidth.toString();
+              document.getElementById("chart44").style.width = '0px';
+          });
+  }
+
+
+  private showWelcomeDialog(){
+    let dialogRef: MatDialogRef<InviteComponent>;
+
+    var inviteId = this.route.snapshot.queryParams["state"];
+
+    if(inviteId) {
+
+      console.log("open dialog with inviteId :" + inviteId);
+
+      if(inviteId.length==12) {
+        dialogRef = this.dialog.open(InviteComponent, {data: {inviteId: inviteId}});
+      }
+    }
+
   }
 
   getProfile(username: string  = null){
@@ -95,11 +120,9 @@ export class DashboardProfileComponent implements OnInit {
 
                 this.userId =  profile.userId;
 
-                //this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
-                //this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-                //  this.profileImageUrl = this.getProfileImageUrl();
-                //};
-                //this.profileImageUrl = this.getProfileImageUrl();
+                if(window.location.search) {
+                  this.showWelcomeDialog();
+                }
               }
           );
     }
@@ -138,31 +161,7 @@ export class DashboardProfileComponent implements OnInit {
     return (null==this.username)
   }
 
-  syncToOrcidClick(){
-    this.profileService.getUserConnection(this.profileX.userId,"orcid")
-        .subscribe(
-            connectionData => {
-                var accessToken = connectionData.accessToken;
-                var orcid = connectionData.providerUserId;
-
-                for(let d of this.profileX.dataSets)
-                {
-                  let w: OrcidWork = new OrcidWork();
-                  w.title = d.name;
-                  w.publicationYear = "1999";
-                  w.workExternalIdentifiers = [new OrcidExternalIdentifier()];
-                  w.workExternalIdentifiers[0].workExternalIdentifierId = d.id;
-                  w.url = `http://www.omicsdi.org/dataset/${d.source}/${d.id}`;
-
-                  this.thorService.claimBatchBehalf(orcid,d.source,accessToken,[w]).subscribe(
-                      x => {
-                        this.notificationsService.success("Ok","orcid connected:" + connectionData.accessToken);
-                      }
-                  );
-                }
-
-
-              }
-        );
+  claimDatasetsToOrcid(){
+    alert("claimDatasetsToOrcid");
   }
 }

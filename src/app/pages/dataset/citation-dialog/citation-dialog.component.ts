@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MdDialogRef} from "@angular/material";
 import {DataSetDetail} from "../../../model/DataSetDetail";
+import {MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-citation-dialog',
@@ -9,7 +9,7 @@ import {DataSetDetail} from "../../../model/DataSetDetail";
 })
 export class CitationDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MdDialogRef<CitationDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<CitationDialogComponent>) { }
 
   public title: string;
   public messageAPA: string;

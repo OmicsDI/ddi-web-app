@@ -1,0 +1,15 @@
+<div class="autocomplete">
+<input
+  type="text"
+  #txtInput
+  placeholder="organism, repository, gene, tissue, accession"
+  class="ng-touched"
+  auto-complete
+        [(ngModel)]="this.searchService.fullQuery"
+        [source]="observableSource.bind(this)"
+        min-chars="3"
+        no-match-found-text=" "
+  (keydown)="keydown($event)"
+/>
+</div>
+

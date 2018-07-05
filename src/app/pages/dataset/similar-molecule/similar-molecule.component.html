@@ -31,7 +31,7 @@
           <ul class="nobullet">
               <li *ngFor="let relatedDataset of filteredDatasets" class="title_one_line" style="margin-bottom: 2px; height:22px;">
 
-                  <app-omics-image [omics]="relatedDataset.omicsType" ></app-omics-image>
+                  <app-omics-image-dataset [omics]="relatedDataset.omicsType" ></app-omics-image-dataset>
                   <a target="" class="align-justify" [routerLink]="['/dataset',relatedDataset.source, relatedDataset.id]">
                       {{relatedDataset.title}}
                   </a>

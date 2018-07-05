@@ -22,6 +22,10 @@ export class AppComponent {
     , private router: Router
     , private selectedService: SelectedService){
 
+      if (window.location.href.startsWith("http://www.omicsdi.org")) {
+        window.location.href = window.location.href.replace("http:", "https:");
+      }
+
     this.title =this.getTitle();
   }
 
@@ -56,5 +60,10 @@ export class AppComponent {
   gotoHelp(){
     window.location.href='http://blog.omicsdi.org/';
   }
+
+
+    toSubmission(){
+        window.location.href='https://www.ebi.ac.uk/biostudies/';
+    }
 
 }

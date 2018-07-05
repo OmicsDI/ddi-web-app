@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { SimilarityResult } from "../model/SimilarityResult";
 import { SearchResult } from "../model/SearchResult";
 import { Subject, Observable } from "rxjs";
-import { Http, Response } from "@angular/http";
+import {Http, RequestOptions, RequestOptionsArgs, Response,Headers} from "@angular/http";
 import { DataSetDetail } from "../model/DataSetDetail";
 import { DataSet } from "../model/DataSet";
 import {AppConfig} from "../app.config";
 import {BaseService} from "./base.service";
+import {MergeCandidate} from "../model/MergeCandidate";
+import {UnMergeDatasets} from "../model/Unmerge/UnMergeDatasets";
 
 @Injectable()
 export class DataSetService extends BaseService{
 
-  private proteomicsList = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, gpmdb, GPMDB, GPMdb,LINCS,LINCS,paxdb,PAXDB,jpost,JPOST Repository";
+  private proteomicsList = "pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, Massive, gpmdb, GPMDB, GPMdb,LINCS,LINCS,paxdb,PAXDB,jpost,JPOST Repository,jPOST,Paxdb,BioModels";
   private metabolomicsList = "MetaboLights Dataset, MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench, Metabolomics Workbench, metabolomics_workbench, metabolome_express, MetabolomeExpress, Metabolomics Workbench, GNPS, gnps";
-  private transcriptomicsList = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments";
-  private genomicsList = "ega,EGA";
+  private transcriptomicsList = "ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, Expression Atlas Experiments, atlas-experiments,GEO";
+  private genomicsList = "ega,EGA,EVA,dbGaP";
 
   constructor(private http:Http, private appConfig: AppConfig) {
     super();
@@ -38,6 +40,10 @@ export class DataSetService extends BaseService{
   public getWebServiceUrl(): string {
     return this.appConfig.getWebServiceUrl();
   }
+
+    public getProfileServiceUrl(): string {
+        return this.appConfig.getProfileServiceUrl();
+    }
 
   public getProteomicsList(): string {
     return this.proteomicsList;
@@ -73,5 +79,88 @@ export class DataSetService extends BaseService{
     let month = month_names_short[month_int - 1];
     return month + " " + day_int+" ";
   }
+
+  public getDatasetByUrl(url: string): Observable<DataSet>{
+    return this.http.post(this.appConfig.getDatasetByUrl(), url)
+        .map(x => this.extractData<DataSet>(x));
+  }
+
+  public getMergeCandidates(start: number, size: number): Observable<MergeCandidate[]>{
+     return this.http.get(this.appConfig.getMergeCandidateUrl(start,size)).map(x => this.extractData<MergeCandidate[]>(x))
+  }
+
+    public getUnMergeCandidates(): Observable<UnMergeDatasets[]>{
+        return this.http.get(this.appConfig.getUnMergeCandidateUrl()).map(x => this.extractData<UnMergeDatasets[]>(x))
+    }
+
+  public getMergeCandidateCount(): Observable<number>{
+    return this.http.get(this.appConfig.getMergeCandidateCountUrl()).map(x => this.extractData<number>(x))
+  }
+//unused
+    // public getUnMergeCandidateCount(): Observable<MergeCandidate[]>{
+    //     return this.http.get(this.appConfig.getUnMergeCandidateCountUrl()).map(x => this.extractData<MergeCandidate[]>(x))
+    // }
+
+  public merge(result: MergeCandidate) : Observable<String> {
+    var url = this.appConfig.getMergeUrl();
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(url, JSON.stringify(result), options)
+        .map(res => {
+          return "OK"
+        })
+        // .catch(err=>{
+        //   return Observable.throw(err);
+        // })
+  }
+
+    public unmerge(result: Array<UnMergeDatasets>) : Observable<String> {
+        var url = this.appConfig.getUnMergeUrl();
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, JSON.stringify(result), options)
+            .map(res => {
+                return "OK"
+            })
+        // .catch(err=>{
+        //   return Observable.throw(err);
+        // })
+    }
+
+    public skipMerge(result: MergeCandidate) : Observable<String> {
+        var url = this.appConfig.skipMergeUrl();
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, JSON.stringify(result), options)
+            .map(res => {
+                return "OK"
+            })
+            // .catch(err=>{
+            //     return Observable.throw(err);
+            // })
+    }
+
+    public multiomicsMerge(result: MergeCandidate) : Observable<String> {
+        var url = this.appConfig.multiomicsMerge();
+
+        let headers = new Headers({ 'Content-Type': 'application/json'});
+        headers.append('Access-Control-Allow-Origin','*' );
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(url, JSON.stringify(result), options)
+            .map(res => {
+                return "OK"
+            })
+            // .catch(err=>{
+            //     return Observable.throw(err);
+            // })
+    }
+
 
 }

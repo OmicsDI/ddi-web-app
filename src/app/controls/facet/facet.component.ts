@@ -67,9 +67,10 @@ export class FacetComponent implements OnInit {
   }
 
   searchByName(){
+    var lowerVal = this.searchInput.nativeElement.value.toLowerCase();
     for (let v of this.facetValuesFiltered)
     {
-      v.visible = (v.value.toLowerCase().indexOf(this.searchInput.nativeElement.value.toLowerCase()) >= 0);
+      v.visible = ((v.value.toLowerCase().indexOf(lowerVal) >= 0) || (v.label.toLowerCase().indexOf(lowerVal) >= 0));
     }
   }
 

@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { ChartsErrorHandler } from '../charts-error-handler/charts-error-handler';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DataSetService} from "../../../../services/dataset.service";
+import {AppConfig} from "../../../../app.config";
 
 @Component({
   selector: 'app-annual-omicstype',
@@ -14,10 +15,10 @@ export class AnnualOmicstypeComponent implements OnInit {
   @Output()
   notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
-  private web_service_url = "http://www.omicsdi.org/ws/";
+  private web_service_url = this.appConfig.getWebServiceUrl();
   private retryLimitTimes = 2;
 
-  constructor(private router: Router, private dataSetService: DataSetService,private route: ActivatedRoute) {
+  constructor(private router: Router, private dataSetService: DataSetService,private route: ActivatedRoute,private appConfig: AppConfig) {
 
   }
 

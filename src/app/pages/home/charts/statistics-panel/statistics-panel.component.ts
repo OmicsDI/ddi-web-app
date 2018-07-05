@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { StatisticsService } from 'app/services/statistics.service';
+import {ProfileService} from "../../../../services/profile.service";
 
 @Component({
   selector: 'app-statistics-panel',
@@ -12,22 +13,42 @@ export class StatisticsPanelComponent implements OnInit {
   notifyHomeLoader:EventEmitter<string> = new EventEmitter<string>();
 
   statisticsList: any;
-  constructor(private statisticsService: StatisticsService) { }
+  constructor(private statisticsService: StatisticsService, private profileService: ProfileService) { }
+
+  repositories:number;
+    datasets:number;
+    diseases:number;
+    tissues:number;
+    organisms:number;
+    users:number = 99;
+
 
   ngOnInit() {
     this.statisticsService.getStatisticsList()
       .then(data => {
         this.notifyHomeLoader.emit('statistics');
         this.statisticsList = data;
-        for (let i = 0; i < this.statisticsList.length; i++) {
-          this.statisticsList[i].name = this.statisticsList[i].name.replace(/Different /g, '');
-          this.statisticsList[i].name = this.statisticsList[i].name.replace(/Repositories\/Databases/g, 'repositories');
-          this.statisticsList[i].name = this.statisticsList[i].name.replace(/Species\/Organisms/g, 'species');
-          this.statisticsList[i].name = this.statisticsList[i].name.replace(/D/g, 'd');
-          this.statisticsList[i].name = this.statisticsList[i].name.replace(/T/g, 't');
-        }
+
+
+          for (let i = 0; i < this.statisticsList.length; i++) {
+            switch(this.statisticsList[i].name){
+                case "Different Repositories/Databases": this.repositories = this.statisticsList[i].value; break;
+                case "Different Datasets" : this.datasets = this.statisticsList[i].value; break;
+                case "Different Diseases" : this.diseases = this.statisticsList[i].value; break;
+                case "Different Tissues" : this.tissues = this.statisticsList[i].value; break;
+                case "Different Species/Organisms" : this.organisms = this.statisticsList[i].value; break;
+                //case "Users" : this.users = this.statisticsList[i].value; break;
+            }
+          }
+
       })
       .catch(this.handleError);
+
+    this.profileService.getUsersCount().subscribe(
+        data => {
+            this.users = data;
+        }
+    );
   }
  private handleError(error: any) {
 

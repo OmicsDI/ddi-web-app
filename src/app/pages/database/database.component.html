@@ -5,7 +5,7 @@
 <div class="db-list-container container_ddi">
   <div class="row">
 
-    <div *ngIf="databases">
+    <div *ngIf="databases&&domainStats">
       <!--<img [src]="databases[0].image.$binary">-->
       <div *ngFor="let db of databases | paginate: { itemsPerPage: 8, currentPage: p }" class="db-item col-md-3 col-sm-6 col-xs-12">
           <div class="panel panel-default expert-db-card ">
@@ -31,8 +31,7 @@
             </div>
 
             <div class="panel-footer small">
-              <a rel="nofollow"
-                 [routerLink]="['/search']" [queryParams]="{q:'*:* AND repository:' + db.repository}">{{ this.getDatasetCount(db.domain) }} datasets</a>
+              <a rel="nofollow" [routerLink]="['/search']" [queryParams]="{q:'(*:* AND (repository: (&quot;' + db.repository + '&quot;)))'}">{{ this.getDatasetCount(db.domain) }} datasets</a>
             </div>
           </div>
         </div>
