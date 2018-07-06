@@ -10,6 +10,7 @@ import {DataSet} from 'model/DataSet';
 export class ScoreSearchComponent implements OnInit, OnChanges {
 
     @Input() dataset: DataSet;
+
     views = 0;
     citations = 0;
     reanalysis = 0;
