@@ -8,7 +8,7 @@ import {BaseService} from './base.service';
 
 @Injectable()
 export class EnrichmentService extends BaseService {
-    constructor(private http: Http, private appConfig: AppConfig) {
+    constructor(private http: Http, public appConfig: AppConfig) {
         super();
     }
 

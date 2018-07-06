@@ -7,7 +7,7 @@ import {DomainStat} from 'model/DomainStat';
 @Injectable()
 export class StatisticsService {
 
-    constructor(private http: Http, private appConfig: AppConfig) {
+    constructor(private http: Http, public appConfig: AppConfig) {
     }
 
     public getStatisticsList(): Promise<Response> {

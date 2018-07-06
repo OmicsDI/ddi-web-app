@@ -14,7 +14,7 @@ export class DashboardPictureComponent implements OnInit {
     public uploader: FileUploader;
     public profileImageUrl: string;
 
-    constructor(private profileService: ProfileService, private appConfig: AppConfig) {
+    constructor(public profileService: ProfileService, public appConfig: AppConfig) {
     }
 
     ngOnInit() {

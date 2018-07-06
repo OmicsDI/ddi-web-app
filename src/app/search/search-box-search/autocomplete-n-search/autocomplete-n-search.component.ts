@@ -16,7 +16,7 @@ export class AutocompleteNSearchComponent implements OnInit {
     @ViewChild('txtInput') txtInput: ElementRef;
     downArrowPressed: Boolean = false;
 
-    constructor(private http: Http, private appConfig: AppConfig, private searchService: SearchService) {
+    constructor(private http: Http, public appConfig: AppConfig, public searchService: SearchService) {
     }
 
     ngOnInit() {

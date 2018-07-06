@@ -22,9 +22,9 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     @Output() change = new EventEmitter();
 
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private dataSetService: DataSetService
-        , private appConfig: AppConfig
+        , public appConfig: AppConfig
         , private router: Router
         , private notificationService: NotificationsService
         , private thorService: ThorService) {

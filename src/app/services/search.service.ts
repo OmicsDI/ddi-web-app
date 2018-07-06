@@ -68,7 +68,7 @@ export class SearchService extends BaseService {
     public allFacets: Facet[] = [];
     public total: number;
 
-    constructor(private http: Http, private appConfig: AppConfig) {
+    constructor(private http: Http, public appConfig: AppConfig) {
         super();
     }
 

@@ -22,7 +22,7 @@ export class ProfileService extends BaseService {
 
     onProfileReceived: EventEmitter<Profile> = new EventEmitter();
 
-    constructor(private http: AuthHttp, private appConfig: AppConfig, private dataSetService: DataSetService) {
+    constructor(private http: AuthHttp, public appConfig: AppConfig, private dataSetService: DataSetService) {
         super();
         console.log('ProfileService ctor');
     }

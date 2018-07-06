@@ -29,7 +29,7 @@ export class AnnualOmicstypeComponent implements OnInit {
     }
 
     constructor(private router: Router, private dataSetService: DataSetService,
-                private route: ActivatedRoute, private appConfig: AppConfig) {
+                private route: ActivatedRoute, public appConfig: AppConfig) {
 
     }
 

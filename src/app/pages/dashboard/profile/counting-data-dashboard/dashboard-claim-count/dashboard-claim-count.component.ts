@@ -40,8 +40,8 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         }
     }
 
-    constructor(private dataSetService: DataSetService, private route: ActivatedRoute, private appConfig: AppConfig,
-                private profileService: ProfileService
+    constructor(private dataSetService: DataSetService, private route: ActivatedRoute, public appConfig: AppConfig,
+                public profileService: ProfileService
         , private router: Router
         , private notificationService: NotificationsService
         , private thorService: ThorService) {

@@ -30,10 +30,10 @@ export class DashboardProfileComponent implements OnInit {
     userId = 'xxx';
     username: string = null;
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private dataSetService: DataSetService
         , private formBuilder: FormBuilder
-        , private appConfig: AppConfig
+        , public appConfig: AppConfig
         , private router: Router
         , private route: ActivatedRoute
         , private dialog: MatDialog) {

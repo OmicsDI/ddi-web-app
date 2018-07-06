@@ -23,9 +23,9 @@ export class ProfileResultDashboardclaimedComponent implements OnInit, OnChanges
     dataSets: DataSetDetail[];
 
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private dataSetService: DataSetService
-        , private appConfig: AppConfig
+        , public appConfig: AppConfig
         , private router: Router
         , private notificationService: NotificationsService
         , private thorService: ThorService) {

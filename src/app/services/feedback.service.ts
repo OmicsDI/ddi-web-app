@@ -6,7 +6,7 @@ import {AppConfig} from 'app/app.config';
 @Injectable()
 export class FeedbackService {
 
-    constructor(private http: Http, private appConfig: AppConfig) {
+    constructor(private http: Http, public appConfig: AppConfig) {
     }
 
     submit(feedback: Feedback) {

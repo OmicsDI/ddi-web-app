@@ -20,7 +20,7 @@ export class ClaimButtonDatasetComponent implements OnInit, OnChanges {
     claimed: boolean;
     claimable = true;
 
-    constructor(private auth: AuthService, private profileService: ProfileService, private router: Router) {
+    constructor(public auth: AuthService, public profileService: ProfileService, private router: Router) {
     }
 
     ngOnInit() {

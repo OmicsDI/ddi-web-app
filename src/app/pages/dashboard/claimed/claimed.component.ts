@@ -11,8 +11,8 @@ import {DialogService} from 'services/dialog.service';
 })
 export class DashboardClaimedComponent implements OnInit {
 
-    constructor(private profileService: ProfileService,
-                private appConfig: AppConfig,
+    constructor(public profileService: ProfileService,
+                public appConfig: AppConfig,
                 private notificationService: NotificationsService,
                 private dialogService: DialogService) {
     }

@@ -19,10 +19,12 @@ export class DashboardSelectedComponent implements OnInit {
 
     dataSets: DataSetDetail[];
 
-    constructor(private selectedService: SelectedService
+    p: 0;
+
+    constructor(public selectedService: SelectedService
         , private dataSetService: DataSetService
-        , private appConfig: AppConfig
-        , private profileService: ProfileService
+        , public appConfig: AppConfig
+        , public profileService: ProfileService
         , private notificationService: NotificationsService
         , private dialogService: DialogService) {
     }

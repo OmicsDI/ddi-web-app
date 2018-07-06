@@ -9,7 +9,7 @@ import {AppConfig} from 'app/app.config';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(public http: Http, private appConfig: AppConfig) {
+    constructor(public http: Http, public appConfig: AppConfig) {
     }
 
     ngOnInit() {

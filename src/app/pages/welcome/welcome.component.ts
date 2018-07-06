@@ -13,7 +13,7 @@ export class WelcomeComponent implements OnInit {
     inviteId: string;
 
     constructor(private route: ActivatedRoute
-        , private appConfig: AppConfig
+        , public appConfig: AppConfig
         , private inviteService: InviteService
         , private router: Router) {
     }

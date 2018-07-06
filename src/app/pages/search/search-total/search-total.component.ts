@@ -17,7 +17,7 @@ export class SearchTotalComponent implements OnInit {
     subscription: Subscription;
 
     constructor(private searchService: SearchService
-        , private profileService: ProfileService
+        , public profileService: ProfileService
         , private notificationService: NotificationsService) {
     }
 

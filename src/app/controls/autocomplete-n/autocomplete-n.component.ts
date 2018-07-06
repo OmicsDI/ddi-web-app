@@ -16,7 +16,7 @@ export class AutocompleteNComponent implements OnInit {
     @Output() submit = new EventEmitter();
     @ViewChild('txtInput') txtInput: ElementRef;
 
-    constructor(private http: Http, private appConfig: AppConfig, private searchService: SearchService) {
+    constructor(private http: Http, public appConfig: AppConfig, public searchService: SearchService) {
     }
 
     ngOnInit() {

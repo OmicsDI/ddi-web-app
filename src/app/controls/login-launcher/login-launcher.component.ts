@@ -17,7 +17,7 @@ export class LoginLauncherComponent implements OnInit {
     public userId: string;
     public isPublic: boolean;
 
-    constructor(private profileService: ProfileService, private router: Router, private auth: AuthService) {
+    constructor(public profileService: ProfileService, private router: Router, public auth: AuthService) {
         this.name = null;
     }
 

@@ -12,7 +12,7 @@ export class SimilarMoleculeService extends BaseService {
 
     constructor(
         private http: Http
-        , private appConfig: AppConfig) {
+        , public appConfig: AppConfig) {
         super();
     }
 
