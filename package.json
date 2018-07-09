@@ -8,7 +8,7 @@
     "start": "ng serve",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor",
+    "e2e": "ng e2e --no-webdriver-update --port=4200",
     "build": "ng build"
   },
   "private": true,
@@ -32,6 +32,7 @@
     "angular2-ui-switch": "git+https://github.com/daominhsangvn/angular2-ui-switch.git",
     "bootstrap": "^3.3.7",
     "cheerio": "^1.0.0-rc.1",
+    "chromedriver": "^2.40.0",
     "core-js": "^2.4.1",
     "d3": "^4.7.4",
     "d3-cloud": "^1.2.4",
@@ -48,7 +49,7 @@
     "rxjs": "^5.0.1",
     "save": "^2.3.1",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "^1.7.4",
@@ -58,7 +59,7 @@
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.42",
     "codelyzer": "~2.0.0-beta.1",
-    "jasmine-core": "2.5.2",
+    "jasmine-core": "2.6.2",
     "jasmine-spec-reporter": "2.5.0",
     "karma": "1.2.0",
     "karma-chrome-launcher": "^2.0.0",
@@ -67,10 +68,10 @@
     "karma-html-reporter": "^0.2.7",
     "karma-jasmine": "^1.0.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-remap-istanbul": "^0.2.1",
-    "protractor": "~4.0.13",
+    "karma-remap-istanbul": "^0.6.0",
+    "protractor": "^5.1.2",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
-    "typescript": "^2.3.4"
+    "typescript": "2.3.4"
   }
 }
