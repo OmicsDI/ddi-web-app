@@ -20,4 +20,4 @@ script:
   - ng lint
   - ng test --watch false -cc
   - npm run build
-  - xvfb-run npm run e2e
+  - npm run e2e
