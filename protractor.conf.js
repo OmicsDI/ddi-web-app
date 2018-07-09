@@ -2,7 +2,7 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 /*global jasmine */
-const SpecReporter = require('jasmine-spec-reporter');
+var SpecReporter = require('jasmine-spec-reporter');
 
 exports.config = {
     allScriptsTimeout: 11000,

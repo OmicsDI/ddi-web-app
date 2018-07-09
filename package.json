@@ -68,10 +68,10 @@
     "karma-html-reporter": "^0.2.7",
     "karma-jasmine": "^1.0.2",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-remap-istanbul": "^0.2.1",
+    "karma-remap-istanbul": "^0.6.0",
     "protractor": "^5.1.2",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
-    "typescript": "^2.3.4"
+    "typescript": "2.3.4"
   }
 }
