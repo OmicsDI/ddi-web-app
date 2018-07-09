@@ -41,7 +41,7 @@ export class DashboardConnectionsCountProfileComponent implements OnInit, OnChan
     }
 
     constructor(private dataSetService: DataSetService, private route: ActivatedRoute,
-                private appConfig: AppConfig, private profileService: ProfileService
+                public appConfig: AppConfig, public profileService: ProfileService
         , private router: Router
         , private notificationService: NotificationsService
         , private thorService: ThorService) {

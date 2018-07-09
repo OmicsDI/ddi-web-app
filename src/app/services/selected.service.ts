@@ -12,7 +12,7 @@ export class SelectedService {
 
     public dataSets: DataSetShort[] = [];
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private notificationService: NotificationsService) {
 
         this.profileService.onProfileReceived.subscribe(x => {

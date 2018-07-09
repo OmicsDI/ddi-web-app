@@ -52,8 +52,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
     constructor(private dataSetService: DataSetService
         , private route: ActivatedRoute
         , private enrichmentService: EnrichmentService
-        , private appConfig: AppConfig
-        , private profileService: ProfileService
+        , public appConfig: AppConfig
+        , public profileService: ProfileService
         , private dialog: MatDialog
         , private databaseListService: DatabaseListService) {
         console.log('DatasetComponent constructor');

@@ -15,7 +15,7 @@ export class ClaimOrcidComponent implements OnInit {
     @Input() datasets: DataSetDetail[];
 
     constructor(private http: Http
-        , private thorService: ThorService) {
+        , public thorService: ThorService) {
     }
 
     ngOnInit() {

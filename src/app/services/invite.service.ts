@@ -8,7 +8,7 @@ import {Invite} from 'model/Invite';
 @Injectable()
 export class InviteService extends BaseService {
 
-    constructor(private http: Http, private appConfig: AppConfig) {
+    constructor(private http: Http, public appConfig: AppConfig) {
         super();
     }
 

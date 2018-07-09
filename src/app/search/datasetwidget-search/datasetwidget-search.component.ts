@@ -34,9 +34,9 @@ export class DatasetwidgetSearchComponent implements OnInit {
     private profile: Observable<Profile>;
     private userId: string;
 
-    constructor(private selectedService: SelectedService
-        , private appConfig: AppConfig
-        , private profileService: ProfileService
+    constructor(public selectedService: SelectedService
+        , public appConfig: AppConfig
+        , public profileService: ProfileService
         , private databaseListServce: DatabaseListService
         , private router: Router
         , private notificationService: NotificationsService

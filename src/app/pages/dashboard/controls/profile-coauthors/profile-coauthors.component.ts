@@ -14,7 +14,7 @@ export class ProfileCoauthorsComponent implements OnInit, OnChanges {
 
     coauthors: UserShort[];
 
-    constructor(private profileService: ProfileService) {
+    constructor(public profileService: ProfileService) {
     }
 
     ngOnInit() {

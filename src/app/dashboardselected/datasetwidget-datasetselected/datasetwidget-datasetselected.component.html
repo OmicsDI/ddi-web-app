@@ -9,9 +9,9 @@
 
     <div class="project-widget-accession">
         <app-omics-image-search-datasetselected
-                [omics]="d.omicsType || d.omics_type"></app-omics-image-search-datasetselected>
+                [omics]="d.omicsType"></app-omics-image-search-datasetselected>
 
-        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title || d.name}}</span></a>
+        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title}}</span></a>
 
     </div>
 

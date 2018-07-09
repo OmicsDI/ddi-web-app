@@ -8,7 +8,7 @@ import {KeyValuePair} from 'model/KeyValuePair';
 @Injectable()
 export class OntologyService extends BaseService {
 
-    constructor(private http: Http, private appConfig: AppConfig) {
+    constructor(private http: Http, public appConfig: AppConfig) {
         super();
     }
 

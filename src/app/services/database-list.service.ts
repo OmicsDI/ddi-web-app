@@ -12,7 +12,7 @@ export class DatabaseListService extends BaseService {
 
     constructor(
         private http: Http,
-        private appConfig: AppConfig) {
+        public appConfig: AppConfig) {
         super();
         this.getDatabaseList().subscribe();
     }

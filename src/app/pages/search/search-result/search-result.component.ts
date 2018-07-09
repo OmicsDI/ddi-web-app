@@ -29,11 +29,11 @@ export class SearchResultComponent implements OnInit, OnDestroy, AfterViewChecke
     total: number;
     loading: boolean;
 
-    constructor(private appConfig: AppConfig
-        , private searchService: SearchService
+    constructor(public appConfig: AppConfig
+        , public searchService: SearchService
         , private slimLoadingBarService: SlimLoadingBarService
-        , private profileService: ProfileService
-        , private selectedService: SelectedService
+        , public profileService: ProfileService
+        , public selectedService: SelectedService
         , private dataSetService: DataSetService
         , private dialog: MatDialog
         , private router: Router

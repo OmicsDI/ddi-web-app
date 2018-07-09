@@ -36,7 +36,7 @@ export class ProfileAnnualOmicstypeComponent implements OnInit, OnChanges {
     }
 
     constructor(private router: Router, private dataSetService: DataSetService, private route: ActivatedRoute,
-                private appConfig: AppConfig, private profileService: ProfileService) {
+                public appConfig: AppConfig, public profileService: ProfileService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 

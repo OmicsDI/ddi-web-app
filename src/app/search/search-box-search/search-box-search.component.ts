@@ -14,7 +14,7 @@ export class SearchBoxSearchComponent implements OnInit {
     @ViewChild(AutocompleteNSearchComponent) autocompleteComponent: AutocompleteNSearchComponent;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-    constructor(private searchService: SearchService, private router: Router, private route: ActivatedRoute) {
+    constructor(public searchService: SearchService, private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit() {

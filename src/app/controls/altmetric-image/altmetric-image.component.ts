@@ -15,7 +15,7 @@ export class AltmetricImageComponent implements OnInit, OnChanges {
     image_url = 'static/images/altmetric/altmetric_unknown.png';
     detail_url = '';
 
-    constructor(private altmetricService: AltmetricService, private appConfig: AppConfig) {
+    constructor(private altmetricService: AltmetricService, public appConfig: AppConfig) {
     }
 
     ngOnInit() {

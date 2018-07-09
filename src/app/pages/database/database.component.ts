@@ -26,7 +26,7 @@ export class DatabaseComponent implements OnInit {
         private databaseListService: DatabaseListService,
         private statisticsService: StatisticsService,
         private loadingService: SlimLoadingBarService,
-        private appConfig: AppConfig) {
+        public appConfig: AppConfig) {
         this.loadingService.start();
         this.url = environment.userServiceUrl;
     }

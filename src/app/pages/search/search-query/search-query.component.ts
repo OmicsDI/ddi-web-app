@@ -18,7 +18,7 @@ export class SearchQueryComponent implements OnInit {
     numberOfResults: number;
 
     constructor(private searchService: SearchService, private notificationService: NotificationsService,
-                private profileService: ProfileService) {
+                public profileService: ProfileService) {
     }
 
     ngOnInit() {

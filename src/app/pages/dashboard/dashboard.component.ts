@@ -12,10 +12,10 @@ import {NotificationsService} from 'angular2-notifications/dist';
 })
 export class DashboardComponent implements OnInit {
 
-    private savedSearches: SavedSearch[] = [];
-    private watchedDatasets: WatchedDataset[] = [];
+    public savedSearches: SavedSearch[] = [];
+    public watchedDatasets: WatchedDataset[] = [];
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private dialogService: DialogService
         , private notificationService: NotificationsService) {
     }

@@ -17,9 +17,9 @@ export class DashboardUpdateComponent implements OnInit {
     public profileImageUrl: string;
     public profile = this.profileService.profile;
 
-    constructor(private profileService: ProfileService,
+    constructor(public profileService: ProfileService,
                 private formBuilder: FormBuilder,
-                private appConfig: AppConfig,
+                public appConfig: AppConfig,
                 private router: Router) {
         this.form = formBuilder.group({
             name: ['', [
