@@ -27,14 +27,14 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
     private retryLimitTimes = 2;
     private userServiceUrl: string;
     private dataOfViewCount: DatasetCount;
-    private dataSets: DataSetDetail[] = [];
+    public dataSets: DataSetDetail[] = [];
 
 
     @Input() profile: Profile = new Profile();
 
 
     constructor(private dataSetService: DataSetService, private route: ActivatedRoute,
-                private appConfig: AppConfig, private profileService: ProfileService
+                public appConfig: AppConfig, public profileService: ProfileService
         , private router: Router
         , private notificationService: NotificationsService
         , private thorService: ThorService) {

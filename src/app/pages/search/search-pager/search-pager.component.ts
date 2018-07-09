@@ -24,7 +24,7 @@ export class SearchPagerComponent implements OnInit {
     total: number;
     loading = true;
 
-    constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
+    constructor(public searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
         for (let i = 1; i <= 100; i++) {
             this.collection.push(`item ${i}`);
         }

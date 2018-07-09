@@ -15,10 +15,10 @@ export class AppComponent implements OnInit {
     homePage: boolean;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
-    constructor(private auth: AuthService, private slimLoadingBarService: SlimLoadingBarService
+    constructor(public auth: AuthService, private slimLoadingBarService: SlimLoadingBarService
         , private route: ActivatedRoute
         , private router: Router
-        , private selectedService: SelectedService) {
+        , public selectedService: SelectedService) {
 
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
             window.location.href = window.location.href.replace('http:', 'https:');

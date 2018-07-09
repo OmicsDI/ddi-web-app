@@ -12,8 +12,8 @@ export class ProfileContactsProfileComponent implements OnInit {
 
     @Input() profile: Profile = new Profile();
 
-    constructor(private appConfig: AppConfig,
-                private profileService: ProfileService) {
+    constructor(public appConfig: AppConfig,
+                public profileService: ProfileService) {
     }
 
     ngOnInit() {

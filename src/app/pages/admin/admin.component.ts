@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
 
     public profiles: Profile[];
 
-    constructor(private profileService: ProfileService, private appConfig: AppConfig) {
+    constructor(public profileService: ProfileService, public appConfig: AppConfig) {
     }
 
     ngOnInit() {

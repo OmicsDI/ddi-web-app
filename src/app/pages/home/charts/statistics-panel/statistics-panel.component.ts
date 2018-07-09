@@ -21,7 +21,7 @@ export class StatisticsPanelComponent implements OnInit {
     organisms: number;
     users = 99;
 
-    constructor(private statisticsService: StatisticsService, private profileService: ProfileService) {
+    constructor(private statisticsService: StatisticsService, public profileService: ProfileService) {
     }
 
 

@@ -28,8 +28,8 @@ export class ThorService {
                 private notificationsService: NotificationsService,
                 private databaseListService: DatabaseListService,
                 private datasetService: DataSetService,
-                private profileService: ProfileService,
-                private appConfig: AppConfig) {
+                public profileService: ProfileService,
+                public appConfig: AppConfig) {
     }
 
     isClaimed(source: string, id: string): boolean {

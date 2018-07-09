@@ -20,7 +20,7 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
 
     userId: string;
 
-    constructor(private profileService: ProfileService, private appConfig: AppConfig) {
+    constructor(public profileService: ProfileService, public appConfig: AppConfig) {
     }
 
     ngOnInit() {

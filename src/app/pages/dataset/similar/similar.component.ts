@@ -24,7 +24,7 @@ export class SimilarComponent implements OnInit, OnChanges {
 
     loadMoreButtonText = 'Load More';
 
-    constructor(private similarityService: SimilarityService, private appConfig: AppConfig,
+    constructor(private similarityService: SimilarityService, public appConfig: AppConfig,
                 private databaseListServce: DatabaseListService) {
         this.subscription = this.similarityService.searchResult$.subscribe(
             result => {

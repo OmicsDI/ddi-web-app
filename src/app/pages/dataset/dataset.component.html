@@ -54,20 +54,20 @@
                             </p>
                         </div>
                     </div>
-                    <p class="align-justify" *ngIf="null!=d.sample_protocol">
-                        <span><b>SAMPLE PROTOCOL:</b></span>
-                        <span class="ng-scope">
-                  <app-annotated-text-dataset [text]="d.sample_protocol"
-                                              [sections]="sample_protocol"></app-annotated-text-dataset>
-              </span>
-                    </p>
-                    <p class="align-justify" *ngIf="null!=d.data_protocol">
-                        <span><b>DATA PROTOCOL:</b></span>
-                        <span class="ng-scope">
-                  <app-annotated-text-dataset [text]="d.data_protocol"
-                                              [sections]="data_protocol"></app-annotated-text-dataset>
-              </span>
-                    </p>
+                    <!--<p class="align-justify" *ngIf="null!=d.sample_protocol">-->
+                        <!--<span><b>SAMPLE PROTOCOL:</b></span>-->
+                        <!--<span class="ng-scope">-->
+                            <!--<app-annotated-text-dataset [text]="d.sample_protocol"-->
+                                              <!--[sections]="sample_protocol"></app-annotated-text-dataset>-->
+                        <!--</span>-->
+                    <!--</p>-->
+                    <!--<p class="align-justify" *ngIf="null!=d.data_protocol">-->
+                        <!--<span><b>DATA PROTOCOL:</b></span>-->
+                        <!--<span class="ng-scope">-->
+                              <!--<app-annotated-text-dataset [text]="d.data_protocol"-->
+                                                          <!--[sections]="data_protocol"></app-annotated-text-dataset>-->
+                        <!--</span>-->
+                    <!--</p>-->
                     <div *ngIf="d.similars">
                         <p class="align-justify" *ngIf="reanalysis_of(d)">
                             <b>REANALYSIS of:</b> <span *ngFor="let s of reanalysis_of(d)"><a
@@ -193,7 +193,7 @@
              href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank"
              title="Download Dataset as JSON">
               <i class="fa fa-file-text-o" aria-hidden="true"></i>
-              <span [ngClass]="unselected"> Json&nbsp;&nbsp; </span>
+              <span [ngClass]="'unselected'"> Json&nbsp;&nbsp; </span>
           </a>
 
           <a class="dot-button" style="background-color: #E69E7A; color:black;"
@@ -216,7 +216,7 @@
             <!--dataset_upper -->
             <div class="panel panel-default">
                 <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
-                <disqus [shortname]="dataset" [identifier]="repository+'/'+acc" [url]="repository+'/'+acc"></disqus>
+                <disqus [shortname]="'dataset'" [identifier]="repository+'/'+acc" [url]="repository+'/'+acc"></disqus>
             </div>
         </div>
         <!-- col-md-8 centerpanel-->

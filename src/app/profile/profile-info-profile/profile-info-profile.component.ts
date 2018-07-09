@@ -29,10 +29,10 @@ export class ProfileInfoProfileComponent implements OnInit, OnChanges {
     @Input() profile: Profile = new Profile();
     @Output() change = new EventEmitter();
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private dataSetService: DataSetService
         , private formBuilder: FormBuilder
-        , private appConfig: AppConfig) {
+        , public appConfig: AppConfig) {
 
     }
 

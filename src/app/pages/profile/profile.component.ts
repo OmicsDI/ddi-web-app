@@ -31,10 +31,10 @@ export class ProfileComponent implements OnInit {
 
     public uploader: FileUploader;
 
-    constructor(private profileService: ProfileService
+    constructor(public profileService: ProfileService
         , private dataSetService: DataSetService
         , private formBuilder: FormBuilder
-        , private appConfig: AppConfig
+        , public appConfig: AppConfig
         , private router: Router
         , private route: ActivatedRoute) {
         this.form = formBuilder.group({

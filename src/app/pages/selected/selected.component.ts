@@ -15,9 +15,11 @@ export class SelectedComponent implements OnInit {
 
     dataSets: DataSetDetail[];
 
-    constructor(private selectedService: SelectedService
+    p: 0;
+
+    constructor(public selectedService: SelectedService
         , private dataSetService: DataSetService
-        , private appConfig: AppConfig
+        , public appConfig: AppConfig
         , private databaseListServce: DatabaseListService) {
     }
 

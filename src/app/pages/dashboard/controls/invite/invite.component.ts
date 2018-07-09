@@ -21,7 +21,7 @@ export class InviteComponent implements OnInit {
     // private email: String;
     private dataSetDetails: DataSetDetail[];
 
-    private secondPage = false;
+    public secondPage = false;
 
     complexForm: FormGroup;
 

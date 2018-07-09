@@ -8,9 +8,9 @@
     </div>
 
     <div class="project-widget-accession">
-        <app-omics-image-dashboardprofile [omics]="d.omicsType || d.omics_type"></app-omics-image-dashboardprofile>
+        <app-omics-image-dashboardprofile [omics]="d.omicsType"></app-omics-image-dashboardprofile>
 
-        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title || d.name}}</span></a>
+        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title}}</span></a>
 
     </div>
 
