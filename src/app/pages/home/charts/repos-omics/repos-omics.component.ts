@@ -375,6 +375,20 @@ export class ReposOmicsComponent implements OnInit {
         this.setTheRadio();
     }
 
+    /**
+     * Find the right index of the column bar when we click to any positions in the bar chart
+     * see https://multiomics.atlassian.net/browse/OF-62
+     * @param {number} i: index of the position where we click to the chart
+     * @param {number} length: number columns in the chart
+     * @returns {any}
+     */
+    private findIndex(i: number, length: number) {
+        if (i > length) {
+            return this.findIndex(i - length, length);
+        }
+        return i;
+    }
+
     private showTip(searchWordPre: string, dataAddKey: any[]): void {
         const self = this
             , pieChartName = self.pieChartName;
@@ -414,14 +428,15 @@ export class ReposOmicsComponent implements OnInit {
                 tooltip.transition()
                     .duration(500)
                     .style('opacity', 0);
-                let searchWord = searchWordPre + dataAddKey[i].name.toString() + '"';
-                if (dataAddKey[i].name.toString() === 'MetaboLights Dataset') {
+                const index = self.findIndex(i, dataAddKey.length);
+                let searchWord = searchWordPre + dataAddKey[index].name.toString() + '"';
+                if (dataAddKey[index].name.toString() === 'MetaboLights Dataset') {
                     searchWord = searchWordPre + 'MetaboLights' + '"';
                 }
-                if (dataAddKey[i].name.toString() === 'Metabolome Workbench') {
+                if (dataAddKey[index].name.toString() === 'Metabolome Workbench') {
                     searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
                 }
-                if (dataAddKey[i].name.toString() === 'Expression Atlas Experiments') {
+                if (dataAddKey[index].name.toString() === 'Expression Atlas Experiments') {
                     searchWord = searchWordPre + 'ExpressionAtlas' + '"';
                 }
 
