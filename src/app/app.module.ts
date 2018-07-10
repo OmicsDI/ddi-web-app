@@ -10,7 +10,6 @@ import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from
 import {AlertModule} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
-import {DropdownModule} from 'ng2-dropdown';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ClipboardModule} from 'ngx-clipboard/dist';
@@ -80,6 +79,7 @@ import {ScoreSearchComponent} from 'search/datasetwidget-search/score-search/sco
 import {CommonModule} from '@angular/common';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from './pipes/pipes.module';
+import {UtilsModule} from './utils/utils.module';
 
 
 export function getParameterByName(name): string {
@@ -155,7 +155,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         NguiAutoCompleteModule,
         DisqusModule.forRoot('omicsdi'),
         AlertModule.forRoot(),
-        DropdownModule,
+        UtilsModule,
         SlimLoadingBarModule.forRoot(),
         NgxPaginationModule,
         TooltipModule,

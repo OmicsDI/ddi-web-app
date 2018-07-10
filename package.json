@@ -36,7 +36,6 @@
     "d3-cloud": "^1.2.4",
     "font-awesome": "^4.7.0",
     "moment": "^2.18.1",
-    "ng2-dropdown": "0.0.21",
     "ng2-file-upload": "^1.2.1",
     "ng2-slim-loading-bar": "^2.4.0",
     "ng2-tooltip": "0.0.7",
