@@ -7,7 +7,7 @@ import {Http, HttpModule, RequestOptions} from '@angular/http';
 import { AppComponent } from './app.component';
 import {HomeComponent} from 'pages/home/home.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
-import {AlertModule} from 'ngx-bootstrap';
+import {AlertModule} from 'ng2-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
 import {DropdownModule} from 'ng2-dropdown';
