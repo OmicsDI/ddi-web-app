@@ -9,7 +9,7 @@ import {HomeComponent} from 'pages/home/home.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule} from 'ng2-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
-import {DisqusModule} from 'angular2-disqus';
+import {DisqusModule} from 'ngx-disqus';
 import {DropdownModule} from 'ng2-dropdown';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -153,7 +153,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         FormsModule,
         ReactiveFormsModule,
         NguiAutoCompleteModule,
-        DisqusModule,
+        DisqusModule.forRoot('omicsdi'),
         AlertModule.forRoot(),
         DropdownModule,
         SlimLoadingBarModule.forRoot(),

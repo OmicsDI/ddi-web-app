@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {DataSetService} from 'services/dataset.service';
@@ -10,7 +10,6 @@ import {SynonymResult} from 'model/EnrichmentInfo/SynonymResult';
 import {Synonym} from 'model/EnrichmentInfo/Synonym';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from 'services/profile.service';
-import {DisqusComponent} from 'ng2-awesome-disqus/disqus.component';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {CitationDialogComponent} from './citation-dialog/citation-dialog.component';
 import {SimilarDataset} from 'model/SimilarDataset';
@@ -46,8 +45,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
     web_service_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
-
-    @ViewChild(DisqusComponent) disqus: DisqusComponent;
 
     constructor(private dataSetService: DataSetService
         , private route: ActivatedRoute
