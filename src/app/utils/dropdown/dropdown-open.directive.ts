@@ -1,4 +1,4 @@
-import {Directive, ElementRef, OnDestroy, Host, HostListener} from '@angular/core';
+import {Directive, ElementRef, Host, HostListener, OnDestroy} from '@angular/core';
 import {DropdownDirective} from './dropdown.directive';
 
 @Directive({

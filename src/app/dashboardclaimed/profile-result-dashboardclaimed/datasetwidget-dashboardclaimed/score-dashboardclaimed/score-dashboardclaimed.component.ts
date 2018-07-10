@@ -19,8 +19,6 @@ export class ScoreDashboardclaimedComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-
-
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {

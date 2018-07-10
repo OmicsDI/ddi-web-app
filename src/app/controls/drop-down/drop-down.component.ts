@@ -27,6 +27,4 @@ export class DropDownComponent implements OnInit {
         this.value = facet.value;
         this.valueChange.emit(this.value);
     }
-
-
 }

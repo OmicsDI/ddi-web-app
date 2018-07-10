@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 
 import {SearchRoutingModule} from './search-routing.module';
 import {SearchComponent} from 'pages/search/search.component';
-import {ScoreComponent} from 'controls/score/score.component';
 import {InviteService} from 'services/invite.service';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {ProfileService} from 'services/profile.service';

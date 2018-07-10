@@ -284,7 +284,7 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
     }
 
     getRelatedDatasets(threshold: number) {
-        this.filteredDatasets = new Array();
+        this.filteredDatasets = [];
         for (const d of this.related_datasets_by_biological) {
             if (d.score >= threshold) {
                 this.filteredDatasets.push(d);

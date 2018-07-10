@@ -51,7 +51,7 @@ export class ProfileResultDashboardclaimedComponent implements OnInit, OnChanges
     }
 
     reloadDataSets() {
-        this.dataSets = new Array();
+        this.dataSets = [];
         if (!this.profile) {
             return;
         }

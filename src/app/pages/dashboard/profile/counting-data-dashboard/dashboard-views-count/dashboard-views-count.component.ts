@@ -3,14 +3,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import * as d3 from 'd3';
 import {DataSetService} from 'services/dataset.service';
 import {AppConfig} from 'app/app.config';
-import {DatasetCount} from 'model/DatasetCount';
 import {ProfileService} from 'services/profile.service';
 
 
 import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {NotificationsService} from 'angular2-notifications/dist';
-import {ThorService} from 'services/thor.service';
 
 @Component({
     selector: 'app-dashboard-views-count',
@@ -25,7 +22,6 @@ export class DashboardViewsCountComponent implements OnInit, OnChanges {
     private web_service_url = this.appConfig.getWebServiceUrl();
     private retryLimitTimes = 2;
     private userServiceUrl: string;
-    private dataOfViewCount: DatasetCount;
     dataSets: DataSetDetail[];
 
     @Input() datasets: DataSetDetail[] = [];
@@ -41,10 +37,7 @@ export class DashboardViewsCountComponent implements OnInit, OnChanges {
     }
 
     constructor(private dataSetService: DataSetService, private route: ActivatedRoute,
-                public appConfig: AppConfig, public profileService: ProfileService
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+                public appConfig: AppConfig, public profileService: ProfileService, private router: Router) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 

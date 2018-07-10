@@ -19,8 +19,6 @@ export class ScoreComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-
-
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {

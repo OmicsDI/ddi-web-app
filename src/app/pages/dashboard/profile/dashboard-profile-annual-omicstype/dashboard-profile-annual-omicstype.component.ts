@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import * as d3 from 'd3';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from 'services/dataset.service';
-import {AppConfig} from '../../../../app.config';
+import {AppConfig} from 'app/app.config';
 import {Profile} from 'model/Profile';
 import {ProfileService} from 'services/profile.service';
 
@@ -36,7 +36,7 @@ export class DashboardProfileAnnualOmicstypeComponent implements OnInit, OnChang
     }
 
     constructor(private router: Router, private dataSetService: DataSetService,
-                private route: ActivatedRoute, public appConfig: AppConfig, public profileService: ProfileService) {
+                public appConfig: AppConfig, public profileService: ProfileService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 

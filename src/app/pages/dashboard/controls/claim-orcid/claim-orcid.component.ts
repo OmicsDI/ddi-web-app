@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
 import {ThorService} from 'services/thor.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 
@@ -14,8 +13,7 @@ export class ClaimOrcidComponent implements OnInit {
     @Input() datasetNumber: number;
     @Input() datasets: DataSetDetail[];
 
-    constructor(private http: Http
-        , public thorService: ThorService) {
+    constructor(public thorService: ThorService) {
     }
 
     ngOnInit() {

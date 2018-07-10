@@ -7,7 +7,6 @@ import {AppConfig} from '../app.config';
 import {BaseService} from './base.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {UserShort} from 'model/UserShort';
-import {DataSetService} from './dataset.service';
 import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
@@ -22,14 +21,8 @@ export class ProfileService extends BaseService {
 
     onProfileReceived: EventEmitter<Profile> = new EventEmitter();
 
-    constructor(private http: AuthHttp, public appConfig: AppConfig, private dataSetService: DataSetService) {
+    constructor(private http: AuthHttp, public appConfig: AppConfig) {
         super();
-        console.log('ProfileService ctor');
-    }
-
-    getParameterByName(name): string {
-        const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     }
 
     getProfile(): Observable<Profile> {

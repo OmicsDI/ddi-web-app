@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ProfileService} from 'services/profile.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {Profile} from 'model/Profile';
-import {DataSetService} from 'services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {FileUploader} from 'ng2-file-upload';
@@ -30,8 +29,6 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
     @Output() change = new EventEmitter();
 
     constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , private formBuilder: FormBuilder
         , public appConfig: AppConfig) {
 
     }

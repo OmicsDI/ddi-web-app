@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AutocompleteNComponent} from '../autocomplete-n/autocomplete-n.component';
 import {SearchService} from 'services/search.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {MatMenuTrigger} from '@angular/material';
 
 @Component({
@@ -14,7 +14,7 @@ export class SearchBoxComponent implements OnInit {
     @ViewChild(AutocompleteNComponent) autocompleteComponent: AutocompleteNComponent;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-    constructor(public searchService: SearchService, private router: Router, private route: ActivatedRoute) {
+    constructor(public searchService: SearchService, private router: Router) {
     }
 
     ngOnInit() {

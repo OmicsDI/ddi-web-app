@@ -10,7 +10,6 @@ import {OmicsImageSearchDatasetselectedComponent} from 'omics-image-datasetselec
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {NgxPaginationModule} from 'ngx-pagination';
-// import {TruncatePipe} from "../pipes/truncate.pipe";
 import {TooltipModule} from 'ng2-tooltip';
 import {TruncateDashboardselectedPipe} from './truncate-dashboardselected.pipe';
 import {ToDateStringDashboardselectedPipe} from './toDateString-dashboardselected.pipe';

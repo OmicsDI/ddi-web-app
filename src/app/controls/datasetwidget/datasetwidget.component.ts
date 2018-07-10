@@ -9,7 +9,6 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
-// import {CitationDialogComponent} from "../../pages/dataset/citation-dialog-search/citation-dialog-search.component";
 import {DataSetService} from 'services/dataset.service';
 import {CitationDialogSearchComponent} from 'search/citation-dialog-search/citation-dialog-search.component';
 
@@ -63,13 +62,6 @@ export class DatasetWidgetComponent implements OnInit {
         $event.stopPropagation();
         $event.preventDefault();
     }
-
-    /*
-    selectClicked($event,source,id){
-      this.toggle(source,id);
-      $event.stopPropagation();
-      $event.preventDefault();
-    }*/
 
     citation(source, id) {
         let dialogRef: MatDialogRef<CitationDialogSearchComponent>;
