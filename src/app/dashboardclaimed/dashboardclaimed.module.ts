@@ -8,12 +8,12 @@ import {ProfileResultDashboardclaimedComponent} from './profile-result-dashboard
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {TooltipModule} from 'ng2-tooltip';
 import {DatasetwidgetDashboardclaimedComponent} from 'datasetwidget/datasetwidget-dashboardclaimed.component';
 import {ScoreDashboardclaimedComponent} from 'datasetwidget/score-dashboardclaimed/score-dashboardclaimed.component';
 import {OmicsImageDashboardclaimedComponent} from 'datasetwidget/omics-image-dashboardclaimed/omics-image-dashboardclaimed.component';
 import {TruncateSearchPipe} from 'datasetwidget/truncate-dashboardclaimed.pipe';
 import {ToDateStringSearchPipe} from 'datasetwidget/toDateString-dashboardclaimed.pipe';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
@@ -22,7 +22,7 @@ import {ToDateStringSearchPipe} from 'datasetwidget/toDateString-dashboardclaime
         DashboardclaimedRoutingModule, // for input,select.etc
         FormsModule,
         ClipboardModule,
-        TooltipModule
+        UtilsModule
     ],
     declarations: [
         DashboardClaimedComponent,

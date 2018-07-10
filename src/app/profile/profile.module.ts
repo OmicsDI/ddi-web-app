@@ -17,9 +17,9 @@ import {ProfileContactsProfileComponent} from './profile-contacts-profile/profil
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {TooltipModule} from 'ng2-tooltip';
 import {TruncateProfilePipe} from './truncate-profile.pipe';
 import {ToDateStringProfilePipe} from './toDateString-profile.pipe';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
@@ -31,7 +31,7 @@ import {ToDateStringProfilePipe} from './toDateString-profile.pipe';
         // for input,select.etc
         FormsModule,
         ClipboardModule,
-        TooltipModule
+        UtilsModule
     ],
     declarations: [
         ProfileComponent,

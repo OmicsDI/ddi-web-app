@@ -32,7 +32,6 @@ import {InviteComponent} from './invite/invite.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {TooltipModule} from 'ng2-tooltip';
 import {TruncateSearchPipe} from './truncate-search.pipe';
 import {ToDateStringSearchPipe} from './toDateString-search.pipe';
 import {AutocompleteNSearchComponent} from './search-box-search/autocomplete-n-search/autocomplete-n-search.component';
@@ -41,6 +40,7 @@ import {QueryBuilderSearchComponent} from './search-box-search/query-builder-sea
 import {DropDownSearchComponent} from './search-box-search/query-builder-search/drop-down-search/drop-down-search.component';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {ControlsModule} from 'controls/controls.module';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
@@ -57,7 +57,7 @@ import {ControlsModule} from 'controls/controls.module';
         // for input,select.etc
         FormsModule,
         ClipboardModule,
-        TooltipModule
+        UtilsModule
     ],
     declarations: [
         InviteComponent,

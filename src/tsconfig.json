@@ -32,6 +32,9 @@
       "controls/*": [
         "app/controls/*"
       ],
+      "utils/*": [
+        "app/utils/*"
+      ],
       "profile-dashboard/*": [
         "app/profile/counting-data-dashboard-profile/dashboard-citations-count-profile/*",
         "app/profile/counting-data-dashboard-profile/dashboard-claim-count-profile/*",

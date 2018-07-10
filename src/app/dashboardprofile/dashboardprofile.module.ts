@@ -13,7 +13,6 @@ import {DashboardCitationsCountComponent} from 'cd-dashboard/dashboard-citations
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {TooltipModule} from 'ng2-tooltip';
 import {NavComponent} from 'pages/dashboard/nav/nav.component';
 import {ProfileInfoComponent} from 'pages/dashboard/controls/profile-info/profile-info.component';
 import {ProfileResultComponent} from 'pages/dashboard/controls/profile-result/profile-result.component';
@@ -26,6 +25,7 @@ import {ScoreDashboardprofileComponent} from './score-dashboardprofile/score-das
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {TruncateDashboardprofilePipe} from './truncate-dashboardprofile.pipe';
 import {ToDateStringDashboardProfilePipe} from './toDateStringDashboardProfile.pipe';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
@@ -37,7 +37,7 @@ import {ToDateStringDashboardProfilePipe} from './toDateStringDashboardProfile.p
         // for input,select.etc
         FormsModule,
         ClipboardModule,
-        TooltipModule
+        UtilsModule
     ],
     declarations: [
         DashboardProfileComponent,

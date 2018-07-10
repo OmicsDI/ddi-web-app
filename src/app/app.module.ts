@@ -13,7 +13,6 @@ import {DisqusModule} from 'ngx-disqus';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {TooltipModule} from 'ng2-tooltip';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SimpleNotificationsModule} from 'angular2-notifications/dist';
@@ -78,7 +77,7 @@ import {ThorService} from 'services/thor.service';
 import {ScoreSearchComponent} from 'search/datasetwidget-search/score-search/score-search.component';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from './pipes/pipes.module';
-import {UtilsModule} from './utils/utils.module';
+import {UtilsModule} from 'utils/utils.module';
 
 
 export function getParameterByName(name): string {
@@ -157,7 +156,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         UtilsModule,
         SlimLoadingBarModule.forRoot(),
         NgxPaginationModule,
-        TooltipModule,
         UiSwitchModule,
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),

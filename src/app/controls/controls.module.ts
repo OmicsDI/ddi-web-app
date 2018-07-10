@@ -10,18 +10,18 @@ import {DeleteButtonComponent} from 'controls/delete-button/delete-button.compon
 import {DatasetwidgetSmallComponent} from 'controls/datasetwidget-small/datasetwidget-small.component';
 import {SocialnetworksComponent} from 'controls/socialnetworks/socialnetworks.component';
 import {CommonModule} from '@angular/common';
-import {TooltipModule} from 'ng2-tooltip';
 import {ScoreComponent} from 'controls/score/score.component';
 import {OmicsImageSearchComponent} from 'search/datasetwidget-search/omics-image/omics-image-search.component';
 import {RouterModule} from '@angular/router';
 import {PipesModule} from '../pipes/pipes.module';
 import {OmicsImageComponent} from 'controls/omics-image/omics-image.component';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        TooltipModule,
+        UtilsModule,
         PipesModule
     ],
     declarations: [
