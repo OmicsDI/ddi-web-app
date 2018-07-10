@@ -38,7 +38,7 @@
     "moment": "^2.18.1",
     "ng2-file-upload": "^1.2.1",
     "ng2-slim-loading-bar": "^4.0.0",
-    "ngx-bootstrap": "^1.9.3",
+    "ngx-bootstrap": "^2.0.5",
     "ngx-clipboard": "^8.0.3",
     "ngx-disqus": "~2.2.0",
     "ngx-pagination": "^3.0.0",
