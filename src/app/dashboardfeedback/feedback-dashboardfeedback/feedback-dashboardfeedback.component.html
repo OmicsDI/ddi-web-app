@@ -27,25 +27,25 @@
         <div *ngIf="isSatisfiedVal==='false'">
             <label>Choose a category that best describes the issue that you are having with the search:</label>
             <span class="a-dropdown-container">
-                                        <select name="category" autocomplete="off" tabIndex="-1"
-                                                class="a-native-dropdown" [(ngModel)]="selectMessage"
-                                                (change)="selectEvent(value)">
-                                        <option class="a-prompt" value="">&hellip;</option>
-                                            <!--<option value="CUSTOMER_SVC">I need to talk to customer service.</option>-->
-                                        <option value="FIND_ITEM">I still haven&#039;t found what I&#039;m looking for.</option>
-                                        <option value="NARROW_OR_SORT">How do I filter or sort my search ?</option>
-                                        <option value="OTHER">Something is broken.</option>
-                                        <option value="INCORRECT_DESC">Some information looks wrong.</option>
-                                        <option value="FEATURE_REQUEST">Could you add a feature ?</option>
-                                        <option value="ITEM_REQUEST">Could you start carrying a database or omics type not listed here ?</option>
-                                        </select>
-                                    </span>
+                <select name="category" autocomplete="off" tabIndex="-1"
+                        class="a-native-dropdown" [(ngModel)]="selectMessage"
+                        (change)="selectEvent(value)">
+                <option class="a-prompt" value="">&hellip;</option>
+                    <!--<option value="CUSTOMER_SVC">I need to talk to customer service.</option>-->
+                <option value="FIND_ITEM">I still haven&#039;t found what I&#039;m looking for.</option>
+                <option value="NARROW_OR_SORT">How do I filter or sort my search ?</option>
+                <option value="OTHER">Something is broken.</option>
+                <option value="INCORRECT_DESC">Some information looks wrong.</option>
+                <option value="FEATURE_REQUEST">Could you add a feature ?</option>
+                <option value="ITEM_REQUEST">Could you start carrying a database or omics type not listed here ?</option>
+                </select>
+            </span>
         </div>
         <div *ngIf="isSatisfiedVal">
-                                        <textarea rows="5" id="feedtxtArea" style="width:100%;"
-                                                  [(ngModel)]="messageData" required
-                                                  placeholder="please enter your comments here.">
-                                        </textarea>
+            <textarea rows="5" id="feedtxtArea" style="width:100%;"
+                      [(ngModel)]="messageData" required
+                      placeholder="please enter your comments here.">
+            </textarea>
         </div>
         <div *ngIf="isSatisfiedVal" style="padding:10px;">
             <button (click)="save_feedback()">Submit</button>

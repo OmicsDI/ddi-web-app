@@ -58,8 +58,6 @@ export class DatabaseListService extends BaseService {
                 }
             }
         }
-        ;
-
         return null;
     }
 }

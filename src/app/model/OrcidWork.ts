@@ -1,4 +1,5 @@
 import {OrcidExternalIdentifier} from './OrcidExternalIdentifier';
+
 /**
  * Created by azorin on 28/09/2017.
  */

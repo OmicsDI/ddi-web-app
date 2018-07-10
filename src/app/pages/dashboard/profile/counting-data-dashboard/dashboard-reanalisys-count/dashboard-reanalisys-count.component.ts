@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {ActivatedRoute, Router} from '@angular/router';
 import * as d3 from 'd3';
 import {DataSetService} from 'services/dataset.service';
-import {AppConfig} from '../../../../../app.config';
+import {AppConfig} from 'app/app.config';
 import {DatasetCount} from 'model/DatasetCount';
 import {ProfileService} from 'services/profile.service';
 

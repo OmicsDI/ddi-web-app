@@ -201,8 +201,6 @@ export class HotwordsComponent implements OnInit {
         if (thisField === 'data_protocol') {
             fontSizePara = 45;
         }
-        ;
-
         svg.selectAll('.cloud').remove();
         cloud().size([divWidth - 10, 325])
             .words(hotwordss)

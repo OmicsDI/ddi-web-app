@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataSetService} from 'services/dataset.service';
-import {AppConfig} from '../../../../app.config';
+import {AppConfig} from 'app/app.config';
 import {Profile} from 'model/Profile';
 import {DatasetCount} from 'model/DatasetCount';
 import {ProfileService} from 'services/profile.service';
@@ -26,7 +26,6 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
     private web_service_url = this.appConfig.getWebServiceUrl();
     private retryLimitTimes = 2;
     private userServiceUrl: string;
-    private dataOfViewCount: DatasetCount;
     public dataSets: DataSetDetail[] = [];
 
 

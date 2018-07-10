@@ -143,7 +143,7 @@ export class ProfileRepoOmicsComponent implements OnInit {
                     name: repos[i].name,
                     size: repos[i].value
                 });
-                continue;
+
             }
         }
 

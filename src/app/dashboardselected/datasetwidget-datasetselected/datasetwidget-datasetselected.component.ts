@@ -13,8 +13,6 @@ import {CitationDialogSearchComponent} from 'search/citation-dialog-search/citat
 import {DataSet} from 'model/DataSet';
 import {DataSetService} from 'services/dataset.service';
 
-// import {CitationDialogComponent} from "../../pages/dataset/citation-dialog-search/citation-dialog-search.component";
-
 @Component({
     selector: 'app-datasetwidget-datasetselected',
     templateUrl: './datasetwidget-datasetselected.component.html',
@@ -65,13 +63,6 @@ export class DatasetwidgetDatasetselectedComponent implements OnInit {
         $event.stopPropagation();
         $event.preventDefault();
     }
-
-    /*
-    selectClicked($event,source,id){
-      this.toggle(source,id);
-      $event.stopPropagation();
-      $event.preventDefault();
-    }*/
 
     citation(source, id) {
         let dialogRef: MatDialogRef<CitationDialogSearchComponent>;

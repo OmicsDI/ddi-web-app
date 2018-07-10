@@ -101,8 +101,6 @@ export class TweetsNewsComponent implements OnInit {
                 output.push(t);
                 t = {};
             });
-
-        console.log(output);
         return output;
     }
 

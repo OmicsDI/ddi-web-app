@@ -36,8 +36,4 @@ export class SearchBoxLargeComponent implements OnInit {
     doNotPropagate(event) {
         event.stopPropagation();
     }
-
-    submitTestQuery() {
-        alert('submitted searchbox');
-    }
 }

@@ -98,11 +98,6 @@
 
 </head>
 <script>
-    function getCookieValue(a) {
-        var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-        return b ? b.pop() : '';
-    }
-
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -118,7 +113,7 @@
         localStorage.setItem('id_token', authToken);
         window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
     }
-1// 2 twitter integration on frontpage
+
     var __twttr = {
         parse: function (response) {
             localStorage.setItem('__twttr', JSON.stringify(response));
@@ -217,10 +212,10 @@
 <!-- Bootstrap Core JavaScript -->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- Morris Charts JavaScript-->
-<script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>
-<script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>
-<script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>
+<!--&lt;!&ndash; Morris Charts JavaScript&ndash;&gt;-->
+<!--<script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>-->
+<!--<script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>-->
+<!--<script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>-->
 
 </body>
 </html>

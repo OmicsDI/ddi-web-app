@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
-import {ScoreService} from 'services/score.service';
 import {DataSet} from 'model/DataSet';
 
 @Component({
@@ -15,7 +14,7 @@ export class ScoreDashboardprofileComponent implements OnInit, OnChanges {
     reanalysis = 0;
     connections = 0;
 
-    constructor(private scoreService: ScoreService) {
+    constructor() {
     }
 
     ngOnInit() {
