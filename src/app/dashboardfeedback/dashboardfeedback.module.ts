@@ -5,7 +5,7 @@ import {DashboardfeedbackRoutingModule} from './dashboardfeedback-routing.module
 import {DashboardFeedbackComponent} from 'pages/dashboard/feedback/feedback.component';
 import {NavDashboardfeedbackComponent} from './nav-dashboardfeedback/nav-dashboardfeedback.component';
 import {FeedbackDashboardfeedbackComponent} from './feedback-dashboardfeedback/feedback-dashboardfeedback.component';
-import {DisqusModule} from 'ng2-awesome-disqus';
+import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 
@@ -13,7 +13,7 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
     imports: [
         CommonModule,
         DashboardfeedbackRoutingModule,
-        DisqusModule,
+        DisqusModule.forRoot('omicsdi'),
         FormsModule,
         ClipboardModule
     ],

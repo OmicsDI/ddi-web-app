@@ -11,7 +11,7 @@ import {OmicsImageDatasetComponent} from 'pages/dataset/omics-image-dataset/omic
 import {AnnotatedTextDatasetComponent} from 'pages/dataset/annotated-text-dataset/annotated-text-dataset.component';
 import {ScoreDatasetComponent} from 'pages/dataset/score-dataset/score-dataset.component';
 import {ClaimButtonDatasetComponent} from 'pages/dataset/claim-button-dataset/claim-button-dataset.component';
-import {DisqusModule} from 'ng2-awesome-disqus';
+import {DisqusModule} from 'ngx-disqus';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {AltmetricImageDatasetComponent} from 'pages/dataset/altmetric-image-dataset/altmetric-image-dataset.component';
 import {TruncateDatasetPipe} from 'pages/dataset/pipe-dataset/truncate-dataset.pipe';
@@ -23,7 +23,7 @@ import {TooltipModule} from 'ng2-tooltip';
     imports: [
         CommonModule,
         DatasetRoutingModule,
-        DisqusModule,
+        DisqusModule.forRoot('omicsdi'),
         ClipboardModule,
         FormsModule,
         TooltipModule
