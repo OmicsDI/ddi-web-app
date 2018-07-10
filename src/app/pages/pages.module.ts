@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
 import {ControlsModule} from 'controls/controls.module';
 import {RouterModule} from '@angular/router';
 import {MatCheckboxModule} from '@angular/material';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {MatCheckboxModule} from '@angular/material';
         FormsModule,
         MatCheckboxModule,
         ControlsModule,
-        RouterModule
+        RouterModule,
+        UtilsModule
     ],
     declarations: [
         InviteComponent,

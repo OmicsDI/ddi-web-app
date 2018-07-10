@@ -1,9 +1,10 @@
 <span>
-    <div class="score score-views" [tooltip]="'Views'"><i class="fa fa-eye"
-                                                          aria-hidden="true"></i> <strong>{{views}}</strong></div>
-    <div class="score score-citations" [tooltip]="'Citations'"><i class="fa fa-quote-left"
-                                                                  aria-hidden="true"></i> <strong>{{citations}}</strong></div>
-    <div class="score score-reanalysis" [tooltip]="'Reanalisys'"><i class="fa fa-code-fork"
-                                                                    aria-hidden="true"></i> <strong>{{reanalysis}}</strong></div>
-    <div class="score score-connections" [tooltip]="'Connections'"><i class="fa fa-th" aria-hidden="true"></i> <strong>{{connections}}</strong></div>
+    <div class="score score-views" [appTooltip]="'Views'">
+        <i class="fa fa-eye" aria-hidden="true"></i> <strong>{{views}}</strong></div>
+    <div class="score score-citations" [appTooltip]="'Citations'">
+        <i class="fa fa-quote-left" aria-hidden="true"></i> <strong>{{citations}}</strong></div>
+    <div class="score score-reanalysis" [appTooltip]="'Reanalisys'">
+        <i class="fa fa-code-fork" aria-hidden="true"></i> <strong>{{reanalysis}}</strong></div>
+    <div class="score score-connections" [appTooltip]="'Connections'">
+        <i class="fa fa-th" aria-hidden="true"></i> <strong>{{connections}}</strong></div>
 </span>

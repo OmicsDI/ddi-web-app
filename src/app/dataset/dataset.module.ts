@@ -17,7 +17,7 @@ import {AltmetricImageDatasetComponent} from 'pages/dataset/altmetric-image-data
 import {TruncateDatasetPipe} from 'pages/dataset/pipe-dataset/truncate-dataset.pipe';
 import {ToDateStringDatasetPipe} from 'pages/dataset/pipe-dataset/toDateStringDataset.pipe';
 import {FormsModule} from '@angular/forms';
-import {TooltipModule} from 'ng2-tooltip';
+import {UtilsModule} from 'utils/utils.module';
 
 @NgModule({
     imports: [
@@ -26,7 +26,7 @@ import {TooltipModule} from 'ng2-tooltip';
         DisqusModule.forRoot('omicsdi'),
         ClipboardModule,
         FormsModule,
-        TooltipModule
+        UtilsModule
     ],
     declarations: [
         DatasetComponent,
