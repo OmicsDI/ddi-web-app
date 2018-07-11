@@ -59,7 +59,7 @@ import {LoginComponent} from 'controls/login/login.component';
 import {DialogServiceMerge} from './merge/dialog-merge.service';
 import {CitationDialogSearchComponent} from 'search/citation-dialog-search/citation-dialog-search.component';
 import {SearchBoxComponent} from 'controls/search-box/search-box.component';
-import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {CitationDialogDashboardprofileComponent} from 'profile-dashboard/citation-dialog-dashboardprofile.component';
 import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
 import {TermsComponent} from 'pages/terms/terms.component';
@@ -181,7 +181,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
             useFactory: authHttpServiceFactory,
             deps: [Http, RequestOptions]
         },
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        {provide: LocationStrategy, useClass: PathLocationStrategy}
         , AuthService
         , AuthGuardService
         , SearchService
