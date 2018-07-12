@@ -50,15 +50,7 @@ import {AnnualOmicstypeComponent} from 'app/pages/home/charts/annual-omicstype/a
 import {TweetsNewsComponent} from 'pages/home/charts/tweets-news/tweets-news.component';
 import {TissuesOrganismsComponent} from 'pages/home/charts/tissues-organisms/tissues-organisms.component';
 import {MegaNumberPipe} from './pipes/mega-number.pipe';
-import {DropDownComponent} from 'controls/drop-down/drop-down.component';
-import {LoginLauncherComponent} from 'controls/login-launcher/login-launcher.component';
-import {LoginComponent} from 'controls/login/login.component';
-import {DialogServiceMerge} from './merge/dialog-merge.service';
-import {CitationDialogSearchComponent} from 'search/citation-dialog-search/citation-dialog-search.component';
-import {SearchBoxComponent} from 'controls/search-box/search-box.component';
 import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {CitationDialogDashboardprofileComponent} from 'profile-dashboard/citation-dialog-dashboardprofile.component';
-import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
 import {SearchComponent} from 'pages/search/search.component';
