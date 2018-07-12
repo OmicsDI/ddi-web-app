@@ -1,5 +1,5 @@
 <div id="wrapper">
-    <app-nav-dashboard></app-nav-dashboard>
+    <app-nav></app-nav>
     <div id="page-wrapper">
         <div class="container-fluid3">
 
@@ -47,8 +47,8 @@
                         <tbody>
                         <tr *ngFor="let s of watchedDatasets">
                             <td>
-                                <app-datasetwidget-small-dashboard [id]="s.accession"
-                                                                   [source]="s.source"></app-datasetwidget-small-dashboard>
+                                <app-datasetwidget-small [id]="s.accession"
+                                                                   [source]="s.source"></app-datasetwidget-small>
                             </td>
                             <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.source}}</a></td>
                             <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.accession}}</a></td>

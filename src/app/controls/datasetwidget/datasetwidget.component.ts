@@ -10,7 +10,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from 'services/dataset.service';
-import {CitationDialogSearchComponent} from 'search/citation-dialog-search/citation-dialog-search.component';
+import {CitationDialogComponent} from "pages/dataset/citation-dialog/citation-dialog.component";
 
 @Component({
     selector: 'app-datasetwidget',
@@ -64,11 +64,11 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     citation(source, id) {
-        let dialogRef: MatDialogRef<CitationDialogSearchComponent>;
+        let dialogRef: MatDialogRef<CitationDialogComponent>;
 
         this.dataSetService.getDataSetDetail_private(id, source).subscribe(
             x => {
-                dialogRef = this.dialog.open(CitationDialogSearchComponent);
+                dialogRef = this.dialog.open(CitationDialogComponent);
                 dialogRef.componentInstance.title = 'Dataset citation';
                 dialogRef.componentInstance.datasetDetail = x;
                 return dialogRef.afterClosed();

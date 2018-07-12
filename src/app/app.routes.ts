@@ -24,6 +24,7 @@ import {NotfoundComponent} from 'pages/notfound/notfound.component';
 // import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
+import {AuthGuardService} from "services/auth-guard.service";
 
 // Route Configuration
 export const routes: Routes = [
@@ -47,16 +48,16 @@ export const routes: Routes = [
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
-    {path: 'merge', loadChildren: './merge/merge.module#MergeModule'},
-    {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule'},
-    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule'},
-    {path: 'dashboard/selected', loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule'},
-    {path: 'dashboard/feedback', loadChildren: './dashboardfeedback/dashboardfeedback.module#DashboardfeedbackModule'},
-    {path: 'dashboard/profile', loadChildren: './dashboardprofile/dashboardprofile.module#DashboardprofileModule'},
-    {path: 'dashboard/update', loadChildren: './dashboardupdate/dashboardupdate.module#DashboardupdateModule'},
-    {path: 'dashboard/claimed', loadChildren: './dashboardclaimed/dashboardclaimed.module#DashboardclaimedModule'},
-    {path: 'dashboard/picture', loadChildren: './dashboardpicture/dashboardpicture.module#DashboardpictureModule'},
-    {path: 'dashboard/settings', loadChildren: './dashboardsettings/dashboardsettings.module#DashboardsettingsModule'}
+    {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
+    {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/selected', loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/feedback', loadChildren: './dashboardfeedback/dashboardfeedback.module#DashboardfeedbackModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/profile', loadChildren: './dashboardprofile/dashboardprofile.module#DashboardprofileModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/update', loadChildren: './dashboardupdate/dashboardupdate.module#DashboardupdateModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/claimed', loadChildren: './dashboardclaimed/dashboardclaimed.module#DashboardclaimedModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/picture', loadChildren: './dashboardpicture/dashboardpicture.module#DashboardpictureModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard/settings', loadChildren: './dashboardsettings/dashboardsettings.module#DashboardsettingsModule', canActivate: [AuthGuardService]}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];
@@ -65,5 +66,5 @@ export const routes: Routes = [
 // export const APP_ROUTER_PROVIDERS = [
 //   provideRouter(routes)
 // ];
-
+const AUTH_PROVIDERS = [AuthGuardService];
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {useHash: false});

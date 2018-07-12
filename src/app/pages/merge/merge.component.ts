@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {DataSetService} from 'services/dataset.service';
 import {MergeCandidate} from 'model/MergeCandidate';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {DialogServiceMerge} from 'app/merge/dialog-merge.service';
-import {Profile} from "model/Profile";
-import {ProfileService} from "services/profile.service";
-import {Router} from "@angular/router";
+import {Profile} from 'model/Profile';
+import {ProfileService} from 'services/profile.service';
+import {Router} from '@angular/router';
+import {DialogService} from 'services/dialog.service';
 
 @Component({
     selector: 'app-merge',
@@ -16,7 +16,7 @@ export class MergeComponent implements OnInit {
 
     public profile: Profile;
     public mergeControl: boolean;
-    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS'];
+    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS' , 'qKHFQW5a'];
 
     test: boolean;
     mergeCandidates: MergeCandidate[];
@@ -30,7 +30,7 @@ export class MergeComponent implements OnInit {
         public profileService: ProfileService,
         private datasetService: DataSetService,
         private notificationService: NotificationsService,
-        private dialogService: DialogServiceMerge,
+        private dialogService: DialogService,
         private router: Router
     ) {
     }

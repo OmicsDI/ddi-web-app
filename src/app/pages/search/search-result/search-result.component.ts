@@ -13,7 +13,7 @@ import {DataSetService} from 'services/dataset.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DatabaseListService} from 'services/database-list.service';
-import {CitationDialogSearchComponent} from 'search/citation-dialog-search/citation-dialog-search.component';
+import {CitationDialogComponent} from "pages/dataset/citation-dialog/citation-dialog.component";
 
 @Component({
     selector: 'app-search-result',
@@ -103,11 +103,11 @@ export class SearchResultComponent implements OnInit, OnDestroy, AfterViewChecke
     }
 
     citation(source, id) {
-        let dialogRef: MatDialogRef<CitationDialogSearchComponent>;
+        let dialogRef: MatDialogRef<CitationDialogComponent>;
 
         this.dataSetService.getDataSetDetail_private(id, source).subscribe(
             x => {
-                dialogRef = this.dialog.open(CitationDialogSearchComponent);
+                dialogRef = this.dialog.open(CitationDialogComponent);
                 dialogRef.componentInstance.title = 'Dataset citation';
                 dialogRef.componentInstance.datasetDetail = x;
                 return dialogRef.afterClosed();

@@ -8,7 +8,7 @@
     <div class="row" style="">
         <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
       <span class="visible-lg">
-        <app-socialnetworks-dataset></app-socialnetworks-dataset>
+        <app-socialnetworks></app-socialnetworks>
       </span>
         </div>
         <!-- col-md-1-->
@@ -21,7 +21,7 @@
             <div class="panel panel-default" id="dataset_upper">
                 <div class="panel-footer">
                     <div style="float: right; width: 400px; text-align: right; position: relative; top:0px;">
-                        <app-score-dataset [dataset]="d"></app-score-dataset>
+                        <app-score [dataset]="d"></app-score>
                     </div>
 
                     <h3>Dataset Information</h3>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-                    <app-omics-image-dataset [omics]="d?.omics_type" [size]="'large'"></app-omics-image-dataset>
+                    <app-omics-image [omics]="d?.omics_type" [size]="'large'"></app-omics-image>
                     <br>
                     <br>
                     <br>
@@ -38,8 +38,8 @@
                 <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
                     <div>
                         <h4>
-                            <app-annotated-text-dataset [text]="d.name"
-                                                        [sections]="title_sections"></app-annotated-text-dataset>
+                            <app-annotated-text [text]="d.name"
+                                                        [sections]="title_sections"></app-annotated-text>
                         </h4>
                         <p id="ontology_highlight_box" (click)="enrich_click()" class="hotword" style="">
                             <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
@@ -49,8 +49,8 @@
                     <div>
                         <div>
                             <p class="align-justify"><b>ABSTRACT</b>:
-                                <app-annotated-text-dataset [text]="d.description"
-                                                            [sections]="abstract_sections"></app-annotated-text-dataset>
+                                <app-annotated-text [text]="d.description"
+                                                            [sections]="abstract_sections"></app-annotated-text>
                             </p>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
               <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
 
-          <claim-button-dataset [dataSet]="d"></claim-button-dataset>
+          <app-claim-button [dataSet]="d"></app-claim-button>
 
           <a class="dot-button" style="background-color: #94D67A; color:black;"
              href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank"
