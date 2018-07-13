@@ -21,6 +21,7 @@ export class MergeComponent implements OnInit {
     test: boolean;
     mergeCandidates: MergeCandidate[];
     count: number;
+
     checkedDatasets: { basedatabase: string, baseaccession: string, database: string, accession: string }[] = [];
     currentPage = 1;
 
@@ -195,7 +196,6 @@ export class MergeComponent implements OnInit {
         }
     }
 
-
     skipMerge(basedatabase: string, baseaccession: string, database: string, accession: string) {
         const result = new MergeCandidate();
         result.database = database;
@@ -363,5 +363,4 @@ export class MergeComponent implements OnInit {
         this.currentPage = page;
         this.load();
     }
-
 }
