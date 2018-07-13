@@ -8,13 +8,11 @@ import {ControlsModule} from 'controls/controls.module';
 import {RouterModule} from '@angular/router';
 import {MatCheckboxModule} from '@angular/material';
 import {UtilsModule} from 'utils/utils.module';
-import {ProfileControlsModule} from 'pages/dashboard/controls/profile-controls.module';
 import {SimilarMoleculeComponent} from 'pages/dataset/similar-molecule/similar-molecule.component';
 import {SimilarComponent} from 'pages/dataset/similar/similar.component';
 import {PublicationComponent} from 'pages/dataset/publication/publication.component';
 import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
 import {PipesModule} from '../pipes/pipes.module';
-import {NavComponent} from 'pages/dashboard/nav/nav.component';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 
 @NgModule({
@@ -35,8 +33,7 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
         SimilarMoleculeComponent,
         SimilarComponent,
         PublicationComponent,
-        CitationDialogComponent,
-        NavComponent
+        CitationDialogComponent
     ],
     exports: [
         CheckComponent,
@@ -45,8 +42,7 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
         SimilarMoleculeComponent,
         SimilarComponent,
         PublicationComponent,
-        CitationDialogComponent,
-        NavComponent
+        CitationDialogComponent
     ],
     entryComponents: [
         // ConfirmDialogComponent

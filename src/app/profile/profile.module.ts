@@ -8,7 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {UtilsModule} from 'utils/utils.module';
 import {ProfileChartsModule} from '../profile-charts/profile-charts.module';
-import {ProfileControlsModule} from 'pages/dashboard/controls/profile-controls.module';
+import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from '../pipes/pipes.module';
 

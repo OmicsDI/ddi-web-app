@@ -24,7 +24,8 @@ export const routes: Routes = [
     {path: 'selected', component: SelectedComponent},
     {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
     {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
-    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
+    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]},
+    {path: 'dataset/:domain/:acc', loadChildren: 'app/dataset/dataset.module#DatasetModule'}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];

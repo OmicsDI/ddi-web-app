@@ -8,9 +8,9 @@ import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
-import {InviteComponent} from '../controls/invite/invite.component';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
+import {InviteComponent} from '@modules/profile-controls/invite/invite.component';
 
 @Component({
     selector: 'app-profile',

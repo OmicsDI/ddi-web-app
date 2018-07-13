@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {SearchService} from 'services/search.service';
-import {InviteComponent} from 'pages/dashboard/controls/invite/invite.component';
 
 @Component({
     selector: 'app-home',
@@ -47,17 +46,4 @@ export class HomeComponent implements OnInit {
     submitTestQuery() {
         alert('submitted');
     }
-
-    private showWelcomeDialog() {
-        let dialogRef: MatDialogRef<InviteComponent>;
-
-        dialogRef = this.dialog.open(InviteComponent, {
-            data: {
-                inviteId: '000deace5d6a'
-                , userName: 'Hello World'
-                , email: 'hello@world.com'
-            }
-        });
-    }
-
 }
