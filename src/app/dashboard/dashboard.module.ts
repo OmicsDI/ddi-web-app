@@ -3,20 +3,18 @@ import {CommonModule} from '@angular/common';
 
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {DashboardComponent} from 'pages/dashboard/dashboard.component';
-import {NavDashboardComponent} from './nav-dashboard/nav-dashboard.component';
-import {DatasetwidgetSmallDashboardComponent} from './datasetwidget-small-dashboard/datasetwidget-small-dashboard.component';
-import {OmicsImageDashboardComponent} from './datasetwidget-small-dashboard/omics-image-dashboard/omics-image-dashboard.component';
+import {ControlsModule} from 'controls/controls.module';
+import {PagesModule} from 'pages/pages.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        ControlsModule,
+        PagesModule
     ],
     declarations: [
-        DashboardComponent,
-        NavDashboardComponent,
-        DatasetwidgetSmallDashboardComponent,
-        OmicsImageDashboardComponent
+        DashboardComponent
     ]
 })
 export class DashboardModule {

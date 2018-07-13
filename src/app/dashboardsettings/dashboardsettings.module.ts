@@ -3,16 +3,18 @@ import {CommonModule} from '@angular/common';
 
 import {DashboardsettingsRoutingModule} from './dashboardsettings-routing.module';
 import {SettingsComponent} from 'pages/dashboard/settings/settings.component';
-import {NavDashboardsettingsComponent} from './nav-dashboardsettings/nav-dashboardsettings.component';
+import {ControlsModule} from 'controls/controls.module';
+import {PagesModule} from 'pages/pages.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        DashboardsettingsRoutingModule
+        DashboardsettingsRoutingModule,
+        ControlsModule,
+        PagesModule
     ],
     declarations: [
-        SettingsComponent,
-        NavDashboardsettingsComponent
+        SettingsComponent
     ]
 })
 export class DashboardsettingsModule {

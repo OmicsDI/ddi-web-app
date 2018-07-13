@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {SearchService} from 'services/search.service';
-import {InviteComponent} from 'search/invite/invite.component';
+import {InviteComponent} from 'pages/dashboard/controls/invite/invite.component';
 
 @Component({
     selector: 'app-home',

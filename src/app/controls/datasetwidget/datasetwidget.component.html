@@ -8,7 +8,7 @@
     </div>
 
     <div class="project-widget-accession">
-        <app-omics-image-search [omics]="d.omicsType"></app-omics-image-search>
+        <app-omics-image [omics]="d.omicsType"></app-omics-image>
 
         <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title}}</span></a>
 

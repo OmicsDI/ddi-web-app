@@ -3,20 +3,22 @@ import {CommonModule} from '@angular/common';
 
 import {DashboardpictureRoutingModule} from './dashboardpicture-routing.module';
 import {DashboardPictureComponent} from 'pages/dashboard/picture/picture.component';
-import {NavDashboardpictureComponent} from './nav-dashboardpicture/nav-dashboardpicture.component';
 import {FormsModule} from '@angular/forms';
 import {FileUploadModule} from 'ng2-file-upload';
+import {ControlsModule} from 'controls/controls.module';
+import {PagesModule} from 'pages/pages.module';
 
 @NgModule({
     imports: [
         CommonModule,
         DashboardpictureRoutingModule,
         FormsModule,
-        FileUploadModule
+        FileUploadModule,
+        ControlsModule,
+        PagesModule
     ],
     declarations: [
-        DashboardPictureComponent,
-        NavDashboardpictureComponent
+        DashboardPictureComponent
     ]
 })
 export class DashboardpictureModule {

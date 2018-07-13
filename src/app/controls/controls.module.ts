@@ -11,18 +11,36 @@ import {DatasetwidgetSmallComponent} from 'controls/datasetwidget-small/datasetw
 import {SocialnetworksComponent} from 'controls/socialnetworks/socialnetworks.component';
 import {CommonModule} from '@angular/common';
 import {ScoreComponent} from 'controls/score/score.component';
-import {OmicsImageSearchComponent} from 'search/datasetwidget-search/omics-image/omics-image-search.component';
 import {RouterModule} from '@angular/router';
 import {PipesModule} from '../pipes/pipes.module';
 import {OmicsImageComponent} from 'controls/omics-image/omics-image.component';
 import {UtilsModule} from 'utils/utils.module';
+import {FeedbackComponent} from 'controls/feedback/feedback.component';
+import {ClipboardModule} from 'ngx-clipboard/dist';
+import {FormsModule} from '@angular/forms';
+import {DropDownComponent} from 'controls/drop-down/drop-down.component';
+import {FacetComponent} from 'controls/facet/facet.component';
+import {FacetOmicsComponent} from 'controls/facet-omics/facet-omics.component';
+import {LoginComponent} from 'controls/login/login.component';
+import {LoginLauncherComponent} from 'controls/login-launcher/login-launcher.component';
+import {QueryBuilderComponent} from 'controls/query-builder/query-builder.component';
+import {SearchBoxComponent} from 'controls/search-box/search-box.component';
+import {SearchBoxLargeComponent} from 'controls/search-box-large/search-box-large.component';
+import {AutocompleteNComponent} from 'controls/autocomplete-n/autocomplete-n.component';
+import {MatMenuModule} from '@angular/material';
+import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         UtilsModule,
-        PipesModule
+        PipesModule,
+        ClipboardModule,
+        FormsModule,
+        MatMenuModule,
+        NguiAutoCompleteModule
+
     ],
     declarations: [
         ConfirmDialogComponent,
@@ -34,17 +52,47 @@ import {UtilsModule} from 'utils/utils.module';
         DatasetwidgetSmallComponent,
         DeleteAllButtonComponent,
         DeleteButtonComponent,
-        SocialnetworksComponent,
-        SocialnetworksComponent,
+        DropDownComponent,
+        FacetComponent,
+        FacetOmicsComponent,
+        FeedbackComponent,
+        LoginComponent,
+        LoginLauncherComponent,
+        OmicsImageComponent,
+        QueryBuilderComponent,
         ScoreComponent,
-        OmicsImageSearchComponent,
-        OmicsImageComponent
+        SearchBoxComponent,
+        SearchBoxLargeComponent,
+        SocialnetworksComponent,
+        AutocompleteNComponent
     ],
     exports: [
         ScoreComponent,
-        OmicsImageSearchComponent,
-        OmicsImageComponent
-    ]
+        AltmetricImageComponent,
+        AnnotatedTextComponent,
+        ClaimAllButtonComponent,
+        ClaimButtonComponent,
+        DatasetWidgetComponent,
+        DatasetwidgetSmallComponent,
+        DeleteAllButtonComponent,
+        DeleteButtonComponent,
+        DropDownComponent,
+        FacetComponent,
+        FacetOmicsComponent,
+        FeedbackComponent,
+        LoginComponent,
+        LoginLauncherComponent,
+        OmicsImageComponent,
+        QueryBuilderComponent,
+        ScoreComponent,
+        SearchBoxComponent,
+        SearchBoxLargeComponent,
+        SocialnetworksComponent,
+        AutocompleteNComponent
+    ],
+    entryComponents: [
+        ConfirmDialogComponent
+    ],
 })
 export class ControlsModule {
 }
