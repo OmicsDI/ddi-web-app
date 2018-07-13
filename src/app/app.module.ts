@@ -50,7 +50,7 @@ import {AnnualOmicstypeComponent} from 'app/pages/home/charts/annual-omicstype/a
 import {TweetsNewsComponent} from 'pages/home/charts/tweets-news/tweets-news.component';
 import {TissuesOrganismsComponent} from 'pages/home/charts/tissues-organisms/tissues-organisms.component';
 import {MegaNumberPipe} from './pipes/mega-number.pipe';
-import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
 import {SearchComponent} from 'pages/search/search.component';
@@ -147,7 +147,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
             useFactory: authHttpServiceFactory,
             deps: [Http, RequestOptions]
         },
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        {provide: LocationStrategy, useClass: PathLocationStrategy}
         , AuthService
         , AuthGuardService
         , SearchService
