@@ -20,7 +20,7 @@ export const routes: Routes = [
     {path: 'dataset/:domain/:acc', loadChildren: './dataset/dataset.module#DatasetModule'},
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
-    {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
+    {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
     {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
     {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
