@@ -6,5 +6,12 @@
     padding-top: 100px;
 }
 
+.error-small {
+    width: 100%;
+    font-size: 20px;
+    color: #999999;
+    text-align: center;
+}
+
 
 

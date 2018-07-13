@@ -2,7 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {DataSetService} from 'services/dataset.service';
 import {MergeCandidate} from 'model/MergeCandidate';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {DialogServiceMerge} from 'app/merge/dialog-merge.service';
+import {Profile} from 'model/Profile';
+import {ProfileService} from 'services/profile.service';
+import {Router} from '@angular/router';
+import {DialogService} from 'services/dialog.service';
 
 @Component({
     selector: 'app-merge',
@@ -11,22 +14,55 @@ import {DialogServiceMerge} from 'app/merge/dialog-merge.service';
 })
 export class MergeComponent implements OnInit {
 
+    public profile: Profile;
+    public mergeControl: boolean;
+    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS' , 'qKHFQW5a'];
+
     test: boolean;
     mergeCandidates: MergeCandidate[];
     count: number;
+
     checkedDatasets: { basedatabase: string, baseaccession: string, database: string, accession: string }[] = [];
     currentPage = 1;
 
+
+
     constructor(
+        public profileService: ProfileService,
         private datasetService: DataSetService,
         private notificationService: NotificationsService,
-        private dialogService: DialogServiceMerge
+        private dialogService: DialogService,
+        private router: Router
     ) {
     }
 
     ngOnInit() {
+        this.authControl();
         this.test = false;
         this.load();
+    }
+
+    authControl() {
+        this.profileService.getProfile()
+            .subscribe(
+                profile => {
+                    this.profile = profile;
+                    console.log(profile);
+                    if (this.profile.userId !== null) {
+                        for ( const user of this.adminUser){
+                            if (user === this.profile.userId) {
+                                return true;
+                            } else {
+                                console.log('unauthorized');
+                                this.router.navigate(['unauthorized']);
+                                return false;
+                            }
+                        }
+                    } else {
+                        this.router.navigate(['unauthorized']);
+                    }
+                }
+            );
     }
 
     load() {
@@ -159,7 +195,6 @@ export class MergeComponent implements OnInit {
             // }
         }
     }
-
 
     skipMerge(basedatabase: string, baseaccession: string, database: string, accession: string) {
         const result = new MergeCandidate();
@@ -328,5 +363,4 @@ export class MergeComponent implements OnInit {
         this.currentPage = page;
         this.load();
     }
-
 }
