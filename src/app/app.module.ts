@@ -53,11 +53,6 @@ import {MegaNumberPipe} from './pipes/mega-number.pipe';
 import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
-import {SearchComponent} from 'pages/search/search.component';
-import {SearchTotalComponent} from 'pages/search/search-total/search-total.component';
-import {SearchFacetComponent} from 'pages/search/search-facet/search-facet.component';
-import {SearchPagerComponent} from 'pages/search/search-pager/search-pager.component';
-import {SearchResultComponent} from 'pages/search/search-result/search-result.component';
 import {ThorService} from 'services/thor.service';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from './pipes/pipes.module';
@@ -100,12 +95,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         MegaNumberPipe,
         TermsComponent,
         NotfoundComponent,
-        SelectedComponent,
-        SearchComponent,
-        SearchTotalComponent,
-        SearchFacetComponent,
-        SearchPagerComponent,
-        SearchResultComponent
+        SelectedComponent
     ],
     imports: [
         CommonModule,
@@ -134,12 +124,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         PagesModule
     ],
     exports: [
-        RouterModule,
-        SearchComponent,
-        SearchTotalComponent,
-        SearchFacetComponent,
-        SearchPagerComponent,
-        SearchResultComponent
+        RouterModule
     ],
     providers: [ProfileService
         , {

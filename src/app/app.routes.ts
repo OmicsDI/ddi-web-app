@@ -39,51 +39,18 @@ export const routes: Routes = [
     {path: 'database', loadChildren: './database/database.module#DatabaseModule'},
     {path: 'about', loadChildren: './about/about.module#AboutModule'},
     {path: 'api', loadChildren: './api/api.module#ApiModule'},
-    // { path: 'search', loadChildren: './search/search.module#SearchModule' },
+    { path: 'search', loadChildren: './search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'dataset/:domain/:acc', loadChildren: './dataset/dataset.module#DatasetModule'},
     // { path: 'search', loadChildren: () => SearchModule },
-    {path: 'search', component: SearchComponent},
+    // {path: 'search', component: SearchComponent},
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
     {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
     {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
-    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]},
-    {
-        path: 'dashboard/selected',
-        loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule',
-        canActivate: [AuthGuardService]
-    },
-    {
-        path: 'dashboard/feedback',
-        loadChildren: './dashboardfeedback/dashboardfeedback.module#DashboardfeedbackModule',
-        canActivate: [AuthGuardService]},
-    {
-        path: 'dashboard/profile',
-        loadChildren: './dashboardprofile/dashboardprofile.module#DashboardprofileModule',
-        canActivate: [AuthGuardService]
-    },
-    {
-        path: 'dashboard/update',
-        loadChildren: './dashboardupdate/dashboardupdate.module#DashboardupdateModule',
-        canActivate: [AuthGuardService]
-    },
-    {
-        path: 'dashboard/claimed',
-        loadChildren: './dashboardclaimed/dashboardclaimed.module#DashboardclaimedModule',
-        canActivate: [AuthGuardService]},
-    {
-        path: 'dashboard/picture',
-        loadChildren: './dashboardpicture/dashboardpicture.module#DashboardpictureModule',
-        canActivate: [AuthGuardService]
-    },
-    {
-        path: 'dashboard/settings',
-        loadChildren: './dashboardsettings/dashboardsettings.module#DashboardsettingsModule',
-        canActivate: [AuthGuardService]
-    }
+    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];
