@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {HelpRoutingModule} from './help-routing.module';
 import {AboutComponent} from '@modules/help/components/about/about.component';
+import {ApiComponent} from '@modules/help/components/api/api.component';
 
 @NgModule({
     imports: [
@@ -10,9 +11,9 @@ import {AboutComponent} from '@modules/help/components/about/about.component';
         HelpRoutingModule
     ],
     declarations: [
-        AboutComponent
-    ],
-    bootstrap: [AboutComponent]
+        AboutComponent,
+        ApiComponent
+    ]
 })
 export class HelpModule {
 }
