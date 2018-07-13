@@ -3,8 +3,8 @@
  */
 
 export class StatisticsDomainsDetail {
-  label: string;
-  id: any;
-  value: string;
-  name: string;
+    label: string;
+    id: any;
+    value: string;
+    name: string;
 }

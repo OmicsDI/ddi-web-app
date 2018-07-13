@@ -1,30 +1,39 @@
-<a id="navbardrop" data-toggle="dropdown" *ngIf="!auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle" data-icon="M" alt="Open Login Menu" style="color:white !important;"><span class="glyphicon glyphicon-user"></span> Login</a>
+<a id="navbardrop" data-toggle="dropdown" *ngIf="!auth.loggedIn()" data-icon="\"
+   class="nav-link text-center dropdown-toggle" data-icon="M" alt="Open Login Menu"
+   style="color:white !important;"><span class="glyphicon glyphicon-user"></span> Login</a>
 
 <div *ngIf="!auth.loggedIn()" class="dropdown-menu" style="background-color: #ffffff">
     <app-login-dialog></app-login-dialog>
 </div>
 
-<a data-toggle="dropdown" *ngIf="auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle" data-icon="M" alt="Open Login Dialog" style="color:white !important;"><span class="glyphicon glyphicon-user"></span> {{name}} <b class="caret"></b></a>
+<a data-toggle="dropdown" *ngIf="auth.loggedIn()" data-icon="\" class="nav-link text-center dropdown-toggle"
+   data-icon="M" alt="Open Login Dialog" style="color:white !important;"><span class="glyphicon glyphicon-user"></span>
+    {{name}} <b class="caret"></b></a>
 
-  <div *ngIf="auth.loggedIn()" class="dropdown-menu" style="background-color: #ffffff">
+<div *ngIf="auth.loggedIn()" class="dropdown-menu" style="background-color: #ffffff">
     <ul nav navbar-nav>
-      <li class="nav-item" >
-    <button *ngIf="this.isPublic" [routerLink]="['/profile',this.userId]" mat-menu-item>
-      Public profile
-    </button>
-      </li>
-      <li class="nav-item" >
-    <button mat-menu-item [routerLink]="['/dashboard']">
-      Dashboard
-    </button>
-      </li>
-      <li class="nav-item" >
-    <button mat-menu-item (click)="LogOut()">
-      Log Out
-    </button>
-      </li>
+        <li class="nav-item">
+            <button *ngIf="this.isPublic" [routerLink]="['/profile',this.userId]" mat-menu-item>
+                Public profile
+            </button>
+        </li>
+        <li class="nav-item">
+            <button mat-menu-item [routerLink]="['/dashboard']">
+                Dashboard
+            </button>
+        </li>
+        <li class="nav-item" *ngIf="this.mergeControl">
+            <button mat-menu-item [routerLink]="['/merge']">
+                Merge
+            </button>
+        </li>
+        <li class="nav-item">
+            <button mat-menu-item (click)="LogOut()">
+                Log Out
+            </button>
+        </li>
     </ul>
-  </div>
+</div>
 
 
 

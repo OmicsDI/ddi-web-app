@@ -3,7 +3,7 @@
  */
 
 export class Score {
-  key1: string;
-  key2: string;
-  value: number;
+    key1: string;
+    key2: string;
+    value: number;
 }

@@ -1,5 +1,4 @@
 export class UserShort {
-  userId: string;
-  userName: string;
+    userId: string;
+    userName: string;
 }
-

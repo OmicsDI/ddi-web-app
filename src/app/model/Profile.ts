@@ -1,7 +1,7 @@
-import {DataSetShort} from "./DataSetShort";
-import {UserShort} from "./UserShort";
+import {DataSetShort} from './DataSetShort';
+import {UserShort} from './UserShort';
 
-export class Profile{
+export class Profile {
     public userId: string;
     public userName: string;
     public accessToken: string;
@@ -17,7 +17,7 @@ export class Profile{
     public dataSets: DataSetShort[];
     public coauthors: UserShort[];
 
-    constructor(){
+    constructor() {
     }
 }
 

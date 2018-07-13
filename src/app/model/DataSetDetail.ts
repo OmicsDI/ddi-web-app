@@ -1,11 +1,12 @@
-import {Protocol} from "./Protocol";
-import {Organism} from "./Organism";
-import {Dates} from "./Dates";
-import {SimilarDataset} from "./SimilarDataset";
+import {Protocol} from './Protocol';
+import {Organism} from './Organism';
+import {Dates} from './Dates';
+import {SimilarDataset} from './SimilarDataset';
+
 /**
  * Created by user on 3/25/2017.
  */
-  export class DataSetDetail {
+export class DataSetDetail {
     id: string;
     source: string;
     name: string;
@@ -29,22 +30,22 @@ import {SimilarDataset} from "./SimilarDataset";
     submitterMail: string[];
     labHead?: any;
     labHeadMail?: any;
-    reanalysis_of: string = "reanalysis_of";
-    reanalised_by: string = "reanalised_by";
-    related_omics: string = "related_omics";
+    reanalysis_of = 'reanalysis_of';
+    reanalised_by = 'reanalised_by';
+    related_omics = 'related_omics';
     secondary_accession: string[];
     repositories: string[];
 
-    constructor(){
-      this.omics_type = [];
+    constructor() {
+        this.omics_type = [];
     }
-  omicsTest(omics: string ): boolean
-  {
-    if(this.omics_type == null)
-      return false;
-    return (this.omics_type.indexOf(omics) != -1);
-  }
 
+    omicsTest(omics: string): boolean {
+        if (this.omics_type == null) {
+            return false;
+        }
+        return (this.omics_type.indexOf(omics) !== -1);
+    }
 
 
 }

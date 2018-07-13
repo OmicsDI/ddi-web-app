@@ -1,212 +1,220 @@
-import { Injectable } from '@angular/core';
-import {Subject, Observable} from "rxjs";
-import {Http, Response} from "@angular/http";
-import {SearchResult} from "../model/SearchResult";
-import {AppConfig} from "../app.config";
-import {BaseService} from "./base.service";
-import {SearchQuery, Rule} from "../model/SearchQuery";
-import {Facet} from "../model/Facet";
-import {FacetValue} from "../model/FacetValue";
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs/Rx';
+import {Http} from '@angular/http';
+import {SearchResult} from 'model/SearchResult';
+import {AppConfig} from 'app/app.config';
+import {BaseService} from './base.service';
+import {Rule, SearchQuery} from 'model/SearchQuery';
+import {Facet} from 'model/Facet';
+import {FacetValue} from 'model/FacetValue';
 
 @Injectable()
-export class SearchService extends BaseService{
+export class SearchService extends BaseService {
 
-  private searchResultSource = new Subject<SearchResult>();
+    private searchResultSource = new Subject<SearchResult>();
 
-  searchResult$ = this.searchResultSource.asObservable();
+    searchResult$ = this.searchResultSource.asObservable();
 
-  private _textQuery: string;
+    private _textQuery: string;
 
-  public get textQuery() : string {
-    return this._textQuery;
-  }
-  public set textQuery(value){
-      this._textQuery = value;
-      this._fullQuery = this.getFullQuery();
-  }
+    selectedFacets: Object = {}; // string=>string[]
 
-  public _paramQuery: SearchQuery = new SearchQuery();
-  public get paramQuery() : SearchQuery {
-    return this._paramQuery;
-  }
-  public set paramQuery(value){
-    this._paramQuery = value;
-    this._fullQuery = this.getFullQuery();
-  }
-
-  private _fullQuery: string;
-
-
-  /*** fullQuery can be set explicitely, textQuery,paramQuery not updated ***/
-  public get fullQuery(): string{
-    return this._fullQuery;
-  }
-  public set fullQuery(value){
-    this._textQuery = value;
-    this._paramQuery = new SearchQuery();
-    this.selectedFacets = new Object();
-    this._fullQuery = this.getFullQuery();
-  }
-
-  public currentQuery: string; //fullQuery after you press search;
-
-
-  currentPage: number = 1;
-
-  sortOrder: string = "ascending";
-  sortBy: string = "";
-
-  selectedPageSize = 10;
-  pageSizes = ["10","20","30","50","100" ];
-
-  public facets: Facet[];
-  public allFacets: Facet[] = [];
-  public total: number;
-
-  constructor(private http: Http, private appConfig: AppConfig) {
-    super()
-  }
-
-  private getFullQuery(): string{
-    let result: string = "";
-    if(this.textQuery){
-      result += this.textQuery;
+    public get textQuery(): string {
+        return this._textQuery;
     }
-    let s = this.paramQuery.toQueryString();
-    //// query string built by legacy algorithm
-    if (s == '((""))')
-      s = "";
-    if (s == '(())')
-      s = "";
-    if(s=='()')
-      s = "";
-    if( s != "")
-    {
-      if(result)
-        result = "(" + result + " AND " +  this.paramQuery.toQueryString() + ")";
-      else
-        result = this.paramQuery.toQueryString();
+
+    public set textQuery(value) {
+        this._textQuery = value;
+        this._fullQuery = this.getFullQuery();
     }
-    return result;
-  }
 
-  public callSearch(page: number = 1 ){
-    this.currentQuery = this.fullQuery;
-    this.currentPage = page;
-    this.total = 0;
-    this.search(this.fullQuery, page).subscribe(searchResult => {
-      this.searchResultSource.next(searchResult);
-      this.total = searchResult.count;
-      this.facets = (JSON.parse(JSON.stringify(searchResult.facets)));
-      if(this.allFacets.length==0){
-        this.allFacets=this.facets;
-      }
-    });
-    /** TODO: handle error **/
-  }
+    public _paramQuery: SearchQuery = new SearchQuery();
+    public get paramQuery(): SearchQuery {
+        return this._paramQuery;
+    }
 
-  private search(searchQuery: string, page: number): Observable<SearchResult> {
-    return this.http.get(this.appConfig.getSearchUrl(searchQuery,100,this.selectedPageSize,this.sortBy,this.sortOrder,(page-1)*this.selectedPageSize))
-      .map(x => this.extractData<SearchResult>(x));
-  }
+    public set paramQuery(value) {
+        this._paramQuery = value;
+        this._fullQuery = this.getFullQuery();
+    }
 
-  page(page: number){
-    this.callSearch(page); //page
-  }
+    private _fullQuery: string;
 
-  sort(){
-    this.currentPage = 1;
-    this.callSearch(); //page
-  }
 
-  changePageSize(){
-    this.callSearch(1);
-  }
+    /*** fullQuery can be set explicitely, textQuery,paramQuery not updated ***/
+    public get fullQuery(): string {
+        return this._fullQuery;
+    }
 
-  selectedFacets: Object = new Object; //string=>string[]
+    public set fullQuery(value) {
+        this._textQuery = value;
+        this._paramQuery = new SearchQuery();
+        this.selectedFacets = {};
+        this._fullQuery = this.getFullQuery();
+    }
 
-  selectFacet(id:string, value:string){
-    if(null==this.selectedFacets[id])
-      this.selectedFacets[id] = new Array<string>();
+    public currentQuery: string; // fullQuery after you press search;
 
-    this.selectedFacets[id].push(value);
-  }
 
-  unselectFacet(id:string, value:string){
-    this.selectedFacets[id].splice(this.selectedFacets[id].indexOf(value),1);
-  }
+    currentPage = 1;
 
-  unselectFacets(){
-    this.selectedFacets = new Object();
-  }
+    sortOrder = 'ascending';
+    sortBy = '';
 
-  isFacetSelected(id:string, value:string):boolean{
-    if(null == this.selectedFacets[id])
-      return false;
+    selectedPageSize = 10;
+    pageSizes = ['10', '20', '30', '50', '100'];
 
-    let result:boolean = (this.selectedFacets[id].indexOf(value) != -1);
+    public facets: Facet[];
+    public allFacets: Facet[] = [];
+    public total: number;
 
-    return result;
-  }
+    constructor(private http: Http, public appConfig: AppConfig) {
+        super();
+    }
 
-  callSearchByFacets(){
-    this.paramQuery = new SearchQuery();
-
-    this.paramQuery.operator = "AND";
-    this.paramQuery.rules = new Array<Rule>();
-    for (var id in this.selectedFacets) {
-      if(this.selectedFacets[id].length == 0)
-        continue;
-
-      let rule: Rule = new Rule();
-      if(this.selectedFacets[id].length > 1){
-        let q: SearchQuery = new SearchQuery();
-        q.operator = (id=="omics_type"?"AND":"OR");
-        q.rules = new Array<Rule>();
-        for(let i of this.selectedFacets[id]){
-          let r:Rule = new Rule();
-          r.field = id;
-          r.data = i;
-          r.condition = "equal";
-          q.rules.push(r);
+    private getFullQuery(): string {
+        let result = '';
+        if (this.textQuery) {
+            result += this.textQuery;
         }
-        rule.query = q;
-      }
-      else{
-        rule.field = id;
-        rule.data = this.selectedFacets[id][0];
-        rule.condition = 'equal';
-      }
-      this.paramQuery.rules.push(rule);
+        let s = this.paramQuery.toQueryString();
+        // // query string built by legacy algorithm
+        if (s === '((""))') {
+            s = '';
+        } if (s === '(())') {
+            s = '';
+        } if (s === '()') {
+            s = '';
+        } if (s !== '') {
+            if (result) {
+                result = '(' + result + ' AND ' + this.paramQuery.toQueryString() + ')';
+            } else {
+                result = this.paramQuery.toQueryString();
+            }
+        }
+        return result;
     }
 
-    this._fullQuery = this.getFullQuery();
-    this.callSearch();
-  }
-
-  getAllFacetValues(facet: string):FacetValue[]{
-    let result: FacetValue[];
-    result = new Array<FacetValue>();
-
-    if(null == this.allFacets){
-      let v:FacetValue = new FacetValue();
-      v.label = "label1";
-      v.value = "value1";
-      result.push(v);
+    public callSearch(page = 1) {
+        console.log('!!!!!!!!is here?!!!!!!!!!!!');
+        this.currentQuery = this.fullQuery;
+        this.currentPage = page;
+        this.total = 0;
+        console.log(this.fullQuery);
+        this.search(this.fullQuery, page).subscribe(searchResult => {
+            this.searchResultSource.next(searchResult);
+            this.total = searchResult.count;
+            this.facets = (JSON.parse(JSON.stringify(searchResult.facets)));
+            if (this.allFacets.length === 0) {
+                this.allFacets = this.facets;
+            }
+        });
+        /** TODO: handle error **/
     }
-    else{
-      for(let f of this.allFacets)
-      {
-        if(f.id == facet){
-          for(let w of f.facetValues) {
-            let v: FacetValue = new FacetValue();
-            v.label = w.label;
-            v.value = w.value;
+
+    private search(searchQuery: string, page: number): Observable<SearchResult> {
+        console.log(searchQuery);
+        if (searchQuery == null) {
+            searchQuery = '';
+        }
+        return this.http.get(
+            this.appConfig.getSearchUrl(
+                searchQuery, 100, this.selectedPageSize, this.sortBy, this.sortOrder, (page - 1) * this.selectedPageSize))
+            .map(x => this.extractData<SearchResult>(x));
+    }
+
+    page(page: number) {
+        this.callSearch(page); // page
+    }
+
+    sort() {
+        this.currentPage = 1;
+        this.callSearch(); // page
+    }
+
+    changePageSize() {
+        this.callSearch(1);
+    }
+
+    selectFacet(id: string, value: string) {
+        if (null == this.selectedFacets[id]) {
+            this.selectedFacets[id] = [];
+        }
+        this.selectedFacets[id].push(value);
+    }
+
+    unselectFacet(id: string, value: string) {
+        this.selectedFacets[id].splice(this.selectedFacets[id].indexOf(value), 1);
+    }
+
+    unselectFacets() {
+        this.selectedFacets = {};
+    }
+
+    isFacetSelected(id: string, value: string): boolean {
+        if (null == this.selectedFacets[id]) {
+            return false;
+        }
+        const result: boolean = (this.selectedFacets[id].indexOf(value) !== -1);
+
+        return result;
+    }
+
+    callSearchByFacets() {
+        this.paramQuery = new SearchQuery();
+
+        this.paramQuery.operator = 'AND';
+        this.paramQuery.rules = [];
+        for (const id in this.selectedFacets) {
+            if (this.selectedFacets[id].length === 0) {
+                continue;
+            }
+            const rule: Rule = new Rule();
+            if (this.selectedFacets[id].length > 1) {
+                const q: SearchQuery = new SearchQuery();
+                q.operator = (id === 'omics_type' ? 'AND' : 'OR');
+                q.rules = [];
+                for (const i of this.selectedFacets[id]) {
+                    const r: Rule = new Rule();
+                    r.field = id;
+                    r.data = i;
+                    r.condition = 'equal';
+                    q.rules.push(r);
+                }
+                rule.query = q;
+            } else {
+                rule.field = id;
+                rule.data = this.selectedFacets[id][0];
+                rule.condition = 'equal';
+            }
+            this.paramQuery.rules.push(rule);
+        }
+
+        this._fullQuery = this.getFullQuery();
+        this.callSearch();
+    }
+
+    getAllFacetValues(facet: string): FacetValue[] {
+        let result: FacetValue[];
+        result = [];
+
+        if (null == this.allFacets) {
+            const v: FacetValue = new FacetValue();
+            v.label = 'label1';
+            v.value = 'value1';
             result.push(v);
-          }
+        } else {
+            for (const f of this.allFacets) {
+                if (f.id === facet) {
+                    for (const w of f.facetValues) {
+                        const v: FacetValue = new FacetValue();
+                        v.label = w.label;
+                        v.value = w.value;
+                        result.push(v);
+                    }
+                }
+            }
         }
-      }
+        return result;
     }
-    return result;
-  }
 }

@@ -3,12 +3,12 @@
  */
 
 export class Id {
-  timeSecond: number;
-  inc: number;
-  machine: number;
-  date: number;
-  time: number;
-  timestamp: number;
-  new: boolean;
+    timeSecond: number;
+    inc: number;
+    machine: number;
+    date: number;
+    time: number;
+    timestamp: number;
+    new: boolean;
 }
 

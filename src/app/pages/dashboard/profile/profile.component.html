@@ -1,32 +1,33 @@
 <div id="wrapper">
-  <app-nav></app-nav>
-  <div id="page-wrapper">
-    <div class="container-fluid3">
-
+    <app-nav></app-nav>
+    <div id="page-wrapper">
+        <div class="container-fluid3">
       <div class="row">
       <div class="col-lg-9 col-md-8 col-sm-6">
         <app-profile-info [profile]="profileX"></app-profile-info>
+        <div class="row align-top">
         <div *ngIf="profileX?.dataSets?.length>0" class="caption">Datasets</div>
 
-        <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
+                    <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
+                </div>
       </div>
+                <div class="col-lg-3 col-md-4 col-sm-4" id="profile_div">
+                    <app-profile-contacts [profile]="profileX"></app-profile-contacts>
+                    <app-profile-connections *ngIf="isMy()"
+                                             [profile]="profileService.profile"></app-profile-connections>
+                    <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length"></app-claim-orcid>
 
-      <div class="col-lg-3 col-md-4 col-sm-4" id="profile_div">
-        <app-profile-contacts [profile]="profileX"></app-profile-contacts>
-        <app-profile-connections *ngIf="isMy()" [profile]="profileService.profile"></app-profile-connections>
-        <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length"></app-claim-orcid>
+                    <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
 
-        <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
-        
-        <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
-        <!--<app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>-->
-        <!--<app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>-->
-        <!--<app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>-->
-        <!--<app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>-->
-      </div>
-      </div>
+                    <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
+                    <!--<app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>-->
+                    <!--<app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>-->
+                    <!--<app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>-->
+                    <!--<app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>-->
+                </div>
+            </div>
 
+        </div>
     </div>
-  </div>
 </div>
 

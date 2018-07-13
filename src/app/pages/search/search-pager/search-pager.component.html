@@ -1,12 +1,12 @@
 <div style="min-height: 60px;">
 
-  <!--  -->
-<div class="row" *ngIf="loading || (this.searchService.total > 0)" style="margin-top:10px;">
-  <div class="col-lg-8">
-      <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
-  </div>
+    <!--  -->
+    <div class="row" *ngIf="loading || (this.searchService.total > 0)" style="margin-top:10px;">
+        <div class="col-lg-8">
+            <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
+        </div>
 
-  <div class="col-lg-4">
+        <div class="col-lg-4">
     <span class="pull-right" style="margin-right:10px;">
       <span style="border:none;"><span (click)="sortOrderChanged();" style="cursor:pointer;">Sort
               <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
@@ -26,12 +26,12 @@
       &nbsp;&nbsp;&nbsp;
       <span>
       Page size&nbsp;
-      <select [(ngModel)]="searchService.selectedPageSize" (change)="searchService.changePageSize()" >
+      <select [(ngModel)]="searchService.selectedPageSize" (change)="searchService.changePageSize()">
         <option [value]="c" *ngFor="let c of searchService.pageSizes">{{c}}</option>
       </select>
       </span>
     </span>
-  </div>
-</div>
+        </div>
+    </div>
 
 </div>

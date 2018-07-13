@@ -3,9 +3,9 @@
  */
 
 export class SavedSearch {
-  id: string;
-  userId: string;
-  search: string;
-  count: number;
-  date: Date;
+    id: string;
+    userId: string;
+    search: string;
+    count: number;
+    date: Date;
 }
