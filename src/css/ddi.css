@@ -1486,3 +1486,10 @@ ul li.no-match-found {display: none;}
     text-decoration:none;
     border-color: transparent;
 }
+
+
+/* DISQOUS */
+
+#disqus_thread {
+    padding: 15px;
+}
