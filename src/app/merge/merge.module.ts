@@ -4,26 +4,25 @@ import {CommonModule} from '@angular/common';
 import {MergeRoutingModule} from './merge-routing.module';
 import {MergeComponent} from 'pages/merge/merge.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {ConfirmDialogMergeComponent} from './confirm-dialog-merge/confirm-dialog-merge.component';
 import {MatDialogModule} from '@angular/material';
-import {DialogServiceMerge} from './dialog-merge.service';
+import {ControlsModule} from 'controls/controls.module';
+import {AuthGuardService} from 'services/auth-guard.service';
 
 @NgModule({
     imports: [
         CommonModule,
         MergeRoutingModule,
         NgxPaginationModule,
-        MatDialogModule
+        MatDialogModule,
+        ControlsModule
     ],
     declarations: [
-        MergeComponent,
-        ConfirmDialogMergeComponent
+        MergeComponent
     ],
     entryComponents: [
-        ConfirmDialogMergeComponent
     ],
     providers: [
-        DialogServiceMerge
+        AuthGuardService
     ],
     bootstrap: [MergeComponent]
 })

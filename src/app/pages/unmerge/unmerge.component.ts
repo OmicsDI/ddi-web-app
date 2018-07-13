@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetService} from 'services/dataset.service';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {DialogUnmergeService} from 'app/unmerge/dialog-unmerge.service';
 import {UnMergeDatasets} from 'model/Unmerge/UnMergeDatasets';
+import {DialogService} from 'services/dialog.service';
 
 @Component({
     selector: 'app-unmerge',
@@ -20,7 +20,7 @@ export class UnmergeComponent implements OnInit {
     constructor(
         private datasetService: DataSetService,
         private notificationService: NotificationsService,
-        private dialogService: DialogUnmergeService
+        private dialogService: DialogService
     ) {
     }
 

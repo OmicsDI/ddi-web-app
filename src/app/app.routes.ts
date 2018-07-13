@@ -24,6 +24,7 @@ import {NotfoundComponent} from 'pages/notfound/notfound.component';
 // import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
+import {AuthGuardService} from 'services/auth-guard.service';
 
 // Route Configuration
 export const routes: Routes = [
@@ -38,25 +39,18 @@ export const routes: Routes = [
     {path: 'database', loadChildren: './database/database.module#DatabaseModule'},
     {path: 'about', loadChildren: './about/about.module#AboutModule'},
     {path: 'api', loadChildren: './api/api.module#ApiModule'},
-    // { path: 'search', loadChildren: './search/search.module#SearchModule' },
+    { path: 'search', loadChildren: './search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'dataset/:domain/:acc', loadChildren: './dataset/dataset.module#DatasetModule'},
     // { path: 'search', loadChildren: () => SearchModule },
-    {path: 'search', component: SearchComponent},
+    // {path: 'search', component: SearchComponent},
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
-    {path: 'merge', loadChildren: './merge/merge.module#MergeModule'},
-    {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule'},
-    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule'},
-    {path: 'dashboard/selected', loadChildren: './dashboardselected/dashboardselected.module#DashboardselectedModule'},
-    {path: 'dashboard/feedback', loadChildren: './dashboardfeedback/dashboardfeedback.module#DashboardfeedbackModule'},
-    {path: 'dashboard/profile', loadChildren: './dashboardprofile/dashboardprofile.module#DashboardprofileModule'},
-    {path: 'dashboard/update', loadChildren: './dashboardupdate/dashboardupdate.module#DashboardupdateModule'},
-    {path: 'dashboard/claimed', loadChildren: './dashboardclaimed/dashboardclaimed.module#DashboardclaimedModule'},
-    {path: 'dashboard/picture', loadChildren: './dashboardpicture/dashboardpicture.module#DashboardpictureModule'},
-    {path: 'dashboard/settings', loadChildren: './dashboardsettings/dashboardsettings.module#DashboardsettingsModule'}
+    {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
+    {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
+    {path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];
@@ -65,5 +59,5 @@ export const routes: Routes = [
 // export const APP_ROUTER_PROVIDERS = [
 //   provideRouter(routes)
 // ];
-
+const AUTH_PROVIDERS = [AuthGuardService];
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {useHash: false});
