@@ -10,7 +10,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from 'services/dataset.service';
-import {CitationDialogComponent} from "pages/dataset/citation-dialog/citation-dialog.component";
+import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
 
 @Component({
     selector: 'app-datasetwidget',

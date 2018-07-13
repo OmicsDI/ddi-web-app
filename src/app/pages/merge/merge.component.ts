@@ -52,7 +52,7 @@ export class MergeComponent implements OnInit {
                             if (user === this.profile.userId) {
                                 return true;
                             } else {
-                                console.log("unauthorized");
+                                console.log('unauthorized');
                                 this.router.navigate(['unauthorized']);
                                 return false;
                             }

@@ -14,8 +14,8 @@ import {SimilarComponent} from 'pages/dataset/similar/similar.component';
 import {PublicationComponent} from 'pages/dataset/publication/publication.component';
 import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
 import {PipesModule} from '../pipes/pipes.module';
-import {NavComponent} from "pages/dashboard/nav/nav.component";
-import {ClipboardModule} from "ngx-clipboard/dist";
+import {NavComponent} from 'pages/dashboard/nav/nav.component';
+import {ClipboardModule} from 'ngx-clipboard/dist';
 
 @NgModule({
     imports: [
