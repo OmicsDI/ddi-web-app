@@ -44,6 +44,9 @@
         "app/profile/datasetwidget-profile/omics-image-datasetwidget-profile/*",
         "app/profile/datasetwidget-profile/score-datasetwidget-profile/*",
         "app/dashboardprofile/datasetwidget-dashboardprofile/citation-dialog-dashboardprofile/*"
+      ],
+      "@modules/*": [
+        "app/modules/*"
       ]
     },
     "declaration": false,

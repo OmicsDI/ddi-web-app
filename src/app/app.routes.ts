@@ -1,49 +1,24 @@
-// Imports
-// Deprecated import
-// import { provideRouter, RouterConfig } from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-// import {ProfileComponent} from "./pages/profile/profile.component";
-// import {DatabaseComponent} from "./pages/database/database.component";
 import {HomeComponent} from 'pages/home/home.component';
-// import {ApiComponent} from "./pages/api/api.component";
-import {SearchComponent} from 'pages/search/search.component';
+import {RouterModule, Routes} from '@angular/router';
 import {UnauthorizedComponent} from 'pages/unauthorized/unauthorized.component';
-// import {DatasetComponent} from "./pages/dataset/dataset.component";
-// import {TermsComponent} from "./pages/terms/terms.component";
 import {NotfoundComponent} from 'pages/notfound/notfound.component';
-// import {AdminComponent} from "./pages/admin/admin.component";
-// import {SelectedComponent} from "./pages/selected/selected.component";
-// import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-// import {DashboardSelectedComponent} from "./pages/dashboard/selected/selected.component";
-// import {DashboardFeedbackComponent} from "./pages/dashboard/feedback/feedback.component";
-// import {DashboardProfileComponent} from "./pages/dashboard/profile/profile.component";
-// import {DashboardUpdateComponent} from "./pages/dashboard/update/update.component";
-// import {DashboardClaimedComponent} from "./pages/dashboard/claimed/claimed.component";
-// import {DashboardPictureComponent} from "./pages/dashboard/picture/picture.component";
-// import {SettingsComponent} from "./pages/dashboard/settings/settings.component";
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
 import {AuthGuardService} from 'services/auth-guard.service';
 
 // Route Configuration
 export const routes: Routes = [
-    {
-        path: '',
-        redirectTo: '/home',
-        pathMatch: 'full'
-    },
+    {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     // { path: 'profile', redirectTo:'dashboard/profile'},
     {path: 'profile/:username', loadChildren: './profile/profile.module#ProfileModule'},
     {path: 'database', loadChildren: './database/database.module#DatabaseModule'},
-    {path: 'about', loadChildren: './about/about.module#AboutModule'},
+    {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},
     {path: 'api', loadChildren: './api/api.module#ApiModule'},
-    { path: 'search', loadChildren: './search/search.module#SearchModule' },
+    {path: 'search', loadChildren: './search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'dataset/:domain/:acc', loadChildren: './dataset/dataset.module#DatasetModule'},
-    // { path: 'search', loadChildren: () => SearchModule },
-    // {path: 'search', component: SearchComponent},
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
@@ -55,9 +30,4 @@ export const routes: Routes = [
 
 ];
 
-// Deprecated provide
-// export const APP_ROUTER_PROVIDERS = [
-//   provideRouter(routes)
-// ];
-const AUTH_PROVIDERS = [AuthGuardService];
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {useHash: false});
