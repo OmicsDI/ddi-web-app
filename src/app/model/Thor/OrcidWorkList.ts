@@ -1,7 +1,7 @@
-import {OrcidWork} from "./OrcidWork";
+import {OrcidWork} from './OrcidWork';
 
 
-export class OrcidWorkList{
+export class OrcidWorkList {
     public orcIdWorkLst: OrcidWork[];
 }
 

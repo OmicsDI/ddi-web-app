@@ -1,6 +1,6 @@
-.caption{
-    color:rgb(0,153,204);
-    font-size:32px;
+.caption {
+    color: rgb(0, 153, 204);
+    font-size: 32px;
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-weight: 300;
 }
@@ -18,34 +18,34 @@
     -webkit-border-radius: 5px;
     border-radius: 5px;
     display: inline;
-    padding:5px;
+    padding: 5px;
 }
 
-span.selected{
+span.selected {
     font-weight: bold;
-    color:black;
+    color: black;
 }
 
-span.unselected{
+span.unselected {
     font-weight: normal;
     margin-right: 22px;
     color: black;
 }
 
-.grey{
+.grey {
     background-color: silver;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.white{
+.white {
     background-color: white;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .row-eq-height {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
-    display:         flex;
+    display: flex;
 }
 

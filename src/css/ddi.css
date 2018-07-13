@@ -1435,7 +1435,7 @@ ul li.no-match-found {display: none;}
     margin-bottom: 10px;
 }
 
-#item1,#item2,#item3,#item4,#item5,#item6,#item7{
+#item1,#item2,#item3,#item4,#item5,#item6,#item7,#item8{
     color:white !important;
     text-decoration:none;
     border-color: transparent;
@@ -1461,6 +1461,9 @@ ul li.no-match-found {display: none;}
     background-color:#2e6da4 !important;
 }
 #item7:hover{
+    background-color:#2e6da4 !important;
+}
+#item8:hover{
     background-color:#2e6da4 !important;
 }
 

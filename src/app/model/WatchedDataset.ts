@@ -3,9 +3,9 @@
  */
 
 export class WatchedDataset {
-  id: string;
-  userId: string;
-  accession: string;
-  source: string;
+    id: string;
+    userId: string;
+    accession: string;
+    source: string;
 }
 

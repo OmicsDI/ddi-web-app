@@ -1,419 +1,423 @@
-<script >
-  document.title = "OmicsDI API";
+<script>
+    document.title = "OmicsDI API";
 </script>
 <div id="content" class="row" style="margin: 10px">
-  <div class="col-md-9" role="main">
+    <div class="col-md-9" role="main">
 
-    <h1 id="overview">
-      <i class="fa fa-book"></i>API overview
-    </h1>
+        <h1 id="overview">
+            <i class="fa fa-book"></i>API overview
+        </h1>
 
-    <p>Most data in the Datatsets Discovery Index can be accessed programmatically using a <a
-      href="http://www.omicsdi.org/ws/">RESTful API</a>
-      allowing for integration with other resources. The API implementation is based on the
-      <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.
-    </p>
+        <p>Most data in the Datatsets Discovery Index can be accessed programmatically using a <a
+                href="http://www.omicsdi.org/ws/">RESTful API</a>
+            allowing for integration with other resources. The API implementation is based on the
+            <a href="https://spring.io/guides/gs/rest-service/">Spring Rest Framework</a>.
+        </p>
 
-    <h2 id="web-browsable-api">Web browsable API</h2>
+        <h2 id="web-browsable-api">Web browsable API</h2>
 
-    <p>The OmicsDI API is <strong>web browsable</strong>, which means that:</p>
+        <p>The OmicsDI API is <strong>web browsable</strong>, which means that:</p>
 
-    <ul>
-      <li><p>The query results returned by the API are available in <a href="http://json.org/"
-                                                                       target="_blank">JSON</a>format.
-        This ensures that they can be viewed by human and accessed programmatically by computer.</p>
-      </li>
+        <ul>
+            <li><p>The query results returned by the API are available in <a href="http://json.org/"
+                                                                             target="_blank">JSON</a>format.
+                This ensures that they can be viewed by human and accessed programmatically by computer.</p>
+            </li>
 
-      <li>
-        <p>The main <a href="http://www.omicsdi.org/ws/" target="_blank">RESTful API</a> page
-          provides a simple web-based user interface, which allows developers to familiarise
-          themselves with the API and get a better sense of the OmicsDI data before writing a single line of
-          code. </p>
-      </li>
-      <li><p>many resources are <strong>hyperlinked</strong> so that it's possible to navigate the API in
-        the browser.</p></li>
-    </ul>
+            <li>
+                <p>The main <a href="http://www.omicsdi.org/ws/" target="_blank">RESTful API</a> page
+                    provides a simple web-based user interface, which allows developers to familiarise
+                    themselves with the API and get a better sense of the OmicsDI data before writing a single line of
+                    code. </p>
+            </li>
+            <li><p>many resources are <strong>hyperlinked</strong> so that it's possible to navigate the API in
+                the browser.</p></li>
+        </ul>
 
-    <p>As a result, developers can familiarise themselves with the API and get a better sense of the OmicsDI
-      data.</p>
-
-
-    <p><a href="http://www.omicsdi.org/ws/" class="btn btn-primary" role="button"
-          target="_blank">Browse the API</a></p>
-
-    <h2 id="versioning">Versioning</h2>
-
-    <p>
-      To ensure that changes in the OmicsDI API don't break the applications relying on it, the API is
-      versioned, and the version is included in the API's URL.
-    </p>
-
-    <p>
-      For example, the current API is at Version 1 and is available at
-      http://www.omicsdi.org/ws/, and
-      the next version will be available at http://www.omicsdi.org/ws/.
-    </p>
-
-    <p>
-      The latest version of the API can be accessed at http://www.omicsdi.org/ws/, but it's
-      not
-      recommended to use this endpoint for long-term development as the underlying data model may change.
-    </p>
-
-    <p>
-      No backward-incompatible changes are made to a version after it has been made public. More
-      specifically, it's guaranteed that within one version there will be no:
-    </p>
-    <ul>
-      <li>changing urls</li>
-      <li>deleting or renaming data fields</li>
-      <li>changing data field types</li>
-    </ul>
-    <p>
-      The following non-disruptive changes may be implemented to a public API:
-    </p>
-    <ul>
-      <li>adding new endpoints</li>
-      <li>adding new data fields</li>
-      <li>adding new filtering methods</li>
-    </ul>
-    <p>
-      An advance notice will be given before obsoleting an API version. To stay up to date, please
-      consider signing up for the PRIDE <a href="https://twitter.com/OmicsDIndex">Twitter</a> account.
-    </p>
+        <p>As a result, developers can familiarise themselves with the API and get a better sense of the OmicsDI
+            data.</p>
 
 
-    <hr>
+        <p><a href="http://www.omicsdi.org/ws/" class="btn btn-primary" role="button"
+              target="_blank">Browse the API</a></p>
 
-    <h1 id="v1">API documentation</h1>
+        <h2 id="versioning">Versioning</h2>
 
-    <h2 id="v1-example-responses">Example responses</h2>
+        <p>
+            To ensure that changes in the OmicsDI API don't break the applications relying on it, the API is
+            versioned, and the version is included in the API's URL.
+        </p>
 
-    <p>Responses containing <strong>multiple entries</strong> have the following fields:</p>
+        <p>
+            For example, the current API is at Version 1 and is available at
+            http://www.omicsdi.org/ws/, and
+            the next version will be available at http://www.omicsdi.org/ws/.
+        </p>
 
-    <ul>
-      <li><em>count</em> is the number of entries in the matching set.</li>
-      <li><em>datasets</em> is an array of datasets.</li>
-      <li><em>facets</em> is an array of facets.</li>
-    </ul>
+        <p>
+            The latest version of the API can be accessed at http://www.omicsdi.org/ws/, but it's
+            not
+            recommended to use this endpoint for long-term development as the underlying data model may change.
+        </p>
 
-    <h4>Example</h4>
-    <pre>
-<code class="prettyprint" >
+        <p>
+            No backward-incompatible changes are made to a version after it has been made public. More
+            specifically, it's guaranteed that within one version there will be no:
+        </p>
+        <ul>
+            <li>changing urls</li>
+            <li>deleting or renaming data fields</li>
+            <li>changing data field types</li>
+        </ul>
+        <p>
+            The following non-disruptive changes may be implemented to a public API:
+        </p>
+        <ul>
+            <li>adding new endpoints</li>
+            <li>adding new data fields</li>
+            <li>adding new filtering methods</li>
+        </ul>
+        <p>
+            An advance notice will be given before obsoleting an API version. To stay up to date, please
+            consider signing up for the PRIDE <a href="https://twitter.com/OmicsDIndex">Twitter</a> account.
+        </p>
+
+
+        <hr>
+
+        <h1 id="v1">API documentation</h1>
+
+        <h2 id="v1-example-responses">Example responses</h2>
+
+        <p>Responses containing <strong>multiple entries</strong> have the following fields:</p>
+
+        <ul>
+            <li><em>count</em> is the number of entries in the matching set.</li>
+            <li><em>datasets</em> is an array of datasets.</li>
+            <li><em>facets</em> is an array of facets.</li>
+        </ul>
+
+        <h4>Example</h4>
+        <pre>
+<code class="prettyprint">
     first code fragment
 </code>
 </pre>
 
-    <p>Responses containing just a <strong>single dataset</strong> have some extra navigation fields, and
-      without the facets</p>
+        <p>Responses containing just a <strong>single dataset</strong> have some extra navigation fields, and
+            without the facets</p>
 
-    <pre>
-<code class="prettyprint" >
+        <pre>
+<code class="prettyprint">
     second code fragment
 </code></pre>
 
-    <h2 id="v1-pagination">Pagination</h2>
+        <h2 id="v1-pagination">Pagination</h2>
 
-    <p>Responses containing multiple datasets are paginated to prevent accidental downloads of large amounts
-      of data and to speed up the API.</p>
+        <p>Responses containing multiple datasets are paginated to prevent accidental downloads of large amounts
+            of data and to speed up the API.</p>
 
-    <p>The page size is controlled by the <code>size</code> parameter. Its default value is
-      <strong>20 datasets per page</strong>, and the maximum number of datasets per page is
-      <strong>100</strong>.</p>
+        <p>The page size is controlled by the <code>size</code> parameter. Its default value is
+            <strong>20 datasets per page</strong>, and the maximum number of datasets per page is
+            <strong>100</strong>.</p>
 
-    <p>Another parameter is <code>start</code> which indicates the numeric order (starting from <code>0</code>,
-      not <code>1</code>) of the first dataset in this page. Its default value is
-      <strong>0</strong>.</p>
+        <p>Another parameter is <code>start</code> which indicates the numeric order (starting from <code>0</code>,
+            not <code>1</code>) of the first dataset in this page. Its default value is
+            <strong>0</strong>.</p>
 
-    <h4>Examples</h4>
+        <h4>Examples</h4>
 
-    <ul>
+        <ul>
 
-      <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=50">http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=50</a>
-      </li>
-      <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=50">http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=20</a>
-    </ul>
-
-
-    <h2 id="v1-sort">Sort</h2>
-
-    <p>The result datasets can be sorted using the title, description, publication date, accession id and the relevance of the query term..</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=id">http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=id</a>
-      </li>
-      <li>
-        <a href="http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=publication_date">http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=publication_date</a>
-      </li>
-    </ul>
-
-
-    <h2 id="v1-output-formats">Output formats</h2>
-
-    <p>The following output format is: <strong>JSON</strong></p>
-
-    <h2 id="v1-filtering">Filtering</h2>
-
-    <p>The API supports several filtering operations that complement the main OmicsDI search functionality.</p>
-
-    <h3 id="v1-filtering-by-search-term">Filtering by search term</h3>
-
-    <p>There is 1 url parameter: <code>query</code></p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human">http://www.omicsdi.org/ws/dataset/search?query=human</a>
-      </li>
-      <li><a href="http://www.omicsdi.org/ws/dataset/search?query=cancer">http://www.omicsdi.org/ws/dataset/search?query=cancer</a>
-      </li>
-    </ul>
-
-    <h3 id="v1-filtering-by-omics-type">Filtering by omics type</h3>
-
-    <p>The omics type can be specified by adding terms in the <code>query</code> url parameter with key:
-      <code>omics_type</code>
-      (possible values: <em>Proteomics</em>, <em>Metabolomics</em>,<em>Genomics</em>, <em>Transcriptomics</em>).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND omics_type: "Proteomics"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND omics_type:"Proteomics"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND omics_type: "Metabolomics"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND omics_type:"Metabolomics"</a></li>
-    </ul>
-
-    <h3 id="v1-filtering-by-database">Filtering by database</h3>
-
-    <p>The database can be specified by adding terms in the <code>query</code> url parameter with key:
-      <code>repository</code>
-      (possible values:<em>MassIVE</em>, <em>Metabolights</em>, <em>PeptideAtlas</em>, <em>PRIDE</em>, <em>GPMDB</em>, <em>EGA</em>, <em>Metabolights</em>, <em>Metabolomics Workbench</em>, <em>MetabolomeExpress</em>, <em>GNPS</em>, <em>ArrayExpress</em>, <em>ExpressionAtlas</em>).
-    </p>
-
-    <h4>Examples</h4>
-
-    <ul>
-
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"Massive"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND repository:"MassIVE"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"Metabolights"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND repository:"Metabolights"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"PeptideAtlas"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND repository:"PeptideAtlas"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"PRIDE"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND repository:"PRIDE"</a></li>
-    </ul>
-
-    <h3 id="v1-filtering-by-organism">Filtering by Organism</h3>
-
-    <p>The organism can be specified by adding terms in the <code>query</code> url parameter with key:
-      <code>TAXONOMY</code>
-      (possible values must be the TAXONOMY id: <em>9606</em>, <em>10090</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li><a href='http://www.omicsdi.org/ws/dataset/search?query=human AND TAXONOMY:"9606"'>http://www.omicsdi.org/ws/dataset/search?query=human
-        AND TAXONOMY:"9606"</a></li>
-      <li><a href='http://www.omicsdi.org/ws/dataset/search?query=human AND TAXONOMY:"10090"'>http://www.omicsdi.org/ws/dataset/search?query=human
-        AND TAXONOMY:"10090"</a></li>
-    </ul>
-
-    <h3 id="v1-filtering-by-tissue">Filtering by Tissue</h3>
-
-    <p>The tissue can be specified by adding terms in the <code>query</code> url parameter with key:
-      <code>tissue</code>
-      (possible values: <em>Liver</em>, <em>Cell culture</em>, <em>Brain</em>, <em>Lung</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li><a href='http://www.omicsdi.org/ws/dataset/search?query=human AND tissue:"Brain"'>http://www.omicsdi.org/ws/dataset/search?query=human
-        AND tissue:"Brain"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND tissue:"Cell culture"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND tissue:"Cell culture"</a></li>
-    </ul>
-
-    <h3 id="v1-filtering-by-disease">Filtering by Disease</h3>
-
-    <p>The disease can be specified by adding terms in the <code>query</code> url parameter with key:
-      <code>disease</code>
-      (possible values: <em>Breast cancer</em>, <em>Lymphoma</em>, <em>Carcinoma</em>, <em>prostate
-        adenocarcinoma</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND disease:"Breast cancer"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND tissue:"Breast cancer"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND disease:"Lymphoma"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND tissue:"Lymphoma"</a></li>
-    </ul>
-
-
-    <h3 id="v1-filtering-by-modification">Filtering by Modification
-      <small>(in proteomics)</small>
-    </h3>
-
-    <p>The Modifications (in proteomics) can be specified by adding terms in the <code>query</code> url
-      parameter with key: <code>disease</code>
-      (possible values: <em>Deamidated residue</em>, <em>Deamidated</em>, <em>Monohydroxylated
-        residue</em>, <em>Iodoacetamide derivatized residue</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND modification:"iodoacetamide derivatized residue"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND modification:"iodoacetamide derivatized residue"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND modification:"monohydroxylated residue"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND modification:"monohydroxylated residue"</a></li>
-    </ul>
-
-    <h3 id="v1-filtering-by-instruments-platforms">Filtering by Instruments & Platforms</h3>
-
-    <p>The Instruments & Platforms can be specified by adding terms in the <code>query</code> url parameter
-      with key: <code>instrument_platform</code>
-      (possible values: <em>QSTAR</em>, <em> LTQ Orbitrap</em>, <em>Q Exactive</em>, <em>LTQ</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND instrument_platform:"LTQ"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND instrument_platform:"LTQ"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND instrument_platform:"Q Exactive"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND instrument_platform:"Q Exactive"</a></li>
-    </ul>
-
-
-    <h3 id="v1-filtering-by-publicationdate">Filtering by Publication Date</h3>
-
-    <p>The Publication Date can be specified by adding terms in the <code>query</code> url parameter with
-      key: "publication_date"
-      (possible values: <em>2015</em>, <em>2014</em>, <em>2013</em>, <em>2014</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND publication_date:"2015"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND publication_date:"2015"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND publication_date:"2014"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND publication_date:"2014"</a></li>
-    </ul>
-
-
-    <h3 id="v1-filtering-by-technologytype">Filtering by Technology Type</h3>
-
-    <p>The Technology Type can be specified by adding terms in the <code>query</code> url parameter with
-      key: "technology_type"
-      (possible values: <em>Mass Spectrometry</em>, <em>Bottom-up proteomics</em>, <em>Gel-based
-        experiment</em>, <em> Shotgun proteomics</em>...).</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND technology_type:"Mass Spectrometry"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND technology_type:"Shotgun proteomics"</a></li>
-    </ul>
-
-
-    <h3 id="v1-combined-filters">Combined filters</h3>
-
-    <p>Any filters can be combined to narrow down the query using the <code>AND</code> operator. More
-      logical operators will be supported in the future.</p>
-
-    <h4>Examples</h4>
-
-    <ul>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry" AND publication_date:"2015"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND technology_type:"Mass Spectrometry" AND publication_date:"2015"</a></li>
-      <li>
-        <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics" AND modification:"monohydroxylated residue"'>http://www.omicsdi.org/ws/dataset/search?query=human
-          AND technology_type:"Shotgun proteomics" and AND modification:"monohydroxylated residue"</a>
-      </li>
-    </ul>
-
-  </div>
-
-
-  <div class="col-md-2 nav-float" style="position:sticky;top:6em">
-    <nav id="affix-nav" class="sidebar hidden-print visible-lg" role="complementary">
-      <ul style="width: 272px;" class="nav sidenav affix-top" data-spy="affix" id="affix-ul">
-        <li>
-          <a href="" ng-click="scrollTo('overview')">API Overview</a>
-          <ul class="nav">
-            <li><a href="" ng-click="scrollTo('web-browsable-api')">Web browsable API</a></li>
-            <li><a href="" ng-click="scrollTo('versioning')">Versioning</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="" ng-click="scrollTo('v1')">API v1 documentation</a>
-          <ul class="nav">
-            <li>
-              <a href="" ng-click="scrollTo('v1-example-responses')">Example responses</a>
-              <ul class="nav hide">
-                <li><a href="" ng-click="scrollTo('v1-hyperlinked-vs-flat-responses')">Hyperlinked
-                  vs flat responses</a></li>
-              </ul>
+            <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=50">http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=50</a>
             </li>
-            <li><a href="" ng-click="scrollTo('v1-pagination')">Pagination</a></li>
-            <li><a href="" ng-click="scrollTo('v1-sort')">Sort</a></li>
-            <li><a href="" ng-click="scrollTo('v1-output-formats')">Output formats</a></li>
-            <li>
-              <a href="" ng-click="scrollTo('v1-filtering')">Filtering</a>
-              <ul class="nav">
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-database')">Filtering by
-                  database</a></li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-organism')">Filtering by
-                  Organism</a></li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-tissue')">Filtering by
-                  Tissue</a>
-                </li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-disease')">Filtering by
-                  Disease</a></li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-modification')">Filtering by
-                  Modification</a></li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-instruments-platform')">Filtering
-                  by Instruments & Platforms</a></li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-publicationdate')">Filtering
-                  by
-                  Publication Date</a></li>
-                <li><a href="" ng-click="scrollTo('v1-filtering-by-technologytype')">Filtering
-                  by
-                  Technology Type</a></li>
-                <li><a href="" ng-click="scrollTo('v1-combined-filters')">Combined filters</a>
-                </li>
-              </ul>
+            <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=50">http://www.omicsdi.org/ws/dataset/search?query=human&start=0&size=20</a>
+        </ul>
+
+
+        <h2 id="v1-sort">Sort</h2>
+
+        <p>The result datasets can be sorted using the title, description, publication date, accession id and the
+            relevance of the query term..</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=id">http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=id</a>
             </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-  </div>
+            <li>
+                <a href="http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=publication_date">http://www.omicsdi.org/ws/dataset/search?query=human&sort_field=publication_date</a>
+            </li>
+        </ul>
+
+
+        <h2 id="v1-output-formats">Output formats</h2>
+
+        <p>The following output format is: <strong>JSON</strong></p>
+
+        <h2 id="v1-filtering">Filtering</h2>
+
+        <p>The API supports several filtering operations that complement the main OmicsDI search functionality.</p>
+
+        <h3 id="v1-filtering-by-search-term">Filtering by search term</h3>
+
+        <p>There is 1 url parameter: <code>query</code></p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li><a href="http://www.omicsdi.org/ws/dataset/search?query=human">http://www.omicsdi.org/ws/dataset/search?query=human</a>
+            </li>
+            <li><a href="http://www.omicsdi.org/ws/dataset/search?query=cancer">http://www.omicsdi.org/ws/dataset/search?query=cancer</a>
+            </li>
+        </ul>
+
+        <h3 id="v1-filtering-by-omics-type">Filtering by omics type</h3>
+
+        <p>The omics type can be specified by adding terms in the <code>query</code> url parameter with key:
+            <code>omics_type</code>
+            (possible values: <em>Proteomics</em>, <em>Metabolomics</em>,<em>Genomics</em>, <em>Transcriptomics</em>).
+        </p>
+
+        <h4>Examples</h4>
+
+        <ul>
+
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND omics_type: "Proteomics"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND omics_type:"Proteomics"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND omics_type: "Metabolomics"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND omics_type:"Metabolomics"</a></li>
+        </ul>
+
+        <h3 id="v1-filtering-by-database">Filtering by database</h3>
+
+        <p>The database can be specified by adding terms in the <code>query</code> url parameter with key:
+            <code>repository</code>
+            (possible values:<em>MassIVE</em>, <em>Metabolights</em>, <em>PeptideAtlas</em>, <em>PRIDE</em>,
+            <em>GPMDB</em>, <em>EGA</em>, <em>Metabolights</em>, <em>Metabolomics Workbench</em>,
+            <em>MetabolomeExpress</em>, <em>GNPS</em>, <em>ArrayExpress</em>, <em>ExpressionAtlas</em>).
+        </p>
+
+        <h4>Examples</h4>
+
+        <ul>
+
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"Massive"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND repository:"MassIVE"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"Metabolights"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND repository:"Metabolights"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"PeptideAtlas"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND repository:"PeptideAtlas"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND repository:"PRIDE"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND repository:"PRIDE"</a></li>
+        </ul>
+
+        <h3 id="v1-filtering-by-organism">Filtering by Organism</h3>
+
+        <p>The organism can be specified by adding terms in the <code>query</code> url parameter with key:
+            <code>TAXONOMY</code>
+            (possible values must be the TAXONOMY id: <em>9606</em>, <em>10090</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li><a href='http://www.omicsdi.org/ws/dataset/search?query=human AND TAXONOMY:"9606"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                AND TAXONOMY:"9606"</a></li>
+            <li><a href='http://www.omicsdi.org/ws/dataset/search?query=human AND TAXONOMY:"10090"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                AND TAXONOMY:"10090"</a></li>
+        </ul>
+
+        <h3 id="v1-filtering-by-tissue">Filtering by Tissue</h3>
+
+        <p>The tissue can be specified by adding terms in the <code>query</code> url parameter with key:
+            <code>tissue</code>
+            (possible values: <em>Liver</em>, <em>Cell culture</em>, <em>Brain</em>, <em>Lung</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li><a href='http://www.omicsdi.org/ws/dataset/search?query=human AND tissue:"Brain"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                AND tissue:"Brain"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND tissue:"Cell culture"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND tissue:"Cell culture"</a></li>
+        </ul>
+
+        <h3 id="v1-filtering-by-disease">Filtering by Disease</h3>
+
+        <p>The disease can be specified by adding terms in the <code>query</code> url parameter with key:
+            <code>disease</code>
+            (possible values: <em>Breast cancer</em>, <em>Lymphoma</em>, <em>Carcinoma</em>, <em>prostate
+                adenocarcinoma</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND disease:"Breast cancer"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND tissue:"Breast cancer"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND disease:"Lymphoma"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND tissue:"Lymphoma"</a></li>
+        </ul>
+
+
+        <h3 id="v1-filtering-by-modification">Filtering by Modification
+            <small>(in proteomics)</small>
+        </h3>
+
+        <p>The Modifications (in proteomics) can be specified by adding terms in the <code>query</code> url
+            parameter with key: <code>disease</code>
+            (possible values: <em>Deamidated residue</em>, <em>Deamidated</em>, <em>Monohydroxylated
+                residue</em>, <em>Iodoacetamide derivatized residue</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND modification:"iodoacetamide derivatized residue"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND modification:"iodoacetamide derivatized residue"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND modification:"monohydroxylated residue"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND modification:"monohydroxylated residue"</a></li>
+        </ul>
+
+        <h3 id="v1-filtering-by-instruments-platforms">Filtering by Instruments & Platforms</h3>
+
+        <p>The Instruments & Platforms can be specified by adding terms in the <code>query</code> url parameter
+            with key: <code>instrument_platform</code>
+            (possible values: <em>QSTAR</em>, <em> LTQ Orbitrap</em>, <em>Q Exactive</em>, <em>LTQ</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND instrument_platform:"LTQ"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND instrument_platform:"LTQ"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND instrument_platform:"Q Exactive"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND instrument_platform:"Q Exactive"</a></li>
+        </ul>
+
+
+        <h3 id="v1-filtering-by-publicationdate">Filtering by Publication Date</h3>
+
+        <p>The Publication Date can be specified by adding terms in the <code>query</code> url parameter with
+            key: "publication_date"
+            (possible values: <em>2015</em>, <em>2014</em>, <em>2013</em>, <em>2014</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND publication_date:"2015"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND publication_date:"2015"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND publication_date:"2014"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND publication_date:"2014"</a></li>
+        </ul>
+
+
+        <h3 id="v1-filtering-by-technologytype">Filtering by Technology Type</h3>
+
+        <p>The Technology Type can be specified by adding terms in the <code>query</code> url parameter with
+            key: "technology_type"
+            (possible values: <em>Mass Spectrometry</em>, <em>Bottom-up proteomics</em>, <em>Gel-based
+                experiment</em>, <em> Shotgun proteomics</em>...).</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND technology_type:"Mass Spectrometry"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND technology_type:"Shotgun proteomics"</a></li>
+        </ul>
+
+
+        <h3 id="v1-combined-filters">Combined filters</h3>
+
+        <p>Any filters can be combined to narrow down the query using the <code>AND</code> operator. More
+            logical operators will be supported in the future.</p>
+
+        <h4>Examples</h4>
+
+        <ul>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Mass Spectrometry" AND publication_date:"2015"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND technology_type:"Mass Spectrometry" AND publication_date:"2015"</a></li>
+            <li>
+                <a href='http://www.omicsdi.org/ws/dataset/search?query=human AND technology_type:"Shotgun proteomics" AND modification:"monohydroxylated residue"'>http://www.omicsdi.org/ws/dataset/search?query=human
+                    AND technology_type:"Shotgun proteomics" and AND modification:"monohydroxylated residue"</a>
+            </li>
+        </ul>
+
+    </div>
+
+
+    <div class="col-md-2 nav-float" style="position:sticky;top:6em">
+        <nav id="affix-nav" class="sidebar hidden-print visible-lg" role="complementary">
+            <ul style="width: 272px;" class="nav sidenav affix-top" data-spy="affix" id="affix-ul">
+                <li>
+                    <a href="" ng-click="scrollTo('overview')">API Overview</a>
+                    <ul class="nav">
+                        <li><a href="" ng-click="scrollTo('web-browsable-api')">Web browsable API</a></li>
+                        <li><a href="" ng-click="scrollTo('versioning')">Versioning</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="" ng-click="scrollTo('v1')">API v1 documentation</a>
+                    <ul class="nav">
+                        <li>
+                            <a href="" ng-click="scrollTo('v1-example-responses')">Example responses</a>
+                            <ul class="nav hide">
+                                <li><a href="" ng-click="scrollTo('v1-hyperlinked-vs-flat-responses')">Hyperlinked
+                                    vs flat responses</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="" ng-click="scrollTo('v1-pagination')">Pagination</a></li>
+                        <li><a href="" ng-click="scrollTo('v1-sort')">Sort</a></li>
+                        <li><a href="" ng-click="scrollTo('v1-output-formats')">Output formats</a></li>
+                        <li>
+                            <a href="" ng-click="scrollTo('v1-filtering')">Filtering</a>
+                            <ul class="nav">
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-database')">Filtering by
+                                    database</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-organism')">Filtering by
+                                    Organism</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-tissue')">Filtering by
+                                    Tissue</a>
+                                </li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-disease')">Filtering by
+                                    Disease</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-modification')">Filtering by
+                                    Modification</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-instruments-platform')">Filtering
+                                    by Instruments & Platforms</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-publicationdate')">Filtering
+                                    by
+                                    Publication Date</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-filtering-by-technologytype')">Filtering
+                                    by
+                                    Technology Type</a></li>
+                                <li><a href="" ng-click="scrollTo('v1-combined-filters')">Combined filters</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 <!--wrapper-->
 

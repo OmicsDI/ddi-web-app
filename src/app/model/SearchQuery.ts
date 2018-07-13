@@ -1,46 +1,51 @@
 /**
  * Created by user on 4/7/2017.
  */
-export class Rule{
-  condition: string = 'equal';
-  field: string =  'all_fields';
-  data: string = '';
-  data2: string = '';
-  query: SearchQuery = null;
+export class Rule {
+    condition = 'equal';
+    field = 'all_fields';
+    data = '';
+    data2 = '';
+    query: SearchQuery = null;
 }
 
-export class SearchQuery{
-  operator: string = "AND";
-  rules: Rule[] = new Array<Rule>();
+export class SearchQuery {
+    operator = 'AND';
+    rules: Rule[] = [];
 
-  constructor(){
-    let rule: Rule = new Rule();
-    this.rules.push(rule);
-  }
-
-  public toQueryString():string{
-    for (var str = "(", i = 0; i < this.rules.length; i++) {
-      i > 0 && (str += " " + this.operator + " ");
-      if(null != this.rules[i].query) {
-        str += this.rules[i].query.toQueryString();
-      }
-      else{
-        var rule =this.rules[i];
-        var strtemp = "";
-
-        if(rule.condition == 'range') {strtemp = "[\"" + rule.data + "\" TO \"" +  (rule.data2||"") + "\"]" }
-        if(rule.condition == 'equal') {strtemp =  "(\"" + rule.data +"\")" }
-
-        if(rule.field == 'all_fields'){
-          str += strtemp;
-        }
-        else{
-          str += rule.field + ": " + strtemp;
-        }
-      }
+    constructor() {
+        const rule: Rule = new Rule();
+        this.rules.push(rule);
     }
-    str = str.replace(/"\*\:\*"/g, "*:*");
-    return str + ")";
-  }
+
+    public toQueryString(): string {
+        let str = '(';
+        for (let i = 0; i < this.rules.length; i++) {
+            if (i > 0) {
+                str += ' ' + this.operator + ' ';
+            }
+            if (null != this.rules[i].query) {
+                str += this.rules[i].query.toQueryString();
+            } else {
+                const rule = this.rules[i];
+                let strtemp = '';
+
+                if (rule.condition === 'range') {
+                    strtemp = '["' + rule.data + '" TO "' + (rule.data2 || '') + '"]';
+                }
+                if (rule.condition === 'equal') {
+                    strtemp = '("' + rule.data + '")';
+                }
+
+                if (rule.field === 'all_fields') {
+                    str += strtemp;
+                } else {
+                    str += rule.field + ': ' + strtemp;
+                }
+            }
+        }
+        str = str.replace(/"\*\:\*"/g, '*:*');
+        return str + ')';
+    }
 }
 

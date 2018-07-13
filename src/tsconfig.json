@@ -1,10 +1,58 @@
 {
   "compilerOptions": {
     "baseUrl": "",
+    "paths": {
+      "datasetwidget/*": [
+        "app/dashboardclaimed/profile-result-dashboardclaimed/datasetwidget-dashboardclaimed/*"
+      ],
+      "cd-dashboard/*": [
+        "app/pages/dashboard/profile/counting-data-dashboard/*"
+      ],
+      "dashboard-profile-annual-omicstype/*": [
+        "app/pages/dashboard/profile/dashboard-profile-annual-omicstype/*"
+      ],
+      "services/*": [
+        "app/services/*"
+      ],
+      "pages/*": [
+        "app/pages/*"
+      ],
+      "search/*": [
+        "app/search/*"
+      ],
+      "model/*": [
+        "app/model/*"
+      ],
+      "omics-image-datasetselected/*": [
+        "app/dashboardselected/datasetwidget-datasetselected/omics-image-datasetselected/*"
+      ],
+      "profile/*": [
+        "app/profile/*"
+      ],
+      "controls/*": [
+        "app/controls/*"
+      ],
+      "utils/*": [
+        "app/utils/*"
+      ],
+      "profile-dashboard/*": [
+        "app/profile/counting-data-dashboard-profile/dashboard-citations-count-profile/*",
+        "app/profile/counting-data-dashboard-profile/dashboard-claim-count-profile/*",
+        "app/profile/counting-data-dashboard-profile/dashboard-connections-count-profile/*",
+        "app/profile/counting-data-dashboard-profile/dashboard-reanalisys-count-profile/*",
+        "app/profile/counting-data-dashboard-profile/dashboard-views-count-profile/*",
+        "app/profile/datasetwidget-profile/omics-image-datasetwidget-profile/*",
+        "app/profile/datasetwidget-profile/score-datasetwidget-profile/*",
+        "app/dashboardprofile/datasetwidget-dashboardprofile/citation-dialog-dashboardprofile/*"
+      ]
+    },
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "mapRoot": "./",
     "module": "es6",
     "moduleResolution": "node",

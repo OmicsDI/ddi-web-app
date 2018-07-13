@@ -1,12 +1,15 @@
-/* tslint:disable:no-unused-variable */
+import {TruncatePipe} from './truncate.pipe';
 
-import { TestBed, async } from '@angular/core/testing';
 
-import { TruncatePipe } from './truncate.pipe';
+describe('Pipe: Default', () => {
+    let pipe: TruncatePipe;
 
-describe('TruncatePipe', () => {
-  it('create an instance', () => {
-    const pipe = new TruncatePipe();
-    expect(pipe).toBeTruthy();
-  });
+    beforeEach(() => {
+        pipe = new TruncatePipe();
+    });
+
+    it('Truncate 15 characters', () => {
+        expect(pipe.transform('Lorem ipsum dolor sit amet, consectetur adipiscing elit', '15', '...'))
+            .toBe('Lorem ipsum dol...');
+    });
 });

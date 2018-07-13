@@ -1,69 +1,75 @@
 <div id="wrapper">
-  <app-nav></app-nav>
-  <div id="page-wrapper">
+    <app-nav></app-nav>
+    <div id="page-wrapper">
 
-    <div class="row align-top">
-      <div class="col-lg-6">
-        <div class="caption">Dashboard - Selected Datasets</div>
-      </div>
-      <div class="col-lg-6 justify-content-end">
-         <div *ngIf="this.dataSets.length>0" style="float: right; position:relative; top: 15px; left:-10px;">
+        <div class="row align-top">
+            <div class="col-lg-6">
+                <div class="caption">Dashboard - Selected Datasets</div>
+            </div>
+            <div class="col-lg-6 justify-content-end">
+                <div *ngIf="this.dataSets.length>0" style="float: right; position:relative; top: 15px; left:-10px;">
 
 
-           <!-- div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="exportClick();">
-             <i class="fa fa-file-excel-o" aria-hidden="true"></i>
-             <span> Export to Excel</span>
-           </div -->
+                    <!-- div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="exportClick();">
+                      <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                      <span> Export to Excel</span>
+                    </div -->
 
-             <a id="downloadAnchorElem" style="display:none"></a>
+                    <a id="downloadAnchorElem" style="display:none"></a>
 
-          <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="download();">
-                 <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                 <span> Download IDs</span>
-          </div>
+                    <div class="score"
+                         style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;"
+                         (click)="download();">
+                        <i class="fa fa-cloud-download" aria-hidden="true"></i>
+                        <span> Download IDs</span>
+                    </div>
 
-          <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="claimClick();">
-              <i class="fa fa-user-circle" aria-hidden="true"></i>
-              <span> Claim All</span>
-          </div>
+                    <div class="score"
+                         style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;"
+                         (click)="claimClick();">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <span> Claim All</span>
+                    </div>
 
-          <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="watchClick();">
-              <i class="fa fa-envelope-o" aria-hidden="true"></i>
-              <span> Watch All</span>
-          </div>
+                    <div class="score"
+                         style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;"
+                         (click)="watchClick();">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <span> Watch All</span>
+                    </div>
 
-          <div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="deleteClick();">
-              <i class="fa fa-times" aria-hidden="true"></i>
-              <span> Delete All</span>
-          </div>
+                    <div class="score"
+                         style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;"
+                         (click)="deleteClick();">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        <span> Delete All</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
 
+        <div *ngIf="this.dataSets.length ==0" style="text-align:center; position: fixed; top: 50%; left:50%;">
+            no datasets selected, please <a [routerLink]="['/search']">browse</a> and select some
+        </div>
+
+
+        <ul class="list-unstyled" style="display:inline-block; width:100%">
+            <li *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }"
+                class="repeated-item ng-scope"
+                style="min-width:400px;">
+
+                <app-datasetwidget [d]="d" (buttonClicked)="this.remove(d.source,d.id)"
+                                                   [allowSelect]="false"></app-datasetwidget>
+
+
+            </li>
+        </ul>
+        <pagination-controls (pageChange)="p = $event"
+                             previousLabel=""
+                             nextLabel=""
+                             *ngIf="this.dataSets && this.dataSets.length > 10"
+                             class="my-pagination">
+        </pagination-controls>
     </div>
-
-    <div *ngIf="this.dataSets.length ==0" style="text-align:center; position: fixed; top: 50%; left:50%;">
-      no datasets selected, please <a [routerLink]="['/search']">browse</a> and select some
-    </div>
-
-
-
-
-  <ul class="list-unstyled" style="display:inline-block; width:100%">
-    <li *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }"
-        class="repeated-item ng-scope"
-        style="min-width:400px;">
-
-      <app-datasetwidget [d]="d" (buttonClicked)="this.remove(d.source,d.id)" [allowSelect]="false"></app-datasetwidget>
-
-
-
-    </li>
-  </ul>
-  <pagination-controls (pageChange)="p = $event"
-                       previousLabel=""
-                       nextLabel=""
-                       *ngIf="this.dataSets && this.dataSets.length > 10"
-                       class="my-pagination">
-  </pagination-controls>
-</div>
 </div>

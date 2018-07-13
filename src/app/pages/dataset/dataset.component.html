@@ -1,104 +1,114 @@
 <div class="container_ddi" id="datasetCtrl">
-  <div id="" class="row">
-  </div>
-  <div id="error-row" class="row">
-    <p>
-    </p>
-  </div>
-  <div class="row" style="">
-    <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
+    <div id="" class="row">
+    </div>
+    <div id="error-row" class="row">
+        <p>
+        </p>
+    </div>
+    <div class="row" style="">
+        <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;">
       <span class="visible-lg">
         <app-socialnetworks></app-socialnetworks>
       </span>
-    </div>
-    <!-- col-md-1-->
-    <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
-      <div id="dataset-error-row" class="row error-info ng-hide">
-        <p class="ng-binding">
-
-        </p>
-      </div>
-      <div class="panel panel-default" id="dataset_upper" >
-        <div class="panel-footer">
-          <div  style="float: right; width: 400px; text-align: right; position: relative; top:0px;">
-            <app-score [dataset]="d" ></app-score>
-          </div>
-
-            <h3>Dataset Information</h3>
-
-
         </div>
+        <!-- col-md-1-->
+        <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel" style="margin-left:-15px">
+            <div id="dataset-error-row" class="row error-info ng-hide">
+                <p class="ng-binding">
 
-        <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
-          <app-omics-image [omics]="d?.omics_type" [size]="'large'"> </app-omics-image>
-          <br>
-          <br>
-          <br>
-        </div>
-        <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
-          <div>
-            <h4>
-              <annotated-text [text]="d.name" [sections]="title_sections"></annotated-text>
-            </h4>
-            <p id="ontology_highlight_box" (click)="enrich_click()" class="hotword" style="">
-              <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
-            </p>
-          </div>
-          <hr style="margin-right:10px">
-          <div>
-            <div>
-              <p class="align-justify"><b>ABSTRACT</b>:
-                <annotated-text [text]="d.description" [sections]="abstract_sections"></annotated-text>
-              </p>
+                </p>
             </div>
-          </div>
-          <p class="align-justify" *ngIf="null!=d.sample_protocol">
-            <span><b>SAMPLE PROTOCOL:</b></span>
-              <span class="ng-scope">
-                  <annotated-text [text]="d.sample_protocol" [sections]="sample_protocol"></annotated-text>
-              </span>
-          </p>
-          <p class="align-justify" *ngIf="null!=d.data_protocol">
-            <span><b>DATA PROTOCOL:</b></span>
-              <span class="ng-scope">
-                  <annotated-text [text]="d.data_protocol" [sections]="data_protocol"></annotated-text>
-              </span>
-          </p>
-          <div *ngIf="d.similars">
-          <p class="align-justify" *ngIf="reanalysis_of(d)">
-            <b>REANALYSIS of:</b> <span *ngFor="let s of reanalysis_of(d)"><a [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a></span>
-              <span *ngIf="reanalysisoverflow(d)">(first 100 items shown)</span>
-          </p>
-          <p class="align-justify" *ngIf="null!=reanalised_by(d)">
-            <b>REANALYZED by:</b> <span href="#" *ngFor="let s of reanalised_by(d)" ><a [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a> </span>
-            <span *ngIf="reanalysisoverflow(d)">(first 100 items shown)</span>
-          </p>
-          <p class="align-justify" *ngIf="null!=related_omics(d)">
-            <b>OTHER RELATED OMICS DATASETS IN:</b> <span href="#" *ngFor="let s of related_omics(d)" ><a [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a> </span>
-          </p>
-          </div>
-          <p class="align-justify" *ngIf="null!=d.instruments">
-            <b>INSTRUMENT(S):</b>{{d.instruments}}
-          </p>
-          <p class="align-justify" *ngIf="null!=d.organisms">
-            <b>ORGANISM(S):</b>
-              <span *ngFor="let o of d.organisms">
-                <a class="biological" [routerLink]="['/search']" [queryParams]="{q: '*:* AND TAXONOMY:&quot;'+o.acc+'&quot;'}">
+            <div class="panel panel-default" id="dataset_upper">
+                <div class="panel-footer">
+                    <div style="float: right; width: 400px; text-align: right; position: relative; top:0px;">
+                        <app-score [dataset]="d"></app-score>
+                    </div>
+
+                    <h3>Dataset Information</h3>
+
+
+                </div>
+
+                <div class="" id="dataset_upper_left" style="height:50px;width:50px;float:left;margin:5px">
+                    <app-omics-image [omics]="d?.omics_type" [size]="'large'"></app-omics-image>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                <div class="" id="dataset_upper_right" style="overflow:hidden;margin-right:20px">
+                    <div>
+                        <h4>
+                            <app-annotated-text [text]="d.name"
+                                                        [sections]="title_sections"></app-annotated-text>
+                        </h4>
+                        <p id="ontology_highlight_box" (click)="enrich_click()" class="hotword" style="">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
+                        </p>
+                    </div>
+                    <hr style="margin-right:10px">
+                    <div>
+                        <div>
+                            <p class="align-justify"><b>ABSTRACT</b>:
+                                <app-annotated-text [text]="d.description"
+                                                            [sections]="abstract_sections"></app-annotated-text>
+                            </p>
+                        </div>
+                    </div>
+                    <!--<p class="align-justify" *ngIf="null!=d.sample_protocol">-->
+                        <!--<span><b>SAMPLE PROTOCOL:</b></span>-->
+                        <!--<span class="ng-scope">-->
+                            <!--<app-annotated-text-dataset [text]="d.sample_protocol"-->
+                                              <!--[sections]="sample_protocol"></app-annotated-text-dataset>-->
+                        <!--</span>-->
+                    <!--</p>-->
+                    <!--<p class="align-justify" *ngIf="null!=d.data_protocol">-->
+                        <!--<span><b>DATA PROTOCOL:</b></span>-->
+                        <!--<span class="ng-scope">-->
+                              <!--<app-annotated-text-dataset [text]="d.data_protocol"-->
+                                                          <!--[sections]="data_protocol"></app-annotated-text-dataset>-->
+                        <!--</span>-->
+                    <!--</p>-->
+                    <div *ngIf="d.similars">
+                        <p class="align-justify" *ngIf="reanalysis_of(d)">
+                            <b>REANALYSIS of:</b> <span *ngFor="let s of reanalysis_of(d)"><a
+                                [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a></span>
+                            <span *ngIf="reanalysisoverflow(d)">(first 100 items shown)</span>
+                        </p>
+                        <p class="align-justify" *ngIf="null!=reanalised_by(d)">
+                            <b>REANALYZED by:</b> <span href="#" *ngFor="let s of reanalised_by(d)"><a
+                                [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a> </span>
+                            <span *ngIf="reanalysisoverflow(d)">(first 100 items shown)</span>
+                        </p>
+                        <p class="align-justify" *ngIf="null!=related_omics(d)">
+                            <b>OTHER RELATED OMICS DATASETS IN:</b> <span href="#" *ngFor="let s of related_omics(d)"><a
+                                [routerLink]="['/dataset',getSourceByDatabaseName(s.database),s.accession]">{{s.accession}}</a> </span>
+                        </p>
+                    </div>
+                    <p class="align-justify" *ngIf="null!=d.instruments">
+                        <b>INSTRUMENT(S):</b>{{d.instruments}}
+                    </p>
+                    <p class="align-justify" *ngIf="null!=d.organisms">
+                        <b>ORGANISM(S):</b>
+                        <span *ngFor="let o of d.organisms">
+                <a class="biological" [routerLink]="['/search']"
+                   [queryParams]="{q: '*:* AND TAXONOMY:&quot;'+o.acc+'&quot;'}">
                        {{o.name}}
                 </a>&nbsp;
               </span>
-          </p>
-          <p class="align-justify ng-hide" *ngIf="null!=d.tissues"><b>TISSUE(S):</b>
-              {{d.tissues}}
-          </p>
-          <p class="align-justify ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0"><b>DISEASE(S):</b>
-              {{d.diseases}}
-          </p>
-          <p class="align-justify" *ngIf="null!=d.submitter">
-            <b>SUBMITTER:</b>
-              <span *ngFor="let o of d.submitter; let i = index;" >
+                    </p>
+                    <p class="align-justify ng-hide" *ngIf="null!=d.tissues"><b>TISSUE(S):</b>
+                        {{d.tissues}}
+                    </p>
+                    <p class="align-justify ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0">
+                        <b>DISEASE(S):</b>
+                        {{d.diseases}}
+                    </p>
+                    <p class="align-justify" *ngIf="null!=d.submitter">
+                        <b>SUBMITTER:</b>
+                        <span *ngFor="let o of d.submitter; let i = index;">
                 <span *ngIf="d.submitterMail && d.submitterMail[i]">
-                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img src="static/images/logo/rsz_mail.png">{{o}}</a>
+                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img
+                          src="static/images/logo/rsz_mail.png">{{o}}</a>
                 </span>
                 <span *ngIf="!(d.submitterMail && d.submitterMail[i])">
                   {{o}}
@@ -106,114 +116,122 @@
                 &nbsp;
               </span>
 
-              <span *ngFor="let o of d.submitterMail">
+                        <span *ngFor="let o of d.submitterMail">
                 <span>
                   <a href="#">{{o.name}}</a>
                 </span>&nbsp;
               </span>
-          </p>
-          <p class="align-justify">
-            <b>PROVIDER:</b>
-            <a [href]="d.full_dataset_link">{{d.id}}</a>  |
-            <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span> </a>
-            <span>| {{d.publicationDate}} </span>
-          </p>
+                    </p>
+                    <p class="align-justify">
+                        <b>PROVIDER:</b>
+                        <a [href]="d.full_dataset_link">{{d.id}}</a> |
+                        <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span>
+                        </a>
+                        <span>| {{d.publicationDate}} </span>
+                    </p>
 
-          <p class="align-justify" *ngIf="null!=d.secondary_accession">
-            <b>SECONDARY ACCESSION(S):</b>&nbsp;
+                    <p class="align-justify" *ngIf="d.secondary_accession">
+                        <b>SECONDARY ACCESSION(S):</b>&nbsp;
 
-            <span *ngFor="let o of d.secondary_accession;">
-              <a *ngIf="o.split('~').length>=1" href="{{o.substring(o.indexOf('~')+1)}}">{{o.substring(0,o.indexOf('~'))}}</a>
-              <a *ngIf="o.split('~').length<1" >{{o}}</a>
+                        <span *ngFor="let o of d.secondary_accession;">
+
+              <!--<a *ngIf="o.split('~').length>1" href="{{o.split('~')[1]}}">{{o.split('~')[0]}}</a>-->
+              <a *ngIf="o.split('~').length > 1" href="{{o.substring(o.indexOf('~')+1)}}">{{o.substring(0,o.indexOf('~'))}}</a>
+              <a *ngIf="o.split('~').length <= 1">{{o}}</a>
 
 
-              <!--<span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">-->
-              <!--<a *ngIf="this.databaseByAccession[o].urlTemplate" class="biological" href="{{this.databaseByAccession[o].urlTemplate.replace('{accession}',o)}}" >-->
-              <!--<img height="32" width="32" src="{{this.databaseByAccession[o].icon}}">&nbsp;{{o}}-->
-              <!--</a>-->
-              <!--</span>-->
-              <!--<span *ngIf="this.databaseByAccession && !this.databaseByAccession[o]">-->
-              <!--{{o}}-->
-              <!--</span>-->
+                            <!--<span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">-->
+                            <!--<a *ngIf="this.databaseByAccession[o].urlTemplate" class="biological" href="{{this.databaseByAccession[o].urlTemplate.replace('{accession}',o)}}" >-->
+                            <!--<img height="32" width="32" src="{{this.databaseByAccession[o].icon}}">&nbsp;{{o}}-->
+                            <!--</a>-->
+                            <!--</span>-->
+                            <!--<span *ngIf="this.databaseByAccession && !this.databaseByAccession[o]">-->
+                            <!--{{o}}-->
+                            <!--</span>-->
             </span>
-          </p>
+                    </p>
 
-          <p class="align-justify" *ngIf="null!=d.repositories">
-            <b>REPOSITORIES:</b>
-            <span *ngFor="let o of d.repositories; let isLast=last">
+                    <p class="align-justify" *ngIf="null!=d.repositories">
+                        <b>REPOSITORIES:</b>
+                        <span *ngFor="let o of d.repositories; let isLast=last">
                 {{o}}{{isLast ? '' : ', '}}
             </span>
-          </p>
+                    </p>
 
-          <!-- dataset_protocol_bottom-->
-          <!-- div id="buttons_highlight_box">
-            <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
-
-
-            <claim-button [dataSet]="d"></claim-button>
+                    <!-- dataset_protocol_bottom-->
+                    <!-- div id="buttons_highlight_box">
+                      <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
 
 
-            <a (click)="citation()" class="citation-button" style="">&lt;CITE&gt;</a>&nbsp;
-            <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>&nbsp;
-            <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
-          </div -->
-        </div>
+                      <claim-button-dataset [dataSet]="d"></claim-button-dataset>
 
-        <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
-        </div>
-        <!--dataset_bottom-->
 
-        <div class="row" style="margin-bottom:10px; margin-right: 0px; margin-left:40px;">
-          <div class="col-lg-2">
-            <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap">ACCESS DATA</a>
-          </div>
-          <div class="col-lg-10">
+                      <a (click)="citation()" class="citation-button" style="">&lt;CITE&gt;</a>&nbsp;
+                      <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>&nbsp;
+                      <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
+                    </div -->
+                </div>
+
+                <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
+                </div>
+                <!--dataset_bottom-->
+
+                <div class="row" style="margin-bottom:10px; margin-right: 0px; margin-left:40px;">
+                    <div class="col-lg-2">
+                        <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap">ACCESS
+                            DATA</a>
+                    </div>
+                    <div class="col-lg-10">
           <span class="pull-right">
           <div class="dot-button" style="background-color: #87CEFA" (click)="citation()">
               <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
 
-          <claim-button [dataSet]="d"></claim-button>
+          <app-claim-button [dataSet]="d"></app-claim-button>
 
-          <a class="dot-button" style="background-color: #94D67A; color:black;" href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" >
+          <a class="dot-button" style="background-color: #94D67A; color:black;"
+             href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank"
+             title="Download Dataset as JSON">
               <i class="fa fa-file-text-o" aria-hidden="true"></i>
-              <span [ngClass]="unselected"> Json&nbsp;&nbsp; </span>
+              <span [ngClass]="'unselected'"> Json&nbsp;&nbsp; </span>
           </a>
 
-          <a class="dot-button" style="background-color: #E69E7A; color:black;" href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML">
+          <a class="dot-button" style="background-color: #E69E7A; color:black;"
+             href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank"
+             title="Download Dataset as XML">
               <i class="fa fa-file-code-o" aria-hidden="true"></i>
               <span [ngClass]="'unselected'"> Xml&nbsp;&nbsp; </span>
           </a>
           </span>
-          </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <app-publication [ids]="d.publicationIds"></app-publication>
+
+            <similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></similar-molecule>
+
+            <!--dataset_upper -->
+            <div class="panel panel-default">
+                <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
+                <disqus [identifier]="repository+'/'+acc" [url]="repository+'/'+acc"></disqus>
+            </div>
         </div>
+        <!-- col-md-8 centerpanel-->
+        <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" style="margin-top:20px;">
+            <p>
+            </p>
+            <h3>
+                Similar Datasets
+            </h3>
+            <p></p>
+            <p></p>
 
-
-
-      </div>
-
-      <app-publication [ids]="d.publicationIds"></app-publication>
-
-      <similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></similar-molecule>
-
-      <!--dataset_upper -->
-      <div class="panel panel-default">
-        <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
-        <disqus [shortname]="dataset" [identifier]="repository+'/'+acc" [url]="repository+'/'+acc" ></disqus>
-      </div>
+            <app-similar [acc]="acc" [repository]="repository"></app-similar>
+        </div>
     </div>
-    <!-- col-md-8 centerpanel-->
-    <div class="col-md-3 col-sm-6 col-xs-12 panel panel-default" id="rightpanel" style="margin-top:20px;" >
-      <p>
-      </p><h3>
-      Similar Datasets
-    </h3>
-      <p></p>
-      <p></p>
-
-        <app-similar [acc]="acc" [repository]="repository"></app-similar>
-    </div>
-  </div>
 </div>
 
 

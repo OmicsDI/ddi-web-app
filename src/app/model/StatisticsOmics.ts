@@ -3,8 +3,8 @@
  */
 
 export class StatisticsOmics {
-  label: string;
-  id: string;
-  value: string;
-  name: string;
+    label: string;
+    id: string;
+    value: string;
+    name: string;
 }

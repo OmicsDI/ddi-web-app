@@ -1,4 +1,4 @@
-.connectionBox{
+.connectionBox {
     background-color: #f0f7de; /**/
     padding-bottom: 10px;
     padding-top: 10px;
@@ -13,12 +13,12 @@
 }
 
 ul.connectionList {
-    padding-left:14px;
+    padding-left: 14px;
 
 }
 
-ul.connectionList li a{
-    color:black;
+ul.connectionList li a {
+    color: black;
 }
 
 .connection {

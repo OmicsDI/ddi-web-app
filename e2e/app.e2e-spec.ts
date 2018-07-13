@@ -7,8 +7,16 @@ describe('web App', function() {
     page = new WebPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should show OmicsDI: Home title', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+      setTimeout(() => {
+          // Changes here will not propagate into your view.
+          this.ngZone.run(() => {
+              page.getTitle()
+                  .then((title: string) => {
+                      expect(title).toEqual('OmicsDI: Home');
+                  });
+          });
+      }, 30000);
   });
 });

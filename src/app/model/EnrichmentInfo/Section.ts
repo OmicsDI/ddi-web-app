@@ -3,8 +3,8 @@
  */
 
 export class Section {
-  "text": string;
-  "beAnnotated": boolean;
-  "synonyms": string[];
-  "tobeReduced": boolean //TODO:what is it?
+    'text': string;
+    'beAnnotated': boolean;
+    'synonyms': string[];
+    'tobeReduced': boolean; // TODO:what is it?
 }
