@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
-import {InviteComponent} from '@modules/profile-controls/invite/invite.component';
+import {InviteComponent} from '@modules/profile-controls/components/invite/invite.component';
 
 @Component({
     selector: 'app-profile',
