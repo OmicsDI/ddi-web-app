@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {MergeComponent} from 'pages/merge/merge.component';
+import {MergeComponent} from './components/merge/merge.component';
 
 const routes: Routes = [{
     path: '',

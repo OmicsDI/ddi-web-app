@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {MergeRoutingModule} from './merge-routing.module';
-import {MergeComponent} from 'pages/merge/merge.component';
+import {MergeComponent} from './components/merge/merge.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material';
 import {ControlsModule} from 'controls/controls.module';

@@ -9,7 +9,7 @@ import {AuthGuardService} from 'services/auth-guard.service';
 
 // Route Configuration
 export const routes: Routes = [
-    {path: '', redirectTo: '/home', pathMatch: 'full'},
+    {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
     {path: 'profile', redirectTo: 'dashboard/profile'},
     {path: 'profile/:username', loadChildren: '@modules/profile/profile.module#ProfileModule'},
@@ -22,7 +22,7 @@ export const routes: Routes = [
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
-    {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
+    {path: 'merge', loadChildren: '@modules/merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
     {path: 'unmerge', loadChildren: '@modules/unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
     {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
