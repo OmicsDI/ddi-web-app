@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
     _dataLoaded = false;
 
     constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService,
-                private route: ActivatedRoute, private notificationService: NotificationsService) {
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {

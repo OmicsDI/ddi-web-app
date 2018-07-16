@@ -15,7 +15,7 @@ export const routes: Routes = [
     {path: 'profile/:username', loadChildren: '@modules/profile/profile.module#ProfileModule'},
     {path: 'database', loadChildren: '@modules/database/database.module#DatabaseModule'},
     {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},
-    {path: 'search', loadChildren: './search/search.module#SearchModule' },
+    {path: 'search', loadChildren: '@modules/search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'dataset/:domain/:acc', loadChildren: '@modules/dataset/dataset.module#DatasetModule'},
     {path: 'terms', component: TermsComponent},

@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {SearchQueryComponent} from 'pages/search/search-query/search-query.component';
 import {CheckComponent} from 'pages/check/check.component';
 import {WelcomeComponent} from 'pages/welcome/welcome.component';
 import {CommonModule} from '@angular/common';
@@ -24,12 +23,10 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
     ],
     declarations: [
         CheckComponent,
-        SearchQueryComponent,
         WelcomeComponent
     ],
     exports: [
         CheckComponent,
-        SearchQueryComponent,
         WelcomeComponent
     ]
 })
