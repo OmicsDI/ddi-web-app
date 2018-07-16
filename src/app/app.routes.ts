@@ -11,8 +11,8 @@ import {AuthGuardService} from 'services/auth-guard.service';
 export const routes: Routes = [
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
-    // { path: 'profile', redirectTo:'dashboard/profile'},
-    {path: 'profile/:username', loadChildren: './profile/profile.module#ProfileModule'},
+    {path: 'profile', redirectTo: 'dashboard/profile'},
+    {path: 'profile/:username', loadChildren: '@modules/profile/profile.module#ProfileModule'},
     {path: 'database', loadChildren: '@modules/database/database.module#DatabaseModule'},
     {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},
     {path: 'search', loadChildren: './search/search.module#SearchModule' },

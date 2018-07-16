@@ -2,15 +2,15 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {ProfileRoutingModule} from './profile-routing.module';
-import {ProfileComponent} from 'pages/profile/profile.component';
+import {ProfileComponent} from './components/profile/profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {UtilsModule} from 'utils/utils.module';
-import {ProfileChartsModule} from '../profile-charts/profile-charts.module';
-import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ControlsModule} from 'controls/controls.module';
-import {PipesModule} from '../pipes/pipes.module';
+import {PipesModule} from '../../pipes/pipes.module';
+import {ProfileChartsModule} from '../../profile-charts/profile-charts.module';
+import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 
 @NgModule({
     imports: [
