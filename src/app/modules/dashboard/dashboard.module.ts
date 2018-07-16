@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from 'controls/controls.module';
 import {PagesModule} from 'pages/pages.module';
-import {ProfileChartsModule} from 'app/profile-charts/profile-charts.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FileUploadModule} from 'ng2-file-upload';
 import {FormsModule} from '@angular/forms';
@@ -22,6 +21,7 @@ import {DashboardUpdateComponent} from '@modules/dashboard/components/update/upd
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
+import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
 
 @NgModule({
     imports: [

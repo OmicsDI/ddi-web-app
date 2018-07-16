@@ -9,8 +9,8 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
 import {UtilsModule} from 'utils/utils.module';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from '../../pipes/pipes.module';
-import {ProfileChartsModule} from '../../profile-charts/profile-charts.module';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
+import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
 
 @NgModule({
     imports: [

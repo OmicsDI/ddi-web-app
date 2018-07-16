@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DataSetService} from 'services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {Profile} from 'model/Profile';
-import {DatasetCount} from 'model/DatasetCount';
 import {ProfileService} from 'services/profile.service';
 
 
