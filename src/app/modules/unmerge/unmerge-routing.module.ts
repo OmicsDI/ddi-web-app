@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {UnmergeComponent} from 'pages/unmerge/unmerge.component';
+import {UnmergeComponent} from './components/unmerge/unmerge.component';
 
 const routes: Routes = [{
     path: '',

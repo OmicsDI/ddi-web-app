@@ -23,7 +23,7 @@ export const routes: Routes = [
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
     {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
-    {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
+    {path: 'unmerge', loadChildren: '@modules/unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
     {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 

@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {UnmergeRoutingModule} from './unmerge-routing.module';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {UnmergeComponent} from 'pages/unmerge/unmerge.component';
+import {UnmergeComponent} from './components/unmerge/unmerge.component';
 import {MatDialogModule} from '@angular/material';
 import {ControlsModule} from 'controls/controls.module';
 
