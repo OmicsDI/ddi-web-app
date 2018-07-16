@@ -17,15 +17,14 @@ export const routes: Routes = [
     {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},
     {path: 'search', loadChildren: './search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
-    {path: 'dataset/:domain/:acc', loadChildren: './dataset/dataset.module#DatasetModule'},
+    {path: 'dataset/:domain/:acc', loadChildren: '@modules/dataset/dataset.module#DatasetModule'},
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule'},
     {path: 'selected', component: SelectedComponent},
     {path: 'merge', loadChildren: './merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
     {path: 'unmerge', loadChildren: './unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
-    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]},
-    {path: 'dataset/:domain/:acc', loadChildren: 'app/dataset/dataset.module#DatasetModule'}
+    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];

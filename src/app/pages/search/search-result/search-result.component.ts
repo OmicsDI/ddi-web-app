@@ -13,7 +13,7 @@ import {DataSetService} from 'services/dataset.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DatabaseListService} from 'services/database-list.service';
-import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
+import {CitationDialogComponent} from 'controls/citation-dialog/citation-dialog.component';
 
 @Component({
     selector: 'app-search-result',

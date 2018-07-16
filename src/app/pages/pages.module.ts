@@ -8,10 +8,6 @@ import {ControlsModule} from 'controls/controls.module';
 import {RouterModule} from '@angular/router';
 import {MatCheckboxModule} from '@angular/material';
 import {UtilsModule} from 'utils/utils.module';
-import {SimilarMoleculeComponent} from 'pages/dataset/similar-molecule/similar-molecule.component';
-import {SimilarComponent} from 'pages/dataset/similar/similar.component';
-import {PublicationComponent} from 'pages/dataset/publication/publication.component';
-import {CitationDialogComponent} from 'pages/dataset/citation-dialog/citation-dialog.component';
 import {PipesModule} from '../pipes/pipes.module';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 
@@ -29,26 +25,13 @@ import {ClipboardModule} from 'ngx-clipboard/dist';
     declarations: [
         CheckComponent,
         SearchQueryComponent,
-        WelcomeComponent,
-        SimilarMoleculeComponent,
-        SimilarComponent,
-        PublicationComponent,
-        CitationDialogComponent
+        WelcomeComponent
     ],
     exports: [
         CheckComponent,
         SearchQueryComponent,
-        WelcomeComponent,
-        SimilarMoleculeComponent,
-        SimilarComponent,
-        PublicationComponent,
-        CitationDialogComponent
-    ],
-    entryComponents: [
-        // ConfirmDialogComponent
-          CitationDialogComponent
-        // in some case dialog will not be loaded in lazy-load module,so we'd better put those component in here
-    ],
+        WelcomeComponent
+    ]
 })
 export class PagesModule {
 }

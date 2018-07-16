@@ -29,6 +29,7 @@ import {SearchBoxLargeComponent} from 'controls/search-box-large/search-box-larg
 import {AutocompleteNComponent} from 'controls/autocomplete-n/autocomplete-n.component';
 import {MatMenuModule} from '@angular/material';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
+import {CitationDialogComponent} from 'controls/citation-dialog/citation-dialog.component';
 
 @NgModule({
     imports: [
@@ -64,7 +65,8 @@ import {NguiAutoCompleteModule} from '@ngui/auto-complete';
         SearchBoxComponent,
         SearchBoxLargeComponent,
         SocialnetworksComponent,
-        AutocompleteNComponent
+        AutocompleteNComponent,
+        CitationDialogComponent
     ],
     exports: [
         ScoreComponent,
@@ -88,7 +90,8 @@ import {NguiAutoCompleteModule} from '@ngui/auto-complete';
         SearchBoxComponent,
         SearchBoxLargeComponent,
         SocialnetworksComponent,
-        AutocompleteNComponent
+        AutocompleteNComponent,
+        CitationDialogComponent
     ],
     entryComponents: [
         ConfirmDialogComponent

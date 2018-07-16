@@ -11,9 +11,9 @@ import {Synonym} from 'model/EnrichmentInfo/Synonym';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from 'services/profile.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
-import {CitationDialogComponent} from './citation-dialog/citation-dialog.component';
 import {SimilarDataset} from 'model/SimilarDataset';
 import {DatabaseListService} from 'services/database-list.service';
+import {CitationDialogComponent} from 'controls/citation-dialog/citation-dialog.component';
 
 
 @Component({
