@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path: 'home', component: HomeComponent},
     // { path: 'profile', redirectTo:'dashboard/profile'},
     {path: 'profile/:username', loadChildren: './profile/profile.module#ProfileModule'},
-    {path: 'database', loadChildren: './database/database.module#DatabaseModule'},
+    {path: 'database', loadChildren: '@modules/database/database.module#DatabaseModule'},
     {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},
     {path: 'search', loadChildren: './search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
