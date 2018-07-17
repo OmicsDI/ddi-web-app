@@ -1,11 +1,11 @@
 import {ModuleWithProviders} from '@angular/core';
-import {HomeComponent} from 'pages/home/home.component';
 import {RouterModule, Routes} from '@angular/router';
 import {UnauthorizedComponent} from 'pages/unauthorized/unauthorized.component';
 import {NotfoundComponent} from 'pages/notfound/notfound.component';
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
 import {AuthGuardService} from 'services/auth-guard.service';
+import {HomeComponent} from '@modules/home/components/home/home.component';
 
 // Route Configuration
 export const routes: Routes = [

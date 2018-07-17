@@ -5,7 +5,6 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Http, HttpModule, RequestOptions} from '@angular/http';
 import {AppComponent} from './app.component';
-import {HomeComponent} from 'pages/home/home.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
@@ -40,16 +39,6 @@ import {DialogService} from 'services/dialog.service';
 import {InviteService} from 'services/invite.service';
 import {UnauthorizedComponent} from 'pages/unauthorized/unauthorized.component';
 import {NotfoundComponent} from 'pages/notfound/notfound.component';
-import {HotwordsComponent} from 'pages/home/charts/hotwords/hotwords.component';
-import {MostAccessedComponent} from 'pages/home/charts/most-accessed/most-accessed.component';
-import {ReposOmicsComponent} from 'pages/home/charts/repos-omics/repos-omics.component';
-import {HomeAboutComponent} from 'pages/home/charts/home-about/home-about.component';
-import {StatisticsPanelComponent} from 'pages/home/charts/statistics-panel/statistics-panel.component';
-import {LatestDatasetsComponent} from 'pages/home/charts/latest-datasets/latest-datasets.component';
-import {AnnualOmicstypeComponent} from 'app/pages/home/charts/annual-omicstype/annual-omicstype.component';
-import {TweetsNewsComponent} from 'pages/home/charts/tweets-news/tweets-news.component';
-import {TissuesOrganismsComponent} from 'pages/home/charts/tissues-organisms/tissues-organisms.component';
-import {MegaNumberPipe} from './pipes/mega-number.pipe';
 import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {TermsComponent} from 'pages/terms/terms.component';
 import {SelectedComponent} from 'pages/selected/selected.component';
@@ -58,6 +47,7 @@ import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from './pipes/pipes.module';
 import {UtilsModule} from 'utils/utils.module';
 import {PagesModule} from 'pages/pages.module';
+import {HomeModule} from '@modules/home/home.module';
 
 
 export function getParameterByName(name): string {
@@ -80,19 +70,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 @NgModule({
     declarations: [
         AppComponent,
-        HomeComponent,
         UnauthorizedComponent,
         NotfoundComponent,
-        HotwordsComponent,
-        TissuesOrganismsComponent,
-        ReposOmicsComponent,
-        LatestDatasetsComponent,
-        MostAccessedComponent,
-        AnnualOmicstypeComponent,
-        TweetsNewsComponent,
-        StatisticsPanelComponent,
-        HomeAboutComponent,
-        MegaNumberPipe,
         TermsComponent,
         NotfoundComponent,
         SelectedComponent
@@ -100,6 +79,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     imports: [
         CommonModule,
         PipesModule,
+        HomeModule,
         BrowserModule,
         FormsModule,
         HttpModule,
