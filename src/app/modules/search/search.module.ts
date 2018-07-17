@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {SearchRoutingModule} from './search-routing.module';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from '../../pipes/pipes.module';
-import {PagesModule} from 'pages/pages.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
@@ -23,7 +22,6 @@ import {SearchQueryComponent} from './components/search-query/search-query.compo
         SearchRoutingModule,
         ControlsModule,
         PipesModule,
-        PagesModule,
         DisqusModule.forRoot('omicsdi'),
         FormsModule,
         ClipboardModule,

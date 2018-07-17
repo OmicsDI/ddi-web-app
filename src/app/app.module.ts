@@ -37,17 +37,13 @@ import {SelectedService} from 'services/selected.service';
 import {ScoreService} from 'services/score.service';
 import {DialogService} from 'services/dialog.service';
 import {InviteService} from 'services/invite.service';
-import {UnauthorizedComponent} from 'pages/unauthorized/unauthorized.component';
-import {NotfoundComponent} from 'pages/notfound/notfound.component';
 import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {TermsComponent} from 'pages/terms/terms.component';
-import {SelectedComponent} from 'pages/selected/selected.component';
 import {ThorService} from 'services/thor.service';
 import {ControlsModule} from 'controls/controls.module';
 import {PipesModule} from './pipes/pipes.module';
 import {UtilsModule} from 'utils/utils.module';
-import {PagesModule} from 'pages/pages.module';
 import {HomeModule} from '@modules/home/home.module';
+import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 
 
 export function getParameterByName(name): string {
@@ -69,12 +65,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        UnauthorizedComponent,
-        NotfoundComponent,
-        TermsComponent,
-        NotfoundComponent,
-        SelectedComponent
+        AppComponent
     ],
     imports: [
         CommonModule,
@@ -95,13 +86,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AlertModule.forRoot(),
         UtilsModule,
         SlimLoadingBarModule.forRoot(),
-        NgxPaginationModule,
         UiSwitchModule,
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),
         ClipboardModule,
         ControlsModule,
-        PagesModule
+        CommonplaceModule
     ],
     exports: [
         RouterModule

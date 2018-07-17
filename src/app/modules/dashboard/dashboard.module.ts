@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from 'controls/controls.module';
-import {PagesModule} from 'pages/pages.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FileUploadModule} from 'ng2-file-upload';
 import {FormsModule} from '@angular/forms';
@@ -28,7 +27,6 @@ import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module
         CommonModule,
         DashboardRoutingModule,
         ControlsModule,
-        PagesModule,
         ProfileControlsModule,
         ProfileChartsModule,
         DisqusModule.forRoot('omicsdi'),
