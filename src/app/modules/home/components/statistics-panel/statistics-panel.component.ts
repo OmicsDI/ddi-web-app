@@ -12,8 +12,11 @@ export class StatisticsPanelComponent implements OnInit {
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
-    statisticsList: any;
+    @Output()
+    register: EventEmitter<string> = new EventEmitter<string>();
 
+    statisticsList: any;
+    private widgetName = 'statistics';
     repositories: number;
     datasets: number;
     diseases: number;
@@ -22,13 +25,14 @@ export class StatisticsPanelComponent implements OnInit {
     users = 99;
 
     constructor(private statisticsService: StatisticsService, public profileService: ProfileService) {
+        this.register.emit(this.widgetName);
     }
 
 
     ngOnInit() {
         this.statisticsService.getStatisticsList()
             .then(data => {
-                this.notifyHomeLoader.emit('statistics');
+                this.notifyHomeLoader.emit(this.widgetName);
                 this.statisticsList = data;
 
 

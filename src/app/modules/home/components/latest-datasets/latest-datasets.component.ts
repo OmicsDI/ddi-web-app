@@ -15,6 +15,10 @@ export class LatestDatasetsComponent implements OnInit {
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
+    @Output()
+    register: EventEmitter<string> = new EventEmitter<string>();
+
+    private widgetName = 'latest_datasets';
     latestDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
@@ -22,6 +26,7 @@ export class LatestDatasetsComponent implements OnInit {
     transcriptomics_list: string;
 
     constructor(private dataSetService: DataSetService) {
+        this.register.emit(this.widgetName);
         LatestDatasetsComponent.requestLatestDatasetFailed = false;
     }
 
@@ -34,7 +39,7 @@ export class LatestDatasetsComponent implements OnInit {
 
         this.dataSetService.getLatestDataSets()
             .then(res => {
-                this.notifyHomeLoader.emit('latest_datasets');
+                this.notifyHomeLoader.emit(this.widgetName);
 
                 this.latestDatasets = res['datasets'];
             })

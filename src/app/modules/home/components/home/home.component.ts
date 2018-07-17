@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {MatDialog} from '@angular/material';
-import {SearchService} from '@shared/services/search.service';
 
 @Component({
     selector: 'app-home',
@@ -9,39 +7,27 @@ import {SearchService} from '@shared/services/search.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    isLoaded = {
-        hotwords: false,
-        tissues: false,
-        repos_omics: false,
-        latest_datasets: false,
-        most_accessed: false,
-        annual_omicstype: false,
-        statistics: false
-    };
 
-    constructor(private loadingBarService: SlimLoadingBarService
-        , private searchService: SearchService
-        , private dialog: MatDialog
-    ) {
+    widgets = {};
+
+    constructor(private loadingBarService: SlimLoadingBarService) {
         this.loadingBarService.start();
     }
 
     ngOnInit() {
     }
 
-    loadOnePart($partName): void {
+    widgetRegister(partName: string): void {
+        this.widgets[partName] = false;
+    }
 
-        this.isLoaded[$partName] = true;
-
-        for (const item in this.isLoaded) {
-            if (!this.isLoaded[item]) {
+    widgetLoaded($partName): void {
+        this.widgets[$partName] = true;
+        for (const item in this.widgets) {
+            if (!this.widgets[item]) {
                 return;
             }
         }
         this.loadingBarService.complete();
-    }
-
-    submitTestQuery() {
-        alert('submitted');
     }
 }

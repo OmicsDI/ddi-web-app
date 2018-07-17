@@ -16,6 +16,10 @@ export class TissuesOrganismsComponent implements OnInit {
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
+    @Output()
+    register: EventEmitter<string> = new EventEmitter<string>();
+
+    private widgetName = 'tissues';
     private webServiceUrl: string;
     private retryLimitTimes: number;
     private chartsErrorHandler: ChartsErrorHandler;
@@ -27,9 +31,8 @@ export class TissuesOrganismsComponent implements OnInit {
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
 
-    private bubble: any;
-
     constructor(datasetService: DataSetService, private router: Router) {
+        this.register.emit(this.widgetName);
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
@@ -52,7 +55,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     self.retryLimitTimes--;
 
                     if (self.retryLimitTimes <= 0) {
-                        self.notifyHomeLoader.emit('tissues');
+                        self.notifyHomeLoader.emit(self.widgetName);
                         ChartsErrorHandler.outputErrorInfo(self.bubChartName);
                         return;
                     }
@@ -60,7 +63,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     ChartsErrorHandler.outputGettingInfo(self.bubChartName);
                     self.startRequest();
                 } else {
-                    self.notifyHomeLoader.emit('tissues');
+                    self.notifyHomeLoader.emit(self.widgetName);
                     ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
                     self.tissues = tissues;

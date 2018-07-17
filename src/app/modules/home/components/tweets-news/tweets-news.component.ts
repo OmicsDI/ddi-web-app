@@ -11,13 +11,20 @@ export class TweetsNewsComponent implements OnInit {
 
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+
+    @Output()
+    register: EventEmitter<string> = new EventEmitter<string>();
+
+    private widgetName = 'tweets_news';
     id = '599190509341515776';
 
     constructor() {
+        this.register.emit(this.widgetName);
     }
 
     ngOnInit() {
         this.fetchTweets();
+        this.notifyHomeLoader.emit(this.widgetName);
         /*
             .then(res => {
                this.notifyHomeLoader.emit('tweet_news');

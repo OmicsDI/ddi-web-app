@@ -14,6 +14,10 @@ export class MostAccessedComponent implements OnInit {
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
+    @Output()
+    register: EventEmitter<string> = new EventEmitter<string>();
+
+    private widgetName = 'most_accessed';
     mostAccessedDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
@@ -21,6 +25,7 @@ export class MostAccessedComponent implements OnInit {
     transcriptomics_list: string;
 
     constructor(private dataSetService: DataSetService) {
+        this.register.emit(this.widgetName);
         MostAccessedComponent.requestMostAccessedDatasetFailed = false;
     }
 
@@ -33,8 +38,6 @@ export class MostAccessedComponent implements OnInit {
 
         this.dataSetService.getMostAccessedDataSets()
             .then(res => {
-                this.notifyHomeLoader.emit('most_accessed');
-
                 this.mostAccessedDatasets = res['datasets'];
                 this.mostAccessedDatasets.length = 10;
                 this.mostAccessedDatasets.sort(function (dataset1, dataset2) {
@@ -45,8 +48,9 @@ export class MostAccessedComponent implements OnInit {
                     } else {
                         return 0;
                     }
-
                 });
+
+                this.notifyHomeLoader.emit(this.widgetName);
 
                 // console.log(this.mostAccessedDatasets);
             })

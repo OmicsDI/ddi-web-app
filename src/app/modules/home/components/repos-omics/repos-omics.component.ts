@@ -15,6 +15,10 @@ export class ReposOmicsComponent implements OnInit {
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
+    @Output()
+    register: EventEmitter<string> = new EventEmitter<string>();
+
+    private widgetName = 'repos_omics';
     private webServiceUrl: string;
     private proteomicsList: string;
     private genomicsList: string;
@@ -31,7 +35,7 @@ export class ReposOmicsComponent implements OnInit {
     private omicsDataNum = [];
 
     constructor(dataSetService: DataSetService, private router: Router) {
-        // this.webServiceUrl = dataSetService.getWebServiceUrl();
+        this.register.emit(this.widgetName);
         this.webServiceUrl = dataSetService.getWebServiceUrl();
         this.proteomicsList = dataSetService.getProteomicsList();
         this.metabolomicsList = dataSetService.getMetabolomicsList();
@@ -51,14 +55,14 @@ export class ReposOmicsComponent implements OnInit {
                 if (err) {
                     this.retryLimitTimes--;
                     if (this.retryLimitTimes <= 0) {
-                        this.notifyHomeLoader.emit('repos_omics');
+                        this.notifyHomeLoader.emit(this.widgetName);
                         ChartsErrorHandler.outputErrorInfo(this.pieChartName);
                         return;
                     }
                     ChartsErrorHandler.outputGettingInfo(this.pieChartName);
                     this.startRequest();
                 } else {
-                    this.notifyHomeLoader.emit('repos_omics');
+                    this.notifyHomeLoader.emit(this.widgetName);
                     this.draw(domains, omicstype);
                 }
             });
