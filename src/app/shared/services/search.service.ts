@@ -112,7 +112,7 @@ export class SearchService extends BaseService {
         /** TODO: handle error **/
     }
 
-    private search(searchQuery: string, page: number): Observable<SearchResult> {
+    public search(searchQuery: string, page: number): Observable<SearchResult> {
         console.log(searchQuery);
         if (searchQuery == null) {
             searchQuery = '';
