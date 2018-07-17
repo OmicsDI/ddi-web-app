@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 import {SearchQuery} from 'model/SearchQuery';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {SavedSearch} from 'model/SavedSearch';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 
 @Component({
     selector: 'app-search-query',

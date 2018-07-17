@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {SelectedService} from 'services/selected.service';
-import {DataSetService} from 'services/dataset.service';
+import {SelectedService} from '@shared/services/selected.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {Observable} from 'rxjs/Rx';
 import {DataSetShort} from 'model/DataSetShort';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {WatchedDataset} from 'model/WatchedDataset';
-import {DialogService} from 'services/dialog.service';
+import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
     selector: 'app-dashboard-selected',

@@ -2,18 +2,18 @@ import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import {DataSet} from 'model/DataSet';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {SearchResult} from 'model/SearchResult';
 import {AppConfig} from 'app/app.config';
-import {ProfileService} from 'services/profile.service';
-import {SelectedService} from 'services/selected.service';
+import {ProfileService} from '@shared/services/profile.service';
+import {SelectedService} from '@shared/services/selected.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {DatabaseListService} from 'services/database-list.service';
-import {CitationDialogComponent} from 'controls/citation-dialog/citation-dialog.component';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 
 @Component({
     selector: 'app-search-result',

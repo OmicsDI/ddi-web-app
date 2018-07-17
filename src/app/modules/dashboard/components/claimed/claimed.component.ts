@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AppConfig} from 'app/app.config';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {DialogService} from 'services/dialog.service';
+import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
     selector: 'app-claimed',

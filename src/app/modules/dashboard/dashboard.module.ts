@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {DashboardRoutingModule} from './dashboard-routing.module';
-import {ControlsModule} from 'controls/controls.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FileUploadModule} from 'ng2-file-upload';
 import {FormsModule} from '@angular/forms';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {UtilsModule} from 'utils/utils.module';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {DashboardClaimedComponent} from '@modules/dashboard/components/claimed/claimed.component';
 import {DashboardFeedbackComponent} from '@modules/dashboard/components/feedback/feedback.component';

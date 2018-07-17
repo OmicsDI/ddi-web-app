@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {MatDialog} from '@angular/material';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 
 @Component({
     selector: 'app-home',

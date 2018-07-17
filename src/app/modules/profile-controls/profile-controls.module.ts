@@ -10,10 +10,10 @@ import {ProfileResultComponent} from './components/profile-result/profile-result
 import {ProfileTotalComponent} from './components/profile-total/profile-total.component';
 import {FormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {ControlsModule} from 'controls/controls.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {MatCheckboxModule} from '@angular/material';
 import {UiSwitchModule} from 'angular2-ui-switch';
-import {PipesModule} from 'app/pipes/pipes.module';
+import {PipesModule} from '@shared/pipes/pipes.module';
 import {RouterModule} from '@angular/router';
 
 @NgModule({

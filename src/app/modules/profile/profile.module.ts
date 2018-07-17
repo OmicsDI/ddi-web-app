@@ -6,9 +6,9 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {UtilsModule} from 'utils/utils.module';
-import {ControlsModule} from 'controls/controls.module';
-import {PipesModule} from '../../pipes/pipes.module';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
+import {PipesModule} from '@shared/pipes/pipes.module';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
 

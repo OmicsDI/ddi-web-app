@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
-import {DialogService} from 'services/dialog.service';
+import {DialogService} from '@shared/services/dialog.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 
 @Component({

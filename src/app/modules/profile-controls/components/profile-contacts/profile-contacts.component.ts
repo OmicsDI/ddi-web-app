@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Profile} from 'model/Profile';
 import {AppConfig} from 'app/app.config';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 
 @Component({
     selector: 'app-profile-contacts',

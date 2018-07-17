@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {DatabaseListService} from 'services/database-list.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {environment} from 'environments/environment';
 import {DomainStat} from 'model/DomainStat';
 import {AppConfig} from 'app/app.config';
-import {StatisticsService} from 'services/statistics.service';
+import {StatisticsService} from '@shared/services/statistics.service';
 
 @Component({
     selector: 'app-database',

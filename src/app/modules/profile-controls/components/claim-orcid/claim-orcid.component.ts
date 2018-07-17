@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ThorService} from 'services/thor.service';
+import {ThorService} from '@shared/services/thor.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 
 @Component({

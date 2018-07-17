@@ -1,19 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {Observable, Subscription} from 'rxjs/Rx';
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
-import {EnrichmentService} from 'services/enrichment.service';
-import {EnrichmentInfo} from 'model/EnrichmentInfo/EnrichmentInfo';
-import {Section} from 'model/EnrichmentInfo/Section';
-import {SynonymResult} from 'model/EnrichmentInfo/SynonymResult';
-import {Synonym} from 'model/EnrichmentInfo/Synonym';
+import {EnrichmentService} from '@shared/services/enrichment.service';
+import {EnrichmentInfo} from 'model/enrichment-info/EnrichmentInfo';
+import {Section} from 'model/enrichment-info/Section';
+import {SynonymResult} from 'model/enrichment-info/SynonymResult';
+import {Synonym} from 'model/enrichment-info/Synonym';
 import {AppConfig} from 'app/app.config';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {SimilarDataset} from 'model/SimilarDataset';
-import {DatabaseListService} from 'services/database-list.service';
-import {CitationDialogComponent} from 'controls/citation-dialog/citation-dialog.component';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 
 
 @Component({

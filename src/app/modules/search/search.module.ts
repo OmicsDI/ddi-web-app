@@ -2,12 +2,12 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {SearchRoutingModule} from './search-routing.module';
-import {ControlsModule} from 'controls/controls.module';
-import {PipesModule} from '../../pipes/pipes.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
+import {PipesModule} from '@shared/pipes/pipes.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {UtilsModule} from 'utils/utils.module';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SearchComponent} from './components/search/search.component';
 import {SearchTotalComponent} from './components/search-total/search-total.component';

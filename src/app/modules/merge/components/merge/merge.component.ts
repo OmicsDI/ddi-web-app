@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {MergeCandidate} from 'model/MergeCandidate';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {Profile} from 'model/Profile';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {Router} from '@angular/router';
-import {DialogService} from 'services/dialog.service';
+import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
     selector: 'app-merge',

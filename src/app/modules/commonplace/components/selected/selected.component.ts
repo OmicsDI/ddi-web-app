@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {Observable} from 'rxjs/Observable';
-import {SelectedService} from 'services/selected.service';
-import {DataSetService} from 'services/dataset.service';
+import {SelectedService} from '@shared/services/selected.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
-import {DatabaseListService} from 'services/database-list.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
 
 @Component({
     selector: 'app-selected',

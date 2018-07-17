@@ -3,9 +3,9 @@ import {CommonModule} from '@angular/common';
 
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard/dist';
-import {UtilsModule} from 'utils/utils.module';
-import {ControlsModule} from 'controls/controls.module';
-import {PipesModule} from '../../pipes/pipes.module';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
+import {PipesModule} from '@shared/pipes/pipes.module';
 import {RouterModule} from '@angular/router';
 import {MatCheckboxModule} from '@angular/material';
 import {HomeComponent} from '@modules/home/components/home/home.component';

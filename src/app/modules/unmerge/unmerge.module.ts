@@ -5,7 +5,7 @@ import {UnmergeRoutingModule} from './unmerge-routing.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {UnmergeComponent} from './components/unmerge/unmerge.component';
 import {MatDialogModule} from '@angular/material';
-import {ControlsModule} from 'controls/controls.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
 
 @NgModule({
     imports: [

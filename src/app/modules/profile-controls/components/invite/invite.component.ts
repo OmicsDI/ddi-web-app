@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {InviteService} from 'services/invite.service';
+import {InviteService} from '@shared/services/invite.service';
 import {Observable} from 'rxjs/Observable';
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {DatabaseListService} from 'services/database-list.service';
-import {ProfileService} from 'services/profile.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';

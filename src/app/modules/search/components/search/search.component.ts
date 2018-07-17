@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {ActivatedRoute} from '@angular/router';
 import {SearchQuery} from 'model/SearchQuery';

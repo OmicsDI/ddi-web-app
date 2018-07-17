@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {AppConfig} from 'app/app.config';
 
 @Component({

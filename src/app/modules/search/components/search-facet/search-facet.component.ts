@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {Facet} from 'model/Facet';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 import {Router} from '@angular/router';
 
 @Component({

@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
-import {SimilarMoleculeService} from 'services/similar-molecule.service';
+import {SimilarMoleculeService} from '@shared/services/similar-molecule.service';
 import {SimilarMolecule} from 'model/SimilarMolecule';
 import {DataSet} from 'model/DataSet';
 import {Score} from 'model/Score';

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {StatisticsService} from 'app/services/statistics.service';
-import {ProfileService} from 'services/profile.service';
+import {StatisticsService} from '@shared/services/statistics.service';
+import {ProfileService} from '@shared/services/profile.service';
 
 @Component({
     selector: 'app-statistics-panel',

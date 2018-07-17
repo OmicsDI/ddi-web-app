@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 
 import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
-import {DataSetService} from 'app/services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 
 const cloud = require('d3-cloud');

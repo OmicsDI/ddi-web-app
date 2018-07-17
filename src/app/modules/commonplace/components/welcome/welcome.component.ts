@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
-import {InviteService} from 'services/invite.service';
+import {InviteService} from '@shared/services/invite.service';
 
 @Component({
     selector: 'app-welcome',

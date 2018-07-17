@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Profile} from 'model/Profile';
 import {DataSetShort} from 'model/DataSetShort';
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {FileUploader} from 'ng2-file-upload';

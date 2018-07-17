@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 import {DataSet} from 'model/DataSet';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {SearchResult} from 'model/SearchResult';

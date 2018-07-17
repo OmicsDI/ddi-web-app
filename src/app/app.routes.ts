@@ -1,6 +1,6 @@
 import {ModuleWithProviders} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {AuthGuardService} from 'services/auth-guard.service';
+import {AuthGuardService} from '@shared/services/auth-guard.service';
 import {HomeComponent} from '@modules/home/components/home/home.component';
 import {UnauthorizedComponent} from '@modules/commonplace/components/unauthorized/unauthorized.component';
 import {TermsComponent} from '@modules/commonplace/components/terms/terms.component';

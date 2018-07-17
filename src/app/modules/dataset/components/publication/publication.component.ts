@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {PublicationService} from 'services/publication.service';
+import {PublicationService} from '@shared/services/publication.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Publication} from 'model/Publication';
 import {AltmetricEntity} from 'model/AltmetricEntity';

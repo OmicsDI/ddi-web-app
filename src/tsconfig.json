@@ -22,6 +22,9 @@
       ],
       "@modules/*": [
         "app/modules/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
       ]
     },
     "declaration": false,

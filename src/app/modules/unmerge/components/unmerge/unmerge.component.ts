@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {UnMergeDatasets} from 'model/Unmerge/UnMergeDatasets';
-import {DialogService} from 'services/dialog.service';
+import {UnMergeDatasets} from 'model/unmerge/UnMergeDatasets';
+import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
     selector: 'app-unmerge',

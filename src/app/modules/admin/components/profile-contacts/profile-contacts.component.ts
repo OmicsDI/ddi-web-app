@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AppConfig} from 'app/app.config';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {Profile} from 'model/Profile';
 
 @Component({

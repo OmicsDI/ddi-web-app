@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
-import {DataSetService} from 'app/services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 
 @Component({

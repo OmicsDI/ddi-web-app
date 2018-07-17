@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
-import {SimilarityService} from 'services/similarity.service';
+import {SimilarityService} from '@shared/services/similarity.service';
 import {SimilarityResult} from 'model/SimilarityResult';
 import {Subscription} from 'rxjs/Subscription';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
-import {DatabaseListService} from 'services/database-list.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
 
 @Component({
     selector: 'app-similar',

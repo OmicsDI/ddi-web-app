@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 
-import {DataSetService} from 'services/dataset.service';
+import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 

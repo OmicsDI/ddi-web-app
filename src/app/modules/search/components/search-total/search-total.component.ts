@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchService} from 'services/search.service';
+import {SearchService} from '@shared/services/search.service';
 import {Subscription} from 'rxjs/Subscription';
 import {SearchQuery} from 'model/SearchQuery';
 import {SavedSearch} from 'model/SavedSearch';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 
 @Component({
