@@ -4,60 +4,45 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Http, HttpModule, RequestOptions} from '@angular/http';
-import {AppComponent} from './app.component';
-import {HomeComponent} from 'pages/home/home.component';
+import {AppComponent} from '@shared/components/app/app.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
-import {NgxPaginationModule} from 'ngx-pagination';
 import {ClipboardModule} from 'ngx-clipboard/dist';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SimpleNotificationsModule} from 'angular2-notifications/dist';
 import {routing} from './app.routes';
 import {RouterModule} from '@angular/router';
-import {ProfileService} from 'services/profile.service';
+import {ProfileService} from '@shared/services/profile.service';
 import {AuthConfig, AuthHttp} from 'angular2-jwt';
-import {AuthService} from 'services/auth.service';
-import {AuthGuardService} from 'services/auth-guard.service';
-import {SearchService} from 'services/search.service';
-import {DataSetService} from 'services/dataset.service';
-import {EnrichmentService} from 'services/enrichment.service';
-import {SimilarityService} from 'services/similarity.service';
-import {OntologyService} from 'services/ontology.service';
-import {PublicationService} from 'services/publication.service';
-import {DatabaseListService} from 'services/database-list.service';
+import {AuthService} from '@shared/services/auth.service';
+import {AuthGuardService} from '@shared/services/auth-guard.service';
+import {SearchService} from '@shared/services/search.service';
+import {DataSetService} from '@shared/services/dataset.service';
+import {EnrichmentService} from '@shared/services/enrichment.service';
+import {SimilarityService} from '@shared/services/similarity.service';
+import {OntologyService} from '@shared/services/ontology.service';
+import {PublicationService} from '@shared/services/publication.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
 import {AppConfig} from './app.config';
-import {SimilarMoleculeService} from 'services/similar-molecule.service';
-import {FeedbackService} from 'services/feedback.service';
-import {StatisticsService} from 'services/statistics.service';
-import {AltmetricService} from 'services/altmetric.service';
-import {SelectedService} from 'services/selected.service';
-import {ScoreService} from 'services/score.service';
-import {DialogService} from 'services/dialog.service';
-import {InviteService} from 'services/invite.service';
-import {UnauthorizedComponent} from 'pages/unauthorized/unauthorized.component';
-import {NotfoundComponent} from 'pages/notfound/notfound.component';
-import {HotwordsComponent} from 'pages/home/charts/hotwords/hotwords.component';
-import {MostAccessedComponent} from 'pages/home/charts/most-accessed/most-accessed.component';
-import {ReposOmicsComponent} from 'pages/home/charts/repos-omics/repos-omics.component';
-import {HomeAboutComponent} from 'pages/home/charts/home-about/home-about.component';
-import {StatisticsPanelComponent} from 'pages/home/charts/statistics-panel/statistics-panel.component';
-import {LatestDatasetsComponent} from 'pages/home/charts/latest-datasets/latest-datasets.component';
-import {AnnualOmicstypeComponent} from 'app/pages/home/charts/annual-omicstype/annual-omicstype.component';
-import {TweetsNewsComponent} from 'pages/home/charts/tweets-news/tweets-news.component';
-import {TissuesOrganismsComponent} from 'pages/home/charts/tissues-organisms/tissues-organisms.component';
-import {MegaNumberPipe} from './pipes/mega-number.pipe';
+import {SimilarMoleculeService} from '@shared/services/similar-molecule.service';
+import {FeedbackService} from '@shared/services/feedback.service';
+import {StatisticsService} from '@shared/services/statistics.service';
+import {AltmetricService} from '@shared/services/altmetric.service';
+import {SelectedService} from '@shared/services/selected.service';
+import {ScoreService} from '@shared/services/score.service';
+import {DialogService} from '@shared/services/dialog.service';
+import {InviteService} from '@shared/services/invite.service';
 import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {TermsComponent} from 'pages/terms/terms.component';
-import {SelectedComponent} from 'pages/selected/selected.component';
-import {ThorService} from 'services/thor.service';
-import {ControlsModule} from 'controls/controls.module';
-import {PipesModule} from './pipes/pipes.module';
-import {UtilsModule} from 'utils/utils.module';
-import {PagesModule} from 'pages/pages.module';
+import {ThorService} from '@shared/services/thor.service';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
+import {PipesModule} from '@shared/pipes/pipes.module';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
+import {HomeModule} from '@modules/home/home.module';
+import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 
 
 export function getParameterByName(name): string {
@@ -79,27 +64,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        HomeComponent,
-        UnauthorizedComponent,
-        NotfoundComponent,
-        HotwordsComponent,
-        TissuesOrganismsComponent,
-        ReposOmicsComponent,
-        LatestDatasetsComponent,
-        MostAccessedComponent,
-        AnnualOmicstypeComponent,
-        TweetsNewsComponent,
-        StatisticsPanelComponent,
-        HomeAboutComponent,
-        MegaNumberPipe,
-        TermsComponent,
-        NotfoundComponent,
-        SelectedComponent
+        AppComponent
     ],
     imports: [
         CommonModule,
         PipesModule,
+        HomeModule,
         BrowserModule,
         FormsModule,
         HttpModule,
@@ -115,13 +85,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AlertModule.forRoot(),
         UtilsModule,
         SlimLoadingBarModule.forRoot(),
-        NgxPaginationModule,
         UiSwitchModule,
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),
         ClipboardModule,
         ControlsModule,
-        PagesModule
+        CommonplaceModule
     ],
     exports: [
         RouterModule
