@@ -94,7 +94,8 @@ import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/au
         CitationDialogComponent
     ],
     entryComponents: [
-        ConfirmDialogComponent
+        ConfirmDialogComponent,
+        CitationDialogComponent
     ],
 })
 export class ControlsModule {
