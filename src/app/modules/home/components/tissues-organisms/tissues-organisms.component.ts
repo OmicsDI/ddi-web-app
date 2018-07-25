@@ -236,15 +236,15 @@ export class TissuesOrganismsComponent implements OnInit {
 
         if (value === 'Tissues') {
             data = self.tissues;
-            searchWord_pre = '*:* AND tissue:"';
+            searchWord_pre = 'tissue:"';
         }
         if (value === 'Organisms') {
             data = self.calculateLoggedValue(self.organisms);
-            searchWord_pre = '*:* AND TAXONOMY:"';
+            searchWord_pre = 'TAXONOMY:"';
         }
         if (value === 'Diseases') {
             data = self.diseases;
-            searchWord_pre = '*:* AND disease:"';
+            searchWord_pre = 'disease:"';
         }
 
         svg_inside.selectAll('.node').remove();

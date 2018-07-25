@@ -170,13 +170,13 @@ export class ReposOmicsComponent implements OnInit {
 
         self.setTheRadio();
         self.drawBarGraphic(self.data, self.reposDataSimple);
-        self.showTip('*:* AND repository:"', self.reposDataSimple);
+        self.showTip('repository:"', self.reposDataSimple);
 
         // give different namespace after 'resize' to add window listener
         d3.select(window).on('resize.repos_omics', function () {
             if (self.router.url === '/home') {
                 self.drawBarGraphic(self.data, self.reposDataSimple);
-                self.showTip('*:* AND repository:"', self.reposDataSimple);
+                self.showTip('repository:"', self.reposDataSimple);
             }
         });
     }
@@ -255,13 +255,13 @@ export class ReposOmicsComponent implements OnInit {
 
             if (value === 'Omics') {
                 d = omicsDataNum;
-                searchWordPre = '*:* AND omics_type:"';
+                searchWordPre = 'omics_type:"';
 
                 self.drawBarGraphic(d, omicsDataSimple);
                 self.showTip(searchWordPre, omicsDataSimple);
             } else if (value === 'Resources') {
                 d = data;
-                searchWordPre = '*:* AND repository:"';
+                searchWordPre = 'repository:"';
 
                 self.drawBarGraphic(d, reposDataSimple);
                 self.showTip(searchWordPre, reposDataSimple);
