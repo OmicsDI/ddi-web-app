@@ -1,9 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {SearchService} from '@shared/services/search.service';
-import {DataSet} from 'model/DataSet';
-import {Observable, Subscription} from 'rxjs/Rx';
-import {SearchResult} from 'model/SearchResult';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {DataControl} from 'model/DataControl';
 
 @Component({
     selector: 'app-search-pager',
@@ -12,28 +8,20 @@ import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 })
 export class SearchPagerComponent implements OnInit {
 
-    collection = [];
-    subscription: Subscription;
-    result: Observable<SearchResult>;
-    datasets: Observable<DataSet[]>;
+    @Input()
+    totalResults: number;
 
-    sortBy = 'id';
-    sortOrder = 'ascending';
+    @Output()
+    dataControlChange = new EventEmitter<DataControl>();
 
-    p = 1;
-    total: number;
+    @Input()
+    dataControl: DataControl;
+
     loading = true;
+    pageSizes = ['10', '20', '30', '50', '100'];
+    Math: Math = Math;
 
-    constructor(public searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService) {
-        for (let i = 1; i <= 100; i++) {
-            this.collection.push(`item ${i}`);
-        }
-
-        this.subscription = searchService.searchResult$.subscribe(
-            searchResult => {
-                this.total = searchResult.count;
-                this.loading = false;
-            });
+    constructor() {
     }
 
     ngOnInit() {
@@ -41,46 +29,26 @@ export class SearchPagerComponent implements OnInit {
     }
 
     getPage(page: number) {
-        this.slimLoadingBarService.start();
-        this.p = page;
-        this.searchService.page(page);
+        this.dataControl.page = page;
+        this.dataControlChange.emit(this.dataControl);
         this.loading = true;
     }
 
-    sort(by: string) {
-        this.slimLoadingBarService.start();
-
-        if (this.searchService.sortBy === by) {
-            if (this.searchService.sortOrder === 'ascending') {
-                this.searchService.sortOrder = 'descending';
-            } else {
-                this.searchService.sortOrder = 'ascending';
-            }
-        } else {
-            this.searchService.sortBy = by;
-            this.searchService.sortOrder = 'ascending';
-        }
-        this.searchService.sort();
+    sortOrderChanged(sortOrder: boolean) {
+        this.dataControl.order = sortOrder;
+        this.dataControlChange.emit(this.dataControl);
         this.loading = true;
     }
 
-    sortOrderChanged() {
-        if (this.searchService.sortOrder === 'ascending') {
-            this.searchService.sortOrder = 'descending';
-        } else {
-            this.searchService.sortOrder = 'ascending';
-        }
-        this.slimLoadingBarService.start();
-        this.searchService.sort();
+    pageSizeChanged(pageSize: number) {
+        this.dataControl.pageSize = pageSize;
+        this.dataControlChange.emit(this.dataControl);
         this.loading = true;
     }
 
     sortByChanged(value) {
-        // console.log(value);
-        this.searchService.sortBy = value;
-        this.slimLoadingBarService.start();
-        this.searchService.sort();
+        this.dataControl.sortBy = value;
+        this.dataControlChange.emit(this.dataControl);
         this.loading = true;
     }
-
 }

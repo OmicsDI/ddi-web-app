@@ -41,18 +41,14 @@ export class DatasetWidgetComponent implements OnInit {
 
     getDatabaseUrl(source) {
         const db = this.databaseListServce.databases[source];
-        if (!db) {
-            console.log('source not found:' + source);
-        } else {
+        if (db) {
             return db.sourceUrl;
         }
     }
 
     getDatabaseTitle(source) {
         const db = this.databaseListServce.databases[source];
-        if (!db) {
-            console.log('source not found:' + source);
-        } else {
+        if (db) {
             return db.databaseName;
         }
     }

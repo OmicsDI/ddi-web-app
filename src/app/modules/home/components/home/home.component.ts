@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {SearchService} from '@shared/services/search.service';
+import {DataControl} from 'model/DataControl';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({
     selector: 'app-home',
@@ -9,8 +12,11 @@ import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 export class HomeComponent implements OnInit {
 
     widgets = {};
+    dataControl = new DataControl();
+    facetsChannel = 'facet_channel';
 
-    constructor(private loadingBarService: SlimLoadingBarService) {
+    constructor(private loadingBarService: SlimLoadingBarService, private searchService: SearchService
+                , private dataTransportService: DataTransportService) {
         this.loadingBarService.start();
     }
 
@@ -29,5 +35,14 @@ export class HomeComponent implements OnInit {
             }
         }
         this.loadingBarService.complete();
+        this.loadFacetForAdvancedSearch();
+    }
+
+    private loadFacetForAdvancedSearch() {
+        this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
+            this.dataControl.order)
+            .subscribe(result => {
+                this.dataTransportService.fire(this.facetsChannel, result.facets);
+            });
     }
 }

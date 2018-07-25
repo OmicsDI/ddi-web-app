@@ -1,6 +1,6 @@
-<div *ngIf="query" class="alert alert-warning alert-group" style="position: relative; z-index: 1">
+<div *ngIf="searchQuery" class="alert alert-warning alert-group" style="position: relative; z-index: 1">
     <div class="form-inline" style="position: relative;">
-        <select [(ngModel)]="query.operator" class="form-control input-sm">
+        <select [(ngModel)]="searchQuery.operator" class="form-control input-sm">
             <option *ngFor="let o of operators">{{o.name}}</option>
         </select>
         <button style="margin-left: 5px" (click)="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus"
@@ -19,15 +19,15 @@
         <label>"Sorry, can not perform the search either there is no field or data is empty."</label>
     </div>
     <div class="group-conditions">
-        <div *ngFor="let rule of query.rules; let i = index;" class="condition">
+        <div *ngFor="let rule of searchQuery.rules; let i = index;" class="condition">
             <div>
                 <div *ngIf="null!=rule.query">
-                    <query-builder [parent]="this" [index]="i" [(query)]="rule.query"></query-builder>
+                    <query-builder [parent]="this" [index]="i" [searchQuery]="rule.query"></query-builder>
                 </div>
                 <div *ngIf="null==rule.query">
                     <div class="form-inline" style="margin-top:3px">
-                        <select [(ngModel)]="rule.field" class="form-control input-sm" (click)="selectField(rule)">
-                            <option *ngFor="let field of searchService.allFacets" [ngValue]="field.id">{{field.label}}
+                        <select [(ngModel)]="rule.field" class="form-control input-sm" (select)="selectField(rule)">
+                            <option *ngFor="let field of allFacets" [ngValue]="field.id">{{field.label}}
                             </option>
                         </select>
                         <select style="margin-left: 3px" [(ngModel)]="rule.condition" class="form-control input-sm">
