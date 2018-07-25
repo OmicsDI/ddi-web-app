@@ -774,10 +774,10 @@ input[type=submit] {
 input[type=text]:not([value*=" "]):active,
 input[type=text]:not([value*=" "]):focus {
     /*box-shadow*/
-    -webkit-box-shadow: inset 4px 0px 0 #2ecc71;
-    -moz-box-shadow: inset 4px 0px 0 #2ecc71;
-    box-shadow: inset 4px 0px 0 #2ecc71;
-    padding-left: 10px;
+    /*-webkit-box-shadow: inset 4px 0px 0 #2ecc71;*/
+    /*-moz-box-shadow: inset 4px 0px 0 #2ecc71;*/
+    /*box-shadow: inset 4px 0px 0 #2ecc71;*/
+    /*padding-left: 10px;*/
     border-color: #00b7ea;
     background-color: white;
 : x;
