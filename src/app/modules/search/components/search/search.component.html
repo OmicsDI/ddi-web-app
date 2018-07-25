@@ -4,7 +4,43 @@
 <div class="row">
     <div class="col-lg-2 col-md-3 col-sm-4 hidden-xs metasearch-facets">
         <div style="vertical-align: top; border:none;">
-            <app-search-facet></app-search-facet>
+            <div *ngFor="let f of searchResult.facets">
+                <ng-container *ngIf="f.label === 'Omics type'">
+                    <app-facet-omics [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                                     [facetSelected]="selectedFacets.get(f.id)"
+                                     (facetValueSelected)="facetValueSelected(f.id, $event)"
+                                     (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                    </app-facet-omics>
+                </ng-container>
+            </div>
+
+            <div *ngFor="let f of searchResult.facets">
+                <ng-container *ngIf="f.label === 'Organisms'">
+                    <h3>{{f.label}}</h3>
+                    <div class="metasearch-organism-facet force-scrollbars list-group-item"
+                         style="overflow-x:hidden;">
+                        <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                                   [facetSelected]="selectedFacets.get(f.id)"
+                                   (facetValueSelected)="facetValueSelected(f.id, $event)"
+                                   (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                        </app-facet>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div *ngFor="let f of searchResult.facets">
+                <ng-container *ngIf="f.label !== 'Organisms'">
+                    <h3>{{f.label}}</h3>
+                    <div class="metasearch-organism-facet force-scrollbars list-group-item"
+                         style="overflow-x:hidden;">
+                        <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                                   [facetSelected]="selectedFacets.get(f.id)"
+                                   (facetValueSelected)="facetValueSelected(f.id, $event)"
+                                   (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                        </app-facet>
+                    </div>
+                </ng-container>
+            </div>
         </div>
     </div>
     <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12  metasearch-results" style="border-left: none;">
