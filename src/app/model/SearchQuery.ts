@@ -34,7 +34,7 @@ export class SearchQuery {
                     strtemp = '["' + rule.data + '" TO "' + (rule.data2 || '') + '"]';
                 }
                 if (rule.condition === 'equal') {
-                    strtemp = '("' + rule.data + '")';
+                    strtemp = '"' + rule.data + '"';
                 }
 
                 if (rule.field === 'all_fields') {
