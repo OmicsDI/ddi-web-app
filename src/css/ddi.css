@@ -815,7 +815,7 @@ input[type=submit]:focus {
 .ddi-card-panel {
     background-color: #fff;
     border-radius: 2px;
-    margin: 1rem 0rem 0.8rem 1rem;
+    margin: 1rem 0rem 0.8rem 0rem;
     padding: 10px;
 }
 
