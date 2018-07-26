@@ -518,33 +518,34 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             } else {
                 year = date.toString().substr(date.toString().lastIndexOf(' '), 4);
             }
+            const citationCount = d['scores'] != null ? d['scores']['citationCount'] : 0;
             switch (d['omics_type'].toString()) {
                 case 'Genomics':
 
                     genomicsList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Transcriptomics':
 
                     transcriList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Metabolomics':
 
                     metaboloList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Proteomics':
 
                     proteomiList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 default:
