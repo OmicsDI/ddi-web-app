@@ -219,7 +219,7 @@ export class AnnualOmicstypeComponent implements OnInit {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + AnnualOmicstypeComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
 
@@ -250,7 +250,7 @@ export class AnnualOmicstypeComponent implements OnInit {
                 return 'translate(' + (i * 0) + ',200)';
             })
             .on('click', function (d) {
-                const searchWord = '*:* AND omics_type:"' + d + '"';
+                const searchWord = 'omics_type:"' + d + '"';
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
                 console.log('this.router.navigate');
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});

@@ -44,7 +44,6 @@ export class SearchQuery {
                 }
             }
         }
-        str = str.replace(/"\*\:\*"/g, '*:*');
         return str + ')';
     }
 }
