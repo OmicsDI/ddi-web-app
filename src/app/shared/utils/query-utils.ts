@@ -8,7 +8,9 @@ export class Index {
 export class QueryUtils {
 
     public static getBaseQuery(params: {}): string {
-        return params['q'] != null ? params['q'] : '';
+        let query = params['q'] != null ? params['q'] : '';
+        query = query.replace(/-AND-/g, ' AND ');
+        return query;
     }
 
     /**

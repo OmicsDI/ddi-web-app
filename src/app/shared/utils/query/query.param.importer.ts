@@ -11,6 +11,8 @@ export class QueryParamImporter implements ParamImporter {
             if (query[0] === '(') {
                 query = query.slice(1, query.length - 1);
             }
+            query = query.replace(/:\s*/g, ':');
+            query = query.replace(/\s+AND\s+/g, '-AND-');
             this.params['q'] = query;
         }
     }
