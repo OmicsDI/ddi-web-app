@@ -1,25 +1,20 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-tissues-organisms',
     templateUrl: './tissues-organisms.component.html',
-    styleUrls: ['./tissues-organisms.component.css']
+    styleUrls: ['./tissues-organisms.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: TissuesOrganismsComponent }]
 })
-export class TissuesOrganismsComponent implements OnInit {
+export class TissuesOrganismsComponent extends AsyncInitialisedComponent implements OnInit {
 
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
-    @Output()
-    register: EventEmitter<string> = new EventEmitter<string>();
-
-    private widgetName = 'tissues';
     private webServiceUrl: string;
     private retryLimitTimes: number;
     private chartsErrorHandler: ChartsErrorHandler;
@@ -32,7 +27,7 @@ export class TissuesOrganismsComponent implements OnInit {
     private diseases: StatisticsDomainsDetail[];
 
     constructor(datasetService: DataSetService, private router: Router) {
-        this.register.emit(this.widgetName);
+        super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
@@ -55,7 +50,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     self.retryLimitTimes--;
 
                     if (self.retryLimitTimes <= 0) {
-                        self.notifyHomeLoader.emit(self.widgetName);
+                        self.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo(self.bubChartName);
                         return;
                     }
@@ -63,7 +58,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     ChartsErrorHandler.outputGettingInfo(self.bubChartName);
                     self.startRequest();
                 } else {
-                    self.notifyHomeLoader.emit(self.widgetName);
+                    self.componentLoaded();
                     ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
                     self.tissues = tissues;

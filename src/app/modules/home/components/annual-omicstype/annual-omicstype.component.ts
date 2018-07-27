@@ -3,21 +3,16 @@ import * as d3 from 'd3';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-annual-omicstype',
     templateUrl: './annual-omicstype.component.html',
-    styleUrls: ['./annual-omicstype.component.css']
+    styleUrls: ['./annual-omicstype.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: AnnualOmicstypeComponent }]
 })
-export class AnnualOmicstypeComponent implements OnInit {
+export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implements OnInit {
 
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
-    @Output()
-    register: EventEmitter<string> = new EventEmitter<string>();
-
-    private widgetName = 'annual_omicstype';
     private web_service_url = this.appConfig.getWebServiceUrl();
     private retryLimitTimes = 2;
 
@@ -32,7 +27,7 @@ export class AnnualOmicstypeComponent implements OnInit {
     }
 
     constructor(private router: Router, public appConfig: AppConfig) {
-        this.register.emit(this.widgetName);
+        super();
     }
 
     ngOnInit() {
@@ -46,14 +41,14 @@ export class AnnualOmicstypeComponent implements OnInit {
                 if (err) {
                     this.retryLimitTimes--;
                     if (this.retryLimitTimes <= 0) {
-                        this.notifyHomeLoader.emit(this.widgetName);
+                        this.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
                         return;
                     }
                     ChartsErrorHandler.outputGettingInfo('barchart_omicstype_annual');
                     this.startRequest();
                 } else {
-                    this.notifyHomeLoader.emit(this.widgetName);
+                    this.componentLoaded();
                     ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
                     const processedData = this.prepareData(annualData);
                     this.draw(processedData);

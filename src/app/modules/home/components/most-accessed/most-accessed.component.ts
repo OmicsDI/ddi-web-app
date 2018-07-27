@@ -1,23 +1,17 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-most-accessed',
     templateUrl: './most-accessed.component.html',
     styleUrls: ['./most-accessed.component.css'],
-    providers: [DataSetService]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: MostAccessedComponent }]
 })
 
-export class MostAccessedComponent implements OnInit {
+export class MostAccessedComponent extends AsyncInitialisedComponent implements OnInit {
     static requestMostAccessedDatasetFailed;
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
-    @Output()
-    register: EventEmitter<string> = new EventEmitter<string>();
-
-    private widgetName = 'most_accessed';
     mostAccessedDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
@@ -25,7 +19,7 @@ export class MostAccessedComponent implements OnInit {
     transcriptomics_list: string;
 
     constructor(private dataSetService: DataSetService) {
-        this.register.emit(this.widgetName);
+        super();
         MostAccessedComponent.requestMostAccessedDatasetFailed = false;
     }
 
@@ -50,7 +44,7 @@ export class MostAccessedComponent implements OnInit {
                     }
                 });
 
-                this.notifyHomeLoader.emit(this.widgetName);
+                this.componentLoaded();
 
                 // console.log(this.mostAccessedDatasets);
             })

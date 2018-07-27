@@ -1,30 +1,24 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 import * as cheerio from 'cheerio';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-tweets-news',
     templateUrl: './tweets-news.component.html',
-    styleUrls: ['./tweets-news.component.css']
+    styleUrls: ['./tweets-news.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: TweetsNewsComponent }]
 })
-export class TweetsNewsComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
-    @Output()
-    register: EventEmitter<string> = new EventEmitter<string>();
-
-    private widgetName = 'tweets_news';
+export class TweetsNewsComponent extends AsyncInitialisedComponent implements OnInit {
     id = '599190509341515776';
 
     constructor() {
-        this.register.emit(this.widgetName);
+        super();
     }
 
     ngOnInit() {
         this.fetchTweets();
-        this.notifyHomeLoader.emit(this.widgetName);
+        this.componentLoaded();
         /*
             .then(res => {
                this.notifyHomeLoader.emit('tweet_news');

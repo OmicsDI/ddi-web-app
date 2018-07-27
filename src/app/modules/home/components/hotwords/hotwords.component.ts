@@ -1,27 +1,22 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, forwardRef, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 
 import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 const cloud = require('d3-cloud');
 
 @Component({
     selector: 'app-hotwords',
     templateUrl: './hotwords.component.html',
-    styleUrls: ['./hotwords.component.css']
+    styleUrls: ['./hotwords.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: HotwordsComponent }]
 })
-export class HotwordsComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
-    @Output()
-    register: EventEmitter<string> = new EventEmitter<string>();
+export class HotwordsComponent extends AsyncInitialisedComponent implements OnInit {
 
     private webServiceUrl: string;
-    private widgetName = 'hotwords';
     private terms: {
         Omics_description: FrequentlyTerm[],
         Omics_data_protocol: FrequentlyTerm[],
@@ -35,7 +30,7 @@ export class HotwordsComponent implements OnInit {
     private field: string;
 
     constructor(datasetService: DataSetService, private router: Router) {
-        this.register.emit(this.widgetName);
+        super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
         this.fill = d3.schemeCategory20b;
@@ -60,7 +55,7 @@ export class HotwordsComponent implements OnInit {
             .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol')
             .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol')
             .await((error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]) => {
-                self.notifyHomeLoader.emit(this.widgetName);
+                this.componentLoaded();
                 self.drawWordCloud(error, omicsDes, omicsDatap, omicsSamp);
             });
     }

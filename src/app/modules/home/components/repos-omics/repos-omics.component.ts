@@ -4,21 +4,16 @@ import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'repos-omics',
     templateUrl: './repos-omics.component.html',
-    styleUrls: ['./repos-omics.component.css']
+    styleUrls: ['./repos-omics.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: ReposOmicsComponent }]
 })
-export class ReposOmicsComponent implements OnInit {
+export class ReposOmicsComponent extends AsyncInitialisedComponent implements OnInit {
 
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
-    @Output()
-    register: EventEmitter<string> = new EventEmitter<string>();
-
-    private widgetName = 'repos_omics';
     private webServiceUrl: string;
     private proteomicsList: string;
     private genomicsList: string;
@@ -35,7 +30,7 @@ export class ReposOmicsComponent implements OnInit {
     private omicsDataNum = [];
 
     constructor(dataSetService: DataSetService, private router: Router) {
-        this.register.emit(this.widgetName);
+        super();
         this.webServiceUrl = dataSetService.getWebServiceUrl();
         this.proteomicsList = dataSetService.getProteomicsList();
         this.metabolomicsList = dataSetService.getMetabolomicsList();
@@ -55,14 +50,14 @@ export class ReposOmicsComponent implements OnInit {
                 if (err) {
                     this.retryLimitTimes--;
                     if (this.retryLimitTimes <= 0) {
-                        this.notifyHomeLoader.emit(this.widgetName);
+                        this.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo(this.pieChartName);
                         return;
                     }
                     ChartsErrorHandler.outputGettingInfo(this.pieChartName);
                     this.startRequest();
                 } else {
-                    this.notifyHomeLoader.emit(this.widgetName);
+                    this.componentLoaded();
                     this.draw(domains, omicstype);
                 }
             });
