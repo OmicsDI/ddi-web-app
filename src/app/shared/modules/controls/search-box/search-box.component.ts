@@ -23,12 +23,15 @@ export class SearchBoxComponent implements OnInit {
     @Input()
     isHomeSearch: boolean;
 
+    params: {};
+
     constructor(protected router: Router, private dataTransportService: DataTransportService,
                 private searchService: SearchService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
+            this.params = params;
             this.queryParams = QueryUtils.extractQuery(params);
             this.query = this.queryParams.toQueryString();
             if (this.query[0] === '(') {
@@ -42,12 +45,12 @@ export class SearchBoxComponent implements OnInit {
     }
 
     doSearch(keyword) {
-        this.router.navigate(['search'], {queryParams: {q: keyword}});
+        this.searchService.triggerSearch(this.params, keyword, null);
     }
 
     search() {
         const searchText = this.autocompleteComponent.searchText;
-        this.router.navigate(['search'], {queryParams: {q: searchText}});
+        this.searchService.triggerSearch(this.params, searchText, null);
     }
 
     updateQueryParams($event: SearchQuery) {
