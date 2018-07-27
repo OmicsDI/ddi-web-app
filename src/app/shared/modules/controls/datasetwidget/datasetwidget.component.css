@@ -1,0 +1,35 @@
+span.selected {
+    font-weight: bold;
+    color: black;
+}
+
+span.unselected {
+    font-weight: normal;
+    margin-right: 22px;
+    color: black;
+}
+
+.grey {
+    background-color: silver;
+    cursor: pointer;
+}
+
+.white {
+    background-color: white;
+    cursor: pointer;
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+span.buttons-span {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-bottom: 5px;
+    padding-right: 12px;
+}

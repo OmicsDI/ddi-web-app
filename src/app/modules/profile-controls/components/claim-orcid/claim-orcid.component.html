@@ -1,0 +1,47 @@
+<div class="connectionBox" style="margin-top:20px;" id="connectionBox"><h3 class="caption" role="navigation">ORCID data
+    exchange
+</h3>
+    <div style="padding:10px; padding-left:15px; text-align: center;">
+        <div style="background-color: #A6CE39" class="dot-button" (click)="openLoginScreen()">
+            <i class="fa fa-exchange" aria-hidden="true"></i> Sync to ORCID&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+
+
+    </div>
+
+    <div *ngIf="this.thorService.orcIdRecord" style="padding:20px">
+        <table style="border-collapse: collapse; background-color: #f0f7de; border:none !Important;">
+            <tr>
+                <td style="border:none;"></td>
+                <td style="border:none; font-weight: bold; text-align: center; ">OmicsDI</td>
+                <td style="border:none; font-weight: bold; text-align: center; ">ORCID</td>
+            </tr>
+            <tr *ngIf="this.thorService.syncResult">
+                <td style="border:none;">Existed records</td>
+                <td style="border:none; text-align: center;">{{this.thorService.syncResult.oldOmicsDI}}</td>
+                <td style="border:none; text-align: center;">{{this.thorService.syncResult.oldOrcid}}</td>
+            </tr>
+            <tr *ngIf="this.thorService.syncResult">
+                <td style="border:none;">Added now</td>
+                <td style="border:none; text-align: center;">{{this.thorService.syncResult.newOmicsDI}}</td>
+                <td style="border:none; text-align: center;">{{this.thorService.syncResult.newOrcid}}</td>
+            </tr>
+            <tr style="font-weight: bold; border:none; border-top: solid 1px black ">
+                <td style="font-weight: bold; border:none; border-top: solid 1px black ">Total works</td>
+                <td style="font-weight: bold; border:none; border-top: solid 1px black; text-align: center; ">
+                    {{this.thorService.datasets?.length}}
+                </td>
+                <td style="font-weight: bold; border:none; border-top: solid 1px black; text-align: center; ">
+                    {{this.thorService.orcIdRecord.works.length}}
+                </td>
+            </tr>
+        </table>
+
+        <div *ngIf="this.thorService.orcIdRecord" style="padding-top: 10px; text-align: center;">
+            logged in as: {{this.thorService.orcIdRecord.name}}
+            <a href="#" *ngIf="this.thorService.isUserLoggedIn" (click)="forget()">forget me</a>
+        </div>
+    </div>
+
+</div>
+

@@ -1,4 +1,4 @@
-import {DataSetShort} from "./DataSetShort";
+import {DataSetShort} from './DataSetShort';
 
 export class Invite {
     id: string;

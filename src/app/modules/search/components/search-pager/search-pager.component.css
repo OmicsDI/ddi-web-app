@@ -1,0 +1,7 @@
+a {
+    cursor: pointer !important;
+}
+
+li > a {
+    cursor: pointer !important;
+}

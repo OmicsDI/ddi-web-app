@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" xmlns:ng="http://angularjs.org" ng-app="ddiApp" id="ng-app"
-      class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
+<html ng-app="ddiApp" id="ng-app"
+      class="js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase
+      indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage
+      borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections
+      csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage
+      sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths ng-scope">
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
     <meta content="width=device-width" name="viewport">
-    <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics, Metabolomics and Genomics"
-          name="description">
+    <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics,
+        Metabolomics and Genomics" name="description">
 
     <meta content={{meta_dataset_title}} name="dataset_title">
     <meta content={{meta_dataset_abstract}} name="dataset_abstract">
     <meta content={{meta_dataset_identifier}} name="dataset_identifier">
     <meta ng-repeat="entry in meta_entries" name={{entry.name}} content={{entry.content}}>
-    <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek" />
+    <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek"/>
 
 
     <title>OmicsDI: Home</title>
 
-   <base href="/">
+    <base href="/">
 
 
     <!-- favico -->
@@ -45,140 +50,108 @@
     <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="assets/bootstrap/css/sb-admin.css" rel="stylesheet" type="text/css">
-    <!-- Morris Charts CSS -->
-    <link href="assets/bootstrap/css/plugins/morris.css" rel="stylesheet" type="text/css">
-    <!-- Custom Fonts -->
-    <!--link href="assets/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"--->
 
     <link rel="stylesheet" href="css/boilerplate-style.css">
     <link rel="stylesheet" href="css/ebi-global.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/ebi-visual.css" type="text/css" media="screen">
     <link rel="stylesheet" href="css/984-24-col-fluid.css" type="text/css" media="screen">
-    <!--link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" -->
-    <!--link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'--->
     <link type="text/css" href="css/ngProgress.css" rel="stylesheet">
     <link type="text/css" href="css/ddi.css" rel="stylesheet">
     <link type="text/css" href="css/autocomplete.css" rel="stylesheet">
 
-  <style>
-    [ng2-tooltip] {margin: 40px; border: 1px solid #ccc}
-
-    [ng2-tooltip] .tooltip-contents {
-      border: 1px solid #ccc; padding: 5px
-    }
-    [ng2-tooltip] .tooltip-down-arrow {
-      height: 10px;
-    }
-    [ng2-tooltip] .tooltip-down-arrow:before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      left: 45%;
-      bottom: 5px;
-      background: #FFFFFF;
-      border-left:1px solid #ccc;
-      border-bottom:1px solid #ccc;
-      transform:rotate(-45deg);
-    }
-
-
-    div.mat-menu-panel{
-      max-width: 1500px;
-      overflow: visible;
-    }
-  </style>
+    <style>
+        div.mat-menu-panel {
+            max-width: 1500px;
+            overflow: visible;
+        }
+    </style>
 
 </head>
 <script>
-  function getCookieValue(a) {
-    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-    return b ? b.pop() : '';
-  }
-  function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
-  var authToken = getParameterByName('AUTH_TOKEN');
-  if(authToken){
-    localStorage.setItem('id_token', authToken);
-    window.location.href=window.location.href.replace('AUTH_TOKEN='+authToken,'');
-  }
-
-  //obsolete twitter integration on frontpage
-  var __twttr = { parse : function(response) {
-      localStorage.setItem('__twttr', JSON.stringify(response));
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
-  }
+
+    var authToken = getParameterByName('AUTH_TOKEN');
+    if (authToken) {
+        localStorage.setItem('id_token', authToken);
+        window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
+    }
+
+    var __twttr = {
+        parse: function (response) {
+            localStorage.setItem('__twttr', JSON.stringify(response));
+        }
+    }
 </script>
 
 
 <body class="level22" style="padding-top: 70px; background-color: #FFF;">
 
 <script>
-  function XhrGet(url){
+    function XhrGet(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
 
-      console.log(url);
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET",url, true);
-    xhr.onload = function (e) {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          console.log(xhr.responseText);
+                    var obj = JSON.parse(xhr.responseText);
 
-          var obj = JSON.parse(xhr.responseText);
+                    var script = document.createElement('script');
+                    script.type = "application/ld+json";
+                    script.innerHTML = JSON.stringify(obj);
 
-          var script = document.createElement('script');
-          script.type = "application/ld+json";
-          script.innerHTML = JSON.stringify(obj);
+                    document.getElementsByTagName('head')[0].appendChild(script);
 
-          document.getElementsByTagName('head')[0].appendChild(script);
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+        };
+        xhr.send(null);
+    }
 
-        } else {
-          console.error(xhr.statusText);
+    (function () {
+        var loc = window.location.href;
+        var baseURL = document.getElementsByTagName('base')[0].href;
+        var path = loc.replace(baseURL, "");
+
+        if (path === "") {
+            path = "home?r=" + Math.random();
         }
-      }
-    };
-    xhr.onerror = function (e) {
-      console.error(xhr.statusText);
-    };
-    xhr.send(null);
-  }
 
-  (function(){
-    var loc = window.location.href;
-    var baseURL = document.getElementsByTagName('base')[0].href;
-    var path = loc.replace(baseURL,"");
+        if (path.indexOf('#') >= 0) {
+            var split = path.split('#');
+            path = split[split.length - 1];
+        }
 
-    if(path===""){
-      path="home?r=" + Math.random();
-    }
-
-      if(path.indexOf('#')>=0){
-          var split = path.split('#');
-          console.log(split);
-          path = split[split.length-1];
-          console.log(path);
-      }
-
-    console.log("relative path: "+path);
-    switch(path){
-        case "dashboard/selected": console.log("no seo"); break;
-        case "merge": console.log("no seo"); break;
-        default: XhrGet('ws/seo' + path);
-    }
-
-
-  })(document);
+        switch (path) {
+            case "dashboard/selected":
+                console.log("no seo");
+                break;
+            case "merge":
+                console.log("no seo");
+                break;
+            default:
+                XhrGet('ws/seo' + path);
+        }
+    })(document);
 </script>
 
-<app-root><div style="text-align:center; position: fixed; top: 50%; left:50%;">Loading OmicsDI...</div></app-root>
+<app-root>
+    <div style="text-align:center; position: fixed; top: 50%; left:50%;">Loading OmicsDI...</div>
+</app-root>
 
 <!--wraper of page -->
 <!-- To have google analytics-->
@@ -186,11 +159,11 @@
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new
-                        Date();
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new
+        Date();
         a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
@@ -199,18 +172,16 @@
     ga('create', 'UA-70417662-2', 'auto');
     ga('send', 'pageview');
 
-</script>
-<script async src="//omicsdi.disqus.com/embed.js"></script>
 
+</script>
 <script src="assets/bootstrap/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
-<script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>
-<script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>
-<script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>
-
+<!--&lt;!&ndash; Morris Charts JavaScript&ndash;&gt;-->
+<!--<script src="assets/bootstrap/js/plugins/morris/raphael.min.js"></script>-->
+<!--<script src="assets/bootstrap/js/plugins/morris/morris.min.js"></script>-->
+<!--<script src="assets/bootstrap/js/plugins/morris/morris-data.js"></script>-->
 </body>
 </html>

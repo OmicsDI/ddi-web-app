@@ -1,0 +1,11 @@
+h2 {
+    font-size: 40px;
+}
+
+.field li, p {
+    font-size: 16px;
+}
+
+sup {
+    font-size: smaller;
+}

@@ -1,0 +1,63 @@
+<form novalidate name="queryForm" class="global-search">
+    <!-- <fieldset> -->
+    <div class="form-group">
+        <div class="input-group">
+            <app-autocomplete-n (submit)="search()"></app-autocomplete-n>
+            <div class="input-group-btn">
+                <button [matMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
+                    <i class="fa {{this.caret_class()}}" aria-hidden="true"></i>
+                    Advanced
+                </button>
+
+                <button type="submit" value="submit" class="btn btn-primary ddi-btn" (click)="search()">
+                    <i class="fa fa-search"></i> Search
+                </button>
+            </div>
+            <!-- /input-group-btn -->
+        </div>
+        <!--input-group -->
+        <span class="help-block example-searches">
+                         <!-- <small> -->
+                             <i>
+                                 Examples:
+                                 <a rel="nofollow" (click)="doSearch('cancer')">cancer</a>,
+                                 <a rel="nofollow" (click)="doSearch('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                                 <a rel="nofollow" (click)="doSearch('Orbitrap')">Orbitrap</a>,
+                                 <a rel="nofollow" (click)="doSearch('Q9HAU5')">Q9HAU5</a>,
+                                 <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,
+                                 <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>,
+                                 <a rel="nofollow" (click)="doSearch('PXD001416')">PXD001416</a>
+                             </i>
+            <!-- </small> -->
+                     </span>
+        <!--
+        <label class="control-label ng-cloak has-error"
+               for="query-text"
+               ng-show="query.submitted && (queryForm.text.$error.required || queryForm.text.$error.minlength)"
+               ng-cloak>
+            Your query is too short
+        </label>
+        <label class="control-label ng-cloak"
+               for="query-text" ng-show="query.submitted && (queryForm.text.$error.maxlength)"
+               ng-cloak>
+            Your query is too long
+        </label>
+        -->
+    </div>
+    <!-- /form-group -->
+    <!-- </fieldset> -->
+</form>
+
+
+<mat-menu id="advancedSearchMenu" #advancedSearchMenu="matMenu" [overlapTrigger]="false">
+    <div class="mat-menu-content" style="width:550px">
+        <div class="alert alert-info" (click)="doNotPropagate($event);">
+            <div style="position: relative;">
+                <strong>Full Text Query:</strong><br/>
+                <input type="text" [(ngModel)]="searchService.textQuery"/>
+            </div>
+
+        </div>
+        <query-builder [(query)]="searchService.paramQuery" (click)="doNotPropagate($event);"></query-builder>
+    </div>
+</mat-menu>

@@ -1,0 +1,54 @@
+<script>
+    document.title = "OmicsDI Databases";
+</script>
+
+<div class="db-list-container container_ddi">
+    <div class="row">
+
+        <div *ngIf="databases&&domainStats">
+            <!--<img [src]="databases[0].image.$binary">-->
+            <div *ngFor="let db of databases | paginate: { itemsPerPage: 8, currentPage: p }"
+                 class="db-item col-md-3 col-sm-6 col-xs-12">
+                <div class="panel panel-default expert-db-card ">
+
+                    <div class="expert-db-card-header">
+                        <a [href]="db.sourceUrl">{{db.databaseName}}</a>
+                    </div>
+
+                    <div class="expert-db-card-logo">
+                        <a [title]="db.title"
+                           [href]="db.sourceUrl"
+                           class="pull-right  image_a">
+                            <img [alt]="db.imgAlt"
+                                 [src]="appConfig.getDatabaseImageUrl(db.databaseName)"
+                                 class="img-rounded hvr-grow"
+                                 style="max-width: 130px;max-height: 100px">
+                        </a>
+                    </div>
+
+                    <div class="panel-body small">
+                        {{db.description}}
+                        <!--MetabolomeExpress houses both private and public uncurated repositories as well as a quality-controlled database of highly-annotated metabolite response statistics submitted by MetabolomeExpress users.-->
+                    </div>
+
+                    <div class="panel-footer small">
+                        <a rel="nofollow" [routerLink]="['/search']"
+                           [queryParams]="{q:'(*:* AND (repository: (&quot;' + db.repository + '&quot;)))'}">{{
+                            this.getDatasetCount(db.domain) }} datasets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <pagination-controls (pageChange)="p = $event"
+                         previousLabel=""
+                         nextLabel=""
+                         *ngIf="databases"
+                         class="my-pagination">
+    </pagination-controls>
+</div>
+
+<!--</div>-->
+

@@ -1,0 +1,24 @@
+<div *ngFor="let f of omicsFacets">
+    <app-facet-omics [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                     (facetValueSelected)="facetValueSelected($event)"></app-facet-omics>
+</div>
+
+<div *ngFor="let f of organismFacets">
+    <h3>{{f.label}}</h3>
+    <div class="metasearch-organism-facet force-scrollbars list-group-item"
+         style="overflow-x:hidden;">
+        <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                   (facetValueSelected)="facetValueSelected($event)"></app-facet>
+    </div>
+</div>
+
+<div *ngFor="let f of facets">
+    <ng-container *ngIf="f.label != 'Organisms'">
+        <h3>{{f.label}}</h3>
+        <div class="metasearch-organism-facet force-scrollbars list-group-item"
+             style="overflow-x:hidden;">
+            <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                       (facetValueSelected)="facetValueSelected($event)"></app-facet>
+        </div>
+    </ng-container>
+</div>

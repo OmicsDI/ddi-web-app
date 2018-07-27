@@ -1,0 +1,62 @@
+Total unmerge candidates: {{this.counts}}
+
+<div *ngFor="let d of unMergeCandidates
+      " style="width:100%; margin:10px;">
+    <table style="background-color: silver;">
+        <!--<tr>-->
+        <!--<td style="width:50px"><input type="checkbox" style="opacity:10" (change)="check(d.masterDatabase,d.masterAccession,d.masterDatabase,d.masterAccession,$event.target.checked)"></td>-->
+        <!--<td style="width:100px">-->
+
+        <!--<input class="form-control" type="button" disabled value="unmerge" (click)="unmerge(d.masterDatabase,d.masterAccession,d.masterDatabase,d.masterAccession)" >-->
+        <!--&lt;!&ndash;<input *ngIf="!isChecked(d.masterDatabase,d.masterAccession,d.masterDatabase,d.masterAccession)" class="form-control" disabled type="button" value="unmerge" (click)="unmerge(d.masterDatabase,d.masterAccession,d.masterDatabase,d.masterAccession)" >&ndash;&gt;-->
+
+        <!--</td>-->
+
+        <!--&lt;!&ndash;<td style="width:100px">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<input *ngIf="isChecked(d.database,d.accession,d.database,d.accession)" type="button" value="skip" (click)="skipMerge(d.database,d.accession,d.database,d.accession)" class="form-control">&ndash;&gt;-->
+        <!--&lt;!&ndash;<input *ngIf="!isChecked(d.database,d.accession,d.database,d.accession)" type="button" value="skip" (click)="skipMerge(d.database,d.accession,d.database,d.accession)" class="form-control" disabled>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+        <!--<td style="width:100px">{{d.masterDatabase}}</td>-->
+        <!--<td style="width:100px"><a target="_blank" [routerLink]="['/dataset', d.masterDatabase,d.masterAccession]">{{d.masterAccession}}</a></td>-->
+        <!--<td>{{d.name}}</td>-->
+
+        <!--</tr>-->
+
+        <!--<tr *ngFor="let c of d.dataset" style="width:100%; border: none;">-->
+        <td style="width:50px"><input type="checkbox" style="opacity:10"
+                                      (change)="check(d.masterDatabase,d.masterAccession,d.dataset.database,d.dataset.accession,$event.target.checked)">
+        </td>
+        <td style="width:100px">
+
+            <input *ngIf="isChecked(d.masterDatabase,d.masterAccession,d.dataset.database,d.dataset.accession)"
+                   type="button" value="unmerge"
+                   (click)="unmerge(d.masterDatabase,d.masterAccession,d.dataset.database,d.dataset.accession)"
+                   class="form-control">
+            <input *ngIf="!isChecked(d.masterDatabase,d.masterAccession,d.dataset.database,d.dataset.accession)"
+                   type="button" value="unmerge"
+                   (click)="unmerge(d.masterDatabase,d.masterAccession,d.dataset.database,d.dataset.accession)"
+                   class="form-control" disabled>
+        </td>
+        <!--<td style="width:100px">-->
+
+        <!--<input *ngIf="isChecked(d.database,d.accession,c.database,c.accession)" type="button" value="skip" (click)="skipMerge(d.database,d.accession,c.database,c.accession)" class="form-control">-->
+        <!--<input *ngIf="!isChecked(d.database,d.accession,c.database,c.accession)" type="button" value="skip" (click)="skipMerge(d.database,d.accession,c.database,c.accession)" class="form-control" disabled>-->
+
+        <!--</td>-->
+
+        <td style="width:100px">{{d.dataset.database}}</td>
+        <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', d.dataset.database,d.dataset.accession]">{{d.dataset.accession}}</a>
+        </td>
+        <td>{{d.dataset.name}}</td>
+
+        <!--</tr>-->
+
+    </table>
+</div>
+
+<pagination-controls (pageChange)="getPage($event)"
+                     class="my-pagination"
+                     id="server">
+</pagination-controls>

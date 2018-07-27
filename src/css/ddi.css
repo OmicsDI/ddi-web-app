@@ -1435,7 +1435,7 @@ ul li.no-match-found {display: none;}
     margin-bottom: 10px;
 }
 
-#item1,#item2,#item3,#item4,#item5,#item6,#item7{
+#item1,#item2,#item3,#item4,#item5,#item6,#item7,#item8{
     color:white !important;
     text-decoration:none;
     border-color: transparent;
@@ -1463,6 +1463,9 @@ ul li.no-match-found {display: none;}
 #item7:hover{
     background-color:#2e6da4 !important;
 }
+#item8:hover{
+    background-color:#2e6da4 !important;
+}
 
 #item-div1,#item-div2,#item-div3{
     text-align:center;
@@ -1482,4 +1485,11 @@ ul li.no-match-found {display: none;}
     color:white !important;
     text-decoration:none;
     border-color: transparent;
+}
+
+
+/* DISQOUS */
+
+#disqus_thread {
+    padding: 15px;
 }

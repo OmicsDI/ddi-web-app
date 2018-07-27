@@ -1,0 +1,51 @@
+<div *ngIf="query" class="alert alert-warning alert-group" style="position: relative; z-index: 1">
+    <div class="form-inline" style="position: relative;">
+        <select [(ngModel)]="query.operator" class="form-control input-sm">
+            <option *ngFor="let o of operators">{{o.name}}</option>
+        </select>
+        <button style="margin-left: 5px" (click)="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus"
+                                                                                                    aria-hidden="true"></i>
+            Add Field
+        </button>
+        <button style="margin-left: 5px" (click)="addGroup()" class="btn btn-sm btn-success"><i class="fa fa-plus"
+                                                                                                aria-hidden="true"></i>
+            Add Group
+        </button>
+        <button style="margin-left: 5px" (click)="removeGroup()" class="btn btn-sm btn-danger" *ngIf="null!=parent"><i
+                class="fa fa-minus" aria-hidden="true"></i> Remove Group
+        </button>
+    </div>
+    <div *ngIf="hideBasicInfo">
+        <label>"Sorry, can not perform the search either there is no field or data is empty."</label>
+    </div>
+    <div class="group-conditions">
+        <div *ngFor="let rule of query.rules; let i = index;" class="condition">
+            <div>
+                <div *ngIf="null!=rule.query">
+                    <query-builder [parent]="this" [index]="i" [(query)]="rule.query"></query-builder>
+                </div>
+                <div *ngIf="null==rule.query">
+                    <div class="form-inline" style="margin-top:3px">
+                        <select [(ngModel)]="rule.field" class="form-control input-sm" (click)="selectField(rule)">
+                            <option *ngFor="let field of searchService.allFacets" [ngValue]="field.id">{{field.label}}
+                            </option>
+                        </select>
+                        <select style="margin-left: 3px" [(ngModel)]="rule.condition" class="form-control input-sm">
+                            <option *ngFor="let condition of conditions">{{condition.name}}</option>
+                        </select>
+                        <div class="input-group" style="margin-left:3px;">
+                            <app-drop-down [(value)]="rule.data" [facetValues]="getFieldsData(rule.field)"
+                                           (valueChange)="dropDownValueChange()"></app-drop-down>
+                        </div>
+                        <div *ngIf="rule.condition=='range'" class="input-group" style="margin-left:3px;">
+                            <app-drop-down [(ngModel)]="rule.data2"
+                                           [facetValues]="getFieldsData(rule.field)"></app-drop-down>
+                        </div>
+                        <button style="margin-left: 5px" (click)="removeCondition(i)" class="btn btn-sm btn-danger"><i
+                                class="fa fa-minus" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

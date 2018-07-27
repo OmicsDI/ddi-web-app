@@ -1,0 +1,17 @@
+<div class="metasearch-organism-facet force-scrollbars" style="max-height: 400px;">
+    <!-- Omic types -->
+    <h3>Show results for</h3>
+    <ul class="list-unstyled metasearch-facet-values">
+
+        <li *ngFor="let v of facetValuesFiltered" [hidden]="!v.visible">
+            <a (click)="labelClicked(v.value, $event, false)">
+                <app-omics-image [omics]="[v.value]"></app-omics-image>
+                <span style="font-size:15px; font-weight:bold">{{v.label}}</span>
+                <small class="ng-binding">
+                    ({{v.count}})
+                </small>
+            </a>
+        </li>
+
+    </ul>
+</div>

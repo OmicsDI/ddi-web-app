@@ -1,0 +1,26 @@
+a:link {
+    color: red;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+/* visited link */
+a:visited {
+    color: green;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+    text-decoration: none;
+    border-bottom: none;
+}
+
+/* selected link */
+a:active {
+    color: blue;
+    text-decoration: none;
+    border-bottom: none;
+}

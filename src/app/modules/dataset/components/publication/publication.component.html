@@ -1,0 +1,60 @@
+<div *ngIf="d" class="panel panel-default" id="dataset_middle_publication" style="position: relative;">
+    <div class="panel-footer ">
+        <h3>Publications</h3>
+    </div>
+    <span id="chevronLeft" class="fa fa-chevron-circle-left ddi-prev" (click)="clickLeft()" *ngIf="leftAvailable()">
+                    </span>
+    <span id="chevronRight" class="fa fa-chevron-circle-right ddi-next" (click)="clickRight()" *ngIf="rightAvailable()">
+                    </span>
+
+
+    <div *ngIf="d" class="" id="dataset_middle_left" style="height:50px;width:50px;float:left;margin:5px">
+        <app-altmetric-image [PMID]="d.id"></app-altmetric-image>
+    </div>
+
+    <div *ngIf="d" class="" id="dataset_middle" style="overflow:hidden;">
+        <div>
+            <h4 style="margin-right:20px" class="ng-binding">
+                {{d.title}}</h4>
+            <p style="margin-right:20px" class="align-justify">
+        <span *ngFor="let a of d.authors">
+        <a [routerLink]="['/search']" [queryParams]="{q:a}">
+          {{a}}
+        </a>&nbsp;
+        </span></p>
+            <p style="margin-right:20px" class="align-justify ng-binding">
+                {{d.journal}} {{d.date}} {{d.issue}}</p>
+        </div>
+        <hr style="margin-right:30px">
+        <p *ngIf="!d.id" class="align-justify" style="">
+            Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to
+            <a href="http://www.ncbi.nlm.nih.gov/pubmed/?term={{d.id}}">
+                PUBMED
+            </a> or
+            <a href="http://www.altmetric.com/details.php?citation_id={{d.id}}">Altmetric</a>.
+        </p>
+        <div style="margin-right: 20px;" class="">
+            <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding">
+                <span>{{a | truncate : lengthLimit : ' '}}&nbsp;</span>
+                <span class="hotword" (click)="moreOrLess()"><b>{{moreLessBtn}}</b></span>
+            </p>
+        </div>
+    </div>
+    <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
+        <div class="col-md-4" style="margin-left:10px">
+            <a *ngIf="d.id" class="ng-binding" href="http://europepmc.org/abstract/MED/{{d.id}}">
+                PMID:
+                {{d.id}}</a>
+        </div>
+        <div class="col-md-4">
+                                            <span *ngIf="ids_length>1" class="ng-binding">
+                                Publication: {{current_idx+1}}/{{ids_length}}
+                            </span>
+        </div>
+        <div class="col-md-3">
+            <p class="ng-binding"></p>
+        </div>
+    </div>
+    <br>
+    <!--dataset_middle_bottom-->
+</div>
