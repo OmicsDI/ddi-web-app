@@ -7,9 +7,19 @@ export class Index {
 
 export class QueryUtils {
 
+    public static transformQuery(query: string): string {
+        query = query.replace(/:\s*/g, ':');
+        query = query.replace(/\s+AND\s+/g, '-AND-');
+        query = query.replace(/\s+OR\s+/g, '-OR-');
+        query = query.replace(/\s+NOT\s+/g, '-NOT-');
+        return query;
+    }
+
     public static getBaseQuery(params: {}): string {
         let query = params['q'] != null ? params['q'] : '';
         query = query.replace(/-AND-/g, ' AND ');
+        query = query.replace(/-OR-/g, ' OR ');
+        query = query.replace(/-NOT-/g, ' NOT ');
         return query;
     }
 
@@ -43,14 +53,20 @@ export class QueryUtils {
     public static getFacets(params: {}): Map<string, string[]> {
         const result = new Map<string, string[]>();
         const searchQuery = this.extractQuery(params);
-        for (let i = 0; i < searchQuery.rules.length; i++) {
-            if (searchQuery.rules[i].field != null) {
-                if (!result.has(searchQuery.rules[i].field)) {
-                    result.set(searchQuery.rules[i].field, [searchQuery.rules[i].data]);
-                } else {
-                    const prev = result.get(searchQuery.rules[i].field);
-                    prev.push(searchQuery.rules[i].data);
-                    result.set(searchQuery.rules[i].field, prev);
+        for (let j = 0; j < searchQuery.rules.length; j++) {
+            if (searchQuery.rules[j].query == null) {
+                continue;
+            }
+            const facetRules = searchQuery.rules[j].query.rules;
+            for (let i = 0; i < facetRules.length; i ++) {
+                if (facetRules[i].field != null) {
+                    if (!result.has(facetRules[i].field)) {
+                        result.set(facetRules[i].field, [facetRules[i].data]);
+                    } else {
+                        const prev = result.get(facetRules[i].field);
+                        prev.push(facetRules[i].data);
+                        result.set(facetRules[i].field, prev);
+                    }
                 }
             }
         }

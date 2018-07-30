@@ -19,13 +19,16 @@ export class SearchQuery {
     }
 
     public toQueryString(): string {
-        let str = '(';
+        let str = '';
         for (let i = 0; i < this.rules.length; i++) {
             if (i > 0) {
                 str += ' ' + this.operator + ' ';
             }
             if (null != this.rules[i].query) {
-                str += this.rules[i].query.toQueryString();
+                const tmp = this.rules[i].query.toQueryString();
+                if (tmp !== '') {
+                    str += '(' + tmp + ')';
+                }
             } else {
                 const rule = this.rules[i];
                 let strtemp = '';
@@ -44,7 +47,7 @@ export class SearchQuery {
                 }
             }
         }
-        return str + ')';
+        return str;
     }
 }
 

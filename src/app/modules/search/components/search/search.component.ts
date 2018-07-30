@@ -6,7 +6,7 @@ import {SearchResult} from 'model/SearchResult';
 import {DataControl} from 'model/DataControl';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {QueryUtils} from '@shared/utils/query-utils';
-import {Rule} from 'model/SearchQuery';
+import {Rule, SearchQuery} from 'model/SearchQuery';
 import {Facet} from 'model/Facet';
 import {FacetValue} from 'model/FacetValue';
 
@@ -39,8 +39,7 @@ export class SearchComponent implements OnInit {
                 .subscribe(result => {
                     this.searchResult = result;
                     this.dataTransportService.fire(this.facetsChannel, result.facets);
-                });
-            this.slimLoadingBarService.stop();
+                }, error => {console.log(error); }, () => {this.slimLoadingBarService.complete(); });
         });
     }
 
@@ -59,17 +58,38 @@ export class SearchComponent implements OnInit {
      */
     facetValueSelected(key: string, facet: string) {
         const searchQuery = QueryUtils.extractQuery(this.params);
+        let foundKey = false;
         for (let i = 0; i < searchQuery.rules.length; i++) {
-            if (searchQuery.rules[i].field === key) {
-                if (searchQuery.rules[i].data === facet) {
-                    return;
+            if (searchQuery.rules[i].query !== null) {
+                const tmpQuery = searchQuery.rules[i].query;
+                for (let j = 0; j < tmpQuery.rules.length; j++) {
+                    if (tmpQuery.rules[j].field === key) {
+                        foundKey = true;
+                        if (tmpQuery.rules[j].data === facet) {
+                            return;
+                        }
+                    }
+                }
+                if (foundKey) {
+                    searchQuery.rules[i].query.operator = 'OR';
+                    const rule = new Rule();
+                    rule.field = key;
+                    rule.data = facet;
+                    searchQuery.rules[i].query.rules.push(rule);
+                    break;
                 }
             }
         }
-        const rule = new Rule();
-        rule.field = key;
-        rule.data = facet;
-        searchQuery.rules.push(rule);
+        if (!foundKey) {
+            const newSearchQuery = new SearchQuery();
+            newSearchQuery.operator = 'OR';
+            newSearchQuery.rules = [];
+            const rule = new Rule();
+            rule.field = key;
+            rule.data = facet;
+            newSearchQuery.rules.push(rule);
+            searchQuery.rules.push({condition: null, data: null, field: null, data2: null, query: newSearchQuery});
+        }
         this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), null);
     }
 
@@ -81,10 +101,16 @@ export class SearchComponent implements OnInit {
     facetValueRemoved(key: string, facet: string) {
         const searchQuery = QueryUtils.extractQuery(this.params);
         for (let i = 0; i < searchQuery.rules.length; i++) {
-            if (searchQuery.rules[i].field === key) {
-                if (searchQuery.rules[i].data === facet) {
-                    searchQuery.rules.splice(i, 1);
-                    break;
+            if (searchQuery.rules[i].query !== null) {
+                for (let j = 0; j < searchQuery.rules[i].query.rules.length; j++) {
+                    const rule = searchQuery.rules[i].query.rules[j];
+                    if (rule.field === key && rule.data === facet) {
+                        searchQuery.rules[i].query.rules.splice(j, 1);
+                        if (searchQuery.rules[i].query.rules.length === 0) {
+                            searchQuery.rules.splice(i, 1);
+                        }
+                        break;
+                    }
                 }
             }
         }
