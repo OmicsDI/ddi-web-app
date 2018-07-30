@@ -73,18 +73,18 @@
               <goal>install-node-and-npm</goal>
             </goals>
             <configuration>
-              <nodeVersion>v6.10.0</nodeVersion>
-              <npmVersion>3.10.10</npmVersion>
+              <nodeVersion>v10.6.0</nodeVersion>
+              <npmVersion>6.1.0</npmVersion>
             </configuration>
           </execution>
           <execution>
-            <id>npm run build</id>
+            <id>npm run release</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>run build -- --environment=${angular.environment} --base-href=${angular.base.href}</arguments>
+              <arguments>run release -- --environment=${angular.environment} --base-href=${angular.base.href}</arguments>
             </configuration>
           </execution>
         </executions>
