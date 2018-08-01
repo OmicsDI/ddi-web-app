@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {TimeUtils} from '@shared/utils/time.utils';
 
 @Component({
     selector: 'app-unauthorized',
