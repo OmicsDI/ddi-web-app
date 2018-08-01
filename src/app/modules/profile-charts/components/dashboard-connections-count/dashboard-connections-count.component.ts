@@ -472,7 +472,7 @@ export class DashboardConnectionsCountComponent implements OnInit, OnChanges {
             if (date.toString().indexOf('-') >= 0) {
                 year = date.toString().substr(0, 4);
             } else {
-                year = date.toString().substr(date.toString().lastIndexOf(' '), 4);
+                year = date.toString().substr(date.toString().lastIndexOf(' ') + 1, 4);
             }
             years.push(Number(year));
         });
@@ -518,7 +518,7 @@ export class DashboardConnectionsCountComponent implements OnInit, OnChanges {
             if (date.toString().indexOf('-') >= 0) {
                 year = date.toString().substr(0, 4);
             } else {
-                year = date.toString().substr(date.toString().lastIndexOf(' '), 4);
+                year = date.toString().substr(date.toString().lastIndexOf(' ') + 1, 4);
             }
             switch (d['omics_type'].toString()) {
                 case 'Genomics':
