@@ -3,10 +3,10 @@ import {Http} from '@angular/http';
 import {Observable, Subject} from 'rxjs/Rx';
 import {SimilarityResult} from 'model/SimilarityResult';
 import {AppConfig} from 'app/app.config';
-import {BaseService} from './base.service';
+import {BaseService} from "@shared/services/base.service";
 
 @Injectable()
-export class SimilarityService extends BaseService {
+export class SimilarityMockService extends BaseService {
 
     private resultSource = new Subject<SimilarityResult>();
 
@@ -17,10 +17,9 @@ export class SimilarityService extends BaseService {
     }
 
     search(acc: string, repository: string) {
-        const o: Observable<SimilarityResult> = this.http.get(this.appConfig.getSimilarUrl(acc, repository))
+        const o: Observable<SimilarityResult> = this.http.get('test/modules/dataset/similarity.json')
             .map(x => this.extractData<SimilarityResult>(x));
         o.subscribe(x => {
-            console.log('SimilarityResult');
             console.log(x);
             this.resultSource.next(x);
         });

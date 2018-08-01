@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {AppConfig} from 'app/app.config';
-import {BaseService} from './base.service';
 import {Database} from 'model/Database';
+import {BaseService} from "@shared/services/base.service";
 
 @Injectable()
-export class DatabaseListService extends BaseService {
+export class DataSetListMockService extends BaseService {
 
     public databases = {};
 
@@ -20,8 +20,6 @@ export class DatabaseListService extends BaseService {
     public getDatabaseList(): Observable<Database[]> {
         return this.http.get(this.appConfig.getDatabasesUrl())
             .map(x => {
-                console.log('database');
-                console.log(x);
                 const d1: Database[] = this.extractData<Database[]>(x);
                 for (const d of d1) {
                     this.databases[d.source] = d;
@@ -31,16 +29,7 @@ export class DatabaseListService extends BaseService {
     }
 
     public getSourceByDatabaseName(database: string): string {
-        const self = this;
-        let source = null;
-        Object.keys(this.databases).forEach(key => {
-            const d = self.databases[key];
-            if (d.databaseName === database) {
-                source = d.source;
-                return;
-            }
-        });
-        return source;
+        return 'massive';
     }
 
     public getDatabaseByAccession(accession: string): Database {
@@ -52,9 +41,9 @@ export class DatabaseListService extends BaseService {
 
             if (database.accessionPrefix) {
                 for (const prefix of database.accessionPrefix) {
-                    console.log('compare ' + prefix + ' and ' + accession);
+                    // console.log('compare ' + prefix + ' and ' + accession);
                     if (accession.startsWith(prefix)) {
-                        console.log('success');
+                        // console.log('success');
                         return database;
                     }
                 }
