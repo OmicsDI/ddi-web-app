@@ -269,7 +269,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     this.synonymResult = data[1];
                     console.log(this.synonymResult);
                     console.log('calling process_sections');
-                    if (this.synonymResult.synonymsList.length <= 0) {
+                    if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     }else {
                         this.process_sections();
