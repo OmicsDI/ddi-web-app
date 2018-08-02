@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {MergeCandidate} from 'model/MergeCandidate';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {Profile} from 'model/Profile';
 import {ProfileService} from '@shared/services/profile.service';
-import {Router} from '@angular/router';
 import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
@@ -14,7 +12,6 @@ import {DialogService} from '@shared/services/dialog.service';
 })
 export class MergeComponent implements OnInit {
 
-    public profile: Profile;
     public mergeControl: boolean;
 
     test: boolean;
@@ -30,44 +27,13 @@ export class MergeComponent implements OnInit {
         public profileService: ProfileService,
         private datasetService: DataSetService,
         private notificationService: NotificationsService,
-        private dialogService: DialogService,
-        private router: Router
+        private dialogService: DialogService
     ) {
     }
 
     ngOnInit() {
-
-        this.authControl();
         this.test = false;
         this.load();
-    }
-
-    authControl() {
-
-        this.profileService.getAdminUsers().subscribe( x => {
-            this.profileService.getProfile()
-                .subscribe(
-                    profile => {
-                        this.profile = profile;
-                        console.log(profile);
-                        if (this.profile.userId !== null) {
-                            for ( const user of x.json().users){
-                                console.log(user);
-                                if (user === this.profile.userId) {
-                                    return true;
-                                } else {
-                                    console.log('unauthorized');
-                                    this.router.navigate(['unauthorized']);
-                                    return false;
-                                }
-                            }
-                        } else {
-                            this.router.navigate(['unauthorized']);
-                        }
-                    }
-                );
-        });
-
     }
 
     load() {
