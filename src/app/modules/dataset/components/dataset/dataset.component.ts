@@ -14,6 +14,8 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import {SimilarDataset} from 'model/SimilarDataset';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
+import {NotificationsService} from 'angular2-notifications/dist';
+import {DialogService} from '@shared/services/dialog.service';
 
 
 @Component({
@@ -52,6 +54,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
         , public appConfig: AppConfig
         , public profileService: ProfileService
         , private dialog: MatDialog
+        , private dialogService: DialogService
+        , private notificationService: NotificationsService
         , private databaseListService: DatabaseListService) {
         console.log('DatasetComponent constructor');
 
@@ -136,15 +140,15 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 // console.log(phase.indexOf(key));
                 if (phase.indexOf(key) > 0) {
                     j += phase.split(key).length - 1;
-                    console.log(j);
-                    console.log(phase);
+                    // console.log(j);
+                    // console.log(phase);
 
                 }
             }
 
             if (i < synonyms[n].from - 1) {
                 const t = str.substr(i + j, synonyms[n].from - i - 1);
-                console.log(t);
+                // console.log(t);
 
                 result.push({text: t, beAnnotated: false, tobeReduced: false, synonyms: null});
 
@@ -230,11 +234,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 /<\/?[ib]*(br|span|h|u|strike|pre|code|tt|blockquote|small|center|em|strong)*\/?>/g, '');
             section.text = section.text.replace(/<[\s\S]*>/g, '');
             if (section.text.indexOf('<') !== -1 && section.text.indexOf('>') === -1) {
-                console.log('+1');
+                // console.log('+1');
                 section.text = section.text.replace(/<[\s\S]*/g, '');
                 count = count + 1;
             } else if (section.text.indexOf('>') !== -1 && section.text.indexOf('<') === -1) {
-                console.log('-1');
+                // console.log('-1');
                 section.text = section.text.replace(/[\s\S]*>/g, '');
                 count = count - 1;
             } else if (section.text.indexOf('>') === -1 && section.text.indexOf('<') === -1 && count > 0) {
@@ -261,9 +265,16 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 data => {
                     console.log('subscription to forkJoin');
                     this.enrichmentInfo = data[0];
+                    console.log(this.enrichmentInfo);
                     this.synonymResult = data[1];
+                    console.log(this.synonymResult);
                     console.log('calling process_sections');
-                    this.process_sections();
+                    if (this.synonymResult.synonymsList.length <= 0) {
+                        this.dialogService.confirm('Alert' , 'no synonymous words');
+                    }else {
+                        this.process_sections();
+                    }
+
                 }
             );
             console.log('add hightlighting');
