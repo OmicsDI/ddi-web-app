@@ -17,7 +17,6 @@ export class LoginLauncherComponent implements OnInit {
     public userId: string;
     public isPublic: boolean;
     public mergeControl: boolean;
-    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS' , '94GSchtF' , 'rag0xYiJ' , 'aEheGiTs' , 'rhT13Rdn', 'VsDx8WqS'];
 
     constructor(public profileService: ProfileService, private router: Router, public auth: AuthService) {
         this.name = null;
