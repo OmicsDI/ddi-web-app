@@ -16,7 +16,6 @@ export class MergeComponent implements OnInit {
 
     public profile: Profile;
     public mergeControl: boolean;
-    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS' , 'qKHFQW5a'];
 
     test: boolean;
     mergeCandidates: MergeCandidate[];
@@ -37,32 +36,38 @@ export class MergeComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.authControl();
         this.test = false;
         this.load();
     }
 
     authControl() {
-        this.profileService.getProfile()
-            .subscribe(
-                profile => {
-                    this.profile = profile;
-                    console.log(profile);
-                    if (this.profile.userId !== null) {
-                        for ( const user of this.adminUser){
-                            if (user === this.profile.userId) {
-                                return true;
-                            } else {
-                                console.log('unauthorized');
-                                this.router.navigate(['unauthorized']);
-                                return false;
+
+        this.profileService.getAdminUsers().subscribe( x => {
+            this.profileService.getProfile()
+                .subscribe(
+                    profile => {
+                        this.profile = profile;
+                        console.log(profile);
+                        if (this.profile.userId !== null) {
+                            for ( const user of x.json().users){
+                                console.log(user);
+                                if (user === this.profile.userId) {
+                                    return true;
+                                } else {
+                                    console.log('unauthorized');
+                                    this.router.navigate(['unauthorized']);
+                                    return false;
+                                }
                             }
+                        } else {
+                            this.router.navigate(['unauthorized']);
                         }
-                    } else {
-                        this.router.navigate(['unauthorized']);
                     }
-                }
-            );
+                );
+        });
+
     }
 
     load() {

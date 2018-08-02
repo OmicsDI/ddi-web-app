@@ -17,7 +17,6 @@ export class LoginLauncherComponent implements OnInit {
     public userId: string;
     public isPublic: boolean;
     public mergeControl: boolean;
-    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS'];
 
     constructor(public profileService: ProfileService, private router: Router, public auth: AuthService) {
         this.name = null;
@@ -28,22 +27,24 @@ export class LoginLauncherComponent implements OnInit {
     }
 
     getProfile() {
-        this.profileService.getProfile()
-            .subscribe(
-                profile => {
-                    this.profile = profile;
-                    this.name = profile.userName;
-                    this.userId = profile.userId;
-                    this.isPublic = profile.isPublic;
-                    if (this.userId !== null) {
-                        for ( const user of this.adminUser){
-                            if (user === this.userId) {
-                                this.mergeControl = true;
+        this.profileService.getAdminUsers().subscribe( x => {
+            this.profileService.getProfile()
+                .subscribe(
+                    profile => {
+                        this.profile = profile;
+                        this.name = profile.userName;
+                        this.userId = profile.userId;
+                        this.isPublic = profile.isPublic;
+                        if (this.userId !== null) {
+                            for (const user of x.json().users) {
+                                if (user === this.userId) {
+                                    this.mergeControl = true;
+                                }
                             }
                         }
                     }
-                }
-            );
+                );
+        });
     }
 
     private deleteCookie(name) {
@@ -58,7 +59,7 @@ export class LoginLauncherComponent implements OnInit {
     }
 
     LogOut() {
-        // this.deleteCookie("AUTH-TOKEN");
+        // this.deleteCookie('AUTH-TOKEN');
         this.mergeControl = false;
         localStorage.removeItem('id_token');
         this.profileService.profile = null;
