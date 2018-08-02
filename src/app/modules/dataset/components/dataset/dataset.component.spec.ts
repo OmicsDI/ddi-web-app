@@ -1,51 +1,47 @@
 import {async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { DatasetComponent } from './dataset.component';
-import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from "@angular/common";
-import {DatasetRoutingModule} from "@modules/dataset/dataset-routing.module";
-import {DisqusModule} from "ngx-disqus";
-import {ClipboardModule} from "ngx-clipboard/dist";
-import {FormsModule} from "@angular/forms";
-import {UtilsModule} from "@shared/modules/utils/utils.module";
-import {ControlsModule} from "@shared/modules/controls/controls.module";
-import {PipesModule} from "@shared/pipes/pipes.module";
-import {PublicationComponent} from "@modules/dataset/components/publication/publication.component";
-import {SimilarComponent} from "@modules/dataset/components/similar/similar.component";
-import {SimilarMoleculeComponent} from "@modules/dataset/components/similar-molecule/similar-molecule.component";
-import {ProfileService} from "@shared/services/profile.service";
-import {AuthHttp} from "angular2-jwt";
-import {authHttpServiceFactory} from "../../../../app.module";
-import {Http, HttpModule, RequestOptions} from "@angular/http";
-import {AuthGuardService} from "@shared/services/auth-guard.service";
-import {AuthService} from "@shared/services/auth.service";
-import {SearchService} from "@shared/services/search.service";
-import {DataSetService} from "@shared/services/dataset.service";
-import {PublicationService} from "@shared/services/publication.service";
-import {SimilarityService} from "@shared/services/similarity.service";
-import {EnrichmentService} from "@shared/services/enrichment.service";
-import {OntologyService} from "@shared/services/ontology.service";
-import {FeedbackService} from "@shared/services/feedback.service";
-import {DatabaseListService} from "@shared/services/database-list.service";
-import {SimilarMoleculeService} from "@shared/services/similar-molecule.service";
-import {AppConfig} from "../../../../app.config";
-import {StatisticsService} from "@shared/services/statistics.service";
-import {AltmetricService} from "@shared/services/altmetric.service";
-import {SelectedService} from "@shared/services/selected.service";
-import {DialogService} from "@shared/services/dialog.service";
-import {ScoreService} from "@shared/services/score.service";
-import {ThorService} from "@shared/services/thor.service";
-import {MatButtonModule, MatDialog, MatDialogModule, MatMenuModule} from "@angular/material";
-import {InviteService} from "@shared/services/invite.service";
-import {HttpClientModule} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
-import {RouterTestingModule} from "@angular/router/testing";
-import {DataSetMockService} from "../../../../../test/modules/dataset/DataSetMockService";
-import {DebugElement} from "@angular/core";
-import {DataSetDetail} from "model/DataSetDetail";
-import {DatasetDetailMock} from "../../../../../test/modules/dataset/DatasetDetailMock";
-import {DataSetListMockService} from "../../../../../test/modules/dataset/DataSetListMockService";
-import {of} from "rxjs/observable/of";
-import {SimilarityMockService} from "../../../../../test/modules/dataset/similarity.mock.service";
+import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {DatasetRoutingModule} from '@modules/dataset/dataset-routing.module';
+import {DisqusModule} from 'ngx-disqus';
+import {ClipboardModule} from 'ngx-clipboard/dist';
+import {FormsModule} from '@angular/forms';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
+import {ControlsModule} from '@shared/modules/controls/controls.module';
+import {PipesModule} from '@shared/pipes/pipes.module';
+import {PublicationComponent} from '@modules/dataset/components/publication/publication.component';
+import {SimilarComponent} from '@modules/dataset/components/similar/similar.component';
+import {SimilarMoleculeComponent} from '@modules/dataset/components/similar-molecule/similar-molecule.component';
+import {ProfileService} from '@shared/services/profile.service';
+import {AuthHttp} from 'angular2-jwt';
+import {authHttpServiceFactory} from 'app/app.module';
+import {Http, HttpModule, RequestOptions} from '@angular/http';
+import {AuthGuardService} from '@shared/services/auth-guard.service';
+import {AuthService} from '@shared/services/auth.service';
+import {SearchService} from '@shared/services/search.service';
+import {DataSetService} from '@shared/services/dataset.service';
+import {PublicationService} from '@shared/services/publication.service';
+import {SimilarityService} from '@shared/services/similarity.service';
+import {EnrichmentService} from '@shared/services/enrichment.service';
+import {OntologyService} from '@shared/services/ontology.service';
+import {FeedbackService} from '@shared/services/feedback.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {SimilarMoleculeService} from '@shared/services/similar-molecule.service';
+import {AppConfig} from 'app/app.config';
+import {StatisticsService} from '@shared/services/statistics.service';
+import {AltmetricService} from '@shared/services/altmetric.service';
+import {SelectedService} from '@shared/services/selected.service';
+import {DialogService} from '@shared/services/dialog.service';
+import {ScoreService} from '@shared/services/score.service';
+import {ThorService} from '@shared/services/thor.service';
+import {MatButtonModule, MatDialog, MatDialogModule, MatMenuModule} from '@angular/material';
+import {InviteService} from '@shared/services/invite.service';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterTestingModule} from '@angular/router/testing';
+import {DataSetMockService} from '@test/modules/dataset/dataset.mock.service';
+import {DebugElement} from '@angular/core';
+import {DataSetListMockService} from '@test/modules/dataset/dataset-list.mock.service';
+import {SimilarityMockService} from '@test/modules/dataset/similarity.mock.service';
 
 describe('DatasetComponent', () => {
   let component: DatasetComponent;
@@ -145,14 +141,14 @@ describe('DatasetComponent', () => {
   //       expect(bannerElement.textContent).toContain('Dataset Information');
   //   });
   //
-  //   // it('should contain "Dataset Information"', () => {
+  //   // it('should contain 'Dataset Information'', () => {
   //   //     const bannerElement: HTMLElement = fixture.nativeElement;
   //   //     //find text from html template
   //   //     const h3 = bannerElement.querySelector('h3');
   //   //     expect(h3.textContent).toEqual('Dataset Information');
   //   // });
   //
-  //   // it('should contain "Dataset Information" in debugElement', () => {
+  //   // it('should contain 'Dataset Information' in debugElement', () => {
   //   //     const bannerDe: DebugElement = fixture.debugElement;
   //   //     const bannerEl: HTMLElement = bannerDe.nativeElement;
   //   //     //find text from html template
@@ -242,6 +238,8 @@ describe('DatasetComponent', () => {
             const reanalysis = El.querySelector('#reanalysis');
             const connections = El.querySelector('#connections');
 
+
+
             expect(h3.textContent).toContain('Anion-Exchange Chromatography of Tryptic and Phosphopeptides: WAX vs. SAX and AEX vs. ERLIC');
             expect(abstract.textContent).toContain('At a pH > 5,  phosphopeptides have two negative charges per residue and are well-retained in anion-exchange chromatography.  However, the peptides with one or two phosphate groups are not separated from the peptides with multiple Asp or Glu residues, which interfere with the identification of phosphopeptides in tryptic digests.  At a pH around 2, phosphate residues have just a single negative charge but Asp and Glu have none.  This facilitates the separation of phosphopeptides from unmodified acidic peptides.  The singly phosphorylated peptides are retained too weakly under these conditions, due to electrostatic repulsion, unless hydrophilic interaction is superimposed in the ERLIC mode (electrostatic repulsion-hydrophilic interaction chromatography).  Weak anion-exchange (WAX) and strong anion-exchange (SAX) columns were compared, both with peptide standards and with a complex tryptic digest.  The SAX column exhibited higher capacity at pH 6 than did the WAX column.  However, only about 60% as many phosphopeptides were identified at pH 6 than via ERLIC at pH 2.  In one run, 12,467 phosphopeptides were identified, including 4233 with more than one phosphate.  We conclude that chromatography of phosphopeptides is best performed at low pH in the ERLIC mode.  Under those conditions the performances of the SAX and WAX materials were comparable.');
             if (reanalisys_of) {
@@ -295,6 +293,16 @@ describe('DatasetComponent', () => {
             };
 
 
+            // const tt = El.querySelector('#dataset_upper_right h4');
+            // expect(tt.textContent).toBe('hehehe');
+            const tt2 = El.querySelectorAll('#dataset_upper_right .align-justify');
+            // for (let t of tt2 ){
+            //     expect(tt.textContent).toBe('hehehe');
+            // }
+            expect(tt2.item(0).textContent).toContain('At a pH > 5,  phosphopeptides have two negative charges per residue and are well-retained in anion-exchange chromatography.  However, the peptides with one or two phosphate groups are not separated from the peptides with multiple Asp or Glu residues, which interfere with the identification of phosphopeptides in tryptic digests.  At a pH around 2, phosphate residues have just a single negative charge but Asp and Glu have none.  This facilitates the separation of phosphopeptides from unmodified acidic peptides.  The singly phosphorylated peptides are retained too weakly under these conditions, due to electrostatic repulsion, unless hydrophilic interaction is superimposed in the ERLIC mode (electrostatic repulsion-hydrophilic interaction chromatography).  Weak anion-exchange (WAX) and strong anion-exchange (SAX) columns were compared, both with peptide standards and with a complex tryptic digest.  The SAX column exhibited higher capacity at pH 6 than did the WAX column.  However, only about 60% as many phosphopeptides were identified at pH 6 than via ERLIC at pH 2.  In one run, 12,467 phosphopeptides were identified, including 4233 with more than one phosphate.  We conclude that chromatography of phosphopeptides is best performed at low pH in the ERLIC mode.  Under those conditions the performances of the SAX and WAX materials were comparable.');
+            // for ( let i = 0; i++ ; i < tt2.length) {
+            //     expect(tt2.item(i).textContent).toBe('test');
+            // };
         });
 
     }));

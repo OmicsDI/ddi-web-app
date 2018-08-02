@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {BaseService} from '@shared/services/base.service';
 import {Http} from '@angular/http';
-import {AppConfig} from '../../../app/app.config';
+import {AppConfig} from 'app/app.config';
 import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {Subject} from "rxjs/Subject";
-import {DataSet} from "model/DataSet";
+import {Subject} from 'rxjs/Subject';
+import {DataSet} from 'model/DataSet';
 
 @Injectable()
 export class DataSetMockService extends BaseService {

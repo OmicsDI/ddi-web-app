@@ -3,7 +3,7 @@ import {Http} from '@angular/http';
 import {Observable, Subject} from 'rxjs/Rx';
 import {SimilarityResult} from 'model/SimilarityResult';
 import {AppConfig} from 'app/app.config';
-import {BaseService} from "@shared/services/base.service";
+import {BaseService} from '@shared/services/base.service';
 
 @Injectable()
 export class SimilarityMockService extends BaseService {

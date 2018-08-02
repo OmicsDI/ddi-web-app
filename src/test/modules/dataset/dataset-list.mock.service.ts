@@ -3,7 +3,7 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {AppConfig} from 'app/app.config';
 import {Database} from 'model/Database';
-import {BaseService} from "@shared/services/base.service";
+import {BaseService} from '@shared/services/base.service';
 
 @Injectable()
 export class DataSetListMockService extends BaseService {
