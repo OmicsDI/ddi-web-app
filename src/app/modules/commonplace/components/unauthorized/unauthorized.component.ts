@@ -8,17 +8,21 @@ import {Router} from '@angular/router';
 })
 export class UnauthorizedComponent implements OnInit {
 
-    returnTime: number;
+    returnTime = 3;
     constructor(private router: Router) {
     }
 
     ngOnInit() {
-        this.returnTime = 3;
-        const interval = setInterval( () => {
-            this.returnTime = this.returnTime - 1;
-            if ( this.returnTime < 0) {
-                this.router.navigate(['home']);
-            }
+        this.sleep(this.returnTime);
+    }
+
+    private sleep(second: number) {
+        if (second === 0) {
+            this.router.navigate(['home']);
+        }
+        setTimeout(() => {
+            this.returnTime -= 1;
+            this.sleep(this.returnTime);
         }, 1000);
     }
 }
