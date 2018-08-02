@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {environment} from 'environments/environment';
@@ -25,9 +24,7 @@ export class DatabaseComponent implements OnInit {
     constructor(
         private databaseListService: DatabaseListService,
         private statisticsService: StatisticsService,
-        private loadingService: SlimLoadingBarService,
         public appConfig: AppConfig) {
-        this.loadingService.start();
         this.url = environment.userServiceUrl;
     }
 
@@ -43,7 +40,6 @@ export class DatabaseComponent implements OnInit {
                 result => {
                     console.log(result);
                     this.databases = result.filter(d => d.source !== 'NCBI'); // AZ:TODO: add "display on database page" bit in mongo
-                    this.loadingService.complete();
                 }
             );
     }

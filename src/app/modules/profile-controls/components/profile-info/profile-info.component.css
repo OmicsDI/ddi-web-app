@@ -52,12 +52,6 @@ a.editBioLink:after {
     font-size: .85em;
 }
 
-html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
-
 table {
     border-collapse: collapse;
     border-width: 0;
@@ -557,4 +551,15 @@ td.gsc_a_c {
 .gsc_rsb_lc {
     margin-left: 12px;
     font-weight: normal;
+}
+
+.available-tasks {
+    margin-top: 15px;
+    list-style: none;
+}
+
+.available-tasks li:before {
+    content: '✓';
+    margin-right: 10px;
+;
 }

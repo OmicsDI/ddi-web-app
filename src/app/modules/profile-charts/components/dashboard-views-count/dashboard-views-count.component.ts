@@ -289,7 +289,7 @@ export class DashboardViewsCountComponent implements OnInit, OnChanges {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + DashboardViewsCountComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
 
@@ -465,33 +465,34 @@ export class DashboardViewsCountComponent implements OnInit, OnChanges {
             } else {
                 year = date.toString().substr(date.toString().lastIndexOf(' '), 4);
             }
+            const viewCount = d['scores'] != null ? d['scores']['viewCount'] : 0;
             switch (d['omics_type'].toString()) {
                 case 'Genomics':
 
                     genomicsList.push({
                         year: +year,
-                        value: +d['scores']['viewCount']
+                        value: +viewCount
                     });
                     break;
                 case 'Transcriptomics':
 
                     transcriList.push({
                         year: +year,
-                        value: +d['scores']['viewCount']
+                        value: +viewCount
                     });
                     break;
                 case 'Metabolomics':
 
                     metaboloList.push({
                         year: +year,
-                        value: +d['scores']['viewCount']
+                        value: +viewCount
                     });
                     break;
                 case 'Proteomics':
 
                     proteomiList.push({
                         year: +year,
-                        value: +d['scores']['viewCount']
+                        value: +viewCount
                     });
                     break;
                 default:

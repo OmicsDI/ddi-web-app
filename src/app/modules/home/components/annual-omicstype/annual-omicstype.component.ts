@@ -1,19 +1,17 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DataSetService} from '@shared/services/dataset.service';
+import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-annual-omicstype',
     templateUrl: './annual-omicstype.component.html',
-    styleUrls: ['./annual-omicstype.component.css']
+    styleUrls: ['./annual-omicstype.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: AnnualOmicstypeComponent }]
 })
-export class AnnualOmicstypeComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implements OnInit {
 
     private web_service_url = this.appConfig.getWebServiceUrl();
     private retryLimitTimes = 2;
@@ -28,14 +26,12 @@ export class AnnualOmicstypeComponent implements OnInit {
         }
     }
 
-    constructor(private router: Router, private dataSetService: DataSetService,
-                private route: ActivatedRoute, public appConfig: AppConfig) {
-
+    constructor(private router: Router, public appConfig: AppConfig) {
+        super();
     }
 
     ngOnInit() {
         this.startRequest();
-        this.web_service_url = this.dataSetService.getWebServiceUrl();
     }
 
     private startRequest() {
@@ -45,14 +41,14 @@ export class AnnualOmicstypeComponent implements OnInit {
                 if (err) {
                     this.retryLimitTimes--;
                     if (this.retryLimitTimes <= 0) {
-                        this.notifyHomeLoader.emit('annual_omicstype');
+                        this.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
                         return;
                     }
                     ChartsErrorHandler.outputGettingInfo('barchart_omicstype_annual');
                     this.startRequest();
                 } else {
-                    this.notifyHomeLoader.emit('annual_omicstype');
+                    this.componentLoaded();
                     ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
                     const processedData = this.prepareData(annualData);
                     this.draw(processedData);
@@ -218,7 +214,7 @@ export class AnnualOmicstypeComponent implements OnInit {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + AnnualOmicstypeComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
 
@@ -249,7 +245,7 @@ export class AnnualOmicstypeComponent implements OnInit {
                 return 'translate(' + (i * 0) + ',200)';
             })
             .on('click', function (d) {
-                const searchWord = '*:* AND omics_type:"' + d + '"';
+                const searchWord = 'omics_type:"' + d + '"';
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
                 console.log('this.router.navigate');
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});

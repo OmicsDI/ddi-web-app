@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {AutocompleteResult} from 'model/AutocompleteResult';
 import {AppConfig} from 'app/app.config';
@@ -16,7 +16,10 @@ export class AutocompleteNComponent implements OnInit {
     @Output() submit = new EventEmitter();
     @ViewChild('txtInput') txtInput: ElementRef;
 
-    constructor(private http: Http, public appConfig: AppConfig, public searchService: SearchService) {
+    @Input()
+    searchText: string;
+
+    constructor(private http: Http, public appConfig: AppConfig) {
     }
 
     ngOnInit() {
@@ -35,12 +38,6 @@ export class AutocompleteNComponent implements OnInit {
         return searchResult.items.map(x => x.name);
     }
 
-    valuechange(event) {
-        if (this.searchService.fullQuery !== event) {
-            this.searchService.fullQuery = event;
-        }
-    }
-
     keydown(event) {
         switch (event.keyCode) {
             case 40:
@@ -51,10 +48,8 @@ export class AutocompleteNComponent implements OnInit {
                     this.submit.emit();
                     event.stopPropagation();
                     const self = this;
-                    const searchText = self.searchService.fullQuery;
                     setTimeout(function () {
-                        self.txtInput.nativeElement.value = searchText;
-                        self.searchService.fullQuery = searchText;
+                        self.txtInput.nativeElement.value = self.searchText;
                     }, 100);
                 }
             }

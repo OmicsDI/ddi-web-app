@@ -19,13 +19,16 @@ export class SearchQuery {
     }
 
     public toQueryString(): string {
-        let str = '(';
+        let str = '';
         for (let i = 0; i < this.rules.length; i++) {
             if (i > 0) {
                 str += ' ' + this.operator + ' ';
             }
             if (null != this.rules[i].query) {
-                str += this.rules[i].query.toQueryString();
+                const tmp = this.rules[i].query.toQueryString();
+                if (tmp !== '') {
+                    str += '(' + tmp + ')';
+                }
             } else {
                 const rule = this.rules[i];
                 let strtemp = '';
@@ -34,7 +37,7 @@ export class SearchQuery {
                     strtemp = '["' + rule.data + '" TO "' + (rule.data2 || '') + '"]';
                 }
                 if (rule.condition === 'equal') {
-                    strtemp = '("' + rule.data + '")';
+                    strtemp = '"' + rule.data + '"';
                 }
 
                 if (rule.field === 'all_fields') {
@@ -44,8 +47,7 @@ export class SearchQuery {
                 }
             }
         }
-        str = str.replace(/"\*\:\*"/g, '*:*');
-        return str + ')';
+        return str;
     }
 }
 

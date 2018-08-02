@@ -335,7 +335,7 @@ export class DashboardReanalisysCountComponent implements OnInit, OnChanges {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + DashboardReanalisysCountComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
 
@@ -513,33 +513,34 @@ export class DashboardReanalisysCountComponent implements OnInit, OnChanges {
             } else {
                 year = date.toString().substr(date.toString().lastIndexOf(' '), 4);
             }
+            const reanalysisCount = d['scores'] != null ? d['scores']['reanalysisCount'] : 0;
             switch (d['omics_type'].toString()) {
                 case 'Genomics':
 
                     genomicsList.push({
                         year: +year,
-                        value: +d['scores']['reanalysisCount']
+                        value: +reanalysisCount
                     });
                     break;
                 case 'Transcriptomics':
 
                     transcriList.push({
                         year: +year,
-                        value: +d['scores']['reanalysisCount']
+                        value: +reanalysisCount
                     });
                     break;
                 case 'Metabolomics':
 
                     metaboloList.push({
                         year: +year,
-                        value: +d['scores']['reanalysisCount']
+                        value: +reanalysisCount
                     });
                     break;
                 case 'Proteomics':
 
                     proteomiList.push({
                         year: +year,
-                        value: +d['scores']['reanalysisCount']
+                        value: +reanalysisCount
                     });
                     break;
                 default:

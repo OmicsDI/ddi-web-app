@@ -60,7 +60,7 @@
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">
-            <li style="width:100%;" *ngIf="!homePage" AppSearchBox class="col-md-6 col-sm-12 col-xs-12 functional">
+            <li style="width:100%;" *ngIf="!homePage" AppSearchBox [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
         </ul>
     </nav>
     <!-- /local-nav -->
