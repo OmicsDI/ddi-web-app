@@ -8,9 +8,9 @@
     </div>
 
     <div class="project-widget-accession">
-        <app-omics-image [omics]="d.omicsType"></app-omics-image>
+        <app-omics-image [omics]="d.omics_type"></app-omics-image>
 
-        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title}}</span></a>
+        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.name}}</span></a>
 
     </div>
 
