@@ -19,7 +19,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 })
 export class DatasetWidgetComponent implements OnInit {
 
-    @Input() d: DataSet;
+    @Input() d: any;
     @Input() allowSelect = true;
     @Output() buttonClicked = new EventEmitter<any>();
     @Input() allowDelete = true;
