@@ -129,8 +129,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
             return result;
         }
 
-        // array of Strange words
-        // hard coded
+        //todo array of Strange words
+        //todo hard coded
         const reg = ['ï', '®', 'µ', 'å', '°' , '¾' ];
         let i = 0;
         for (let n = 0; n < synonyms.length; n++) {
@@ -271,7 +271,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     console.log('calling process_sections');
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
-                    }else {
+                    } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {
+                        this.dialogService.confirm('Alert' , 'no synonymous words in name or description');
+                        this.process_sections();
+                    } else {
                         this.process_sections();
                     }
 
