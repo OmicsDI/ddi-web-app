@@ -334,7 +334,7 @@ export class MergeComponent implements OnInit {
         this.currentPage = page;
         this.load();
     }
-    //todo as a service,not hard coded
+    // todo as a service,not hard coded
     getDatabaseName(dbname) {
         if (dbname) {
             switch (dbname.toLowerCase()) {
