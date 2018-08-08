@@ -11,7 +11,6 @@ import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
-import {DataSetDetail} from 'model/DataSetDetail';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -20,7 +19,7 @@ import {DataSetDetail} from 'model/DataSetDetail';
 })
 export class DatasetWidgetComponent implements OnInit {
 
-    @Input() d: DataSetDetail;
+    @Input() d: DataSet;
     @Input() allowSelect = true;
     @Output() buttonClicked = new EventEmitter<any>();
     @Input() allowDelete = true;
