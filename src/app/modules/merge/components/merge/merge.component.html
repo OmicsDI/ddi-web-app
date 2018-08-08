@@ -33,7 +33,7 @@
 
                 </td>
                 <td style="width:100px">{{d.database}}</td>
-                <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', d.database.toLowerCase(),d.accession]">{{d.accession}}</a>
+                <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', getDatabaseName(d.database),d.accession]">{{d.accession}}</a>
                 </td>
                 <td>{{d.name}}</td>
 
@@ -68,7 +68,7 @@
 
                 </td>
                 <td style="width:100px">{{c.database}}</td>
-                <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', c.database.toLowerCase(),c.accession]">{{c.accession}}</a>
+                <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', getDatabaseName(c.database),c.accession]">{{c.accession}}</a>
                 </td>
                 <td>{{c.name}}</td>
 
