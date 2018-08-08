@@ -15,7 +15,7 @@
                 style="min-width:400px;">
 
 
-            <app-datasetwidget [d]="convertDataset(d)" [allowSelect]="false" [allowClaim]="false"
+            <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
                                                 (buttonClicked)="this.deleteDataset(d.source, d.id)"></app-datasetwidget>
         </li>
 

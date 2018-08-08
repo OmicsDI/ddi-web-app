@@ -2,6 +2,7 @@ import {Protocol} from './Protocol';
 import {Organism} from './Organism';
 import {Dates} from './Dates';
 import {SimilarDataset} from './SimilarDataset';
+import {DataSet} from 'model/DataSet';
 
 /**
  * Created by user on 3/25/2017.
@@ -35,6 +36,35 @@ export class DataSetDetail {
     related_omics = 'related_omics';
     secondary_accession: string[];
     repositories: string[];
+    score = 0;
+    visitCount = 0;
+    claimable = false;
+    citationsCount = 0;
+    connectionsCount = 0;
+    reanalysisCount = 0;
+    viewsCount = 0;
+
+    public static toDataset(datasetDetails: DataSetDetail): DataSet {
+        const dataset = new DataSet();
+        dataset.id = datasetDetails.id;
+        dataset.source = datasetDetails.source;
+        dataset.title = datasetDetails.name;
+        dataset.description = datasetDetails.description;
+        dataset.keywords = datasetDetails.keywords;
+        dataset.organisms = datasetDetails.organisms;
+        dataset.tissues = datasetDetails.tissues;
+        dataset.diseases = datasetDetails.diseases;
+        dataset.omicsType = datasetDetails.omics_type;
+        dataset.publicationDate = datasetDetails.publicationDate;
+        dataset.score = datasetDetails.score;
+        dataset.visitCount = datasetDetails.visitCount;
+        dataset.claimable = datasetDetails.claimable;
+        dataset.citationsCount = datasetDetails.citationsCount;
+        dataset.connectionsCount = datasetDetails.connectionsCount;
+        dataset.reanalysisCount = datasetDetails.reanalysisCount;
+        dataset.viewsCount = datasetDetails.viewsCount;
+        return dataset;
+    }
 
     constructor() {
         this.omics_type = [];
@@ -46,7 +76,6 @@ export class DataSetDetail {
         }
         return (this.omics_type.indexOf(omics) !== -1);
     }
-
 
 }
 

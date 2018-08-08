@@ -30,6 +30,8 @@ export class ProfileComponent implements OnInit {
     userId = 'xxx';
     username: string = null;
 
+    toDataset = DataSetDetail.toDataset;
+
     public uploader: FileUploader;
 
     constructor(public profileService: ProfileService
@@ -154,27 +156,5 @@ export class ProfileComponent implements OnInit {
 
     isMy(): boolean {
         return (null == this.username);
-    }
-
-    convertDataset(d) {
-        const dataset = new DataSet();
-        dataset.id = d.id;
-        dataset.source = d.source;
-        dataset.title = d.name;
-        dataset.description = d.description;
-        dataset.keywords = d.keywords;
-        dataset.organisms = d.organisms;
-        dataset.tissues = d.tissues;
-        dataset.diseases = d.diseases;
-        dataset.omicsType = d.omics_type;
-        dataset.publicationDate = d.publicationDate;
-        dataset.score = d.score;
-        dataset.visitCount = d.visitCount;
-        dataset.claimable = d.claimable;
-        dataset.citationsCount = d.citationsCount;
-        dataset.connectionsCount = d.connectionsCount;
-        dataset.reanalysisCount = d.reanalysisCount;
-        dataset.viewsCount = d.viewsCount;
-        return dataset;
     }
 }
