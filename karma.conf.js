@@ -23,12 +23,15 @@ module.exports = function (config) {
         angularCli: {
             environment: 'dev'
         },
+        preprocessors: {
+            './src/test.ts': ['@angular/cli']
+        },
         reporters: ['progress', 'kjhtml'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['Chrome'],
+        browsers: ['ChromeHeadless'],
         singleRun: false
     });
 };
