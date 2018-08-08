@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FeedbackService} from '@shared/services/feedback.service';
 import {Feedback} from 'model/Feedback';
 import {SearchService} from '@shared/services/search.service';
@@ -20,6 +20,9 @@ export class FeedbackComponent implements OnInit {
     selectMessage: string;
     timeout = false;
 
+    @Input()
+    query: string;
+
     constructor(private feedbackService: FeedbackService
         , private searhcService: SearchService
         , private notificationService: NotificationsService) {
@@ -37,7 +40,7 @@ export class FeedbackComponent implements OnInit {
         feedback.message = `${this.messageData} ${this.selectMessage}`; // $scope.feedback.messageData + ' '+$scope.feedback.selectMessage
         feedback.userInfo = 'testuser';
         feedback.satisfied = this.isSatisfiedVal === 'true'; // $scope.feedback.isSatisfiedVal
-        feedback.searchQuery = this.searhcService.currentQuery; // $scope.query_for_show
+        feedback.searchQuery = this.query;
 
         this.feedbackService.submit(feedback);
 

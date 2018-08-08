@@ -91,7 +91,7 @@
                         <b>ORGANISM(S):</b>
                         <span *ngFor="let o of d.organisms">
                 <a class="biological" [routerLink]="['/search']"
-                   [queryParams]="{q: '*:* AND TAXONOMY:&quot;'+o.acc+'&quot;'}">
+                   [queryParams]="{q: 'TAXONOMY:&quot;'+o.acc+'&quot;'}">
                        {{o.name}}
                 </a>&nbsp;
               </span>

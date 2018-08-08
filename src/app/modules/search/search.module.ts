@@ -13,8 +13,6 @@ import {SearchComponent} from './components/search/search.component';
 import {SearchTotalComponent} from './components/search-total/search-total.component';
 import {SearchResultComponent} from './components/search-result/search-result.component';
 import {SearchPagerComponent} from './components/search-pager/search-pager.component';
-import {SearchFacetComponent} from './components/search-facet/search-facet.component';
-import {SearchQueryComponent} from './components/search-query/search-query.component';
 
 @NgModule({
     imports: [
@@ -32,12 +30,7 @@ import {SearchQueryComponent} from './components/search-query/search-query.compo
         SearchComponent,
         SearchTotalComponent,
         SearchResultComponent,
-        SearchPagerComponent,
-        SearchFacetComponent,
-        SearchQueryComponent
-    ],
-    exports: [
-        SearchQueryComponent
+        SearchPagerComponent
     ]
 })
 export class SearchModule {

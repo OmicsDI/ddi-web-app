@@ -1,20 +1,20 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 
 @Component({
     selector: 'app-latest-datasets',
     templateUrl: './latest-datasets.component.html',
     styleUrls: ['./latest-datasets.component.css'],
-    providers: [DataSetService]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: LatestDatasetsComponent }]
 })
-export class LatestDatasetsComponent implements OnInit {
+export class LatestDatasetsComponent extends AsyncInitialisedComponent implements OnInit {
 
     static requestLatestDatasetFailed;
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
+    private widgetName = 'latest_datasets';
     latestDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
@@ -22,6 +22,7 @@ export class LatestDatasetsComponent implements OnInit {
     transcriptomics_list: string;
 
     constructor(private dataSetService: DataSetService) {
+        super();
         LatestDatasetsComponent.requestLatestDatasetFailed = false;
     }
 
@@ -34,7 +35,7 @@ export class LatestDatasetsComponent implements OnInit {
 
         this.dataSetService.getLatestDataSets()
             .then(res => {
-                this.notifyHomeLoader.emit('latest_datasets');
+                this.componentLoaded();
 
                 this.latestDatasets = res['datasets'];
             })

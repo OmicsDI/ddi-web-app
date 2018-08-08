@@ -50,15 +50,14 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         // this.profileService.getDataSetDetails(this.profileService.profile);
-        this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
-
+        this.startRequest(this.datasets);
 
         // Listen page size
         Observable.fromEvent(window, 'resize')
             .debounceTime(100) // timer
             .subscribe((event) => {
                 // restartRequest
-                this.reloadDataSets();
+                this.startRequest(this.datasets);
             });
 
         this.web_service_url = this.dataSetService.getWebServiceUrl();
@@ -75,18 +74,10 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                 this.datasets = chng.currentValue;
                 // console.log(this.datasets);
                 if (null != chng.currentValue) {
-                    // console.log('hey reload!');
-                    // console.log(this.datasets);
-                    this.reloadDataSets();
+                    this.startRequest(this.datasets);
                 }
             }
         }
-    }
-
-    reloadDataSets() {
-        // this.dataSets = new Array();
-        // console.log(this.datasets);
-        this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[]) {
@@ -351,7 +342,7 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + DashboardClaimCountComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
 

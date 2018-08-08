@@ -1,20 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-tissues-organisms',
     templateUrl: './tissues-organisms.component.html',
-    styleUrls: ['./tissues-organisms.component.css']
+    styleUrls: ['./tissues-organisms.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: TissuesOrganismsComponent }]
 })
-export class TissuesOrganismsComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+export class TissuesOrganismsComponent extends AsyncInitialisedComponent implements OnInit {
 
     private webServiceUrl: string;
     private retryLimitTimes: number;
@@ -27,9 +26,8 @@ export class TissuesOrganismsComponent implements OnInit {
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
 
-    private bubble: any;
-
     constructor(datasetService: DataSetService, private router: Router) {
+        super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
@@ -52,7 +50,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     self.retryLimitTimes--;
 
                     if (self.retryLimitTimes <= 0) {
-                        self.notifyHomeLoader.emit('tissues');
+                        self.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo(self.bubChartName);
                         return;
                     }
@@ -60,7 +58,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     ChartsErrorHandler.outputGettingInfo(self.bubChartName);
                     self.startRequest();
                 } else {
-                    self.notifyHomeLoader.emit('tissues');
+                    self.componentLoaded();
                     ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
                     self.tissues = tissues;
@@ -233,15 +231,15 @@ export class TissuesOrganismsComponent implements OnInit {
 
         if (value === 'Tissues') {
             data = self.tissues;
-            searchWord_pre = '*:* AND tissue:"';
+            searchWord_pre = 'tissue:"';
         }
         if (value === 'Organisms') {
             data = self.calculateLoggedValue(self.organisms);
-            searchWord_pre = '*:* AND TAXONOMY:"';
+            searchWord_pre = 'TAXONOMY:"';
         }
         if (value === 'Diseases') {
             data = self.diseases;
-            searchWord_pre = '*:* AND disease:"';
+            searchWord_pre = 'disease:"';
         }
 
         svg_inside.selectAll('.node').remove();

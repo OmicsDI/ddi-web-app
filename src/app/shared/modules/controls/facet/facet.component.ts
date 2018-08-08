@@ -28,44 +28,33 @@ export class FacetComponent implements OnInit {
     @Input() facetValues: FacetValue[];
     @Input() id: string;
     @Output() facetValueSelected: EventEmitter<string> = new EventEmitter<string>();
+    @Output() facetValueRemoved: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('searchInput') searchInput: ElementRef;
 
     facetValuesFiltered: FacetValueFiltered[];
 
-    constructor(private searchService: SearchService) {
+    @Input()
+    facetSelected: string[];
 
+    constructor() {
     }
 
     ngOnInit() {
         this.facetValuesFiltered = this.facetValues.map(x => new FacetValueFiltered(x));
+        this.facetSelected = (this.facetSelected !== undefined) ? this.facetSelected : [];
     }
 
     checkBoxClicked(value: string, event) {
-
-        let val: string;
-
-        if (event.target.checked) {
-            val = 'checked';
-            this.searchService.selectFacet(this.id, value);
-        } else {
-            val = 'unchecked';
-            this.searchService.unselectFacet(this.id, value);
-        }
-        console.log('>>>' + value + ' ' + val);
-        this.facetValueSelected.emit(value + ' ' + val);
+        this.labelClicked(value, event, event.target.checked);
     }
 
     labelClicked(value: string, event, isCheckboxChecked: boolean) {
-        console.log(`>>>labelClicked ${value} ${event} ${isCheckboxChecked}`);
-        event.preventDefault();
-        if (isCheckboxChecked) {
-            this.searchService.unselectFacet(this.id, value);
+        if (!isCheckboxChecked) {
+            this.facetValueRemoved.emit(value);
         } else {
-            this.searchService.selectFacet(this.id, value);
+            this.facetValueSelected.emit(value);
         }
-        this.facetValueSelected.emit(value);
-        console.log(isCheckboxChecked);
     }
 
     searchByName() {
@@ -76,6 +65,9 @@ export class FacetComponent implements OnInit {
     }
 
     isChecked(value: string): boolean {
-        return this.searchService.isFacetSelected(this.id, value);
+        if (this.facetSelected === undefined) {
+            return false;
+        }
+        return this.facetSelected.indexOf(value) > -1;
     }
 }
