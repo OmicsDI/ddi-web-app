@@ -59,7 +59,7 @@
                 class="repeated-item ng-scope"
                 style="min-width:400px;">
 
-                <app-datasetwidget [d]="d" (buttonClicked)="this.remove(d.source,d.id)"
+                <app-datasetwidget [d]="convertDataset(d)" (buttonClicked)="this.remove(d.source,d.id)"
                                                    [allowSelect]="false"></app-datasetwidget>
 
 

@@ -9,6 +9,7 @@ import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -138,6 +139,27 @@ export class DashboardSelectedComponent implements OnInit {
             });
 
 
+    }
+    convertDataset(d) {
+        const dataset = new DataSet();
+        dataset.id = d.id;
+        dataset.source = d.source;
+        dataset.title = d.name;
+        dataset.description = d.description;
+        dataset.keywords = d.keywords;
+        dataset.organisms = d.organisms;
+        dataset.tissues = d.tissues;
+        dataset.diseases = d.diseases;
+        dataset.omicsType = d.omics_type;
+        dataset.publicationDate = d.publicationDate;
+        dataset.score = d.score;
+        dataset.visitCount = d.visitCount;
+        dataset.claimable = d.claimable;
+        dataset.citationsCount = d.citationsCount;
+        dataset.connectionsCount = d.connectionsCount;
+        dataset.reanalysisCount = d.reanalysisCount;
+        dataset.viewsCount = d.viewsCount;
+        return dataset;
     }
 }
 
