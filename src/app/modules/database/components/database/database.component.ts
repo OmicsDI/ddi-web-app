@@ -64,6 +64,10 @@ export class DatabaseComponent implements OnInit {
         console.log(this.domainStats);
         for (const d of this.domainStats) {
 
+            if (domain === 'Omics-ENA' && d.domain.name === 'ENA' ) {
+                return d.domain.value;
+            }
+
             if (d.domain.name === domain) {
                 return d.domain.value;
             }
