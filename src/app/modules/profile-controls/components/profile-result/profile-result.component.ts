@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Rx';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {ThorService} from '@shared/services/thor.service';
-import {DataSet} from "model/DataSet";
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-profile-result',
