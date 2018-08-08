@@ -25,6 +25,9 @@
       ],
       "@shared/*": [
         "app/shared/*"
+      ],
+      "@test/*": [
+        "test/*"
       ]
     },
     "declaration": false,
