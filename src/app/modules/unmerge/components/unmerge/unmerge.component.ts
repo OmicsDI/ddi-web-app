@@ -115,5 +115,29 @@ export class UnmergeComponent implements OnInit {
         this.load();
     }
 
+    //todo as a service,not hard coded
+    getDatabaseName(dbname) {
+        if (dbname) {
+            switch (dbname.toLowerCase()) {
+                case 'arrayexpress':
+                    return 'arrayexpress-repository';
+                case 'expressionatlas':
+                    return 'atlas-experiments';
+                case 'jpost repository':
+                    return 'jpost';
+                case 'metabolights':
+                    return 'metabolights_dataset';
+                case 'peptideatlas':
+                    return 'peptide_atlas';
+                case 'metabolomicsworkbench':
+                    return 'metabolomics_workbench';
+                case 'metabolomeexpress':
+                    return 'metabolome_express';
+                default :
+                    return dbname.toLowerCase();
+            }
+
+        }
+    }
 
 }
