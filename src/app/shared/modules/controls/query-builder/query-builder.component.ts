@@ -51,10 +51,6 @@ export class QueryBuilderComponent implements OnInit {
             star.label = 'All';
             star.facetValues = [];
             this.allFacets = ArrayUtils.prepend(star, this.allFacets);
-            star.id = '*';
-            star.label = 'All';
-            star.facetValues = [];
-            this.allFacets = ArrayUtils.prepend(star, this.allFacets);
         });
     }
 
