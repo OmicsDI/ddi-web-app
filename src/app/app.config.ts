@@ -109,7 +109,7 @@ export class AppConfig {
     }
 
     getDatabaseImageUrl(databaseName: string) {
-        return `${environment.webServiceUrl}database/${databaseName}/picture?=${Math.random()}`;
+        return `${environment.webServiceUrl}database/${databaseName}/picture`;
     }
 
     getLoginUrl(provider: string, scope: string) {
