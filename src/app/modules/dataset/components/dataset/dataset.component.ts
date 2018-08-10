@@ -16,6 +16,7 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DialogService} from '@shared/services/dialog.service';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 
 @Component({
@@ -56,6 +57,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         , private dialog: MatDialog
         , private dialogService: DialogService
         , private notificationService: NotificationsService
+        , private slimLoadingBarService: SlimLoadingBarService
         , private databaseListService: DatabaseListService) {
         console.log('DatasetComponent constructor');
 
@@ -85,6 +87,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                         self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
                     });
                 }
+                this.slimLoadingBarService.complete();
             });
         this.web_service_url = dataSetService.getWebServiceUrl();
         this.databaseListService.getDatabaseList().subscribe(x => {
@@ -95,6 +98,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     ngOnInit() {
         console.log('DatasetComponent init');
         this.subscription = this.route.params.subscribe(params => {
+            this.slimLoadingBarService.start();
             this.acc = params['acc'];
             this.repository = params['domain'];
             this.dataSetService.getDataSetDetail(this.acc, this.repository);

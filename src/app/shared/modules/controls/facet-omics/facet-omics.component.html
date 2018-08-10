@@ -4,7 +4,7 @@
     <ul class="list-unstyled metasearch-facet-values">
 
         <li *ngFor="let v of facetValuesFiltered" [hidden]="!v.visible">
-            <a (click)="labelClicked(v.value, $event, false)">
+            <a (click)="labelClicked(v.value, $event, true)">
                 <app-omics-image [omics]="[v.value]"></app-omics-image>
                 <span style="font-size:15px; font-weight:bold">{{v.label}}</span>
                 <small class="ng-binding">

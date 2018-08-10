@@ -1,52 +1,38 @@
 <script>
     document.title = "OmicsDI Home";
-
 </script>
 
 
 <div id="page-wrapper" class="container_ddi">
-
-
-    <div id="" class="row" style="margin:10px">
-    </div>
+    <div id="" class="row" style="margin:10px"></div>
 
 
     <div class="row">
 
         <div class="col-md-12">
-            <div ng-controller="QueryCtrl" class="ng-scope panel panel-default" style="">
-                <!--      <div ng-controller="QueryCtrl" class=" ng-scope panel panel-default" style="background-color:lightcyan; ">   -->
-                <h3 style="margin-top:10px">
-                </h3>
-
-                <search-box-large></search-box-large>
-                <!-- /form -->
+            <div class="ng-scope panel panel-default" style="">
+                <h3 style="margin-top:10px"></h3>
+                <div AppSearchBox [isHomeSearch]="true"></div>
             </div>
-            <!--/controller-->
         </div>
 
         <div class="col-md-4">
         </div>
-
-
     </div>
 
-    <!-- <div ng-controller="ResultsListCtrl" class="ng-scope container" ng-show="true" style=""> -->
     <div class="row">
 
         <div class="col-md-4">
-            <app-hotwords (notifyHomeLoader)="loadOnePart($event)"></app-hotwords>
+            <app-hotwords></app-hotwords>
         </div>
 
 
         <div class="col-md-4">
-            <app-tissues-organisms (notifyHomeLoader)="loadOnePart($event)"></app-tissues-organisms>
+            <app-tissues-organisms></app-tissues-organisms>
         </div>
 
         <div class="col-md-4">
-            <!--<div id="chart_repos_omics" class="panel panel-default" style="height:360px">
-            </div>-->
-            <repos-omics (notifyHomeLoader)="loadOnePart($event)"></repos-omics>
+            <repos-omics></repos-omics>
         </div>
 
 
@@ -56,15 +42,15 @@
 
     <div class="row">
         <div class="col-md-4">
-            <app-latest-datasets (notifyHomeLoader)="loadOnePart($event)"></app-latest-datasets>
+            <app-latest-datasets></app-latest-datasets>
         </div>
 
         <div class="col-md-4">
-            <app-most-accessed (notifyHomeLoader)="loadOnePart($event)"></app-most-accessed>
+            <app-most-accessed></app-most-accessed>
         </div>
 
         <div class="col-md-4">
-            <app-annual-omicstype (notifyHomeLoader)="loadOnePart($event)"></app-annual-omicstype>
+            <app-annual-omicstype></app-annual-omicstype>
         </div>
     </div>
     <!--row -->
@@ -72,11 +58,11 @@
     <div class="row">
 
         <div class="col-md-4">
-            <app-tweets-news (notifyHomeLoader)="loadOnePart($event)"></app-tweets-news>
+            <app-tweets-news></app-tweets-news>
         </div>
 
         <div class="col-md-4">
-            <app-statistics-panel (notifyHomeLoader)="loadOnePart($event)"></app-statistics-panel>
+            <app-statistics-panel></app-statistics-panel>
         </div>
 
         <div class="col-md-4">

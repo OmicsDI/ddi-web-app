@@ -1,37 +1,33 @@
 <div style="min-height: 60px;">
-
-    <!--  -->
-    <div class="row" *ngIf="loading || (this.searchService.total > 0)" style="margin-top:10px;">
+    <div class="row" *ngIf="loading || (this.totalResults > 0)" style="margin-top:10px;">
         <div class="col-lg-8">
             <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
         </div>
 
         <div class="col-lg-4">
-    <span class="pull-right" style="margin-right:10px;">
-      <span style="border:none;"><span (click)="sortOrderChanged();" style="cursor:pointer;">Sort
-              <i *ngIf="searchService.sortOrder=='ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
-        <i *ngIf="searchService.sortOrder=='descending'" class="fa fa-caret-up" style="font-size:19px"></i></span> by:
-
-
-      <select (change)="sortByChanged($event.target.value)" [ngModel]="this.searchService.sortBy">
-        <option value="">Relevance</option>
-        <option value="id">Accession</option>
-        <option value="publication_date">Pub.Date</option>
-        <option value="view_count">Views</option>
-        <option value="citation_count">Citations</option>
-        <option value="reanalysis_count">Reanalysis</option>
-        <option value="search_count">Connections</option>
-      </select>
-      </span>
-      &nbsp;&nbsp;&nbsp;
-      <span>
-      Page size&nbsp;
-      <select [(ngModel)]="searchService.selectedPageSize" (change)="searchService.changePageSize()">
-        <option [value]="c" *ngFor="let c of searchService.pageSizes">{{c}}</option>
-      </select>
-      </span>
-    </span>
+            <span class="pull-right" style="margin-right:10px;">
+                <span style="border:none;">
+                    <span (click)="sortOrderChanged(!dataControl.order);" style="cursor:pointer;">Sort
+                        <i *ngIf="dataControl.order" class="fa fa-caret-down " style="font-size:19px;"></i>
+                        <i *ngIf="!dataControl.order" class="fa fa-caret-up" style="font-size:19px"></i>
+                    </span> by:
+                    <select (change)="sortByChanged($event.target.value)" [ngModel]="this.dataControl.sortBy">
+                        <option value="">Relevance</option>
+                        <option value="id">Accession</option>
+                        <option value="publication_date">Pub.Date</option>
+                        <option value="view_count">Views</option>
+                        <option value="citation_count">Citations</option>
+                        <option value="reanalysis_count">Reanalysis</option>
+                        <option value="search_count">Connections</option>
+                    </select>
+                </span>
+                <span>
+                    Page size&nbsp;
+                    <select [(ngModel)]="dataControl.pageSize" (change)="pageSizeChanged($event.target.value)">
+                        <option [value]="c" *ngFor="let c of pageSizes">{{c}}</option>
+                    </select>
+                </span>
+            </span>
         </div>
     </div>
-
 </div>

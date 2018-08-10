@@ -24,7 +24,6 @@ import {LoginComponent} from '@shared/modules/controls/login/login.component';
 import {LoginLauncherComponent} from '@shared/modules/controls/login-launcher/login-launcher.component';
 import {QueryBuilderComponent} from '@shared/modules/controls/query-builder/query-builder.component';
 import {SearchBoxComponent} from '@shared/modules/controls/search-box/search-box.component';
-import {SearchBoxLargeComponent} from '@shared/modules/controls/search-box-large/search-box-large.component';
 import {MatMenuModule} from '@angular/material';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
@@ -63,7 +62,6 @@ import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/au
         QueryBuilderComponent,
         ScoreComponent,
         SearchBoxComponent,
-        SearchBoxLargeComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
         CitationDialogComponent
@@ -88,7 +86,6 @@ import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/au
         QueryBuilderComponent,
         ScoreComponent,
         SearchBoxComponent,
-        SearchBoxLargeComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
         CitationDialogComponent

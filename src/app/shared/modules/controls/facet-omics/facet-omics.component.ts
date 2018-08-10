@@ -9,8 +9,8 @@ import {SearchService} from '@shared/services/search.service';
 })
 export class FacetOmicsComponent extends FacetComponent {
 
-    constructor(searchService: SearchService) {
-        super(searchService);
+    constructor() {
+        super();
     }
 
 }

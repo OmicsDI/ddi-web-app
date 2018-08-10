@@ -5,11 +5,11 @@ div.datasetsCaption {
     font-weight: 300;
 }
 
-html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+/*html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*border: 0;*/
+/*}*/
 
 table {
     border-collapse: collapse;
@@ -574,3 +574,11 @@ td.gsc_a_c {
     clear: both;
 }
 
+@media (min-width: 992px) {
+    .col-md-10 {
+        width: 80%;
+    }
+    .col-md-2 {
+        width: 19.9%;
+    }
+}

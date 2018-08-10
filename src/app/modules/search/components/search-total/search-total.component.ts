@@ -1,7 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {SearchService} from '@shared/services/search.service';
-import {Subscription} from 'rxjs/Subscription';
-import {SearchQuery} from 'model/SearchQuery';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SavedSearch} from 'model/SavedSearch';
 import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
@@ -12,28 +9,25 @@ import {NotificationsService} from 'angular2-notifications/dist';
     styleUrls: ['./search-total.component.css']
 })
 export class SearchTotalComponent implements OnInit {
-    searchCount: string;
-    searchQuery: string;
-    subscription: Subscription;
 
-    constructor(private searchService: SearchService
-        , public profileService: ProfileService
+    @Input()
+    searchCount: string;
+
+    @Input()
+    searchQuery: string;
+
+    @Output()
+    ignoreAllFacet = new EventEmitter<void>();
+
+    constructor(public profileService: ProfileService
         , private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
-        this.subscription = this.searchService.searchResult$.subscribe(
-            searchResult => {
-                this.searchCount = searchResult.count.toString();
-                this.searchQuery = this.searchService.currentQuery;
-            });
     }
 
     showAllClick() {
-        this.searchService.paramQuery = new SearchQuery();
-        this.searchService.textQuery = '*:*';
-        this.searchService.unselectFacets();
-        this.searchService.callSearch();
+        this.ignoreAllFacet.emit();
     }
 
     saveSearchClick() {

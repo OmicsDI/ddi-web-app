@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SelectedService} from '../../services/selected.service';
 
@@ -12,12 +11,10 @@ import {SelectedService} from '../../services/selected.service';
 
 export class AppComponent implements OnInit {
     title: string;
-    homePage: boolean;
+    homePage = true;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
-    constructor(public auth: AuthService, private slimLoadingBarService: SlimLoadingBarService
-        , private route: ActivatedRoute
-        , private router: Router
+    constructor(public auth: AuthService, private route: ActivatedRoute, private router: Router
         , public selectedService: SelectedService) {
 
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
@@ -28,28 +25,14 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.router.events.subscribe(x => {
-            this.homePage = (this.router.url === '/home');
+        this.router.events.subscribe(() => {
+            this.homePage = (this.router.url === '/home') || (this.router.url === '/');
         });
     }
 
     getTitle(): string {
         const result = 'Omics DI 2.0';
         return result;
-    }
-
-    startLoading() {
-        this.slimLoadingBarService.start(() => {
-            console.log('Loading complete');
-        });
-    }
-
-    stopLoading() {
-        this.slimLoadingBarService.stop();
-    }
-
-    completeLoading() {
-        this.slimLoadingBarService.complete();
     }
 
     gotoHelp() {

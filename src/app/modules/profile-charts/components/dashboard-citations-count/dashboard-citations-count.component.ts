@@ -50,7 +50,7 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         // this.profileService.getDataSetDetails(this.profileService.profile);
-        this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
+        this.startRequest(this.datasets);
 
 
         // Listen page size
@@ -58,7 +58,7 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             .debounceTime(100) // timer
             .subscribe((event) => {
                 // restartRequest
-                this.reloadDataSets();
+                this.startRequest(this.datasets);
             });
 
         this.web_service_url = this.dataSetService.getWebServiceUrl();
@@ -77,15 +77,10 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                 if (null != chng.currentValue) {
                     // console.log('hey reload!');
                     // console.log(this.datasets);
-                    this.reloadDataSets();
+                    this.startRequest(this.datasets);
                 }
             }
         }
-    }
-
-    reloadDataSets() {
-        // this.dataSets = new Array();
-        this.startRequest(this.datasets);
     }
 
     private startRequest(datasetDetail: DataSetDetail[]) {
@@ -339,7 +334,7 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + DashboardCitationsCountComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
 
@@ -518,33 +513,34 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             } else {
                 year = date.toString().substr(date.toString().lastIndexOf(' ') + 1, 4);
             }
+            const citationCount = d['scores'] != null ? d['scores']['citationCount'] : 0;
             switch (d['omics_type'].toString()) {
                 case 'Genomics':
 
                     genomicsList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Transcriptomics':
 
                     transcriList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Metabolomics':
 
                     metaboloList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Proteomics':
 
                     proteomiList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 default:

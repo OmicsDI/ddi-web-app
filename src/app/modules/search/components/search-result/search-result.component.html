@@ -1,6 +1,6 @@
 <ul class="list-unstyled">
-    <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.selectedPageSize, currentPage: searchService.currentPage
-  , totalItems: total }, let last = last"
+    <li *ngFor="let d of searchResult.datasets | paginate: { itemsPerPage: dataControl.pageSize,
+    currentPage: dataControl.page, totalItems: totalResults }, let last = last"
         class="repeated-item ng-scope"
         style="">
 
