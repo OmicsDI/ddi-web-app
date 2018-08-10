@@ -18,8 +18,8 @@ import {DialogService} from '@shared/services/dialog.service';
 export class DashboardSelectedComponent implements OnInit {
 
     dataSets: DataSetDetail[];
-
     p: 0;
+    toDataset = DataSetDetail.toDataset;
 
     constructor(public selectedService: SelectedService
         , private dataSetService: DataSetService

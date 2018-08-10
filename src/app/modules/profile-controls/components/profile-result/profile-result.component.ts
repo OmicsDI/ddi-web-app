@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Rx';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {ThorService} from '@shared/services/thor.service';
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-profile-result',
@@ -21,6 +22,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     @Input() profile: Profile;
     @Output() change = new EventEmitter();
 
+    toDataset = DataSetDetail.toDataset;
 
     constructor(public profileService: ProfileService
         , private dataSetService: DataSetService

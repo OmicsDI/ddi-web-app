@@ -9,6 +9,7 @@ import {AppConfig} from 'app/app.config';
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-profile',
@@ -28,6 +29,8 @@ export class ProfileComponent implements OnInit {
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
+
+    toDataset = DataSetDetail.toDataset;
 
     public uploader: FileUploader;
 

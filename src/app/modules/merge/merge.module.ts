@@ -7,6 +7,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {AuthGuardService} from '@shared/services/auth-guard.service';
+import {OnlyAdminDirective} from '@shared/directives/only-admin.directive';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {AuthGuardService} from '@shared/services/auth-guard.service';
         ControlsModule
     ],
     declarations: [
-        MergeComponent
+        MergeComponent,
+        OnlyAdminDirective
     ],
     entryComponents: [
     ],

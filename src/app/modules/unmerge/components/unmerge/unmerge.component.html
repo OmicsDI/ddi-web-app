@@ -47,7 +47,7 @@ Total unmerge candidates: {{this.counts}}
         <!--</td>-->
 
         <td style="width:100px">{{d.dataset.database}}</td>
-        <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', d.dataset.database,d.dataset.accession]">{{d.dataset.accession}}</a>
+        <td style="width:100px"><a target="_blank" [routerLink]="['/dataset', getDatabaseName(d.dataset.database),d.dataset.accession]">{{d.dataset.accession}}</a>
         </td>
         <td>{{d.dataset.name}}</td>
 

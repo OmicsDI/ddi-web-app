@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {MergeCandidate} from 'model/MergeCandidate';
 import {NotificationsService} from 'angular2-notifications/dist';
-import {Profile} from 'model/Profile';
 import {ProfileService} from '@shared/services/profile.service';
-import {Router} from '@angular/router';
 import {DialogService} from '@shared/services/dialog.service';
 
 @Component({
@@ -14,9 +12,7 @@ import {DialogService} from '@shared/services/dialog.service';
 })
 export class MergeComponent implements OnInit {
 
-    public profile: Profile;
     public mergeControl: boolean;
-    public adminUser= ['BH3FoEuT', 'xQuOBTAW' , '8AufFkjS' , 'qKHFQW5a'];
 
     test: boolean;
     mergeCandidates: MergeCandidate[];
@@ -31,38 +27,13 @@ export class MergeComponent implements OnInit {
         public profileService: ProfileService,
         private datasetService: DataSetService,
         private notificationService: NotificationsService,
-        private dialogService: DialogService,
-        private router: Router
+        private dialogService: DialogService
     ) {
     }
 
     ngOnInit() {
-        this.authControl();
         this.test = false;
         this.load();
-    }
-
-    authControl() {
-        this.profileService.getProfile()
-            .subscribe(
-                profile => {
-                    this.profile = profile;
-                    console.log(profile);
-                    if (this.profile.userId !== null) {
-                        for ( const user of this.adminUser){
-                            if (user === this.profile.userId) {
-                                return true;
-                            } else {
-                                console.log('unauthorized');
-                                this.router.navigate(['unauthorized']);
-                                return false;
-                            }
-                        }
-                    } else {
-                        this.router.navigate(['unauthorized']);
-                    }
-                }
-            );
     }
 
     load() {
@@ -362,5 +333,29 @@ export class MergeComponent implements OnInit {
     getPage(page: number) {
         this.currentPage = page;
         this.load();
+    }
+    // todo as a service,not hard coded
+    getDatabaseName(dbname) {
+        if (dbname) {
+            switch (dbname.toLowerCase()) {
+                case 'arrayexpress':
+                    return 'arrayexpress-repository';
+                case 'expressionatlas':
+                    return 'atlas-experiments';
+                case 'jpost repository':
+                    return 'jpost';
+                case 'metabolights':
+                    return 'metabolights_dataset';
+                case 'peptideatlas':
+                    return 'peptide_atlas';
+                case 'metabolomicsworkbench':
+                    return 'metabolomics_workbench';
+                case 'metabolomeexpress':
+                    return 'metabolome_express';
+                default :
+                    return dbname.toLowerCase();
+            }
+
+        }
     }
 }

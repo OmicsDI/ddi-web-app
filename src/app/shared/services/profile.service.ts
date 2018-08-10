@@ -275,6 +275,10 @@ export class ProfileService extends BaseService {
             .map(x => this.extractData<DataSetShort[]>(x));
         // .catch(this.handleError);
     }
+
+    getAdminUsers() {
+        return this.http.get('static/adminUser/adminUser.json');
+    }
 }
 
 
