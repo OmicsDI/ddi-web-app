@@ -1,6 +1,6 @@
 import {async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { DatasetComponent } from './dataset.component';
+import { DatasetComponent } from '@modules/dataset/components/dataset/dataset.component';
 import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {DatasetRoutingModule} from '@modules/dataset/dataset-routing.module';
 import {DisqusModule} from 'ngx-disqus';
