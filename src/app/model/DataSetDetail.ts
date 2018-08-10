@@ -3,46 +3,45 @@ import {Organism} from './Organism';
 import {Dates} from './Dates';
 import {SimilarDataset} from './SimilarDataset';
 import {DataSet} from 'model/DataSet';
+import {LabMember} from 'model/LabMember';
+import {Scores} from 'model/Scores';
+import {DatasetSimilar} from 'model/DatasetSimilar';
 
 /**
  * Created by user on 3/25/2017.
  */
 export class DataSetDetail {
-    id: string;
-    source: string;
-    name: string;
-    description: string;
-    keywords?: any;
-    organisms: Organism[];
-    publicationDate: string;
-    publicationIds: string[];
-    protocols: Protocol[];
-    instruments?: any;
-    experimentType?: any;
-    labMembers?: any;
-    full_dataset_link: string;
-    tissues?: any;
-    diseases?: any;
-    omics_type: string[];
-    similars: SimilarDataset[];
-    organization?: any;
-    dates: Dates;
+    repositories: string[];
+    tissues: string[];
+    diseases: string[];
+    citationsCount: number;
+    connectionsCount: number;
+    viewsCount: number;
+    reanalysisCount: number;
+    claimable: boolean;
+    labHead: string[];
+    labHeadMail: string[];
     submitter: string[];
     submitterMail: string[];
-    labHead?: any;
-    labHeadMail?: any;
-    reanalysis_of = 'reanalysis_of';
-    reanalised_by = 'reanalised_by';
-    related_omics = 'related_omics';
+    publicationDate: string;
+    publicationIds: string[];
+    organisms: Organism[];
+    protocols: Protocol[];
+    labMembers: LabMember[];
+    full_dataset_link: string;
+    instruments: string[];
+    experimentType: string[];
+    dates: Map<string, Set<string>>;
+    scores: Scores;
+    similars: DatasetSimilar[];
     secondary_accession: string[];
-    repositories: string[];
-    score = 0;
-    visitCount = 0;
-    claimable = false;
-    citationsCount = 0;
-    connectionsCount = 0;
-    reanalysisCount = 0;
-    viewsCount = 0;
+    keywords: string[];
+    omics_type: string[];
+    description: string;
+    source: string;
+    organization: string[];
+    name: string;
+    id: string;
 
     public static toDataset(datasetDetails: DataSetDetail): DataSet {
         const dataset = new DataSet();
@@ -52,12 +51,24 @@ export class DataSetDetail {
         dataset.description = datasetDetails.description;
         dataset.keywords = datasetDetails.keywords;
         dataset.organisms = datasetDetails.organisms;
-        dataset.tissues = datasetDetails.tissues;
-        dataset.diseases = datasetDetails.diseases;
+        if (datasetDetails.tissues) {
+            for ( const tissue of datasetDetails.tissues) {
+                dataset.tissues.push({name: tissue});
+            };
+        } else {
+            dataset.tissues = null;
+        };
+
+        if (datasetDetails.diseases) {
+            for ( const disease of datasetDetails.diseases) {
+                dataset.diseases.push({name: disease});
+            };
+        } else {
+            dataset.diseases = null;
+        };
         dataset.omicsType = datasetDetails.omics_type;
         dataset.publicationDate = datasetDetails.publicationDate;
-        dataset.score = datasetDetails.score;
-        dataset.visitCount = datasetDetails.visitCount;
+        dataset.score = datasetDetails.scores;
         dataset.claimable = datasetDetails.claimable;
         dataset.citationsCount = datasetDetails.citationsCount;
         dataset.connectionsCount = datasetDetails.connectionsCount;
