@@ -37,13 +37,9 @@ export class DataSetListMockService extends BaseService {
         for (const key of Object.keys(this.databases)) {
             const database = self.databases[key];
 
-            // console.log("database:" + database);
-
             if (database.accessionPrefix) {
                 for (const prefix of database.accessionPrefix) {
-                    // console.log('compare ' + prefix + ' and ' + accession);
                     if (accession.startsWith(prefix)) {
-                        // console.log('success');
                         return database;
                     }
                 }

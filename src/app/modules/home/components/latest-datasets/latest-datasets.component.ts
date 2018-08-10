@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     genomics_list: string;
     transcriptomics_list: string;
 
-    constructor(private dataSetService: DataSetService) {
+    constructor(private dataSetService: DataSetService, private logger: LogService) {
         super();
         LatestDatasetsComponent.requestLatestDatasetFailed = false;
     }
@@ -42,7 +43,7 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
             .then(() => {
                 if (this.latestDatasets == null) {
                     LatestDatasetsComponent.requestLatestDatasetFailed = true;
-                    console.log('datasets array is empty');
+                    this.logger.debug('datasets array is empty');
                 }
             })
             .catch(this.handleError)
@@ -52,7 +53,7 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     private handleError(error: any) {
 
         LatestDatasetsComponent.requestLatestDatasetFailed = true;
-        console.log('GET error with url: http://www.omicsdi.org/ws/dataset/dataset/latest?size=10');
+        this.logger.error('GET error with url: http://www.omicsdi.org/ws/dataset/dataset/latest?size=10');
         return Promise.reject(error.message || error);
     }
 

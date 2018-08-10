@@ -44,6 +44,7 @@ import {DataSetListMockService} from '@test/modules/dataset/dataset-list.mock.se
 import {SimilarityMockService} from '@test/modules/dataset/similarity.mock.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 describe('DatasetComponent', () => {
   let component: DatasetComponent;
@@ -99,6 +100,7 @@ describe('DatasetComponent', () => {
             , {provide: DatabaseListService, useClass: DataSetListMockService}
             , SimilarMoleculeService
             , SlimLoadingBarService
+            , LogService
             , FeedbackService
             , AppConfig
             , StatisticsService

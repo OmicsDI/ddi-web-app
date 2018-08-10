@@ -5,6 +5,7 @@ import {environment} from 'environments/environment';
 import {DomainStat} from 'model/DomainStat';
 import {AppConfig} from 'app/app.config';
 import {StatisticsService} from '@shared/services/statistics.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-database',
@@ -21,10 +22,10 @@ export class DatabaseComponent implements OnInit {
     };
     public url: string;
 
-    constructor(
-        private databaseListService: DatabaseListService,
-        private statisticsService: StatisticsService,
-        public appConfig: AppConfig) {
+    constructor(private databaseListService: DatabaseListService,
+                private statisticsService: StatisticsService,
+                private logger: LogService,
+                public appConfig: AppConfig) {
         this.url = environment.userServiceUrl;
     }
 
@@ -38,7 +39,6 @@ export class DatabaseComponent implements OnInit {
             .getDatabaseList()
             .subscribe(
                 result => {
-                    console.log(result);
                     this.databases = result.filter(d => d.source !== 'NCBI'); // AZ:TODO: add "display on database page" bit in mongo
                 }
             );
@@ -63,7 +63,7 @@ export class DatabaseComponent implements OnInit {
         if (this.domainStats.has(domain)) {
             return this.domainStats.get(domain).domain.value;
         }
-        console.log('Domain : ' + domain + ' can\'t be found');
+        this.logger.debug('Domain : {} can\'t be found', domain);
         return 0;
     }
 }

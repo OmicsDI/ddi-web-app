@@ -20,7 +20,6 @@ export class SimilarityMockService extends BaseService {
         const o: Observable<SimilarityResult> = this.http.get('test/modules/dataset/similarity.json')
             .map(x => this.extractData<SimilarityResult>(x));
         o.subscribe(x => {
-            console.log(x);
             this.resultSource.next(x);
         });
     }

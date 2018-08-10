@@ -6,6 +6,7 @@ import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-tissues-organisms',
@@ -26,7 +27,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
 
-    constructor(datasetService: DataSetService, private router: Router) {
+    constructor(datasetService: DataSetService, private router: Router, private logger: LogService) {
         super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
@@ -201,7 +202,6 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         d3.select('#' + self.bubChartName + '_radio_form')
             .selectAll('input')
             .on('change', function (d: any) {
-                console.log(d);
                 self.field = d3.select(this).attr('value');    // ignore this exception raised by editor
                 self.change();
             });
@@ -260,7 +260,6 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             .enter().append('g')
             .attr('class', 'node')
             .attr('transform', function (d: any) {
-                // console.log(d)
                 return 'translate(' + d.x + ',' + d.y + ')';
             })
             .on('click', function (d: any, i) {
@@ -273,7 +272,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
                 if (value === 'Organisms') {
                     searchWord = searchWord_pre + d.data.taxonomyid + '"';
                 }
-                console.log(searchWord);
+                self.logger.debug('Search keyword: {}', searchWord);
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 // -------------------------------  redirect --------------------------------------------

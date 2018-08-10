@@ -4,6 +4,7 @@ import {MergeCandidate} from 'model/MergeCandidate';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {ProfileService} from '@shared/services/profile.service';
 import {DialogService} from '@shared/services/dialog.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-merge',
@@ -23,12 +24,11 @@ export class MergeComponent implements OnInit {
 
 
 
-    constructor(
-        public profileService: ProfileService,
-        private datasetService: DataSetService,
-        private notificationService: NotificationsService,
-        private dialogService: DialogService
-    ) {
+    constructor(public profileService: ProfileService,
+                private datasetService: DataSetService,
+                private notificationService: NotificationsService,
+                private logger: LogService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {
@@ -41,7 +41,7 @@ export class MergeComponent implements OnInit {
             .getMergeCandidates(10 * (this.currentPage - 1), 10)
             .subscribe(
                 result => {
-                    console.log(result);
+                    this.logger.debug('Merge candidates: {}', result);
                     this.mergeCandidates = result;
                 }
             );
@@ -72,7 +72,6 @@ export class MergeComponent implements OnInit {
         for (const m of this.checkedDatasets) {
 
             if (m.baseaccession === baseaccession && m.basedatabase === basedatabase && m.accession !== accession) {
-                console.log(m.database + '???' + m.accession);
                 result.similars.push({'database': m.database, 'accession': m.accession});
             }
 
@@ -175,7 +174,6 @@ export class MergeComponent implements OnInit {
 
         for (const m of this.checkedDatasets) {
             if (m.baseaccession === baseaccession && m.basedatabase === basedatabase) {
-                console.log(m.database + '???' + m.accession);
                 result.similars.push({'database': m.database, 'accession': m.accession});
             }
             // if(m.database==database && m.accession === accession)
@@ -243,7 +241,6 @@ export class MergeComponent implements OnInit {
 
         for (const m of this.checkedDatasets) {
             if (m.baseaccession === baseaccession && m.basedatabase === basedatabase) {
-                console.log(m.database + '???' + m.accession);
                 result.similars.push({'database': m.database, 'accession': m.accession});
             }
             // if(m.database==database && m.accession === accession)

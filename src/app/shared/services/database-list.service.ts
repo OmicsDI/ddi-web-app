@@ -4,15 +4,16 @@ import {Observable} from 'rxjs/Observable';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {Database} from 'model/Database';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Injectable()
 export class DatabaseListService extends BaseService {
 
     public databases = {};
 
-    constructor(
-        private http: Http,
-        public appConfig: AppConfig) {
+    constructor(private http: Http,
+                private logger: LogService,
+                public appConfig: AppConfig) {
         super();
         this.getDatabaseList().subscribe();
     }
@@ -46,13 +47,11 @@ export class DatabaseListService extends BaseService {
         for (const key of Object.keys(this.databases)) {
             const database = self.databases[key];
 
-            // console.log("database:" + database);
-
             if (database.accessionPrefix) {
                 for (const prefix of database.accessionPrefix) {
-                    console.log('compare ' + prefix + ' and ' + accession);
+                    this.logger.debug('Comparing {} and {}', prefix, accession);
                     if (accession.startsWith(prefix)) {
-                        console.log('success');
+                        this.logger.debug('success');
                         return database;
                     }
                 }

@@ -9,6 +9,7 @@ import {QueryUtils} from '@shared/utils/query-utils';
 import {Rule, SearchQuery} from 'model/SearchQuery';
 import {Facet} from 'model/Facet';
 import {FacetValue} from 'model/FacetValue';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-search',
@@ -23,8 +24,11 @@ export class SearchComponent implements OnInit {
     params = {};
     selectedFacets: Map<string, string[]>;
 
-    constructor(private searchService: SearchService, private slimLoadingBarService: SlimLoadingBarService,
-                private route: ActivatedRoute, private dataTransportService: DataTransportService) {
+    constructor(private searchService: SearchService,
+                private slimLoadingBarService: SlimLoadingBarService,
+                private route: ActivatedRoute,
+                private logger: LogService,
+                private dataTransportService: DataTransportService) {
     }
 
     ngOnInit() {
@@ -34,12 +38,17 @@ export class SearchComponent implements OnInit {
             this.query = QueryUtils.getBaseQuery(params);
             this.dataControl = QueryUtils.getDataControl(params);
             this.selectedFacets = QueryUtils.getFacets(params);
-            this.searchService.fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize,
-                this.dataControl.sortBy, this.dataControl.order)
-                .subscribe(result => {
+            this.searchService
+                .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
+                .subscribe(
+                    result => {
                     this.searchResult = result;
                     this.dataTransportService.fire(this.facetsChannel, result.facets);
-                }, error => {console.log(error); }, () => {this.slimLoadingBarService.complete(); });
+                }, error => {
+                        this.logger.error('Exception occurred when getting search result, {}', error);
+                }, () => {
+                        this.slimLoadingBarService.complete();
+                });
         });
     }
 

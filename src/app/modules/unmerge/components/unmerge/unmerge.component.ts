@@ -3,6 +3,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {UnMergeDatasets} from 'model/unmerge/UnMergeDatasets';
 import {DialogService} from '@shared/services/dialog.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-unmerge',
@@ -17,11 +18,10 @@ export class UnmergeComponent implements OnInit {
     checkedDatasets: { basedatabase: string, baseaccession: string, database: string, accession: string }[] = [];
     currentPage = 1;
 
-    constructor(
-        private datasetService: DataSetService,
-        private notificationService: NotificationsService,
-        private dialogService: DialogService
-    ) {
+    constructor(private datasetService: DataSetService,
+                private notificationService: NotificationsService,
+                private logger: LogService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {
@@ -34,7 +34,7 @@ export class UnmergeComponent implements OnInit {
             .getUnMergeCandidates()
             .subscribe(
                 result => {
-                    console.log(result);
+                    this.logger.debug('Unmerge candidates: {}', result);
                     this.unMergeCandidates = result;
                     this.counts = this.unMergeCandidates.length;
                 }
@@ -68,7 +68,7 @@ export class UnmergeComponent implements OnInit {
             });
             list.push(unmerge);
         }
-        console.log(list);
+        this.logger.debug('Unmerge list: {}', list);
 
 
         const confirm = this.dialogService.confirm('unmerge datasets', 'unmerge datasets')

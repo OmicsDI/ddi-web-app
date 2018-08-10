@@ -71,7 +71,6 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
     }
 
     find_similarity_limit(scores, threshold) {
-        // console.log(scores);
         const main_key = this.acc + '@' + this.repository;
         let limit = 0;
         if (scores != null) {
@@ -290,7 +289,6 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                 this.filteredDatasets.push(d);
             }
         }
-        console.log('this.filteredDatasets.length:' + this.filteredDatasets.length);
     }
 
 }

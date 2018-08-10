@@ -17,6 +17,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DialogService} from '@shared/services/dialog.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 
 @Component({
@@ -49,17 +50,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
     databaseByAccession: Object = {};
     ontology_highlighted = false;
 
-    constructor(private dataSetService: DataSetService
-        , private route: ActivatedRoute
-        , private enrichmentService: EnrichmentService
-        , public appConfig: AppConfig
-        , public profileService: ProfileService
-        , private dialog: MatDialog
-        , private dialogService: DialogService
-        , private notificationService: NotificationsService
-        , private slimLoadingBarService: SlimLoadingBarService
-        , private databaseListService: DatabaseListService) {
-        console.log('DatasetComponent constructor');
+    constructor(private dataSetService: DataSetService,
+                private route: ActivatedRoute,
+                private enrichmentService: EnrichmentService,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private dialog: MatDialog,
+                private dialogService: DialogService,
+                private notificationService: NotificationsService,
+                private logger: LogService,
+                private slimLoadingBarService: SlimLoadingBarService,
+                private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
         this.index_dataset = this.current_url.indexOf('dataset');
@@ -68,9 +69,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         this.subscription = this.dataSetService.dataSetDetail$.subscribe(
             result => {
-
-                console.log(result);
-                console.log('dataSetDetail$ subscribtion');
                 this.d = result;
                 // TODO: update with canonical id
                 this.acc = result.id;
@@ -79,8 +77,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.repositoryName = this.getDatabaseTitle(result.source);
                 this.databaseUrl = this.getDatabaseUrl(result.source);
 
-                console.log('dataSetDetailResult:' + result);
-                console.log('publicationIds:' + result.publicationIds);
+                this.logger.debug('DataSetDetailResult: {}', result);
 
                 if (this.d.secondary_accession) {
                     this.d.secondary_accession.forEach(item => {
@@ -91,12 +88,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
             });
         this.web_service_url = dataSetService.getWebServiceUrl();
         this.databaseListService.getDatabaseList().subscribe(x => {
-            console.log('database list received');
+            this.logger.debug('database list received');
         });
     }
 
     ngOnInit() {
-        console.log('DatasetComponent init');
         this.subscription = this.route.params.subscribe(params => {
             this.slimLoadingBarService.start();
             this.acc = params['acc'];
@@ -141,18 +137,14 @@ export class DatasetComponent implements OnInit, OnDestroy {
             let j = 0;
             for (const key of reg) {
                 const phase = str.substring(0, i);
-                // console.log(phase.indexOf(key));
                 if (phase.indexOf(key) > 0) {
                     j += phase.split(key).length - 1;
-                    // console.log(j);
-                    // console.log(phase);
 
                 }
             }
 
             if (i < synonyms[n].from - 1) {
                 const t = str.substr(i + j, synonyms[n].from - i - 1);
-                // console.log(t);
 
                 result.push({text: t, beAnnotated: false, tobeReduced: false, synonyms: null});
 
@@ -168,7 +160,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 }
             );
             i = synonyms[n].to;
-            // console.log(i);
         }
         // add space for strange words
         let s = 0;
@@ -238,11 +229,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 /<\/?[ib]*(br|span|h|u|strike|pre|code|tt|blockquote|small|center|em|strong)*\/?>/g, '');
             section.text = section.text.replace(/<[\s\S]*>/g, '');
             if (section.text.indexOf('<') !== -1 && section.text.indexOf('>') === -1) {
-                // console.log('+1');
                 section.text = section.text.replace(/<[\s\S]*/g, '');
                 count = count + 1;
             } else if (section.text.indexOf('>') !== -1 && section.text.indexOf('<') === -1) {
-                // console.log('-1');
                 section.text = section.text.replace(/[\s\S]*>/g, '');
                 count = count - 1;
             } else if (section.text.indexOf('>') === -1 && section.text.indexOf('<') === -1 && count > 0) {
@@ -258,7 +247,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             this.sample_protocol_sections = null;
             this.data_protocol_sections = null;
 
-            console.log('remove hightlighting');
+            this.logger.debug('remove hightlighting');
             this.ontology_highlighted = false;
         } else {
 
@@ -267,12 +256,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     this.enrichmentService.getSynonyms(this.repository, this.acc)]
             ).subscribe(
                 data => {
-                    console.log('subscription to forkJoin');
                     this.enrichmentInfo = data[0];
-                    console.log(this.enrichmentInfo);
+                    this.logger.debug('Enrichment info: {}', this.enrichmentInfo);
                     this.synonymResult = data[1];
-                    console.log(this.synonymResult);
-                    console.log('calling process_sections');
+                    this.logger.debug('Synonym result: {}', this.synonymResult);
+                    this.logger.debug('calling process_sections');
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {
@@ -284,7 +272,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
                 }
             );
-            console.log('add hightlighting');
         }
     }
 
@@ -362,7 +349,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     getDatabaseUrl(source) {
         const db = this.databaseListService.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('Source not found: {}', source);
         } else {
             return db.sourceUrl;
         }
@@ -371,7 +358,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     getDatabaseTitle(source) {
         const db = this.databaseListService.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('Source not found: {}', source);
         } else {
             return db.databaseName;
         }

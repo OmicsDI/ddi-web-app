@@ -18,7 +18,6 @@ export class SelectedService {
         this.profileService.onProfileReceived.subscribe(x => {
             this.profileService.getSelected(this.profileService.userId).subscribe(
                 r => {
-                    console.log('is here??????');
                     this.dataSets = r;
                 }
             );

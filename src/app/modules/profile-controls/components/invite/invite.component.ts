@@ -9,6 +9,7 @@ import {ProfileService} from '@shared/services/profile.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-invite',
@@ -25,15 +26,16 @@ export class InviteComponent implements OnInit {
 
     complexForm: FormGroup;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any
-        , private inviteService: InviteService
-        , private dataSetService: DataSetService
-        , private databaseListServce: DatabaseListService
-        , private changeDetector: ChangeDetectorRef
-        , public dialogRef: MatDialogRef<InviteComponent>
-        , public profileService: ProfileService
-        , public router: Router
-        , fb: FormBuilder) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+                private inviteService: InviteService,
+                private dataSetService: DataSetService,
+                private databaseListServce: DatabaseListService,
+                private changeDetector: ChangeDetectorRef,
+                public dialogRef: MatDialogRef<InviteComponent>,
+                public profileService: ProfileService,
+                private logger: LogService,
+                public router: Router,
+                fb: FormBuilder) {
 
         this.complexForm = fb.group({});
 
@@ -56,7 +58,7 @@ export class InviteComponent implements OnInit {
     deleteDataset(source: string, id: string) {
         const i: number = this.dataSetDetails.findIndex(x => x.source === source && x.id === id);
         if (i !== -1) {
-            console.log('deleting');
+            this.logger.info('deleting');
             this.dataSetDetails.splice(i, 1);
         }
     }
@@ -64,7 +66,7 @@ export class InviteComponent implements OnInit {
     getDatabaseUrl(source) {
         const db = this.databaseListServce.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('source not found: {}', source);
         } else {
             return db.sourceUrl;
         }
@@ -73,7 +75,7 @@ export class InviteComponent implements OnInit {
     getDatabaseTitle(source) {
         const db = this.databaseListServce.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('source not found: {}', source);
         } else {
             return db.databaseName;
         }
@@ -82,7 +84,7 @@ export class InviteComponent implements OnInit {
     checkchanged(checked: string, source: string, id: string) {
         const i: number = this.dataSetDetails.findIndex(x => x.source === source && x.id === id);
         if (i !== -1) {
-            console.log('checked:' + checked);
+            this.logger.debug('checked: {}', checked);
             if (!checked) {
                 this.dataSetDetails[i]['unchecked'] = true;
             } else {
@@ -122,7 +124,7 @@ export class InviteComponent implements OnInit {
         }
 
         this.profileService.updateUser().subscribe(x => {
-                console.log('user updated' + x);
+                this.logger.info('user updated, {}', x);
                 this.dialogRef.close();
                 this.profileService.getProfile().subscribe();
             }

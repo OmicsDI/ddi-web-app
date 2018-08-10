@@ -10,6 +10,7 @@ import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
 import {DataSet} from 'model/DataSet';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-profile',
@@ -34,12 +35,13 @@ export class ProfileComponent implements OnInit {
 
     public uploader: FileUploader;
 
-    constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , private formBuilder: FormBuilder
-        , public appConfig: AppConfig
-        , private router: Router
-        , private route: ActivatedRoute) {
+    constructor(public profileService: ProfileService,
+                private dataSetService: DataSetService,
+                private formBuilder: FormBuilder,
+                public appConfig: AppConfig,
+                private router: Router,
+                private logger: LogService,
+                private route: ActivatedRoute) {
         this.form = formBuilder.group({
             name: ['', [
                 Validators.required,
@@ -66,7 +68,7 @@ export class ProfileComponent implements OnInit {
     }
 
     getProfile(username: string = null) {
-        console.log('current username:' + username);
+        this.logger.debug('current username: {}', username);
 
         if (username) {
             this.profileService.getPublicProfile(username)
@@ -93,7 +95,7 @@ export class ProfileComponent implements OnInit {
             this.profileService.getProfile()
                 .subscribe(
                     profile => {
-                        console.log('getting profile');
+                        this.logger.debug('getting profile');
 
                         this.profileX = profile;
                         this.name = profile.userName;
@@ -116,7 +118,7 @@ export class ProfileComponent implements OnInit {
     }
 
     checkAll(ev) {
-        console.log('checking select all' + ev);
+        this.logger.debug('checking select all {}', ev);
         this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked);
     }
 
@@ -148,7 +150,6 @@ export class ProfileComponent implements OnInit {
     public fileChangeEvent(fileInput: any) {
         if (fileInput.target.files && fileInput.target.files[0]) {
             setTimeout(() => {
-                console.log('fileChangeEvent hello');
                 this.uploader.uploadAll();
             }, 100);
         }

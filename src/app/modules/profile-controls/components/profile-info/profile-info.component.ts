@@ -5,6 +5,7 @@ import {Profile} from 'model/Profile';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {FileUploader} from 'ng2-file-upload';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-profile-info',
@@ -28,8 +29,7 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
     @Input() profile: Profile = new Profile();
     @Output() change = new EventEmitter();
 
-    constructor(public profileService: ProfileService
-        , public appConfig: AppConfig) {
+    constructor(public profileService: ProfileService, public appConfig: AppConfig, private logger: LogService) {
 
     }
 
@@ -41,10 +41,9 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
             const chng = changes[propName];
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
                 if (null != chng.currentValue) {
-                    console.log(`profile-info ngOnChanges: ${chng.currentValue.userId}`);
+                    this.logger.debug(`profile-info ngOnChanges: ${chng.currentValue.userId}`);
                     this.profile = chng.currentValue;
                     this.profileImageUrl = this.getProfileImageUrl();
                     this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.profile.userId)});
