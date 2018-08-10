@@ -44,6 +44,8 @@ import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {HomeModule} from '@modules/home/home.module';
 import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 import {DataTransportService} from '@shared/services/data.transport.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
 
 
 export function getParameterByName(name): string {
@@ -125,6 +127,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         , MatDialogModule
         , MatMenuModule
         , MatButtonModule
+        , LogService
+        , LogPublisherService
         , InviteService],
     entryComponents: [
         // ConfirmDialogComponent
