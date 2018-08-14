@@ -1,6 +1,6 @@
 import {async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { DatasetComponent } from './dataset.component';
+import { DatasetComponent } from '@modules/dataset/components/dataset/dataset.component';
 import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {DatasetRoutingModule} from '@modules/dataset/dataset-routing.module';
 import {DisqusModule} from 'ngx-disqus';
@@ -43,6 +43,8 @@ import {DebugElement} from '@angular/core';
 import {DataSetListMockService} from '@test/modules/dataset/dataset-list.mock.service';
 import {SimilarityMockService} from '@test/modules/dataset/similarity.mock.service';
 import {NotificationsService} from 'angular2-notifications/dist';
+import {SimilarMoleculeMockService} from '@test/modules/dataset/similarMolecule.mock.service';
+import {PublicationMockService} from '@test/modules/dataset/publication.mock.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 describe('DatasetComponent', () => {
@@ -91,15 +93,14 @@ describe('DatasetComponent', () => {
             , AuthGuardService
             , SearchService
             , {provide: DataSetService, useClass: DataSetMockService}
-            , PublicationService
-            // For SimilarComponent
+            , {provide: PublicationService, useClass: PublicationMockService}
+          // For SimilarComponent
             , {provide: SimilarityService, useClass: SimilarityMockService}
             , EnrichmentService
             , OntologyService
             , {provide: DatabaseListService, useClass: DataSetListMockService}
-            , SimilarMoleculeService
-            , SlimLoadingBarService
-            , FeedbackService
+            , {provide: SimilarMoleculeService, useClass: SimilarMoleculeMockService}
+                , FeedbackService
             , AppConfig
             , StatisticsService
             , AltmetricService
@@ -112,6 +113,7 @@ describe('DatasetComponent', () => {
             , MatButtonModule
             , InviteService
             , NotificationsService
+            , SlimLoadingBarService
             // , ActivatedRoute
         ]
     })
@@ -121,16 +123,15 @@ describe('DatasetComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DatasetComponent);
     component = fixture.componentInstance;
-    datasetService = TestBed.get(DataSetService);
     fixture.detectChanges();
   });
     it('Consistency between frontend and backend: dataset componenet', async( () => {
+        component.ngOnInit();
         fixture.detectChanges();
         fixture.whenStable().then( () => {
             fixture.detectChanges();
             // find text from html template
             fixture.detectChanges();
-            component.ngOnInit();
             const De: DebugElement = fixture.debugElement;
             const El: HTMLElement = De.nativeElement;
             const h3 = El.querySelector('h4');

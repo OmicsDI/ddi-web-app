@@ -26,7 +26,7 @@ export class DataSetMockService extends BaseService {
         super();
     };
     private getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
-        return this.http.get('test/modules/dataset/test.json').map( x => this.extractData<DataSetDetail>(x));
+        return this.http.get('test/modules/dataset/DataSetDetail.json').map( x => this.extractData<DataSetDetail>(x));
     }
 
     public getDataSetDetail(accession: string, repository: string) {
