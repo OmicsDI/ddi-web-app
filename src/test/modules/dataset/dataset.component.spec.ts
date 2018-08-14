@@ -43,6 +43,8 @@ import {DebugElement} from '@angular/core';
 import {DataSetListMockService} from '@test/modules/dataset/dataset-list.mock.service';
 import {SimilarityMockService} from '@test/modules/dataset/similarity.mock.service';
 import {NotificationsService} from 'angular2-notifications/dist';
+import {SimilarMoleculeMockService} from "@test/modules/dataset/similarMolecule.mock.service";
+import {PublicationMockService} from "@test/modules/dataset/publication.mock.service";
 
 describe('DatasetComponent', () => {
   let component: DatasetComponent;
@@ -90,14 +92,14 @@ describe('DatasetComponent', () => {
             , AuthGuardService
             , SearchService
             , {provide: DataSetService, useClass: DataSetMockService}
-            , PublicationService
-            // For SimilarComponent
+            , {provide: PublicationService, useClass: PublicationMockService}
+          // For SimilarComponent
             , {provide: SimilarityService, useClass: SimilarityMockService}
             , EnrichmentService
             , OntologyService
             , {provide: DatabaseListService, useClass: DataSetListMockService}
-            , SimilarMoleculeService
-            , FeedbackService
+            , {provide: SimilarMoleculeService, useClass: SimilarMoleculeMockService}
+                , FeedbackService
             , AppConfig
             , StatisticsService
             , AltmetricService
@@ -119,16 +121,16 @@ describe('DatasetComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DatasetComponent);
     component = fixture.componentInstance;
-    datasetService = TestBed.get(DataSetService);
     fixture.detectChanges();
   });
     it('Consistency between frontend and backend: dataset componenet', async( () => {
         fixture.detectChanges();
+        component.ngOnInit();
         fixture.whenStable().then( () => {
             fixture.detectChanges();
             // find text from html template
             fixture.detectChanges();
-            component.ngOnInit();
+
             const De: DebugElement = fixture.debugElement;
             const El: HTMLElement = De.nativeElement;
             const h3 = El.querySelector('h4');

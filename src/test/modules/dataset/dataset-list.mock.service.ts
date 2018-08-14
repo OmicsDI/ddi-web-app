@@ -18,7 +18,7 @@ export class DataSetListMockService extends BaseService {
     }
 
     public getDatabaseList(): Observable<Database[]> {
-        return this.http.get(this.appConfig.getDatabasesUrl())
+        return this.http.get('test/modules/dataset/DatabaseDetail.json')
             .map(x => {
                 const d1: Database[] = this.extractData<Database[]>(x);
                 for (const d of d1) {
