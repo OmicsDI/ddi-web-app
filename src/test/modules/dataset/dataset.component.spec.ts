@@ -50,7 +50,6 @@ import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 describe('DatasetComponent', () => {
   let component: DatasetComponent;
   let fixture: ComponentFixture<DatasetComponent>;
-  let datasetService: DataSetService;
   // let datasetDetail: DataSetDetail;
 
 
@@ -118,19 +117,17 @@ describe('DatasetComponent', () => {
         ]
     })
     .compileComponents();
+      fixture = TestBed.createComponent(DatasetComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DatasetComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  // beforeEach(() => {
+  //
+  // });
     it('Consistency between frontend and backend: dataset componenet', async( () => {
         component.ngOnInit();
-        fixture.detectChanges();
         fixture.whenStable().then( () => {
-            fixture.detectChanges();
-            // find text from html template
             fixture.detectChanges();
             const De: DebugElement = fixture.debugElement;
             const El: HTMLElement = De.nativeElement;
