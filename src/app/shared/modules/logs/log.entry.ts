@@ -15,14 +15,19 @@ export class LogEntry {
 
     buildLogString(): string {
 
-        const stack = new Error();
+        let fileAndLine = '';
+        try {
+            const err = new Error();
+            fileAndLine = this.getFileAndLine(err.stack);
+        } catch (e) {
+        }
 
         let ret = '';
 
         if (this.logWithDate) {
             ret += new Date().toUTCString() + ' - ';
         }
-        ret += this.getFileAndLine(stack.stack) + ' - ';
+        ret += fileAndLine + ' - ';
         ret += LogLevel[this.level];
         ret += ' - ' + this.formatParams(this.message, this.extraInfo);
 
