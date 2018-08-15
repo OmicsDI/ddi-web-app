@@ -1,6 +1,7 @@
 import {Observable} from 'rxjs/Observable';
-import {LogEntry, LogLevel} from '@shared/modules/logs/services/log.service';
 import {LogPublisher} from '@shared/modules/logs/log.publisher';
+import {LogEntry} from '@shared/modules/logs/log.entry';
+import {LogLevel} from '@shared/modules/logs/log.level';
 
 export class LogConsole extends LogPublisher {
 

@@ -2,60 +2,8 @@ import {Injectable} from '@angular/core';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
 import {LogPublisher} from '@shared/modules/logs/log.publisher';
 import {isDevMode} from '@angular/core';
-
-
-export enum LogLevel {
-    ALL = 0,
-    DEBUG = 1,
-    INFO = 2,
-    WARN = 3,
-    ERROR = 4,
-    FATAL = 5,
-    OFF = 6
-}
-
-export class LogEntry {
-    message = '';
-    level: LogLevel = LogLevel.DEBUG;
-    extraInfo: any[] = [];
-    logWithDate = true;
-
-    private static formatParam(param) {
-        if (typeof param === 'object') {
-            return JSON.stringify(param);
-        }
-        return param;
-    }
-
-    buildLogString(): string {
-
-        const stack = new Error();
-
-        let ret = '';
-
-        if (this.logWithDate) {
-            ret += new Date().toUTCString() + ' - ';
-        }
-        ret += this.getFileAndLine(stack.stack) + ' - ';
-        ret += LogLevel[this.level];
-        ret += ' - ' + this.formatParams(this.message, this.extraInfo);
-
-        return ret;
-    }
-
-    private formatParams(message: string, params: any[]): string {
-        let index = 0;
-        return message.replace(/({})/g, function(match) {
-            const ret = typeof params[index] !== 'undefined' ? LogEntry.formatParam(params[index]) : LogEntry.formatParam(match);
-            index += 1;
-            return ret;
-        });
-    }
-
-    private getFileAndLine(stack: string) {
-        return stack.split('\n')[5].trim();
-    }
-}
+import {LogEntry} from '@shared/modules/logs/log.entry';
+import {LogLevel} from '@shared/modules/logs/log.level';
 
 
 @Injectable()
