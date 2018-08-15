@@ -152,7 +152,8 @@ describe('DatasetComponent', () => {
             const reanalysis = El.querySelector('#reanalysis');
             const connections = El.querySelector('#connections');
             // console.log(h4.textContent);
-            // expect(h4.textContent).toContain('Anion-Exchange Chromatography of Tryptic and Phosphopeptides: WAX vs. SAX and AEX vs. ERLIC');
+            // expect(h4.textContent).toContain('Anion-Exchange
+            // Chromatography of Tryptic and Phosphopeptides: WAX vs. SAX and AEX vs. ERLIC');
             expect(abstract.textContent).toContain('At a pH > 5,  phosphopeptides have two negative charges per resid' +
                 'ue and are well-retained in anion-exchan' +
                 'ge chromatography.  However, the peptides' +
