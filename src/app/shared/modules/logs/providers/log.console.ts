@@ -5,8 +5,6 @@ import {LogLevel} from '@shared/modules/logs/log.level';
 
 export class LogConsole extends LogPublisher {
 
-    private logProvider = console.log.bind(window.console);
-
     log(entry: LogEntry): Observable<boolean> {
         // Log to console
         switch (entry.level)  {
@@ -24,7 +22,6 @@ export class LogConsole extends LogPublisher {
     }
 
     clear(): Observable<boolean> {
-        this.logProvider.clear();
         return Observable.of(true);
     }
 }
