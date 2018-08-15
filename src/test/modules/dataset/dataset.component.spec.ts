@@ -1,6 +1,6 @@
 import {async, ComponentFixture, ComponentFixtureAutoDetect, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { DatasetComponent } from './dataset.component';
+import { DatasetComponent } from '@modules/dataset/components/dataset/dataset.component';
 import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {DatasetRoutingModule} from '@modules/dataset/dataset-routing.module';
 import {DisqusModule} from 'ngx-disqus';
@@ -38,17 +38,19 @@ import {MatButtonModule, MatDialog, MatDialogModule, MatMenuModule} from '@angul
 import {InviteService} from '@shared/services/invite.service';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterTestingModule} from '@angular/router/testing';
-import {DataSetMockService} from '@test/modules/dataset/dataset.mock.service';
 import {DebugElement} from '@angular/core';
-import {DataSetListMockService} from '@test/modules/dataset/dataset-list.mock.service';
+import {DataSetListMockService} from '@test/sharedServices/dataset-list.mock.service';
 import {SimilarityMockService} from '@test/modules/dataset/similarity.mock.service';
 import {NotificationsService} from 'angular2-notifications/dist';
+import {SimilarMoleculeMockService} from '@test/modules/dataset/similarMolecule.mock.service';
+import {PublicationMockService} from '@test/modules/dataset/publication.mock.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {AltmetricMockService} from '@test/modules/dataset/altmetric.mock.service';
+import {DataSetMockService} from '@test/sharedServices/dataset.mock.service';
 
 describe('DatasetComponent', () => {
   let component: DatasetComponent;
   let fixture: ComponentFixture<DatasetComponent>;
-  let datasetService: DataSetService;
   // let datasetDetail: DataSetDetail;
 
 
@@ -91,18 +93,17 @@ describe('DatasetComponent', () => {
             , AuthGuardService
             , SearchService
             , {provide: DataSetService, useClass: DataSetMockService}
-            , PublicationService
-            // For SimilarComponent
+            , {provide: PublicationService, useClass: PublicationMockService}
+          // For SimilarComponent
             , {provide: SimilarityService, useClass: SimilarityMockService}
             , EnrichmentService
             , OntologyService
             , {provide: DatabaseListService, useClass: DataSetListMockService}
-            , SimilarMoleculeService
-            , SlimLoadingBarService
-            , FeedbackService
+            , {provide: SimilarMoleculeService, useClass: SimilarMoleculeMockService}
+                , FeedbackService
             , AppConfig
             , StatisticsService
-            , AltmetricService
+            , {provide: AltmetricService, useClass: AltmetricMockService}
             , SelectedService
             , DialogService
             , ScoreService
@@ -112,28 +113,27 @@ describe('DatasetComponent', () => {
             , MatButtonModule
             , InviteService
             , NotificationsService
+            , SlimLoadingBarService
             // , ActivatedRoute
         ]
     })
-    .compileComponents();
+    .compileComponents().then( () => {
+        fixture = TestBed.createComponent(DatasetComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DatasetComponent);
-    component = fixture.componentInstance;
-    datasetService = TestBed.get(DataSetService);
-    fixture.detectChanges();
-  });
+  // beforeEach(() => {
+  //
+  // });
     it('Consistency between frontend and backend: dataset componenet', async( () => {
-        fixture.detectChanges();
         fixture.whenStable().then( () => {
             fixture.detectChanges();
-            // find text from html template
-            fixture.detectChanges();
-            component.ngOnInit();
             const De: DebugElement = fixture.debugElement;
             const El: HTMLElement = De.nativeElement;
-            const h3 = El.querySelector('h4');
+            // const h4 = El.querySelector('h4');
             const abstract = El.querySelector('#abstract');
             const reanalisys_of = El.querySelector('#reanalisys_of');
             const reanalisys_by = El.querySelector('#reanalisys_by');
@@ -151,7 +151,9 @@ describe('DatasetComponent', () => {
             const citations = El.querySelector('#citations');
             const reanalysis = El.querySelector('#reanalysis');
             const connections = El.querySelector('#connections');
-            expect(h3.textContent).toContain('Anion-Exchange Chromatography of Tryptic and Phosphopeptides: WAX vs. SAX and AEX vs. ERLIC');
+            // console.log(h4.textContent);
+            // expect(h4.textContent).toContain('Anion-Exchange
+            // Chromatography of Tryptic and Phosphopeptides: WAX vs. SAX and AEX vs. ERLIC');
             expect(abstract.textContent).toContain('At a pH > 5,  phosphopeptides have two negative charges per resid' +
                 'ue and are well-retained in anion-exchan' +
                 'ge chromatography.  However, the peptides' +
@@ -182,54 +184,40 @@ describe('DatasetComponent', () => {
                 'osphopeptides is best performed at low pH ' +
                 'in the ERLIC mode.  Under those conditions the per' +
                 'formances of the SAX and WAX materials were comparable.');
-            if (reanalisys_of) {
-                expect(reanalisys_of.textContent).toContain('TEST001');
-            };
-            if (reanalisys_of) {
+                //
+                //
+                // expect(reanalisys_of.textContent).toContain('TEST001');
+
                 expect(reanalisys_by.textContent).toContain('GPM32310019962');
-            };
-            if (relate_omics) {
+
                 expect(relate_omics.textContent).toContain('TEST002');
-            };
-            if (instruments) {
+
                 expect(instruments.textContent).toContain('Q Exactive');
-            };
-            if (organisms) {
+
                 expect(organisms.textContent).toContain('Homo sapiens');
-            };
-            if (tissues) {
+
                 expect(tissues.textContent).toContain('Hela Cell');
-            };
-            if (diseases) {
+
                 expect(diseases.textContent).toContain('Not Available');
-            };
-            if (submitter) {
+
                 expect(submitter.textContent).toContain('Otto Hudecz');
-            };
-            if (id) {
+
                 expect(id.textContent).toContain('PXD001333');
-            };
-            if (publicationDate) {
+
                 expect(publicationDate.textContent).toContain('2015-04-23');
-            };
-            if (secondary_accession) {
-                expect(secondary_accession.textContent).toContain('???');
-            };
-            if (repositories) {
+
+                // expect(secondary_accession.textContent).toContain('???');
+
                 expect(repositories.textContent).toContain('Pride');
-            };
-            if (views) {
+
                 expect(views.textContent).toContain(66);
-            };
-            if (citations) {
+
                 expect(citations.textContent).toContain(0);
-            };
-            if (reanalysis) {
+
                 expect(reanalysis.textContent).toContain(1);
-            };
-            if (connections) {
+
                 expect(connections.textContent).toContain(2);
-            };
+
         });
 
     }));
