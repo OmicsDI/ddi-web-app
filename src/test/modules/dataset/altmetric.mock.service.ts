@@ -3,7 +3,7 @@ import {Http} from '@angular/http';
 import {AppConfig} from 'app/app.config';
 import {AltmetricEntity} from 'model/AltmetricEntity';
 import {Observable} from 'rxjs/Observable';
-import {BaseService} from "@shared/services/base.service";
+import {BaseService} from '@shared/services/base.service';
 
 @Injectable()
 export class AltmetricMockService extends BaseService {
