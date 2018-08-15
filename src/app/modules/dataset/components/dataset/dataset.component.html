@@ -151,7 +151,7 @@
             </span>
                     </p>
 
-                    <p class="align-justify" *ngIf="null!=d.repositories">
+                    <p class="align-justify" *ngIf="null!=d.repositories" id="repositories">
                         <b>REPOSITORIES:</b>
                         <span *ngFor="let o of d.repositories; let isLast=last">
                 {{o}}{{isLast ? '' : ', '}}

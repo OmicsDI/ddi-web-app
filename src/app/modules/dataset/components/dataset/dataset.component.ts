@@ -131,7 +131,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         // todo array of Strange words
         // todo hard coded
-        const reg = ['ï', '®', 'µ', 'å', '°' , '¾' ];
+        const reg = ['ï', '®', 'µ', 'å', '°' , '¾', 'è' ];
         let i = 0;
         for (let n = 0; n < synonyms.length; n++) {
             let j = 0;
