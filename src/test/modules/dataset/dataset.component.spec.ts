@@ -45,8 +45,10 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {SimilarMoleculeMockService} from '@test/modules/dataset/similarMolecule.mock.service';
 import {PublicationMockService} from '@test/modules/dataset/publication.mock.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {LogService} from '@shared/modules/logs/services/log.service';
 import {AltmetricMockService} from '@test/modules/dataset/altmetric.mock.service';
 import {DataSetMockService} from '@test/sharedServices/dataset.mock.service';
+import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
 
 describe('DatasetComponent', () => {
   let component: DatasetComponent;
@@ -85,6 +87,8 @@ describe('DatasetComponent', () => {
                 useFactory: authHttpServiceFactory,
                 deps: [Http, RequestOptions]
             },
+            LogPublisherService,
+            LogService,
             {provide: LocationStrategy, useClass: PathLocationStrategy},
             { provide: ComponentFixtureAutoDetect, useValue: true },
             // set base href
@@ -100,7 +104,7 @@ describe('DatasetComponent', () => {
             , OntologyService
             , {provide: DatabaseListService, useClass: DataSetListMockService}
             , {provide: SimilarMoleculeService, useClass: SimilarMoleculeMockService}
-                , FeedbackService
+            , FeedbackService
             , AppConfig
             , StatisticsService
             , {provide: AltmetricService, useClass: AltmetricMockService}

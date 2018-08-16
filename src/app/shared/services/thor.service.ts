@@ -13,6 +13,7 @@ import {DataSetService} from './dataset.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from './profile.service';
 import {AppConfig} from 'app/app.config';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Injectable()
 export class ThorService {
@@ -29,6 +30,7 @@ export class ThorService {
                 private databaseListService: DatabaseListService,
                 private datasetService: DataSetService,
                 public profileService: ProfileService,
+                private logger: LogService,
                 public appConfig: AppConfig) {
     }
 
@@ -117,7 +119,7 @@ export class ThorService {
 
                     o.shortDescription = dataset.description;
                     const orcidName = this.databaseListService.databases[dataset.source].orcidName;
-                    console.log(`orcidName ${orcidName}`);
+                    this.logger.debug('Claim orcidName: {}', orcidName);
                     o.clientDbName = orcidName; // Todo
 
                     orcidWorkList.orcIdWorkLst.push(o);

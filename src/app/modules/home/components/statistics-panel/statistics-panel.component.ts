@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-statistics-panel',
@@ -19,7 +20,7 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
     organisms: number;
     users = 99;
 
-    constructor(private statisticsService: StatisticsService, public profileService: ProfileService) {
+    constructor(private statisticsService: StatisticsService, public profileService: ProfileService, private logger: LogService) {
         super();
     }
 
@@ -64,7 +65,7 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
 
     private handleError(error: any) {
         this.componentLoaded();
-        console.log('GET error with url: http://www.omicsdi.org/ws/statistics/general');
+        this.logger.error('GET error with url: http://www.omicsdi.org/ws/statistics/general');
         return Promise.reject(error.message || error);
     }
 }

@@ -11,6 +11,7 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import {InviteComponent} from '@modules/profile-controls/components/invite/invite.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-profile',
@@ -30,13 +31,14 @@ export class DashboardProfileComponent implements OnInit {
     userId = 'xxx';
     username: string = null;
 
-    constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , private formBuilder: FormBuilder
-        , public appConfig: AppConfig
-        , private router: Router
-        , private route: ActivatedRoute
-        , private dialog: MatDialog) {
+    constructor(public profileService: ProfileService,
+                private dataSetService: DataSetService,
+                private formBuilder: FormBuilder,
+                public appConfig: AppConfig,
+                private router: Router,
+                private route: ActivatedRoute,
+                private logger: LogService,
+                private dialog: MatDialog) {
 
         this.form = formBuilder.group({
             name: ['', [
@@ -54,8 +56,6 @@ export class DashboardProfileComponent implements OnInit {
                 zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
             })
         });
-
-        console.log('DashboardProfileComponent:ctor');
     }
 
     ngOnInit() {
@@ -81,7 +81,7 @@ export class DashboardProfileComponent implements OnInit {
 
         if (inviteId) {
 
-            console.log('open dialog with inviteId :' + inviteId);
+            this.logger.debug('Opening dialog with inviteId : {}', inviteId);
 
             if (inviteId.length === 12) {
                 dialogRef = this.dialog.open(InviteComponent, {data: {inviteId: inviteId}});
@@ -91,7 +91,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     getProfile(username: string = null) {
-        console.log('current username:' + username);
+        this.logger.debug('Current username: {}', username);
 
         if (username) {
             this.profileService.getPublicProfile(username)
@@ -110,7 +110,7 @@ export class DashboardProfileComponent implements OnInit {
             this.profileService.getProfile()
                 .subscribe(
                     profile => {
-                        console.log('getting profile');
+                        this.logger.debug('getting profile');
 
                         this.profileX = profile;
                         this.name = profile.userName;
@@ -131,7 +131,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     checkAll(ev) {
-        console.log('checking select all' + ev);
+        this.logger.debug('Checking select all {}', ev);
         this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked);
     }
 

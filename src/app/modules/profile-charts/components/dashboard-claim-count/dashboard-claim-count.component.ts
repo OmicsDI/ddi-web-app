@@ -68,11 +68,8 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
             const chng = changes[propName];
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'datasets') {
-                // console.log(chng.currentValue);
                 this.datasets = chng.currentValue;
-                // console.log(this.datasets);
                 if (null != chng.currentValue) {
                     this.startRequest(this.datasets);
                 }
@@ -83,7 +80,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
     private startRequest(datasetDetail: DataSetDetail[]) {
 
         const processedData = this.prepareData(datasetDetail);
-        // console.log(processedData);
         this.draw(processedData);
     }
 
@@ -104,8 +100,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
 
     private drawGraph(processedData: any): void {
         const self = this;
-        // console.log('processedData');
-        // console.log(processedData);
 
         const body = d3.select('#barchart_claim_dashboard');
         const svgProperties: any = this.initSvg(body);
@@ -124,7 +118,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         const proteomiList = processedData.get('proteomiList');
         const omicsTypes = [
             {omicstype: 'genomicsList'}, {omicstype: 'transcriList'}, {omicstype: 'metaboloList'}, {omicstype: 'proteomiList'}];
-        // console.log(allYear);
 
         const yearSet = processedData.get('yearSet');
 
@@ -134,13 +127,11 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         const yearCollections: number[] = [];
         const countCollections: number[] = [];
         allYear.forEach(data => {
-            // console.log(Number(data['count'].toString()));
             const count: number = Number(data['value']);
             dataCollection.push(count);
             // idCollection.push(data['id']);
             yearCollections.push(data['year']);
         });
-        // console.log(allYear);
         const allFullYear = [];
         allYear.forEach(a => {
             if (a['value'] !== 0) {
@@ -151,11 +142,7 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                 });
             }
         });
-        // console.log(allFullYear);
-
-        // console.log(genomicsList);
         //
-        // console.log(Array.from(annualDataExtends).length);
         // var minDate = new Date(d3.min(annualDataExtends, d => {
         //     return parseInt(d["year"]);
         // }), 0, 0);
@@ -174,12 +161,8 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
 
 
         const minpointer = processedData.get('minYear');
-        // console.log(minpointer);
         const max_M_P = processedData.get('max_M_P');
         const max_G_T = processedData.get('max_G_T');
-        // console.log(max_G_T);
-        // console.log(max_M_P);
-        // console.log(max);
         x0.domain([new Date(Number(minpointer) - 1, 0, 0), new Date()]);
 
         y0.domain([0, Number(max_G_T)]);
@@ -198,12 +181,9 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
 
         const valueline2 = d3.line()
             .x(d => {
-                // console.log('Line:');
-                // console.log(x0(new Date(d["year"], 0, 0)));
                 return x0(new Date(d['year'], 0, 0));
             })
             .y(d => {
-                // console.log(y1(parseInt(d["value"])));
                 return y1(parseInt(d['value'], 10));
             });
 
@@ -243,21 +223,16 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                 return x0(new Date(d['year'], 0, 0));
             })
             .attr('cy', function (d) {
-                // console.log(d);
                 if (d['omics_type'] === 'Genomics' || d['omics_type'] === 'Transcriptomics') {
-                    // console.log(y0(d['value']));
                     return y0(d['value']);
                 } else if (d['omics_type'] === 'Metabolomics' || d['omics_type'] === 'Proteomics') {
-                    // console.log(y1(d['value']));
                     return y1(d['value']);
                 }
             })
             .attr('fill', function (d) {
                 if (d['omics_type'] === 'Genomics' || d['omics_type'] === 'Transcriptomics') {
-                    // console.log(y0(d['value']));
                     return 'steelblue';
                 } else if (d['omics_type'] === 'Metabolomics' || d['omics_type'] === 'Proteomics') {
-                    // console.log(y1(d['value']));
                     return 'red';
                 }
             });
@@ -267,7 +242,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
             .style('cursor', 'pointer')
             .on('mouseover', function (d: any, i: number) {
                 const mouse_coords = d3.mouse(document.getElementById('bar_chart_tooltip').parentElement);
-                // console.log(mouse_coords[0]+','+mouse_coords[1]);
                 /*
                 for d3 tooltip
                 if a tooltip is inside angular component inside a div like this
@@ -305,7 +279,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                     Number(barchart_claim_dashboard_height) - Number(barchart_citations_dashboard_height) -
                     Number(barchart_connections_dashboard_height) - Number(barchart_views_dashboard_height) -
                     Number(barchart_reanalisys_dashboard_height) + mouse_coords[1] - 40;
-                // console.log('position:'+position);
 
                 toolTip.html(d.omics_type.toString() + ': <br>' + d.value.toString() + ' datasets')
                     .style('left', ((mouse_coords[0] + 5) + 'px'))
@@ -327,9 +300,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                 // let connectionBox_height = contactInfo.substring(0,contactInfo.indexOf('px'));
                 // let sum = Number(contactInfo)+Number(gsc_rsb_co)+Number(connectionBox);
                 // let coordy = mouse_coords[1].valueOf();
-                // console.log('????:'+contactInfo_height);
-                // console.log(mouse_coords[0]+","+mouse_coords[1]);
-                // console.log(coordy+sum);
 
             })
             .on('mouseout', function () {
@@ -345,8 +315,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                 const searchWord = 'omics_type:"'
                     + DashboardClaimCountComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
-
-                // console.log("router.navigate>>");
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
             });
 
@@ -375,7 +343,7 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         //     .on("click", function (d) {
         //         var searchWord = "*:* AND omics_type:\"" + d + "\"";
         //         // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
-        //         // console.log("this.router.navigate");
+        //
         //         self.router.navigate(['search'],{ queryParams: { q: searchWord }});
         //     });
         //
@@ -477,7 +445,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
             years.push(Number(year));
         });
         const maxYear = Math.max(...years);
-        // console.log(maxYear);
         const minYear = Math.min(...years);
         const allList = [];
         const allList_g = [];
@@ -503,8 +470,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
             });
         }
 
-        // console.log(allList_g);
-
 
         const genomicsList = [],
             metaboloList = [],
@@ -513,7 +478,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
             allYearData = [];
         const allFullYearData = [];
         annualData.forEach(d => {
-            // console.log(d);
             const date = d['dates']['publication'];
             let year;
             if (date.toString().indexOf('-') >= 0) {
@@ -526,10 +490,7 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
                     allList_g.forEach(g => {
 
                         if (Number(g['year']) === Number(year)) {
-                            // console.log(g['year']);
-                            // console.log(Number(year));
                             g['value'] = g['value'] + 1;
-                            // console.log(g['value']);
                         }
                     });
                     // genomicsList.push({
@@ -582,10 +543,10 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         // let metabolo = this.groupByYear(metaboloList);
         // let proteomi = this.groupByYear(proteomiList);
         // //
-        // // console.log(genomics);
-        // // console.log(transcri);
-        // // console.log(metabolo);
-        // // console.log(proteomi);
+        //
+        //
+        //
+        //
         //
         //
         // allList_g.forEach(g=>{
@@ -666,9 +627,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         const max_G_T = Math.max(...data_G_T);
         const max_M_P = Math.max(...data_M_P);
 
-        // console.log(max_G_T);
-        // console.log(max_M_P);
-
 
         // if(allList_g)
         //     allList_g.forEach(d=>{
@@ -698,13 +656,6 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         //                 omics_type:'Proteomics',year:d['year'],value:d['value']
         //             });
         //     })
-
-
-        // console.log(allFullYearData);
-        // console.log(allList_g);
-        // console.log(allList_t);
-        // console.log(allList_m);
-        // console.log(allList_p);
 
 
         processedData.set('allYear', allFullYearData);
@@ -743,13 +694,9 @@ export class DashboardClaimCountComponent implements OnInit, OnChanges {
         const years = Array.from(yearSet);
         years.forEach(y => {
             let totalCount = 0;
-            // console.log(y);
             data.forEach(d => {
-                // console.log(d['year']);
                 if (Number(d['year']) === Number(y)) {
-                    // console.log(totalCount);
                     totalCount = totalCount + Number(d['value']);
-                    // console.log(totalCount);
                 }
             });
             groupedByYear.push({

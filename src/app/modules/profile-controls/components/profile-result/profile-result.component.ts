@@ -9,6 +9,7 @@ import {DataSetDetail} from 'model/DataSetDetail';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {ThorService} from '@shared/services/thor.service';
 import {DataSet} from 'model/DataSet';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-profile-result',
@@ -24,12 +25,13 @@ export class ProfileResultComponent implements OnInit, OnChanges {
 
     toDataset = DataSetDetail.toDataset;
 
-    constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , public appConfig: AppConfig
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+    constructor(public profileService: ProfileService,
+                private dataSetService: DataSetService,
+                public appConfig: AppConfig,
+                private router: Router,
+                private notificationService: NotificationsService,
+                private logger: LogService,
+                private thorService: ThorService) {
     }
 
     ngOnInit() {
@@ -42,7 +44,6 @@ export class ProfileResultComponent implements OnInit, OnChanges {
             const chng = changes[propName];
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
                 if (null != chng.currentValue) {
                     this.reloadDataSets();
@@ -73,7 +74,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     deleteDataset(source, id) {
         const i: number = this.profile.dataSets.findIndex(x => x.source === source && x.id === id);
         if (i !== -1) {
-            console.log(`deleting ${source} ${id}`);
+            this.logger.info(`deleting ${source} ${id}`);
             this.profile.dataSets.splice(i, 1);
         }
         this.change.emit({});

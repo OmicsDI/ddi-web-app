@@ -217,8 +217,6 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
                 const searchWord = 'omics_type:"'
                     + AnnualOmicstypeComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
-
-                console.log('router.navigate>>');
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
             });
 
@@ -247,7 +245,6 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
             .on('click', function (d) {
                 const searchWord = 'omics_type:"' + d + '"';
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
-                console.log('this.router.navigate');
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
             });
 
@@ -341,8 +338,6 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
         const omicsTypes = d3.keys(annualData[0]).filter(key => {
             return key !== 'year';
         });
-
-        // console.log(omicsTypes);
         //     omicsTypes = _.without(omicsTypes, "omics");//***unclear question  */
 
         const data = annualData;
@@ -394,7 +389,6 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
                 }
             }
         });
-        // console.log(data[0].omics);
         this.prepareAllDate(genomicsList, 'Genomics', allYearData);
         this.prepareAllDate(transcriList, 'Transcriptomics', allYearData);
         this.prepareAllDate(metaboloList, 'Metabolomics', allYearData);

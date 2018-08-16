@@ -130,7 +130,6 @@ export class Chord2 {
                     return 'group' + n;
                 }));
             const groupLabels = function (d) {
-                // console.log(d.startAngle, d.endAngle);
                 return {
                     angle: (d.startAngle + d.endAngle) / 2,
                     label: labels[d.index]
@@ -385,8 +384,6 @@ export class Chord2 {
         while (++i < ngroups) {
             subgroupIndex.push(d3.range(subgroups[i].length));
         }
-
-        // console.log(subgroups);
         // Sort subgroups…
         if (self.sortSubgroups) {
             subgroupIndex.forEach(function (d, r) {
@@ -408,7 +405,6 @@ export class Chord2 {
                     // a0 = x,
                     //   a1 = x += v * k;  //modified by Mingze, for get the rignt start point of each group??? not sure
                     a1 = v * k;
-                // console.log(x);
                 // here you should directly modify the "edges",
                 // then access them back via polygons
                 // I now extend polygons elements with new properties.

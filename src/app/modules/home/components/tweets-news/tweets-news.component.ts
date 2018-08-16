@@ -19,15 +19,6 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
     ngOnInit() {
         this.fetchTweets();
         this.componentLoaded();
-        /*
-            .then(res => {
-               this.notifyHomeLoader.emit('tweet_news');
-               this.publishtweets(this.parseTweets(res, 4));
-            })
-            .catch(reason => {
-              console.warn(reason);
-            })
-            */
         const self = this;
 
         setTimeout(function () {
@@ -56,8 +47,6 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
     }
 
     private parseTweets(res: string, limit: number) {
-        // console.log(res);
-        // console.log(res["body"]);
         const $ = cheerio.load(JSON.parse(res)['body']);
         const tweets = $('li.timeline-TweetList-tweet');
         limit = tweets.length < limit ? tweets.length : limit;
