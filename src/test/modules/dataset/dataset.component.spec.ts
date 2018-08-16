@@ -59,43 +59,13 @@ describe('DatasetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-            CommonModule,
-            DatasetRoutingModule,
-            DisqusModule.forRoot('omicsdi'),
-            ClipboardModule,
-            FormsModule,
-            UtilsModule,
-            ControlsModule,
-            PipesModule,
-            HttpModule,
-            HttpClientModule,
-            RouterTestingModule,
-            MatDialogModule
-            , MatMenuModule
-            , MatButtonModule
-        ],
         declarations: [
             DatasetComponent,
             PublicationComponent,
-            SimilarComponent,
-            SimilarMoleculeComponent
         ],
-        providers: [ProfileService
-            , {
-                provide: AuthHttp,
-                useFactory: authHttpServiceFactory,
-                deps: [Http, RequestOptions]
-            },
+        providers: [ProfileService,
             LogPublisherService,
             LogService,
-            {provide: LocationStrategy, useClass: PathLocationStrategy},
-            { provide: ComponentFixtureAutoDetect, useValue: true },
-            // set base href
-            {provide: APP_BASE_HREF, useValue: '/'} ,
-             AuthService
-            , AuthGuardService
-            , SearchService
             , {provide: DataSetService, useClass: DataSetMockService}
             , {provide: PublicationService, useClass: PublicationMockService}
           // For SimilarComponent
@@ -118,7 +88,6 @@ describe('DatasetComponent', () => {
             , InviteService
             , NotificationsService
             , SlimLoadingBarService
-            // , ActivatedRoute
         ]
     })
     .compileComponents().then( () => {
