@@ -1,5 +1,6 @@
 import {DataControl} from 'model/DataControl';
 import {Rule, SearchQuery} from 'model/SearchQuery';
+import {ArrayUtils} from '@shared/utils/array-utils';
 
 export class Index {
     current = 0;
@@ -50,23 +51,28 @@ export class QueryUtils {
      * @param {{}} params
      * @returns {Map<string, string[]>}
      */
-    public static getFacets(params: {}): Map<string, string[]> {
-        const result = new Map<string, string[]>();
+    public static getAllFacets(params: {}): Map<string, string[]> {
+        let result = new Map<string, string[]>();
         const searchQuery = this.extractQuery(params);
+        result = ArrayUtils.addAll(result, this.getFacets(searchQuery.rules));
         for (let j = 0; j < searchQuery.rules.length; j++) {
-            if (searchQuery.rules[j].query == null) {
-                continue;
+            if (searchQuery.rules[j].query != null) {
+                result = ArrayUtils.addAll(result, this.getFacets(searchQuery.rules[j].query.rules));
             }
-            const facetRules = searchQuery.rules[j].query.rules;
-            for (let i = 0; i < facetRules.length; i ++) {
-                if (facetRules[i].field != null) {
-                    if (!result.has(facetRules[i].field)) {
-                        result.set(facetRules[i].field, [facetRules[i].data]);
-                    } else {
-                        const prev = result.get(facetRules[i].field);
-                        prev.push(facetRules[i].data);
-                        result.set(facetRules[i].field, prev);
-                    }
+        }
+        return result;
+    }
+
+    private static getFacets(facetRules: Rule[]): Map<string, string[]> {
+        const result = new Map<string, string[]>();
+        for (let i = 0; i < facetRules.length; i ++) {
+            if (facetRules[i].field != null) {
+                if (!result.has(facetRules[i].field)) {
+                    result.set(facetRules[i].field, [facetRules[i].data]);
+                } else {
+                    const prev = result.get(facetRules[i].field);
+                    prev.push(facetRules[i].data);
+                    result.set(facetRules[i].field, prev);
                 }
             }
         }
