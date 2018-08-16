@@ -37,7 +37,8 @@ export class SearchComponent implements OnInit {
             this.slimLoadingBarService.start();
             this.query = QueryUtils.getBaseQuery(params);
             this.dataControl = QueryUtils.getDataControl(params);
-            this.selectedFacets = QueryUtils.getFacets(params);
+            this.selectedFacets = QueryUtils.getAllFacets(params);
+            this.logger.debug('Facet selected: {}', this.selectedFacets);
             this.searchService
                 .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
                 .subscribe(
