@@ -16,7 +16,7 @@ export class FeedbackComponent implements OnInit {
     issue: boolean;
     thanks: boolean;
     labelMessage = 'thank you for your feedback';
-    messageData: string;
+    messageData = '';
     selectMessage: string;
     timeout = false;
 
@@ -36,7 +36,10 @@ export class FeedbackComponent implements OnInit {
 
     save_feedback() {
         const feedback = new Feedback();
-
+        if (this.messageData.length < 15) {
+            this.notificationService.error('Feedback error', 'The feedback message must be set to 15 or more characters', {timeOut: 5000});
+            return;
+        }
         feedback.message = `${this.messageData} ${this.selectMessage}`; // $scope.feedback.messageData + ' '+$scope.feedback.selectMessage
         feedback.userInfo = 'testuser';
         feedback.satisfied = this.isSatisfiedVal === 'true'; // $scope.feedback.isSatisfiedVal
@@ -46,7 +49,7 @@ export class FeedbackComponent implements OnInit {
 
         this.thanks = true;
         this.isSatisfiedVal = null;
-        this.messageData = null;
+        this.messageData = '';
         this.selectMessage = null;
 
         this.notificationService.success('Feedback sent', 'to application support team');
