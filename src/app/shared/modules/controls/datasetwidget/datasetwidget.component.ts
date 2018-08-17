@@ -12,6 +12,7 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -26,6 +27,7 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowDelete = true;
     @Input() allowClaim = true;
     @Input() allowWatch = true;
+    @Input() databases: Database[];
 
     constructor(public selectedService: SelectedService,
                 public appConfig: AppConfig,
@@ -42,14 +44,14 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     getDatabaseUrl(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (db) {
             return db.sourceUrl;
         }
     }
 
     getDatabaseTitle(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (db) {
             return db.databaseName;
         }
@@ -64,7 +66,7 @@ export class DatasetWidgetComponent implements OnInit {
     citation(source, id) {
         let dialogRef: MatDialogRef<CitationDialogComponent>;
 
-        this.dataSetService.getDataSetDetail_private(id, source).subscribe(
+        this.dataSetService.getDataSetDetail(id, source).subscribe(
             x => {
                 dialogRef = this.dialog.open(CitationDialogComponent);
                 dialogRef.componentInstance.title = 'Dataset citation';

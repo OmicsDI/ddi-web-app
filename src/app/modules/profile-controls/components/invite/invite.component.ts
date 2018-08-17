@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {InviteService} from '@shared/services/invite.service';
 import {Observable} from 'rxjs/Observable';
@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-invite',
@@ -23,6 +24,9 @@ export class InviteComponent implements OnInit {
     private dataSetDetails: DataSetDetail[];
 
     public secondPage = false;
+
+    @Input()
+    databases: Database[];
 
     complexForm: FormGroup;
 
@@ -45,7 +49,7 @@ export class InviteComponent implements OnInit {
         this.inviteService.getInvite(this.data.inviteId).subscribe(x => {
             if (x) {
                 Observable.forkJoin(x.dataSets.map(record => {
-                    return this.dataSetService.getDataSetDetail_private(record.id, record.source);
+                    return this.dataSetService.getDataSetDetail(record.id, record.source);
                 })).subscribe(
                     y => {
                         this.dataSetDetails = y;
@@ -64,7 +68,7 @@ export class InviteComponent implements OnInit {
     }
 
     getDatabaseUrl(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (!db) {
             this.logger.debug('source not found: {}', source);
         } else {
@@ -73,7 +77,7 @@ export class InviteComponent implements OnInit {
     }
 
     getDatabaseTitle(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (!db) {
             this.logger.debug('source not found: {}', source);
         } else {

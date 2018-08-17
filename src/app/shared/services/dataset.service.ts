@@ -28,13 +28,13 @@ export class DataSetService extends BaseService {
         super();
     }
 
-    public getDataSetDetail_private(accession: string, repository: string): Observable<DataSetDetail> {
+    public getDataSetDetail(accession: string, repository: string): Observable<DataSetDetail> {
         return this.http.get(this.appConfig.getDatasetUrl(accession, repository))
             .map(x => this.extractData<DataSetDetail>(x));
     }
 
-    public getDataSetDetail(accession: string, repository: string) {
-        this.getDataSetDetail_private(accession, repository).subscribe(result => {
+    public getDataSetDetailInCorrect(accession: string, repository: string) {
+        this.getDataSetDetail(accession, repository).subscribe(result => {
             this.dataSetSource.next(result);
         });
     }

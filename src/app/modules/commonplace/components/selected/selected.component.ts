@@ -6,6 +6,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-selected',
@@ -16,6 +17,7 @@ export class SelectedComponent implements OnInit {
 
     dataSets: DataSetDetail[];
 
+    databases: Map<string, Database> = new Map<string, Database>();
     p: 0;
 
     constructor(public selectedService: SelectedService,
@@ -26,45 +28,26 @@ export class SelectedComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.reloadDataSets();
-    }
-
-    reloadDataSets() {
         this.dataSets = [];
         if (!this.selectedService.dataSets) {
             return;
         }
-        Observable.forkJoin(this.selectedService.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
-        })).subscribe(
-            y => {
-                this.dataSets = y;
-            }
-        );
+        this.databaseListServce.getDatabaseList().subscribe(databases => {
+            databases.map(db => {
+                this.databases.set(db.source, db);
+            });
+        });
+        this.selectedService.dataSets.map(x => {
+            this.dataSetService.getDataSetDetail(x.id, x.source).subscribe(datasetDetail => {
+                this.dataSets.push(datasetDetail);
+            });
+        });
     }
 
     remove(source, id) {
         const i = this.dataSets.findIndex(x => x.id === id && x.source === source);
         if (i > -1) {
             this.dataSets.splice(i, 1);
-        }
-    }
-
-    getDatabaseUrl(source) {
-        const db = this.databaseListServce.databases[source];
-        if (!db) {
-            this.logger.debug('source not found: {}', source);
-        } else {
-            return db.sourceUrl;
-        }
-    }
-
-    getDatabaseTitle(source) {
-        const db = this.databaseListServce.databases[source];
-        if (!db) {
-            this.logger.debug('source not found: {}', source);
-        } else {
-            return db.databaseName;
         }
     }
 }

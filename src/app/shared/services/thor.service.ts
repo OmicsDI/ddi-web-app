@@ -96,35 +96,37 @@ export class ThorService {
 
         // omicsdi to orcid
         if (this.datasets) {
-            for (const dataset of this.datasets) {
-                if (this.orcIdRecord && this.orcIdRecord.works) {
-                    if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId === dataset.id)) {
-                        continue;
+            this.databaseListService.getDatabaseList().subscribe(databases => {
+                for (const dataset of this.datasets) {
+                    if (this.orcIdRecord && this.orcIdRecord.works) {
+                        if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId === dataset.id)) {
+                            continue;
+                        }
+                        const o = new OrcidWork();
+                        o.url = dataset.full_dataset_link; // ."https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2589";
+                        o.title = dataset.name; // "E-MTAB-2589 - compchipsubmission1";
+                        o.workType = 'data-set';
+                        let publicationYear = '';
+                        try {
+                            publicationYear = (new Date(dataset.publicationDate)).getFullYear().toString();
+                        } catch (ex) {
+                        }
+                        o.publicationYear = publicationYear;
+                        o.workExternalIdentifiers = [];
+
+                        const i = new WorkExternalIdentifier();
+                        i.workExternalIdentifierId = dataset.id; // "E-MTAB-2589";
+                        o.workExternalIdentifiers.push(i);
+
+                        o.shortDescription = dataset.description;
+                        const orcidName = this.databaseListService.getDatabaseBySource(dataset.source, databases).orcidName;
+                        this.logger.debug('Claim orcidName: {}', orcidName);
+                        o.clientDbName = orcidName; // Todo
+
+                        orcidWorkList.orcIdWorkLst.push(o);
                     }
-                    const o = new OrcidWork();
-                    o.url = dataset.full_dataset_link; // ."https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2589";
-                    o.title = dataset.name; // "E-MTAB-2589 - compchipsubmission1";
-                    o.workType = 'data-set';
-                    let publicationYear = '';
-                    try {
-                        publicationYear = (new Date(dataset.publicationDate)).getFullYear().toString();
-                    } catch (ex) {
-                    }
-                    o.publicationYear = publicationYear;
-                    o.workExternalIdentifiers = [];
-
-                    const i = new WorkExternalIdentifier();
-                    i.workExternalIdentifierId = dataset.id; // "E-MTAB-2589";
-                    o.workExternalIdentifiers.push(i);
-
-                    o.shortDescription = dataset.description;
-                    const orcidName = this.databaseListService.databases[dataset.source].orcidName;
-                    this.logger.debug('Claim orcidName: {}', orcidName);
-                    o.clientDbName = orcidName; // Todo
-
-                    orcidWorkList.orcIdWorkLst.push(o);
                 }
-            }
+            });
         }
         if (orcidWorkList.orcIdWorkLst.length > 0) {
             this.http.post(claimUrl, JSON.stringify(orcidWorkList), options).subscribe(

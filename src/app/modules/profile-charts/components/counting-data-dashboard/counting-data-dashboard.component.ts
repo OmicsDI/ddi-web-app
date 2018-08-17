@@ -73,7 +73,7 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
             return;
         }
         Observable.forkJoin(this.profile.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
+            return this.dataSetService.getDataSetDetail(x.id, x.source);
         })).subscribe(
             y => {
                 this.dataSets = y;

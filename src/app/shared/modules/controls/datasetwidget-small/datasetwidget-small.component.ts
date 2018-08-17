@@ -20,7 +20,7 @@ export class DatasetwidgetSmallComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dataSetService.getDataSetDetail_private(this.id, this.source).subscribe(
+        this.dataSetService.getDataSetDetail(this.id, this.source).subscribe(
             x => this.dataSetDetail = x
         );
     }

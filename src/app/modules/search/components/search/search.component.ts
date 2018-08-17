@@ -10,6 +10,8 @@ import {Rule, SearchQuery} from 'model/SearchQuery';
 import {Facet} from 'model/Facet';
 import {FacetValue} from 'model/FacetValue';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
+import {DatabaseListService} from '@shared/services/database-list.service';
 
 @Component({
     selector: 'app-search',
@@ -23,11 +25,13 @@ export class SearchComponent implements OnInit {
     dataControl = new DataControl();
     params = {};
     selectedFacets: Map<string, string[]>;
+    databases: Database[];
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: SlimLoadingBarService,
                 private route: ActivatedRoute,
                 private logger: LogService,
+                private databaseListService: DatabaseListService,
                 private dataTransportService: DataTransportService) {
     }
 
@@ -39,17 +43,21 @@ export class SearchComponent implements OnInit {
             this.dataControl = QueryUtils.getDataControl(params);
             this.selectedFacets = QueryUtils.getAllFacets(params);
             this.logger.debug('Facet selected: {}', this.selectedFacets);
-            this.searchService
-                .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
-                .subscribe(
-                    result => {
-                    this.searchResult = result;
-                    this.dataTransportService.fire(this.facetsChannel, result.facets);
-                }, error => {
-                        this.logger.error('Exception occurred when getting search result, {}', error);
-                }, () => {
-                        this.slimLoadingBarService.complete();
-                });
+            this.databaseListService.getDatabaseList().subscribe(databases => {
+                this.databases = databases;
+                this.searchService
+                    .fullSearch(
+                        this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
+                    .subscribe(
+                        result => {
+                            this.searchResult = result;
+                            this.dataTransportService.fire(this.facetsChannel, result.facets);
+                        }, error => {
+                            this.logger.error('Exception occurred when getting search result, {}', error);
+                        }, () => {
+                            this.slimLoadingBarService.complete();
+                        });
+            });
         });
     }
 
