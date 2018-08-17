@@ -173,6 +173,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
             svg = body.append('svg')
                 .attr('id', 'word_cloud_svg')
                 .attr('class', 'wordcloud')
+                .attr('style', 'margin-top: 10px;')
                 .attr('height', 325);
         }
 
