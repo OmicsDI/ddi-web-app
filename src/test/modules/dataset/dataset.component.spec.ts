@@ -51,87 +51,81 @@ import {DataSetMockService} from '@test/sharedServices/dataset.mock.service';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
 
 describe('DatasetComponent', () => {
-  let component: DatasetComponent;
-  let fixture: ComponentFixture<DatasetComponent>;
-  // let datasetDetail: DataSetDetail;
+    let component: DatasetComponent;
+    let fixture: ComponentFixture<DatasetComponent>;
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                DatasetRoutingModule,
+                DisqusModule.forRoot('omicsdi'),
+                ClipboardModule,
+                FormsModule,
+                UtilsModule,
+                ControlsModule,
+                PipesModule,
+                HttpModule,
+                HttpClientModule,
+                RouterTestingModule,
+                MatDialogModule,
+                MatMenuModule,
+                MatButtonModule
+            ],
+            declarations: [
+                DatasetComponent,
+                PublicationComponent,
+                SimilarComponent,
+                SimilarMoleculeComponent
+            ],
+            providers: [ProfileService,
+                {
+                    provide: AuthHttp,
+                    useFactory: authHttpServiceFactory,
+                    deps: [Http, RequestOptions]
+                },
+                LogPublisherService,
+                LogService,
+                {provide: LocationStrategy, useClass: PathLocationStrategy},
+                { provide: ComponentFixtureAutoDetect, useValue: true },
+                // set base href
+                {provide: APP_BASE_HREF, useValue: '/'} ,
+                AuthService,
+                AuthGuardService,
+                SearchService,
+                {provide: DataSetService, useClass: DataSetMockService},
+                {provide: PublicationService, useClass: PublicationMockService},
+                {provide: SimilarityService, useClass: SimilarityMockService},
+                EnrichmentService,
+                OntologyService,
+                {provide: DatabaseListService, useClass: DataSetListMockService},
+                {provide: SimilarMoleculeService, useClass: SimilarMoleculeMockService},
+                FeedbackService,
+                AppConfig,
+                StatisticsService,
+                {provide: AltmetricService, useClass: AltmetricMockService},
+                SelectedService,
+                DialogService,
+                ScoreService,
+                ThorService,
+                MatDialogModule,
+                MatMenuModule,
+                MatButtonModule,
+                InviteService,
+                NotificationsService,
+                SlimLoadingBarService
+            ]
+        })
+            .compileComponents().then( () => {
+            fixture = TestBed.createComponent(DatasetComponent);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+        });
 
+    }));
 
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-        imports: [
-            CommonModule,
-            DatasetRoutingModule,
-            DisqusModule.forRoot('omicsdi'),
-            ClipboardModule,
-            FormsModule,
-            UtilsModule,
-            ControlsModule,
-            PipesModule,
-            HttpModule,
-            HttpClientModule,
-            RouterTestingModule,
-            MatDialogModule
-            , MatMenuModule
-            , MatButtonModule
-        ],
-        declarations: [
-            DatasetComponent,
-            PublicationComponent,
-            SimilarComponent,
-            SimilarMoleculeComponent
-        ],
-        providers: [ProfileService
-            , {
-                provide: AuthHttp,
-                useFactory: authHttpServiceFactory,
-                deps: [Http, RequestOptions]
-            },
-            LogPublisherService,
-            LogService,
-            {provide: LocationStrategy, useClass: PathLocationStrategy},
-            { provide: ComponentFixtureAutoDetect, useValue: true },
-            // set base href
-            {provide: APP_BASE_HREF, useValue: '/'} ,
-             AuthService
-            , AuthGuardService
-            , SearchService
-            , {provide: DataSetService, useClass: DataSetMockService}
-            , {provide: PublicationService, useClass: PublicationMockService}
-          // For SimilarComponent
-            , {provide: SimilarityService, useClass: SimilarityMockService}
-            , EnrichmentService
-            , OntologyService
-            , {provide: DatabaseListService, useClass: DataSetListMockService}
-            , {provide: SimilarMoleculeService, useClass: SimilarMoleculeMockService}
-            , FeedbackService
-            , AppConfig
-            , StatisticsService
-            , {provide: AltmetricService, useClass: AltmetricMockService}
-            , SelectedService
-            , DialogService
-            , ScoreService
-            , ThorService
-            , MatDialogModule
-            , MatMenuModule
-            , MatButtonModule
-            , InviteService
-            , NotificationsService
-            , SlimLoadingBarService
-            // , ActivatedRoute
-        ]
-    })
-    .compileComponents().then( () => {
-        fixture = TestBed.createComponent(DatasetComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
-
-  }));
-
-  // beforeEach(() => {
-  //
-  // });
+    // beforeEach(() => {
+    //
+    // });
     it('Consistency between frontend and backend: dataset componenet', async( () => {
         fixture.whenStable().then( () => {
             fixture.detectChanges();
@@ -188,39 +182,37 @@ describe('DatasetComponent', () => {
                 'osphopeptides is best performed at low pH ' +
                 'in the ERLIC mode.  Under those conditions the per' +
                 'formances of the SAX and WAX materials were comparable.');
-                //
-                //
-                // expect(reanalisys_of.textContent).toContain('TEST001');
+            //
+            //
+            // expect(reanalisys_of.textContent).toContain('TEST001');
 
-                expect(reanalisys_by.textContent).toContain('GPM32310019962');
+            expect(reanalisys_by.textContent).toContain('GPM32310019962');
 
-                expect(relate_omics.textContent).toContain('TEST002');
+            expect(relate_omics.textContent).toContain('TEST002');
 
-                expect(instruments.textContent).toContain('Q Exactive');
+            expect(instruments.textContent).toContain('Q Exactive');
 
-                expect(organisms.textContent).toContain('Homo sapiens');
+            expect(organisms.textContent).toContain('Homo sapiens');
 
-                expect(tissues.textContent).toContain('Hela Cell');
+            expect(tissues.textContent).toContain('Hela Cell');
 
-                expect(diseases.textContent).toContain('Not Available');
+            expect(diseases.textContent).toContain('Not Available');
 
-                expect(submitter.textContent).toContain('Otto Hudecz');
+            expect(submitter.textContent).toContain('Otto Hudecz');
 
-                expect(id.textContent).toContain('PXD001333');
+            expect(id.textContent).toContain('PXD001333');
 
-                expect(publicationDate.textContent).toContain('2015-04-23');
+            expect(publicationDate.textContent).toContain('2015-04-23');
 
-                // expect(secondary_accession.textContent).toContain('???');
+            expect(repositories.textContent).toContain('Pride');
 
-                expect(repositories.textContent).toContain('Pride');
+            expect(views.textContent).toContain(66);
 
-                expect(views.textContent).toContain(66);
+            expect(citations.textContent).toContain(0);
 
-                expect(citations.textContent).toContain(0);
+            expect(reanalysis.textContent).toContain(1);
 
-                expect(reanalysis.textContent).toContain(1);
-
-                expect(connections.textContent).toContain(2);
+            expect(connections.textContent).toContain(2);
 
         });
 
