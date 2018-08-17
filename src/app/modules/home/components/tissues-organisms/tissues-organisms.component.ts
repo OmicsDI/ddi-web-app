@@ -220,6 +220,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         const svg_inside = body.append('svg')
             .attr('width', diameter_inside)
             .attr('height', diameter_inside)
+            .attr('style', 'margin-top: 15px;')
             .attr('class', 'bubble center');
         //         .attr("style", "position:relative");
 
