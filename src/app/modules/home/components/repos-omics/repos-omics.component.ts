@@ -288,7 +288,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             .append('svg')
             .attr('width', divWidth)
             .attr('height', svgHeight)
-            .attr('margin-top', 10)
+            .attr('style', 'margin-top: 15px;')
             .attr('id', this.pieChartName + '_svg');
 
         if (svg.selectAll('rect')) {

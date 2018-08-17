@@ -5,6 +5,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-similar',
@@ -24,7 +25,9 @@ export class SimilarComponent implements OnInit, OnChanges {
 
     loadMoreButtonText = 'Load More';
 
-    constructor(private similarityService: SimilarityService, public appConfig: AppConfig,
+    constructor(private similarityService: SimilarityService,
+                public appConfig: AppConfig,
+                private logger: LogService,
                 private databaseListServce: DatabaseListService) {
         this.subscription = this.similarityService.searchResult$.subscribe(
             result => {
@@ -36,8 +39,7 @@ export class SimilarComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(...args: any[]) {
-        console.log('onChange fired');
-        console.log('changing', args);
+        this.logger.debug('OnChanges fired, args: {}', args);
 
         if ((this.acc != null) && (this.repository != null)) {
             if ((this.acc !== '') && (this.repository !== '')) {
@@ -81,7 +83,7 @@ export class SimilarComponent implements OnInit, OnChanges {
     getDatabaseTitle(source) {
         const db = this.databaseListServce.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('Source not found: {}', source);
         } else {
             return db.databaseName;
         }

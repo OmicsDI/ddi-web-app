@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {ProfileService} from '@shared/services/profile.service';
 import {Profile} from 'model/Profile';
 import {AppConfig} from 'app/app.config';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-profile-connections',
@@ -20,11 +21,10 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
 
     userId: string;
 
-    constructor(public profileService: ProfileService, public appConfig: AppConfig) {
+    constructor(public profileService: ProfileService, public appConfig: AppConfig, private logger: LogService) {
     }
 
     ngOnInit() {
-        // console.info("getting user connections:" + this.profile.userId);
         // this.getConnections(this.profile.userId);
     }
 
@@ -34,7 +34,6 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
             const chng = changes[propName];
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
                 if (null != chng.currentValue) {
                     this.userId = chng.currentValue.userId;
@@ -58,14 +57,14 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
     }
 
     connectedChanged(connected: boolean, provider: string) {
-        console.log(`connectedChanged: ${provider} ${this.githubConnected}`);
+        this.logger.debug(`connectedChanged: ${provider} ${this.githubConnected}`);
 
         if (connected) { // disconnect
-            console.log('disconnecting:' + provider);
+            this.logger.debug('disconnecting: {}', provider);
             this.profileService.deleteConnection(this.userId, provider).subscribe();
         } else { // connect
             // window.location.href=this.appConfig.getLoginUrl("github",this.appConfig.githubScope);
-            console.log('connecting:' + provider);
+            this.logger.debug('connecting: {}', provider);
             this.profileService.connect(provider);
         }
     }

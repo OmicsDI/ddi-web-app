@@ -6,6 +6,7 @@ import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {DataSet} from 'model/DataSet';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-claim-button',
@@ -19,7 +20,7 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
     claimed: boolean;
     claimable = true;
 
-    constructor(public auth: AuthService, public profileService: ProfileService, private router: Router) {
+    constructor(public auth: AuthService, public profileService: ProfileService, private router: Router, private logger: LogService) {
     }
 
     ngOnInit() {
@@ -64,10 +65,10 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
         dataset.omics_type = this.dataSet.omicsType;
 
         if (!this.profileService.profile) {
-            console.log(`this.profileService.profile is NULL`);
-            console.log(`this.profileService.userId ${this.profileService.userId}`);
+            this.logger.debug(`this.profileService.profile is NULL`);
+            this.logger.debug('this.profileService.userId: {}', this.profileService.userId);
         } else {
-            console.log(`claim dataset for user: ${this.profileService.profile.userId}`);
+            this.logger.debug('Claiming dataset for user: {}', this.profileService.profile.userId);
             this.profileService.claimDataset(this.profileService.profile.userId, dataset);
         }
 
@@ -77,6 +78,4 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
     viewInProfile() {
         this.router.navigate(['profile']);
     }
-
-
 }

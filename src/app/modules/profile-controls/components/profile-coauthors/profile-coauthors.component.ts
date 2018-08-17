@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {ProfileService} from '@shared/services/profile.service';
 import {Profile} from 'model/Profile';
 import {UserShort} from 'model/UserShort';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-profile-coauthors',
@@ -14,7 +15,7 @@ export class ProfileCoauthorsComponent implements OnInit, OnChanges {
 
     coauthors: UserShort[];
 
-    constructor(public profileService: ProfileService) {
+    constructor(public profileService: ProfileService, private logger: LogService) {
     }
 
     ngOnInit() {
@@ -26,14 +27,13 @@ export class ProfileCoauthorsComponent implements OnInit, OnChanges {
             const chng = changes[propName];
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
                 if (null != chng.currentValue) {
-                    console.log(`profile-coauthors ngOnChanges: ${chng.currentValue.userId}`);
+                    this.logger.debug(`profile-coauthors ngOnChanges: ${chng.currentValue.userId}`);
                     this.profileService.getCoAuthors(chng.currentValue.userId).subscribe(
                         x => this.coauthors = x);
 
-                    console.log(`after profile-coauthors ngOnChanges: ${chng.currentValue.userId}`);
+                    this.logger.debug(`after profile-coauthors ngOnChanges: ${chng.currentValue.userId}`);
                     this.profile = chng.currentValue;
                 }
             }

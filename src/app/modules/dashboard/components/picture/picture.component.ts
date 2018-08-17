@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {ProfileService} from '@shared/services/profile.service';
 import {AppConfig} from 'app/app.config';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-picture',
@@ -14,14 +15,14 @@ export class DashboardPictureComponent implements OnInit {
     public uploader: FileUploader;
     public profileImageUrl: string;
 
-    constructor(public profileService: ProfileService, public appConfig: AppConfig) {
+    constructor(public profileService: ProfileService, public appConfig: AppConfig, private logger: LogService) {
     }
 
     ngOnInit() {
         this.profileService.getProfile()
             .subscribe(
                 profile => {
-                    console.log('getting profile');
+                    this.logger.debug('getting profile');
 
                     this.userId = profile.userId;
                     // this.getConnections(this.userId);
@@ -45,7 +46,6 @@ export class DashboardPictureComponent implements OnInit {
     public fileChangeEvent(fileInput: any) {
         if (fileInput.target.files && fileInput.target.files[0]) {
             setTimeout(() => {
-                console.log('fileChangeEvent hello');
                 this.uploader.uploadAll();
             }, 100);
         }

@@ -1,5 +1,5 @@
 .huge-smaller {
-    font-size: 20px;
+    font-size: 17px;
 }
 
 i#species_icon.icon-conceptual::before {
@@ -12,4 +12,13 @@ i#species_icon.icon-conceptual::before {
     display: block;
     position: relative;
     border: none;
+}
+
+.statistic-panel-item {
+    padding-left: 10px;
+    padding-right: 0px;
+}
+
+.statistic-panel-item .panel .panel-heading .row div {
+    padding-left: 10px;
 }

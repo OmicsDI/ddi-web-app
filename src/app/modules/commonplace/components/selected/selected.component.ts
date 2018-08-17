@@ -5,6 +5,7 @@ import {SelectedService} from '@shared/services/selected.service';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-selected',
@@ -17,10 +18,11 @@ export class SelectedComponent implements OnInit {
 
     p: 0;
 
-    constructor(public selectedService: SelectedService
-        , private dataSetService: DataSetService
-        , public appConfig: AppConfig
-        , private databaseListServce: DatabaseListService) {
+    constructor(public selectedService: SelectedService,
+                private dataSetService: DataSetService,
+                public appConfig: AppConfig,
+                private logger: LogService,
+                private databaseListServce: DatabaseListService) {
     }
 
     ngOnInit() {
@@ -51,7 +53,7 @@ export class SelectedComponent implements OnInit {
     getDatabaseUrl(source) {
         const db = this.databaseListServce.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('source not found: {}', source);
         } else {
             return db.sourceUrl;
         }
@@ -60,7 +62,7 @@ export class SelectedComponent implements OnInit {
     getDatabaseTitle(source) {
         const db = this.databaseListServce.databases[source];
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('source not found: {}', source);
         } else {
             return db.databaseName;
         }

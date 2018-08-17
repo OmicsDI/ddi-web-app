@@ -106,7 +106,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
         formdiv
             .attr('class', 'center')
-            .attr('style', 'width:280px');
+            .attr('style', 'width:280px; position: absolute; bottom: 15px; left: 25%');
 
         const radio_form = formdiv.append('form');
         radio_form
@@ -173,6 +173,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
             svg = body.append('svg')
                 .attr('id', 'word_cloud_svg')
                 .attr('class', 'wordcloud')
+                .attr('style', 'margin-top: 10px;')
                 .attr('height', 325);
         }
 

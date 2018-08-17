@@ -3,6 +3,7 @@ import {PublicationService} from '@shared/services/publication.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Publication} from 'model/Publication';
 import {AltmetricEntity} from 'model/AltmetricEntity';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-publication',
@@ -19,11 +20,10 @@ export class PublicationComponent implements OnInit, OnChanges {
     altmetric_entities: AltmetricEntity[] = [];
 
 
-    constructor(private publicationService: PublicationService) {
+    constructor(private publicationService: PublicationService, private logger: LogService) {
         this.subscription = this.publicationService.searchResult$.subscribe(
             result => {
                 this.d = result.publications[0];
-                console.log(this.d);
             });
     }
 
@@ -31,8 +31,7 @@ export class PublicationComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(...args: any[]) {
-        console.log('onChange fired');
-        console.log('changing', args);
+        this.logger.debug('OnChange fired, args: {}', args);
 
         if (this.ids != null) {
             if (this.ids.length > 0) {
