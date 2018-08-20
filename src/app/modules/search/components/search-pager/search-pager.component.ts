@@ -34,7 +34,12 @@ export class SearchPagerComponent implements OnInit {
         this.loading = true;
     }
 
-    sortOrderChanged(sortOrder: boolean) {
+    sortOrderChanged(sortOrder: string) {
+        if (sortOrder === 'ascending') {
+            sortOrder = 'descending';
+        } else {
+            sortOrder = 'ascending';
+        }
         this.dataControl.order = sortOrder;
         this.dataControlChange.emit(this.dataControl);
         this.loading = true;
