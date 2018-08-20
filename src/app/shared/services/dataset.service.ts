@@ -20,10 +20,6 @@ export class DataSetService extends BaseService {
         'Expression Atlas Experiments, atlas-experiments,GEO';
     private genomicsList = 'ega,EGA,EVA,dbGaP';
 
-    private dataSetSource = new Subject<DataSetDetail>();
-
-    dataSetDetail$ = this.dataSetSource.asObservable();
-
     constructor(private http: Http, public appConfig: AppConfig) {
         super();
     }
@@ -32,13 +28,6 @@ export class DataSetService extends BaseService {
         return this.http.get(this.appConfig.getDatasetUrl(accession, repository))
             .map(x => this.extractData<DataSetDetail>(x));
     }
-
-    public getDataSetDetailInCorrect(accession: string, repository: string) {
-        this.getDataSetDetail(accession, repository).subscribe(result => {
-            this.dataSetSource.next(result);
-        });
-    }
-
     public getWebServiceUrl(): string {
         return this.appConfig.getWebServiceUrl();
     }
