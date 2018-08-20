@@ -1,5 +1,5 @@
 export class DataControl {
-    sortBy = 'id';
+    sortBy = '';
     order = 'ascending';
     pageSize = 10;
     page = 1;
