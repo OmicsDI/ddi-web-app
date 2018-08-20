@@ -6,6 +6,7 @@ import {SearchQuery} from 'model/SearchQuery';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {SearchService} from '@shared/services/search.service';
 import {QueryUtils} from '@shared/utils/query-utils';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: '[AppSearchBox]',
@@ -25,8 +26,11 @@ export class SearchBoxComponent implements OnInit {
 
     params: {};
 
-    constructor(protected router: Router, private dataTransportService: DataTransportService,
-                private searchService: SearchService, private route: ActivatedRoute) {
+    constructor(protected router: Router,
+                private dataTransportService: DataTransportService,
+                private searchService: SearchService,
+                private logger: LogService,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -37,6 +41,7 @@ export class SearchBoxComponent implements OnInit {
             if (this.query[0] === '(') {
                 this.query = this.query.slice(1, this.query.length - 1);
             }
+            this.logger.debug('query: {}', this.query);
         });
     }
 

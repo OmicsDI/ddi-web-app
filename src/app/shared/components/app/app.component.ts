@@ -34,9 +34,6 @@ export class AppComponent implements OnInit {
         this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
-        this.router.routeReuseStrategy.shouldReuseRoute = function(){
-            return false;
-        };
         this.router.events.subscribe((ev: any) => {
             this.homePage = (this.router.url === '/home') || (this.router.url === '/');
             if (ev instanceof NavigationStart) {
