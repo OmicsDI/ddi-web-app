@@ -1,4 +1,4 @@
-<div class="caption">{{this.profile?.userName}}</div>
+<div class="caption" id="userName">{{this.profile?.userName}}</div>
 <br />
 <div>
     <div class="pictureFrame col-md-3 hidden-sm hidden-xs">
@@ -24,7 +24,7 @@
                 <li>We are waiting for your <a [routerLink]="['/profile','feedback']">feedback</a>
             </ul>
         </div>
-        <div class="bio" *ngIf="this.profile?.bio">{{this.profile?.bio}}</div>
+        <div class="bio" *ngIf="this.profile?.bio" id="bio">{{this.profile?.bio}}</div>
     </div>
 </div>
 
