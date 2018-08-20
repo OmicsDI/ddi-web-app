@@ -32,14 +32,13 @@ export class SearchService extends BaseService {
         this.router.navigate(['search'], {queryParams: paramImporter.getParams()});
     }
 
-    public fullSearch(searchQuery: string, page: number, pageSize: number, sortBy: string, order: boolean): Observable<SearchResult> {
-        const orderBy = order ? 'ascending' : 'descending';
+    public fullSearch(searchQuery: string, page: number, pageSize: number, sortBy: string, order: string): Observable<SearchResult> {
         if (searchQuery == null) {
             searchQuery = '';
         }
         return this.http.get(
             this.appConfig.getSearchUrl(
-                searchQuery, 100, pageSize, sortBy, orderBy, (page - 1) * pageSize))
+                searchQuery, 100, pageSize, sortBy, order, (page - 1) * pageSize))
             .map(x => this.extractData<SearchResult>(x));
     }
 }
