@@ -103,8 +103,9 @@
                         <b>DISEASE(S):</b>
                         {{d.diseases}}
                     </p>
-                    <p class="align-justify" *ngIf="null!=d.submitter"  id="submitter">
+                    <p class="align-justify" *ngIf="null!=d.submitter">
                         <b>SUBMITTER:</b>
+                        <span id="submitter">
                         <span *ngFor="let o of d.submitter; let i = index;">
                 <span *ngIf="d.submitterMail && d.submitterMail[i]">
                   <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img
@@ -115,7 +116,7 @@
                 </span>
                 &nbsp;
               </span>
-
+                </span>
                         <span *ngFor="let o of d.submitterMail">
                 <span>
                   <a href="#">{{o.name}}</a>
@@ -125,7 +126,7 @@
                     <p class="align-justify">
                         <b>PROVIDER:</b>
                         <a [href]="d.full_dataset_link" id="id">{{d.id}}</a> |
-                        <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding">{{this.getDatabaseTitle(d.source)}}</span>
+                        <a [href]="this.getDatabaseUrl(d.source)"> <span class="ng-binding" id="source">{{this.getDatabaseTitle(d.source)}}</span>
                         </a>
                         <span id="publicationDate">| {{d.publicationDate}} </span>
                     </p>
@@ -151,9 +152,9 @@
             </span>
                     </p>
 
-                    <p class="align-justify" *ngIf="null!=d.repositories" id="repositories">
+                    <p class="align-justify" *ngIf="null!=d.repositories" >
                         <b>REPOSITORIES:</b>
-                        <span *ngFor="let o of d.repositories; let isLast=last">
+                        <span *ngFor="let o of d.repositories; let isLast=last" class="repositories">
                 {{o}}{{isLast ? '' : ', '}}
             </span>
                     </p>
@@ -178,7 +179,7 @@
 
                 <div class="row" style="margin-bottom:10px; margin-right: 0px; margin-left:40px;">
                     <div class="col-lg-2">
-                        <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap">ACCESS
+                        <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap" id="full_dataset_link">ACCESS
                             DATA</a>
                     </div>
                     <div class="col-lg-10">
