@@ -10,7 +10,7 @@ import {SettingsComponent} from '@modules/dashboard/components/settings/settings
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 
 const routes: Routes = [
-    {path: '', component: DashboardComponent},
+    {path: 'dashboard', component: DashboardComponent},
     {path: 'selected', component: DashboardSelectedComponent},
     {path: 'feedback', component: DashboardFeedbackComponent},
     {path: 'profile', component: DashboardProfileComponent},

@@ -1502,3 +1502,8 @@ ul li.no-match-found {display: none;}
         width: 6%;
     }
 }
+
+.activated {
+    background-color: #0099cc;
+    color: white !important;
+}

@@ -1,62 +1,32 @@
 <nav>
     <div id="navbar-ex1-collapse" class="collapse navbar-collapse ">
         <ul class="nav navbar-nav side-nav">
-            <li data-toggle="collapse" data-target="#profileLinks">
-                <!--- data-toggle="collapse" data-target="#profileLinks" -->
-                <a [routerLink]="['/dashboard','profile']"><i class="fa fa-fw fa-user-circle"></i> Profile <i
-                        class="fa fa-fw fa-caret-down"></i></a>
+            <li data-target="#profileLinks">
+                <a [routerLink]="['/dashboard','profile']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-user-circle"></i> Profile</a>
                 <ul id="profileLinks">
                     <li>
-                        <a [routerLink]="['/dashboard','update']"><i class="fa fa-fw fa-file-text-o"></i> Edit
+                        <a [routerLink]="['/dashboard','update']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-file-text-o"></i> Edit
                             Profile</a>
                     </li>
                     <li>
-                        <a [routerLink]="['/dashboard','picture']"><i class="fa fa-fw fa-file-image-o"></i> Edit Picture</a>
+                        <a [routerLink]="['/dashboard','picture']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-file-image-o"></i> Edit Picture</a>
                     </li>
                     <li>
-                        <a [routerLink]="['/dashboard','claimed']"><i class="fa fa-fw fa-bar-chart"></i> Edit
+                        <a [routerLink]="['/dashboard','claimed']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-bar-chart"></i> Edit
                             Datasets</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a [routerLink]="['/dashboard']"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-            </li>
-
-            <!-- li>
-              <a [routerLink]="['/dashboard','settings']"><i class="fa fa-fw fa-wrench"></i> Settings</a>
-            </li>
-            <!--li>
-              <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                <a [routerLink]="['/dashboard', 'dashboard']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
-              <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-            </li>
-            <li>
-              <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-            </li>
-
-            <li>
-              <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-              <ul id="demo" class="collapse">
-                <li>
-                  <a href="#">Dropdown Item</a>
-                </li>
-                <li>
-                  <a href="#">Dropdown Item</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-            </li -->
-            <li>
-                <a [routerLink]="['/dashboard','selected']"><i class="fa fa-fw fa-shopping-basket"></i> Selected
+                <a [routerLink]="['/dashboard','selected']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-shopping-basket"></i> Selected
                     Datasets</a>
             </li>
 
             <li>
-                <a [routerLink]="['/dashboard','feedback']"><i class="fa fa-fw fa-commenting-o"></i> Feedback</a>
+                <a [routerLink]="['/dashboard','feedback']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-commenting-o"></i> Feedback</a>
             </li>
         </ul>
     </div>
