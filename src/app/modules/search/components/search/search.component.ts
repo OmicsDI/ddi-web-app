@@ -89,7 +89,9 @@ export class SearchComponent implements OnInit {
                     }
                 }
                 if (foundKey) {
-                    searchQuery.rules[i].query.operator = 'OR';
+                    if (key !== 'omics_type') {
+                        searchQuery.rules[i].query.operator = 'OR';
+                    }
                     const rule = new Rule();
                     rule.field = key;
                     rule.data = facet;
