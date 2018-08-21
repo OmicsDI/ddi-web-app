@@ -97,7 +97,7 @@ export class AppConfig {
     }
 
     getProfileUploadImageUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/picture?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/picture`;
     }
 
     getOntologyLookupUrl(keys: string[]) {

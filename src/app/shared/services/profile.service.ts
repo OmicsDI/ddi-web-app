@@ -31,6 +31,7 @@ export class ProfileService extends BaseService {
             .map(x => {
                 console.log(x);
                 this.profile = this.extractData<Profile>(x);
+                console.log(JSON.stringify(this.profile));
                 if (!this.profile || !this.profile.userId) {
                     console.log('profile not received');
                 } else {
@@ -54,6 +55,7 @@ export class ProfileService extends BaseService {
         let _profile;
         return this.http.get(this.appConfig.getProfileUrl(username)) // ,config //{ withCredentials: true }
             .map(x => {
+                console.log(x);
                 _profile = this.extractData<Profile>(x);
                 if (!_profile) {
                     console.log('public profile not received');
@@ -69,6 +71,7 @@ export class ProfileService extends BaseService {
         let _profiles;
         return this.http.get(this.appConfig.getAllProfilesUrl()) // ,config //{ withCredentials: true }
             .map(x => {
+                console.log(x);
                 _profiles = this.extractData<Profile[]>(x);
                 if (!_profiles) {
                     console.log('public profile not received');

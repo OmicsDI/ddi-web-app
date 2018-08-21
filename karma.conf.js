@@ -3,6 +3,10 @@
 module.exports = function (config) {
     config.set({
         basePath: '',
+        captureTimeout: 1660000,
+        browserDisconnectTimeout : 16610000,
+        browserDisconnectTolerance : 1,
+        browserNoActivityTimeout : 16660000,
         frameworks: ['jasmine', '@angular/cli'],
         plugins: [
             require('karma-jasmine'),
@@ -29,7 +33,7 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['ChromeHeadless'],
+        browsers: ['Chrome'],
         singleRun: false
     });
 };

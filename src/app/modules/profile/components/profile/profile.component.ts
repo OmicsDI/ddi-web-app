@@ -60,7 +60,9 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.username = params['username'];
+            if ( !this.username ) {
+                this.username = params['username'];
+            }
             this.getProfile(this.username);
         });
     }
@@ -79,6 +81,11 @@ export class ProfileComponent implements OnInit {
 
                         this.profileX = profile;
                         this.profileImageUrl = this.getProfileImageUrl();
+                        // for ( const dataset of this.profileX.dataSets ) {
+                        //     this.dataSetService.getDataSetDetail_private(dataset.id, dataset.source).subscribe( x => {
+                        //         this.dataSetDetails.push(x);
+                        //     });
+                        // }
 
                         Observable.forkJoin(this.profileX.dataSets.map(x => {
                             return this.dataSetService.getDataSetDetail_private(x.id, x.source);

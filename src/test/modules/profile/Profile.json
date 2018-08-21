@@ -1,0 +1,151 @@
+{
+  "userId": "BH3FoEuT",
+  "userName": "XuPan",
+  "accessToken": "e5c739f65f845a7551f5e3e9ae56050dd391cf49",
+  "roles": "USER,ADMIN",
+  "orcid": null,
+  "bio": "阿发防守打法胜多负少的范德萨阿斯顿发生打发asdfsdfsadfsadfsadf",
+  "homepage": "https://github.com/16574917",
+  "email": "hll3939092@gmail.com",
+  "affiliation": "GitHub user",
+  "isPublic": true,
+  "dataSets": [
+    {
+      "id": "E-MTAB-4583",
+      "source": "arrayexpress-repository",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "PRD000474",
+      "source": "pride",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "PRD000512",
+      "source": "pride",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "PRD000486",
+      "source": "pride",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "PXD000069",
+      "source": "pride",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-74636",
+      "source": "arrayexpress-repository",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-MTAB-4917",
+      "source": "arrayexpress-repository",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-82903",
+      "source": "arrayexpress-repository",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-82896",
+      "source": "arrayexpress-repository",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-82881",
+      "source": "arrayexpress-repository",
+      "claimed": "Mar 28, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-MTAB-3870",
+      "source": "arrayexpress-repository",
+      "claimed": "Apr 9, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "PRD000005",
+      "source": "pride",
+      "claimed": "Apr 9, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-78124",
+      "source": "arrayexpress-repository",
+      "claimed": "Apr 9, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-23783",
+      "source": "arrayexpress-repository",
+      "claimed": "May 10, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-24065",
+      "source": "arrayexpress-repository",
+      "claimed": "Jul 12, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-30197",
+      "source": "arrayexpress-repository",
+      "claimed": "Jul 13, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-47318",
+      "source": "arrayexpress-repository",
+      "claimed": "Jul 18, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "E-GEOD-64409",
+      "source": "arrayexpress-repository",
+      "claimed": "Jul 18, 2018",
+      "name": null,
+      "omics_type": null
+    },
+    {
+      "id": "MSV000080774",
+      "source": "massive",
+      "claimed": "Jul 23, 2018",
+      "name": null,
+      "omics_type": null
+    }
+  ],
+  "imageUrl": "https://secure.gravatar.com/avatar/",
+  "image": null,
+  "expires": 0,
+  "coauthors": null
+}

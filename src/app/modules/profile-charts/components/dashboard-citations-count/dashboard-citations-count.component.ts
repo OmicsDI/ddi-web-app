@@ -42,9 +42,7 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
 
     constructor(private dataSetService: DataSetService, private route: ActivatedRoute, public appConfig: AppConfig,
                 public profileService: ProfileService
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+        , private router: Router) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 

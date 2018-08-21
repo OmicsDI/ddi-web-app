@@ -6,6 +6,10 @@ export class WebPage {
     return browser.get('/');
   }
 
+    // navigateToProfile() {
+    //     return browser.get('/profile/bcdnTdFx');
+    // }
+
   getTitle() {
     return browser.getTitle();
   }

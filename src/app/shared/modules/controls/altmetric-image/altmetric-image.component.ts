@@ -29,6 +29,7 @@ export class AltmetricImageComponent implements OnInit, OnChanges {
 
                     this.altmetricService.get(PMID).subscribe(
                         result => {
+                            console.log(result);
                             this.image_url = result.image_url;
                             this.detail_url = result.detail_url;
                         }

@@ -34,8 +34,7 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
     constructor(private dataSetService: DataSetService, private route: ActivatedRoute,
                 public appConfig: AppConfig, public profileService: ProfileService
         , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+        , private notificationService: NotificationsService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 
@@ -77,7 +76,6 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
         })).subscribe(
             y => {
                 this.dataSets = y;
-                this.thorService.datasets = y;
             }
         );
     }
