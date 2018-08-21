@@ -17,7 +17,7 @@ import {ThorService} from '@shared/services/thor.service';
     templateUrl: './dashboard-connections-count.component.html',
     styleUrls: ['./dashboard-connections-count.component.css']
 })
-export class DashboardConnectionsCountComponent implements OnInit, OnChanges {
+export class DashboardConnectionsCountComponent implements OnInit {
 
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
@@ -61,20 +61,6 @@ export class DashboardConnectionsCountComponent implements OnInit, OnChanges {
             });
 
         this.web_service_url = this.dataSetService.getWebServiceUrl();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
-            if (propName === 'datasets') {
-                this.datasets = chng.currentValue;
-                if (null != chng.currentValue) {
-                    this.startRequest(this.datasets);
-                }
-            }
-        }
     }
 
     private startRequest(datasetDetail: DataSetDetail[]) {

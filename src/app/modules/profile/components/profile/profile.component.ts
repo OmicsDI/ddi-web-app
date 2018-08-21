@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Rx';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-profile',
@@ -20,7 +21,7 @@ import {Database} from 'model/Database';
         './profile.css']
 })
 export class ProfileComponent implements OnInit {
-    profileX: Profile = new Profile;
+    profileX: Profile;
     public name: String;
     form: FormGroup;
     editMode = false;
@@ -44,6 +45,7 @@ export class ProfileComponent implements OnInit {
                 private router: Router,
                 private logger: LogService,
                 private databaseListService: DatabaseListService,
+                private slimLoadingBarService: SlimLoadingBarService,
                 private route: ActivatedRoute) {
         this.form = formBuilder.group({
             name: ['', [
@@ -64,6 +66,7 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.slimLoadingBarService.start();
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.route.params.subscribe(params => {
@@ -93,6 +96,7 @@ export class ProfileComponent implements OnInit {
                         })).subscribe(
                             y => {
                                 this.dataSetDetails = y;
+                                this.slimLoadingBarService.complete();
                             }
                         );
                     }

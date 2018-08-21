@@ -11,7 +11,7 @@
                         <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-4" id="profile_div">
+                <div class="col-lg-3 col-md-4 col-sm-4" id="profile_div" *ngIf="profileX">
                     <app-profile-contacts [profile]="profileX"></app-profile-contacts>
                     <app-profile-connections *ngIf="isMy()"
                                              [profile]="profileService.profile"></app-profile-connections>

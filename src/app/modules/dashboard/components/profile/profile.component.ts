@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import {InviteComponent} from '@modules/profile-controls/components/invite/invite.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-profile',
@@ -19,7 +20,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
     styleUrls: ['./profile.component.css']
 })
 export class DashboardProfileComponent implements OnInit {
-    profileX: Profile = new Profile;
+    profileX: Profile;
     public name: String;
     form: FormGroup;
     editMode = false;
@@ -38,6 +39,7 @@ export class DashboardProfileComponent implements OnInit {
                 private router: Router,
                 private route: ActivatedRoute,
                 private logger: LogService,
+                private slimLoadingBarService: SlimLoadingBarService,
                 private dialog: MatDialog) {
 
         this.form = formBuilder.group({
@@ -59,6 +61,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.slimLoadingBarService.start();
         this.route.params.subscribe(params => {
             this.username = params['username'];
             this.getProfile(this.username);
@@ -103,7 +106,7 @@ export class DashboardProfileComponent implements OnInit {
                         }
 
                         this.profileX = profile;
-                        // this.profileImageUrl = this.getProfileImageUrl();
+                        this.slimLoadingBarService.complete();
                     }
                 );
         } else {
@@ -121,6 +124,7 @@ export class DashboardProfileComponent implements OnInit {
                         if (window.location.search) {
                             this.showWelcomeDialog();
                         }
+                        this.slimLoadingBarService.complete();
                     }
                 );
         }

@@ -10,13 +10,14 @@ import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {ThorService} from '@shared/services/thor.service';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-counting-data-dashboard',
     templateUrl: './counting-data-dashboard.component.html',
     styleUrls: ['./counting-data-dashboard.component.css']
 })
-export class CountingDataDashboardComponent implements OnInit, OnChanges {
+export class CountingDataDashboardComponent implements OnInit {
 
 
     @Output()
@@ -25,22 +26,24 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
     private web_service_url = this.appConfig.getWebServiceUrl();
     private retryLimitTimes = 2;
     private userServiceUrl: string;
-    public dataSets: DataSetDetail[] = [];
+    public dataSets: DataSetDetail[];
 
 
-    @Input() profile: Profile = new Profile();
+    @Input() profile: Profile;
 
 
-    constructor(private dataSetService: DataSetService, private route: ActivatedRoute,
-                public appConfig: AppConfig, public profileService: ProfileService
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+    constructor(private dataSetService: DataSetService,
+                private route: ActivatedRoute,
+                public appConfig: AppConfig, public profileService: ProfileService,
+                private router: Router,
+                private notificationService: NotificationsService,
+                private logger: LogService,
+                private thorService: ThorService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 
     ngOnInit() {
-        this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
+        this.reloadDataSets();
         // Listen page size
         Observable.fromEvent(window, 'resize')
             .subscribe((event) => {
@@ -50,26 +53,10 @@ export class CountingDataDashboardComponent implements OnInit, OnChanges {
         this.web_service_url = this.dataSetService.getWebServiceUrl();
     }
 
-
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
-            if (propName === 'profile') {
-                if (null != chng.currentValue) {
-                    this.reloadDataSets();
-                }
-            }
-        }
-    }
-
     reloadDataSets() {
         // this.dataSets = new Array();
-        if (!this.profile) {
-            return;
-        }
-        if (!this.profile.dataSets) {
+        if (!this.profile || !this.profile.dataSets) {
+            this.dataSets = [];
             return;
         }
         Observable.forkJoin(this.profile.dataSets.map(x => {

@@ -32,7 +32,7 @@
 
             <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
                  style="display:inline-block; vertical-align: top; text-align: right;"
-                 id="profile_div">
+                 id="profile_div" *ngIf="profileX">
                 <app-profile-contacts [profile]="profileX"></app-profile-contacts>
                 <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
                 <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
