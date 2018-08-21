@@ -6,6 +6,8 @@ import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-similar',
@@ -23,11 +25,15 @@ export class SimilarComponent implements OnInit, OnChanges {
     @Input() acc: string;
     @Input() repository: string;
 
+    @Input()
+    databases: Database[];
+
     loadMoreButtonText = 'Load More';
 
     constructor(private similarityService: SimilarityService,
                 public appConfig: AppConfig,
                 private logger: LogService,
+                private router: Router,
                 private databaseListServce: DatabaseListService) {
         this.subscription = this.similarityService.searchResult$.subscribe(
             result => {
@@ -69,19 +75,8 @@ export class SimilarComponent implements OnInit, OnChanges {
         return this.d.datasets.slice(0, this.datasetNumber);
     }
 
-    omicsTest(d: DataSet, omics: string): boolean {
-        if (d == null) {
-            return false;
-        }
-        if (d.omicsType == null) {
-            return false;
-        }
-
-        return (d.omicsType.indexOf(omics) !== -1);
-    }
-
     getDatabaseTitle(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (!db) {
             this.logger.debug('Source not found: {}', source);
         } else {
@@ -89,4 +84,7 @@ export class SimilarComponent implements OnInit, OnChanges {
         }
     }
 
+    openDataset(dataset: DataSet) {
+        this.router.navigate(['dataset', dataset.source, dataset.id]);
+    }
 }

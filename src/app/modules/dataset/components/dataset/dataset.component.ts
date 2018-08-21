@@ -18,6 +18,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {DialogService} from '@shared/services/dialog.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 
 @Component({
@@ -28,9 +29,6 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail = new DataSetDetail();
     subscription: Subscription;
-    enrichmentSubscription: Subscription;
-    synonymResultSubscription: Subscription;
-
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
 
@@ -43,12 +41,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
     sample_protocol_sections: Section[];
     data_protocol_sections: Section[];
     current_url: String;
-    page_identifier: String;
     index_dataset: number;
     databaseUrl: string;
     web_service_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
+
+    databases: Database[];
+
+    reanalysisOf = [];
+    reanalysedBy = [];
+    relatedOmics = [];
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -64,32 +67,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         this.current_url = route.pathFromRoot.toString();
         this.index_dataset = this.current_url.indexOf('dataset');
-
-        const self = this;
-
-        this.subscription = this.dataSetService.dataSetDetail$.subscribe(
-            result => {
-                this.d = result;
-                // TODO: update with canonical id
-                this.acc = result.id;
-                this.repository = result.source;
-                // this.page_identifier = '${repository}/${source}';
-                this.repositoryName = this.getDatabaseTitle(result.source);
-                this.databaseUrl = this.getDatabaseUrl(result.source);
-
-                this.logger.debug('DataSetDetailResult: {}', result);
-
-                if (this.d.secondary_accession) {
-                    this.d.secondary_accession.forEach(item => {
-                        self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
-                    });
-                }
-                this.slimLoadingBarService.complete();
-            });
         this.web_service_url = dataSetService.getWebServiceUrl();
-        this.databaseListService.getDatabaseList().subscribe(x => {
-            this.logger.debug('database list received');
-        });
     }
 
     ngOnInit() {
@@ -97,17 +75,47 @@ export class DatasetComponent implements OnInit, OnDestroy {
             this.slimLoadingBarService.start();
             this.acc = params['acc'];
             this.repository = params['domain'];
-            this.dataSetService.getDataSetDetail(this.acc, this.repository);
+            this.databaseListService.getDatabaseList().subscribe(databases => {
+                this.databases = databases;
+                this.dataSetService.getDataSetDetail(this.acc, this.repository).subscribe(result => {
+                    this.d = result;
+                    // TODO: update with canonical id
+                    this.acc = result.id;
+                    this.repository = result.source;
 
-            // if(this.disqus) {
-            //   this.disqus.reset();
-            //   this.disqus.identifier = '${repository}/${acc}';
-            //   this.disqus.url = '${repository}/${acc}';
-            // }
+                    this.logger.debug('DataSetDetailResult: {}', result);
 
+                    if (this.d.secondary_accession) {
+                        this.d.secondary_accession.forEach(item => {
+                            this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, databases);
+                        });
+                    }
+
+                    const db = this.databaseListService.getDatabaseBySource(result.source, databases);
+                    this.repositoryName = db.databaseName;
+                    this.databaseUrl = db.sourceUrl;
+
+                    if (result.similars != null) {
+                        result.similars.filter(s => s.relationType === 'Reanalysis of').map(reanalysis => {
+                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysis.database, databases);
+                            this.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
+                        });
+
+                        result.similars.filter(s => s.relationType === 'Reanalyzed by').map(reanalysedBy => {
+                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysedBy.database, databases);
+                            this.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
+                        });
+
+                        result.similars.filter(s => s.relationType !== 'Reanalyzed by' && s.relationType !== 'Reanalysis of').map(omics => {
+                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(omics.database, databases);
+                            this.relatedOmics.push({reanalysis: omics, db: reanalyDb});
+                        });
+                    }
+
+                    this.slimLoadingBarService.complete();
+                });
+            });
         });
-
-
     }
 
     ngOnDestroy() {
@@ -285,116 +293,4 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         return dialogRef.afterClosed();
     }
-
-    reanalysis_of(d: DataSetDetail): SimilarDataset[] {
-        const r = [];
-        if (d.similars) {
-            for (const s of d.similars) {
-                if (s.relationType === 'Reanalysis of') {
-                    r.push(s);
-                }
-            }
-        }
-        if (r.length > 0) {
-            return r;
-        } else {
-            return null;
-        }
-    }
-
-    reanalised_by(d: DataSetDetail): SimilarDataset[] {
-        const r = [];
-        if (d.similars) {
-            for (const s of d.similars) {
-                if (s.relationType === 'Reanalyzed by') {
-                    r.push(s);
-                }
-            }
-        }
-        if (r.length > 0) {
-            return r;
-        } else {
-            return null;
-        }
-    }
-
-    reanalysisoverflow(d: DataSetDetail): boolean {
-        if (!d.similars) {
-            return false;
-        }
-
-        return (d.similars.length > 99);
-    }
-
-    related_omics(d: DataSetDetail): SimilarDataset[] {
-        const r = [];
-        if (d.similars) {
-            for (const s of d.similars) {
-                if (((s.relationType !== 'Reanalyzed by') && (s.relationType !== 'Reanalysis of'))) {
-                    r.push(s);
-                }
-            }
-        }
-        if (r.length > 0) {
-            return r;
-        } else {
-            return null;
-        }
-    }
-
-    getSourceByDatabaseName(database: string): string {
-        return this.databaseListService.getSourceByDatabaseName(database);
-    }
-
-    getDatabaseUrl(source) {
-        const db = this.databaseListService.databases[source];
-        if (!db) {
-            this.logger.debug('Source not found: {}', source);
-        } else {
-            return db.sourceUrl;
-        }
-    }
-
-    getDatabaseTitle(source) {
-        const db = this.databaseListService.databases[source];
-        if (!db) {
-            this.logger.debug('Source not found: {}', source);
-        } else {
-            return db.databaseName;
-        }
-    }
-
 }
-
-/*public reanalysis_of(): string
- {
-
- }
- public reanalised_by(): string
- {
- let r = "";
- for(let s of this.similars){
- if(s.relationType === "Reanalysed by"){
- r+= (s.accession+" ");
- }
- }
- if(r!=""){
- return r;
- } else {
- return null;
- }
- }
- public related_omics(): string
- {
- let r = "";
- for(let s of this.similars){
- if((s.relationType !== "Reanalysed by")&&(s.relationType !== "Reanalysis of")){
- r+= (s.accession+" ");
- }
- }
- if(r!=""){
- return r;
- } else {
- return null;
- }
- }*/

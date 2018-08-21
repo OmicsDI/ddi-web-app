@@ -5,6 +5,8 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {DataControl} from 'model/DataControl';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-search-result',
@@ -22,6 +24,9 @@ export class SearchResultComponent implements OnInit {
     @Input()
     dataControl: DataControl;
 
+    @Input()
+    databases: Database[];
+
     constructor(private dataSetService: DataSetService, private dialog: MatDialog) {
     }
 
@@ -31,7 +36,7 @@ export class SearchResultComponent implements OnInit {
     citation(source, id) {
         let dialogRef: MatDialogRef<CitationDialogComponent>;
 
-        this.dataSetService.getDataSetDetail_private(id, source).subscribe(
+        this.dataSetService.getDataSetDetail(id, source).subscribe(
             x => {
                 dialogRef = this.dialog.open(CitationDialogComponent);
                 dialogRef.componentInstance.title = 'Dataset citation';

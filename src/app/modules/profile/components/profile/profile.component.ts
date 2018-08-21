@@ -9,8 +9,9 @@ import {AppConfig} from 'app/app.config';
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {DataSet} from 'model/DataSet';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-profile',
@@ -30,6 +31,7 @@ export class ProfileComponent implements OnInit {
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
+    databases: Database[];
 
     toDataset = DataSetDetail.toDataset;
 
@@ -41,6 +43,7 @@ export class ProfileComponent implements OnInit {
                 public appConfig: AppConfig,
                 private router: Router,
                 private logger: LogService,
+                private databaseListService: DatabaseListService,
                 private route: ActivatedRoute) {
         this.form = formBuilder.group({
             name: ['', [
@@ -61,9 +64,12 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            this.username = params['username'];
-            this.getProfile(this.username);
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.route.params.subscribe(params => {
+                this.username = params['username'];
+                this.getProfile(this.username);
+            });
         });
     }
 
@@ -83,7 +89,7 @@ export class ProfileComponent implements OnInit {
                         this.profileImageUrl = this.getProfileImageUrl();
 
                         Observable.forkJoin(this.profileX.dataSets.map(x => {
-                            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
+                            return this.dataSetService.getDataSetDetail(x.id, x.source);
                         })).subscribe(
                             y => {
                                 this.dataSetDetails = y;

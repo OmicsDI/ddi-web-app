@@ -23,7 +23,7 @@ describe('public profile page', function() {
         expect(profilePage.getScoreViews().getText()).toContain('0');
         expect(profilePage.getScoreReanalysis().getText()).toContain('0');
         expect(profilePage.getScoreCitations().getText()).toContain('0');
-        expect(profilePage.getScoreConnections().getText()).toContain('0');
+        expect(profilePage.getScoreConnections().getText()).toContain('10');
 
         // title
         expect(profilePage.getTitle().getText()).toContain('Transcription profiling of human monoc' +

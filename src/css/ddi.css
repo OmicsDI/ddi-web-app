@@ -1496,3 +1496,9 @@ ul li.no-match-found {display: none;}
 #disqus_thread {
     padding: 15px;
 }
+
+@media (min-width: 992px) {
+    #app-social {
+        width: 6%;
+    }
+}

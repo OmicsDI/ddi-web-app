@@ -7,6 +7,13 @@ export class LogEntry {
     logWithDate = true;
 
     private static formatParam(param) {
+        if (param instanceof Map) {
+            const result = [];
+            param.forEach((val, key) => {
+                result.push(this.formatParam(key) + ': ' + this.formatParam(val));
+            });
+            return result.join(',');
+        }
         if (typeof param === 'object') {
             return JSON.stringify(param);
         }

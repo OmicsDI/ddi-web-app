@@ -48,7 +48,7 @@
         <app-search-pager [totalResults]="searchResult.count" (dataControlChange)="requestData($event)"
                           [dataControl]="dataControl"></app-search-pager>
         <app-search-result [totalResults]="searchResult.count" [dataControl]="dataControl"
-                           [searchResult]="searchResult"></app-search-result>
+                           [searchResult]="searchResult" [databases]="databases"></app-search-result>
         <app-search-pager [totalResults]="searchResult.count"
                           (dataControlChange)="requestData($event)" [dataControl]="dataControl"></app-search-pager>
         <app-feedback [query]="query"></app-feedback>

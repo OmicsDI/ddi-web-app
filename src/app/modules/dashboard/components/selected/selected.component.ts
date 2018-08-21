@@ -9,6 +9,8 @@ import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -17,20 +19,25 @@ import {DialogService} from '@shared/services/dialog.service';
 })
 export class DashboardSelectedComponent implements OnInit {
 
-    dataSets: DataSetDetail[];
+    dataSets: DataSetDetail[] = [];
     p: 0;
     toDataset = DataSetDetail.toDataset;
+    databases: Database[];
 
-    constructor(public selectedService: SelectedService
-        , private dataSetService: DataSetService
-        , public appConfig: AppConfig
-        , public profileService: ProfileService
-        , private notificationService: NotificationsService
-        , private dialogService: DialogService) {
+    constructor(public selectedService: SelectedService,
+                private dataSetService: DataSetService,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private notificationService: NotificationsService,
+                private databaseListService: DatabaseListService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {
-        this.reloadDataSets();
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.reloadDataSets();
+        });
     }
 
     reloadDataSets() {
@@ -39,7 +46,7 @@ export class DashboardSelectedComponent implements OnInit {
             return;
         }
         Observable.forkJoin(this.selectedService.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
+            return this.dataSetService.getDataSetDetail(x.id, x.source);
         })).subscribe(
             y => {
                 this.dataSets = y;

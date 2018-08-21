@@ -16,7 +16,7 @@
 
 
             <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
-                                                (buttonClicked)="this.deleteDataset(d.source, d.id)"></app-datasetwidget>
+                               [databases]="databases" (buttonClicked)="deleteDataset(d.source, d.id)"></app-datasetwidget>
         </li>
 
 
