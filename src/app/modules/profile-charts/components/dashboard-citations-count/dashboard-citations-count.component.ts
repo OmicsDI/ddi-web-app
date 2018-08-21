@@ -17,7 +17,7 @@ import {ThorService} from '@shared/services/thor.service';
     templateUrl: './dashboard-citations-count.component.html',
     styleUrls: ['./dashboard-citations-count.component.css']
 })
-export class DashboardCitationsCountComponent implements OnInit, OnChanges {
+export class DashboardCitationsCountComponent implements OnInit {
 
     @Output() notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
     private username: string;
@@ -64,20 +64,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             });
 
         this.web_service_url = this.dataSetService.getWebServiceUrl();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
-            if (propName === 'datasets') {
-                this.datasets = chng.currentValue;
-                if (null != chng.currentValue) {
-                    this.startRequest(this.datasets);
-                }
-            }
-        }
     }
 
     private startRequest(datasetDetail: DataSetDetail[]) {

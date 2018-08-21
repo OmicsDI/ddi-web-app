@@ -11,6 +11,7 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -19,7 +20,7 @@ import {Database} from 'model/Database';
 })
 export class DashboardSelectedComponent implements OnInit {
 
-    dataSets: DataSetDetail[] = [];
+    dataSets: DataSetDetail[];
     p: 0;
     toDataset = DataSetDetail.toDataset;
     databases: Database[];
@@ -29,11 +30,13 @@ export class DashboardSelectedComponent implements OnInit {
                 public appConfig: AppConfig,
                 public profileService: ProfileService,
                 private notificationService: NotificationsService,
+                private slimLoadingBarService: SlimLoadingBarService,
                 private databaseListService: DatabaseListService,
                 private dialogService: DialogService) {
     }
 
     ngOnInit() {
+        this.slimLoadingBarService.start();
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.reloadDataSets();
@@ -41,8 +44,9 @@ export class DashboardSelectedComponent implements OnInit {
     }
 
     reloadDataSets() {
-        this.dataSets = [];
         if (!this.selectedService.dataSets) {
+            this.dataSets = [];
+            this.slimLoadingBarService.complete();
             return;
         }
         Observable.forkJoin(this.selectedService.dataSets.map(x => {
@@ -50,6 +54,7 @@ export class DashboardSelectedComponent implements OnInit {
         })).subscribe(
             y => {
                 this.dataSets = y;
+                this.slimLoadingBarService.complete();
             }
         );
     }

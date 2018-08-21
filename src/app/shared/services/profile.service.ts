@@ -29,7 +29,6 @@ export class ProfileService extends BaseService {
     getProfile(): Observable<Profile> {
         return this.http.get(this.appConfig.getProfileUrl(null)) // ,config // { withCredentials: true }
             .map(x => {
-                this.logger.debug('Retrieve profile: {}', x.json());
                 this.profile = this.extractData<Profile>(x);
                 if (!this.profile || !this.profile.userId) {
                     this.logger.debug('Profile not received');

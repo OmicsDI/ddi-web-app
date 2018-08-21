@@ -14,7 +14,7 @@ import {DataSetDetail} from 'model/DataSetDetail';
     templateUrl: './dashboard-views-count.component.html',
     styleUrls: ['./dashboard-views-count.component.css']
 })
-export class DashboardViewsCountComponent implements OnInit, OnChanges {
+export class DashboardViewsCountComponent implements OnInit {
 
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
@@ -55,20 +55,6 @@ export class DashboardViewsCountComponent implements OnInit, OnChanges {
             });
 
         this.web_service_url = this.dataSetService.getWebServiceUrl();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
-            if (propName === 'datasets') {
-                this.datasets = chng.currentValue;
-                if (null != chng.currentValue) {
-                    this.startRequest(this.datasets);
-                }
-            }
-        }
     }
 
     private startRequest(datasetDetail: DataSetDetail[]) {
