@@ -22,19 +22,19 @@ export class ProfilePage {
     }
 
     getScoreViews() {
-        return element.all(by.css('app-score #views'));
+        return element.all(by.css('app-score .views'));
     }
 
     getScoreCitations() {
-        return element.all(by.css('app-score #citations'));
+        return element.all(by.css('app-score .citations'));
     }
 
     getScoreReanalysis() {
-        return element.all(by.css('app-score #reanalysis'));
+        return element.all(by.css('app-score .reanalysis'));
     }
 
     getScoreConnections() {
-        return element.all(by.css('app-score #connections'));
+        return element.all(by.css('app-score .connections'));
     }
 
     getTitle() {

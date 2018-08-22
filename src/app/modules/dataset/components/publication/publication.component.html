@@ -17,12 +17,12 @@
             <h4 style="margin-right:20px" class="ng-binding">
                 {{d.title}}</h4>
             <p style="margin-right:20px" class="align-justify">
-        <span *ngFor="let a of d.authors">
+        <span *ngFor="let a of d.authors"  class="publication_authors">
         <a [routerLink]="['/search']" [queryParams]="{q:a}">
           {{a}}
         </a>&nbsp;
         </span></p>
-            <p style="margin-right:20px" class="align-justify ng-binding">
+            <p style="margin-right:20px" class="align-justify ng-binding"  id="journal_date_issu">
                 {{d.journal}} {{d.date}} {{d.issue}}</p>
         </div>
         <hr style="margin-right:30px">
@@ -34,7 +34,7 @@
             <a href="http://www.altmetric.com/details.php?citation_id={{d.id}}">Altmetric</a>.
         </p>
         <div style="margin-right: 20px;" class="">
-            <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding">
+            <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding" class="pubAbstract">
                 <span>{{a | truncate : lengthLimit : ' '}}&nbsp;</span>
                 <span class="hotword" (click)="moreOrLess()"><b>{{moreLessBtn}}</b></span>
             </p>
@@ -42,7 +42,7 @@
     </div>
     <div class="row" id="dataset_middle_bottom" style="margin-top:10px; margin-left:45px ">
         <div class="col-md-4" style="margin-left:10px">
-            <a *ngIf="d.id" class="ng-binding" href="http://europepmc.org/abstract/MED/{{d.id}}">
+            <a *ngIf="d.id" class="ng-binding" href="http://europepmc.org/abstract/MED/{{d.id}}" id="pubId">
                 PMID:
                 {{d.id}}</a>
         </div>

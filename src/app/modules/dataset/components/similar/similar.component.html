@@ -4,7 +4,7 @@
         <div class="project-widget  list-group-item ddi-card-panel">
             <div class="project-widget-accession">
                 <app-omics-image [omics]="ds?.omicsType"></app-omics-image>
-                <a target="" class="align-justify ng-binding" (click)="openDataset(ds)">
+                <a target="" class="align-justify ng-binding" (click)="openDataset(ds)" class="similar_title">
                     {{ds.title}}</a>
             </div>
             <div class="project-widget-paragraph hidden ng-binding">
@@ -16,9 +16,9 @@
                 <span *ngFor="let o of ds.organisms">{{o}}&nbsp;</span>
             </div>
             <div class="project-widget-paragraph ng-binding">
-                <span class="ng-binding"> {{ds.publicationDate | toDateString}} | </span>
-                {{ds.id}} |
-                {{this.getDatabaseTitle(ds.source)}}
+                <span class="ng-binding"> <span class="similar_publicationDate">{{ds.publicationDate | toDateString}}</span> | </span>
+                <span class="similar_id">{{ds.id}}</span> |
+                <span class="similar_source">{{this.getDatabaseTitle(ds.source)}}</span>
             </div>
         </div>
     </li>
