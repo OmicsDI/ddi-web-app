@@ -17,8 +17,7 @@ import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css',
-        './profile.css']
+    styleUrls: ['./profile.component.css', './profile.css']
 })
 export class ProfileComponent implements OnInit {
     profileX: Profile;
