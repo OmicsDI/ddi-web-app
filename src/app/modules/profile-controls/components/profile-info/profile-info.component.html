@@ -8,15 +8,15 @@
         <div *ngIf="!this.profile?.bio" class="bio" style="position:relative;">
             <h5>Congratulations! You have created OmicsDI profile. What next?</h5>
             <ul class="available-tasks">
-                <li>Upload best <a [routerLink]="['/profile','update']">photo</a>
-                <li>Write short <a [routerLink]="['/profile','update']">bio</a> to stand out of colleagues
+                <li>Upload best <a [routerLink]="['/dashboard','update']">photo</a>
+                <li>Write short <a [routerLink]="['/dashboard','update']">bio</a> to stand out of colleagues
                 <li>Use <a [routerLink]="['/search']" [queryParams]="{q: this.profile?.userName}">search</a> and claim
                     your datasets!
                 <li>When you are happy with the content, you can make your profile <a
-                        [routerLink]="['/profile','update']">public</a> and use short URL in communication
+                        [routerLink]="['/dashboard','update']">public</a> and use short URL in communication
                 <li>Please consult <a href="http://blog.omicsdi.org/post/claiming-datasests/">help</a> for detailed
                     step-by-step instructions
-                <li>We are waiting for your <a [routerLink]="['/profile','feedback']">feedback</a>
+                <li>We are waiting for your <a [routerLink]="['/dashboard','feedback']">feedback</a>
             </ul>
         </div>
         <div class="bio" *ngIf="this.profile?.bio" id="bio">{{this.profile?.bio}}</div>
