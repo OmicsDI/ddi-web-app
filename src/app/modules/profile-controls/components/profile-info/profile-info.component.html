@@ -1,15 +1,14 @@
 <div class="caption" id="userName">{{this.profile?.userName}}</div>
 <br />
 <div>
-    <div class="pictureFrame col-md-3 hidden-sm hidden-xs">
+    <div class="pictureFrame">
 
         <img
                 [src]="this.profileImageUrl"
                 id="gsc_prf_pup">
     </div>
-
-    <div class="bioContainer col-md-9 col-sm-12 col-xs-12">
-
+    <div class="bioContainer">
+        <br />
         <div *ngIf="!this.profile?.bio" class="bio" style="position:relative;">
             <h5>Congratulations! You have created OmicsDI profile. What next?</h5>
             <ul class="available-tasks">

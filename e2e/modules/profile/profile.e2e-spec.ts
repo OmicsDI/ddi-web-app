@@ -1,4 +1,4 @@
-import {WebPage} from '../app.po';
+import {WebPage} from '../../app.po';
 import {browser, by, element} from 'protractor';
 import {async} from '@angular/core/testing';
 import {ProfilePage} from './profile.po';
