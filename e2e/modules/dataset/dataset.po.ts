@@ -91,7 +91,7 @@ export class DatasetPage {
 
     // app-publication
     getPublication_titles () {
-        return element(by.css('app-publication h4'));
+        return element(by.css('app-publication #publication_title'));
     }
 
     getPublication_authors () {
