@@ -7,6 +7,7 @@ import {DataTransportService} from '@shared/services/data.transport.service';
 import {SearchService} from '@shared/services/search.service';
 import {QueryUtils} from '@shared/utils/query-utils';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {DataControl} from 'model/DataControl';
 
 @Component({
     selector: '[AppSearchBox]',
@@ -26,6 +27,10 @@ export class SearchBoxComponent implements OnInit {
 
     params: {};
 
+    // advance search
+    dataControl = new DataControl();
+    facetsChannel = 'facet_channel';
+
     constructor(protected router: Router,
                 private dataTransportService: DataTransportService,
                 private searchService: SearchService,
@@ -43,6 +48,7 @@ export class SearchBoxComponent implements OnInit {
             }
             this.logger.debug('query: {}', this.query);
         });
+        this.loadFacetForAdvancedSearch();
     }
 
     caret_class(): string {
@@ -64,5 +70,13 @@ export class SearchBoxComponent implements OnInit {
 
     doNotPropagate(event) {
         event.stopPropagation();
+    }
+
+    private loadFacetForAdvancedSearch() {
+        this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
+            this.dataControl.order)
+            .subscribe(result => {
+                this.dataTransportService.fire(this.facetsChannel, result.facets);
+            });
     }
 }
