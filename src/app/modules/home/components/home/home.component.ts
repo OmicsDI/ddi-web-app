@@ -12,14 +12,11 @@ import {AsyncInitialisedComponent} from '@shared/components/async/async.initiali
 })
 export class HomeComponent implements AfterViewInit {
 
-    dataControl = new DataControl();
-    facetsChannel = 'facet_channel';
 
     @ViewChildren(AsyncInitialisedComponent)
     asyncComponents: QueryList<AsyncInitialisedComponent>;
 
-    constructor(private loadingBarService: SlimLoadingBarService, private searchService: SearchService
-                , private dataTransportService: DataTransportService) {
+    constructor(private loadingBarService: SlimLoadingBarService) {
         this.loadingBarService.start();
     }
 
@@ -30,17 +27,9 @@ export class HomeComponent implements AfterViewInit {
                 total -= 1;
             }
             if (total === 0) {
-                this.loadFacetForAdvancedSearch();
                 this.loadingBarService.complete();
             }
         }));
     }
 
-    private loadFacetForAdvancedSearch() {
-        this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
-            this.dataControl.order)
-            .subscribe(result => {
-                this.dataTransportService.fire(this.facetsChannel, result.facets);
-            });
-    }
 }
