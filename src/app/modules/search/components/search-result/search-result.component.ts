@@ -6,7 +6,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {DataControl} from 'model/DataControl';
 import {DatabaseListService} from '@shared/services/database-list.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 
 @Component({
     selector: 'app-search-result',
@@ -25,7 +25,7 @@ export class SearchResultComponent implements OnInit {
     dataControl: DataControl;
 
     @Input()
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     constructor(private dataSetService: DataSetService, private dialog: MatDialog) {
     }

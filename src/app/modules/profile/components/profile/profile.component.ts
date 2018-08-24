@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     toDataset = DataSetDetail.toDataset;
 

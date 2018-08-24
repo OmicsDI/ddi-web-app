@@ -6,7 +6,7 @@ import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 import {Router} from '@angular/router';
 
 @Component({
@@ -26,7 +26,7 @@ export class SimilarComponent implements OnInit, OnChanges {
     @Input() repository: string;
 
     @Input()
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     loadMoreButtonText = 'Load More';
 

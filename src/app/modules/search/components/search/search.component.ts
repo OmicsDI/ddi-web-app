@@ -10,7 +10,7 @@ import {Rule, SearchQuery} from 'model/SearchQuery';
 import {Facet} from 'model/Facet';
 import {FacetValue} from 'model/FacetValue';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 import {DatabaseListService} from '@shared/services/database-list.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
     dataControl = new DataControl();
     params = {};
     selectedFacets: Map<string, string[]>;
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: SlimLoadingBarService,

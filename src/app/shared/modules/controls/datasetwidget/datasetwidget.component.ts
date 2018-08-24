@@ -12,7 +12,7 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -27,7 +27,7 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowDelete = true;
     @Input() allowClaim = true;
     @Input() allowWatch = true;
-    @Input() databases: Database[];
+    @Input() databases: DatabaseDetail[];
 
     constructor(public selectedService: SelectedService,
                 public appConfig: AppConfig,

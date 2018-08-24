@@ -18,7 +18,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {DialogService} from '@shared/services/dialog.service';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 
 
 @Component({
@@ -47,7 +47,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     databaseByAccession: Object = {};
     ontology_highlighted = false;
 
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     reanalysisOf = [];
     reanalysedBy = [];

@@ -3,7 +3,7 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Injectable()
@@ -15,14 +15,14 @@ export class DatabaseListService extends BaseService {
         super();
     }
 
-    public getDatabaseList(): Observable<Database[]> {
+    public getDatabaseList(): Observable<DatabaseDetail[]> {
         return this.http.get(this.appConfig.getDatabasesUrl())
             .map(x => {
-                return this.extractData<Database[]>(x);
+                return this.extractData<DatabaseDetail[]>(x);
             });
     }
 
-    public getDatabaseBySource(source: string, databases: Database[]): Database {
+    public getDatabaseBySource(source: string, databases: DatabaseDetail[]): DatabaseDetail {
         for (const db of databases) {
             if (db.source === source) {
                 return db;
@@ -32,7 +32,7 @@ export class DatabaseListService extends BaseService {
         return null;
     }
 
-    public getDatabaseByDatabaseName(database: string, databases: Database[]): Database {
+    public getDatabaseByDatabaseName(database: string, databases: DatabaseDetail[]): DatabaseDetail {
         for (const db of databases) {
             if (db.databaseName === database) {
                 return db;
@@ -42,7 +42,7 @@ export class DatabaseListService extends BaseService {
         return null;
     }
 
-    public getDatabaseByAccession(accession: string, databases: Database[]): Database {
+    public getDatabaseByAccession(accession: string, databases: DatabaseDetail[]): DatabaseDetail {
         for (const database of databases) {
             if (database.accessionPrefix) {
                 for (const prefix of database.accessionPrefix) {

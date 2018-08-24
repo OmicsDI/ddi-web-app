@@ -13,8 +13,8 @@ export class DataSet {
     description: string;
     keywords: string[];
     organisms: Organism[];
-    tissues: Tissue[];
-    diseases: Disease[];
+    tissues: Tissue[] = [];
+    diseases: Disease[] = [];
     visitCount: number;
     publicationDate: string;
     score?: any;

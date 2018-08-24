@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DatabaseListService} from '@shared/services/database-list.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 import {environment} from 'environments/environment';
 import {DomainStat} from 'model/DomainStat';
 import {AppConfig} from 'app/app.config';
@@ -13,7 +13,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
     styleUrls: ['./database.component.css']
 })
 export class DatabaseComponent implements OnInit {
-    public databases: Database[];
+    public databases: DatabaseDetail[];
     public domainStats: Map<String, DomainStat> = new Map<String, DomainStat>();
     public p = 1;
     public config = {

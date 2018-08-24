@@ -10,7 +10,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
@@ -23,7 +23,7 @@ export class DashboardSelectedComponent implements OnInit {
     dataSets: DataSetDetail[];
     p: 0;
     toDataset = DataSetDetail.toDataset;
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     constructor(public selectedService: SelectedService,
                 private dataSetService: DataSetService,

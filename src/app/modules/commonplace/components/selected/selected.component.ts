@@ -6,7 +6,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 
 @Component({
     selector: 'app-selected',
@@ -17,7 +17,7 @@ export class SelectedComponent implements OnInit {
 
     dataSets: DataSetDetail[];
 
-    databases: Map<string, Database> = new Map<string, Database>();
+    databases: Map<string, DatabaseDetail> = new Map<string, DatabaseDetail>();
     p: 0;
 
     constructor(public selectedService: SelectedService,

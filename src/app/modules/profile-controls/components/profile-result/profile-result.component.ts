@@ -11,7 +11,7 @@ import {ThorService} from '@shared/services/thor.service';
 import {DataSet} from 'model/DataSet';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 
 @Component({
     selector: 'app-profile-result',
@@ -25,7 +25,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     @Input() profile: Profile;
     @Output() change = new EventEmitter();
 
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     toDataset = DataSetDetail.toDataset;
 

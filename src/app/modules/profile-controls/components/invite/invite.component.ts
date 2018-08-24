@@ -10,7 +10,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {Database} from 'model/Database';
+import {DatabaseDetail} from 'model/DatabaseDetail';
 
 @Component({
     selector: 'app-invite',
@@ -26,7 +26,7 @@ export class InviteComponent implements OnInit {
     public secondPage = false;
 
     @Input()
-    databases: Database[];
+    databases: DatabaseDetail[];
 
     complexForm: FormGroup;
 

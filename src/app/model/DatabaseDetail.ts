@@ -2,7 +2,7 @@
  * Created by Ricardo on 5/18/2017.
  */
 
-export class Database {
+export class DatabaseDetail {
     databaseName: string;
     source: string;
     repository: string;
