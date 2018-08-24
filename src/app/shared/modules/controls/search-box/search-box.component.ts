@@ -40,13 +40,15 @@ export class SearchBoxComponent implements OnInit {
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
-            this.params = params;
-            this.queryParams = QueryUtils.extractQuery(params);
-            this.query = this.queryParams.toQueryString();
-            if (this.query[0] === '(') {
-                this.query = this.query.slice(1, this.query.length - 1);
+            if (this.router.url.indexOf('/dataset/') === -1) {
+                this.params = params;
+                this.queryParams = QueryUtils.extractQuery(params);
+                this.query = this.queryParams.toQueryString();
+                if (this.query[0] === '(') {
+                    this.query = this.query.slice(1, this.query.length - 1);
+                }
+                this.logger.debug('query: {}', this.query);
             }
-            this.logger.debug('query: {}', this.query);
         });
         this.loadFacetForAdvancedSearch();
     }
