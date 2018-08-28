@@ -20,3 +20,12 @@
     display: inline;
     padding:5px;
 }
+
+@media (min-width: 992px) {
+    .col-md-10 {
+        width: 80%;
+    }
+    .col-md-2 {
+        width: 19.9%;
+    }
+}

@@ -9,6 +9,9 @@ import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -20,29 +23,38 @@ export class DashboardSelectedComponent implements OnInit {
     dataSets: DataSetDetail[];
     p: 0;
     toDataset = DataSetDetail.toDataset;
+    databases: Database[];
 
-    constructor(public selectedService: SelectedService
-        , private dataSetService: DataSetService
-        , public appConfig: AppConfig
-        , public profileService: ProfileService
-        , private notificationService: NotificationsService
-        , private dialogService: DialogService) {
+    constructor(public selectedService: SelectedService,
+                private dataSetService: DataSetService,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private notificationService: NotificationsService,
+                private slimLoadingBarService: SlimLoadingBarService,
+                private databaseListService: DatabaseListService,
+                private dialogService: DialogService) {
     }
 
     ngOnInit() {
-        this.reloadDataSets();
+        this.slimLoadingBarService.start();
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.reloadDataSets();
+        });
     }
 
     reloadDataSets() {
-        this.dataSets = [];
         if (!this.selectedService.dataSets) {
+            this.dataSets = [];
+            this.slimLoadingBarService.complete();
             return;
         }
         Observable.forkJoin(this.selectedService.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
+            return this.dataSetService.getDataSetDetail(x.id, x.source);
         })).subscribe(
             y => {
                 this.dataSets = y;
+                this.slimLoadingBarService.complete();
             }
         );
     }

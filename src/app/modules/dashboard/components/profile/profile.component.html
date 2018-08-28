@@ -1,17 +1,19 @@
 <div id="wrapper">
     <app-nav></app-nav>
     <div id="page-wrapper">
-        <div class="container-fluid3">
-      <div class="row">
-      <div class="col-lg-9 col-md-8 col-sm-6">
-        <app-profile-info [profile]="profileX"></app-profile-info>
-        <div class="row align-top">
-        <div *ngIf="profileX?.dataSets?.length>0" class="caption">Datasets</div>
+        <div class="container-fluid3" *ngIf="profileX">
+            <div class="row">
+                <div class="col-md-10 col-sm-12 col-xs-12">
+                    <app-profile-info [profile]="profileX"></app-profile-info>
+                    <div class="row align-top" style="margin-left: 0">
+                        <div *ngIf="profileX?.dataSets?.length>0" class="caption">Datasets</div>
 
-                    <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
+                        <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
+                    </div>
                 </div>
-      </div>
-                <div class="col-lg-3 col-md-4 col-sm-4" id="profile_div">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+                     style="display:inline-block; vertical-align: top; text-align: right;"
+                     id="profile_div" *ngIf="profileX">
                     <app-profile-contacts [profile]="profileX"></app-profile-contacts>
                     <app-profile-connections *ngIf="isMy()"
                                              [profile]="profileService.profile"></app-profile-connections>

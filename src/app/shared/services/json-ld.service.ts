@@ -46,8 +46,6 @@ export class JsonLdService {
         // script.innerHTML = JSON.stringify(data);
         // document.getElementsByTagName('head')[0].appendChild(script);
 
-        console.log('json-ld service - script adde');
-
     }
 
 }

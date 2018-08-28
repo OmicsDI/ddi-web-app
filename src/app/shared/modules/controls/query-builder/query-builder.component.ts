@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FacetValue} from 'model/FacetValue';
 import {SearchQuery} from 'model/SearchQuery';
 import {SearchService} from '@shared/services/search.service';
+import {DataTransportService} from '@shared/services/data.transport.service';
+import {Facet} from 'model/Facet';
+import {ArrayUtils} from '@shared/utils/array-utils';
 
 @Component({
     selector: 'query-builder',
@@ -10,19 +13,14 @@ import {SearchService} from '@shared/services/search.service';
 })
 export class QueryBuilderComponent implements OnInit {
 
-    private _query: SearchQuery;
-
     hideBasicInfo: boolean;
+
+    facetsChannel = 'facet_channel';
 
     operators = [
         {name: 'AND'},
         {name: 'OR'},
         {name: 'NOT'}
-    ];
-
-    fields = [
-        {name: 'all_fields', label: 'All Fields'}
-        , {name: 'hello', label: 'hello world'}
     ];
 
     conditions = [
@@ -35,29 +33,33 @@ export class QueryBuilderComponent implements OnInit {
 
     @Output() queryChange = new EventEmitter<SearchQuery>();
 
-    @Input() get query(): SearchQuery {
-        return this._query;
-    }
+    @Input() searchQuery: SearchQuery;
 
-    constructor(private searchService: SearchService) {
+    allFacets: Facet[] = [];
+
+    constructor(private dataTransportService: DataTransportService) {
     }
 
     ngOnInit() {
+        if (this.parent) {
+            this.allFacets = this.parent.allFacets;
+        }
+        this.dataTransportService.listen(this.facetsChannel).subscribe((m: Facet[]) => {
+            this.allFacets = m;
+            const star = new Facet();
+            star.id = 'all_fields';
+            star.label = 'All';
+            star.facetValues = [];
+            this.allFacets = ArrayUtils.prepend(star, this.allFacets);
+        });
     }
-
-    set query(val) {
-        this._query = val;
-        this.queryChange.emit(this._query);
-    }
-
-
 
     capitalize = function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
     };
 
     public notify() {
-        this.queryChange.emit(this._query);
+        this.queryChange.emit(this.searchQuery);
         if (this.parent) {
             this.parent.notify();
         }
@@ -65,10 +67,10 @@ export class QueryBuilderComponent implements OnInit {
 
     addCondition() {
         this.hideBasicInfo = false;
-        if (null == this.query.rules) {
-            this.query.rules = [];
+        if (null == this.searchQuery.rules) {
+            this.searchQuery.rules = [];
         }
-        this.query.rules.push({
+        this.searchQuery.rules.push({
             condition: 'equal',
             field: 'all_fields',
             data: '',
@@ -79,21 +81,21 @@ export class QueryBuilderComponent implements OnInit {
     };
 
     removeCondition(index) {
-        this.query.rules.splice(index, 1);
+        this.searchQuery.rules.splice(index, 1);
         this.notify();
     };
 
     addGroup() {
         this.hideBasicInfo = false;
-        if (null == this.query.rules) {
-            this.query.rules = [];
+        if (null == this.searchQuery.rules) {
+            this.searchQuery.rules = [];
         }
 
         const q: SearchQuery = new SearchQuery();
         q.operator = 'AND';
         q.rules = [];
 
-        this.query.rules.push({
+        this.searchQuery.rules.push({
             query: q,
             condition: null,
             field: null,
@@ -123,21 +125,43 @@ export class QueryBuilderComponent implements OnInit {
 
     removeGroup() {
         this.parent.removeGroupByIndex(this.index);
-        this.queryChange.emit(this._query);
+        this.queryChange.emit(this.searchQuery);
     };
 
     removeGroupByIndex(index: number) {
-        this.query.rules.splice(index, 1);
+        this.searchQuery.rules.splice(index, 1);
         this.notify();
     }
 
     getFieldsData(field: string): FacetValue[] {
-        return this.searchService.getAllFacetValues(field);
-
+        return this.getAllFacetValues(field);
     }
 
     dropDownValueChange() {
         this.notify();
+    }
+
+    getAllFacetValues(facet: string): FacetValue[] {
+        let result: FacetValue[];
+        result = [];
+        if (null == this.allFacets) {
+            const v: FacetValue = new FacetValue();
+            v.label = 'label1';
+            v.value = 'value1';
+            result.push(v);
+        } else {
+            for (const f of this.allFacets) {
+                if (f.id === facet) {
+                    for (const w of f.facetValues) {
+                        const v: FacetValue = new FacetValue();
+                        v.label = w.label;
+                        v.value = w.value;
+                        result.push(v);
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
 

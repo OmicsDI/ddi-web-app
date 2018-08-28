@@ -1,27 +1,29 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 
 @Component({
     selector: 'app-latest-datasets',
     templateUrl: './latest-datasets.component.html',
     styleUrls: ['./latest-datasets.component.css'],
-    providers: [DataSetService]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: LatestDatasetsComponent }]
 })
-export class LatestDatasetsComponent implements OnInit {
+export class LatestDatasetsComponent extends AsyncInitialisedComponent implements OnInit {
 
     static requestLatestDatasetFailed;
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
 
+    private widgetName = 'latest_datasets';
     latestDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
     genomics_list: string;
     transcriptomics_list: string;
 
-    constructor(private dataSetService: DataSetService) {
+    constructor(private dataSetService: DataSetService, private logger: LogService) {
+        super();
         LatestDatasetsComponent.requestLatestDatasetFailed = false;
     }
 
@@ -34,14 +36,14 @@ export class LatestDatasetsComponent implements OnInit {
 
         this.dataSetService.getLatestDataSets()
             .then(res => {
-                this.notifyHomeLoader.emit('latest_datasets');
+                this.componentLoaded();
 
                 this.latestDatasets = res['datasets'];
             })
             .then(() => {
                 if (this.latestDatasets == null) {
                     LatestDatasetsComponent.requestLatestDatasetFailed = true;
-                    console.log('datasets array is empty');
+                    this.logger.debug('datasets array is empty');
                 }
             })
             .catch(this.handleError)
@@ -51,7 +53,7 @@ export class LatestDatasetsComponent implements OnInit {
     private handleError(error: any) {
 
         LatestDatasetsComponent.requestLatestDatasetFailed = true;
-        console.log('GET error with url: http://www.omicsdi.org/ws/dataset/dataset/latest?size=10');
+        this.logger.error('GET error with url: http://www.omicsdi.org/ws/dataset/dataset/latest?size=10');
         return Promise.reject(error.message || error);
     }
 

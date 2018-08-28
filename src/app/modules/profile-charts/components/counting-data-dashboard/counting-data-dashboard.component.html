@@ -3,8 +3,10 @@
 <!--<app-dashboard-reanalisys-count [datasets]="dataSets"></app-dashboard-reanalisys-count>-->
 <!--<app-dashboard-views-count [datasets]="dataSets"></app-dashboard-views-count>-->
 <!--<app-dashboard-profile-annual-omicstype [datasets]="dataSets"></app-dashboard-profile-annual-omicstype>-->
-<app-dashboard-claim-count [datasets]="dataSets"></app-dashboard-claim-count>
-<app-dashboard-citations-count [datasets]="dataSets"></app-dashboard-citations-count>
-<app-dashboard-reanalisys-count [datasets]="dataSets"></app-dashboard-reanalisys-count>
-<app-dashboard-views-count [datasets]="dataSets"></app-dashboard-views-count>
-<app-dashboard-connections-count [datasets]="dataSets"></app-dashboard-connections-count>
+<div *ngIf="dataSets">
+    <app-dashboard-claim-count [datasets]="dataSets"></app-dashboard-claim-count>
+    <app-dashboard-citations-count [datasets]="dataSets"></app-dashboard-citations-count>
+    <app-dashboard-reanalisys-count [datasets]="dataSets"></app-dashboard-reanalisys-count>
+    <app-dashboard-views-count [datasets]="dataSets"></app-dashboard-views-count>
+    <app-dashboard-connections-count [datasets]="dataSets"></app-dashboard-connections-count>
+</div>

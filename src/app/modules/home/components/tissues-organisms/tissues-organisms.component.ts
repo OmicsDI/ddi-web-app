@@ -1,20 +1,20 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-tissues-organisms',
     templateUrl: './tissues-organisms.component.html',
-    styleUrls: ['./tissues-organisms.component.css']
+    styleUrls: ['./tissues-organisms.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: TissuesOrganismsComponent }]
 })
-export class TissuesOrganismsComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+export class TissuesOrganismsComponent extends AsyncInitialisedComponent implements OnInit {
 
     private webServiceUrl: string;
     private retryLimitTimes: number;
@@ -27,9 +27,8 @@ export class TissuesOrganismsComponent implements OnInit {
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
 
-    private bubble: any;
-
-    constructor(datasetService: DataSetService, private router: Router) {
+    constructor(datasetService: DataSetService, private router: Router, private logger: LogService) {
+        super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
@@ -52,7 +51,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     self.retryLimitTimes--;
 
                     if (self.retryLimitTimes <= 0) {
-                        self.notifyHomeLoader.emit('tissues');
+                        self.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo(self.bubChartName);
                         return;
                     }
@@ -60,7 +59,7 @@ export class TissuesOrganismsComponent implements OnInit {
                     ChartsErrorHandler.outputGettingInfo(self.bubChartName);
                     self.startRequest();
                 } else {
-                    self.notifyHomeLoader.emit('tissues');
+                    self.componentLoaded();
                     ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
                     self.tissues = tissues;
@@ -203,7 +202,6 @@ export class TissuesOrganismsComponent implements OnInit {
         d3.select('#' + self.bubChartName + '_radio_form')
             .selectAll('input')
             .on('change', function (d: any) {
-                console.log(d);
                 self.field = d3.select(this).attr('value');    // ignore this exception raised by editor
                 self.change();
             });
@@ -222,6 +220,7 @@ export class TissuesOrganismsComponent implements OnInit {
         const svg_inside = body.append('svg')
             .attr('width', diameter_inside)
             .attr('height', diameter_inside)
+            .attr('style', 'margin-top: 15px;')
             .attr('class', 'bubble center');
         //         .attr("style", "position:relative");
 
@@ -233,15 +232,15 @@ export class TissuesOrganismsComponent implements OnInit {
 
         if (value === 'Tissues') {
             data = self.tissues;
-            searchWord_pre = '*:* AND tissue:"';
+            searchWord_pre = 'tissue:"';
         }
         if (value === 'Organisms') {
             data = self.calculateLoggedValue(self.organisms);
-            searchWord_pre = '*:* AND TAXONOMY:"';
+            searchWord_pre = 'TAXONOMY:"';
         }
         if (value === 'Diseases') {
             data = self.diseases;
-            searchWord_pre = '*:* AND disease:"';
+            searchWord_pre = 'disease:"';
         }
 
         svg_inside.selectAll('.node').remove();
@@ -262,7 +261,6 @@ export class TissuesOrganismsComponent implements OnInit {
             .enter().append('g')
             .attr('class', 'node')
             .attr('transform', function (d: any) {
-                // console.log(d)
                 return 'translate(' + d.x + ',' + d.y + ')';
             })
             .on('click', function (d: any, i) {
@@ -275,7 +273,7 @@ export class TissuesOrganismsComponent implements OnInit {
                 if (value === 'Organisms') {
                     searchWord = searchWord_pre + d.data.taxonomyid + '"';
                 }
-                console.log(searchWord);
+                self.logger.debug('Search keyword: {}', searchWord);
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 // -------------------------------  redirect --------------------------------------------

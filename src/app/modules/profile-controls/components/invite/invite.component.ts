@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {InviteService} from '@shared/services/invite.service';
 import {Observable} from 'rxjs/Observable';
@@ -9,6 +9,8 @@ import {ProfileService} from '@shared/services/profile.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-invite',
@@ -23,17 +25,21 @@ export class InviteComponent implements OnInit {
 
     public secondPage = false;
 
+    @Input()
+    databases: Database[];
+
     complexForm: FormGroup;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: any
-        , private inviteService: InviteService
-        , private dataSetService: DataSetService
-        , private databaseListServce: DatabaseListService
-        , private changeDetector: ChangeDetectorRef
-        , public dialogRef: MatDialogRef<InviteComponent>
-        , public profileService: ProfileService
-        , public router: Router
-        , fb: FormBuilder) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+                private inviteService: InviteService,
+                private dataSetService: DataSetService,
+                private databaseListServce: DatabaseListService,
+                private changeDetector: ChangeDetectorRef,
+                public dialogRef: MatDialogRef<InviteComponent>,
+                public profileService: ProfileService,
+                private logger: LogService,
+                public router: Router,
+                fb: FormBuilder) {
 
         this.complexForm = fb.group({});
 
@@ -43,7 +49,7 @@ export class InviteComponent implements OnInit {
         this.inviteService.getInvite(this.data.inviteId).subscribe(x => {
             if (x) {
                 Observable.forkJoin(x.dataSets.map(record => {
-                    return this.dataSetService.getDataSetDetail_private(record.id, record.source);
+                    return this.dataSetService.getDataSetDetail(record.id, record.source);
                 })).subscribe(
                     y => {
                         this.dataSetDetails = y;
@@ -56,24 +62,24 @@ export class InviteComponent implements OnInit {
     deleteDataset(source: string, id: string) {
         const i: number = this.dataSetDetails.findIndex(x => x.source === source && x.id === id);
         if (i !== -1) {
-            console.log('deleting');
+            this.logger.info('deleting');
             this.dataSetDetails.splice(i, 1);
         }
     }
 
     getDatabaseUrl(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('source not found: {}', source);
         } else {
             return db.sourceUrl;
         }
     }
 
     getDatabaseTitle(source) {
-        const db = this.databaseListServce.databases[source];
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
         if (!db) {
-            console.log('source not found:' + source);
+            this.logger.debug('source not found: {}', source);
         } else {
             return db.databaseName;
         }
@@ -82,7 +88,7 @@ export class InviteComponent implements OnInit {
     checkchanged(checked: string, source: string, id: string) {
         const i: number = this.dataSetDetails.findIndex(x => x.source === source && x.id === id);
         if (i !== -1) {
-            console.log('checked:' + checked);
+            this.logger.debug('checked: {}', checked);
             if (!checked) {
                 this.dataSetDetails[i]['unchecked'] = true;
             } else {
@@ -122,7 +128,7 @@ export class InviteComponent implements OnInit {
         }
 
         this.profileService.updateUser().subscribe(x => {
-                console.log('user updated' + x);
+                this.logger.info('user updated, {}', x);
                 this.dialogRef.close();
                 this.profileService.getProfile().subscribe();
             }

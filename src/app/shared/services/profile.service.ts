@@ -10,6 +10,7 @@ import {UserShort} from 'model/UserShort';
 import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 
 @Injectable()
@@ -21,20 +22,18 @@ export class ProfileService extends BaseService {
 
     onProfileReceived: EventEmitter<Profile> = new EventEmitter();
 
-    constructor(private http: AuthHttp, public appConfig: AppConfig) {
+    constructor(private http: AuthHttp, public appConfig: AppConfig, private logger: LogService) {
         super();
     }
 
     getProfile(): Observable<Profile> {
-        console.log(this.appConfig.getProfileUrl(null));
         return this.http.get(this.appConfig.getProfileUrl(null)) // ,config // { withCredentials: true }
             .map(x => {
-                console.log(x);
                 this.profile = this.extractData<Profile>(x);
                 if (!this.profile || !this.profile.userId) {
-                    console.log('profile not received');
+                    this.logger.debug('Profile not received');
                 } else {
-                    console.log('profile received:' + this.profile.userId);
+                    this.logger.debug('Profile received: {}', this.profile.userId);
                     this.userId = this.profile.userId;
                     this.getCoAuthors(this.profile.userId);
                     this.getWatchedDatasets(this.profile.userId).subscribe(
@@ -43,7 +42,6 @@ export class ProfileService extends BaseService {
                         }
                     );
                     this.onProfileReceived.emit(this.profile);
-                    console.log('lucky');
                 }
                 return this.profile;
             });
@@ -56,9 +54,9 @@ export class ProfileService extends BaseService {
             .map(x => {
                 _profile = this.extractData<Profile>(x);
                 if (!_profile) {
-                    console.log('public profile not received');
+                    this.logger.debug('public profile not received');
                 } else {
-                    console.log('public profile received:' + _profile.userId);
+                    this.logger.debug('public profile received: {}', _profile.userId);
                 }
                 return _profile;
             });
@@ -71,9 +69,9 @@ export class ProfileService extends BaseService {
             .map(x => {
                 _profiles = this.extractData<Profile[]>(x);
                 if (!_profiles) {
-                    console.log('public profile not received');
+                    this.logger.debug('public profile not received');
                 } else {
-                    console.log('public profilesreceived:' + _profiles.length);
+                    this.logger.debug('public profiles received: {}', _profiles.length);
                 }
                 return _profiles;
             })
@@ -118,7 +116,6 @@ export class ProfileService extends BaseService {
 
         const config: RequestOptionsArgs = {headers: headers};
         // $http.post(url, config) .success ...
-        // console.log("deleting user with datasets:" + this.profile.dataSets.length);
 
         return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(this.profile), config)
             .map(res => {
@@ -136,16 +133,16 @@ export class ProfileService extends BaseService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
+        this.logger.error(errMsg);
         return Observable.throw(errMsg);
     }
 
     private extractDataLogin(res: Response) {
-        console.warn('logging out - extracting data..');
+        this.logger.warn('logging out - extracting data..');
     }
 
     private handleErrorLogin(error: Response | any) {
-        console.warn('logging out - error..');
+        this.logger.warn('logging out - error..');
         return Observable.throw('Error in logout');
     }
 
@@ -155,7 +152,6 @@ export class ProfileService extends BaseService {
             .map(res => res.json()).subscribe(data => {
             r = data;
         });
-        console.log(r);
     }
 
     public claimDataset(userID: string, dataset: DataSetShort) {
@@ -224,10 +220,10 @@ export class ProfileService extends BaseService {
     }
 
     saveSavedSearch(savedSearch: SavedSearch) {
-        console.log('saving saved search');
+        this.logger.debug('Saving saved search');
         this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId), JSON.stringify(savedSearch)).subscribe(
             x => {
-                console.log('saved search saved');
+                this.logger.debug('Search saved saved');
             }
         );
     }
@@ -245,10 +241,10 @@ export class ProfileService extends BaseService {
     }
 
     saveWatchedDataset(watchedDataset: WatchedDataset) {
-        console.log('saving saved search');
+        this.logger.debug('Saving saved search');
         this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset)).subscribe(
             x => {
-                console.log('watched dataset saved');
+                this.logger.debug('Watched dataset saved');
                 this.watchedDatasets.push(watchedDataset);
             }
         );

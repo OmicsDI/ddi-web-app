@@ -17,7 +17,7 @@ import {ThorService} from '@shared/services/thor.service';
     templateUrl: './dashboard-citations-count.component.html',
     styleUrls: ['./dashboard-citations-count.component.css']
 })
-export class DashboardCitationsCountComponent implements OnInit, OnChanges {
+export class DashboardCitationsCountComponent implements OnInit {
 
     @Output() notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
     private username: string;
@@ -40,17 +40,19 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         }
     }
 
-    constructor(private dataSetService: DataSetService, private route: ActivatedRoute, public appConfig: AppConfig,
-                public profileService: ProfileService
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+    constructor(private dataSetService: DataSetService,
+                private route: ActivatedRoute,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private router: Router,
+                private notificationService: NotificationsService,
+                private thorService: ThorService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 
     ngOnInit() {
         // this.profileService.getDataSetDetails(this.profileService.profile);
-        this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
+        this.startRequest(this.datasets);
 
 
         // Listen page size
@@ -58,40 +60,15 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             .debounceTime(100) // timer
             .subscribe((event) => {
                 // restartRequest
-                this.reloadDataSets();
+                this.startRequest(this.datasets);
             });
 
         this.web_service_url = this.dataSetService.getWebServiceUrl();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-            if (propName === 'datasets') {
-                // console.log(chng.currentValue);
-                this.datasets = chng.currentValue;
-                // console.log(this.datasets);
-                if (null != chng.currentValue) {
-                    // console.log('hey reload!');
-                    // console.log(this.datasets);
-                    this.reloadDataSets();
-                }
-            }
-        }
-    }
-
-    reloadDataSets() {
-        // this.dataSets = new Array();
-        this.startRequest(this.datasets);
-    }
-
     private startRequest(datasetDetail: DataSetDetail[]) {
 
         const processedData = this.prepareData(datasetDetail);
-        // console.log(processedData);
         this.draw(processedData);
     }
 
@@ -112,9 +89,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
 
     private drawGraph(processedData: any): void {
         const self = this;
-        // console.log('processedData');
-        // console.log(processedData);
-
         const body = d3.select('#barchart_citations_dashboard');
         const svgProperties: any = this.initSvg(body);
 
@@ -132,10 +106,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         const proteomiList = processedData.get('proteomiList');
         const omicsTypes = [
             {omicstype: 'genomicsList'}, {omicstype: 'transcriList'}, {omicstype: 'metaboloList'}, {omicstype: 'proteomiList'}];
-        // console.log(proteomiList);
-        // console.log(metaboloList);
-        // console.log(transcriList);
-        // console.log(genomicsList);
 
         const yearSet = processedData.get('yearSet');
 
@@ -145,16 +115,12 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         const yearCollections: number[] = [];
         const countCollections: number[] = [];
         allYear.forEach(data => {
-            // console.log(Number(data['count'].toString()));
             const count: number = Number(data['value']);
             dataCollection.push(count);
             // idCollection.push(data['id']);
             yearCollections.push(data['year']);
         });
-
-        // console.log(genomicsList);
         //
-        // console.log(Array.from(annualDataExtends).length);
         // var minDate = new Date(d3.min(annualDataExtends, d => {
         //     return parseInt(d["year"]);
         // }), 0, 0);
@@ -173,7 +139,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
 
 
         const minpointer = processedData.get('minYear');
-        // console.log(minpointer);
         const max_G_T = processedData.get('max_G_T');
         const max_M_P = processedData.get('max_M_P');
         x0.domain([new Date(Number(minpointer) - 1, 0, 0), new Date()]);
@@ -194,12 +159,9 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
 
         const valueline2 = d3.line()
             .x(d => {
-                // console.log('Line:');
-                // console.log(x0(new Date(d["year"], 0, 0)));
                 return x0(new Date(d['year'], 0, 0));
             })
             .y(d => {
-                // console.log(y1(parseInt(d["value"])));
                 return y1(parseInt(d['value'], 10));
             });
 
@@ -208,9 +170,7 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                 .style('stroke', 'steelblue')
                 .attr('d', valueline(genomicsList))
                 .style('fill', d => {
-                    // console.log(d);
                 });
-            // console.log(d3.selectAll('path'));
         }
         if (transcriList) {
             svg.append('path')
@@ -243,7 +203,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                 return x0(new Date(d['year'], 0, 0));
             })
             .attr('cy', function (d) {
-                // console.log(d);
                 if (d['omics_type'] === 'Genomics' || d['omics_type'] === 'Transcriptomics') {
                     return y0(d['value']);
                 } else if (d['omics_type'] === 'Metabolomics' || d['omics_type'] === 'Proteomics') {
@@ -264,7 +223,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             .style('cursor', 'pointer')
             .on('mouseover', function (d: any, i: number) {
                 const mouse_coords = d3.mouse(document.getElementById('bar_chart_tooltip').parentElement);
-                // console.log(mouse_coords[0]+','+mouse_coords[1]);
                 /*
                 for d3 tooltip
                 if a tooltip is inside angular component inside a div like this
@@ -302,7 +260,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                     Number(barchart_claim_dashboard_height) - Number(barchart_citations_dashboard_height) -
                     Number(barchart_connections_dashboard_height) - Number(barchart_views_dashboard_height) -
                     Number(barchart_reanalisys_dashboard_height) + mouse_coords[1] - 40;
-                // console.log('position:'+position);
 
                 toolTip.html(d.omics_type.toString() + ': <br>' + d.value.toString() + ' datasets')
                     .style('left', ((mouse_coords[0] + 5) + 'px'))
@@ -324,9 +281,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                 // let connectionBox_height = contactInfo.substring(0,contactInfo.indexOf('px'));
                 // let sum = Number(contactInfo)+Number(gsc_rsb_co)+Number(connectionBox);
                 // let coordy = mouse_coords[1].valueOf();
-                // console.log('????:'+contactInfo_height);
-                // console.log(mouse_coords[0]+","+mouse_coords[1]);
-                // console.log(coordy+sum);
 
             })
             .on('mouseout', function () {
@@ -339,11 +293,9 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
                     .duration(500)
                     .style('opacity', 0);
 
-                const searchWord = '*:* AND omics_type:"'
+                const searchWord = 'omics_type:"'
                     + DashboardCitationsCountComponent.getName(d['year'], d['value'], annualDataExtends)
                     + '" AND publication_date:"' + d['year'] + '"';
-
-                // console.log("router.navigate>>");
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
             });
 
@@ -372,7 +324,7 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         //     .on("click", function (d) {
         //         var searchWord = "*:* AND omics_type:\"" + d + "\"";
         //         // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
-        //         // console.log("this.router.navigate");
+        //
         //         self.router.navigate(['search'],{ queryParams: { q: searchWord }});
         //     });
         //
@@ -475,7 +427,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             years.push(Number(year));
         });
         const maxYear = Math.max(...years);
-        // console.log(maxYear);
         const minYear = Math.min(...years);
         const allList = [];
         const allList_g = [];
@@ -501,8 +452,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             });
         }
 
-        // console.log(allList_g);
-
 
         const genomicsList = [],
             metaboloList = [],
@@ -510,7 +459,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             transcriList = [],
             allYearData = [];
         annualData.forEach(d => {
-            // console.log(d);
             const date = d['dates']['publication'];
             let year;
             if (date.toString().indexOf('-') >= 0) {
@@ -518,33 +466,34 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
             } else {
                 year = date.toString().substr(date.toString().lastIndexOf(' ') + 1, 4);
             }
+            const citationCount = d['scores'] != null ? d['scores']['citationCount'] : 0;
             switch (d['omics_type'].toString()) {
                 case 'Genomics':
 
                     genomicsList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Transcriptomics':
 
                     transcriList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Metabolomics':
 
                     metaboloList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 case 'Proteomics':
 
                     proteomiList.push({
                         year: +year,
-                        value: +d['scores']['citationCount']
+                        value: +citationCount
                     });
                     break;
                 default:
@@ -558,11 +507,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         const transcri = this.groupByYear(transcriList);
         const metabolo = this.groupByYear(metaboloList);
         const proteomi = this.groupByYear(proteomiList);
-
-        // console.log(genomics);
-        // console.log(transcri);
-        // console.log(metabolo);
-        // console.log(proteomi);
 
 
         allList_g.forEach(g => {
@@ -642,7 +586,6 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         const dataCollection = [];
         const yearSet = new Set();
         allFullYearData.forEach(data => {
-            // console.log(Number(data['count'].toString()));
             const count: number = Number(data['value']);
             dataCollection.push(count);
             yearSet.add(data['year']);
@@ -725,13 +668,9 @@ export class DashboardCitationsCountComponent implements OnInit, OnChanges {
         const years = Array.from(yearSet);
         years.forEach(y => {
             let totalCount = 0;
-            // console.log(y);
             data.forEach(d => {
-                // console.log(d['year']);
                 if (Number(d['year']) === Number(y)) {
-                    // console.log(totalCount);
                     totalCount = totalCount + Number(d['value']);
-                    // console.log(totalCount);
                 }
             });
             groupedByYear.push({

@@ -1204,7 +1204,8 @@ h3 {
 }
 
 .loading {
-    background: url(./web_guidelines/images/global/ajax-loader.gif) no-repeat 99%
+    background: url(./web_guidelines/images/global/ajax-loader.gif) no-repeat 99%;
+    background-size: 64px 64px;
 }
 
 #search-extras #ebi_search_results
@@ -1236,4 +1237,12 @@ span.searchterm {
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px
+}
+
+.search-box {
+    height: 29px;
+    margin-top:10px;
+    z-index:1;
+    margin-bottom:10px;
+    width:100%;
 }

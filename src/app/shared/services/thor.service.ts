@@ -13,6 +13,7 @@ import {DataSetService} from './dataset.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from './profile.service';
 import {AppConfig} from 'app/app.config';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Injectable()
 export class ThorService {
@@ -29,6 +30,7 @@ export class ThorService {
                 private databaseListService: DatabaseListService,
                 private datasetService: DataSetService,
                 public profileService: ProfileService,
+                private logger: LogService,
                 public appConfig: AppConfig) {
     }
 
@@ -94,35 +96,37 @@ export class ThorService {
 
         // omicsdi to orcid
         if (this.datasets) {
-            for (const dataset of this.datasets) {
-                if (this.orcIdRecord && this.orcIdRecord.works) {
-                    if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId === dataset.id)) {
-                        continue;
+            this.databaseListService.getDatabaseList().subscribe(databases => {
+                for (const dataset of this.datasets) {
+                    if (this.orcIdRecord && this.orcIdRecord.works) {
+                        if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId === dataset.id)) {
+                            continue;
+                        }
+                        const o = new OrcidWork();
+                        o.url = dataset.full_dataset_link; // ."https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2589";
+                        o.title = dataset.name; // "E-MTAB-2589 - compchipsubmission1";
+                        o.workType = 'data-set';
+                        let publicationYear = '';
+                        try {
+                            publicationYear = (new Date(dataset.publicationDate)).getFullYear().toString();
+                        } catch (ex) {
+                        }
+                        o.publicationYear = publicationYear;
+                        o.workExternalIdentifiers = [];
+
+                        const i = new WorkExternalIdentifier();
+                        i.workExternalIdentifierId = dataset.id; // "E-MTAB-2589";
+                        o.workExternalIdentifiers.push(i);
+
+                        o.shortDescription = dataset.description;
+                        const orcidName = this.databaseListService.getDatabaseBySource(dataset.source, databases).orcidName;
+                        this.logger.debug('Claim orcidName: {}', orcidName);
+                        o.clientDbName = orcidName; // Todo
+
+                        orcidWorkList.orcIdWorkLst.push(o);
                     }
-                    const o = new OrcidWork();
-                    o.url = dataset.full_dataset_link; // ."https://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-2589";
-                    o.title = dataset.name; // "E-MTAB-2589 - compchipsubmission1";
-                    o.workType = 'data-set';
-                    let publicationYear = '';
-                    try {
-                        publicationYear = (new Date(dataset.publicationDate)).getFullYear().toString();
-                    } catch (ex) {
-                    }
-                    o.publicationYear = publicationYear;
-                    o.workExternalIdentifiers = [];
-
-                    const i = new WorkExternalIdentifier();
-                    i.workExternalIdentifierId = dataset.id; // "E-MTAB-2589";
-                    o.workExternalIdentifiers.push(i);
-
-                    o.shortDescription = dataset.description;
-                    const orcidName = this.databaseListService.databases[dataset.source].orcidName;
-                    console.log(`orcidName ${orcidName}`);
-                    o.clientDbName = orcidName; // Todo
-
-                    orcidWorkList.orcIdWorkLst.push(o);
                 }
-            }
+            });
         }
         if (orcidWorkList.orcIdWorkLst.length > 0) {
             this.http.post(claimUrl, JSON.stringify(orcidWorkList), options).subscribe(

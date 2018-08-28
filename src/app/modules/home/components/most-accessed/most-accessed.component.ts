@@ -1,26 +1,26 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-most-accessed',
     templateUrl: './most-accessed.component.html',
     styleUrls: ['./most-accessed.component.css'],
-    providers: [DataSetService]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: MostAccessedComponent }]
 })
 
-export class MostAccessedComponent implements OnInit {
+export class MostAccessedComponent extends AsyncInitialisedComponent implements OnInit {
     static requestMostAccessedDatasetFailed;
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-
     mostAccessedDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
     genomics_list: string;
     transcriptomics_list: string;
 
-    constructor(private dataSetService: DataSetService) {
+    constructor(private dataSetService: DataSetService, private logger: LogService) {
+        super();
         MostAccessedComponent.requestMostAccessedDatasetFailed = false;
     }
 
@@ -33,8 +33,6 @@ export class MostAccessedComponent implements OnInit {
 
         this.dataSetService.getMostAccessedDataSets()
             .then(res => {
-                this.notifyHomeLoader.emit('most_accessed');
-
                 this.mostAccessedDatasets = res['datasets'];
                 this.mostAccessedDatasets.length = 10;
                 this.mostAccessedDatasets.sort(function (dataset1, dataset2) {
@@ -45,15 +43,14 @@ export class MostAccessedComponent implements OnInit {
                     } else {
                         return 0;
                     }
-
                 });
 
-                // console.log(this.mostAccessedDatasets);
+                this.componentLoaded();
             })
             .then(() => {
                 if (this.mostAccessedDatasets == null) {
                     MostAccessedComponent.requestMostAccessedDatasetFailed = true;
-                    console.log('datasets array is empty');
+                    this.logger.debug('datasets array is empty');
                 }
             })
             .catch(this.handleError)
@@ -63,7 +60,7 @@ export class MostAccessedComponent implements OnInit {
     private handleError(error: any) {
 
         MostAccessedComponent.requestMostAccessedDatasetFailed = true;
-        console.log('GET error with url: http://www.omicsdi.org/ws/dataset/mostAccessed?size=20');
+        this.logger.error('GET error with url: http://www.omicsdi.org/ws/dataset/mostAccessed?size=20');
         return Promise.reject(error.message || error);
     }
 

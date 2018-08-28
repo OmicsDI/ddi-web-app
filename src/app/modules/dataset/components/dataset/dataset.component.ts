@@ -16,6 +16,9 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DialogService} from '@shared/services/dialog.service';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 
 @Component({
@@ -26,9 +29,6 @@ import {DialogService} from '@shared/services/dialog.service';
 export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail = new DataSetDetail();
     subscription: Subscription;
-    enrichmentSubscription: Subscription;
-    synonymResultSubscription: Subscription;
-
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
 
@@ -41,73 +41,81 @@ export class DatasetComponent implements OnInit, OnDestroy {
     sample_protocol_sections: Section[];
     data_protocol_sections: Section[];
     current_url: String;
-    page_identifier: String;
     index_dataset: number;
     databaseUrl: string;
     web_service_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
 
-    constructor(private dataSetService: DataSetService
-        , private route: ActivatedRoute
-        , private enrichmentService: EnrichmentService
-        , public appConfig: AppConfig
-        , public profileService: ProfileService
-        , private dialog: MatDialog
-        , private dialogService: DialogService
-        , private notificationService: NotificationsService
-        , private databaseListService: DatabaseListService) {
-        console.log('DatasetComponent constructor');
+    databases: Database[];
+
+    reanalysisOf = [];
+    reanalysedBy = [];
+    relatedOmics = [];
+
+    constructor(private dataSetService: DataSetService,
+                private route: ActivatedRoute,
+                private enrichmentService: EnrichmentService,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private dialog: MatDialog,
+                private dialogService: DialogService,
+                private notificationService: NotificationsService,
+                private logger: LogService,
+                private slimLoadingBarService: SlimLoadingBarService,
+                private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
         this.index_dataset = this.current_url.indexOf('dataset');
-
-        const self = this;
-
-        this.subscription = this.dataSetService.dataSetDetail$.subscribe(
-            result => {
-
-                console.log(result);
-                console.log('dataSetDetail$ subscribtion');
-                this.d = result;
-                // TODO: update with canonical id
-                this.acc = result.id;
-                this.repository = result.source;
-                // this.page_identifier = '${repository}/${source}';
-                this.repositoryName = this.getDatabaseTitle(result.source);
-                this.databaseUrl = this.getDatabaseUrl(result.source);
-
-                console.log('dataSetDetailResult:' + result);
-                console.log('publicationIds:' + result.publicationIds);
-
-                if (this.d.secondary_accession) {
-                    this.d.secondary_accession.forEach(item => {
-                        self.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item);
-                    });
-                }
-            });
         this.web_service_url = dataSetService.getWebServiceUrl();
-        this.databaseListService.getDatabaseList().subscribe(x => {
-            console.log('database list received');
-        });
     }
 
     ngOnInit() {
-        console.log('DatasetComponent init');
         this.subscription = this.route.params.subscribe(params => {
+            this.slimLoadingBarService.start();
             this.acc = params['acc'];
             this.repository = params['domain'];
-            this.dataSetService.getDataSetDetail(this.acc, this.repository);
+            this.databaseListService.getDatabaseList().subscribe(databases => {
+                this.databases = databases;
+                this.dataSetService.getDataSetDetail(this.acc, this.repository).subscribe(result => {
+                    this.d = result;
+                    // TODO: update with canonical id
+                    this.acc = result.id;
+                    this.repository = result.source;
 
-            // if(this.disqus) {
-            //   this.disqus.reset();
-            //   this.disqus.identifier = '${repository}/${acc}';
-            //   this.disqus.url = '${repository}/${acc}';
-            // }
+                    this.logger.debug('DataSetDetailResult: {}', result);
 
+                    if (this.d.secondary_accession) {
+                        this.d.secondary_accession.forEach(item => {
+                            this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, databases);
+                        });
+                    }
+
+                    const db = this.databaseListService.getDatabaseBySource(result.source, databases);
+                    this.repositoryName = db.databaseName;
+                    this.databaseUrl = db.sourceUrl;
+
+                    if (result.similars != null) {
+                        result.similars.filter(s => s.relationType === 'Reanalysis of').map(reanalysis => {
+                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysis.database, databases);
+                            this.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
+                        });
+
+                        result.similars.filter(s => s.relationType === 'Reanalyzed by').map(reanalysedBy => {
+                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysedBy.database, databases);
+                            this.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
+                        });
+
+                        result.similars.filter(s => s.relationType !== 'Reanalyzed by' && s.relationType !== 'Reanalysis of').map(omics => {
+                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(omics.database, databases);
+                            this.relatedOmics.push({reanalysis: omics, db: reanalyDb});
+                        });
+                    }
+
+                    this.slimLoadingBarService.complete();
+                });
+            });
         });
-
-
     }
 
     ngOnDestroy() {
@@ -131,24 +139,20 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         // todo array of Strange words
         // todo hard coded
-        const reg = ['ï', '®', 'µ', 'å', '°' , '¾' ];
+        const reg = ['ï', '®', 'µ', 'å', '°' , '¾', 'è' ];
         let i = 0;
         for (let n = 0; n < synonyms.length; n++) {
             let j = 0;
             for (const key of reg) {
                 const phase = str.substring(0, i);
-                // console.log(phase.indexOf(key));
                 if (phase.indexOf(key) > 0) {
                     j += phase.split(key).length - 1;
-                    // console.log(j);
-                    // console.log(phase);
 
                 }
             }
 
             if (i < synonyms[n].from - 1) {
                 const t = str.substr(i + j, synonyms[n].from - i - 1);
-                // console.log(t);
 
                 result.push({text: t, beAnnotated: false, tobeReduced: false, synonyms: null});
 
@@ -164,7 +168,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 }
             );
             i = synonyms[n].to;
-            // console.log(i);
         }
         // add space for strange words
         let s = 0;
@@ -234,11 +237,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 /<\/?[ib]*(br|span|h|u|strike|pre|code|tt|blockquote|small|center|em|strong)*\/?>/g, '');
             section.text = section.text.replace(/<[\s\S]*>/g, '');
             if (section.text.indexOf('<') !== -1 && section.text.indexOf('>') === -1) {
-                // console.log('+1');
                 section.text = section.text.replace(/<[\s\S]*/g, '');
                 count = count + 1;
             } else if (section.text.indexOf('>') !== -1 && section.text.indexOf('<') === -1) {
-                // console.log('-1');
                 section.text = section.text.replace(/[\s\S]*>/g, '');
                 count = count - 1;
             } else if (section.text.indexOf('>') === -1 && section.text.indexOf('<') === -1 && count > 0) {
@@ -254,7 +255,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             this.sample_protocol_sections = null;
             this.data_protocol_sections = null;
 
-            console.log('remove hightlighting');
+            this.logger.debug('remove hightlighting');
             this.ontology_highlighted = false;
         } else {
 
@@ -263,12 +264,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     this.enrichmentService.getSynonyms(this.repository, this.acc)]
             ).subscribe(
                 data => {
-                    console.log('subscription to forkJoin');
                     this.enrichmentInfo = data[0];
-                    console.log(this.enrichmentInfo);
+                    this.logger.debug('Enrichment info: {}', this.enrichmentInfo);
                     this.synonymResult = data[1];
-                    console.log(this.synonymResult);
-                    console.log('calling process_sections');
+                    this.logger.debug('Synonym result: {}', this.synonymResult);
+                    this.logger.debug('calling process_sections');
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {
@@ -280,7 +280,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
                 }
             );
-            console.log('add hightlighting');
         }
     }
 
@@ -294,116 +293,4 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         return dialogRef.afterClosed();
     }
-
-    reanalysis_of(d: DataSetDetail): SimilarDataset[] {
-        const r = [];
-        if (d.similars) {
-            for (const s of d.similars) {
-                if (s.relationType === 'Reanalysis of') {
-                    r.push(s);
-                }
-            }
-        }
-        if (r.length > 0) {
-            return r;
-        } else {
-            return null;
-        }
-    }
-
-    reanalised_by(d: DataSetDetail): SimilarDataset[] {
-        const r = [];
-        if (d.similars) {
-            for (const s of d.similars) {
-                if (s.relationType === 'Reanalyzed by') {
-                    r.push(s);
-                }
-            }
-        }
-        if (r.length > 0) {
-            return r;
-        } else {
-            return null;
-        }
-    }
-
-    reanalysisoverflow(d: DataSetDetail): boolean {
-        if (!d.similars) {
-            return false;
-        }
-
-        return (d.similars.length > 99);
-    }
-
-    related_omics(d: DataSetDetail): SimilarDataset[] {
-        const r = [];
-        if (d.similars) {
-            for (const s of d.similars) {
-                if (((s.relationType !== 'Reanalyzed by') && (s.relationType !== 'Reanalysis of'))) {
-                    r.push(s);
-                }
-            }
-        }
-        if (r.length > 0) {
-            return r;
-        } else {
-            return null;
-        }
-    }
-
-    getSourceByDatabaseName(database: string): string {
-        return this.databaseListService.getSourceByDatabaseName(database);
-    }
-
-    getDatabaseUrl(source) {
-        const db = this.databaseListService.databases[source];
-        if (!db) {
-            console.log('source not found:' + source);
-        } else {
-            return db.sourceUrl;
-        }
-    }
-
-    getDatabaseTitle(source) {
-        const db = this.databaseListService.databases[source];
-        if (!db) {
-            console.log('source not found:' + source);
-        } else {
-            return db.databaseName;
-        }
-    }
-
 }
-
-/*public reanalysis_of(): string
- {
-
- }
- public reanalised_by(): string
- {
- let r = "";
- for(let s of this.similars){
- if(s.relationType === "Reanalysed by"){
- r+= (s.accession+" ");
- }
- }
- if(r!=""){
- return r;
- } else {
- return null;
- }
- }
- public related_omics(): string
- {
- let r = "";
- for(let s of this.similars){
- if((s.relationType !== "Reanalysed by")&&(s.relationType !== "Reanalysis of")){
- r+= (s.accession+" ");
- }
- }
- if(r!=""){
- return r;
- } else {
- return null;
- }
- }*/

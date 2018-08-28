@@ -1,49 +1,35 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {MatDialog} from '@angular/material';
 import {SearchService} from '@shared/services/search.service';
+import {DataControl} from 'model/DataControl';
+import {DataTransportService} from '@shared/services/data.transport.service';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-    isLoaded = {
-        hotwords: false,
-        tissues: false,
-        repos_omics: false,
-        latest_datasets: false,
-        most_accessed: false,
-        annual_omicstype: false,
-        statistics: false
-    };
+export class HomeComponent implements AfterViewInit {
 
-    constructor(private loadingBarService: SlimLoadingBarService
-        , private searchService: SearchService
-        , private dialog: MatDialog
-    ) {
+
+    @ViewChildren(AsyncInitialisedComponent)
+    asyncComponents: QueryList<AsyncInitialisedComponent>;
+
+    constructor(private loadingBarService: SlimLoadingBarService) {
         this.loadingBarService.start();
     }
 
-    ngOnInit() {
-        this.searchService.fullQuery = '';
-        this.searchService.callSearch();
-    }
-
-    loadOnePart($partName): void {
-
-        this.isLoaded[$partName] = true;
-
-        for (const item in this.isLoaded) {
-            if (!this.isLoaded[item]) {
-                return;
+    ngAfterViewInit() {
+        let total = this.asyncComponents.length;
+        this.asyncComponents.map(e => e.loadedState$).forEach(e => e.subscribe(loaded => {
+            if (loaded) {
+                total -= 1;
             }
-        }
-        this.loadingBarService.complete();
+            if (total === 0) {
+                this.loadingBarService.complete();
+            }
+        }));
     }
 
-    submitTestQuery() {
-        alert('submitted');
-    }
 }

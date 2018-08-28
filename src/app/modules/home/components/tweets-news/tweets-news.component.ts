@@ -1,32 +1,24 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 import * as cheerio from 'cheerio';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'app-tweets-news',
     templateUrl: './tweets-news.component.html',
-    styleUrls: ['./tweets-news.component.css']
+    styleUrls: ['./tweets-news.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: TweetsNewsComponent }]
 })
-export class TweetsNewsComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+export class TweetsNewsComponent extends AsyncInitialisedComponent implements OnInit {
     id = '599190509341515776';
 
     constructor() {
+        super();
     }
 
     ngOnInit() {
         this.fetchTweets();
-        /*
-            .then(res => {
-               this.notifyHomeLoader.emit('tweet_news');
-               this.publishtweets(this.parseTweets(res, 4));
-            })
-            .catch(reason => {
-              console.warn(reason);
-            })
-            */
+        this.componentLoaded();
         const self = this;
 
         setTimeout(function () {
@@ -55,8 +47,6 @@ export class TweetsNewsComponent implements OnInit {
     }
 
     private parseTweets(res: string, limit: number) {
-        // console.log(res);
-        // console.log(res["body"]);
         const $ = cheerio.load(JSON.parse(res)['body']);
         const tweets = $('li.timeline-TweetList-tweet');
         limit = tweets.length < limit ? tweets.length : limit;

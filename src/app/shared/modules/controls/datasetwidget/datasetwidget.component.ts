@@ -11,6 +11,8 @@ import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -25,34 +27,32 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowDelete = true;
     @Input() allowClaim = true;
     @Input() allowWatch = true;
+    @Input() databases: Database[];
 
-    constructor(public selectedService: SelectedService
-        , public appConfig: AppConfig
-        , public profileService: ProfileService
-        , private databaseListServce: DatabaseListService
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private dataSetService: DataSetService
-        , private dialog: MatDialog) {
+    constructor(public selectedService: SelectedService,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private databaseListServce: DatabaseListService,
+                private router: Router,
+                private notificationService: NotificationsService,
+                private dataSetService: DataSetService,
+                private logger: LogService,
+                private dialog: MatDialog) {
     }
 
     ngOnInit() {
     }
 
     getDatabaseUrl(source) {
-        const db = this.databaseListServce.databases[source];
-        if (!db) {
-            console.log('source not found:' + source);
-        } else {
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
+        if (db) {
             return db.sourceUrl;
         }
     }
 
     getDatabaseTitle(source) {
-        const db = this.databaseListServce.databases[source];
-        if (!db) {
-            console.log('source not found:' + source);
-        } else {
+        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
+        if (db) {
             return db.databaseName;
         }
     }
@@ -66,7 +66,7 @@ export class DatasetWidgetComponent implements OnInit {
     citation(source, id) {
         let dialogRef: MatDialogRef<CitationDialogComponent>;
 
-        this.dataSetService.getDataSetDetail_private(id, source).subscribe(
+        this.dataSetService.getDataSetDetail(id, source).subscribe(
             x => {
                 dialogRef = this.dialog.open(CitationDialogComponent);
                 dialogRef.componentInstance.title = 'Dataset citation';
@@ -125,7 +125,7 @@ export class DatasetWidgetComponent implements OnInit {
         }
 
         this.selectedService.toggle(source, id);
-        console.log(`toggle ${source} ${id}`);
+        this.logger.debug('Toggling {}, {}', source, id);
     }
 
     deleteClicked($event, source, id) {

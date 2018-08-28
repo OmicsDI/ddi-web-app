@@ -4,16 +4,15 @@ import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
     selector: 'repos-omics',
     templateUrl: './repos-omics.component.html',
-    styleUrls: ['./repos-omics.component.css']
+    styleUrls: ['./repos-omics.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: ReposOmicsComponent }]
 })
-export class ReposOmicsComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+export class ReposOmicsComponent extends AsyncInitialisedComponent implements OnInit {
 
     private webServiceUrl: string;
     private proteomicsList: string;
@@ -31,7 +30,7 @@ export class ReposOmicsComponent implements OnInit {
     private omicsDataNum = [];
 
     constructor(dataSetService: DataSetService, private router: Router) {
-        // this.webServiceUrl = dataSetService.getWebServiceUrl();
+        super();
         this.webServiceUrl = dataSetService.getWebServiceUrl();
         this.proteomicsList = dataSetService.getProteomicsList();
         this.metabolomicsList = dataSetService.getMetabolomicsList();
@@ -51,14 +50,14 @@ export class ReposOmicsComponent implements OnInit {
                 if (err) {
                     this.retryLimitTimes--;
                     if (this.retryLimitTimes <= 0) {
-                        this.notifyHomeLoader.emit('repos_omics');
+                        this.componentLoaded();
                         ChartsErrorHandler.outputErrorInfo(this.pieChartName);
                         return;
                     }
                     ChartsErrorHandler.outputGettingInfo(this.pieChartName);
                     this.startRequest();
                 } else {
-                    this.notifyHomeLoader.emit('repos_omics');
+                    this.componentLoaded();
                     this.draw(domains, omicstype);
                 }
             });
@@ -166,13 +165,13 @@ export class ReposOmicsComponent implements OnInit {
 
         self.setTheRadio();
         self.drawBarGraphic(self.data, self.reposDataSimple);
-        self.showTip('*:* AND repository:"', self.reposDataSimple);
+        self.showTip('repository:"', self.reposDataSimple);
 
         // give different namespace after 'resize' to add window listener
         d3.select(window).on('resize.repos_omics', function () {
             if (self.router.url === '/home') {
                 self.drawBarGraphic(self.data, self.reposDataSimple);
-                self.showTip('*:* AND repository:"', self.reposDataSimple);
+                self.showTip('repository:"', self.reposDataSimple);
             }
         });
     }
@@ -251,13 +250,13 @@ export class ReposOmicsComponent implements OnInit {
 
             if (value === 'Omics') {
                 d = omicsDataNum;
-                searchWordPre = '*:* AND omics_type:"';
+                searchWordPre = 'omics_type:"';
 
                 self.drawBarGraphic(d, omicsDataSimple);
                 self.showTip(searchWordPre, omicsDataSimple);
             } else if (value === 'Resources') {
                 d = data;
-                searchWordPre = '*:* AND repository:"';
+                searchWordPre = 'repository:"';
 
                 self.drawBarGraphic(d, reposDataSimple);
                 self.showTip(searchWordPre, reposDataSimple);
@@ -289,7 +288,7 @@ export class ReposOmicsComponent implements OnInit {
             .append('svg')
             .attr('width', divWidth)
             .attr('height', svgHeight)
-            .attr('margin-top', 10)
+            .attr('style', 'margin-top: 15px;')
             .attr('id', this.pieChartName + '_svg');
 
         if (svg.selectAll('rect')) {

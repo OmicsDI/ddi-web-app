@@ -62,7 +62,6 @@ export class DashboardUpdateComponent implements OnInit {
     public fileChangeEvent(fileInput: any) {
         if (fileInput.target.files && fileInput.target.files[0]) {
             setTimeout(() => {
-                console.log('fileChangeEvent hello');
                 this.uploader.uploadAll();
             }, 100);
         }

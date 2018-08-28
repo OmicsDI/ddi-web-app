@@ -1,15 +1,15 @@
 div.datasetsCaption {
-    padding-top: 20px;
-    font-family: Helvetica Neue;
-    font-size: 24px;
+    color: rgb(0, 153, 204);
+    font-size: 32px;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-weight: 300;
 }
 
-html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
-    margin: 0;
-    padding: 0;
-    border: 0;
-}
+/*html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*border: 0;*/
+/*}*/
 
 table {
     border-collapse: collapse;
@@ -254,6 +254,7 @@ button.gs_btn_mini .gs_lbl, button.gs_btn_half .gs_lbl, button.gs_btn_eml .gs_lb
 #gsc_prf_pup {
     width: 98px;
     height: 98px;
+    padding: 5px;
 }
 
 #gsc_prf_pu form {
@@ -574,3 +575,15 @@ td.gsc_a_c {
     clear: both;
 }
 
+@media (min-width: 992px) {
+    .col-md-10 {
+        width: 80%;
+    }
+    .col-md-2 {
+        width: 19.9%;
+    }
+}
+
+:host ::ng-deep .bio {
+    font-size: 1.3em !important;
+}

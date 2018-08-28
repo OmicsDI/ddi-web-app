@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-socialnetworks',
@@ -15,14 +16,14 @@ export class SocialnetworksComponent implements OnInit {
         linkedin: ['https://www.linkedin.com/shareArticle?mini=true&url=[', 520]
     };
 
-    constructor() {
+    constructor(private logger: LogService) {
     }
 
     ngOnInit() {
     }
 
     click_share_this(label: string): void {
-        console.log(label);
+        this.logger.debug(label);
         const value = this.share_methods[label]
             , c = value[0].replace('[', encodeURIComponent(location.href)).replace(']', encodeURIComponent(document.title));
         const features = 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=500,height=' + value[1];

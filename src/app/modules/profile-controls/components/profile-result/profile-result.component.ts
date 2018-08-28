@@ -9,6 +9,9 @@ import {DataSetDetail} from 'model/DataSetDetail';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {ThorService} from '@shared/services/thor.service';
 import {DataSet} from 'model/DataSet';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-profile-result',
@@ -22,18 +25,22 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     @Input() profile: Profile;
     @Output() change = new EventEmitter();
 
+    databases: Database[];
+
     toDataset = DataSetDetail.toDataset;
 
-    constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , public appConfig: AppConfig
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+
+    constructor(public profileService: ProfileService,
+                private dataSetService: DataSetService,
+                public appConfig: AppConfig,
+                private router: Router,
+                private notificationService: NotificationsService,
+                private databaseListServive: DatabaseListService,
+                private logger: LogService,
+                private thorService: ThorService) {
     }
 
     ngOnInit() {
-        // this.profileService.getDataSetDetails(this.profileService.profile);
         this.profileService.onProfileReceived.subscribe(x => this.reloadDataSets());
     }
 
@@ -42,7 +49,6 @@ export class ProfileResultComponent implements OnInit, OnChanges {
             const chng = changes[propName];
             const cur = JSON.stringify(chng.currentValue);
             const prev = JSON.stringify(chng.previousValue);
-            // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
             if (propName === 'profile') {
                 if (null != chng.currentValue) {
                     this.reloadDataSets();
@@ -52,28 +58,31 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     }
 
     reloadDataSets() {
-        this.dataSets = [];
-        if (!this.profile) {
-            return;
-        }
-        if (!this.profile.dataSets) {
-            return;
-        }
-        Observable.forkJoin(this.profile.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
-        })).subscribe(
-            y => {
-                this.dataSets = y;
-                this.thorService.datasets = y;
+        this.databaseListServive.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.dataSets = [];
+            if (!this.profile) {
+                return;
             }
-        );
+            if (!this.profile.dataSets) {
+                return;
+            }
+            Observable.forkJoin(this.profile.dataSets.map(x => {
+                return this.dataSetService.getDataSetDetail(x.id, x.source);
+            })).subscribe(
+                y => {
+                    this.dataSets = y;
+                    this.thorService.datasets = y;
+                }
+            );
+        });
     }
 
 
     deleteDataset(source, id) {
         const i: number = this.profile.dataSets.findIndex(x => x.source === source && x.id === id);
         if (i !== -1) {
-            console.log(`deleting ${source} ${id}`);
+            this.logger.info(`deleting ${source} ${id}`);
             this.profile.dataSets.splice(i, 1);
         }
         this.change.emit({});

@@ -3,6 +3,7 @@ import {PublicationService} from '@shared/services/publication.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Publication} from 'model/Publication';
 import {AltmetricEntity} from 'model/AltmetricEntity';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-publication',
@@ -12,27 +13,19 @@ import {AltmetricEntity} from 'model/AltmetricEntity';
 export class PublicationComponent implements OnInit, OnChanges {
     @Input() ids: string[] = [];
     d: Publication = new Publication;
-    subscription: Subscription;
     current_idx = 0;
     ids_length = '';
     toggle = true;
-    altmetric_entities: AltmetricEntity[] = [];
 
 
-    constructor(private publicationService: PublicationService) {
-        this.subscription = this.publicationService.searchResult$.subscribe(
-            result => {
-                this.d = result.publications[0];
-                console.log(this.d);
-            });
+    constructor(private publicationService: PublicationService, private logger: LogService) {
     }
 
     ngOnInit() {
     }
 
     ngOnChanges(...args: any[]) {
-        console.log('onChange fired');
-        console.log('changing', args);
+        this.logger.debug('OnChange fired, args: {}', args);
 
         if (this.ids != null) {
             if (this.ids.length > 0) {
@@ -43,7 +36,10 @@ export class PublicationComponent implements OnInit, OnChanges {
 
     loadComponent() {
         this.current_idx = 0;
-        this.publicationService.search(this.ids[this.current_idx]);
+        this.publicationService.search(this.ids[this.current_idx]).subscribe(
+            result => {
+                this.d = result.publications[0];
+            });
         this.ids_length = String(this.ids.length);
     }
 
@@ -53,7 +49,10 @@ export class PublicationComponent implements OnInit, OnChanges {
         } else {
             this.current_idx = this.current_idx - 1;
         }
-        this.publicationService.search(this.ids[this.current_idx]);
+        this.publicationService.search(this.ids[this.current_idx]).subscribe(
+            result => {
+                this.d = result.publications[0];
+            });
     }
 
     clickRight() {
@@ -62,7 +61,10 @@ export class PublicationComponent implements OnInit, OnChanges {
         } else {
             this.current_idx = this.current_idx + 1;
         }
-        this.publicationService.search(this.ids[this.current_idx]);
+        this.publicationService.search(this.ids[this.current_idx]).subscribe(
+            result => {
+                this.d = result.publications[0];
+            });
     }
 
     get lengthLimit(): string {

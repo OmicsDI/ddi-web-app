@@ -15,10 +15,6 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
-    logError(err: string) {
-        console.error(err);
-    }
-
     redirect(url: string) {
         window.location.href = url;
     }

@@ -1,19 +1,18 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {ProfileService} from '@shared/services/profile.service';
+import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
 
 @Component({
     selector: 'app-statistics-panel',
     templateUrl: './statistics-panel.component.html',
-    styleUrls: ['./statistics-panel.component.css']
+    styleUrls: ['./statistics-panel.component.css'],
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: StatisticsPanelComponent }]
 })
-export class StatisticsPanelComponent implements OnInit {
-
-    @Output()
-    notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
+export class StatisticsPanelComponent extends AsyncInitialisedComponent implements OnInit {
 
     statisticsList: any;
-
     repositories: number;
     datasets: number;
     diseases: number;
@@ -21,14 +20,15 @@ export class StatisticsPanelComponent implements OnInit {
     organisms: number;
     users = 99;
 
-    constructor(private statisticsService: StatisticsService, public profileService: ProfileService) {
+    constructor(private statisticsService: StatisticsService, public profileService: ProfileService, private logger: LogService) {
+        super();
     }
 
 
     ngOnInit() {
         this.statisticsService.getStatisticsList()
             .then(data => {
-                this.notifyHomeLoader.emit('statistics');
+                this.componentLoaded();
                 this.statisticsList = data;
 
 
@@ -64,8 +64,8 @@ export class StatisticsPanelComponent implements OnInit {
     }
 
     private handleError(error: any) {
-
-        console.log('GET error with url: http://www.omicsdi.org/ws/statistics/general');
+        this.componentLoaded();
+        this.logger.error('GET error with url: http://www.omicsdi.org/ws/statistics/general');
         return Promise.reject(error.message || error);
     }
 }

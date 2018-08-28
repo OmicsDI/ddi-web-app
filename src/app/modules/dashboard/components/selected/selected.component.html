@@ -7,7 +7,7 @@
                 <div class="caption">Dashboard - Selected Datasets</div>
             </div>
             <div class="col-lg-6 justify-content-end">
-                <div *ngIf="this.dataSets.length>0" style="float: right; position:relative; top: 15px; left:-10px;">
+                <div *ngIf="dataSets && dataSets.length > 0" style="float: right; position:relative; top: 15px; left:-10px;">
 
 
                     <!-- div class="score" style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;" (click)="exportClick();">
@@ -49,7 +49,7 @@
 
         </div>
 
-        <div *ngIf="this.dataSets.length ==0" style="text-align:center; position: fixed; top: 50%; left:50%;">
+        <div *ngIf="dataSets && dataSets.length == 0" style="text-align:center; position: fixed; top: 50%; left:50%;">
             no datasets selected, please <a [routerLink]="['/search']">browse</a> and select some
         </div>
 
@@ -60,7 +60,7 @@
                 style="min-width:400px;">
 
                 <app-datasetwidget [d]="toDataset(d)" (buttonClicked)="this.remove(d.source,d.id)"
-                                                   [allowSelect]="false"></app-datasetwidget>
+                                   [databases]="databases" [allowSelect]="false"></app-datasetwidget>
 
 
             </li>

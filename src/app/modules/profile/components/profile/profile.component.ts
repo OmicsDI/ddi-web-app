@@ -9,16 +9,18 @@ import {AppConfig} from 'app/app.config';
 import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
-import {DataSet} from 'model/DataSet';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css',
-        './profile.css']
+    styleUrls: ['./profile.component.css', './profile.css']
 })
 export class ProfileComponent implements OnInit {
-    profileX: Profile = new Profile;
+    profileX: Profile;
     public name: String;
     form: FormGroup;
     editMode = false;
@@ -29,17 +31,21 @@ export class ProfileComponent implements OnInit {
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
+    databases: Database[];
 
     toDataset = DataSetDetail.toDataset;
 
     public uploader: FileUploader;
 
-    constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , private formBuilder: FormBuilder
-        , public appConfig: AppConfig
-        , private router: Router
-        , private route: ActivatedRoute) {
+    constructor(public profileService: ProfileService,
+                private dataSetService: DataSetService,
+                private formBuilder: FormBuilder,
+                public appConfig: AppConfig,
+                private router: Router,
+                private logger: LogService,
+                private databaseListService: DatabaseListService,
+                private slimLoadingBarService: SlimLoadingBarService,
+                private route: ActivatedRoute) {
         this.form = formBuilder.group({
             name: ['', [
                 Validators.required,
@@ -59,14 +65,18 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            this.username = params['username'];
-            this.getProfile(this.username);
+        this.slimLoadingBarService.start();
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.route.params.subscribe(params => {
+                this.username = params['username'];
+                this.getProfile(this.username);
+            });
         });
     }
 
     getProfile(username: string = null) {
-        console.log('current username:' + username);
+        this.logger.debug('current username: {}', username);
 
         if (username) {
             this.profileService.getPublicProfile(username)
@@ -81,10 +91,11 @@ export class ProfileComponent implements OnInit {
                         this.profileImageUrl = this.getProfileImageUrl();
 
                         Observable.forkJoin(this.profileX.dataSets.map(x => {
-                            return this.dataSetService.getDataSetDetail_private(x.id, x.source);
+                            return this.dataSetService.getDataSetDetail(x.id, x.source);
                         })).subscribe(
                             y => {
                                 this.dataSetDetails = y;
+                                this.slimLoadingBarService.complete();
                             }
                         );
                     }
@@ -93,7 +104,7 @@ export class ProfileComponent implements OnInit {
             this.profileService.getProfile()
                 .subscribe(
                     profile => {
-                        console.log('getting profile');
+                        this.logger.debug('getting profile');
 
                         this.profileX = profile;
                         this.name = profile.userName;
@@ -116,7 +127,7 @@ export class ProfileComponent implements OnInit {
     }
 
     checkAll(ev) {
-        console.log('checking select all' + ev);
+        this.logger.debug('checking select all {}', ev);
         this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked);
     }
 
@@ -148,7 +159,6 @@ export class ProfileComponent implements OnInit {
     public fileChangeEvent(fileInput: any) {
         if (fileInput.target.files && fileInput.target.files[0]) {
             setTimeout(() => {
-                console.log('fileChangeEvent hello');
                 this.uploader.uploadAll();
             }, 100);
         }

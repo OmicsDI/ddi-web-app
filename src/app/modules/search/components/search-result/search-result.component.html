@@ -1,10 +1,10 @@
 <ul class="list-unstyled">
-    <li *ngFor="let d of datasets | async | paginate: { itemsPerPage: searchService.selectedPageSize, currentPage: searchService.currentPage
-  , totalItems: total }, let last = last"
+    <li *ngFor="let d of searchResult.datasets | paginate: { itemsPerPage: dataControl.pageSize,
+    currentPage: dataControl.page, totalItems: totalResults }, let last = last"
         class="repeated-item ng-scope"
         style="">
 
-        <app-datasetwidget [d]="d" [allowDelete]="false"></app-datasetwidget>
+        <app-datasetwidget [d]="d" [allowDelete]="false" [databases]="databases"></app-datasetwidget>
     </li>
 </ul>
 

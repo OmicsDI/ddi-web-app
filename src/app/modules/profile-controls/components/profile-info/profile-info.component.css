@@ -33,7 +33,7 @@
 
 .bio {
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-    font-size: 16px;
+    font-size: 1.1em;
     text-align: justify;
     min-height: 200px;
     width: 100%;
@@ -50,12 +50,6 @@ a.editBioLink:after {
     content: " >";
     font-family: "EBI-Functional";
     font-size: .85em;
-}
-
-html, body, form, table, div, h1, h2, h3, h4, h5, h6, img, ol, ul, li, button {
-    margin: 0;
-    padding: 0;
-    border: 0;
 }
 
 table {
@@ -557,4 +551,15 @@ td.gsc_a_c {
 .gsc_rsb_lc {
     margin-left: 12px;
     font-weight: normal;
+}
+
+.available-tasks {
+    margin-top: 15px;
+    list-style: none;
+}
+
+.available-tasks li:before {
+    content: '✓';
+    margin-right: 10px;
+;
 }

@@ -11,6 +11,8 @@ import {MatDialog, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import {InviteComponent} from '@modules/profile-controls/components/invite/invite.component';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-profile',
@@ -18,7 +20,7 @@ import {InviteComponent} from '@modules/profile-controls/components/invite/invit
     styleUrls: ['./profile.component.css']
 })
 export class DashboardProfileComponent implements OnInit {
-    profileX: Profile = new Profile;
+    profileX: Profile;
     public name: String;
     form: FormGroup;
     editMode = false;
@@ -30,13 +32,15 @@ export class DashboardProfileComponent implements OnInit {
     userId = 'xxx';
     username: string = null;
 
-    constructor(public profileService: ProfileService
-        , private dataSetService: DataSetService
-        , private formBuilder: FormBuilder
-        , public appConfig: AppConfig
-        , private router: Router
-        , private route: ActivatedRoute
-        , private dialog: MatDialog) {
+    constructor(public profileService: ProfileService,
+                private dataSetService: DataSetService,
+                private formBuilder: FormBuilder,
+                public appConfig: AppConfig,
+                private router: Router,
+                private route: ActivatedRoute,
+                private logger: LogService,
+                private slimLoadingBarService: SlimLoadingBarService,
+                private dialog: MatDialog) {
 
         this.form = formBuilder.group({
             name: ['', [
@@ -54,11 +58,10 @@ export class DashboardProfileComponent implements OnInit {
                 zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
             })
         });
-
-        console.log('DashboardProfileComponent:ctor');
     }
 
     ngOnInit() {
+        this.slimLoadingBarService.start();
         this.route.params.subscribe(params => {
             this.username = params['username'];
             this.getProfile(this.username);
@@ -81,7 +84,7 @@ export class DashboardProfileComponent implements OnInit {
 
         if (inviteId) {
 
-            console.log('open dialog with inviteId :' + inviteId);
+            this.logger.debug('Opening dialog with inviteId : {}', inviteId);
 
             if (inviteId.length === 12) {
                 dialogRef = this.dialog.open(InviteComponent, {data: {inviteId: inviteId}});
@@ -91,7 +94,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     getProfile(username: string = null) {
-        console.log('current username:' + username);
+        this.logger.debug('Current username: {}', username);
 
         if (username) {
             this.profileService.getPublicProfile(username)
@@ -103,14 +106,14 @@ export class DashboardProfileComponent implements OnInit {
                         }
 
                         this.profileX = profile;
-                        // this.profileImageUrl = this.getProfileImageUrl();
+                        this.slimLoadingBarService.complete();
                     }
                 );
         } else {
             this.profileService.getProfile()
                 .subscribe(
                     profile => {
-                        console.log('getting profile');
+                        this.logger.debug('getting profile');
 
                         this.profileX = profile;
                         this.name = profile.userName;
@@ -121,6 +124,7 @@ export class DashboardProfileComponent implements OnInit {
                         if (window.location.search) {
                             this.showWelcomeDialog();
                         }
+                        this.slimLoadingBarService.complete();
                     }
                 );
         }
@@ -131,7 +135,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     checkAll(ev) {
-        console.log('checking select all' + ev);
+        this.logger.debug('Checking select all {}', ev);
         this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked);
     }
 

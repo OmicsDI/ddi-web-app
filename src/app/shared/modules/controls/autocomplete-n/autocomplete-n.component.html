@@ -2,10 +2,10 @@
     <input
             type="text"
             #txtInput
-            placeholder="organism, repository, gene, tissue, accession"
+            placeholder="Organism, repository, gene, tissue, accession"
             class="ng-touched"
             auto-complete
-            [(ngModel)]="this.searchService.fullQuery"
+            [(ngModel)]="searchText"
             [source]="observableSource.bind(this)"
             min-chars="3"
             no-match-found-text=" "

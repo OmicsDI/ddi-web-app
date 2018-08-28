@@ -437,7 +437,7 @@ a.keywords {
     -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    display: inline;
+    display: inline-block;
 }
 
 .tabactive {
@@ -774,10 +774,10 @@ input[type=submit] {
 input[type=text]:not([value*=" "]):active,
 input[type=text]:not([value*=" "]):focus {
     /*box-shadow*/
-    -webkit-box-shadow: inset 4px 0px 0 #2ecc71;
-    -moz-box-shadow: inset 4px 0px 0 #2ecc71;
-    box-shadow: inset 4px 0px 0 #2ecc71;
-    padding-left: 10px;
+    /*-webkit-box-shadow: inset 4px 0px 0 #2ecc71;*/
+    /*-moz-box-shadow: inset 4px 0px 0 #2ecc71;*/
+    /*box-shadow: inset 4px 0px 0 #2ecc71;*/
+    /*padding-left: 10px;*/
     border-color: #00b7ea;
     background-color: white;
 : x;
@@ -815,7 +815,7 @@ input[type=submit]:focus {
 .ddi-card-panel {
     background-color: #fff;
     border-radius: 2px;
-    margin: 1rem 0rem 0.8rem 1rem;
+    margin: 1rem 0rem 0.8rem 0rem;
     padding: 10px;
 }
 
@@ -1487,9 +1487,23 @@ ul li.no-match-found {display: none;}
     border-color: transparent;
 }
 
+.pictureFrame {
+    margin-bottom: 15px;
+}
 
 /* DISQOUS */
 
 #disqus_thread {
     padding: 15px;
+}
+
+@media (min-width: 992px) {
+    #app-social {
+        width: 6%;
+    }
+}
+
+.activated {
+    background-color: #0099cc;
+    color: white !important;
 }
