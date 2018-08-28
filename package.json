@@ -47,7 +47,9 @@
     "save": "^2.3.1",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.8.4",
-    "adm-zip": "^0.4.11"
+    "adm-zip": "^0.4.11",
+    "url-parse": "^1.4.3",
+    "hoek": "^5.0.4"
   },
   "devDependencies": {
     "@angular/cli": "^1.7.4",
