@@ -35,10 +35,6 @@ export class SimilarComponent implements OnInit, OnChanges {
                 private logger: LogService,
                 private router: Router,
                 private databaseListServce: DatabaseListService) {
-        this.subscription = this.similarityService.searchResult$.subscribe(
-            result => {
-                this.d = result;
-            });
     }
 
     ngOnInit() {
@@ -49,7 +45,10 @@ export class SimilarComponent implements OnInit, OnChanges {
 
         if ((this.acc != null) && (this.repository != null)) {
             if ((this.acc !== '') && (this.repository !== '')) {
-                this.similarityService.search(this.acc, this.repository);
+                this.similarityService.search(this.acc, this.repository).subscribe(
+                    result => {
+                        this.d = result;
+                    });
             }
         }
     }

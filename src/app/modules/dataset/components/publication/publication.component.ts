@@ -13,18 +13,12 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 export class PublicationComponent implements OnInit, OnChanges {
     @Input() ids: string[] = [];
     d: Publication = new Publication;
-    subscription: Subscription;
     current_idx = 0;
     ids_length = '';
     toggle = true;
-    altmetric_entities: AltmetricEntity[] = [];
 
 
     constructor(private publicationService: PublicationService, private logger: LogService) {
-        this.subscription = this.publicationService.searchResult$.subscribe(
-            result => {
-                this.d = result.publications[0];
-            });
     }
 
     ngOnInit() {
@@ -42,7 +36,10 @@ export class PublicationComponent implements OnInit, OnChanges {
 
     loadComponent() {
         this.current_idx = 0;
-        this.publicationService.search(this.ids[this.current_idx]);
+        this.publicationService.search(this.ids[this.current_idx]).subscribe(
+            result => {
+                this.d = result.publications[0];
+            });
         this.ids_length = String(this.ids.length);
     }
 
@@ -52,7 +49,10 @@ export class PublicationComponent implements OnInit, OnChanges {
         } else {
             this.current_idx = this.current_idx - 1;
         }
-        this.publicationService.search(this.ids[this.current_idx]);
+        this.publicationService.search(this.ids[this.current_idx]).subscribe(
+            result => {
+                this.d = result.publications[0];
+            });
     }
 
     clickRight() {
@@ -61,7 +61,10 @@ export class PublicationComponent implements OnInit, OnChanges {
         } else {
             this.current_idx = this.current_idx + 1;
         }
-        this.publicationService.search(this.ids[this.current_idx]);
+        this.publicationService.search(this.ids[this.current_idx]).subscribe(
+            result => {
+                this.d = result.publications[0];
+            });
     }
 
     get lengthLimit(): string {
