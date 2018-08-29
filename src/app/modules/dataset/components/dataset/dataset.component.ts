@@ -27,7 +27,7 @@ import {Database} from 'model/Database';
     styleUrls: ['./dataset.component.css']
 })
 export class DatasetComponent implements OnInit, OnDestroy {
-    d: DataSetDetail = new DataSetDetail();
+    d: DataSetDetail;
     subscription: Subscription;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
