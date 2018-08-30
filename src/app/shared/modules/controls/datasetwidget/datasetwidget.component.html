@@ -63,19 +63,19 @@
               <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
 
-          <div style="background-color: #FA8B7A;" *ngIf="this.allowClaim && this.profileService.profile && d.claimable"
+          <div style="background-color: #FA8B7A;" *ngIf="this.allowClaim && this.profile && d.claimable"
                class="dot-button" (click)="claimClicked($event,d.source,d.id)">
               <i class="fa fa-user-circle" aria-hidden="true"></i>
-              <span [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
+              <span [ngClass]="this.isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{this.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
           </div>
 
-          <div style="background-color: #94D67A" *ngIf="this.allowWatch && this.profileService.userId"
+          <div style="background-color: #94D67A" *ngIf="this.allowWatch && this.profile.userId"
                class="dot-button" (click)="watchClicked($event,d.source,d.id)">
               <i class="fa fa-envelope-o" aria-hidden="true"></i>
-              <span [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
+              <span [ngClass]="this.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
           </div>
 
-          <div *ngIf="this.allowDelete && this.profileService.profile" class="dot-button"
+          <div *ngIf="this.allowDelete && this.profile" class="dot-button"
                style="background-color: silver;" (click)="deleteClicked($event,d.source,d.id)">
               <i class="fa fa-times" aria-hidden="true"></i>
               <span [ngClass]="'unselected'">Delete </span>

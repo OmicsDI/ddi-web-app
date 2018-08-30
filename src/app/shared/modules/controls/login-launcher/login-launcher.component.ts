@@ -31,6 +31,8 @@ export class LoginLauncherComponent implements OnInit {
             this.profileService.getProfile()
                 .subscribe(
                     profile => {
+                        localStorage.removeItem('profile');
+                        localStorage.setItem('profile', JSON.stringify(profile));
                         this.profile = profile;
                         this.name = profile.userName;
                         this.userId = profile.userId;
@@ -62,8 +64,7 @@ export class LoginLauncherComponent implements OnInit {
         // this.deleteCookie('AUTH-TOKEN');
         this.mergeControl = false;
         localStorage.removeItem('id_token');
-        this.profileService.profile = null;
-        this.profileService.userId = null;
+        localStorage.removeItem('profile');
         this.router.navigate(['home']);
     }
 }

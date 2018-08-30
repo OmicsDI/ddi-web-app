@@ -15,8 +15,8 @@ export class SelectedService {
     constructor(public profileService: ProfileService
         , private notificationService: NotificationsService) {
 
-        this.profileService.onProfileReceived.subscribe(x => {
-            this.profileService.getSelected(this.profileService.userId).subscribe(
+        this.profileService.getProfile().subscribe(x => {
+            this.profileService.getSelected(x.userId).subscribe(
                 r => {
                     this.dataSets = r;
                 }
@@ -60,10 +60,21 @@ export class SelectedService {
         } else {
             this.dataSets.push({id: id, source: source, name: '', claimed: '0', omics_type: null});
         }
+        let profile;
+        if (localStorage.getItem('profile')) {
+            profile = JSON.parse(localStorage.getItem('profile'));
+            this.profileService.setSelected(profile.userId, this.dataSets).subscribe(x => {
+            });
 
-        this.profileService.setSelected(this.profileService.userId, this.dataSets).subscribe(x => {
-        });
+            this.notificationService.success('Selection saved', 'in your dashboard');
+        } else {
+            this.profileService.getProfile().subscribe( x => {
+                profile = x;
+                this.profileService.setSelected(profile.userId, this.dataSets).subscribe(p => {
+                });
 
-        this.notificationService.success('Selection saved', 'in your dashboard');
+                this.notificationService.success('Selection saved', 'in your dashboard');
+            });
+        };
     }
 }

@@ -19,11 +19,13 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
 
     claimed: boolean;
     claimable = true;
+    profile: Profile;
 
     constructor(public auth: AuthService, public profileService: ProfileService, private router: Router, private logger: LogService) {
     }
 
     ngOnInit() {
+        this.profile = JSON.parse(localStorage.getItem('profile'));
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -43,8 +45,8 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
 
                     this.claimable = this.dataSet.claimable != null && this.dataSet.claimable;
 
-                    if (null != this.profileService.profile) {
-                        const profile: Profile = this.profileService.profile;
+                    if (null != this.profile) {
+                        const profile: Profile = this.profile;
                         let obj: any;
                         if (null != profile.dataSets) {
                             obj = profile.dataSets.find(x => x.id === this.dataSet.id && x.source === this.dataSet.source);
@@ -64,12 +66,15 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
         dataset.name = this.dataSet.title;
         dataset.omics_type = this.dataSet.omicsType;
 
-        if (!this.profileService.profile) {
+        if (!this.profile) {
             this.logger.debug(`this.profileService.profile is NULL`);
-            this.logger.debug('this.profileService.userId: {}', this.profileService.userId);
+            this.logger.debug('this.profileService.userId: {}', this.profile.userId);
         } else {
-            this.logger.debug('Claiming dataset for user: {}', this.profileService.profile.userId);
-            this.profileService.claimDataset(this.profileService.profile.userId, dataset);
+            this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
+            this.profileService.claimDataset(this.profile.userId, dataset);
+            //
+            this.profile.dataSets.push(dataset);
+            localStorage.setItem('profile', JSON.stringify(this.profile));
         }
 
         this.claimed = true;

@@ -5,6 +5,7 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-dashboard',
@@ -15,6 +16,7 @@ export class DashboardComponent implements OnInit {
 
     public savedSearches: SavedSearch[] = [];
     public watchedDatasets: WatchedDataset[] = [];
+    profile: Profile;
 
     constructor(public profileService: ProfileService,
                 private dialogService: DialogService,
@@ -23,22 +25,25 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.profileService.profile) {
-            this.profileService.getSavedSearches(this.profileService.profile.userId).subscribe(x => {
+        if (localStorage.getItem('profile')) {
+            this.profile = JSON.parse(localStorage.getItem('profile'));
+        };
+        if (this.profile) {
+            this.profileService.getSavedSearches(this.profile.userId).subscribe(x => {
                 this.logger.debug('saved searches received: {}', x.length);
                 this.savedSearches = x;
             });
-            this.profileService.getWatchedDatasets(this.profileService.profile.userId).subscribe(x => {
+            this.profileService.getWatchedDatasets(this.profile.userId).subscribe(x => {
                 this.logger.debug('saved searches received: {}', x.length);
                 this.watchedDatasets = x;
             });
         } else {
-            this.profileService.onProfileReceived.subscribe(x => {
+            this.profileService.getProfile().subscribe(x => {
                 this.profileService.getSavedSearches(x.userId).subscribe(r => {
                     this.logger.debug('saved searches received: {}', r.length);
                     this.savedSearches = r;
                 });
-                this.profileService.getWatchedDatasets(this.profileService.profile.userId).subscribe(r => {
+                this.profileService.getWatchedDatasets(x.userId).subscribe(r => {
                     this.logger.debug('saved searches received: {}', r.length);
                     this.watchedDatasets = r;
                 });
@@ -47,7 +52,7 @@ export class DashboardComponent implements OnInit {
     }
 
     delete(id: string) {
-        this.profileService.deleteSavedSearch(id).subscribe(
+        this.profileService.deleteSavedSearch(this.profile.userId, id).subscribe(
             x => {
                 this.logger.debug('savedSearch deleted');
                 const i = this.savedSearches.findIndex(r => r.id === id);
@@ -58,7 +63,7 @@ export class DashboardComponent implements OnInit {
     }
 
     deleteWatch(id: string) {
-        this.profileService.deleteWatchedDataset(id).subscribe(
+        this.profileService.deleteWatchedDataset(this.profile.userId, id).subscribe(
             x => {
                 this.logger.debug('watchedDataset deleted');
                 const i = this.watchedDatasets.findIndex(r => r.id === id);

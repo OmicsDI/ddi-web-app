@@ -12,6 +12,7 @@ import {DialogService} from '@shared/services/dialog.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -24,6 +25,7 @@ export class DashboardSelectedComponent implements OnInit {
     p: 0;
     toDataset = DataSetDetail.toDataset;
     databases: Database[];
+    profile: Profile;
 
     constructor(public selectedService: SelectedService,
                 private dataSetService: DataSetService,
@@ -37,6 +39,13 @@ export class DashboardSelectedComponent implements OnInit {
 
     ngOnInit() {
         this.slimLoadingBarService.start();
+        if (localStorage.getItem('profile')) {
+            this.profile = JSON.parse(localStorage.getItem('profile'));
+        } else {
+            this.profileService.getProfile().subscribe( x => {
+                this.profile = x;
+            });
+        }
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.reloadDataSets();
@@ -82,7 +91,7 @@ export class DashboardSelectedComponent implements OnInit {
             d.source = dataSet.source;
             d.id = dataSet.id;
 
-            this.profileService.claimDataset(this.profileService.userId, d);
+            this.profileService.claimDataset(this.profile.userId, d);
         }
         this.notificationService.success(
             'Datasets claimed',
@@ -96,7 +105,7 @@ export class DashboardSelectedComponent implements OnInit {
 
             d.source = dataSet.source;
             d.accession = dataSet.id;
-            d.userId = this.profileService.userId;
+            d.userId = this.profile.userId;
 
             this.profileService.saveWatchedDataset(d);
         }

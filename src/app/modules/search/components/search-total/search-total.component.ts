@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SavedSearch} from 'model/SavedSearch';
 import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-search-total',
@@ -18,12 +19,20 @@ export class SearchTotalComponent implements OnInit {
 
     @Output()
     ignoreAllFacet = new EventEmitter<void>();
+    profile: Profile;
 
     constructor(public profileService: ProfileService
         , private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('profile')) {
+            this.profile = JSON.parse(localStorage.getItem('profile'));
+        } else {
+            this.profileService.getProfile().subscribe( x => {
+                this.profile = x;
+            });
+        }
     }
 
     showAllClick() {
@@ -33,17 +42,26 @@ export class SearchTotalComponent implements OnInit {
     saveSearchClick() {
         const savedSearch: SavedSearch = new SavedSearch();
 
-        savedSearch.userId = this.profileService.userId;
-        savedSearch.search = this.searchQuery;
-        savedSearch.count = +this.searchCount;
+        if (!this.profile) {
+            this.notificationService.error(
+                'Please login'
+            );
+            return;
+        } else {
+            savedSearch.userId = this.profile.userId;
+            savedSearch.search = this.searchQuery;
+            savedSearch.count = +this.searchCount;
 
 
-        this.profileService.saveSavedSearch(savedSearch);
+            this.profileService.saveSavedSearch(savedSearch);
 
-        this.notificationService.success(
-            'Search saved',
-            'to your dashboard'
-        );
+            this.notificationService.success(
+                'Search saved',
+                'to your dashboard'
+            );
+        }
+
+
     }
 
     copyQueryClick() {

@@ -11,6 +11,7 @@ import {DataSetShort} from 'model/DataSetShort';
 import {Router} from '@angular/router';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-invite',
@@ -29,6 +30,7 @@ export class InviteComponent implements OnInit {
     databases: Database[];
 
     complexForm: FormGroup;
+    profile: Profile;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: any,
                 private inviteService: InviteService,
@@ -46,6 +48,13 @@ export class InviteComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('profile')) {
+            this.profile = JSON.parse(localStorage.getItem('profile'));
+        } else {
+            this.profileService.getProfile().subscribe( x => {
+                this.profile = x;
+            });
+        }
         this.inviteService.getInvite(this.data.inviteId).subscribe(x => {
             if (x) {
                 Observable.forkJoin(x.dataSets.map(record => {
@@ -118,16 +127,18 @@ export class InviteComponent implements OnInit {
                     return y;
                 }
             }).filter(x => x)) {
-                if (!this.profileService.profile.dataSets) {
-                    this.profileService.profile.dataSets = [];
+                if (!this.profile.dataSets) {
+                    this.profile.dataSets = [];
                 }
-                if (!this.profileService.profile.dataSets.find(x => (x.source === ds.source && x.id === ds.id))) {
-                    this.profileService.profile.dataSets.push(ds);
+                if (!this.profile.dataSets.find(x => (x.source === ds.source && x.id === ds.id))) {
+                    this.profile.dataSets.push(ds);
                 }
             }
         }
 
-        this.profileService.updateUser().subscribe(x => {
+        this.profileService.updateUser(this.profile).subscribe(x => {
+                localStorage.removeItem('profile');
+                localStorage.setItem('profile', JSON.stringify(this.profile));
                 this.logger.info('user updated, {}', x);
                 this.dialogRef.close();
                 this.profileService.getProfile().subscribe();
@@ -137,8 +148,7 @@ export class InviteComponent implements OnInit {
 
     cancel() {
         localStorage.removeItem('id_token');
-        this.profileService.profile = null;
-        this.profileService.userId = null;
+        localStorage.removeItem('profile');
         this.router.navigate(['home']);
 
         this.dialogRef.close();

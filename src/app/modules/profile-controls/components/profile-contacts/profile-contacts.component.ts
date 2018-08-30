@@ -21,13 +21,13 @@ export class ProfileContactsComponent implements OnInit {
 
 
     contactInfoPresent(): boolean {
-        if (!this.profileService.profile) {
+        if (!this.profile) {
             return false;
         }
         return this.profile.isPublic
             || (this.profile.affiliation !== ''
-                && this.profileService.profile.email !== ''
-                && this.profileService.profile.homepage !== ''
-                && this.profileService.profile.orcid !== '');
+                && this.profile.email !== ''
+                && this.profile.homepage !== ''
+                && this.profile.orcid !== '');
     }
 }

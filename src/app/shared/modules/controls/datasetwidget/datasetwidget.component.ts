@@ -13,6 +13,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -28,6 +29,8 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowClaim = true;
     @Input() allowWatch = true;
     @Input() databases: Database[];
+    profile: Profile;
+    watchedDatasets: WatchedDataset[];
 
     constructor(public selectedService: SelectedService,
                 public appConfig: AppConfig,
@@ -41,6 +44,23 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('profile')) {
+            this.profile = JSON.parse(localStorage.getItem('profile'));
+            if (this.profile.userId) {
+                this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
+                    this.watchedDatasets = x;
+                });
+            }
+        } else {
+            this.profileService.getProfile().subscribe( x => {
+                this.profile = x;
+                if (this.profile.userId) {
+                    this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watchedDatasets => {
+                        this.watchedDatasets = watchedDatasets;
+                    });
+                }
+            });
+        }
     }
 
     getDatabaseUrl(source) {
@@ -77,13 +97,16 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     claimClicked($event, source, id) {
-        if (!this.profileService.isClaimed(source, id)) {
+        if (!this.isClaimed(source, id)) {
             const d: DataSetShort = new DataSetShort();
 
             d.source = source;
             d.id = id;
 
-            this.profileService.claimDataset(this.profileService.userId, d);
+            this.profileService.claimDataset(this.profile.userId, d);
+            this.profile.dataSets.push(d);
+            localStorage.removeItem('profile');
+            localStorage.setItem('profile', JSON.stringify(this.profile));
         } else {
             this.router.navigate(['profile']);
         }
@@ -102,9 +125,13 @@ export class DatasetWidgetComponent implements OnInit {
 
         d.source = source;
         d.accession = id;
-        d.userId = this.profileService.userId;
+        d.userId = this.profile.userId;
 
+        if (this.isWatched(source, id)) {
+            return;
+        }
         this.profileService.saveWatchedDataset(d);
+        this.watchedDatasets.push(d);
 
         $event.stopPropagation();
         $event.preventDefault();
@@ -120,7 +147,7 @@ export class DatasetWidgetComponent implements OnInit {
             return;
         }
 
-        if (!this.profileService.userId) {
+        if (!this.profile.userId) {
             return;
         }
 
@@ -130,5 +157,21 @@ export class DatasetWidgetComponent implements OnInit {
 
     deleteClicked($event, source, id) {
         this.buttonClicked.emit();
+    }
+
+    public isClaimed(source, id) {
+        let obj: any;
+        if (null != this.profile.dataSets) {
+            obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
+        }
+        return (null != obj);
+    }
+
+    public isWatched(source, id) {
+        let obj: any;
+        if (null != this.watchedDatasets) {
+            obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
+        }
+        return (null != obj);
     }
 }

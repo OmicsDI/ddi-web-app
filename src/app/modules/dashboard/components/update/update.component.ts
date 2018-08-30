@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-update',
@@ -15,7 +16,7 @@ export class DashboardUpdateComponent implements OnInit {
     public uploader: FileUploader;
     form: FormGroup;
     public profileImageUrl: string;
-    public profile = this.profileService.profile;
+    public profile: Profile;
 
     constructor(public profileService: ProfileService,
                 private formBuilder: FormBuilder,
@@ -40,22 +41,33 @@ export class DashboardUpdateComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (localStorage.getItem('profile')) {
+            this.profile = JSON.parse(localStorage.getItem('profile'));
+            this.fileUpload(this.profile);
+        } else {
+            this.profileService.getProfile().subscribe( x => {
+                this.profile = x;
+                this.fileUpload(this.profile);
+            });
+        }
 
-        if (!this.profileService.profile) {
+    };
+    fileUpload (profile: Profile) {
+        if (!profile) {
             this.router.navigate(['/profile']);
             return;
         }
 
-        this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.profileService.profile.userId)});
+        this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(profile.userId)});
         this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-            this.profileImageUrl = this.getProfileImageUrl();
+            this.profileImageUrl = this.getProfileImageUrl(profile);
         };
-        this.profileImageUrl = this.getProfileImageUrl();
+        this.profileImageUrl = this.getProfileImageUrl(profile);
     }
 
-    getProfileImageUrl(): string {
+    getProfileImageUrl(profile: Profile): string {
 
-        return this.appConfig.getProfileImageUrl(this.profileService.profile.userId);
+        return this.appConfig.getProfileImageUrl(profile.userId);
 
     }
 
@@ -68,7 +80,7 @@ export class DashboardUpdateComponent implements OnInit {
     }
 
     submitClicked() {
-        this.profileService.updateUser().subscribe(
+        this.profileService.updateUser(this.profile).subscribe(
             () => {
                 this.router.navigate(['/dashboard/profile']);
             }
