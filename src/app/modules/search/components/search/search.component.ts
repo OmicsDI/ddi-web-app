@@ -21,7 +21,7 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 export class SearchComponent implements OnInit {
     query: string;
     facetsChannel = 'facet_channel';
-    searchResult: SearchResult = new SearchResult();
+    searchResult: SearchResult;
     dataControl = new DataControl();
     params = {};
     selectedFacets: Map<string, string[]>;

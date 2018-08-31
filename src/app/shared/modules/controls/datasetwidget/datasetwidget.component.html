@@ -1,63 +1,62 @@
-<div class="ddi-card-panel list-group-item"
-     [ngStyle]="{'cursor':  allowSelect && this.profileService.userId ? 'pointer' : 'default'}"
+<div class="mt-card" [ngStyle]="{'cursor':  allowSelect && this.profileService.userId ? 'pointer' : 'default'}"
      [ngClass]="allowSelect && this.profileService.userId && this.selectedService.isSelected(d.source,d.id) ? 'grey' : 'white'"
      (click)="toggle(d.source,d.id);">
-
-    <div style="float: right; width: 200px; text-align: right">
-        <app-score [dataset]="d"></app-score>
-    </div>
-
-    <div class="project-widget-accession">
-        <app-omics-image [omics]="d.omicsType"></app-omics-image>
-
-        <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title}}</span></a>
-
-    </div>
-
-    <div class="ddi-blockquote" style="padding-left: 0px; margin-left: 0px;">
-        <div class="project-widget-paragraph align-justify ng-binding">
-            <!--
-                <b>Project description:</b>
-            -->
-            <span *ngIf="d.description" class="description">{{d.description | truncate : 200 : '...'}}</span>
-
-            <span *ngIf="!!!d.description" class="description">Not available</span>
+    <div class="mt-card-body">
+        <div style="float: right; width: 200px; text-align: right">
+            <app-score [dataset]="d"></app-score>
         </div>
 
-        <div class="project-widget-paragraph">
-        </div>
-        <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
-            <strong>ORGANISM(S):</strong> <span *ngFor="let o of d.organisms" class="organisms">{{o.name}}&nbsp;</span>
-            <span *ngIf="!d.organisms" class="organisms">Not available</span>
+        <div class="project-widget-accession">
+            <app-omics-image [omics]="d.omicsType"></app-omics-image>
+
+            <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding">{{d.title}}</span></a>
+
         </div>
 
-        <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
-            <strong>TISSUE(S):</strong> <span *ngFor="let o of d.tissues" class="tissues">{{o.name}}&nbsp;</span>
-            <span *ngIf="!d.tissues" class="tissues">Not available</span>
-        </div>
-        <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
-            <strong>DISEASE(S):</strong> <span *ngFor="let o of d.diseases" class="diseases">{{o.name}}&nbsp;</span>
-            <span *ngIf="!d.diseases" class="diseases">Not available</span>
-        </div>
-    </div>
+        <div class="ddi-blockquote" style="padding-left: 0px; margin-left: 0px;">
+            <div class="project-widget-paragraph align-justify ng-binding">
+                <!--
+                    <b>Project description:</b>
+                -->
+                <span *ngIf="d.description" class="description">{{d.description | truncate : 200 : '...'}}</span>
 
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <span *ngIf="!!!d.description" class="description">Not available</span>
+            </div>
+
             <div class="project-widget-paragraph">
+            </div>
+            <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
+                <strong>ORGANISM(S):</strong> <span *ngFor="let o of d.organisms" class="organisms">{{o.name}}&nbsp;</span>
+                <span *ngIf="!d.organisms" class="organisms">Not available</span>
+            </div>
+
+            <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
+                <strong>TISSUE(S):</strong> <span *ngFor="let o of d.tissues" class="tissues">{{o.name}}&nbsp;</span>
+                <span *ngIf="!d.tissues" class="tissues">Not available</span>
+            </div>
+            <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
+                <strong>DISEASE(S):</strong> <span *ngFor="let o of d.diseases" class="diseases">{{o.name}}&nbsp;</span>
+                <span *ngIf="!d.diseases" class="diseases">Not available</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="project-widget-paragraph">
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide" class="publicationDate">
           <span>{{d.publicationDate | toDateString }}</span> | </span>
-                <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding" class="dataset_id">{{d.id}}</span></a> |
-                <a [href]="this.getDatabaseUrl(d.source)"> <span
-                        class="ng-binding" class="database_source">{{this.getDatabaseTitle(d.source)}}</span> </a>
-            </div>
+                    <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding" class="dataset_id">{{d.id}}</span></a> |
+                    <a [href]="this.getDatabaseUrl(d.source)"> <span
+                            class="ng-binding" class="database_source">{{this.getDatabaseTitle(d.source)}}</span> </a>
+                </div>
 
-            <div *ngIf="d.keywords" class="project-widget-paragraph" style="padding-top:5px;">
-                <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope"
-                   [routerLink]="['/search']" [queryParams]="{q:o}">{{o}}&nbsp;</a>
-            </div>
+                <div *ngIf="d.keywords" class="project-widget-paragraph" style="padding-top:5px;">
+                    <a *ngFor="let o of d.keywords" [title]="o" class="keywords ng-binding ng-scope"
+                       [routerLink]="['/search']" [queryParams]="{q:o}">{{o}}&nbsp;</a>
+                </div>
 
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 align-bottom">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 align-bottom">
           <span class="pull-right">
           <div style="background-color: #87CEFA" class="dot-button" (click)="citeClicked($event,d.source,d.id)">
               <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
@@ -81,6 +80,7 @@
               <span [ngClass]="'unselected'">Delete </span>
           </div>
           </span>
+            </div>
         </div>
     </div>
 </div>

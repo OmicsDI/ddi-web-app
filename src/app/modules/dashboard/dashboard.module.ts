@@ -19,7 +19,6 @@ import {SettingsComponent} from '@modules/dashboard/components/settings/settings
 import {DashboardUpdateComponent} from '@modules/dashboard/components/update/update.component';
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
-import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
 
 @NgModule({
@@ -46,7 +45,6 @@ import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module
         DashboardSelectedComponent,
         SettingsComponent,
         DashboardUpdateComponent,
-        NavComponent
     ]
 })
 export class DashboardModule {
