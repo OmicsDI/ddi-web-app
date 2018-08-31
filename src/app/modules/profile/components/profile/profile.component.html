@@ -6,20 +6,17 @@
 
                     <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
 
-                    <div style="display:inline-block; width:100%" id="datasets">
+                    <div style="display:inline-block; width:100%" id="datasets" *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0">
                         <div class="mt-card">
                             <div class="mt-card-header">
                                 <h4 class="mt-card-title" style="margin-left: 20px">
                                     Datasets
                                 </h4>
                             </div>
-                            <div class="mt-card-body" style="margin-top: 20px">
+                            <div class="mt-card-body">
                                 <div class="row">
-                                    <label class="col-md-1 mt-col-form-label">Total: </label>
-                                    <div class="col-md-10">
-                                        <div class="form-group has-default bmd-form-group">
-                                            {{this.profileX.dataSets.length}}
-                                        </div>
+                                    <div class="col-xs-12" style="padding: 0 25px;">
+                                        <input type="text" placeholder="Filter datasets...">
                                     </div>
                                 </div>
                             </div>
