@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
+import {HttpClientModule} from '@angular/common/http';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
@@ -20,10 +20,13 @@ import {DashboardUpdateComponent} from '@modules/dashboard/components/update/upd
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
+import {NgxEditorModule} from 'ngx-editor';
 
 @NgModule({
     imports: [
         CommonModule,
+        HttpClientModule,
+        NgxEditorModule,
         DashboardRoutingModule,
         ControlsModule,
         ProfileControlsModule,

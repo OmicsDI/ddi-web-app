@@ -745,8 +745,6 @@ ul#local-nav li.functional {
     height: 20px;
 }
 
-input[type="text"],
-input[type="password"],
 input[type="submit"] {
     clear: both;
     /*    float: left;*/
@@ -801,6 +799,12 @@ input[type=submit]:focus {
     position: relative;
     top: 1px;
     border-bottom: 1px solid;
+}
+
+input[type="file"], input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], textarea {
+    width: 100%;
+    border: 1px solid #D5D5D5;
+    padding: 6px 6px 7px;
 }
 
 .ddi-btn {
@@ -1592,5 +1596,9 @@ img.image-rounded {
 }
 
 .mt-card .mt-card-body .mt-col-form-label, .mt-card .mt-card-body .mt-label-on-right {
+    text-align: right;
+}
+
+.control-label {
     text-align: right;
 }

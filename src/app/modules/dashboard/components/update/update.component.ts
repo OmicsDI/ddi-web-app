@@ -17,6 +17,28 @@ export class DashboardUpdateComponent implements OnInit {
     public profileImageUrl: string;
     public profile = this.profileService.profile;
 
+    editorConfig = {
+        'editable': true,
+        'spellcheck': true,
+        'height': 'auto',
+        'minHeight': '300px',
+        'width': 'auto',
+        'minWidth': '0',
+        'translate': 'yes',
+        'enableToolbar': true,
+        'showToolbar': true,
+        'placeholder': 'Enter text here...',
+        'imageEndPoint': '',
+        'toolbar': [
+            ['bold', 'italic', 'underline', 'strikeThrough', 'superscript', 'subscript'],
+            ['fontName', 'fontSize', 'color'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
+            ['cut', 'copy', 'delete', 'removeFormat', 'undo', 'redo'],
+            ['paragraph', 'blockquote', 'removeBlockquote', 'horizontalLine', 'orderedList', 'unorderedList'],
+            ['link', 'unlink', 'image', 'video']
+        ]
+    };
+
     constructor(public profileService: ProfileService,
                 private formBuilder: FormBuilder,
                 public appConfig: AppConfig,
@@ -45,11 +67,6 @@ export class DashboardUpdateComponent implements OnInit {
             this.router.navigate(['/profile']);
             return;
         }
-
-        this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.profileService.profile.userId)});
-        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-            this.profileImageUrl = this.getProfileImageUrl();
-        };
         this.profileImageUrl = this.getProfileImageUrl();
     }
 
