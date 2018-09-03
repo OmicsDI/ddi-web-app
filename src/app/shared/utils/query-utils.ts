@@ -130,7 +130,7 @@ export class QueryUtils {
     }
 
     private static extractCondition(condition: string): Rule {
-        const parts = condition.split(':');
+        const parts = condition.split(/:(.+)/);
         const rule = new Rule();
         let value = condition;
         if (parts.length > 1) {
