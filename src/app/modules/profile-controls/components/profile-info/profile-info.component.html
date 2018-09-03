@@ -41,7 +41,7 @@
                 <label class="col-md-2 mt-col-form-label">Public profile</label>
                 <div class="col-md-10">
                     <div class="form-group has-default bmd-form-group">
-                        <a [routerLink]="['/profile', profile.userId]" title="OmicsDI public profile">https://omicsdi.org/profile/{{profile.userId}}</a>
+                        <a [routerLink]="['/profile', profile.userId]" title="OmicsDI public profile">{{baseUrl}}/profile/{{profile.userId}}</a>
                     </div>
                 </div>
             </div>

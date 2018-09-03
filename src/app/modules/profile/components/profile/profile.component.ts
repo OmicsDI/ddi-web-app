@@ -13,6 +13,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-profile',
@@ -23,8 +24,6 @@ export class ProfileComponent implements OnInit {
     profileX: Profile;
     public name: String;
     form: FormGroup;
-    editMode = false;
-    facebookConnected = false;
     orcidConnected = false;
     dataSetDetails: DataSetDetail[] = [];
     profileImageUrl = '';
@@ -32,8 +31,10 @@ export class ProfileComponent implements OnInit {
     userId = 'xxx';
     username: string = null;
     databases: Database[];
+    filter = '';
 
     toDataset = DataSetDetail.toDataset;
+    datasetShowed: DataSetDetail[];
 
     public uploader: FileUploader;
 
@@ -61,6 +62,15 @@ export class ProfileComponent implements OnInit {
                 city: ['', Validators.maxLength(30)],
                 zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
             })
+        });
+    }
+
+    filterDatasets(keyword) {
+        this.datasetShowed = [];
+        this.dataSetDetails.forEach(dataset => {
+            if (dataset.name.indexOf(keyword) > -1 || dataset.description.indexOf(keyword) > -1) {
+                this.datasetShowed.push(dataset);
+            }
         });
     }
 
@@ -95,6 +105,7 @@ export class ProfileComponent implements OnInit {
                         })).subscribe(
                             y => {
                                 this.dataSetDetails = y;
+                                this.datasetShowed = y;
                                 this.slimLoadingBarService.complete();
                             }
                         );

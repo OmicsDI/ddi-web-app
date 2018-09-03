@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
 import {FormGroup} from '@angular/forms';
 import {Profile} from 'model/Profile';
@@ -29,8 +30,13 @@ export class ProfileInfoComponent implements OnInit, OnChanges {
     @Input() profile: Profile = new Profile();
     @Output() change = new EventEmitter();
 
-    constructor(public profileService: ProfileService, public appConfig: AppConfig, private logger: LogService) {
+    baseUrl = '';
 
+    constructor(public profileService: ProfileService,
+                public appConfig: AppConfig,
+                private logger: LogService,
+                @Inject(DOCUMENT) private document) {
+        this.baseUrl = document.location.origin;
     }
 
     ngOnInit() {
