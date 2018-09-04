@@ -8,3 +8,31 @@
 .edit-form h4 {
     font-weight: 300;
 }
+
+.image-rounded {
+    position: absolute;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.image-rounded:hover {
+    z-index: 0;
+}
+
+.click-to-change {
+    cursor: pointer;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 0 0 400px 400px;
+    height: 50%;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    z-index: 1;
+}
+
+.click-to-change:hover {
+    z-index: 3;
+}
