@@ -42,7 +42,7 @@ export class DashboardUpdateComponent implements OnInit {
 
     ngOnInit() {
         if (this.profileService.isAuthorized()) {
-            this.profile = this.profileService.getProfileFromLocal()
+            this.profile = this.profileService.getProfileFromLocal();
             this.fileUpload(this.profile);
         } else {
             this.profileService.getProfile().subscribe( x => {
