@@ -61,8 +61,8 @@ export class SelectedService {
             this.dataSets.push({id: id, source: source, name: '', claimed: '0', omics_type: null});
         }
         let profile;
-        if (localStorage.getItem('profile')) {
-            profile = JSON.parse(localStorage.getItem('profile'));
+        if (this.profileService.isAuthorized()) {
+            profile = this.profileService.getProfileFromLocal();
             this.profileService.setSelected(profile.userId, this.dataSets).subscribe(x => {
             });
 

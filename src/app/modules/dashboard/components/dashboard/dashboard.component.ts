@@ -25,10 +25,8 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('profile')) {
-            this.profile = JSON.parse(localStorage.getItem('profile'));
-        };
-        if (this.profile) {
+        if (this.profileService.isAuthorized()) {
+            this.profile = this.profileService.getProfileFromLocal();
             this.profileService.getSavedSearches(this.profile.userId).subscribe(x => {
                 this.logger.debug('saved searches received: {}', x.length);
                 this.savedSearches = x;
@@ -36,17 +34,6 @@ export class DashboardComponent implements OnInit {
             this.profileService.getWatchedDatasets(this.profile.userId).subscribe(x => {
                 this.logger.debug('saved searches received: {}', x.length);
                 this.watchedDatasets = x;
-            });
-        } else {
-            this.profileService.getProfile().subscribe(x => {
-                this.profileService.getSavedSearches(x.userId).subscribe(r => {
-                    this.logger.debug('saved searches received: {}', r.length);
-                    this.savedSearches = r;
-                });
-                this.profileService.getWatchedDatasets(x.userId).subscribe(r => {
-                    this.logger.debug('saved searches received: {}', r.length);
-                    this.watchedDatasets = r;
-                });
             });
         }
     }

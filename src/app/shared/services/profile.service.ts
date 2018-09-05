@@ -21,6 +21,24 @@ export class ProfileService extends BaseService {
         super();
     }
 
+    isAuthorized() {
+        if (localStorage.getItem('profile')) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    setProfile(profile: Profile) {
+        localStorage.removeItem('profile');
+        localStorage.setItem('profile', JSON.stringify(profile));
+    };
+    removeProfile() {
+        localStorage.removeItem('profile');
+    };
+    getProfileFromLocal() {
+        return JSON.parse(localStorage.getItem('profile'));
+    };
+
     getProfile(): Observable<Profile> {
         return this.http.get(this.appConfig.getProfileUrl(null)) // ,config // { withCredentials: true }
             .map(x => this.extractData<Profile>(x));

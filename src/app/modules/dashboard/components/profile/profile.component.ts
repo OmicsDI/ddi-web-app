@@ -114,8 +114,7 @@ export class DashboardProfileComponent implements OnInit {
                 .subscribe(
                     profile => {
                         this.logger.debug('getting profile');
-                        localStorage.removeItem('profile');
-                        localStorage.setItem('profile', JSON.stringify(profile));
+                        this.profileService.setProfile(profile);
                         this.profileX = profile;
                         this.name = profile.userName;
                         this.dataSetDetails = [];
@@ -132,7 +131,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     updateProfile() {
-        this.profileService.updateUser(JSON.parse(localStorage.getItem('profile'))).subscribe();
+        this.profileService.updateUser(this.profileService.getProfileFromLocal()).subscribe();
     }
 
     checkAll(ev) {

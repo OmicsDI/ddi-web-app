@@ -41,8 +41,8 @@ export class DashboardUpdateComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('profile')) {
-            this.profile = JSON.parse(localStorage.getItem('profile'));
+        if (this.profileService.isAuthorized()) {
+            this.profile = this.profileService.getProfileFromLocal()
             this.fileUpload(this.profile);
         } else {
             this.profileService.getProfile().subscribe( x => {

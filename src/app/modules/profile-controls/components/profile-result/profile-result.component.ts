@@ -84,8 +84,7 @@ export class ProfileResultComponent implements OnInit, OnChanges {
         if (i !== -1) {
             this.logger.info(`deleting ${source} ${id}`);
             this.profile.dataSets.splice(i, 1);
-            localStorage.removeItem('profile');
-            localStorage.setItem('profile', JSON.stringify(this.profile));
+            this.profileService.setProfile(this.profile);
         }
         this.change.emit({});
         this.reloadDataSets();

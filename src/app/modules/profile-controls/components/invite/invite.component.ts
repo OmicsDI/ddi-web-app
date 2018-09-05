@@ -48,8 +48,8 @@ export class InviteComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('profile')) {
-            this.profile = JSON.parse(localStorage.getItem('profile'));
+        if (this.profileService.isAuthorized()) {
+            this.profile = this.profileService.getProfileFromLocal();
         } else {
             this.profileService.getProfile().subscribe( x => {
                 this.profile = x;
@@ -137,8 +137,7 @@ export class InviteComponent implements OnInit {
         }
 
         this.profileService.updateUser(this.profile).subscribe(x => {
-                localStorage.removeItem('profile');
-                localStorage.setItem('profile', JSON.stringify(this.profile));
+                this.profileService.setProfile(this.profile);
                 this.logger.info('user updated, {}', x);
                 this.dialogRef.close();
                 this.profileService.getProfile().subscribe();
@@ -147,8 +146,7 @@ export class InviteComponent implements OnInit {
     }
 
     cancel() {
-        localStorage.removeItem('id_token');
-        localStorage.removeItem('profile');
+        this.profileService.removeProfile();
         this.router.navigate(['home']);
 
         this.dialogRef.close();

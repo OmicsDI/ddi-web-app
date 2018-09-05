@@ -21,7 +21,9 @@ export class DashboardClaimedComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.profile = JSON.parse(localStorage.getItem('profile'));
+        if (this.profileService.isAuthorized()) {
+            this.profile = this.profileService.getProfileFromLocal();
+        }
     }
 
     updateProfile() {

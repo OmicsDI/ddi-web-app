@@ -44,8 +44,8 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('profile')) {
-            this.profile = JSON.parse(localStorage.getItem('profile'));
+        if (this.profileService.isAuthorized()) {
+            this.profile = this.profileService.getProfileFromLocal();
             if (this.profile.userId) {
                 this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
                     this.watchedDatasets = x;
