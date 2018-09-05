@@ -21,7 +21,7 @@
     <to>/</to>
   </rule>
   <rule match-type="wildcard">
-    <from>/about</from>
+    <from>/help/*</from>
     <to>/</to>
   </rule>
   <rule match-type="wildcard">
