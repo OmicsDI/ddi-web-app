@@ -20,13 +20,16 @@ import {DashboardUpdateComponent} from '@modules/dashboard/components/update/upd
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
-import {NgxEditorModule} from 'ngx-editor';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cropper.module';
+
 
 @NgModule({
     imports: [
         CommonModule,
         HttpClientModule,
-        NgxEditorModule,
+        FroalaEditorModule.forRoot(),
+        FroalaViewModule.forRoot(),
         DashboardRoutingModule,
         ControlsModule,
         ProfileControlsModule,
@@ -37,7 +40,8 @@ import {NgxEditorModule} from 'ngx-editor';
         UiSwitchModule,
         ClipboardModule,
         UtilsModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        ImageCropperModule
     ],
     declarations: [
         DashboardComponent,

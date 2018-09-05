@@ -13,7 +13,6 @@ import {Profile} from 'model/Profile';
 export class NavComponent implements OnInit {
 
     userId: string;
-    public uploader: FileUploader;
     public profileImageUrl: string;
     profile: Profile;
     showUp = false;
@@ -33,12 +32,6 @@ export class NavComponent implements OnInit {
                     this.userId = profile.userId;
                     // this.getConnections(this.userId);
                     // this.getCoAuthors(this.userId);
-
-                    this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
-
-                    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-                        this.profileImageUrl = this.getProfileImageUrl();
-                    };
 
                     this.profileImageUrl = this.getProfileImageUrl();
                 }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
+import {UploadService} from '@shared/services/upload.service';
 
 @Component({
     selector: 'app-update',
@@ -13,9 +13,13 @@ import {FileUploader} from 'ng2-file-upload';
 export class DashboardUpdateComponent implements OnInit {
 
     public uploader: FileUploader;
-    form: FormGroup;
     public profileImageUrl: string;
     public profile = this.profileService.profile;
+
+    imageChangedEvent: any = '';
+    croppedImage: any = '';
+    isProfileImageChanged = false;
+    bio = this.profile.bio;
 
     editorConfig = {
         'editable': true,
@@ -40,25 +44,9 @@ export class DashboardUpdateComponent implements OnInit {
     };
 
     constructor(public profileService: ProfileService,
-                private formBuilder: FormBuilder,
                 public appConfig: AppConfig,
+                private uploadService: UploadService,
                 private router: Router) {
-        this.form = formBuilder.group({
-            name: ['', [
-                Validators.required,
-                Validators.minLength(3)
-            ]],
-            email: ['', [
-                Validators.required
-            ]],
-            phone: [],
-            address: formBuilder.group({
-                street: ['', Validators.minLength(3)],
-                suite: [],
-                city: ['', Validators.maxLength(30)],
-                zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
-            })
-        });
     }
 
     ngOnInit() {
@@ -67,42 +55,42 @@ export class DashboardUpdateComponent implements OnInit {
             this.router.navigate(['/profile']);
             return;
         }
-        this.profileImageUrl = this.getProfileImageUrl();
+        this.profileImageUrl = this.appConfig.getProfileImageUrl(this.profile.userId);
     }
 
-    getProfileImageUrl(): string {
-
-        return this.appConfig.getProfileImageUrl(this.profileService.profile.userId);
-
-    }
-
-    public fileChangeEvent(fileInput: any) {
-        if (fileInput.target.files && fileInput.target.files[0]) {
-            setTimeout(() => {
-                this.uploader.uploadAll();
-            }, 100);
+    updateProfile() {
+        if (this.isProfileImageChanged) {
+            const file = this.uploadService.dataURLtoFile(this.profileImageUrl, 'image.png');
+            this.uploadService.uploadFile(this.appConfig.getProfileUploadImageUrl(this.profile.userId), file);
+            this.isProfileImageChanged = false;
         }
+        console.log("updating....");
+        this.profileService.updateUserProfile(this.profile).subscribe(success => {
+            console.log(success);
+        }, error => {
+            console.log(error);
+        })
     }
 
-    submitClicked() {
-        this.profileService.updateUser().subscribe(
-            () => {
-                this.router.navigate(['/dashboard/profile']);
-            }
-        );
+    updateBio(html) {
+        this.profile.bio = html;
     }
 
-    cancelClicked() {
-        // this.editMode = false;
-        this.profileService.getProfile();
-        this.router.navigate(['/dashboard/profile']);
+    fileChangeEvent(event: any): void {
+        this.imageChangedEvent = event;
+    }
+    imageCropped(image: string) {
+        this.croppedImage = image;
+    }
+    imageLoaded() {
+        // show cropper
+    }
+    loadImageFailed() {
+        // show message
     }
 
-    onSubmit() {
-        alert('submitd');
-    }
-
-    onCancel() {
-        alert('canceld');
+    profileImageChange() {
+        this.profileImageUrl = this.croppedImage;
+        this.isProfileImageChanged = true;
     }
 }

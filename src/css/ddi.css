@@ -1602,3 +1602,7 @@ img.image-rounded {
 .control-label {
     text-align: right;
 }
+
+image-cropper > div {
+    text-align: center;
+}
