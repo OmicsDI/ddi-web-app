@@ -1,16 +1,10 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
-import {DatasetCount} from 'model/DatasetCount';
 import {ProfileService} from '@shared/services/profile.service';
-
-
-import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {NotificationsService} from 'angular2-notifications/dist';
-import {ThorService} from '@shared/services/thor.service';
 
 @Component({
     selector: 'app-dashboard-connections-count',
@@ -21,67 +15,36 @@ export class DashboardConnectionsCountComponent implements OnInit {
 
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-    private username: string;
     private web_service_url = this.appConfig.getWebServiceUrl();
-    private retryLimitTimes = 2;
     private userServiceUrl: string;
-    private dataOfViewCount: DatasetCount;
     dataSets: DataSetDetail[];
     @Input() datasets: DataSetDetail[] = [];
 
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
-            for (let j = 0; j < data[i].omics.length; j++) {
-                if (data[i].omics[j].year === year && data[i].omics[j].value === value) {
-                    return data[i].omics[j].name;
-                }
+            if (data[i].year === year && data[i].value === value) {
+                return data[i].omics_type;
             }
         }
     }
 
-    constructor(private dataSetService: DataSetService, private route: ActivatedRoute, public appConfig: AppConfig,
-                public profileService: ProfileService
-        , private router: Router
-        , private notificationService: NotificationsService
-        , private thorService: ThorService) {
+    constructor(private dataSetService: DataSetService,
+                private route: ActivatedRoute,
+                public appConfig: AppConfig,
+                public profileService: ProfileService,
+                private router: Router) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 
     ngOnInit() {
-        // this.profileService.getDataSetDetails(this.profileService.profile);
         this.startRequest(this.datasets);
-
-
-        // Listen page size
-        Observable.fromEvent(window, 'resize')
-            .debounceTime(100) // timer
-            .subscribe((event) => {
-                // restartRequest
-                this.startRequest(this.datasets);
-            });
-
         this.web_service_url = this.dataSetService.getWebServiceUrl();
     }
 
     private startRequest(datasetDetail: DataSetDetail[]) {
 
         const processedData = this.prepareData(datasetDetail);
-        this.draw(processedData);
-    }
-
-    private draw(processedData: any) {
-
         this.drawGraph(processedData);
-        const self = this;
-        // d3.select(window).on('resize',function(){
-        //   self.drawGraph(processedData);
-        // });
-        d3.select(window)
-            .on('resize.annual_omicstype', function () {
-                if (self.router.url === '/home') {
-                    self.drawGraph(processedData);
-                }
-            });
     }
 
     private drawGraph(processedData: any): void {
@@ -106,25 +69,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
 
         const yearSet = processedData.get('yearSet');
 
-        const dataCollection: number[] = [];
-        // let idCollection:string[] = [];
-        // let pointerCollection: number[] = [];
-        const yearCollections: number[] = [];
-        const countCollections: number[] = [];
-        allYear.forEach(data => {
-            const count: number = Number(data['value']);
-            dataCollection.push(count);
-            // idCollection.push(data['id']);
-            yearCollections.push(data['year']);
-        });
-
-        // var minDate = new Date(d3.min(annualDataExtends, d => {
-        //     return parseInt(d["year"]);
-        // }), 0, 0);
-        // var maxDate = new Date(d3.max(annualDataExtends, d => {
-        //     return parseInt(d["year"]);
-        // }), 0, 1);
-
         const x0 = d3.scaleTime().range([0, width - 30]);
         const y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         const y1 = d3.scaleLinear().range([height - heightOffset, 0]);
@@ -145,22 +89,12 @@ export class DashboardConnectionsCountComponent implements OnInit {
 
 
         const valueline = d3.line()
-            .x(d => {
-
-                return x0(new Date(d['year'], 0, 0));
-            })
-            .y(d => {
-
-                return y0(parseInt(d['value'], 10));
-            });
+            .x(d => {return x0(new Date(d['year'], 0, 0)); })
+            .y(d => {return y0(parseInt(d['value'], 10)); });
 
         const valueline2 = d3.line()
-            .x(d => {
-                return x0(new Date(d['year'], 0, 0));
-            })
-            .y(d => {
-                return y1(parseInt(d['value'], 10));
-            });
+            .x(d => {return x0(new Date(d['year'], 0, 0)); })
+            .y(d => {return y1(parseInt(d['value'], 10)); });
 
         if (genomicsList) {
             svg.append('path')
@@ -216,49 +150,11 @@ export class DashboardConnectionsCountComponent implements OnInit {
             .attr('r', 4)
             .style('cursor', 'pointer')
             .on('mouseover', function (d: any, i: number) {
-                const mouse_coords = d3.mouse(document.getElementById('bar_chart_tooltip').parentElement);
-                /*
-                for d3 tooltip
-                if a tooltip is inside angular component inside a div like this
-                ----div-----
-                [component]
-                [component]
-                [component]
-                ----div-----
-                the tooltip will show at the div,not the component ,so we have to fix it
-                 */
-                const profile_div = d3.select('#profile_div').style('height');
-                const profile_div_height = profile_div.substring(0, profile_div.indexOf('px'));
-
-                const barchart_omicstype_annual_dashboard = d3.select('#barchart_claim_dashboard').style('height');
-                const barchart_claim_dashboard_height = barchart_omicstype_annual_dashboard.substring(
-                    0, barchart_omicstype_annual_dashboard.indexOf('px'));
-
-                // barchart_citations_dashboard height
-                const barchart_citations_dashboard = d3.select('#barchart_citations_dashboard').style('height');
-                const barchart_citations_dashboard_height = barchart_citations_dashboard.substring(
-                    0, barchart_citations_dashboard.indexOf('px'));
-                // barchart_connections_dashboard
-                const barchart_connections_dashboard = d3.select('#barchart_connections_dashboard').style('height');
-                const barchart_connections_dashboard_height = barchart_connections_dashboard.substring(
-                    0, barchart_connections_dashboard.indexOf('px'));
-                // barchart_views_dashboard
-                const barchart_views_dashboard = d3.select('#barchart_views_dashboard').style('height');
-                const barchart_views_dashboard_height = barchart_views_dashboard.substring(
-                    0, barchart_views_dashboard.indexOf('px'));
-                // barchart_reanalisys_dashboard
-                const barchart_reanalisys_dashboard = d3.select('#barchart_reanalisys_dashboard').style('height');
-                const barchart_reanalisys_dashboard_height = barchart_reanalisys_dashboard.substring(
-                    0, barchart_reanalisys_dashboard.indexOf('px'));
-
-                const position = Number(profile_div_height) -
-                    Number(barchart_claim_dashboard_height) - Number(barchart_citations_dashboard_height) -
-                    Number(barchart_connections_dashboard_height) - Number(barchart_views_dashboard_height) -
-                    Number(barchart_reanalisys_dashboard_height) + mouse_coords[1] - 40;
+                const mouse_coords = d3.mouse(document.getElementById('barchart_connections_dashboard'));
 
                 toolTip.html(d.omics_type.toString() + ': <br>' + d.value.toString() + ' datasets')
-                    .style('left', ((mouse_coords[0] + 5) + 'px'))
-                    .style('top', (position + 'px'))
+                    .style('left', ((mouse_coords[0] - 10) + 'px'))
+                    .style('top', ((mouse_coords[1] - 35 ) + 'px'))
                     .style('height', '3em')
                     .style('width', ((d.year.toString().length + 9) * 8 + 'px'))
                     .style('padding', '5px');
@@ -266,17 +162,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
                 toolTip.transition()
                     .duration(200)
                     .style('opacity', .9);
-                // contactInfo,gsc_rsb_co,connectionBox
-
-                // let contactInfo = d3.select('#contactInfo').style('height');
-                // let contactInfo_height = contactInfo.substring(0,contactInfo.indexOf('px'));
-                // let gsc_rsb_co = d3.select('#gsc_rsb_co').style('height');
-                // let gsc_rsb_co_height = contactInfo.substring(0,contactInfo.indexOf('px'));
-                // let connectionBox = d3.select('#connectionBox').style('height');
-                // let connectionBox_height = contactInfo.substring(0,contactInfo.indexOf('px'));
-                // let sum = Number(contactInfo)+Number(gsc_rsb_co)+Number(connectionBox);
-                // let coordy = mouse_coords[1].valueOf();
-
             })
             .on('mouseout', function () {
                 toolTip.transition()
@@ -289,7 +174,7 @@ export class DashboardConnectionsCountComponent implements OnInit {
                     .style('opacity', 0);
 
                 const searchWord = 'omics_type:"'
-                    + DashboardConnectionsCountComponent.getName(d['year'], d['value'], annualDataExtends)
+                    + DashboardConnectionsCountComponent.getName(d['year'], d['value'], allYear)
                     + '" AND publication_date:"' + d['year'] + '"';
 
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
@@ -320,7 +205,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
             })
             .on('click', function (d) {
                 const searchWord = 'omics_type:"' + d + '"';
-                // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);//***not yet solved**/
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
             });
 
@@ -369,13 +253,8 @@ export class DashboardConnectionsCountComponent implements OnInit {
     private initSvg(body: any): any {
 
         const svgProperties = new Map<string, any>();
-        // let body = d3.select('#barchart_omicstype_annual');
-        const divWidthPx = body.style('width');
-        let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2), 10);
-        const latestDatasetsDivHeightPx = d3.select('#barchart_connections_dashboard').style('height');
-        let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2), 10);
-        divHeight = 100;
-        divWidth = parseInt(body.style('width'), 10);
+        const divHeight = 100;
+        const divWidth = parseInt(body.style('width'), 10);
 
         const heightOffset = 50;
         const margin = {top: 20, right: 0, bottom: -20, left: 20},
@@ -385,7 +264,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
 
         let tool_tip = null;
         if (!tool_tip) {
-            // tool_tip = document.getElementById('barchart_omicstype_annual_dashboard_svg')
             tool_tip = body.append('div')
                 .attr('id', 'bar_chart_tooltip')
                 .attr('class', 'chart_tooltip')
@@ -424,7 +302,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
         });
         const maxYear = Math.max(...years);
         const minYear = Math.min(...years);
-        const allList = [];
         const allList_g = [];
         const allList_m = [];
         const allList_p = [];
@@ -637,16 +514,6 @@ export class DashboardConnectionsCountComponent implements OnInit {
         processedData.set('max_M_P', max_M_P);
         processedData.set('yearSet', yearSet);
         return processedData;
-    }
-
-    private prepareAllDate(priData: any, nameString: string, allYearData: any[]) {
-        for (let i = 0; i < priData.length; i++) {
-            allYearData.push({
-                name: nameString,
-                year: priData[i].year,
-                value: priData[i].value
-            });
-        }
     }
 
     private groupByYear(data: any) {

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FileUploader} from 'ng2-file-upload';
 import {ProfileService} from '@shared/services/profile.service';
 import {AppConfig} from '../../../../app.config';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {Profile} from 'model/Profile';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({
     selector: 'app-nav',
@@ -18,31 +18,24 @@ export class NavComponent implements OnInit {
     showUp = false;
 
     constructor(private profileService: ProfileService,
-                public appConfig: AppConfig, private router: Router, private route: ActivatedRoute) {
+                private dataTransportService: DataTransportService,
+                public appConfig: AppConfig, private router: Router) {
     }
 
     ngOnInit() {
         this.router.events.subscribe(() => {
             this.showUp = this.router.url.indexOf('/dashboard/') !== -1;
         });
+        this.dataTransportService.listen('image_change').subscribe(message => {
+             this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
+        });
         this.profileService.getProfile()
             .subscribe(
                 profile => {
                     this.profile = profile;
                     this.userId = profile.userId;
-                    // this.getConnections(this.userId);
-                    // this.getCoAuthors(this.userId);
-
-                    this.profileImageUrl = this.getProfileImageUrl();
+                    this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
                 }
             );
-    }
-
-    getProfileImageUrl(): string {
-        return this.appConfig.getProfileImageUrl(this.userId);
-    }
-
-    profileClicked() {
-
     }
 }

@@ -1606,3 +1606,16 @@ img.image-rounded {
 image-cropper > div {
     text-align: center;
 }
+
+.html-render {
+    all: initial;
+}
+
+.html-render * {
+    all: unset;
+}
+
+.home-search .autocomplete input {
+    border: 1px solid #dddddd !important;
+    padding: 7px 7px 6px 7px !important;
+}

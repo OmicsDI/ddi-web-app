@@ -27,7 +27,8 @@ export class UploadService {
         formData.append('file', file, file.name);
 
         const req = new HttpRequest('POST', url, formData, {
-            reportProgress: true
+            reportProgress: true,
+            responseType: 'text'
         });
 
         // create a new progress-subject for every file

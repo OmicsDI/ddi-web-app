@@ -20,7 +20,7 @@ import {DashboardUpdateComponent} from '@modules/dashboard/components/update/upd
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import {QuillModule} from 'ngx-quill';
 import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cropper.module';
 
 
@@ -28,8 +28,7 @@ import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cro
     imports: [
         CommonModule,
         HttpClientModule,
-        FroalaEditorModule.forRoot(),
-        FroalaViewModule.forRoot(),
+        QuillModule,
         DashboardRoutingModule,
         ControlsModule,
         ProfileControlsModule,

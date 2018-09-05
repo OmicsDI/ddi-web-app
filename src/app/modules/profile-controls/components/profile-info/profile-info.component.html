@@ -56,8 +56,7 @@
         </div>
         <div class="col-xs-12 line-bottom" style="margin: 15px 0" *ngIf="this.profile.bio">
         </div>
-        <div class="col-md-12" *ngIf="this.profile.bio">
-            {{this.profile.bio | keepHtml}}
+        <div class="col-md-12 ql-editor" *ngIf="this.profile.bio" [innerHTML]="profile.bio | keepHtml">
         </div>
     </div>
 </div>

@@ -4,6 +4,8 @@ import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
 import {FileUploader} from 'ng2-file-upload';
 import {UploadService} from '@shared/services/upload.service';
+import {NotificationsService} from 'angular2-notifications/dist';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({
     selector: 'app-update',
@@ -19,33 +21,12 @@ export class DashboardUpdateComponent implements OnInit {
     imageChangedEvent: any = '';
     croppedImage: any = '';
     isProfileImageChanged = false;
-    bio = this.profile.bio;
-
-    editorConfig = {
-        'editable': true,
-        'spellcheck': true,
-        'height': 'auto',
-        'minHeight': '300px',
-        'width': 'auto',
-        'minWidth': '0',
-        'translate': 'yes',
-        'enableToolbar': true,
-        'showToolbar': true,
-        'placeholder': 'Enter text here...',
-        'imageEndPoint': '',
-        'toolbar': [
-            ['bold', 'italic', 'underline', 'strikeThrough', 'superscript', 'subscript'],
-            ['fontName', 'fontSize', 'color'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent'],
-            ['cut', 'copy', 'delete', 'removeFormat', 'undo', 'redo'],
-            ['paragraph', 'blockquote', 'removeBlockquote', 'horizontalLine', 'orderedList', 'unorderedList'],
-            ['link', 'unlink', 'image', 'video']
-        ]
-    };
 
     constructor(public profileService: ProfileService,
                 public appConfig: AppConfig,
                 private uploadService: UploadService,
+                private notification: NotificationsService,
+                private dataTransporterService: DataTransportService,
                 private router: Router) {
     }
 
@@ -61,19 +42,20 @@ export class DashboardUpdateComponent implements OnInit {
     updateProfile() {
         if (this.isProfileImageChanged) {
             const file = this.uploadService.dataURLtoFile(this.profileImageUrl, 'image.png');
-            this.uploadService.uploadFile(this.appConfig.getProfileUploadImageUrl(this.profile.userId), file);
+            this.uploadService.uploadFile(this.appConfig.getProfileUploadImageUrl(this.profile.userId), file).subscribe(percent => {
+
+            }, error => {
+                this.notification.error('An exception occurred while uploading your profile photo: ' + error);
+            }, () => {
+                this.dataTransporterService.fire('image_change', 'image updated');
+            });
             this.isProfileImageChanged = false;
         }
-        console.log("updating....");
         this.profileService.updateUserProfile(this.profile).subscribe(success => {
-            console.log(success);
+            this.notification.success('Profile updated');
         }, error => {
-            console.log(error);
-        })
-    }
-
-    updateBio(html) {
-        this.profile.bio = html;
+            this.notification.error('An exception occurred while saving your profile: ' + error);
+        });
     }
 
     fileChangeEvent(event: any): void {

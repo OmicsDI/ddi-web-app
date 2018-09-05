@@ -561,5 +561,4 @@ td.gsc_a_c {
 .available-tasks li:before {
     content: '✓';
     margin-right: 10px;
-;
 }
