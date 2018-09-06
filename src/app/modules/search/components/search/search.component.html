@@ -1,57 +1,59 @@
-<div class="hidden-lg" AppSearchBoxSearch style="width:100%; padding-bottom: 20px;"></div>
-<app-search-total [searchCount]="searchResult.count" [searchQuery]="query" (ignoreAllFacet)="removeAllFacet()">
-</app-search-total>
+<div *ngIf="searchResult">
+    <div class="hidden-lg" AppSearchBoxSearch style="width:100%; padding-bottom: 20px;"></div>
+    <app-search-total [searchCount]="searchResult.count" [searchQuery]="query" (ignoreAllFacet)="removeAllFacet()">
+    </app-search-total>
 
-<div class="row">
-    <div class="col-lg-2 col-md-3 col-sm-4 hidden-xs metasearch-facets">
-        <div style="vertical-align: top; border:none;">
-            <div *ngFor="let f of searchResult.facets">
-                <ng-container *ngIf="f.label === 'Omics type'">
-                    <app-facet-omics [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
-                                     [facetSelected]="selectedFacets.get(f.id)"
-                                     (facetValueSelected)="facetValueSelected(f.id, $event)"
-                                     (facetValueRemoved)="facetValueRemoved(f.id, $event)">
-                    </app-facet-omics>
-                </ng-container>
-            </div>
+    <div class="row">
+        <div class="col-lg-2 col-md-3 col-sm-4 hidden-xs metasearch-facets">
+            <div style="vertical-align: top; border:none;">
+                <div *ngFor="let f of searchResult.facets">
+                    <ng-container *ngIf="f.label === 'Omics type'">
+                        <app-facet-omics [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                                         [facetSelected]="selectedFacets.get(f.id)"
+                                         (facetValueSelected)="facetValueSelected(f.id, $event)"
+                                         (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                        </app-facet-omics>
+                    </ng-container>
+                </div>
 
-            <div *ngFor="let f of searchResult.facets">
-                <ng-container *ngIf="f.label === 'Organisms'">
-                    <h3>{{f.label}}</h3>
-                    <div class="metasearch-organism-facet force-scrollbars list-group-item"
-                         style="overflow-x:hidden;">
-                        <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
-                                   [facetSelected]="selectedFacets.get(f.id)"
-                                   (facetValueSelected)="facetValueSelected(f.id, $event)"
-                                   (facetValueRemoved)="facetValueRemoved(f.id, $event)">
-                        </app-facet>
-                    </div>
-                </ng-container>
-            </div>
+                <div *ngFor="let f of searchResult.facets">
+                    <ng-container *ngIf="f.label === 'Organisms'">
+                        <h3>{{f.label}}</h3>
+                        <div class="metasearch-organism-facet force-scrollbars list-group-item"
+                             style="overflow-x:hidden;">
+                            <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                                       [facetSelected]="selectedFacets.get(f.id)"
+                                       (facetValueSelected)="facetValueSelected(f.id, $event)"
+                                       (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                            </app-facet>
+                        </div>
+                    </ng-container>
+                </div>
 
-            <div *ngFor="let f of searchResult.facets">
-                <ng-container *ngIf="f.label !== 'Organisms'">
-                    <h3>{{f.label}}</h3>
-                    <div class="metasearch-organism-facet force-scrollbars list-group-item"
-                         style="overflow-x:hidden;">
-                        <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
-                                   [facetSelected]="selectedFacets.get(f.id)"
-                                   (facetValueSelected)="facetValueSelected(f.id, $event)"
-                                   (facetValueRemoved)="facetValueRemoved(f.id, $event)">
-                        </app-facet>
-                    </div>
-                </ng-container>
+                <div *ngFor="let f of searchResult.facets">
+                    <ng-container *ngIf="f.label !== 'Organisms'">
+                        <h3>{{f.label}}</h3>
+                        <div class="metasearch-organism-facet force-scrollbars list-group-item"
+                             style="overflow-x:hidden;">
+                            <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
+                                       [facetSelected]="selectedFacets.get(f.id)"
+                                       (facetValueSelected)="facetValueSelected(f.id, $event)"
+                                       (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                            </app-facet>
+                        </div>
+                    </ng-container>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12  metasearch-results" style="border-left: none;">
-        <app-search-pager [totalResults]="searchResult.count" (dataControlChange)="requestData($event)"
-                          [dataControl]="dataControl"></app-search-pager>
-        <app-search-result [totalResults]="searchResult.count" [dataControl]="dataControl"
-                           [searchResult]="searchResult" [databases]="databases"></app-search-result>
-        <app-search-pager [totalResults]="searchResult.count"
-                          (dataControlChange)="requestData($event)" [dataControl]="dataControl"></app-search-pager>
-        <app-feedback [query]="query"></app-feedback>
-    </div>
+        <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12  metasearch-results" style="border-left: none;">
+            <app-search-pager [totalResults]="searchResult.count" (dataControlChange)="requestData($event)"
+                              [dataControl]="dataControl"></app-search-pager>
+            <app-search-result [totalResults]="searchResult.count" [dataControl]="dataControl"
+                               [searchResult]="searchResult" [databases]="databases"></app-search-result>
+            <app-search-pager [totalResults]="searchResult.count"
+                              (dataControlChange)="requestData($event)" [dataControl]="dataControl"></app-search-pager>
+            <app-feedback [query]="query"></app-feedback>
+        </div>
 
+    </div>
 </div>

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-
+import {HttpClientModule} from '@angular/common/http';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
@@ -19,12 +19,16 @@ import {SettingsComponent} from '@modules/dashboard/components/settings/settings
 import {DashboardUpdateComponent} from '@modules/dashboard/components/update/update.component';
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
-import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
+import {QuillModule} from 'ngx-quill';
+import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cropper.module';
+
 
 @NgModule({
     imports: [
         CommonModule,
+        HttpClientModule,
+        QuillModule,
         DashboardRoutingModule,
         ControlsModule,
         ProfileControlsModule,
@@ -35,7 +39,8 @@ import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module
         UiSwitchModule,
         ClipboardModule,
         UtilsModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        ImageCropperModule
     ],
     declarations: [
         DashboardComponent,
@@ -46,7 +51,6 @@ import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module
         DashboardSelectedComponent,
         SettingsComponent,
         DashboardUpdateComponent,
-        NavComponent
     ]
 })
 export class DashboardModule {

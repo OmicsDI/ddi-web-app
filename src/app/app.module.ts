@@ -46,6 +46,9 @@ import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
+import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
+import {UploadService} from '@shared/services/upload.service';
+import {HttpClientModule} from '@angular/common/http';
 
 
 export function getParameterByName(name): string {
@@ -67,7 +70,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        NavComponent
     ],
     imports: [
         CommonModule,
@@ -76,6 +80,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         BrowserModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         MatDialogModule,
         MatMenuModule,
         MatButtonModule,
@@ -129,6 +134,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         , MatButtonModule
         , LogService
         , LogPublisherService
+        , UploadService
         , InviteService],
     entryComponents: [
         // ConfirmDialogComponent

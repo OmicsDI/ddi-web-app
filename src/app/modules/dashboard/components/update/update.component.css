@@ -4,3 +4,106 @@
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-weight: 300;
 }
+
+.edit-form h4 {
+    font-weight: 300;
+}
+
+.image-rounded {
+    position: absolute;
+    z-index: 2;
+}
+
+.image-rounded:hover {
+    z-index: 0;
+}
+
+.click-to-change {
+    cursor: pointer;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 0 0 400px 400px;
+    height: 50%;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    padding: 20px;
+    color: white;
+    z-index: 1;
+}
+
+.click-to-change:hover {
+    z-index: 3;
+}
+
+.drop {
+    width: 96%;
+    height: 96%;
+    border: 3px dashed #DADFE3;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    background: white;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /*&:hover
+     * cursor: pointer
+     * background: #f5f5f5 */
+}
+.drop .cont {
+    width: 80%;
+    height: 200px;
+    color: #8E99A5;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.drop .cont i {
+    font-size: 400%;
+    color: #8E99A5;
+    position: relative;
+}
+.drop .cont .tit {
+    font-size: 400%;
+    text-transform: uppercase;
+}
+.drop .cont .desc {
+    color: #A4AEBB;
+}
+.drop .cont .browse {
+    margin: 10px 25%;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    background: #09f;
+}
+.drop input {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    background: red;
+    opacity: 0;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.error-message {
+    color: red;
+}

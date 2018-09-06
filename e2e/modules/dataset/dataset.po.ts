@@ -107,7 +107,7 @@ export class DatasetPage {
     }
 
     clickPubAbstractMoreLess () {
-        return element(by.css('.pubAbstract b')).click();
+        browser.actions().mouseMove(element(by.css('#more-abstract'))).click().perform();
     }
 
     getPubId () {

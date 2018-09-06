@@ -1,33 +1,30 @@
 <div id="wrapper">
-    <app-nav></app-nav>
-    <div id="page-wrapper">
-        <div class="container-fluid3">
+    <div class="container-fluid3">
 
-            <div class="caption">Edit Picture</div>
+        <div class="caption">Edit Picture</div>
 
-            <div class="row">
-                <div class="col-md-2 col-md-offset-5 pictureFrameEdit">
+        <div class="row">
+            <div class="col-md-2 col-md-offset-5 pictureFrameEdit">
 
-                    <img
-                            [src]="this.profileImageUrl"
-                            width="150"
-                            id="gsc_prf_pup"
-                            style="width:150px;">
+                <img
+                        [src]="this.profileImageUrl"
+                        width="150"
+                        id="gsc_prf_pup"
+                        style="width:150px;">
 
 
-                    <form method="post" enctype="multipart/form-data"
-                          action="#">
-                        <div style="text-align: center; font-size: 10px; font-style: italic; font-weight: normal;">
-                            <input type="file" id="file" name="file" ng2FileSelect [uploader]="uploader"
-                                   (change)="fileChangeEvent($event)" class="inputfile"/>
-                            <label for="file" style="font-size: 10px; font-style: italic; font-weight: normal;">change
-                                photo</label>
-                        </div>
-                    </form>
+                <form method="post" enctype="multipart/form-data"
+                      action="#">
+                    <div style="text-align: center; font-size: 10px; font-style: italic; font-weight: normal;">
+                        <input type="file" id="file" name="file" ng2FileSelect [uploader]="uploader"
+                               (change)="fileChangeEvent($event)" class="inputfile"/>
+                        <label for="file" style="font-size: 10px; font-style: italic; font-weight: normal;">change
+                            photo</label>
+                    </div>
+                </form>
 
-                </div>
             </div>
-
         </div>
+
     </div>
 </div>
