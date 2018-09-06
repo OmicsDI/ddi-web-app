@@ -1619,3 +1619,8 @@ image-cropper > div {
     border: 1px solid #dddddd !important;
     padding: 7px 7px 6px 7px !important;
 }
+
+.form-control {
+    border-radius: 0;
+    box-shadow: none;
+}

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
 import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
-import {FileUploader} from 'ng2-file-upload';
 import {UploadService} from '@shared/services/upload.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DataTransportService} from '@shared/services/data.transport.service';
@@ -14,10 +13,8 @@ import {DataTransportService} from '@shared/services/data.transport.service';
 })
 export class DashboardUpdateComponent implements OnInit {
 
-    public uploader: FileUploader;
     public profileImageUrl: string;
     public profile = this.profileService.profile;
-
     imageChangedEvent: any = '';
     croppedImage: any = '';
     isProfileImageChanged = false;
