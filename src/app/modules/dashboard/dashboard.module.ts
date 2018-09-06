@@ -4,7 +4,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
-import {FileUploadModule} from 'ng2-file-upload';
 import {FormsModule} from '@angular/forms';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {ClipboardModule} from 'ngx-clipboard/dist';
@@ -33,7 +32,6 @@ import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cro
         ProfileControlsModule,
         ProfileChartsModule,
         DisqusModule.forRoot('omicsdi'),
-        FileUploadModule,
         FormsModule,
         UiSwitchModule,
         ClipboardModule,
