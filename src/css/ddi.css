@@ -1624,3 +1624,9 @@ image-cropper > div {
     border-radius: 0;
     box-shadow: none;
 }
+
+.caption {
+    font-size: 30px;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-weight: 300;
+}
