@@ -34,9 +34,9 @@
             <a href="http://www.altmetric.com/details.php?citation_id={{d.id}}">Altmetric</a>.
         </p>
         <div style="margin-right: 20px;" class="">
-            <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding" class="pubAbstract">
+            <p *ngFor="let a of d.pubAbstract" class="align-justify ng-binding pubAbstract">
                 <span>{{a | truncate : lengthLimit : ' '}}&nbsp;</span>
-                <span class="hotword" (click)="moreOrLess()"><b>{{moreLessBtn}}</b></span>
+                <span class="hotword" (click)="moreOrLess()"><b id="more-abstract">{{moreLessBtn}}</b></span>
             </p>
         </div>
     </div>
