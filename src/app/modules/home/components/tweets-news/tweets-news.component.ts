@@ -30,7 +30,7 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
         const self = this;
         const t = localStorage.getItem('__twttr');
         if (t) {
-            self.publishtweets(self.parseTweets(localStorage.getItem('__twttr'), 4));
+            self.publishtweets(self.parseTweets(localStorage.getItem('__twttr'), 7));
         } else {
             setTimeout(function () {
                 self.checkTweets();
