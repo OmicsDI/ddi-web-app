@@ -1,19 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {Profile} from 'model/Profile';
-import {DataSetShort} from 'model/DataSetShort';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
-import {FileUploader} from 'ng2-file-upload';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-profile',
@@ -23,8 +20,6 @@ import {DataSet} from 'model/DataSet';
 export class ProfileComponent implements OnInit {
     profileX: Profile;
     public name: String;
-    form: FormGroup;
-    orcidConnected = false;
     dataSetDetails: DataSetDetail[] = [];
     profileImageUrl = '';
     coauthors: string[];
@@ -36,8 +31,6 @@ export class ProfileComponent implements OnInit {
     toDataset = DataSetDetail.toDataset;
     datasetShowed: DataSetDetail[];
 
-    public uploader: FileUploader;
-
     constructor(public profileService: ProfileService,
                 private dataSetService: DataSetService,
                 private formBuilder: FormBuilder,
@@ -47,22 +40,6 @@ export class ProfileComponent implements OnInit {
                 private databaseListService: DatabaseListService,
                 private slimLoadingBarService: SlimLoadingBarService,
                 private route: ActivatedRoute) {
-        this.form = formBuilder.group({
-            name: ['', [
-                Validators.required,
-                Validators.minLength(3)
-            ]],
-            email: ['', [
-                Validators.required
-            ]],
-            phone: [],
-            address: formBuilder.group({
-                street: ['', Validators.minLength(3)],
-                suite: [],
-                city: ['', Validators.maxLength(30)],
-                zipcode: ['', Validators.pattern('^([0-9]){5}([-])([0-9]){4}$')]
-            })
-        });
     }
 
     filterDatasets(keyword) {
@@ -92,10 +69,6 @@ export class ProfileComponent implements OnInit {
             this.profileService.getPublicProfile(username)
                 .subscribe(
                     profile => {
-                        // if(!profile){
-                        //   this.router.navigate(["/notfound"]);
-                        //   return;
-                        // }
 
                         this.profileX = profile;
                         this.profileImageUrl = this.getProfileImageUrl();
@@ -122,14 +95,6 @@ export class ProfileComponent implements OnInit {
                         this.dataSetDetails = [];
 
                         this.userId = profile.userId;
-                        // this.getConnections(this.userId);
-                        // this.getCoAuthors(this.userId);
-
-                        this.uploader = new FileUploader({url: this.appConfig.getProfileUploadImageUrl(this.userId)});
-
-                        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-                            this.profileImageUrl = this.getProfileImageUrl();
-                        };
 
                         this.profileImageUrl = this.getProfileImageUrl();
                     }
@@ -137,45 +102,8 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    checkAll(ev) {
-        this.logger.debug('checking select all {}', ev);
-        this.profileX.dataSets.forEach(x => (x as any).state = ev.target.checked);
-    }
-
-    isAllChecked() {
-        if (null == this.profileX.dataSets) {
-            return false;
-        }
-        return this.profileX.dataSets.every(_ => (_ as any).state);
-    }
-
-    deleteSelected() {
-        const dataSets: DataSetDetail[] = this.dataSetDetails.filter(x => !(x as any).state);
-
-        this.profileService.saveDataSets(this.profileX.userId, dataSets.map(x => {
-            const r: DataSetShort = new DataSetShort();
-            r.source = x.source;
-            r.id = x.id;
-            r.claimed = x['claimed'];
-            return r;
-        }));
-
-        this.getProfile(this.username);
-    }
-
     getProfileImageUrl(): string {
         return this.appConfig.getProfileImageUrl(this.userId);
     }
 
-    public fileChangeEvent(fileInput: any) {
-        if (fileInput.target.files && fileInput.target.files[0]) {
-            setTimeout(() => {
-                this.uploader.uploadAll();
-            }, 100);
-        }
-    }
-
-    isMy(): boolean {
-        return (null == this.username);
-    }
 }

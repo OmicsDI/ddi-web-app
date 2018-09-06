@@ -14,7 +14,6 @@ import {DashboardClaimedComponent} from '@modules/dashboard/components/claimed/c
 import {DashboardFeedbackComponent} from '@modules/dashboard/components/feedback/feedback.component';
 import {DashboardSelectedComponent} from '@modules/dashboard/components/selected/selected.component';
 import {DashboardProfileComponent} from '@modules/dashboard/components/profile/profile.component';
-import {DashboardPictureComponent} from '@modules/dashboard/components/picture/picture.component';
 import {SettingsComponent} from '@modules/dashboard/components/settings/settings.component';
 import {DashboardUpdateComponent} from '@modules/dashboard/components/update/update.component';
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
@@ -46,7 +45,6 @@ import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cro
         DashboardComponent,
         DashboardClaimedComponent,
         DashboardFeedbackComponent,
-        DashboardPictureComponent,
         DashboardProfileComponent,
         DashboardSelectedComponent,
         SettingsComponent,
