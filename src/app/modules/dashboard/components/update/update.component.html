@@ -26,13 +26,20 @@
                                             Drag & Drop
                                         </div>
                                         <div class="desc">
-                                            your files to Assets, or
+                                            your photo to Assets, or
                                         </div>
                                         <div class="browse">
                                             click here to browse
                                         </div>
                                     </div>
-                                    <input id="image-upload" multiple="false" name="image-upload" type="file" (change)="fileChangeEvent($event)" />
+                                    <input id="image-upload" multiple="false" name="image-upload" type="file" (change)="fileChangeEvent($event)" accept="image/*" />
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="imageChangedEvent && imageLoadFailed">
+                                <div class="col-xs-12">
+                                    <div class="alert alert-danger">
+                                        Your input image can't be opened, please select another one!
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" *ngIf="imageChangedEvent">
@@ -52,7 +59,7 @@
                         <div class="mt-card-body">
                             <div class="row edit-form">
                                 <div class="col-md-12 col-xs-12">
-                                    <button type="button" class="btn btn-primary" (click)="imageChangedEvent = null" *ngIf="imageChangedEvent">Pick another image</button>
+                                    <button type="button" class="btn btn-primary" (click)="imageChangedEvent = null; imageLoadFailed=false;" *ngIf="imageChangedEvent">Pick another image</button>
                                     <button type="button" class="btn btn-default pull-right" style="margin-left: 5px" data-dismiss="modal">Cancel</button>
                                     <button type="submit" class="btn btn-success pull-right" (click)="profileImageChange()" data-dismiss="modal">OK</button>
                                 </div>

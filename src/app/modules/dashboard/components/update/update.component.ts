@@ -17,6 +17,7 @@ export class DashboardUpdateComponent implements OnInit {
     public profile = this.profileService.profile;
     imageChangedEvent: any = '';
     croppedImage: any = '';
+    imageLoadFailed = false;
     isProfileImageChanged = false;
 
     constructor(public profileService: ProfileService,
@@ -62,14 +63,16 @@ export class DashboardUpdateComponent implements OnInit {
         this.croppedImage = image;
     }
     imageLoaded() {
-        // show cropper
+        this.imageLoadFailed = false;
     }
     loadImageFailed() {
-        // show message
+        this.imageLoadFailed = true;
     }
 
     profileImageChange() {
-        this.profileImageUrl = this.croppedImage;
-        this.isProfileImageChanged = true;
+        if (!this.imageLoadFailed) {
+            this.profileImageUrl = this.croppedImage;
+            this.isProfileImageChanged = true;
+        }
     }
 }
