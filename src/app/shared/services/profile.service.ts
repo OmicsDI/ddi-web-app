@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Headers, RequestOptionsArgs, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Profile} from 'model/Profile';
@@ -16,27 +16,22 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 @Injectable()
 export class ProfileService extends BaseService {
 
-
-    constructor(private http: AuthHttp, public appConfig: AppConfig, private logger: LogService) {
+    constructor(private http: AuthHttp,
+                public appConfig: AppConfig,
+                private logger: LogService) {
         super();
     }
 
-    isAuthorized() {
-        if (localStorage.getItem('profile')) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-    setProfile(profile: Profile) {
+    setProfile(profile: Profile): void {
         localStorage.removeItem('profile');
         localStorage.setItem('profile', JSON.stringify(profile));
     };
     removeProfile() {
         localStorage.removeItem('profile');
     };
-    getProfileFromLocal() {
-        return JSON.parse(localStorage.getItem('profile'));
+    getProfileFromLocal(): Profile {
+        const profile = JSON.parse(localStorage.getItem('profile'));
+        return profile;
     };
 
     getProfile(): Observable<Profile> {
@@ -108,26 +103,6 @@ export class ProfileService extends BaseService {
         headers.append('Accept', 'application/json');
         let authToken = this.getParameterByName("auth");
         if(authToken) {
-            headers.append('X-AUTH-TOKEN', authToken);
-        }**/
-
-        const config: RequestOptionsArgs = {headers: headers};
-        // $http.post(url, config) .success ...
-
-        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), config)
-            .map(res => {
-                return 'OK';
-            });
-    }
-
-    public updateUserProfile(profile: Profile): Observable<string> {
-
-        const headers = new Headers();
-        /**
-         headers.append('Content-Type', 'application/json');
-         headers.append('Accept', 'application/json');
-         let authToken = this.getParameterByName("auth");
-         if(authToken) {
             headers.append('X-AUTH-TOKEN', authToken);
         }**/
 
@@ -213,22 +188,6 @@ export class ProfileService extends BaseService {
 
         form.submit();
     }
-
-    // public isClaimed(source, id) {
-    //     let obj: any;
-    //     if (null != this.profile.dataSets) {
-    //         obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
-    //     }
-    //     return (null != obj);
-    // }
-
-    // public isWatched(source, id) {
-    //     let obj: any;
-    //     if (null != this.watchedDatasets) {
-    //         obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
-    //     }
-    //     return (null != obj);
-    // }
 
     getSavedSearches(userId: string): Observable<SavedSearch[]> {
         return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//

@@ -21,18 +21,12 @@ export class SearchTotalComponent implements OnInit {
     ignoreAllFacet = new EventEmitter<void>();
     profile: Profile;
 
-    constructor(public profileService: ProfileService
-        , private notificationService: NotificationsService) {
+    constructor(public profileService: ProfileService,
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
-        if (this.profileService.isAuthorized()) {
-            this.profile = this.profileService.getProfileFromLocal();
-        } else {
-            this.profileService.getProfile().subscribe( x => {
-                this.profile = x;
-            });
-        }
+        this.profile = this.profileService.getProfileFromLocal();
     }
 
     showAllClick() {
@@ -43,32 +37,18 @@ export class SearchTotalComponent implements OnInit {
         const savedSearch: SavedSearch = new SavedSearch();
 
         if (!this.profile) {
-            this.notificationService.error(
-                'Please login'
-            );
+            this.notificationService.error('Please login');
             return;
         } else {
             savedSearch.userId = this.profile.userId;
             savedSearch.search = this.searchQuery;
             savedSearch.count = +this.searchCount;
-
-
             this.profileService.saveSavedSearch(savedSearch);
-
-            this.notificationService.success(
-                'Search saved',
-                'to your dashboard'
-            );
+            this.notificationService.success('Search saved', 'to your dashboard');
         }
-
-
     }
 
     copyQueryClick() {
-        this.notificationService.success(
-            'Сopied to clipboard',
-            this.searchQuery
-        );
+        this.notificationService.success('Сopied to clipboard', this.searchQuery);
     }
-
 }

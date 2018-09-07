@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ThorService} from '@shared/services/thor.service';
+import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -32,29 +33,27 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.profileService.isAuthorized()) {
-            this.profile = this.profileService.getProfileFromLocal();
-            this.profileService.getSavedSearches(this.profile.userId).subscribe(x => {
-                this.logger.debug('saved searches received: {}', x.length);
-                this.savedSearches = x;
-            });
-            this.profileService.getWatchedDatasets(this.profile.userId).subscribe(x => {
-                this.logger.debug('saved searches received: {}', x.length);
-                this.watchedDatasets = x;
-            });
-            if (!this.profile.dataSets) {
-                this.dataSets = [];
-                return;
-            }
-            Observable.forkJoin(this.profile.dataSets.map(x => {
-                return this.dataSetService.getDataSetDetail(x.id, x.source);
-            })).subscribe(
-                y => {
-                    this.dataSets = y;
-                    this.thorService.datasets = y;
-                }
-            );
+        this.profile = this.profileService.getProfileFromLocal();
+        this.profileService.getSavedSearches(this.profile.userId).subscribe(x => {
+            this.logger.debug('saved searches received: {}', x.length);
+            this.savedSearches = x;
+        });
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe(x => {
+            this.logger.debug('saved searches received: {}', x.length);
+            this.watchedDatasets = x;
+        });
+        if (!this.profile.dataSets) {
+            this.dataSets = [];
+            return;
         }
+        Observable.forkJoin(this.profile.dataSets.map(x => {
+            return this.dataSetService.getDataSetDetail(x.id, x.source);
+        })).subscribe(
+            y => {
+                this.dataSets = y;
+                this.thorService.datasets = y;
+            }
+        );
     }
     delete(id: string) {
         this.profileService.deleteSavedSearch(this.profile.userId, id).subscribe(

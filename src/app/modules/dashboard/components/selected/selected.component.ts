@@ -39,16 +39,14 @@ export class DashboardSelectedComponent implements OnInit {
 
     ngOnInit() {
         this.slimLoadingBarService.start();
-        if (this.profileService.isAuthorized()) {
-            this.profile = this.profileService.getProfileFromLocal();
-        };
+        this.profile = this.profileService.getProfileFromLocal();
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.reloadDataSets();
         });
     }
 
-    reloadDataSets() {
+    private reloadDataSets() {
         if (!this.selectedService.dataSets) {
             this.dataSets = [];
             this.slimLoadingBarService.complete();
@@ -56,9 +54,8 @@ export class DashboardSelectedComponent implements OnInit {
         }
         Observable.forkJoin(this.selectedService.dataSets.map(x => {
             return this.dataSetService.getDataSetDetail(x.id, x.source);
-        })).subscribe(
-            y => {
-                this.dataSets = y;
+        })).subscribe(datasets => {
+                this.dataSets = datasets;
                 this.slimLoadingBarService.complete();
             }
         );
@@ -89,10 +86,7 @@ export class DashboardSelectedComponent implements OnInit {
 
             this.profileService.claimDataset(this.profile.userId, d);
         }
-        this.notificationService.success(
-            'Datasets claimed',
-            'to your dashboard'
-        );
+        this.notificationService.success('Datasets claimed', 'to your dashboard');
     }
 
     watchClick() {
@@ -105,33 +99,23 @@ export class DashboardSelectedComponent implements OnInit {
 
             this.profileService.saveWatchedDataset(d);
         }
-        this.notificationService.success(
-            'Datasets watched',
-            'to your dashboard'
-        );
+        this.notificationService.success('Datasets watched', 'to your dashboard');
     }
 
 
     deleteClick() {
-        const confirm = this.dialogService.confirm('Unselect all datasets', 'Are you sure you want to do this?')
+        this.dialogService.confirm('Unselect all datasets', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
                     this.selectedService.dataSets = [];
-
                     this.reloadDataSets();
-
-                    this.notificationService.success(
-                        'Datasets deleted',
-                        'from selected'
-                    );
-
+                    this.notificationService.success('Datasets deleted', 'from selected');
                 }
             });
     }
 
     download() {
-
-        const confirm = this.dialogService.confirm('Download selected.txt', 'Are you sure you want to do this?')
+        this.dialogService.confirm('Download selected.txt', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
                     let IDs = '';
@@ -139,25 +123,14 @@ export class DashboardSelectedComponent implements OnInit {
                         IDs += ((IDs === '' ? '' : ',') + d.source + '/' + d.id);
                     }
 
-                    const storageObj = {hello: 'world'};
                     const dataStr = 'data:text;charset=utf-8,' + encodeURIComponent(IDs);
                     const dlAnchorElem = document.getElementById('downloadAnchorElem');
                     dlAnchorElem.setAttribute('href', dataStr);
                     dlAnchorElem.setAttribute('download', 'selected.txt');
                     dlAnchorElem.click();
 
-                    this.notificationService.success(
-                        'Dataset IDs downloaded',
-                        'to your computer'
-                    );
-
+                    this.notificationService.success('Dataset IDs downloaded', 'to your computer');
                 }
             });
-
-
     }
 }
-
-
-// <img style="float:right;cursor:pointer;" src="img/delete.png" title="delete"
-// (click)="selectedService.unselect(d.source, d.id); remove(d.source, d.id);">

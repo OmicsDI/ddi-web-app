@@ -14,6 +14,7 @@ import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from './profile.service';
 import {AppConfig} from 'app/app.config';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {AuthService} from '@shared/services/auth.service';
 
 @Injectable()
 export class ThorService {
@@ -26,6 +27,7 @@ export class ThorService {
     public datasets: DataSetDetail[];
 
     constructor(private http: Http,
+                private authService: AuthService,
                 private notificationsService: NotificationsService,
                 private databaseListService: DatabaseListService,
                 private datasetService: DataSetService,
@@ -156,13 +158,9 @@ export class ThorService {
                                 d.name = x.title;
                                 d.omics_type = x.omicsType;
                                 let profile;
-                                if (this.profileService.isAuthorized()) {
+                                if (this.authService.loggedIn()) {
                                     profile = this.profileService.getProfileFromLocal();
                                     this.profileService.claimDataset(profile.userId, d);
-                                } else {
-                                    this.profileService.getProfile().subscribe( p => {
-                                        this.profileService.claimDataset(p.userId, d);
-                                    });
                                 }
                             }
                         }

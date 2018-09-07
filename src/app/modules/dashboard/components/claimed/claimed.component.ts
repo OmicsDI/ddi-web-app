@@ -21,9 +21,7 @@ export class DashboardClaimedComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.profileService.isAuthorized()) {
-            this.profile = this.profileService.getProfileFromLocal();
-        }
+        this.profile = this.profileService.getProfileFromLocal();
     }
 
     updateProfile() {
@@ -31,20 +29,12 @@ export class DashboardClaimedComponent implements OnInit {
     }
 
     deleteClick() {
-
         this.dialogService.confirm('Delete all datasets', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
-                    this.notificationService.success(
-                        'Datasets deleted',
-                        'from your profile'
-                    );
-
+                    this.notificationService.success('Datasets deleted', 'from your profile');
                     this.profile.dataSets = [];
-                    this.profileService.updateUser(this.profile ).subscribe(x => {
-
-                    });
-
+                    this.profileService.updateUser(this.profile ).subscribe(x => {});
                 }
             });
     }

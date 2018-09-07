@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from './profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
+import {AuthService} from '@shared/services/auth.service';
 
 @Injectable()
 export class SelectedService {
@@ -12,16 +13,17 @@ export class SelectedService {
 
     public dataSets: DataSetShort[] = [];
 
-    constructor(public profileService: ProfileService
-        , private notificationService: NotificationsService) {
-
-        this.profileService.getProfile().subscribe(x => {
-            this.profileService.getSelected(x.userId).subscribe(
+    constructor(public profileService: ProfileService,
+                private authService: AuthService,
+                private notificationService: NotificationsService) {
+        if (this.authService.loggedIn()) {
+            const profile = this.profileService.getProfileFromLocal();
+            this.profileService.getSelected(profile.userId).subscribe(
                 r => {
                     this.dataSets = r;
                 }
             );
-        });
+        }
     }
 
     public select(source, accession) {
@@ -60,21 +62,11 @@ export class SelectedService {
         } else {
             this.dataSets.push({id: id, source: source, name: '', claimed: '0', omics_type: null});
         }
-        let profile;
-        if (this.profileService.isAuthorized()) {
-            profile = this.profileService.getProfileFromLocal();
-            this.profileService.setSelected(profile.userId, this.dataSets).subscribe(x => {
-            });
+        if (this.authService.loggedIn()) {
+            const profile = this.profileService.getProfileFromLocal();
+            this.profileService.setSelected(profile.userId, this.dataSets).subscribe(x => {});
 
             this.notificationService.success('Selection saved', 'in your dashboard');
-        } else {
-            this.profileService.getProfile().subscribe( x => {
-                profile = x;
-                this.profileService.setSelected(profile.userId, this.dataSets).subscribe(p => {
-                });
-
-                this.notificationService.success('Selection saved', 'in your dashboard');
-            });
-        };
+        }
     }
 }

@@ -14,6 +14,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
+import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -23,7 +24,7 @@ import {Profile} from 'model/Profile';
 export class DatasetWidgetComponent implements OnInit {
 
     @Input() d: DataSet;
-    @Input() allowSelect = true;
+    @Input() allowSelect = false;
     @Output() buttonClicked = new EventEmitter<any>();
     @Input() allowDelete = true;
     @Input() allowClaim = true;
@@ -40,18 +41,20 @@ export class DatasetWidgetComponent implements OnInit {
                 private notificationService: NotificationsService,
                 private dataSetService: DataSetService,
                 private logger: LogService,
+                private authService: AuthService,
                 private dialog: MatDialog) {
     }
 
     ngOnInit() {
-        if (this.profileService.isAuthorized()) {
+        if (this.authService.loggedIn()) {
             this.profile = this.profileService.getProfileFromLocal();
             if (this.profile.userId) {
                 this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
                     this.watchedDatasets = x;
                 });
+                this.allowSelect = true;
             }
-        };
+        }
     }
 
     getDatabaseUrl(source) {
@@ -104,10 +107,7 @@ export class DatasetWidgetComponent implements OnInit {
         $event.stopPropagation();
         $event.preventDefault();
 
-        this.notificationService.success(
-            'Dataset claimed',
-            'to your dashboard'
-        );
+        this.notificationService.success('Dataset claimed', 'to your dashboard');
     }
 
     watchClicked($event, source, id) {
@@ -126,10 +126,7 @@ export class DatasetWidgetComponent implements OnInit {
         $event.stopPropagation();
         $event.preventDefault();
 
-        this.notificationService.success(
-            'Dataset watched',
-            'in your dashboard'
-        );
+        this.notificationService.success('Dataset watched', 'in your dashboard');
     }
 
     toggle(source: string, id: string) {

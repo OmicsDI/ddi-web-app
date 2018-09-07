@@ -30,10 +30,8 @@ export class DashboardUpdateComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.profileService.isAuthorized()) {
-            this.profile = this.profileService.getProfileFromLocal();
-            this.fileUpload(this.profile);
-        }
+        this.profile = this.profileService.getProfileFromLocal();
+        this.fileUpload(this.profile);
     };
     fileUpload (profile: Profile) {
         if (!profile) {
@@ -55,7 +53,7 @@ export class DashboardUpdateComponent implements OnInit {
             });
             this.isProfileImageChanged = false;
         }
-        this.profileService.updateUserProfile(this.profile).subscribe(success => {
+        this.profileService.updateUser(this.profile).subscribe(success => {
             this.notification.success('Profile updated');
         }, error => {
             this.notification.error('An exception occurred while saving your profile: ' + error);
