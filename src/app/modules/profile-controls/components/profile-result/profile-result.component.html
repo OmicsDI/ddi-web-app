@@ -1,22 +1,19 @@
-<ul *ngIf="this.profile?.dataSets && this.profile?.dataSets.length>0" class="list-unstyled"
+<ul *ngIf="profile?.dataSets && profile?.dataSets.length>0" class="list-unstyled"
     style="display:inline-block; width:100%">
 
-    <ng-container *ngFor="let d of this.dataSets | paginate: { itemsPerPage: 10, currentPage: p }">
+    <ng-container *ngFor="let d of dataSets | paginate: { itemsPerPage: 10, currentPage: p }">
 
 
-        <div class="col-sm-1" *ngIf="this.thorService.isClaimed(d.source,d.id)" class="rotate"
+        <div class="col-sm-1" *ngIf="thorService.isClaimed(d.source,d.id)" class="rotate"
              style="float:left; position: relative; top: 60px; left:-45px; z-index: 1000; color: #A6CE39; padding-bottom: 5px; display: inline;">
             linked to orcid <img src="assets/orcid.png">
         </div>
 
 
-        <li
-                class="repeated-item ng-scope"
-                style="min-width:400px;">
-
-
+        <li class="repeated-item ng-scope" style="min-width:400px;">
             <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
-                               [databases]="databases" (buttonClicked)="deleteDataset(d.source, d.id)"></app-datasetwidget>
+                               [databases]="databases" (buttonClicked)="deleteDataset(d.source, d.id)"
+                               [profile]="profile"></app-datasetwidget>
         </li>
 
 
@@ -27,7 +24,7 @@
 <pagination-controls (pageChange)="p = $event"
                      previousLabel=""
                      nextLabel=""
-                     *ngIf="this.dataSets && this.dataSets.length > 10"
+                     *ngIf="dataSets && dataSets.length > 10"
                      class="my-pagination">
 </pagination-controls>
 

@@ -12,6 +12,9 @@ import {FacetValue} from 'model/FacetValue';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {DatabaseListService} from '@shared/services/database-list.service';
+import {Profile} from 'model/Profile';
+import {AuthService} from '@shared/services/auth.service';
+import {ProfileService} from '@shared/services/profile.service';
 
 @Component({
     selector: 'app-search',
@@ -26,16 +29,22 @@ export class SearchComponent implements OnInit {
     params = {};
     selectedFacets: Map<string, string[]>;
     databases: Database[];
+    profile: Profile;
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: SlimLoadingBarService,
                 private route: ActivatedRoute,
                 private logger: LogService,
+                private authService: AuthService,
+                private profileService: ProfileService,
                 private databaseListService: DatabaseListService,
                 private dataTransportService: DataTransportService) {
     }
 
     ngOnInit() {
+        if (this.authService.loggedIn()) {
+            this.profile = this.profileService.getProfileFromLocal();
+        }
         this.route.queryParams.subscribe(params => {
             this.params = params;
             this.slimLoadingBarService.start();

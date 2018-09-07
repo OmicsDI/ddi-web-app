@@ -30,6 +30,7 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowClaim = true;
     @Input() allowWatch = true;
     @Input() databases: Database[];
+    @Input()
     profile: Profile;
     watchedDatasets: WatchedDataset[];
 
@@ -52,7 +53,6 @@ export class DatasetWidgetComponent implements OnInit {
                 this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
                     this.watchedDatasets = x;
                 });
-                this.allowSelect = true;
             }
         }
     }

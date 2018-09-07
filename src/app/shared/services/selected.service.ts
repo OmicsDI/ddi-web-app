@@ -3,6 +3,7 @@ import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from './profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {AuthService} from '@shared/services/auth.service';
+import {Profile} from 'model/Profile';
 
 @Injectable()
 export class SelectedService {
@@ -13,12 +14,14 @@ export class SelectedService {
 
     public dataSets: DataSetShort[] = [];
 
+    profile: Profile;
+
     constructor(public profileService: ProfileService,
                 private authService: AuthService,
                 private notificationService: NotificationsService) {
         if (this.authService.loggedIn()) {
-            const profile = this.profileService.getProfileFromLocal();
-            this.profileService.getSelected(profile.userId).subscribe(
+            this.profile = this.profileService.getProfileFromLocal();
+            this.profileService.getSelected(this.profile.userId).subscribe(
                 r => {
                     this.dataSets = r;
                 }

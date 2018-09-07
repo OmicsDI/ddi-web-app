@@ -57,7 +57,7 @@
                 class="repeated-item ng-scope"
                 style="min-width:400px;">
 
-                <app-datasetwidget [d]="toDataset(d)" (buttonClicked)="this.remove(d.source,d.id)"
+                <app-datasetwidget [d]="toDataset(d)" (buttonClicked)="this.remove(d.source,d.id)" [profile]="profile"
                                    [databases]="databases" [allowSelect]="false"></app-datasetwidget>
 
 
