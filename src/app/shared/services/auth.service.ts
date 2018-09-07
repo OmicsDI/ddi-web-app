@@ -7,11 +7,6 @@ export class AuthService {
     }
 
     loggedIn() {
-        let result: boolean;
-        result = tokenNotExpired('id_token');
-        if (!result) {
-            return false;
-        }
-        return result;
+        return tokenNotExpired('id_token') && localStorage.getItem('profile') != null;
     }
 }
