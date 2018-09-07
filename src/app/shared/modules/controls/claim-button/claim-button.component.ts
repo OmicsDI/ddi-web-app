@@ -25,7 +25,7 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.profile = JSON.parse(localStorage.getItem('profile'));
+        this.profile = this.profileService.getProfileFromLocal();
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
@@ -66,15 +66,12 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
         dataset.name = this.dataSet.title;
         dataset.omics_type = this.dataSet.omicsType;
 
-        if (!this.profile) {
-            this.logger.debug(`this.profileService.profile is NULL`);
-            this.logger.debug('this.profileService.userId: {}', this.profile.userId);
-        } else {
+        if (this.profileService.isAuthorized()) {
             this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
             this.profileService.claimDataset(this.profile.userId, dataset);
             //
             this.profile.dataSets.push(dataset);
-            localStorage.setItem('profile', JSON.stringify(this.profile));
+            this.profileService.setProfile(this.profile);
         }
 
         this.claimed = true;

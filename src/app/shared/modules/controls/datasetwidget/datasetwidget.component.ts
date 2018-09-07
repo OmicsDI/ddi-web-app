@@ -51,16 +51,7 @@ export class DatasetWidgetComponent implements OnInit {
                     this.watchedDatasets = x;
                 });
             }
-        } else {
-            this.profileService.getProfile().subscribe( x => {
-                this.profile = x;
-                if (this.profile.userId) {
-                    this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watchedDatasets => {
-                        this.watchedDatasets = watchedDatasets;
-                    });
-                }
-            });
-        }
+        };
     }
 
     getDatabaseUrl(source) {
@@ -105,8 +96,7 @@ export class DatasetWidgetComponent implements OnInit {
 
             this.profileService.claimDataset(this.profile.userId, d);
             this.profile.dataSets.push(d);
-            localStorage.removeItem('profile');
-            localStorage.setItem('profile', JSON.stringify(this.profile));
+            this.profileService.setProfile(this.profile);
         } else {
             this.router.navigate(['profile']);
         }

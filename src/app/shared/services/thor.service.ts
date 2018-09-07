@@ -156,8 +156,8 @@ export class ThorService {
                                 d.name = x.title;
                                 d.omics_type = x.omicsType;
                                 let profile;
-                                if (localStorage.getItem('profile')) {
-                                    profile = JSON.parse(localStorage.getItem('profile'));
+                                if (this.profileService.isAuthorized()) {
+                                    profile = this.profileService.getProfileFromLocal();
                                     this.profileService.claimDataset(profile.userId, d);
                                 } else {
                                     this.profileService.getProfile().subscribe( p => {

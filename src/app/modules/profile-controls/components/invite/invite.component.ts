@@ -50,11 +50,7 @@ export class InviteComponent implements OnInit {
     ngOnInit() {
         if (this.profileService.isAuthorized()) {
             this.profile = this.profileService.getProfileFromLocal();
-        } else {
-            this.profileService.getProfile().subscribe( x => {
-                this.profile = x;
-            });
-        }
+        };
         this.inviteService.getInvite(this.data.inviteId).subscribe(x => {
             if (x) {
                 Observable.forkJoin(x.dataSets.map(record => {

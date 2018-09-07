@@ -26,8 +26,8 @@ export class SearchTotalComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (localStorage.getItem('profile')) {
-            this.profile = JSON.parse(localStorage.getItem('profile'));
+        if (this.profileService.isAuthorized()) {
+            this.profile = this.profileService.getProfileFromLocal();
         } else {
             this.profileService.getProfile().subscribe( x => {
                 this.profile = x;

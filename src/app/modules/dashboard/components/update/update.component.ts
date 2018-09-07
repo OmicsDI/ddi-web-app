@@ -44,13 +44,7 @@ export class DashboardUpdateComponent implements OnInit {
         if (this.profileService.isAuthorized()) {
             this.profile = this.profileService.getProfileFromLocal();
             this.fileUpload(this.profile);
-        } else {
-            this.profileService.getProfile().subscribe( x => {
-                this.profile = x;
-                this.fileUpload(this.profile);
-            });
         }
-
     };
     fileUpload (profile: Profile) {
         if (!profile) {

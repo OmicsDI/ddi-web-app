@@ -41,11 +41,7 @@ export class DashboardSelectedComponent implements OnInit {
         this.slimLoadingBarService.start();
         if (this.profileService.isAuthorized()) {
             this.profile = this.profileService.getProfileFromLocal();
-        } else {
-            this.profileService.getProfile().subscribe( x => {
-                this.profile = x;
-            });
-        }
+        };
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.reloadDataSets();
