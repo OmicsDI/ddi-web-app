@@ -101,6 +101,9 @@
               <directory>dist</directory>
             </resource>
             <resource>
+              <directory>sitemaps</directory>
+            </resource>
+            <resource>
               <directory>webapp/WEB-INF</directory>
               <targetPath>WEB-INF</targetPath>
             </resource>
