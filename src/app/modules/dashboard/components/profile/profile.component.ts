@@ -67,13 +67,13 @@ export class DashboardProfileComponent implements OnInit {
             this.getProfile(this.username);
         });
 
-        Observable.fromEvent(window, 'resize')
-            .debounceTime(100) // timer
-            .subscribe((event) => {
-                // restartRequest
-                // document.getElementById("chart44").style.width = document.getElementById("profile_div").clientWidth.toString();
-                document.getElementById('chart44').style.width = '0px';
-            });
+        // Observable.fromEvent(window, 'resize')
+        //     .debounceTime(100) // timer
+        //     .subscribe((event) => {
+        //         // restartRequest
+        //         // document.getElementById("chart44").style.width = document.getElementById("profile_div").clientWidth.toString();
+        //         document.getElementById('chart44').style.width = '0px';
+        //     });
     }
 
 

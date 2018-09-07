@@ -1,12 +1,9 @@
 <div id="wrapper">
-    <app-nav></app-nav>
-    <div id="page-wrapper">
-        <div class="container-fluid3">
-
-
+    <div class="container-fluid3">
+        <div class="col-md-12 col-xs-12">
             <div class="row align-top">
                 <div class="col-lg-6">
-                    <div class="caption">Edit Datasets</div>
+                    <div class="caption">My Datasets</div>
                 </div>
                 <div class="col-lg-6 justify-content-end">
                     <div *ngIf="(profileService.profile?.dataSets?.length>0)"
@@ -32,7 +29,6 @@
                                                    [queryParams]="{q:profileService.profile?.userName}">search</a> to
                 find and claim your dataset.
             </div>
-
         </div>
     </div>
 </div>

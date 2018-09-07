@@ -5,7 +5,6 @@ import {DashboardFeedbackComponent} from '@modules/dashboard/components/feedback
 import {DashboardProfileComponent} from '@modules/dashboard/components/profile/profile.component';
 import {DashboardUpdateComponent} from '@modules/dashboard/components/update/update.component';
 import {DashboardClaimedComponent} from '@modules/dashboard/components/claimed/claimed.component';
-import {DashboardPictureComponent} from '@modules/dashboard/components/picture/picture.component';
 import {SettingsComponent} from '@modules/dashboard/components/settings/settings.component';
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
 
@@ -16,7 +15,6 @@ const routes: Routes = [
     {path: 'profile', component: DashboardProfileComponent},
     {path: 'update', component: DashboardUpdateComponent},
     {path: 'claimed', component: DashboardClaimedComponent},
-    {path: 'picture', component: DashboardPictureComponent},
     {path: 'settings', component: SettingsComponent}
 ];
 

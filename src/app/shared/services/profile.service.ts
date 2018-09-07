@@ -120,6 +120,26 @@ export class ProfileService extends BaseService {
             });
     }
 
+    public updateUserProfile(profile: Profile): Observable<string> {
+
+        const headers = new Headers();
+        /**
+         headers.append('Content-Type', 'application/json');
+         headers.append('Accept', 'application/json');
+         let authToken = this.getParameterByName("auth");
+         if(authToken) {
+            headers.append('X-AUTH-TOKEN', authToken);
+        }**/
+
+        const config: RequestOptionsArgs = {headers: headers};
+        // $http.post(url, config) .success ...
+
+        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), config)
+            .map(res => {
+                return 'OK';
+            });
+    }
+
     private handleError(error: Response | any) {
         // In a real world app, we might use a remote logging infrastructure
         let errMsg: string;

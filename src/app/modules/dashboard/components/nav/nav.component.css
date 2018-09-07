@@ -1,0 +1,40 @@
+.side-nav {
+    background-color: #393d41;
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.side-nav>li>ul>li>a {
+    color: white;
+}
+
+.side-nav>li>a {
+    color: white;
+}
+
+.side-nav li {
+    border-bottom: 0px solid #393d41;
+}
+
+.user {
+    padding: 20px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.user span {
+    color: white;
+    margin-left: 10px;
+    border: none;
+    background-color: inherit;
+}
+
+@media (min-width: 768px) {
+    .side-nav {
+        left: 240px;
+        width: 240px;
+        margin-left: -240px;
+    }
+    .side-nav>li>a {
+        width: 240px;
+    }
+}

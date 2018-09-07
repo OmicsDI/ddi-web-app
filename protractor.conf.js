@@ -12,7 +12,7 @@ exports.config = {
     capabilities: {
         'browserName': 'chrome',
         chromeOptions: {
-            'args': ['--headless', '--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage', '--window-size=800,600']
+            'args': ['--headless', '--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage', '--window-size=1600,1000']
         }
     },
     directConnect: true,
@@ -32,5 +32,6 @@ exports.config = {
     },
     onPrepare: function () {
         jasmine.getEnv().addReporter(new SpecReporter());
+        browser.manage().window().setSize(1600, 1000);
     }
 };

@@ -1,0 +1,13 @@
+.autocomplete input {
+    font-size: 1.1em;
+    padding: 6px;
+    text-indent: 4px;
+    width: 100%;
+    border: 0px solid transparent;
+}
+
+.autocomplete input:active, .autocomplete input:focus {
+    border-color: transparent;
+    box-shadow: none;
+    outline: 0 solid transparent;
+}

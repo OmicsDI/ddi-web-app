@@ -21,6 +21,10 @@ ul.connectionList li a {
     color: black;
 }
 
+ul.connectionList li {
+    position: relative;
+}
+
 .connection {
     display: block;
     padding: 4px 0;

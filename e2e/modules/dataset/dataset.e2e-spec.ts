@@ -1,6 +1,6 @@
 import {DatasetPage} from './dataset.po';
 
-describe('public profile page', function() {
+describe('public dataset page', function() {
     let datasetPage: DatasetPage;
 
     // looks like beforeEach will execute before all it,even it is not inside this e2e-spec file,

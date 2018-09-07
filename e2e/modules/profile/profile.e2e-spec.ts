@@ -64,7 +64,7 @@ describe('public profile page', function() {
 
         // contact info
         // user
-        expect(profilePage.getAffiliation().getText()).toBe(' Orcid user');
+        expect(profilePage.getAffiliation().getText()).toBe('Orcid user');
 
         // homepage
         expect(profilePage.getHomepage().getAttribute('href')).toBe('https://orcid.org/0000-0003-3282-7478');
@@ -73,7 +73,7 @@ describe('public profile page', function() {
         expect(profilePage.getOrcid().getText()).toBe(' 0000-0003-3282-7478');
 
         // public profile
-        expect(profilePage.getPublicProfile().getText()).toBe(' Pan Xu0');
+        expect(profilePage.getPublicProfile().getText()).toBe('http://localhost:4200/profile/bcdnTdFx');
 
 
 
