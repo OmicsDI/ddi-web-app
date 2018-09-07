@@ -14,7 +14,6 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
-import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -30,9 +29,8 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowClaim = true;
     @Input() allowWatch = true;
     @Input() databases: Database[];
-    @Input()
-    profile: Profile;
-    watchedDatasets: WatchedDataset[];
+    @Input() profile: Profile;
+    @Input() watchedDatasets: WatchedDataset[] = [];
 
     constructor(public selectedService: SelectedService,
                 public appConfig: AppConfig,
@@ -42,19 +40,10 @@ export class DatasetWidgetComponent implements OnInit {
                 private notificationService: NotificationsService,
                 private dataSetService: DataSetService,
                 private logger: LogService,
-                private authService: AuthService,
                 private dialog: MatDialog) {
     }
 
     ngOnInit() {
-        if (this.authService.loggedIn()) {
-            this.profile = this.profileService.getProfileFromLocal();
-            if (this.profile.userId) {
-                this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
-                    this.watchedDatasets = x;
-                });
-            }
-        }
     }
 
     getDatabaseUrl(source) {

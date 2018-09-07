@@ -8,6 +8,8 @@ import {DataControl} from 'model/DataControl';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
+import {WatchedDataset} from 'model/WatchedDataset';
+import {ProfileService} from '@shared/services/profile.service';
 
 @Component({
     selector: 'app-search-result',
@@ -31,10 +33,17 @@ export class SearchResultComponent implements OnInit {
     @Input()
     profile: Profile;
 
-    constructor(private dataSetService: DataSetService, private dialog: MatDialog) {
+    watchedDatasets: WatchedDataset[];
+
+    constructor(private dataSetService: DataSetService,
+                private dialog: MatDialog,
+                private profileService: ProfileService) {
     }
 
     ngOnInit() {
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
+            this.watchedDatasets = x;
+        });
     }
 
     citation(source, id) {

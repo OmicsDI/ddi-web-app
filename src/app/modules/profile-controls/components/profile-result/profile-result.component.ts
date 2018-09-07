@@ -12,13 +12,14 @@ import {DataSet} from 'model/DataSet';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
+import {WatchedDataset} from 'model/WatchedDataset';
 
 @Component({
     selector: 'app-profile-result',
     templateUrl: './profile-result.component.html',
     styleUrls: ['./profile-result.component.css']
 })
-export class ProfileResultComponent implements OnInit, OnChanges {
+export class ProfileResultComponent implements OnInit {
 
     dataSets: DataSetDetail[];
 
@@ -28,6 +29,8 @@ export class ProfileResultComponent implements OnInit, OnChanges {
     databases: Database[];
 
     toDataset = DataSetDetail.toDataset;
+
+    watchedDatasets: WatchedDataset[];
 
 
     constructor(public profileService: ProfileService,
@@ -42,19 +45,9 @@ export class ProfileResultComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this.reloadDataSets();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName of Object.keys(changes)) {
-            const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
-            if (propName === 'profile') {
-                if (null != chng.currentValue) {
-                    this.reloadDataSets();
-                }
-            }
-        }
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
+            this.watchedDatasets = x;
+        });
     }
 
     reloadDataSets() {

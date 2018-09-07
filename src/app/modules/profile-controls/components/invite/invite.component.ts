@@ -134,7 +134,6 @@ export class InviteComponent implements OnInit {
                 this.profileService.setProfile(this.profile);
                 this.logger.info('user updated, {}', x);
                 this.dialogRef.close();
-                this.profileService.getProfile().subscribe();
             }
         );
     }

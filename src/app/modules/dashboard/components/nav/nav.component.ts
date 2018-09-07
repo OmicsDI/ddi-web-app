@@ -4,6 +4,7 @@ import {AppConfig} from '../../../../app.config';
 import {Router} from '@angular/router';
 import {Profile} from 'model/Profile';
 import {DataTransportService} from '@shared/services/data.transport.service';
+import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-nav',
@@ -18,8 +19,10 @@ export class NavComponent implements OnInit {
     showUp = false;
 
     constructor(private profileService: ProfileService,
+                private authService: AuthService,
                 private dataTransportService: DataTransportService,
-                public appConfig: AppConfig, private router: Router) {
+                public appConfig: AppConfig,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -29,13 +32,10 @@ export class NavComponent implements OnInit {
         this.dataTransportService.listen('image_change').subscribe(message => {
              this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
         });
-        this.profileService.getProfile()
-            .subscribe(
-                profile => {
-                    this.profile = profile;
-                    this.userId = profile.userId;
-                    this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
-                }
-            );
+        if (this.authService.loggedIn()) {
+            this.profile = this.profileService.getProfileFromLocal();
+            this.userId = this.profile.userId;
+            this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
+        }
     }
 }

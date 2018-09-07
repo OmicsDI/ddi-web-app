@@ -26,6 +26,7 @@ export class DashboardSelectedComponent implements OnInit {
     toDataset = DataSetDetail.toDataset;
     databases: Database[];
     profile: Profile;
+    watchedDatasets: WatchedDataset[];
 
     constructor(public selectedService: SelectedService,
                 private dataSetService: DataSetService,
@@ -40,6 +41,9 @@ export class DashboardSelectedComponent implements OnInit {
     ngOnInit() {
         this.slimLoadingBarService.start();
         this.profile = this.profileService.getProfileFromLocal();
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
+            this.watchedDatasets = x;
+        });
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.reloadDataSets();

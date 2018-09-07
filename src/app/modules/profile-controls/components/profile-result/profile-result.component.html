@@ -13,7 +13,7 @@
         <li class="repeated-item ng-scope" style="min-width:400px;">
             <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
                                [databases]="databases" (buttonClicked)="deleteDataset(d.source, d.id)"
-                               [profile]="profile"></app-datasetwidget>
+                               [profile]="profile" [watchedDatasets]="watchedDatasets"></app-datasetwidget>
         </li>
 
 

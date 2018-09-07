@@ -11,6 +11,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-profile',
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit {
                 private dataSetService: DataSetService,
                 private formBuilder: FormBuilder,
                 public appConfig: AppConfig,
+                private authService: AuthService,
                 private router: Router,
                 private logger: LogService,
                 private databaseListService: DatabaseListService,
@@ -85,20 +87,17 @@ export class ProfileComponent implements OnInit {
                     }
                 );
         } else {
-            this.profileService.getProfile()
-                .subscribe(
-                    profile => {
-                        this.logger.debug('getting profile');
+            if (this.authService.loggedIn()) {
+                this.profileX = this.profileService.getProfileFromLocal();
+                this.name = this.profileX.userName;
+                this.dataSetDetails = [];
 
-                        this.profileX = profile;
-                        this.name = profile.userName;
-                        this.dataSetDetails = [];
+                this.userId = this.profileX.userId;
 
-                        this.userId = profile.userId;
-
-                        this.profileImageUrl = this.getProfileImageUrl();
-                    }
-                );
+                this.profileImageUrl = this.getProfileImageUrl();
+            } else {
+                this.router.navigate(['unauthorized']);
+            }
         }
     }
 
