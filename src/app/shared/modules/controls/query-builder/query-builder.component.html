@@ -1,6 +1,6 @@
 <div *ngIf="searchQuery" class="alert alert-warning alert-group" style="position: relative; z-index: 1">
     <div class="form-inline" style="position: relative;">
-        <select [(ngModel)]="searchQuery.operator" class="form-control input-sm">
+        <select [(ngModel)]="searchQuery.operator" class="form-control input-sm" (change)="notify()">
             <option *ngFor="let o of operators">{{o.name}}</option>
         </select>
         <button style="margin-left: 5px" (click)="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus"

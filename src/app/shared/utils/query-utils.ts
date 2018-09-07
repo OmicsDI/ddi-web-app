@@ -86,11 +86,9 @@ export class QueryUtils {
      */
     public static extractQuery(params: {}): SearchQuery {
         let query = this.getBaseQuery(params);
+        query = '(' + query + ')';
         query = query.replace(/\(("[^"]*")\)/g, '[$1]');
-        if (query[0] === '(') {
-            query = query.slice(1, query.length - 1);
-        }
-        return this.queryExtractor(query, new Index());
+        return this.queryExtractor(query, new Index()).rules[0].query;
     }
 
     private static queryExtractor(query: string, index: Index): SearchQuery {
@@ -110,7 +108,6 @@ export class QueryUtils {
                 } else if (message.indexOf('NOT') > -1) {
                     search.operator = 'NOT';
                 }
-                index.current++;
                 break;
             } else {
                 message += query.charAt(index.current);
