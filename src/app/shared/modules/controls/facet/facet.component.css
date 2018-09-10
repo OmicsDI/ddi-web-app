@@ -1,3 +1,9 @@
 .metasearch-facet-link {
     font-size: 10px;
 }
+
+.facet-label {
+    white-space: normal;
+    width: 85%;
+    margin-left: 0;
+}
