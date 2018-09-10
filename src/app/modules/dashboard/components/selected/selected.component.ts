@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {SelectedService} from '@shared/services/selected.service';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {Observable} from 'rxjs/Rx';
@@ -13,6 +12,8 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {Profile} from 'model/Profile';
+import {DataSet} from 'model/DataSet';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -21,20 +22,20 @@ import {Profile} from 'model/Profile';
 })
 export class DashboardSelectedComponent implements OnInit {
 
-    dataSets: DataSetDetail[];
+    dataSets: DataSetShort[];
     p: 0;
-    toDataset = DataSetDetail.toDataset;
     databases: Database[];
     profile: Profile;
     watchedDatasets: WatchedDataset[];
+    selectedChannel: 'selected_channel';
 
-    constructor(public selectedService: SelectedService,
-                private dataSetService: DataSetService,
+    constructor(private dataSetService: DataSetService,
                 public appConfig: AppConfig,
                 public profileService: ProfileService,
                 private notificationService: NotificationsService,
                 private slimLoadingBarService: SlimLoadingBarService,
                 private databaseListService: DatabaseListService,
+                private dataTransporterService: DataTransportService,
                 private dialogService: DialogService) {
     }
 
@@ -46,23 +47,15 @@ export class DashboardSelectedComponent implements OnInit {
         });
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
-            this.reloadDataSets();
+            this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
+                this.dataSets = datasets;
+                this.slimLoadingBarService.complete();
+            });
         });
     }
 
-    private reloadDataSets() {
-        if (!this.selectedService.dataSets) {
-            this.dataSets = [];
-            this.slimLoadingBarService.complete();
-            return;
-        }
-        Observable.forkJoin(this.selectedService.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail(x.id, x.source);
-        })).subscribe(datasets => {
-                this.dataSets = datasets;
-                this.slimLoadingBarService.complete();
-            }
-        );
+    getDataset(accession: string, repository: string): Observable<DataSet> {
+        return this.dataSetService.getDataSetDetail(accession, repository).map(x => DataSetDetail.toDataset(x));
     }
 
     remove(source, id) {
@@ -70,15 +63,13 @@ export class DashboardSelectedComponent implements OnInit {
         if (i > -1) {
             this.dataSets.splice(i, 1);
         }
-        i = this.selectedService.dataSets.findIndex(x => x.id === id && x.source === source);
+        i = this.dataSets.findIndex(x => x.id === id && x.source === source);
         if (i > -1) {
-            this.selectedService.dataSets.splice(i, 1);
+            this.dataSets.splice(i, 1);
         }
+        this.profileService.setSelected(this.profile.userId, this.dataSets).subscribe(x => {});
+        this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
         this.notificationService.success('Dataset removed', 'from selected');
-    }
-
-    exportClick() {
-        alert('exportClick');
     }
 
     claimClick() {
@@ -111,8 +102,9 @@ export class DashboardSelectedComponent implements OnInit {
         this.dialogService.confirm('Unselect all datasets', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
-                    this.selectedService.dataSets = [];
-                    this.reloadDataSets();
+                    this.dataSets = [];
+                    this.profileService.setSelected(this.profile.userId, this.dataSets).subscribe(x => {});
+                    this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
                     this.notificationService.success('Datasets deleted', 'from selected');
                 }
             });
@@ -123,7 +115,7 @@ export class DashboardSelectedComponent implements OnInit {
             .subscribe(res => {
                 if (res) {
                     let IDs = '';
-                    for (const d of this.selectedService.dataSets) {
+                    for (const d of this.dataSets) {
                         IDs += ((IDs === '' ? '' : ',') + d.source + '/' + d.id);
                     }
 

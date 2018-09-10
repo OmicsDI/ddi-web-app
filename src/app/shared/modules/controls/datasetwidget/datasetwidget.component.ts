@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataSet} from 'model/DataSet';
-import {SelectedService} from '@shared/services/selected.service';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
@@ -14,6 +13,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -25,15 +25,17 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() d: DataSet;
     @Input() allowSelect = true;
     @Output() buttonClicked = new EventEmitter<any>();
+    @Output() toggleDataset = new EventEmitter<DataSetShort>();
     @Input() allowDelete = true;
     @Input() allowClaim = true;
     @Input() allowWatch = true;
     @Input() databases: Database[];
     @Input() profile: Profile;
     @Input() watchedDatasets: WatchedDataset[] = [];
+    @Input() observableDataset: Observable<DataSet>;
+    @Input() isSelected = false;
 
-    constructor(public selectedService: SelectedService,
-                public appConfig: AppConfig,
+    constructor(public appConfig: AppConfig,
                 public profileService: ProfileService,
                 private databaseListServce: DatabaseListService,
                 private router: Router,
@@ -44,6 +46,11 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.observableDataset) {
+            this.observableDataset.subscribe(dataset => {
+                this.d = dataset;
+            });
+        }
     }
 
     getDatabaseUrl(source) {
@@ -118,7 +125,7 @@ export class DatasetWidgetComponent implements OnInit {
         this.notificationService.success('Dataset watched', 'in your dashboard');
     }
 
-    toggle(source: string, id: string) {
+    toggle(datasetShort: DataSetShort) {
         if (!this.allowSelect) {
             return;
         }
@@ -127,8 +134,7 @@ export class DatasetWidgetComponent implements OnInit {
             return;
         }
 
-        this.selectedService.toggle(source, id);
-        this.logger.debug('Toggling {}, {}', source, id);
+        this.toggleDataset.emit(datasetShort);
     }
 
     deleteClicked($event, source, id) {

@@ -1,6 +1,6 @@
 <div class="mt-card" [ngStyle]="{'cursor':  allowSelect && profile ? 'pointer' : 'default'}"
-     [ngClass]="allowSelect && selectedService.isSelected(d.source,d.id) ? 'grey' : 'white'"
-     (click)="toggle(d.source,d.id);">
+     [ngClass]="allowSelect && isSelected ? 'grey' : 'white'"
+     (click)="toggle(d);" *ngIf="d">
     <div class="mt-card-body">
         <div style="float: right; width: 200px; text-align: right">
             <app-score [dataset]="d"></app-score>

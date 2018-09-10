@@ -32,7 +32,6 @@ import {SimilarMoleculeService} from '@shared/services/similar-molecule.service'
 import {FeedbackService} from '@shared/services/feedback.service';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {AltmetricService} from '@shared/services/altmetric.service';
-import {SelectedService} from '@shared/services/selected.service';
 import {ScoreService} from '@shared/services/score.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {InviteService} from '@shared/services/invite.service';
@@ -125,7 +124,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         , AppConfig
         , StatisticsService
         , AltmetricService
-        , SelectedService
         , DialogService
         , ScoreService
         , ThorService

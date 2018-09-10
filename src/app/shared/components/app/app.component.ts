@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {SelectedService} from '@shared/services/selected.service';
-import { Location, PopStateEvent } from '@angular/common';
+import {Location, PopStateEvent} from '@angular/common';
+import {ProfileService} from '@shared/services/profile.service';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({
     selector: 'app-root',
@@ -15,13 +16,16 @@ export class AppComponent implements OnInit {
     homePage = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
+    private selectedComponents = 0;
+    selectedChannel: 'selected_channel';
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
     constructor(public auth: AuthService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
-                public selectedService: SelectedService) {
+                private dataTransporterService: DataTransportService,
+                private profileService: ProfileService) {
 
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
             window.location.href = window.location.href.replace('http:', 'https:');
@@ -49,6 +53,14 @@ export class AppComponent implements OnInit {
                 }
             }
         });
+        if (this.auth.loggedIn()) {
+            this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
+                this.selectedComponents = datasets.length;
+            });
+            this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
+                this.selectedComponents = datasets.length;
+            });
+        }
     }
 
     getTitle(): string {

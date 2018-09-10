@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 
 import {CheckComponent} from '@modules/commonplace/components/check/check.component';
 import {NotfoundComponent} from '@modules/commonplace/components/notfound/notfound.component';
-import {SelectedComponent} from '@modules/commonplace/components/selected/selected.component';
 import {TermsComponent} from '@modules/commonplace/components/terms/terms.component';
 import {UnauthorizedComponent} from '@modules/commonplace/components/unauthorized/unauthorized.component';
 import {WelcomeComponent} from '@modules/commonplace/components/welcome/welcome.component';
@@ -33,7 +32,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     declarations: [
         CheckComponent,
         NotfoundComponent,
-        SelectedComponent,
         TermsComponent,
         UnauthorizedComponent,
         WelcomeComponent

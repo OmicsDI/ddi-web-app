@@ -5,7 +5,6 @@ import {HomeComponent} from '@modules/home/components/home/home.component';
 import {UnauthorizedComponent} from '@modules/commonplace/components/unauthorized/unauthorized.component';
 import {TermsComponent} from '@modules/commonplace/components/terms/terms.component';
 import {NotfoundComponent} from '@modules/commonplace/components/notfound/notfound.component';
-import {SelectedComponent} from '@modules/commonplace/components/selected/selected.component';
 
 // Route Configuration
 export const routes: Routes = [
@@ -21,7 +20,6 @@ export const routes: Routes = [
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule', canActivate: [AuthGuardService]},
-    {path: 'selected', component: SelectedComponent, canActivate: [AuthGuardService]},
     {path: 'merge', loadChildren: '@modules/merge/merge.module#MergeModule' , canActivate: [AuthGuardService]},
     {path: 'unmerge', loadChildren: '@modules/unmerge/unmerge.module#UnmergeModule', canActivate: [AuthGuardService]},
     {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuardService]}
