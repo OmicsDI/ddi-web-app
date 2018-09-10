@@ -44,9 +44,6 @@ export class SearchBoxComponent implements OnInit {
                 this.params = params;
                 this.queryParams = QueryUtils.extractQuery(params);
                 this.query = this.queryParams.toQueryString();
-                if (this.query[0] === '(') {
-                    this.query = this.query.slice(1, this.query.length - 1);
-                }
                 this.logger.debug('query: {}', this.query);
             }
         });
