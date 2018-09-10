@@ -23,7 +23,7 @@ import {Profile} from 'model/Profile';
 export class DatasetWidgetComponent implements OnInit {
 
     @Input() d: DataSet;
-    @Input() allowSelect = false;
+    @Input() allowSelect = true;
     @Output() buttonClicked = new EventEmitter<any>();
     @Input() allowDelete = true;
     @Input() allowClaim = true;
@@ -123,7 +123,7 @@ export class DatasetWidgetComponent implements OnInit {
             return;
         }
 
-        if (!this.profile.userId) {
+        if (!this.profile) {
             return;
         }
 
