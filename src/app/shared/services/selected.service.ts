@@ -8,8 +8,6 @@ import {Profile} from 'model/Profile';
 @Injectable()
 export class SelectedService {
 
-    private userId: string;
-
     private i = 0;
 
     public dataSets: DataSetShort[] = [];
