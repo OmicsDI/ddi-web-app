@@ -47,7 +47,10 @@ export class ProfileComponent implements OnInit {
     filterDatasets(keyword) {
         this.datasetShowed = [];
         this.dataSetDetails.forEach(dataset => {
-            if (dataset.name.indexOf(keyword) > -1 || dataset.description.indexOf(keyword) > -1) {
+            if (dataset.id.indexOf(keyword) > -1
+                || dataset.source.indexOf(keyword) > -1
+                || dataset.name.indexOf(keyword) > -1
+                || dataset.description.indexOf(keyword) > -1) {
                 this.datasetShowed.push(dataset);
             }
         });
