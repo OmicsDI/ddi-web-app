@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     homePage = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
-    private selectedComponents = 0;
+    selectedComponents = 0;
     selectedChannel: 'selected_channel';
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
