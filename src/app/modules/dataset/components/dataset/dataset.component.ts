@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {Observable, Subscription} from 'rxjs/Rx';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -11,7 +11,6 @@ import {Synonym} from 'model/enrichment-info/Synonym';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
-import {SimilarDataset} from 'model/SimilarDataset';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications/dist';
@@ -26,7 +25,7 @@ import {Database} from 'model/Database';
     templateUrl: './dataset.component.html',
     styleUrls: ['./dataset.component.css']
 })
-export class DatasetComponent implements OnInit, OnDestroy {
+export class DatasetComponent implements OnInit {
     d: DataSetDetail;
     subscription: Subscription;
     enrichmentInfo: EnrichmentInfo;
@@ -71,16 +70,15 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscription = this.route.params.subscribe(params => {
-            this.slimLoadingBarService.start();
-            this.acc = params['acc'];
-            this.repository = params['domain'];
-            this.databaseListService.getDatabaseList().subscribe(databases => {
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.route.params.subscribe(params => {
+                this.slimLoadingBarService.start();
+                this.acc = params['acc'];
+                this.repository = params['domain'];
                 this.databases = databases;
                 this.dataSetService.getDataSetDetail(this.acc, this.repository).subscribe(result => {
                     this.reanalysisOf = this.reanalysedBy = this.relatedOmics = [];
                     this.d = result;
-                    // TODO: update with canonical id
                     this.acc = result.id;
                     this.repository = result.source;
 
@@ -119,18 +117,13 @@ export class DatasetComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
-
-
     getSynonyms(text: string): string[] {
         let result: string[];
         result = this.synonymResult.synonymsList.find(r => r.wordLabel === text).synonyms;
         return result;
     }
 
-    get_section(str: string, synonyms: Synonym[]): Section[] {
+    getSection(str: string, synonyms: Synonym[]): Section[] {
 
         const result: Section[] = [];
         if (null == synonyms) {
@@ -183,7 +176,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }
 
     // Backup do not delete
-    // get_section(str: string, synonyms: Synonym[]): Section[]{
+    // getSection(str: string, synonyms: Synonym[]): Section[]{
     //     let result: Section[] = new Array<Section>();
     //     if(null==synonyms){
     //         result.push({text:str, beAnnotated: false, tobeReduced: false, synonyms: null});
@@ -215,23 +208,23 @@ export class DatasetComponent implements OnInit, OnDestroy {
     //     return result;
     // }
 
-    process_sections() {
+    processSections() {
         // TODO: encoding problems
         const description = this.enrichmentInfo.originalAttributes.description.replace('Â³loopingÂ²', 'WloopingW');
 
-        this.title_sections = this.get_section(this.enrichmentInfo.originalAttributes.name, this.enrichmentInfo.synonyms.name);
-        this.abstract_sections = this.get_section(description, this.enrichmentInfo.synonyms.description);
-        this.sample_protocol_sections = this.get_section(
+        this.title_sections = this.getSection(this.enrichmentInfo.originalAttributes.name, this.enrichmentInfo.synonyms.name);
+        this.abstract_sections = this.getSection(description, this.enrichmentInfo.synonyms.description);
+        this.sample_protocol_sections = this.getSection(
             this.enrichmentInfo.originalAttributes.sample_protocol, this.enrichmentInfo.synonyms.sample_protocol);
-        this.data_protocol_sections = this.get_section(
+        this.data_protocol_sections = this.getSection(
             this.enrichmentInfo.originalAttributes.data_protocol, this.enrichmentInfo.synonyms.data_protocol);
 
         const str = this.enrichmentInfo.originalAttributes.name;
         this.ontology_highlighted = true;
-        this.remove_tags();
+        this.removeTags();
     }
 
-    remove_tags() {
+    removeTags() {
         let count = 0;
         for (const section of this.abstract_sections) {
             section.text = section.text.replace(
@@ -249,7 +242,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
     }
 
-    enrich_click() {
+    enrichClick() {
         if (this.ontology_highlighted) {
             this.title_sections = null;
             this.abstract_sections = null;
@@ -269,14 +262,14 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     this.logger.debug('Enrichment info: {}', this.enrichmentInfo);
                     this.synonymResult = data[1];
                     this.logger.debug('Synonym result: {}', this.synonymResult);
-                    this.logger.debug('calling process_sections');
+                    this.logger.debug('calling processSections');
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {
                         this.dialogService.confirm('Alert' , 'no synonymous words in name or description');
-                        this.process_sections();
+                        this.processSections();
                     } else {
-                        this.process_sections();
+                        this.processSections();
                     }
 
                 }
