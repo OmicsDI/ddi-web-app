@@ -68,4 +68,8 @@
     <from>/merge</from>
     <to>/</to>
   </rule>
+  <rule match-type="wildcard">
+    <from>/unmerge</from>
+    <to>/</to>
+  </rule>
 </urlrewrite>

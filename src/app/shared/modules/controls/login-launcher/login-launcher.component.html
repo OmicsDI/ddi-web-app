@@ -27,6 +27,11 @@
                 Merge
             </button>
         </li>
+        <li class="nav-item" *ngIf="this.mergeControl">
+            <button mat-menu-item [routerLink]="['/unmerge']">
+                Unmerge
+            </button>
+        </li>
         <li class="nav-item">
             <button mat-menu-item (click)="LogOut()">
                 Log Out
