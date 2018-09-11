@@ -47,34 +47,34 @@
                     <hr style="margin-right:10px">
                     <div>
                         <div>
-                            <p class="align-justify"><b>ABSTRACT</b>:
+                            <p class="elements"><b>ABSTRACT</b>:
                                 <app-annotated-text [text]="d.description"
                                                     [sections]="abstract_sections" id="abstract"></app-annotated-text>
                             </p>
                         </div>
                     </div>
                     <div *ngIf="d.similars">
-                        <p class="align-justify" *ngIf="reanalysisOf.length > 0" id="reanalisys_of">
-                            <b>REANALYSIS of:</b> <span *ngFor="let s of reanalysisOf"><a
+                        <p class="elements" *ngIf="reanalysisOf.length > 0" id="reanalisys_of">
+                            <b>REANALYSIS of: </b> <span *ngFor="let s of reanalysisOf"><a
                                 [routerLink]="['/dataset', s['db'].source, s['reanalysis'].accession]">{{s['reanalysis'].accession}}</a></span>
                             <span *ngIf="d.similars && d.similars.length > 99">(first 100 items shown)</span>
                         </p>
-                        <p class="align-justify" *ngIf="reanalysedBy.length > 0" id="reanalisys_by">
-                            <b>REANALYSED by:</b> <span href="#" *ngFor="let s of reanalysedBy"><a
+                        <p class="elements" *ngIf="reanalysedBy.length > 0" id="reanalisys_by">
+                            <b>REANALYSED by: </b> <span href="#" *ngFor="let s of reanalysedBy"><a
                                 [routerLink]="['/dataset', s['db'].source, s['reanalysis'].accession]">{{s['reanalysis'].accession}}</a> </span>
                             <span *ngIf="d.similars && d.similars.length > 99">(first 100 items shown)</span>
                         </p>
-                        <p class="align-justify" *ngIf="relatedOmics.length > 0" id="relate_omics">
-                            <b>OTHER RELATED OMICS DATASETS IN:</b> <span href="#" *ngFor="let s of relatedOmics"><a
+                        <p class="elements" *ngIf="relatedOmics.length > 0" id="relate_omics">
+                            <b>OTHER RELATED OMICS DATASETS IN: </b> <span href="#" *ngFor="let s of relatedOmics"><a
                                 [routerLink]="['/dataset', s['db'].source, s['reanalysis'].accession]">{{s['reanalysis'].accession}}</a> </span>
                         </p>
                     </div>
-                    <p class="align-justify" *ngIf="null!=d.instruments" id="instruments">
-                        <b>INSTRUMENT(S):</b>
+                    <p class="elements" *ngIf="null!=d.instruments" id="instruments">
+                        <b>INSTRUMENT(S): </b>
                         <span>{{d.instruments}}</span>
                     </p>
-                    <p class="align-justify" *ngIf="null!=d.organisms" id="organisms">
-                        <b>ORGANISM(S):</b>
+                    <p class="elements" *ngIf="null!=d.organisms" id="organisms">
+                        <b>ORGANISM(S): </b>
                         <span *ngFor="let o of d.organisms">
                             <a class="biological" [routerLink]="['/search']"
                                [queryParams]="{q: 'TAXONOMY:&quot;'+o.acc+'&quot;'}">
@@ -82,15 +82,15 @@
                             </a>&nbsp;
                         </span>
                     </p>
-                    <p class="align-justify ng-hide" *ngIf="null!=d.tissues" id="tissues"><b>TISSUE(S):</b>
+                    <p class="elements ng-hide" *ngIf="null!=d.tissues" id="tissues"><b>TISSUE(S): </b>
                         <span>{{d.tissues}}</span>
                     </p>
-                    <p class="align-justify ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0" id="diseases">
-                        <b>DISEASE(S):</b>
+                    <p class="elements ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0" id="diseases">
+                        <b>DISEASE(S): </b>
                         <span>{{d.diseases}}</span>
                     </p>
-                    <p class="align-justify" *ngIf="null!=d.submitter" id="submitter">
-                        <b>SUBMITTER:</b>
+                    <p class="elements" *ngIf="null!=d.submitter" id="submitter">
+                        <b>SUBMITTER: </b>
                         <span *ngFor="let o of d.submitter; let i = index;">
                             <span *ngIf="d.submitterMail && d.submitterMail[i]">
                               <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img
@@ -107,8 +107,8 @@
                             </span>&nbsp;
                         </span>
                     </p>
-                    <p class="align-justify">
-                        <b>PROVIDER:</b>
+                    <p class="elements">
+                        <b>PROVIDER: </b>
                         <span>
                             <a [href]="d.full_dataset_link" id="id">{{d.id}}</a> |
                             <a [href]="databaseUrl"> <span class="ng-binding" id="source">{{repositoryName}}</span>
@@ -117,8 +117,8 @@
                         </span>
                     </p>
 
-                    <p class="align-justify" *ngIf="d.secondary_accession" id="secondary_accession">
-                        <b>SECONDARY ACCESSION(S):</b>&nbsp;
+                    <p class="elements" *ngIf="d.secondary_accession" id="secondary_accession">
+                        <b>SECONDARY ACCESSION(S): </b>
 
                         <span *ngFor="let o of d.secondary_accession;">
 
@@ -136,8 +136,8 @@
                         </span>
                     </p>
 
-                    <p class="align-justify" *ngIf="null!=d.repositories">
-                        <b>REPOSITORIES:</b>
+                    <p class="elements" *ngIf="null!=d.repositories">
+                        <b>REPOSITORIES: </b>
                         <span *ngFor="let o of d.repositories; let isLast=last"  class="repositories">{{o}}{{isLast ? '' : ', '}}</span>
                     </p>
 
@@ -159,7 +159,7 @@
                 </div>
                 <!--dataset_bottom-->
 
-                <div class="row" style="margin-bottom:10px; margin-right: 0px; margin-left:40px;">
+                <div class="row" style="margin-bottom:20px; margin-right: 0px; margin-left:40px;">
                     <div class="col-lg-2">
                         <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap" id="full_dataset_link">ACCESS
                             DATA</a>

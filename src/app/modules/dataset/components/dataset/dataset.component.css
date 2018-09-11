@@ -31,7 +31,7 @@
     color: black;
 }
 
-.align-justify > span {
+.elements > span {
     display: inline-block;
-    margin-left: 8px;
+    margin-right: 8px;
 }
