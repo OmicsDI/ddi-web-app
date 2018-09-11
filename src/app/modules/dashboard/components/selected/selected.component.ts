@@ -50,6 +50,7 @@ export class DashboardSelectedComponent implements OnInit {
             this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
                 this.dataSets = datasets;
                 this.slimLoadingBarService.complete();
+                this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
             });
         });
     }
