@@ -30,3 +30,8 @@
     background-color: white; /* Green */
     color: black;
 }
+
+.align-justify > span {
+    display: inline-block;
+    margin-left: 8px;
+}

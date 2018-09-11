@@ -60,7 +60,7 @@
                             <span *ngIf="d.similars && d.similars.length > 99">(first 100 items shown)</span>
                         </p>
                         <p class="align-justify" *ngIf="reanalysedBy.length > 0" id="reanalisys_by">
-                            <b>REANALYZED by:</b> <span href="#" *ngFor="let s of reanalysedBy"><a
+                            <b>REANALYSED by:</b> <span href="#" *ngFor="let s of reanalysedBy"><a
                                 [routerLink]="['/dataset', s['db'].source, s['reanalysis'].accession]">{{s['reanalysis'].accession}}</a> </span>
                             <span *ngIf="d.similars && d.similars.length > 99">(first 100 items shown)</span>
                         </p>
@@ -70,7 +70,8 @@
                         </p>
                     </div>
                     <p class="align-justify" *ngIf="null!=d.instruments" id="instruments">
-                        <b>INSTRUMENT(S):</b>{{d.instruments}}
+                        <b>INSTRUMENT(S):</b>
+                        <span>{{d.instruments}}</span>
                     </p>
                     <p class="align-justify" *ngIf="null!=d.organisms" id="organisms">
                         <b>ORGANISM(S):</b>
@@ -86,7 +87,7 @@
                     </p>
                     <p class="align-justify ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0" id="diseases">
                         <b>DISEASE(S):</b>
-                        {{d.diseases}}
+                        <span>{{d.diseases}}</span>
                     </p>
                     <p class="align-justify" *ngIf="null!=d.submitter">
                         <b>SUBMITTER:</b>
@@ -110,10 +111,12 @@
                     </p>
                     <p class="align-justify">
                         <b>PROVIDER:</b>
-                        <a [href]="d.full_dataset_link" id="id">{{d.id}}</a> |
-                        <a [href]="databaseUrl"> <span class="ng-binding" id="source">{{repositoryName}}</span>
-                        </a>
-                        <span id="publicationDate">| {{d.publicationDate}} </span>
+                        <span>
+                            <a [href]="d.full_dataset_link" id="id">{{d.id}}</a> |
+                            <a [href]="databaseUrl"> <span class="ng-binding" id="source">{{repositoryName}}</span>
+                            </a>
+                            <span id="publicationDate">| {{d.publicationDate}} </span>
+                        </span>
                     </p>
 
                     <p class="align-justify" *ngIf="d.secondary_accession" id="secondary_accession">
