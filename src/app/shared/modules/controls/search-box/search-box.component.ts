@@ -55,12 +55,12 @@ export class SearchBoxComponent implements OnInit {
     }
 
     doSearch(keyword) {
-        this.searchService.triggerSearch(this.params, keyword, null);
+        this.searchService.triggerSearch(this.params, keyword, new DataControl());
     }
 
     search() {
         const searchText = this.autocompleteComponent.searchText;
-        this.searchService.triggerSearch(this.params, searchText, null);
+        this.doSearch(searchText);
     }
 
     updateQueryParams($event: SearchQuery) {
