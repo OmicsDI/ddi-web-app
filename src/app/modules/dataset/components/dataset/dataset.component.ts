@@ -78,6 +78,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             this.databaseListService.getDatabaseList().subscribe(databases => {
                 this.databases = databases;
                 this.dataSetService.getDataSetDetail(this.acc, this.repository).subscribe(result => {
+                    this.reanalysisOf = this.reanalysedBy = this.relatedOmics = [];
                     this.d = result;
                     // TODO: update with canonical id
                     this.acc = result.id;
