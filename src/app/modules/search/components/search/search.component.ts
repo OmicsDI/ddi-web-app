@@ -45,14 +45,14 @@ export class SearchComponent implements OnInit {
         if (this.authService.loggedIn()) {
             this.profile = this.profileService.getProfileFromLocal();
         }
-        this.route.queryParams.subscribe(params => {
-            this.params = params;
-            this.slimLoadingBarService.start();
-            this.query = QueryUtils.getBaseQuery(params);
-            this.dataControl = QueryUtils.getDataControl(params);
-            this.selectedFacets = QueryUtils.getAllFacets(params);
-            this.logger.debug('Facet selected: {}', this.selectedFacets);
-            this.databaseListService.getDatabaseList().subscribe(databases => {
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.route.queryParams.subscribe(params => {
+                this.params = params;
+                this.slimLoadingBarService.start();
+                this.query = QueryUtils.getBaseQuery(params);
+                this.dataControl = QueryUtils.getDataControl(params);
+                this.selectedFacets = QueryUtils.getAllFacets(params);
+                this.logger.debug('Facet selected: {}', this.selectedFacets);
                 this.databases = databases;
                 this.searchService
                     .fullSearch(
