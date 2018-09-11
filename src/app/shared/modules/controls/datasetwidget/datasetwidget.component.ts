@@ -96,14 +96,13 @@ export class DatasetWidgetComponent implements OnInit {
             this.profileService.claimDataset(this.profile.userId, d);
             this.profile.dataSets.push(d);
             this.profileService.setProfile(this.profile);
+            this.notificationService.success('Dataset claimed', 'to your dashboard');
         } else {
-            this.router.navigate(['profile']);
+            this.router.navigate(['dashboard', 'claimed']);
         }
 
         $event.stopPropagation();
         $event.preventDefault();
-
-        this.notificationService.success('Dataset claimed', 'to your dashboard');
     }
 
     watchClicked($event, source, id) {
