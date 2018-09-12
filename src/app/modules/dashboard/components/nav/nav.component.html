@@ -1,4 +1,4 @@
-<nav *ngIf="showUp && profile">
+<nav>
     <div id="navbar-ex1-collapse" class="collapse navbar-collapse ">
         <ul class="nav navbar-nav side-nav">
             <li style="width: 100%; margin-bottom: 20px" [routerLink]="['/dashboard','profile']">
@@ -30,3 +30,4 @@
         </ul>
     </div>
 </nav>
+<router-outlet></router-outlet>

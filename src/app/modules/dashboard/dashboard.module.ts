@@ -47,6 +47,7 @@ import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cro
         DashboardSelectedComponent,
         SettingsComponent,
         DashboardUpdateComponent,
+        NavComponent,
     ]
 })
 export class DashboardModule {

@@ -45,7 +45,6 @@ import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
-import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
 import {UploadService} from '@shared/services/upload.service';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -69,8 +68,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        NavComponent
+        AppComponent
     ],
     imports: [
         CommonModule,
