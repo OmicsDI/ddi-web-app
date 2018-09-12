@@ -66,6 +66,10 @@
   </rule>
   <rule match-type="wildcard">
     <from>/merge</from>
-    <to>/</to>
+    <to>/dashboard/merge</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/unmerge</from>
+    <to>/dashboard/unmerge</to>
   </rule>
 </urlrewrite>

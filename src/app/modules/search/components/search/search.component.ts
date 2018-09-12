@@ -12,6 +12,9 @@ import {FacetValue} from 'model/FacetValue';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {DatabaseListService} from '@shared/services/database-list.service';
+import {Profile} from 'model/Profile';
+import {AuthService} from '@shared/services/auth.service';
+import {ProfileService} from '@shared/services/profile.service';
 
 @Component({
     selector: 'app-search',
@@ -26,24 +29,30 @@ export class SearchComponent implements OnInit {
     params = {};
     selectedFacets: Map<string, string[]>;
     databases: Database[];
+    profile: Profile;
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: SlimLoadingBarService,
                 private route: ActivatedRoute,
                 private logger: LogService,
+                private authService: AuthService,
+                private profileService: ProfileService,
                 private databaseListService: DatabaseListService,
                 private dataTransportService: DataTransportService) {
     }
 
     ngOnInit() {
-        this.route.queryParams.subscribe(params => {
-            this.params = params;
-            this.slimLoadingBarService.start();
-            this.query = QueryUtils.getBaseQuery(params);
-            this.dataControl = QueryUtils.getDataControl(params);
-            this.selectedFacets = QueryUtils.getAllFacets(params);
-            this.logger.debug('Facet selected: {}', this.selectedFacets);
-            this.databaseListService.getDatabaseList().subscribe(databases => {
+        if (this.authService.loggedIn()) {
+            this.profile = this.profileService.getProfileFromLocal();
+        }
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.route.queryParams.subscribe(params => {
+                this.params = params;
+                this.slimLoadingBarService.start();
+                this.query = QueryUtils.getBaseQuery(params);
+                this.dataControl = QueryUtils.getDataControl(params);
+                this.selectedFacets = QueryUtils.getAllFacets(params);
+                this.logger.debug('Facet selected: {}', this.selectedFacets);
                 this.databases = databases;
                 this.searchService
                     .fullSearch(
@@ -69,13 +78,7 @@ export class SearchComponent implements OnInit {
         this.searchService.triggerSearch(this.params, null, dataControl);
     }
 
-    /**
-     * Add a facet into query
-     * @param {string} key i.e: Organisms
-     * @param {string} facet i.e: 10090
-     */
-    facetValueSelected(key: string, facet: string) {
-        const searchQuery = QueryUtils.extractQuery(this.params);
+    facetValueFindAndUpdate(searchQuery: SearchQuery, key: string, facet: string): boolean {
         let foundKey = false;
         for (let i = 0; i < searchQuery.rules.length; i++) {
             if (searchQuery.rules[i].query !== null) {
@@ -100,6 +103,46 @@ export class SearchComponent implements OnInit {
                 }
             }
         }
+        return foundKey;
+    }
+
+    /**
+     * Add a facet into query
+     * @param {string} key i.e: Organisms
+     * @param {string} facet i.e: 10090
+     */
+    facetValueSelected(key: string, facet: string) {
+        const searchQuery = QueryUtils.extractQuery(this.params);
+
+        // Find key & update
+        let foundKey = this.facetValueFindAndUpdate(searchQuery, key, facet);
+
+        // If key not found, check the first level of query
+        // If yes, then move that first level to second level
+        if (!foundKey) {
+            for (let i = 0; i < searchQuery.rules.length; i++) {
+                if (searchQuery.rules[i].query === null) {
+                    if (searchQuery.rules[i].field === key) {
+                        if (searchQuery.rules[i].data === facet) {
+                            return;
+                        }
+                        const newSearchQuery = new SearchQuery();
+                        newSearchQuery.operator = 'OR';
+                        newSearchQuery.rules = [];
+                        const rule = new Rule();
+                        rule.field = searchQuery.rules[i].field;
+                        rule.data = searchQuery.rules[i].data;
+                        newSearchQuery.rules.push(rule);
+                        searchQuery.rules.splice(i, 1);
+                        searchQuery.rules.push({condition: null, data: null, field: null, data2: null, query: newSearchQuery});
+                        foundKey = this.facetValueFindAndUpdate(searchQuery, key, facet);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // If key still not found, add new facet to query
         if (!foundKey) {
             const newSearchQuery = new SearchQuery();
             newSearchQuery.operator = 'OR';
@@ -149,6 +192,18 @@ export class SearchComponent implements OnInit {
                     if (rule.field !== null && rule.field === originalFacet.id && rule.data === facet.value) {
                         searchQuery.rules.splice(i, 1);
                         break;
+                    }
+                    if (rule.query != null) {
+                        for (let j = 0; j < rule.query.rules.length; j++) {
+                            const rule2 = rule.query.rules[j];
+                            if (rule2.field !== null && rule2.field === originalFacet.id && rule2.data === facet.value) {
+                                searchQuery.rules[i].query.rules.splice(j, 1);
+                                break;
+                            }
+                        }
+                        if (searchQuery.rules[i].query.rules.length === 0) {
+                            searchQuery.rules.splice(i, 1);
+                        }
                     }
                 }
             });

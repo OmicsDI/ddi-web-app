@@ -3,6 +3,7 @@ import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DialogService} from '@shared/services/dialog.service';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-claimed',
@@ -11,6 +12,8 @@ import {DialogService} from '@shared/services/dialog.service';
 })
 export class DashboardClaimedComponent implements OnInit {
 
+    profile: Profile;
+
     constructor(public profileService: ProfileService,
                 public appConfig: AppConfig,
                 private notificationService: NotificationsService,
@@ -18,27 +21,20 @@ export class DashboardClaimedComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.profile = this.profileService.getProfileFromLocal();
     }
 
     updateProfile() {
-        this.profileService.updateUser().subscribe();
+        this.profileService.updateUser(this.profile).subscribe();
     }
 
     deleteClick() {
-
         this.dialogService.confirm('Delete all datasets', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
-                    this.notificationService.success(
-                        'Datasets deleted',
-                        'from your profile'
-                    );
-
-                    this.profileService.profile.dataSets = [];
-                    this.profileService.updateUser().subscribe(x => {
-
-                    });
-
+                    this.notificationService.success('Datasets deleted', 'from your profile');
+                    this.profile.dataSets = [];
+                    this.profileService.updateUser(this.profile ).subscribe(x => {});
                 }
             });
     }

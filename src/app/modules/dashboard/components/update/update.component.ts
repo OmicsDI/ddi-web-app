@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
 import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
+import {Profile} from 'model/Profile';
 import {UploadService} from '@shared/services/upload.service';
 import {NotificationsService} from 'angular2-notifications/dist';
 import {DataTransportService} from '@shared/services/data.transport.service';
@@ -14,7 +15,7 @@ import {DataTransportService} from '@shared/services/data.transport.service';
 export class DashboardUpdateComponent implements OnInit {
 
     public profileImageUrl: string;
-    public profile = this.profileService.profile;
+    public profile: Profile;
     imageChangedEvent: any = '';
     croppedImage: any = '';
     imageLoadFailed = false;
@@ -29,8 +30,11 @@ export class DashboardUpdateComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        if (!this.profileService.profile) {
+        this.profile = this.profileService.getProfileFromLocal();
+        this.fileUpload(this.profile);
+    };
+    fileUpload (profile: Profile) {
+        if (!profile) {
             this.router.navigate(['/profile']);
             return;
         }
@@ -49,7 +53,7 @@ export class DashboardUpdateComponent implements OnInit {
             });
             this.isProfileImageChanged = false;
         }
-        this.profileService.updateUserProfile(this.profile).subscribe(success => {
+        this.profileService.updateUser(this.profile).subscribe(success => {
             this.notification.success('Profile updated');
         }, error => {
             this.notification.error('An exception occurred while saving your profile: ' + error);

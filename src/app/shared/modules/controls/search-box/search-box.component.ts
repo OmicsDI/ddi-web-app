@@ -44,9 +44,6 @@ export class SearchBoxComponent implements OnInit {
                 this.params = params;
                 this.queryParams = QueryUtils.extractQuery(params);
                 this.query = this.queryParams.toQueryString();
-                if (this.query[0] === '(') {
-                    this.query = this.query.slice(1, this.query.length - 1);
-                }
                 this.logger.debug('query: {}', this.query);
             }
         });
@@ -58,12 +55,12 @@ export class SearchBoxComponent implements OnInit {
     }
 
     doSearch(keyword) {
-        this.searchService.triggerSearch(this.params, keyword, null);
+        this.searchService.triggerSearch(this.params, keyword, new DataControl());
     }
 
     search() {
         const searchText = this.autocompleteComponent.searchText;
-        this.searchService.triggerSearch(this.params, searchText, null);
+        this.doSearch(searchText);
     }
 
     updateQueryParams($event: SearchQuery) {

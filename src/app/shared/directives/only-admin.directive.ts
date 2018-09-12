@@ -3,24 +3,31 @@ import {ProfileService} from '@shared/services/profile.service';
 import {Router} from '@angular/router';
 import {Profile} from 'model/Profile';
 import {Observable} from 'rxjs/Observable';
+import {AuthService} from '@shared/services/auth.service';
 
 @Directive({
     selector: '[appOnlyAdmin]'
 })
 export class OnlyAdminDirective implements OnInit {
 
-    constructor(private templateRef: TemplateRef<any>, private viewContainer: ViewContainerRef, public profileService: ProfileService,
+    constructor(private templateRef: TemplateRef<any>,
+                private viewContainer: ViewContainerRef,
+                private authService: AuthService,
+                public profileService: ProfileService,
                 private router: Router) {
     }
 
     ngOnInit(): void {
-        this.profileService.getProfile().subscribe(profile => {
+        if (this.authService.loggedIn()) {
+            const profile = this.profileService.getProfileFromLocal();
             this.checkPermission(profile).subscribe(approval => {
                 if (!approval) {
                     this.router.navigate(['unauthorized']);
                 }
             });
-        });
+        } else {
+            this.router.navigate(['unauthorized']);
+        }
     }
 
     checkPermission(profile: Profile): Observable<boolean> {

@@ -4,6 +4,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {UnMergeDatasets} from 'model/unmerge/UnMergeDatasets';
 import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-unmerge',
@@ -13,7 +14,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 export class UnmergeComponent implements OnInit {
 
     test: boolean;
-    unMergeCandidates: UnMergeDatasets[] = [];
+    unMergeCandidates: UnMergeDatasets[];
     counts: number;
     checkedDatasets: { basedatabase: string, baseaccession: string, database: string, accession: string }[] = [];
     currentPage = 1;
@@ -21,6 +22,7 @@ export class UnmergeComponent implements OnInit {
     constructor(private datasetService: DataSetService,
                 private notificationService: NotificationsService,
                 private logger: LogService,
+                private slimLoadingBarService: SlimLoadingBarService,
                 private dialogService: DialogService) {
     }
 
@@ -30,6 +32,7 @@ export class UnmergeComponent implements OnInit {
     }
 
     load() {
+        this.slimLoadingBarService.start();
         this.datasetService
             .getUnMergeCandidates()
             .subscribe(
@@ -37,6 +40,7 @@ export class UnmergeComponent implements OnInit {
                     this.logger.debug('Unmerge candidates: {}', result);
                     this.unMergeCandidates = result;
                     this.counts = this.unMergeCandidates.length;
+                    this.slimLoadingBarService.complete();
                 }
             );
 

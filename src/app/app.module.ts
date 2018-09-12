@@ -32,7 +32,6 @@ import {SimilarMoleculeService} from '@shared/services/similar-molecule.service'
 import {FeedbackService} from '@shared/services/feedback.service';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {AltmetricService} from '@shared/services/altmetric.service';
-import {SelectedService} from '@shared/services/selected.service';
 import {ScoreService} from '@shared/services/score.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {InviteService} from '@shared/services/invite.service';
@@ -46,7 +45,6 @@ import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
-import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
 import {UploadService} from '@shared/services/upload.service';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -70,8 +68,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
     declarations: [
-        AppComponent,
-        NavComponent
+        AppComponent
     ],
     imports: [
         CommonModule,
@@ -125,7 +122,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         , AppConfig
         , StatisticsService
         , AltmetricService
-        , SelectedService
         , DialogService
         , ScoreService
         , ThorService

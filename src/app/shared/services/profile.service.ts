@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Headers, RequestOptionsArgs, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Profile} from 'model/Profile';
@@ -16,35 +16,27 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 @Injectable()
 export class ProfileService extends BaseService {
 
-    public profile: Profile; // this.profile.userId
-    public userId: string;
-    public watchedDatasets: WatchedDataset[];
-
-    onProfileReceived: EventEmitter<Profile> = new EventEmitter();
-
-    constructor(private http: AuthHttp, public appConfig: AppConfig, private logger: LogService) {
+    constructor(private http: AuthHttp,
+                public appConfig: AppConfig,
+                private logger: LogService) {
         super();
     }
 
+    setProfile(profile: Profile): void {
+        localStorage.removeItem('profile');
+        localStorage.setItem('profile', JSON.stringify(profile));
+    };
+    removeProfile() {
+        localStorage.removeItem('profile');
+    };
+    getProfileFromLocal(): Profile {
+        const profile = JSON.parse(localStorage.getItem('profile'));
+        return profile;
+    };
+
     getProfile(): Observable<Profile> {
         return this.http.get(this.appConfig.getProfileUrl(null)) // ,config // { withCredentials: true }
-            .map(x => {
-                this.profile = this.extractData<Profile>(x);
-                if (!this.profile || !this.profile.userId) {
-                    this.logger.debug('Profile not received');
-                } else {
-                    this.logger.debug('Profile received: {}', this.profile.userId);
-                    this.userId = this.profile.userId;
-                    this.getCoAuthors(this.profile.userId);
-                    this.getWatchedDatasets(this.profile.userId).subscribe(
-                        d => {
-                            this.watchedDatasets = d;
-                        }
-                    );
-                    this.onProfileReceived.emit(this.profile);
-                }
-                return this.profile;
-            });
+            .map(x => this.extractData<Profile>(x));
         // .catch(this.handleError);
     }
 
@@ -103,7 +95,7 @@ export class ProfileService extends BaseService {
         // .catch(this.handleError);
     }
 
-    public updateUser(): Observable<string> {
+    public updateUser(profile: Profile): Observable<string> {
 
         const headers = new Headers();
         /**
@@ -111,26 +103,6 @@ export class ProfileService extends BaseService {
         headers.append('Accept', 'application/json');
         let authToken = this.getParameterByName("auth");
         if(authToken) {
-            headers.append('X-AUTH-TOKEN', authToken);
-        }**/
-
-        const config: RequestOptionsArgs = {headers: headers};
-        // $http.post(url, config) .success ...
-
-        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(this.profile), config)
-            .map(res => {
-                return 'OK';
-            });
-    }
-
-    public updateUserProfile(profile: Profile): Observable<string> {
-
-        const headers = new Headers();
-        /**
-         headers.append('Content-Type', 'application/json');
-         headers.append('Accept', 'application/json');
-         let authToken = this.getParameterByName("auth");
-         if(authToken) {
             headers.append('X-AUTH-TOKEN', authToken);
         }**/
 
@@ -182,7 +154,7 @@ export class ProfileService extends BaseService {
 
         this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID), JSON.stringify(dataset))
             .subscribe(x => {
-                this.profile.dataSets.push(dataset);
+                // this.profile.dataSets.push(dataset);
             });
     }
 
@@ -217,22 +189,6 @@ export class ProfileService extends BaseService {
         form.submit();
     }
 
-    public isClaimed(source, id) {
-        let obj: any;
-        if (null != this.profile.dataSets) {
-            obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
-        }
-        return (null != obj);
-    }
-
-    public isWatched(source, id) {
-        let obj: any;
-        if (null != this.watchedDatasets) {
-            obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
-        }
-        return (null != obj);
-    }
-
     getSavedSearches(userId: string): Observable<SavedSearch[]> {
         return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//
             .map(x => this.extractData<SavedSearch[]>(x));
@@ -248,8 +204,8 @@ export class ProfileService extends BaseService {
         );
     }
 
-    deleteSavedSearch(id: string): Observable<String> {
-        return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(this.userId, id)).map(
+    deleteSavedSearch(userId: string, id: string): Observable<String> {
+        return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(userId, id)).map(
             x => 'ok'
         ).catch(this.handleError);
     }
@@ -265,13 +221,13 @@ export class ProfileService extends BaseService {
         this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset)).subscribe(
             x => {
                 this.logger.debug('Watched dataset saved');
-                this.watchedDatasets.push(watchedDataset);
+                // this.watchedDatasets.push(watchedDataset);
             }
         );
     }
 
-    deleteWatchedDataset(id: string): Observable<String> {
-        return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(this.userId, id)).map(
+    deleteWatchedDataset(userId: string, id: string): Observable<String> {
+        return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(userId, id)).map(
             x => 'ok');
         // ).catch(this.handleError);
     }

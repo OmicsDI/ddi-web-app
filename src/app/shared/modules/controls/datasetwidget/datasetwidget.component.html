@@ -1,6 +1,6 @@
-<div class="mt-card" [ngStyle]="{'cursor':  allowSelect && this.profileService.userId ? 'pointer' : 'default'}"
-     [ngClass]="allowSelect && this.profileService.userId && this.selectedService.isSelected(d.source,d.id) ? 'grey' : 'white'"
-     (click)="toggle(d.source,d.id);">
+<div class="mt-card" [ngStyle]="{'cursor':  allowSelect && profile ? 'pointer' : 'default'}"
+     [ngClass]="allowSelect && isSelected ? 'grey' : 'white'"
+     (click)="toggle(d);" *ngIf="d">
     <div class="mt-card-body">
         <div style="float: right; width: 200px; text-align: right">
             <app-score [dataset]="d"></app-score>
@@ -46,8 +46,8 @@
         <span *ngIf="d.publicationDate" class="ng-binding ng-hide" class="publicationDate">
           <span>{{d.publicationDate | toDateString }}</span> | </span>
                     <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding" class="dataset_id">{{d.id}}</span></a> |
-                    <a [href]="this.getDatabaseUrl(d.source)"> <span
-                            class="ng-binding" class="database_source">{{this.getDatabaseTitle(d.source)}}</span> </a>
+                    <a [href]="getDatabaseUrl(d.source)"> <span
+                            class="ng-binding" class="database_source">{{getDatabaseTitle(d.source)}}</span> </a>
                 </div>
 
                 <div *ngIf="d.keywords" class="project-widget-paragraph" style="padding-top:5px;">
@@ -61,20 +61,19 @@
                   <div style="background-color: #87CEFA" class="dot-button" (click)="citeClicked($event,d.source,d.id)">
                       <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
                   </div>
-
-                  <div style="background-color: #FA8B7A;" *ngIf="this.allowClaim && this.profileService.profile && d.claimable"
+                  <div style="background-color: #FA8B7A;" *ngIf="this.allowClaim && profile && d.claimable"
                        class="dot-button" (click)="claimClicked($event,d.source,d.id)">
                       <i class="fa fa-user-circle" aria-hidden="true"></i>
-                      <span [ngClass]="this.profileService.isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
+                      <span [ngClass]="isClaimed(d.source,d.id) ? 'selected' : 'unselected'">{{isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
                   </div>
 
-                  <div style="background-color: #94D67A" *ngIf="this.allowWatch && this.profileService.userId"
+                  <div style="background-color: #94D67A" *ngIf="allowWatch && profile"
                        class="dot-button" (click)="watchClicked($event,d.source,d.id)">
                       <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                      <span [ngClass]="this.profileService.isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{this.profileService.isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
+                      <span [ngClass]="isWatched(d.source,d.id) ? 'selected' : 'unselected'">{{isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
                   </div>
 
-                  <div *ngIf="this.allowDelete && this.profileService.profile" class="dot-button"
+                  <div *ngIf="allowDelete && profile" class="dot-button"
                        style="background-color: silver;" (click)="deleteClicked($event,d.source,d.id)">
                       <i class="fa fa-times" aria-hidden="true"></i>
                       <span [ngClass]="'unselected'">Delete </span>

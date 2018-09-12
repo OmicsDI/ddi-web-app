@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ThorService} from '@shared/services/thor.service';
+import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,7 +21,6 @@ export class DashboardComponent implements OnInit {
 
     public savedSearches: SavedSearch[] = [];
     public watchedDatasets: WatchedDataset[] = [];
-
     profile: Profile;
     public dataSets: DataSetDetail[];
 
@@ -33,36 +33,16 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.profileService.profile) {
-            this.profile = this.profileService.profile;
-            this.reloadDataSets();
-            this.profileService.getSavedSearches(this.profileService.profile.userId).subscribe(x => {
-                this.logger.debug('saved searches received: {}', x.length);
-                this.savedSearches = x;
-            });
-            this.profileService.getWatchedDatasets(this.profileService.profile.userId).subscribe(x => {
-                this.logger.debug('saved searches received: {}', x.length);
-                this.watchedDatasets = x;
-            });
-        } else {
-            this.profileService.onProfileReceived.subscribe(x => {
-                this.profile = x;
-                this.reloadDataSets();
-                this.profileService.getSavedSearches(x.userId).subscribe(r => {
-                    this.logger.debug('saved searches received: {}', r.length);
-                    this.savedSearches = r;
-                });
-                this.profileService.getWatchedDatasets(this.profileService.profile.userId).subscribe(r => {
-                    this.logger.debug('saved searches received: {}', r.length);
-                    this.watchedDatasets = r;
-                });
-            });
-        }
-    }
-
-    reloadDataSets() {
-        // this.dataSets = new Array();
-        if (!this.profile || !this.profile.dataSets) {
+        this.profile = this.profileService.getProfileFromLocal();
+        this.profileService.getSavedSearches(this.profile.userId).subscribe(x => {
+            this.logger.debug('saved searches received: {}', x.length);
+            this.savedSearches = x;
+        });
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe(x => {
+            this.logger.debug('saved searches received: {}', x.length);
+            this.watchedDatasets = x;
+        });
+        if (!this.profile.dataSets) {
             this.dataSets = [];
             return;
         }
@@ -75,9 +55,8 @@ export class DashboardComponent implements OnInit {
             }
         );
     }
-
     delete(id: string) {
-        this.profileService.deleteSavedSearch(id).subscribe(
+        this.profileService.deleteSavedSearch(this.profile.userId, id).subscribe(
             x => {
                 this.logger.debug('savedSearch deleted');
                 const i = this.savedSearches.findIndex(r => r.id === id);
@@ -88,7 +67,7 @@ export class DashboardComponent implements OnInit {
     }
 
     deleteWatch(id: string) {
-        this.profileService.deleteWatchedDataset(id).subscribe(
+        this.profileService.deleteWatchedDataset(this.profile.userId, id).subscribe(
             x => {
                 this.logger.debug('watchedDataset deleted');
                 const i = this.watchedDatasets.findIndex(r => r.id === id);

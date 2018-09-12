@@ -20,6 +20,10 @@ import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
 import {QuillModule} from 'ngx-quill';
 import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cropper.module';
+import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
+import {MergeComponent} from '@modules/dashboard/components/merge/merge.component';
+import {OnlyAdminDirective} from '@shared/directives/only-admin.directive';
+import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.component';
 
 
 @NgModule({
@@ -47,6 +51,10 @@ import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cro
         DashboardSelectedComponent,
         SettingsComponent,
         DashboardUpdateComponent,
+        NavComponent,
+        MergeComponent,
+        UnmergeComponent,
+        OnlyAdminDirective
     ]
 })
 export class DashboardModule {

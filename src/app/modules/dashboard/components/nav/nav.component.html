@@ -1,4 +1,4 @@
-<nav *ngIf="showUp && profile">
+<nav>
     <div id="navbar-ex1-collapse" class="collapse navbar-collapse ">
         <ul class="nav navbar-nav side-nav">
             <li style="width: 100%; margin-bottom: 20px" [routerLink]="['/dashboard','profile']">
@@ -23,10 +23,24 @@
                 <a [routerLink]="['/dashboard','selected']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-shopping-basket"></i> Selected
                     Datasets</a>
             </li>
-
+            <li *ngIf="isAdmin">
+                <!--- data-toggle="collapse" data-target="#profileLinks" -->
+                <a data-toggle="collapse" data-target="#adminNav">
+                    <i class="fa fa-fw fa-user-circle"></i> Admin Zone<i class="fa fa-fw fa-caret-down"></i>
+                </a>
+                <ul id="adminNav" class="collapse">
+                    <li>
+                        <a [routerLink]="['/dashboard', 'merge']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-code-fork"></i> Merge Datasets</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/dashboard', 'unmerge']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-undo"></i> Unmerge Datasets</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a [routerLink]="['/dashboard','feedback']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-commenting-o"></i> Feedback</a>
             </li>
         </ul>
     </div>
 </nav>
+<router-outlet></router-outlet>

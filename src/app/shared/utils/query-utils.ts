@@ -52,9 +52,8 @@ export class QueryUtils {
      * @returns {Map<string, string[]>}
      */
     public static getAllFacets(params: {}): Map<string, string[]> {
-        let result = new Map<string, string[]>();
         const searchQuery = this.extractQuery(params);
-        result = ArrayUtils.addAll(result, this.getFacets(searchQuery.rules));
+        let result = this.getFacets(searchQuery.rules);
         for (let j = 0; j < searchQuery.rules.length; j++) {
             if (searchQuery.rules[j].query != null) {
                 result = ArrayUtils.addAll(result, this.getFacets(searchQuery.rules[j].query.rules));
@@ -86,6 +85,7 @@ export class QueryUtils {
      */
     public static extractQuery(params: {}): SearchQuery {
         let query = this.getBaseQuery(params);
+        query = '(' + query + ')';
         query = query.replace(/\(("[^"]*")\)/g, '[$1]');
         if (query[0] === '(') {
             query = query.slice(1, query.length - 1);
@@ -105,16 +105,15 @@ export class QueryUtils {
                     query: this.queryExtractor(query, index), condition: null, field: null, data: null, data2: null};
                 queryRules.push(rule);
             } else if (query.charAt(index.current) === ')') {
-                if (message.indexOf('OR') > -1) {
-                    search.operator = 'OR';
-                } else if (message.indexOf('NOT') > -1) {
-                    search.operator = 'NOT';
-                }
-                index.current++;
                 break;
             } else {
                 message += query.charAt(index.current);
             }
+        }
+        if (message.indexOf('OR') > -1) {
+            search.operator = 'OR';
+        } else if (message.indexOf('NOT') > -1) {
+            search.operator = 'NOT';
         }
         const conditions = message.split(search.operator);
         for (let i = 0; i < conditions.length; i++) {

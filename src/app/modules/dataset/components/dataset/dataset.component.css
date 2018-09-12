@@ -30,3 +30,8 @@
     background-color: white; /* Green */
     color: black;
 }
+
+.elements > span {
+    display: inline-block;
+    margin-right: 8px;
+}
