@@ -25,6 +25,8 @@ export class OnlyAdminDirective implements OnInit {
                     this.router.navigate(['unauthorized']);
                 }
             });
+        } else {
+            this.router.navigate(['unauthorized']);
         }
     }
 

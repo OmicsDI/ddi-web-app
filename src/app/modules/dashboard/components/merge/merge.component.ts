@@ -5,6 +5,7 @@ import {NotificationsService} from 'angular2-notifications/dist';
 import {ProfileService} from '@shared/services/profile.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'app-merge',
@@ -27,6 +28,7 @@ export class MergeComponent implements OnInit {
     constructor(public profileService: ProfileService,
                 private datasetService: DataSetService,
                 private notificationService: NotificationsService,
+                private slimLoadingBarService: SlimLoadingBarService,
                 private logger: LogService,
                 private dialogService: DialogService) {
     }
@@ -37,12 +39,14 @@ export class MergeComponent implements OnInit {
     }
 
     load() {
+        this.slimLoadingBarService.start();
         this.datasetService
             .getMergeCandidates(10 * (this.currentPage - 1), 10)
             .subscribe(
                 result => {
                     this.logger.debug('Merge candidates: {}', result);
                     this.mergeCandidates = result;
+                    this.slimLoadingBarService.complete();
                 }
             );
 

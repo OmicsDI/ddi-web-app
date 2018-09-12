@@ -16,7 +16,6 @@ export class LoginLauncherComponent implements OnInit {
     public name: string;
     public userId: string;
     public isPublic: boolean;
-    public mergeControl: boolean;
 
     constructor(public profileService: ProfileService, private router: Router, public auth: AuthService) {
         this.name = null;
@@ -27,25 +26,16 @@ export class LoginLauncherComponent implements OnInit {
     }
 
     getProfile() {
-        this.profileService.getAdminUsers().subscribe( x => {
-            this.profileService.getProfile()
-                .subscribe(
-                    profile => {
-                        this.profileService.setProfile(profile);
-                        this.profile = profile;
-                        this.name = profile.userName;
-                        this.userId = profile.userId;
-                        this.isPublic = profile.isPublic;
-                        if (this.userId !== null) {
-                            for (const user of x.json().users) {
-                                if (user === this.userId) {
-                                    this.mergeControl = true;
-                                }
-                            }
-                        }
-                    }
-                );
-        });
+        this.profileService.getProfile()
+            .subscribe(
+                profile => {
+                    this.profileService.setProfile(profile);
+                    this.profile = profile;
+                    this.name = profile.userName;
+                    this.userId = profile.userId;
+                    this.isPublic = profile.isPublic;
+                }
+            );
     }
 
     private deleteCookie(name) {
@@ -61,7 +51,6 @@ export class LoginLauncherComponent implements OnInit {
 
     LogOut() {
         // this.deleteCookie('AUTH-TOKEN');
-        this.mergeControl = false;
         localStorage.removeItem('id_token');
         this.profileService.removeProfile();
         this.router.navigate(['home']);
