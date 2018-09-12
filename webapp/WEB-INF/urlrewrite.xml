@@ -72,4 +72,8 @@
     <from>/unmerge</from>
     <to>/dashboard/unmerge</to>
   </rule>
+  <rule match-type="wildcard">
+    <from>/.git*</from>
+    <to>/</to>
+  </rule>
 </urlrewrite>

@@ -47,3 +47,4 @@ node
 Thumbs.db
 
 coverage
+sitemaps/*.xml
