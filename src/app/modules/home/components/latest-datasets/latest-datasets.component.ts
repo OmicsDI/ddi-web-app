@@ -3,6 +3,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {TimeUtils} from '@shared/utils/time-utils';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     }
 
     getMonthDay(dateString: string): string {
-        return this.dataSetService.getMonthDay(dateString);
+        return TimeUtils.getMonthDay(dateString);
     }
 
 }

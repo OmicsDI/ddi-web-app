@@ -19,7 +19,6 @@ import {RouterModule} from '@angular/router';
 import {ProfileService} from '@shared/services/profile.service';
 import {AuthConfig, AuthHttp} from 'angular2-jwt';
 import {AuthService} from '@shared/services/auth.service';
-import {AuthGuardService} from '@shared/services/auth-guard.service';
 import {SearchService} from '@shared/services/search.service';
 import {DataSetService} from '@shared/services/dataset.service';
 import {EnrichmentService} from '@shared/services/enrichment.service';
@@ -108,7 +107,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         },
         {provide: LocationStrategy, useClass: PathLocationStrategy}
         , AuthService
-        , AuthGuardService
         , DataTransportService
         , SearchService
         , DataSetService

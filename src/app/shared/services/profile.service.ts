@@ -11,6 +11,7 @@ import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {CookieUtils} from '@shared/utils/cookie-utils';
 
 
 @Injectable()
@@ -30,8 +31,7 @@ export class ProfileService extends BaseService {
         localStorage.removeItem('profile');
     };
     getProfileFromLocal(): Profile {
-        const profile = JSON.parse(localStorage.getItem('profile'));
-        return profile;
+        return JSON.parse(localStorage.getItem('profile'));
     };
 
     getProfile(): Observable<Profile> {
@@ -129,15 +129,6 @@ export class ProfileService extends BaseService {
         return Observable.throw(errMsg);
     }
 
-    private extractDataLogin(res: Response) {
-        this.logger.warn('logging out - extracting data..');
-    }
-
-    private handleErrorLogin(error: Response | any) {
-        this.logger.warn('logging out - error..');
-        return Observable.throw('Error in logout');
-    }
-
     public saveDataSets(userID: string, datasets: DataSetShort[]) {
         let r: string;
         this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets))
@@ -147,32 +138,13 @@ export class ProfileService extends BaseService {
     }
 
     public claimDataset(userID: string, dataset: DataSetShort) {
-        // alert(`claim ${userID} ${accession} ${repository}`);
-        // let datasetId:DataSetId = new DataSetId();
-        // datasetId.accession = accession;
-        // datasetId.repository = repository;
-
         this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID), JSON.stringify(dataset))
-            .subscribe(x => {
-                // this.profile.dataSets.push(dataset);
-            });
-    }
-
-    setCookie(name, value, path) {
-        if (null == path) {
-            path = '/';
-        }
-
-        const today = new Date();
-        const expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
-
-        document.cookie = name + '=' + value + '; path=' + path + '; expires=' + expiry.toUTCString();
+            .subscribe(x => {});
     }
 
     public connect(provider: string) {
 
         const form = document.createElement('form');
-        const element1 = document.createElement('input');
 
         form.method = 'POST';
         form.action = this.appConfig.getConnectUrl(provider);
@@ -183,8 +155,9 @@ export class ProfileService extends BaseService {
         // /form.appendChild(element1);
 
         document.body.appendChild(form);
-
-        this.setCookie('X-AUTH-TOKEN', localStorage.getItem('id_token'), this.appConfig.getConnectCookiePath(provider));
+        const expire = new Date(new Date().getTime() + 30 * 24 * 3600 * 1000);
+        CookieUtils.setCookie('X-AUTH-TOKEN',
+            localStorage.getItem('id_token'), this.appConfig.getConnectCookiePath(provider), expire);
 
         form.submit();
     }
@@ -221,7 +194,6 @@ export class ProfileService extends BaseService {
         this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset)).subscribe(
             x => {
                 this.logger.debug('Watched dataset saved');
-                // this.watchedDatasets.push(watchedDataset);
             }
         );
     }

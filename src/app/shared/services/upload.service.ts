@@ -9,6 +9,12 @@ export class UploadService {
     constructor(private http: HttpClient) {
     }
 
+    /**
+     * Convert base64 image string to File object
+     * @param dataurl
+     * @param filename
+     * @returns {File}
+     */
     dataURLtoFile(dataurl, filename): File {
         const arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]);
@@ -21,6 +27,12 @@ export class UploadService {
         return new File([u8arr], filename, {type: mime});
     }
 
+    /**
+     * Upload file into the given url
+     * @param {string} url
+     * @param {File} file
+     * @returns {Observable<number>}
+     */
     uploadFile(url: string, file: File): Observable<number> {
 
         const formData = new FormData();

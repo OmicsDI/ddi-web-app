@@ -10,9 +10,8 @@ import {SimilarityResult} from 'model/SimilarityResult';
 @Injectable()
 export class SimilarMoleculeService extends BaseService {
 
-    constructor(
-        private http: Http
-        , public appConfig: AppConfig) {
+    constructor(private http: Http,
+                public appConfig: AppConfig) {
         super();
     }
 

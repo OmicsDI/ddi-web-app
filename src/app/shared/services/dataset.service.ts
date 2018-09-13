@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
 import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSet} from 'model/DataSet';
@@ -64,14 +64,6 @@ export class DataSetService extends BaseService {
             .toPromise();
     }
 
-    public getMonthDay(dateString: string): string {
-        const month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        const month_int = parseInt(dateString.substr(4, 2), 10);
-        const day_int = parseInt(dateString.substr(6, 2), 10);
-        const month = month_names_short[month_int - 1];
-        return month + ' ' + day_int + ' ';
-    }
-
     public getDatasetByUrl(url: string): Observable<DataSet> {
         return this.http.post(this.appConfig.getDatasetByUrl(), url)
             .map(x => this.extractData<DataSet>(x));
@@ -88,11 +80,6 @@ export class DataSetService extends BaseService {
     public getMergeCandidateCount(): Observable<number> {
         return this.http.get(this.appConfig.getMergeCandidateCountUrl()).map(x => this.extractData<number>(x));
     }
-
-// unused
-    // public getUnMergeCandidateCount(): Observable<MergeCandidate[]>{
-    //     return this.http.get(this.appConfig.getUnMergeCandidateCountUrl()).map(x => this.extractData<MergeCandidate[]>(x))
-    // }
 
     public merge(result: MergeCandidate): Observable<String> {
         const url = this.appConfig.getMergeUrl();
