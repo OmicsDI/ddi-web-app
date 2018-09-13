@@ -2,8 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FeedbackService} from '@shared/services/feedback.service';
 import {Feedback} from 'model/Feedback';
 import {SearchService} from '@shared/services/search.service';
-import {NotificationsService} from 'angular2-notifications/dist';
-import {setTimeout} from 'timers';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
     selector: 'app-feedback',

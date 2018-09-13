@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Headers, RequestOptionsArgs, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Response} from '@angular/http';
 import {Profile} from 'model/Profile';
-import {AuthHttp} from 'angular2-jwt';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {DataSetShort} from 'model/DataSetShort';
@@ -12,12 +10,16 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {CookieUtils} from '@shared/utils/cookie-utils';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {throwError} from 'rxjs/internal/observable/throwError';
 
 
 @Injectable()
 export class ProfileService extends BaseService {
 
-    constructor(private http: AuthHttp,
+    constructor(private http: HttpClient,
                 public appConfig: AppConfig,
                 private logger: LogService) {
         super();
@@ -35,15 +37,14 @@ export class ProfileService extends BaseService {
     };
 
     getProfile(): Observable<Profile> {
-        return this.http.get(this.appConfig.getProfileUrl(null)) // ,config // { withCredentials: true }
-            .map(x => this.extractData<Profile>(x));
-        // .catch(this.handleError);
+        return this.http.get(this.appConfig.getProfileUrl(null))
+            .pipe(map((data: Response) => this.extractData<Profile>(data)));
     }
 
     getPublicProfile(username): Observable<Profile> {
         let _profile;
-        return this.http.get(this.appConfig.getProfileUrl(username)) // ,config //{ withCredentials: true }
-            .map(x => {
+        return this.http.get(this.appConfig.getProfileUrl(username))
+            .pipe(map((x: Response) => {
                 _profile = this.extractData<Profile>(x);
                 if (!_profile) {
                     this.logger.debug('public profile not received');
@@ -51,14 +52,13 @@ export class ProfileService extends BaseService {
                     this.logger.debug('public profile received: {}', _profile.userId);
                 }
                 return _profile;
-            });
-        // .catch(this.handleError);
+            }));
     }
 
     getAllProfiles(): Observable<Profile[]> {
         let _profiles;
-        return this.http.get(this.appConfig.getAllProfilesUrl()) // ,config //{ withCredentials: true }
-            .map(x => {
+        return this.http.get(this.appConfig.getAllProfilesUrl())
+            .pipe(map((x: Response) => {
                 _profiles = this.extractData<Profile[]>(x);
                 if (!_profiles) {
                     this.logger.debug('public profile not received');
@@ -66,53 +66,35 @@ export class ProfileService extends BaseService {
                     this.logger.debug('public profiles received: {}', _profiles.length);
                 }
                 return _profiles;
-            })
-            .catch(this.handleError);
+            }), catchError((e: Response) => this.handleError(e)));
     }
 
     getUserConnections(userId: string): Observable<string[]> {
-        return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) // { withCredentials: true }
-            .map(x => this.extractData<string[]>(x));
-        // .catch(this.handleError);
+        return this.http.get(this.appConfig.getUserConnectionsUrl(userId))
+            .pipe(map((x: Response) => this.extractData<string[]>(x)));
     }
 
     getUserConnection(userId: string, provider: string): Observable<ConnectionData> {
-        return this.http.get(this.appConfig.getUserConnectionUrl(userId, provider)) // { withCredentials: true }
-            .map(x => this.extractData<ConnectionData>(x))
-            .catch(this.handleError);
+        return this.http.get(this.appConfig.getUserConnectionUrl(userId, provider))
+            .pipe(
+                map((x: Response) => this.extractData<ConnectionData>(x)),
+                catchError((e: Response) => this.handleError(e)));
     }
 
     deleteConnection(userId: string, provider: string): Observable<any> {
         const deleteConnectionUrl = this.appConfig.getDeleteConnectionUrl(userId, provider);
         return this.http.delete(deleteConnectionUrl)
-            .map(res => res.json())
-            .catch(this.handleError);
+            .pipe(map((res: Response) => res), catchError((e: Response) => this.handleError(e)));
     }
 
     getCoAuthors(userId: string): Observable<UserShort[]> {
         return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))//
-            .map(x => this.extractData<UserShort[]>(x));
-        // .catch(this.handleError);
+            .pipe(map((x: Response) => this.extractData<UserShort[]>(x)));
     }
 
     public updateUser(profile: Profile): Observable<string> {
-
-        const headers = new Headers();
-        /**
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-        let authToken = this.getParameterByName("auth");
-        if(authToken) {
-            headers.append('X-AUTH-TOKEN', authToken);
-        }**/
-
-        const config: RequestOptionsArgs = {headers: headers};
-        // $http.post(url, config) .success ...
-
-        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), config)
-            .map(res => {
-                return 'OK';
-            });
+        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile))
+            .pipe(map(() => 'OK'));
     }
 
     private handleError(error: Response | any) {
@@ -126,15 +108,12 @@ export class ProfileService extends BaseService {
             errMsg = error.message ? error.message : error.toString();
         }
         this.logger.error(errMsg);
-        return Observable.throw(errMsg);
+        return throwError(error);
     }
 
     public saveDataSets(userID: string, datasets: DataSetShort[]) {
-        let r: string;
         this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets))
-            .map(res => res.json()).subscribe(data => {
-            r = data;
-        });
+            .pipe(map((res: Response) => res)).subscribe(() => {});
     }
 
     public claimDataset(userID: string, dataset: DataSetShort) {
@@ -164,8 +143,7 @@ export class ProfileService extends BaseService {
 
     getSavedSearches(userId: string): Observable<SavedSearch[]> {
         return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//
-            .map(x => this.extractData<SavedSearch[]>(x));
-        // .catch(this.handleError);
+            .pipe(map((x: Response) => this.extractData<SavedSearch[]>(x)));
     }
 
     saveSavedSearch(savedSearch: SavedSearch) {
@@ -178,15 +156,13 @@ export class ProfileService extends BaseService {
     }
 
     deleteSavedSearch(userId: string, id: string): Observable<String> {
-        return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(userId, id)).map(
-            x => 'ok'
-        ).catch(this.handleError);
+        return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(userId, id))
+            .pipe(map(x => 'ok'), catchError((e: Response) => this.handleError(e)));
     }
 
     getWatchedDatasets(userId: string): Observable<WatchedDataset[]> {
         return this.http.get(this.appConfig.getWatchedDatasetsUrl(userId))//
-            .map(x => this.extractData<WatchedDataset[]>(x));
-        // .catch(this.handleError);
+            .pipe(map((x: Response) => this.extractData<WatchedDataset[]>(x)));
     }
 
     saveWatchedDataset(watchedDataset: WatchedDataset) {
@@ -199,25 +175,20 @@ export class ProfileService extends BaseService {
     }
 
     deleteWatchedDataset(userId: string, id: string): Observable<String> {
-        return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(userId, id)).map(
-            x => 'ok');
-        // ).catch(this.handleError);
+        return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(userId, id)).pipe(map(x => 'ok'));
     }
 
     getUsersCount(): Observable<number> {
-        return this.http.get(this.appConfig.getUserCountUrl()).map(x => this.extractData<number>(x));
+        return this.http.get(this.appConfig.getUserCountUrl()).pipe(map((x: Response) => this.extractData<number>(x)));
     }
 
     setSelected(userId: string, datasets: DataSetShort[]): Observable<String> {
-        return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets)).map(
-            x => 'ok');
-        // ).catch(this.handleError);
+        return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets)).pipe(map(x => 'ok'));
     }
 
     getSelected(userId: string): Observable<DataSetShort[]> {
         return this.http.get(this.appConfig.getSelectedDatasetsUrl(userId))//
-            .map(x => this.extractData<DataSetShort[]>(x));
-        // .catch(this.handleError);
+            .pipe(map((x: Response) => this.extractData<DataSetShort[]>(x)));
     }
 
     getAdminUsers() {

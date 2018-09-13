@@ -4,7 +4,7 @@ import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
 import {Profile} from 'model/Profile';
 import {UploadService} from '@shared/services/upload.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({

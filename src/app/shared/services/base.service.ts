@@ -9,13 +9,6 @@ export class BaseService {
     }
 
     protected extractData<T>(res: Response): T {
-        if ('' === res.text()) {
-            return null;
-        }
-
-        const body = res.json();
-        let result: T;
-        result = (body || {}) as T;
-        return result;
+        return (res || {}) as T;
     }
 }

@@ -1,9 +1,6 @@
-import {AfterViewInit, Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
-import {SearchService} from '@shared/services/search.service';
-import {DataControl} from 'model/DataControl';
-import {DataTransportService} from '@shared/services/data.transport.service';
+import {AfterViewInit, Component, QueryList, ViewChildren} from '@angular/core';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-home',
@@ -16,7 +13,7 @@ export class HomeComponent implements AfterViewInit {
     @ViewChildren(AsyncInitialisedComponent)
     asyncComponents: QueryList<AsyncInitialisedComponent>;
 
-    constructor(private loadingBarService: SlimLoadingBarService) {
+    constructor(private loadingBarService: NgProgress) {
         this.loadingBarService.start();
     }
 

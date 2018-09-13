@@ -32,9 +32,9 @@ export class NavComponent implements OnInit {
             this.profile = this.profileService.getProfileFromLocal();
             this.userId = this.profile.userId;
             this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
-            this.profileService.getAdminUsers().subscribe( x => {
+            this.profileService.getAdminUsers().subscribe( (x: Response) => {
                 if (this.userId !== null) {
-                    for (const user of x.json().users) {
+                    for (const user of x.json()['users']) {
                         if (user === this.userId) {
                             this.isAdmin = true;
                         }

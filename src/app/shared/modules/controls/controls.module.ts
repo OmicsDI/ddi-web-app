@@ -15,7 +15,7 @@ import {RouterModule} from '@angular/router';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {OmicsImageComponent} from '@shared/modules/controls/omics-image/omics-image.component';
 import {FeedbackComponent} from '@shared/modules/controls/feedback/feedback.component';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {FormsModule} from '@angular/forms';
 import {DropDownComponent} from '@shared/modules/controls/drop-down/drop-down.component';
 import {FacetComponent} from '@shared/modules/controls/facet/facet.component';

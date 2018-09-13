@@ -3,14 +3,14 @@ import {ProfileService} from '@shared/services/profile.service';
 import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Profile} from 'model/Profile';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ThorService} from '@shared/services/thor.service';
-import {AuthService} from '@shared/services/auth.service';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 @Component({
     selector: 'app-dashboard',
@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
             this.dataSets = [];
             return;
         }
-        Observable.forkJoin(this.profile.dataSets.map(x => {
+        forkJoin(this.profile.dataSets.map(x => {
             return this.dataSetService.getDataSetDetail(x.id, x.source);
         })).subscribe(
             y => {

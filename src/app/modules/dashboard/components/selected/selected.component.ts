@@ -2,18 +2,19 @@ import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs';
 import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from '@shared/services/profile.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {Profile} from 'model/Profile';
 import {DataSet} from 'model/DataSet';
 import {DataTransportService} from '@shared/services/data.transport.service';
+import {map} from 'rxjs/operators';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -33,7 +34,7 @@ export class DashboardSelectedComponent implements OnInit {
                 public appConfig: AppConfig,
                 public profileService: ProfileService,
                 private notificationService: NotificationsService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private databaseListService: DatabaseListService,
                 private dataTransporterService: DataTransportService,
                 private dialogService: DialogService) {
@@ -56,7 +57,7 @@ export class DashboardSelectedComponent implements OnInit {
     }
 
     getDataset(accession: string, repository: string): Observable<DataSet> {
-        return this.dataSetService.getDataSetDetail(accession, repository).map(x => DataSetDetail.toDataset(x));
+        return this.dataSetService.getDataSetDetail(accession, repository).pipe(map(x => DataSetDetail.toDataset(x)));
     }
 
     remove(source, id) {

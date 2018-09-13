@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchService} from '@shared/services/search.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResult} from 'model/SearchResult';
 import {DataControl} from 'model/DataControl';
@@ -15,6 +14,7 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 import {Profile} from 'model/Profile';
 import {AuthService} from '@shared/services/auth.service';
 import {ProfileService} from '@shared/services/profile.service';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-search',
@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
     profile: Profile;
 
     constructor(private searchService: SearchService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private route: ActivatedRoute,
                 private logger: LogService,
                 private authService: AuthService,

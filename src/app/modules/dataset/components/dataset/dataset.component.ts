@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {Observable, Subscription} from 'rxjs/Rx';
+import {Subscription} from 'rxjs';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
 import {EnrichmentService} from '@shared/services/enrichment.service';
@@ -13,11 +13,12 @@ import {ProfileService} from '@shared/services/profile.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {DialogService} from '@shared/services/dialog.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
+import {NgProgress} from '@ngx-progressbar/core';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class DatasetComponent implements OnInit {
                 private dialogService: DialogService,
                 private notificationService: NotificationsService,
                 private logger: LogService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
@@ -253,7 +254,7 @@ export class DatasetComponent implements OnInit {
             this.ontology_highlighted = false;
         } else {
 
-            Observable.forkJoin(
+            forkJoin(
                 [this.enrichmentService.getEnrichmentInfo(this.repository, this.acc),
                     this.enrichmentService.getSynonyms(this.repository, this.acc)]
             ).subscribe(

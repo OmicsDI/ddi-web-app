@@ -3,21 +3,19 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Http, HttpModule, RequestOptions} from '@angular/http';
 import {AppComponent} from '@shared/components/app/app.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
-import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {SimpleNotificationsModule} from 'angular2-notifications/dist';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 import {routing} from './app.routes';
 import {RouterModule} from '@angular/router';
 import {ProfileService} from '@shared/services/profile.service';
-import {AuthConfig, AuthHttp} from 'angular2-jwt';
+import {JwtModule} from '@auth0/angular-jwt';
 import {AuthService} from '@shared/services/auth.service';
 import {SearchService} from '@shared/services/search.service';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -46,23 +44,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
 import {UploadService} from '@shared/services/upload.service';
 import {HttpClientModule} from '@angular/common/http';
-
-
-export function getParameterByName(name): string {
-  const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-  return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
-
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-    return new AuthHttp(new AuthConfig({
-        tokenName: 'id_token',
-        tokenGetter: (() => localStorage.getItem('id_token')),
-        globalHeaders: [{'Content-Type': 'application/json'}],
-        headerName: 'X-AUTH-TOKEN',
-        noTokenScheme: true,
-        noJwtError: true
-    }), http, options);
-}
+import {NgProgressModule} from '@ngx-progressbar/core';
 
 
 @NgModule({
@@ -70,13 +52,19 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AppComponent
     ],
     imports: [
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: (() => localStorage.getItem('id_token')),
+                headerName: 'X-AUTH-TOKEN',
+            }
+        }),
         CommonModule,
         PipesModule,
         HomeModule,
         BrowserModule,
         FormsModule,
-        HttpModule,
         HttpClientModule,
+        NgProgressModule.forRoot(),
         MatDialogModule,
         MatMenuModule,
         MatButtonModule,
@@ -88,7 +76,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         DisqusModule.forRoot('omicsdi'),
         AlertModule.forRoot(),
         UtilsModule,
-        SlimLoadingBarModule.forRoot(),
         UiSwitchModule,
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),
@@ -99,12 +86,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     exports: [
         RouterModule
     ],
-    providers: [ProfileService
-        , {
-            provide: AuthHttp,
-            useFactory: authHttpServiceFactory,
-            deps: [Http, RequestOptions]
-        },
+    providers: [ProfileService,
         {provide: LocationStrategy, useClass: PathLocationStrategy}
         , AuthService
         , DataTransportService

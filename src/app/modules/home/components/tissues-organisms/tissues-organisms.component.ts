@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-
+import * as queue from 'd3-queue'
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -41,7 +41,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
     private startRequest(): void {
         const self = this;
 
-        d3.queue()
+        queue.queue()
             .defer(d3.json, this.webServiceUrl + 'statistics/tissues?size=100')
             .defer(d3.json, this.webServiceUrl + 'statistics/organisms?size=100') // geojson points
             .defer(d3.json, this.webServiceUrl + 'statistics/diseases?size=100') // geojson points
@@ -214,7 +214,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             , div_height_inside = parseInt(body.style('height'), 10)
             , diameter_inside = Math.min(div_height_inside, div_width_inside) - 24
             , format = d3.format(',d')
-            , color: string[] = d3.schemeCategory20b;
+            , color: string[] = Array.from(d3.schemeCategory10.values());
 
         body.selectAll('svg').remove();
         const svg_inside = body.append('svg')

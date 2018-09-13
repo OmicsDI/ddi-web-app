@@ -26,16 +26,18 @@ export class LoginLauncherComponent implements OnInit {
     }
 
     getProfile() {
-        this.profileService.getProfile()
-            .subscribe(
-                profile => {
-                    this.profileService.setProfile(profile);
-                    this.profile = profile;
-                    this.name = profile.userName;
-                    this.userId = profile.userId;
-                    this.isPublic = profile.isPublic;
-                }
-            );
+        if (this.auth.loggedIn()) {
+            this.profileService.getProfile()
+                .subscribe(
+                    profile => {
+                        this.profileService.setProfile(profile);
+                        this.profile = profile;
+                        this.name = profile.userName;
+                        this.userId = profile.userId;
+                        this.isPublic = profile.isPublic;
+                    }
+                );
+        }
     }
 
     private deleteCookie(name) {

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {FormsModule} from '@angular/forms';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';

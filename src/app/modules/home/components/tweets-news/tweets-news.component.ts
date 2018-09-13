@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 import * as cheerio from 'cheerio';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';

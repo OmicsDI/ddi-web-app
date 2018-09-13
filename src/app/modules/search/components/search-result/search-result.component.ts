@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import 'rxjs/add/operator/map';
 import {SearchResult} from 'model/SearchResult';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -11,7 +10,7 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {ProfileService} from '@shared/services/profile.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {DataTransportService} from '@shared/services/data.transport.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
     selector: 'app-search-result',

@@ -1,5 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
+import * as queue from 'd3-queue'
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
@@ -35,7 +36,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
     }
 
     private startRequest() {
-        d3.queue()
+        queue.queue()
             .defer(d3.json, this.web_service_url + 'statistics/omicsByYear') // geojson points
             .await((err: any, annualData: any[]) => {
                 if (err) {

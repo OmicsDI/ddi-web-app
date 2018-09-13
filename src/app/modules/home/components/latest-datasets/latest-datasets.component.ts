@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -16,7 +16,6 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
 
     static requestLatestDatasetFailed;
 
-    private widgetName = 'latest_datasets';
     latestDatasets: DataSet[];
     proteomics_list: string;
     metabolomics_list: string;
@@ -54,7 +53,6 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     private handleError(error: any) {
 
         LatestDatasetsComponent.requestLatestDatasetFailed = true;
-        this.logger.error('GET error with url: http://www.omicsdi.org/ws/dataset/dataset/latest?size=10');
         return Promise.reject(error.message || error);
     }
 

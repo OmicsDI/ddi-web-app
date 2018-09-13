@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {DatasetRoutingModule} from './dataset-routing.module';
 import {DatasetComponent} from './components/dataset/dataset.component';
 import {DisqusModule} from 'ngx-disqus';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {FormsModule} from '@angular/forms';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';

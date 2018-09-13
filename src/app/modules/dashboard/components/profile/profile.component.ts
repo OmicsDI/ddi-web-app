@@ -6,11 +6,10 @@ import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
-import 'rxjs/add/observable/fromEvent';
 import {InviteComponent} from '@modules/profile-controls/components/invite/invite.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {AuthService} from '@shared/services/auth.service';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-profile',
@@ -33,7 +32,7 @@ export class DashboardProfileComponent implements OnInit {
                 private authService: AuthService,
                 private route: ActivatedRoute,
                 private logger: LogService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private dialog: MatDialog) {
     }
 

@@ -1,7 +1,4 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Http} from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
 
 
 @Component({
@@ -14,6 +11,6 @@ export class NotfoundComponent {
     selected = 'oh mama';
     @ViewChild('txtInput') input: ElementRef;
 
-    constructor(public http: Http) {
+    constructor() {
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
-import {Http} from '@angular/http';
+import {Observable} from 'rxjs';
 import {SearchResult} from 'model/SearchResult';
+import {Response} from '@angular/http';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {DefaultParamImporter} from '@shared/utils/query/default.param.importer';
@@ -9,12 +9,14 @@ import {QueryParamImporter} from '@shared/utils/query/query.param.importer';
 import {DatacontrolParamImporter} from '@shared/utils/query/datacontrol.param.importer';
 import {DataControl} from 'model/DataControl';
 import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 
 @Injectable()
 export class SearchService extends BaseService {
 
-    constructor(private http: Http, public appConfig: AppConfig, private router: Router) {
+    constructor(private http: HttpClient, public appConfig: AppConfig, private router: Router) {
         super();
     }
 
@@ -39,6 +41,6 @@ export class SearchService extends BaseService {
         return this.http.get(
             this.appConfig.getSearchUrl(
                 searchQuery, 100, pageSize, sortBy, order, (page - 1) * pageSize))
-            .map(x => this.extractData<SearchResult>(x));
+            .pipe(map((x: Response) => this.extractData<SearchResult>(x)));
     }
 }

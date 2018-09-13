@@ -1,6 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-
+import * as queue from 'd3-queue';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
@@ -43,7 +43,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     }
 
     public startRequest() {
-        d3.queue()
+        queue.queue()
             .defer(d3.json, this.webServiceUrl + 'statistics/domains')
             .defer(d3.json, this.webServiceUrl + 'statistics/omics')
             .await((err: any, domains: any[], omicstype: any[]) => {

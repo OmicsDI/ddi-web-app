@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {InviteService} from '@shared/services/invite.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DatabaseListService} from '@shared/services/database-list.service';
@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 @Component({
     selector: 'app-invite',
@@ -51,7 +52,7 @@ export class InviteComponent implements OnInit {
         this.profile = this.profileService.getProfileFromLocal();
         this.inviteService.getInvite(this.data.inviteId).subscribe(x => {
             if (x) {
-                Observable.forkJoin(x.dataSets.map(record => {
+                forkJoin(x.dataSets.map(record => {
                     return this.dataSetService.getDataSetDetail(record.id, record.source);
                 })).subscribe(
                     y => {
