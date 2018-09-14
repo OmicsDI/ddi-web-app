@@ -66,15 +66,16 @@ export class ClaimButtonComponent implements OnInit, OnChanges {
         dataset.name = this.dataSet.title;
         dataset.omics_type = this.dataSet.omicsType;
 
-        if (this.auth.loggedIn()) {
-            this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
-            this.profileService.claimDataset(this.profile.userId, dataset);
-            //
-            this.profile.dataSets.push(dataset);
-            this.profileService.setProfile(this.profile);
-        }
-
-        this.claimed = true;
+        this.auth.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
+                this.profileService.claimDataset(this.profile.userId, dataset);
+                //
+                this.profile.dataSets.push(dataset);
+                this.profileService.setProfile(this.profile);
+                this.claimed = true;
+            }
+        });
     }
 
     viewInProfile() {

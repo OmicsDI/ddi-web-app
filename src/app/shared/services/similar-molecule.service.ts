@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Response} from '@angular/http';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {SimilarMolecule} from 'model/SimilarMolecule';
@@ -19,13 +18,13 @@ export class SimilarMoleculeService extends BaseService {
     public search(acc: string, repository: string): Observable<SimilarMolecule> {
         return this.http
             .get(this.appConfig.getSimilarityMoleculesUrl(acc, repository))
-            .pipe(map((x: Response) => this.extractData<SimilarMolecule>(x)));
+            .pipe(map(x => this.extractData<SimilarMolecule>(x)));
     }
 
     public searchSimilarityDatasets(acc: string, repository: string): Observable<SimilarityResult> {
         return this.http
             .get(this.appConfig.getSimilarityDatasetsUrl(acc, repository))
-            .pipe(map((x: Response) => this.extractData<SimilarityResult>(x)));
+            .pipe(map(x => this.extractData<SimilarityResult>(x)));
     }
 
 }

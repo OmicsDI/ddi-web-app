@@ -11,6 +11,7 @@ import {ProfileService} from '@shared/services/profile.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '@shared/services/auth.service';
 
 @Component({
     selector: 'app-search-result',
@@ -42,17 +43,25 @@ export class SearchResultComponent implements OnInit {
 
     constructor(private dataSetService: DataSetService,
                 private dialog: MatDialog,
+                private authService: AuthService,
                 private dataTransporterService: DataTransportService,
                 private notificationService: NotificationsService,
                 private profileService: ProfileService) {
     }
 
     ngOnInit() {
-        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
-            this.watchedDatasets = x;
-        });
-        this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
-            this.selectedDatasets = datasets;
+        this.authService.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
+                    this.watchedDatasets = x;
+                });
+                this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
+                    this.selectedDatasets = datasets;
+                });
+            } else {
+                this.watchedDatasets = [];
+                this.selectedDatasets = [];
+            }
         });
     }
 

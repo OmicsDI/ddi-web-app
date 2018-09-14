@@ -1,5 +1,4 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Response} from '@angular/http';
 import {AutocompleteResult} from 'model/AutocompleteResult';
 import {AppConfig} from 'app/app.config';
 import {map} from 'rxjs/operators';
@@ -31,7 +30,7 @@ export class AutocompleteNComponent implements OnInit {
             .pipe(map(this.extractData));
     }
 
-    private extractData(res: Response): string[] {
+    private extractData(res: Object): string[] {
         const body = res;
         // return body || { };
         let searchResult: AutocompleteResult;

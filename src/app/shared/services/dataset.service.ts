@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Response} from '@angular/http';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
@@ -28,7 +27,7 @@ export class DataSetService extends BaseService {
 
     public getDataSetDetail(accession: string, repository: string): Observable<DataSetDetail> {
         return this.http.get(this.appConfig.getDatasetUrl(accession, repository))
-            .pipe(map((x: Response) => this.extractData<DataSetDetail>(x)));
+            .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
     public getWebServiceUrl(): string {
         return this.appConfig.getWebServiceUrl();
@@ -54,36 +53,34 @@ export class DataSetService extends BaseService {
         return this.transcriptomicsList;
     }
 
-    public getLatestDataSets(): Promise<Response> {
+    public getLatestDataSets(): Promise<Object> {
         return this.http.get(this.appConfig.getDatasetLatestUrl())
-            .pipe(map((res: Response) => res))
             .toPromise();
     }
 
-    public getMostAccessedDataSets(): Promise<Response> {
+    public getMostAccessedDataSets(): Promise<Object> {
         return this.http.get(this.appConfig.getDatasetMostAccessedUrl())
-            .pipe(map((res: Response) => res))
             .toPromise();
     }
 
     public getDatasetByUrl(url: string): Observable<DataSet> {
         return this.http.post(this.appConfig.getDatasetByUrl(), url)
-            .pipe(map((x: Response) => this.extractData<DataSet>(x)));
+            .pipe(map(x => this.extractData<DataSet>(x)));
     }
 
     public getMergeCandidates(start: number, size: number): Observable<MergeCandidate[]> {
         return this.http.get(this.appConfig.getMergeCandidateUrl(start, size))
-            .pipe(map((x: Response) => this.extractData<MergeCandidate[]>(x)));
+            .pipe(map(x => this.extractData<MergeCandidate[]>(x)));
     }
 
     public getUnMergeCandidates(): Observable<UnMergeDatasets[]> {
         return this.http.get(this.appConfig.getUnMergeCandidateUrl())
-            .pipe(map((x: Response) => this.extractData<UnMergeDatasets[]>(x)));
+            .pipe(map(x => this.extractData<UnMergeDatasets[]>(x)));
     }
 
     public getMergeCandidateCount(): Observable<number> {
         return this.http.get(this.appConfig.getMergeCandidateCountUrl())
-            .pipe(map((x: Response) => this.extractData<number>(x)));
+            .pipe(map(x => this.extractData<number>(x)));
     }
 
     public merge(result: MergeCandidate): Observable<String> {
@@ -92,7 +89,7 @@ export class DataSetService extends BaseService {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
         return this.http.post(url, JSON.stringify(result), {headers: headers})
-            .pipe(map((res: Response) => 'OK'));
+            .pipe(map(res => 'OK'));
     }
 
     public unmerge(result: Array<UnMergeDatasets>): Observable<String> {
@@ -101,7 +98,7 @@ export class DataSetService extends BaseService {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
         return this.http.post(url, JSON.stringify(result), {headers: headers})
-            .pipe(map((res: Response) => {
+            .pipe(map(res => {
                 return 'OK';
             }));
     }
@@ -112,7 +109,7 @@ export class DataSetService extends BaseService {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
         return this.http.post(url, JSON.stringify(result), {headers: headers})
-            .pipe(map((res: Response) => {
+            .pipe(map(res => {
                 return 'OK';
             }));
     }
@@ -124,7 +121,7 @@ export class DataSetService extends BaseService {
         headers.append('Access-Control-Allow-Origin', '*');
 
         return this.http.post(url, JSON.stringify(result), {headers: headers})
-            .pipe(map((res: Response) => {
+            .pipe(map(res => {
                 return 'OK';
             }));
     }

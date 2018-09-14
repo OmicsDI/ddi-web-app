@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
     /*font-family: "Lucida Grande", "Droid Sans", Arial, Helvetica, sans-serif;*/
-    font-family: "proxima-nova", "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Montserrat",  "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .legend {
@@ -1252,7 +1252,7 @@ $lines-to-show: 3;
     display: -ms-box;
     display: box;
     max-width: 95%;
-    height: 20px; /* Fallback for non-webkit */
+    padding: 4px 0;
     margin: 0 auto;
     font-size: 13px;
     line-height: 1.4;
@@ -1603,7 +1603,7 @@ img.image-rounded {
     text-align: right;
 }
 
-image-cropper > div {
+app-image-cropper > div {
     text-align: center;
 }
 
@@ -1629,4 +1629,12 @@ image-cropper > div {
     font-size: 30px;
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-weight: 300;
+}
+.grey .tag::before, .grey .tag::after {
+    background: silver !important;
+}
+
+.container_ddi > .panel-row {
+    display: flex;
+    flex: 1;
 }

@@ -90,17 +90,19 @@ export class ProfileComponent implements OnInit {
                     }
                 );
         } else {
-            if (this.authService.loggedIn()) {
-                this.profileX = this.profileService.getProfileFromLocal();
-                this.name = this.profileX.userName;
-                this.dataSetDetails = [];
+            this.authService.loggedIn().then(isLogged => {
+                if (isLogged) {
+                    this.profileX = this.profileService.getProfileFromLocal();
+                    this.name = this.profileX.userName;
+                    this.dataSetDetails = [];
 
-                this.userId = this.profileX.userId;
+                    this.userId = this.profileX.userId;
 
-                this.profileImageUrl = this.getProfileImageUrl();
-            } else {
-                this.router.navigate(['unauthorized']);
-            }
+                    this.profileImageUrl = this.getProfileImageUrl();
+                } else {
+                    this.router.navigate(['unauthorized']);
+                }
+            });
         }
     }
 

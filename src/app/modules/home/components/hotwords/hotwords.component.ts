@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-import * as queue from 'd3-queue'
 
 import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -51,14 +50,19 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         const self = this;
         const webServiceUrl = this.webServiceUrl;
 
-        queue.queue()
-            .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description')
-            .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol')
-            .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol')
-            .await((error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]) => {
-                this.componentLoaded();
-                self.drawWordCloud(error, omicsDes, omicsDatap, omicsSamp);
-            });
+        const urls = [
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol'
+        ];
+
+        Promise.all(urls.map(url => d3.json(url))).then(function([omicsDes, omicsDatap, omicsSamp]) {
+            self.componentLoaded();
+            self.drawWordCloud(null, omicsDes as FrequentlyTerm[], omicsDatap as FrequentlyTerm[], omicsSamp as FrequentlyTerm[]);
+        }, (err) => {
+            self.componentLoaded();
+            self.drawWordCloud(err, [], [], []);
+        });
     }
 
     private drawWordCloud(error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]): void {

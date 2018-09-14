@@ -38,7 +38,7 @@
             </div>
 
         </div>
-        <query-builder [searchQuery]="queryParams" (queryChange)="updateQueryParams($event)" (click)="doNotPropagate($event);">
-        </query-builder>
+        <app-query-builder [searchQuery]="queryParams" (queryChange)="updateQueryParams($event)" (click)="doNotPropagate($event);">
+        </app-query-builder>
     </div>
 </mat-menu>

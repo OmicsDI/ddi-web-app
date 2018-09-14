@@ -12,7 +12,7 @@
         <div class="col-md-12">
             <div class="ng-scope panel panel-default" style="">
                 <h3 style="margin-top:10px"></h3>
-                <div AppSearchBox [isHomeSearch]="true" class="home-search"></div>
+                <div app-search-box [isHomeSearch]="true" class="home-search"></div>
             </div>
         </div>
 
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row panel-row">
 
         <div class="col-md-4">
             <app-hotwords></app-hotwords>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="col-md-4">
-            <repos-omics></repos-omics>
+            <app-repos-omics></app-repos-omics>
         </div>
 
 
@@ -40,7 +40,7 @@
     <!-- row -->
 
 
-    <div class="row">
+    <div class="row panel-row">
         <div class="col-md-4">
             <app-latest-datasets></app-latest-datasets>
         </div>
@@ -55,7 +55,7 @@
     </div>
     <!--row -->
 
-    <div class="row">
+    <div class="row panel-row" style="margin-top: 20px">
 
         <div class="col-md-4">
             <app-tweets-news></app-tweets-news>

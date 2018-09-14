@@ -77,11 +77,11 @@ export class ThorService {
     getUserInfo(): Observable<any> {
         const claimUrl = this.appConfig.getThorUrl() + 'claiming?clientAddress=https://www.ebi.ac.uk&ordIdWorkJson={}';
 
-        return this.http.get(claimUrl, {withCredentials: true}).pipe(map((data: Response) => {
-            this.isUserLoggedIn = data.json()['isUserLoggedIn'];
-            this.loginUrl = data.json()['loginUrl'];
-            this.logoutUrl = data.json()['logoutUrl'];
-            this.orcIdRecord = data.json()['orcIdRecord'];
+        return this.http.get(claimUrl, {withCredentials: true}).pipe(map(data => {
+            this.isUserLoggedIn = data['isUserLoggedIn'];
+            this.loginUrl = data['loginUrl'];
+            this.logoutUrl = data['logoutUrl'];
+            this.orcIdRecord = data['orcIdRecord'];
         }));
     }
 
@@ -154,10 +154,12 @@ export class ThorService {
                                 d.name = x.title;
                                 d.omics_type = x.omicsType;
                                 let profile;
-                                if (this.authService.loggedIn()) {
-                                    profile = this.profileService.getProfileFromLocal();
-                                    this.profileService.claimDataset(profile.userId, d);
-                                }
+                                this.authService.loggedIn().then(isLogged => {
+                                    if (isLogged) {
+                                        profile = this.profileService.getProfileFromLocal();
+                                        this.profileService.claimDataset(profile.userId, d);
+                                    }
+                                });
                             }
                         }
                     }

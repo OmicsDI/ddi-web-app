@@ -1,168 +1,168 @@
-<div id="statisticspanel" class="panel panel-default" style="min-height:390px; height:100%;">
-
-
-    <div class="">
-        <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
-    </div>
-
-
-    <!-- p *ngFor="let statisticdata of statisticsList " style="margin:8px">
-      {{statisticdata.value|number}} {{statisticdata.name}}
-    </p -->
-
-    <div style="padding:20px 10px;">
-
-        <div class="row">
-            <div class="col-lg-6 statistic-panel-item">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3" style="display:block;">
-                                <i class="fa fa-server fa-3x" style="font-size: 2.5em"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge-smaller">{{repositories}}</div>
-                                <div>Repositories</div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <!-- a href="#">
-                      <div class="panel-footer">
-                        <span class="pull-left">View repositories</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                      </div>
-                    </a -->
-                </div>
-            </div>
-
-            <div class="col-lg-6 statistic-panel-item">
-
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3" style="display:block">
-                                <i class="fa fa-bar-chart fa-3x" style="font-size: 2.5em"></i>
-                            </div>
-                            <div class="col-xs-9">
-                                <div class="huge-smaller">{{datasets}}</div>
-                                <div>Datasets</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- a href="#">
-                      <div class="panel-footer">
-                        <span class="pull-left">Browse datasets</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                      </div>
-                    </a -->
-                </div>
-
-            </div>
+<div id="statisticspanel" class="panel panel-default" style="height:100%;">
+    <div>
+        <div class="">
+            <h4 class="icon icon-functional " data-icon="z"> Statistics</h4>
         </div>
-        <div class="row">
 
-            <div class="col-lg-6 statistic-panel-item">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3" style="display:block;">
-                                <i class="fa fa-heartbeat fa-3x" style="font-size: 2.5em"></i>
+
+        <!-- p *ngFor="let statisticdata of statisticsList " style="margin:8px">
+          {{statisticdata.value|number}} {{statisticdata.name}}
+        </p -->
+
+        <div style="padding:20px 10px;">
+
+            <div class="row">
+                <div class="col-lg-6 statistic-panel-item">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="display:block;">
+                                    <i class="fa fa-server fa-3x" style="font-size: 2.5em"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge-smaller">{{repositories}}</div>
+                                    <div>Repositories</div>
+                                </div>
+
                             </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge-smaller">{{diseases}}</div>
-                                <div>Diseases</div>
-                            </div>
+
                         </div>
+                        <!-- a href="#">
+                          <div class="panel-footer">
+                            <span class="pull-left">View repositories</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                          </div>
+                        </a -->
                     </div>
-                    <!--  href="#">
-                      <div class="panel-footer">
-                        <span class="pull-left">Search diseases</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                      </div>
-                    </a -->
                 </div>
-            </div>
-            <div class="col-lg-6 statistic-panel-item">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3" style="display:block;">
-                                <i class="fa fa-male fa-3x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge-smaller">{{tissues}}</div>
-                                <div>Tissues</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- a href="#">
-                      <div class="panel-footer">
-                        <span class="pull-left">Search Tissues</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                      </div>
-                    </a -->
-                </div>
-            </div>
 
-        </div>
-        <div class="row">
+                <div class="col-lg-6 statistic-panel-item">
 
-            <div class="col-lg-6 statistic-panel-item">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3" style="display:block;">
-                                <div>
-                                    <i class="icon icon-conceptual" data-icon="o" id="species_icon"></i>
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="display:block">
+                                    <i class="fa fa-bar-chart fa-3x" style="font-size: 2.5em"></i>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="huge-smaller">{{datasets}}</div>
+                                    <div>Datasets</div>
                                 </div>
                             </div>
-                            <div class="col-xs-9">
-                                <div class="huge-smaller">{{organisms}}</div>
-                                <div>Species</div>
-                            </div>
                         </div>
+                        <!-- a href="#">
+                          <div class="panel-footer">
+                            <span class="pull-left">Browse datasets</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                          </div>
+                        </a -->
                     </div>
-                    <!-- a href="#">
-                      <div class="panel-footer">
-                        <span class="pull-left">Search Species</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                      </div>
-                    </a -->
+
                 </div>
             </div>
+            <div class="row">
 
-            <div class="col-lg-6 statistic-panel-item">
-
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3" style="display:block;">
-                                <i class="fa fa-user-circle fa-3x" style="display:block; font-size: 2.5em"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge-smaller">{{users}}</div>
-                                <div>Users</div>
+                <div class="col-lg-6 statistic-panel-item">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="display:block;">
+                                    <i class="fa fa-heartbeat fa-3x" style="font-size: 2.5em"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge-smaller">{{diseases}}</div>
+                                    <div>Diseases</div>
+                                </div>
                             </div>
                         </div>
+                        <!--  href="#">
+                          <div class="panel-footer">
+                            <span class="pull-left">Search diseases</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                          </div>
+                        </a -->
                     </div>
-                    <!-- a href="#">
-                      <div class="panel-footer">
-                        <span class="pull-left">Sign Up to join!</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                      </div>
-                    </a -->
+                </div>
+                <div class="col-lg-6 statistic-panel-item">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="display:block;">
+                                    <i class="fa fa-male fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge-smaller">{{tissues}}</div>
+                                    <div>Tissues</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- a href="#">
+                          <div class="panel-footer">
+                            <span class="pull-left">Search Tissues</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                          </div>
+                        </a -->
+                    </div>
                 </div>
 
             </div>
+            <div class="row">
 
+                <div class="col-lg-6 statistic-panel-item">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="display:block;">
+                                    <div>
+                                        <i class="icon icon-conceptual" data-icon="o" id="species_icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="huge-smaller">{{organisms}}</div>
+                                    <div>Species</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- a href="#">
+                          <div class="panel-footer">
+                            <span class="pull-left">Search Species</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                          </div>
+                        </a -->
+                    </div>
+                </div>
+
+                <div class="col-lg-6 statistic-panel-item">
+
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3" style="display:block;">
+                                    <i class="fa fa-user-circle fa-3x" style="display:block; font-size: 2.5em"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge-smaller">{{users}}</div>
+                                    <div>Users</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- a href="#">
+                          <div class="panel-footer">
+                            <span class="pull-left">Sign Up to join!</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                          </div>
+                        </a -->
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
 

@@ -15,7 +15,6 @@ export class NavComponent implements OnInit {
     userId: string;
     public profileImageUrl: string;
     profile: Profile;
-    showUp = false;
     isAdmin = false;
 
     constructor(private profileService: ProfileService,
@@ -28,19 +27,21 @@ export class NavComponent implements OnInit {
         this.dataTransportService.listen('image_change').subscribe(message => {
              this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
         });
-        if (this.authService.loggedIn()) {
-            this.profile = this.profileService.getProfileFromLocal();
-            this.userId = this.profile.userId;
-            this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
-            this.profileService.getAdminUsers().subscribe( (x: Response) => {
-                if (this.userId !== null) {
-                    for (const user of x.json()['users']) {
-                        if (user === this.userId) {
-                            this.isAdmin = true;
+        this.authService.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.profile = this.profileService.getProfileFromLocal();
+                this.userId = this.profile.userId;
+                this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
+                this.profileService.getAdminUsers().subscribe( x => {
+                    if (this.userId !== null) {
+                        for (const user of x['users']) {
+                            if (user === this.userId) {
+                                this.isAdmin = true;
+                            }
                         }
                     }
-                }
-            });
-        }
+                });
+            }
+        });
     }
 }

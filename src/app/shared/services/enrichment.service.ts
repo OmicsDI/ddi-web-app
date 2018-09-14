@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Response} from '@angular/http';
 import {EnrichmentInfo} from 'model/enrichment-info/EnrichmentInfo';
 import {SynonymResult} from 'model/enrichment-info/SynonymResult';
 import {AppConfig} from 'app/app.config';
@@ -16,11 +15,11 @@ export class EnrichmentService extends BaseService {
 
     getEnrichmentInfo(repository: string, acc: string): Observable<EnrichmentInfo> {
         return this.http.get(this.appConfig.getEnrichmentUrl(acc, repository))
-            .pipe(map((x: Response) => this.extractData<EnrichmentInfo>(x)));
+            .pipe(map(x => this.extractData<EnrichmentInfo>(x)));
     }
 
     getSynonyms(repository: string, acc: string): Observable<SynonymResult> {
         return this.http.get(this.appConfig.getSynonymsUrl(acc, repository))
-            .pipe(map((x: Response) => this.extractData<SynonymResult>(x)));
+            .pipe(map(x => this.extractData<SynonymResult>(x)));
     }
 }

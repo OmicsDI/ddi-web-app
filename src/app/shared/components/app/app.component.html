@@ -30,7 +30,7 @@
                             class="fa fa-bell"></i> Help <b class="caret"></b></a>
 
                     <div class="dropdown-menu" style="background-color: #ffffff">
-                        <ul nav navbar-nav>
+                        <ul>
                             <li class="nav-item" id="li1">
                                 <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
                                     Omics Help
@@ -45,7 +45,7 @@
                         </ul>
                     </div>
                 </li>
-                <li AppLoginLauncher class="nav-item dropdown text-center" id="item6">
+                <li app-login-launcher class="nav-item dropdown text-center" id="item6">
                 </li>
                 <li class="nav-item" *ngIf="selectedComponents > 0"><a
                         routerLink="/dashboard/selected"
@@ -55,7 +55,7 @@
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">
-            <li style="width:100%;" *ngIf="!homePage" AppSearchBox [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
+            <li style="width:100%;" *ngIf="!homePage" app-search-box [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
         </ul>
     </nav>
     <!-- /local-nav -->

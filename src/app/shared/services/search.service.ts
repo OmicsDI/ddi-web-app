@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {SearchResult} from 'model/SearchResult';
-import {Response} from '@angular/http';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {DefaultParamImporter} from '@shared/utils/query/default.param.importer';
@@ -41,6 +40,6 @@ export class SearchService extends BaseService {
         return this.http.get(
             this.appConfig.getSearchUrl(
                 searchQuery, 100, pageSize, sortBy, order, (page - 1) * pageSize))
-            .pipe(map((x: Response) => this.extractData<SearchResult>(x)));
+            .pipe(map(x => this.extractData<SearchResult>(x)));
     }
 }

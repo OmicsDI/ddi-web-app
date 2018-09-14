@@ -18,5 +18,5 @@ addons:
 
 script:
   - ng lint
-  - ng test --watch false -cc
+  - ng test --watch false
   - npm run e2e

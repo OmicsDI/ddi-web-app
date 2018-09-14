@@ -46,6 +46,9 @@ import {UploadService} from '@shared/services/upload.service';
 import {HttpClientModule} from '@angular/common/http';
 import {NgProgressModule} from '@ngx-progressbar/core';
 
+export function jwtTokenGetter() {
+    return localStorage.getItem('id_token');
+}
 
 @NgModule({
     declarations: [
@@ -54,8 +57,10 @@ import {NgProgressModule} from '@ngx-progressbar/core';
     imports: [
         JwtModule.forRoot({
             config: {
-                tokenGetter: (() => localStorage.getItem('id_token')),
+                tokenGetter: jwtTokenGetter,
                 headerName: 'X-AUTH-TOKEN',
+                whitelistedDomains: ['wwwdev.ebi.ac.uk'],
+                blacklistedRoutes: new Array(new RegExp('wwwdev.ebi.ac.uk\/Tools\/omicsdi\/ws\/.*'))
             }
         }),
         CommonModule,

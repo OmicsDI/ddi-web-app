@@ -42,30 +42,32 @@ export class SearchComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.authService.loggedIn()) {
-            this.profile = this.profileService.getProfileFromLocal();
-        }
-        this.databaseListService.getDatabaseList().subscribe(databases => {
-            this.route.queryParams.subscribe(params => {
-                this.params = params;
-                this.slimLoadingBarService.start();
-                this.query = QueryUtils.getBaseQuery(params);
-                this.dataControl = QueryUtils.getDataControl(params);
-                this.selectedFacets = QueryUtils.getAllFacets(params);
-                this.logger.debug('Facet selected: {}', this.selectedFacets);
-                this.databases = databases;
-                this.searchService
-                    .fullSearch(
-                        this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
-                    .subscribe(
-                        result => {
-                            this.searchResult = result;
-                            this.dataTransportService.fire(this.facetsChannel, result.facets);
-                        }, error => {
-                            this.logger.error('Exception occurred when getting search result, {}', error);
-                        }, () => {
-                            this.slimLoadingBarService.complete();
-                        });
+        this.authService.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.profile = this.profileService.getProfileFromLocal();
+            }
+            this.databaseListService.getDatabaseList().subscribe(databases => {
+                this.route.queryParams.subscribe(params => {
+                    this.params = params;
+                    this.slimLoadingBarService.start();
+                    this.query = QueryUtils.getBaseQuery(params);
+                    this.dataControl = QueryUtils.getDataControl(params);
+                    this.selectedFacets = QueryUtils.getAllFacets(params);
+                    this.logger.debug('Facet selected: {}', this.selectedFacets);
+                    this.databases = databases;
+                    this.searchService
+                        .fullSearch(
+                            this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
+                        .subscribe(
+                            result => {
+                                this.searchResult = result;
+                                this.dataTransportService.fire(this.facetsChannel, result.facets);
+                            }, error => {
+                                this.logger.error('Exception occurred when getting search result, {}', error);
+                            }, () => {
+                                this.slimLoadingBarService.complete();
+                            });
+                });
             });
         });
     }

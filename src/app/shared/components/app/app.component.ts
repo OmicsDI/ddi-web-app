@@ -53,14 +53,16 @@ export class AppComponent implements OnInit {
                 }
             }
         });
-        if (this.auth.loggedIn()) {
-            this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
-                this.selectedComponents = datasets.length;
-            });
-            this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
-                this.selectedComponents = datasets.length;
-            });
-        }
+        this.auth.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
+                    this.selectedComponents = datasets.length;
+                });
+                this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
+                    this.selectedComponents = datasets.length;
+                });
+            }
+        });
     }
 
     getTitle(): string {

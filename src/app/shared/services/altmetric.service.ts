@@ -15,7 +15,7 @@ export class AltmetricService extends BaseService {
 
     public get(PMID: string): Observable<AltmetricEntity> {
         return this.http.get(this.appConfig.getAltmetricUrl(PMID))
-            .pipe(map((res: Response) => {
+            .pipe(map(res => {
                 const r = new AltmetricEntity();
 
                 r.pubmed_id = res['pmid'];

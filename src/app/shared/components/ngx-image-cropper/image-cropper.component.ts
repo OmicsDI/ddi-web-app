@@ -38,7 +38,7 @@ export interface CropperPosition {
 }
 
 @Component({
-    selector: 'image-cropper',
+    selector: 'app-image-cropper',
     templateUrl: './image-cropper.component.html',
     styleUrls: ['./image-cropper.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush

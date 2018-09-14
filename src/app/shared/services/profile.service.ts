@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Response} from '@angular/http';
 import {Profile} from 'model/Profile';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
@@ -10,7 +9,7 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {CookieUtils} from '@shared/utils/cookie-utils';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs/internal/observable/throwError';
@@ -38,13 +37,13 @@ export class ProfileService extends BaseService {
 
     getProfile(): Observable<Profile> {
         return this.http.get(this.appConfig.getProfileUrl(null))
-            .pipe(map((data: Response) => this.extractData<Profile>(data)));
+            .pipe(map(data => this.extractData<Profile>(data)));
     }
 
     getPublicProfile(username): Observable<Profile> {
         let _profile;
         return this.http.get(this.appConfig.getProfileUrl(username))
-            .pipe(map((x: Response) => {
+            .pipe(map(x => {
                 _profile = this.extractData<Profile>(x);
                 if (!_profile) {
                     this.logger.debug('public profile not received');
@@ -58,7 +57,7 @@ export class ProfileService extends BaseService {
     getAllProfiles(): Observable<Profile[]> {
         let _profiles;
         return this.http.get(this.appConfig.getAllProfilesUrl())
-            .pipe(map((x: Response) => {
+            .pipe(map(x => {
                 _profiles = this.extractData<Profile[]>(x);
                 if (!_profiles) {
                     this.logger.debug('public profile not received');
@@ -66,30 +65,30 @@ export class ProfileService extends BaseService {
                     this.logger.debug('public profiles received: {}', _profiles.length);
                 }
                 return _profiles;
-            }), catchError((e: Response) => this.handleError(e)));
+            }), catchError(e => this.handleError(e)));
     }
 
     getUserConnections(userId: string): Observable<string[]> {
         return this.http.get(this.appConfig.getUserConnectionsUrl(userId))
-            .pipe(map((x: Response) => this.extractData<string[]>(x)));
+            .pipe(map(x => this.extractData<string[]>(x)));
     }
 
     getUserConnection(userId: string, provider: string): Observable<ConnectionData> {
         return this.http.get(this.appConfig.getUserConnectionUrl(userId, provider))
             .pipe(
-                map((x: Response) => this.extractData<ConnectionData>(x)),
-                catchError((e: Response) => this.handleError(e)));
+                map(x => this.extractData<ConnectionData>(x)),
+                catchError(e => this.handleError(e)));
     }
 
     deleteConnection(userId: string, provider: string): Observable<any> {
         const deleteConnectionUrl = this.appConfig.getDeleteConnectionUrl(userId, provider);
         return this.http.delete(deleteConnectionUrl)
-            .pipe(map((res: Response) => res), catchError((e: Response) => this.handleError(e)));
+            .pipe(map(res => res), catchError(e => this.handleError(e)));
     }
 
     getCoAuthors(userId: string): Observable<UserShort[]> {
         return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))//
-            .pipe(map((x: Response) => this.extractData<UserShort[]>(x)));
+            .pipe(map(x => this.extractData<UserShort[]>(x)));
     }
 
     public updateUser(profile: Profile): Observable<string> {
@@ -97,23 +96,22 @@ export class ProfileService extends BaseService {
             .pipe(map(() => 'OK'));
     }
 
-    private handleError(error: Response | any) {
-        // In a real world app, we might use a remote logging infrastructure
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    private handleError(error: HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+            // A client-side or network error occurred. Handle it accordingly.
+            this.logger.error('An error occurred:', error.error.message);
         } else {
-            errMsg = error.message ? error.message : error.toString();
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            this.logger.error('Backend returned code {}, body was: {}', error.status, error.error);
         }
-        this.logger.error(errMsg);
-        return throwError(error);
+        // return an observable with a user-facing error message
+        return throwError('Something bad happened; please try again later.');
     }
 
     public saveDataSets(userID: string, datasets: DataSetShort[]) {
         this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets))
-            .pipe(map((res: Response) => res)).subscribe(() => {});
+            .pipe(map(res => res)).subscribe(() => {});
     }
 
     public claimDataset(userID: string, dataset: DataSetShort) {
@@ -143,35 +141,29 @@ export class ProfileService extends BaseService {
 
     getSavedSearches(userId: string): Observable<SavedSearch[]> {
         return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//
-            .pipe(map((x: Response) => this.extractData<SavedSearch[]>(x)));
+            .pipe(map(x => this.extractData<SavedSearch[]>(x)));
     }
 
     saveSavedSearch(savedSearch: SavedSearch) {
         this.logger.debug('Saving saved search');
         this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId), JSON.stringify(savedSearch)).subscribe(
-            x => {
-                this.logger.debug('Search saved saved');
-            }
-        );
+            () => this.logger.debug('Search saved saved'));
     }
 
     deleteSavedSearch(userId: string, id: string): Observable<String> {
         return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(userId, id))
-            .pipe(map(x => 'ok'), catchError((e: Response) => this.handleError(e)));
+            .pipe(map(x => 'ok'), catchError(e => this.handleError(e)));
     }
 
     getWatchedDatasets(userId: string): Observable<WatchedDataset[]> {
         return this.http.get(this.appConfig.getWatchedDatasetsUrl(userId))//
-            .pipe(map((x: Response) => this.extractData<WatchedDataset[]>(x)));
+            .pipe(map(x => this.extractData<WatchedDataset[]>(x)));
     }
 
     saveWatchedDataset(watchedDataset: WatchedDataset) {
         this.logger.debug('Saving saved search');
         this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset)).subscribe(
-            x => {
-                this.logger.debug('Watched dataset saved');
-            }
-        );
+            () => this.logger.debug('Watched dataset saved'));
     }
 
     deleteWatchedDataset(userId: string, id: string): Observable<String> {
@@ -179,7 +171,7 @@ export class ProfileService extends BaseService {
     }
 
     getUsersCount(): Observable<number> {
-        return this.http.get(this.appConfig.getUserCountUrl()).pipe(map((x: Response) => this.extractData<number>(x)));
+        return this.http.get(this.appConfig.getUserCountUrl()).pipe(map(x => this.extractData<number>(x)));
     }
 
     setSelected(userId: string, datasets: DataSetShort[]): Observable<String> {
@@ -188,7 +180,7 @@ export class ProfileService extends BaseService {
 
     getSelected(userId: string): Observable<DataSetShort[]> {
         return this.http.get(this.appConfig.getSelectedDatasetsUrl(userId))//
-            .pipe(map((x: Response) => this.extractData<DataSetShort[]>(x)));
+            .pipe(map(x => this.extractData<DataSetShort[]>(x)));
     }
 
     getAdminUsers() {

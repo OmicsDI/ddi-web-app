@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-import * as queue from 'd3-queue';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
-    selector: 'repos-omics',
+    selector: 'app-repos-omics',
     templateUrl: './repos-omics.component.html',
     styleUrls: ['./repos-omics.component.css'],
     providers: [ {provide: AsyncInitialisedComponent, useExisting: ReposOmicsComponent }]
@@ -22,7 +21,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
     private pieChartName = 'chart_repos_omics';
     private body;
-    private retryLimitTimes = 2;
 
     private reposDataSimple = [];
     private data = [];
@@ -43,24 +41,18 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     }
 
     public startRequest() {
-        queue.queue()
-            .defer(d3.json, this.webServiceUrl + 'statistics/domains')
-            .defer(d3.json, this.webServiceUrl + 'statistics/omics')
-            .await((err: any, domains: any[], omicstype: any[]) => {
-                if (err) {
-                    this.retryLimitTimes--;
-                    if (this.retryLimitTimes <= 0) {
-                        this.componentLoaded();
-                        ChartsErrorHandler.outputErrorInfo(this.pieChartName);
-                        return;
-                    }
-                    ChartsErrorHandler.outputGettingInfo(this.pieChartName);
-                    this.startRequest();
-                } else {
-                    this.componentLoaded();
-                    this.draw(domains, omicstype);
-                }
-            });
+        const self = this;
+        const urls = [
+            this.webServiceUrl + 'statistics/domains',
+            this.webServiceUrl + 'statistics/omics'
+        ];
+
+        Promise.all(urls.map(url => d3.json(url))).then(function([domains, omicstype]) {
+            self.draw(domains as any[], omicstype as any[]);
+        }, (err) => {
+            ChartsErrorHandler.outputErrorInfo(self.pieChartName);
+        });
+        this.componentLoaded();
     }
 
     public draw(domains: any[], omicsType: any[]): void {

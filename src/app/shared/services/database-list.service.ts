@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Response} from '@angular/http';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {Database} from 'model/Database';
@@ -19,7 +18,7 @@ export class DatabaseListService extends BaseService {
 
     public getDatabaseList(): Observable<Database[]> {
         return this.http.get(this.appConfig.getDatabasesUrl())
-            .pipe(map((x: Response) => this.extractData<Database[]>(x)));
+            .pipe(map(x => this.extractData<Database[]>(x)));
     }
 
     public getDatabaseBySource(source: string, databases: Database[]): Database {

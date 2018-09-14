@@ -14,9 +14,11 @@ export class LogConsole extends LogPublisher {
                 console.error.bind(console)(entry.buildLogString());
                 break;
             case LogLevel.WARN:
+                // tslint:disable-next-line
                 console.warn.bind(console)(entry.buildLogString());
                 break;
             default:
+                // tslint:disable-next-line
                 console.log.bind(console)(entry.buildLogString());
         }
         return of(true);

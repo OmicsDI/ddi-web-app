@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-import * as queue from 'd3-queue'
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
@@ -15,7 +14,6 @@ import {AsyncInitialisedComponent} from '@shared/components/async/async.initiali
 export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implements OnInit {
 
     private web_service_url = this.appConfig.getWebServiceUrl();
-    private retryLimitTimes = 2;
 
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
@@ -36,25 +34,19 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
     }
 
     private startRequest() {
-        queue.queue()
-            .defer(d3.json, this.web_service_url + 'statistics/omicsByYear') // geojson points
-            .await((err: any, annualData: any[]) => {
-                if (err) {
-                    this.retryLimitTimes--;
-                    if (this.retryLimitTimes <= 0) {
-                        this.componentLoaded();
-                        ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
-                        return;
-                    }
-                    ChartsErrorHandler.outputGettingInfo('barchart_omicstype_annual');
-                    this.startRequest();
-                } else {
-                    this.componentLoaded();
-                    ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
-                    const processedData = this.prepareData(annualData);
-                    this.draw(processedData);
-                }
-            });
+        const self = this;
+        const urls = [
+            this.web_service_url + 'statistics/omicsByYear',
+        ];
+
+        Promise.all(urls.map(url => d3.json(url))).then(function([annualData]) {
+            ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
+            const processedData = self.prepareData(annualData as any[]);
+            self.draw(processedData);
+        }, (err) => {
+            ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
+        });
+        self.componentLoaded();
     }
 
     private draw(processedData: any) {
@@ -241,7 +233,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
             .enter().append('g')
             .attr('class', 'legend')
             .attr('transform', function (d, i) {
-                return 'translate(' + (i * 0) + ',200)';
+                return 'translate(' + (i * 0) + ',235)';
             })
             .on('click', function (d) {
                 const searchWord = 'omics_type:"' + d + '"';
@@ -298,11 +290,11 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
         let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2), 10);
         const latestDatasetsDivHeightPx = d3.select('#latestdatasetspanel').style('height');
         let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2), 10);
-        divHeight = 288;
+        divHeight = 325;
         divWidth = parseInt(body.style('width'), 10);
 
         const heightOffset = 50;
-        const margin = {top: 20, right: 20, bottom: 20, left: 60},
+        const margin = {top: 25, right: 20, bottom: 20, left: 60},
             width = divWidth - margin.left - margin.right,
             height = divHeight - margin.top - margin.bottom;
         body.attr('position', 'relative');

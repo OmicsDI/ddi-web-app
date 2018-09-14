@@ -6,7 +6,7 @@ import {Facet} from 'model/Facet';
 import {ArrayUtils} from '@shared/utils/array-utils';
 
 @Component({
-    selector: 'query-builder',
+    selector: 'app-query-builder',
     templateUrl: './query-builder.component.html',
     styleUrls: ['./query-builder.component.css']
 })

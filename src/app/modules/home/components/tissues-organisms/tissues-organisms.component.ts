@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-import * as queue from 'd3-queue'
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -40,35 +39,25 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
 
     private startRequest(): void {
         const self = this;
+        const urls = [
+            this.webServiceUrl + 'statistics/tissues?size=100',
+            this.webServiceUrl + 'statistics/organisms?size=100',
+            this.webServiceUrl + 'statistics/diseases?size=100'
+        ];
 
-        queue.queue()
-            .defer(d3.json, this.webServiceUrl + 'statistics/tissues?size=100')
-            .defer(d3.json, this.webServiceUrl + 'statistics/organisms?size=100') // geojson points
-            .defer(d3.json, this.webServiceUrl + 'statistics/diseases?size=100') // geojson points
-            .await(function (error: any, tissues: StatisticsDomainsDetail[], organisms: StatisticsDomainsDetail[],
-                             diseases: StatisticsDomainsDetail[]) {
-                if (error) {
-                    self.retryLimitTimes--;
+        Promise.all(urls.map(url => d3.json(url))).then(function([tissues, organisms, diseases]) {
+            self.componentLoaded();
+            ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
-                    if (self.retryLimitTimes <= 0) {
-                        self.componentLoaded();
-                        ChartsErrorHandler.outputErrorInfo(self.bubChartName);
-                        return;
-                    }
+            self.tissues = tissues as StatisticsDomainsDetail[];
+            self.organisms = organisms as StatisticsDomainsDetail[];
+            self.diseases = diseases as StatisticsDomainsDetail[];
 
-                    ChartsErrorHandler.outputGettingInfo(self.bubChartName);
-                    self.startRequest();
-                } else {
-                    self.componentLoaded();
-                    ChartsErrorHandler.removeGettingInfo(self.bubChartName);
-
-                    self.tissues = tissues;
-                    self.organisms = organisms;
-                    self.diseases = diseases;
-
-                    self.prepareData();
-                }
-            });
+            self.prepareData();
+        }, (err) => {
+            self.componentLoaded();
+            ChartsErrorHandler.outputErrorInfo(self.bubChartName);
+        });
     }
 
     private prepareData(): void {
@@ -220,7 +209,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         const svg_inside = body.append('svg')
             .attr('width', diameter_inside)
             .attr('height', diameter_inside)
-            .attr('style', 'margin-top: 15px;')
+            .attr('style', 'margin-top: 10px;')
             .attr('class', 'bubble center');
         //         .attr("style", "position:relative");
 
