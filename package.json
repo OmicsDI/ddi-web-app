@@ -9,7 +9,7 @@
     "test": "ng test",
     "e2e": "ng e2e",
     "build": "ng build",
-    "release": "ng build --prod --build-optimizer"
+    "release": "ng build"
   },
   "private": true,
   "dependencies": {
@@ -41,7 +41,6 @@
     "ngx-disqus": "~2.4.0",
     "ngx-pagination": "^3.0.0",
     "ngx-quill": "^3.4.0",
-    "parse5": "^5.1.0",
     "process": "^0.11.10",
     "rxjs": "^6.3.2",
     "zone.js": "^0.8.4"

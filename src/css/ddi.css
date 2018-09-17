@@ -1638,3 +1638,10 @@ app-image-cropper > div {
     display: flex;
     flex: 1;
 }
+
+.cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 95%;
+    white-space: nowrap;
+}

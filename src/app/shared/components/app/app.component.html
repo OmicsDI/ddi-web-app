@@ -59,7 +59,9 @@
         </ul>
     </nav>
     <!-- /local-nav -->
-    <ng-progress></ng-progress>
+    <ng-progress [direction]="'ltr+'" [min]="20" [max]="1" [speed]="200"  [trickleSpeed]="300"
+                 [spinner]="false" [spinnerPosition]="'left'" [thick]="false" [meteor]="true"
+                 [color]="'red'" [ease]="'linear'"></ng-progress>
     <!--main container of page -->
     <div style="min-height: 600px;">
         <router-outlet></router-outlet>
