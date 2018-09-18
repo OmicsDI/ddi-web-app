@@ -37,7 +37,7 @@
                                 </div>
                             </li>
                             <li class="nav-item" id="li3">
-                                <div class="text-center" *ngIf="auth.loggedIn()" mat-menu-item
+                                <div class="text-center" *appIsLogged mat-menu-item
                                      [routerLink]="['dashboard','feedback']" id="item-div3">
                                     Feedback
                                 </div>

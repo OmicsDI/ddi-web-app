@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {ConfirmDialogComponent} from '@shared/modules/controls/confirm-dialog/confirm-dialog.component';
 import {AltmetricImageComponent} from '@shared/modules/controls/altmetric-image/altmetric-image.component';
 import {AnnotatedTextComponent} from '@shared/modules/controls/annotated-text/annotated-text.component';
-import {ClaimAllButtonComponent} from '@shared/modules/controls/claim-all-button/claim-all-button.component';
-import {ClaimButtonComponent} from '@shared/modules/controls/claim-button/claim-button.component';
 import {DatasetWidgetComponent} from '@shared/modules/controls/datasetwidget/datasetwidget.component';
 import {DeleteAllButtonComponent} from '@shared/modules/controls/delete-all-button/delete-all-button.component';
 import {DeleteButtonComponent} from '@shared/modules/controls/delete-button/delete-button.component';
@@ -46,8 +44,6 @@ import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/au
         ConfirmDialogComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
-        ClaimAllButtonComponent,
-        ClaimButtonComponent,
         DatasetWidgetComponent,
         DatasetwidgetSmallComponent,
         DeleteAllButtonComponent,
@@ -70,8 +66,6 @@ import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/au
         ScoreComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
-        ClaimAllButtonComponent,
-        ClaimButtonComponent,
         DatasetWidgetComponent,
         DatasetwidgetSmallComponent,
         DeleteAllButtonComponent,
