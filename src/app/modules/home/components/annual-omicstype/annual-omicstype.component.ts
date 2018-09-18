@@ -233,7 +233,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
             .enter().append('g')
             .attr('class', 'legend')
             .attr('transform', function (d, i) {
-                return 'translate(' + (i * 0) + ',235)';
+                return 'translate(' + (i * 0) + ',270)';
             })
             .on('click', function (d) {
                 const searchWord = 'omics_type:"' + d + '"';
@@ -286,12 +286,8 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
 
         const svgProperties = new Map<string, any>();
         // let body = d3.select('#barchart_omicstype_annual');
-        const divWidthPx = body.style('width');
-        let divWidth = parseInt(divWidthPx.substr(0, divWidthPx.length - 2), 10);
-        const latestDatasetsDivHeightPx = d3.select('#latestdatasetspanel').style('height');
-        let divHeight = parseInt(latestDatasetsDivHeightPx.substr(0, latestDatasetsDivHeightPx.length - 2), 10);
-        divHeight = 325;
-        divWidth = parseInt(body.style('width'), 10);
+        const divHeight = 355;
+        const divWidth = parseInt(body.style('width'), 10);
 
         const heightOffset = 50;
         const margin = {top: 25, right: 20, bottom: 20, left: 60},

@@ -6,4 +6,16 @@ export class TimeUtils {
         const month = month_names_short[month_int - 1];
         return month + ' ' + day_int + ' ';
     }
+
+    static getMonthName(month: number): string {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return monthNames[month];
+    }
+
+    static getDayOfWeek(day: number): string {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return days[day];
+    }
 }

@@ -155,8 +155,8 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
         const body = self.body = d3.select('#' + self.pieChartName);
 
-        self.setTheRadio();
         self.drawBarGraphic(self.data, self.reposDataSimple);
+        self.setTheRadio();
         self.showTip('repository:"', self.reposDataSimple);
 
         // give different namespace after 'resize' to add window listener
@@ -181,11 +181,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         let formDiv = d3.select('#' + pieChartName + '_formdiv');
         if (formDiv.empty()) {
             formDiv = body.append('div');
+            formDiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
+            formDiv = formDiv.append('div');
+            formDiv
+                .attr('style', 'position: relative; left: -50%');
         }
         formDiv
-            .attr('id', pieChartName + '_formdiv')
-            .attr('class', 'center')
-            .attr('style', 'width: 180px; position: absolute; bottom: 15px; left:' + (divWidth / 2 - 60) + 'px');
+            .attr('id', pieChartName + '_formdiv');
 
         let radioForm = d3.select('#' + pieChartName + '_radio_form');
         if (radioForm.empty()) {
@@ -262,7 +264,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         const body = d3.select('#' + this.pieChartName);
 
         const divWidth = parseInt(body.style('width'), 10);
-        const divHeight = parseInt(body.style('height'), 10);
+        const divHeight = 365;
         body.attr('position', 'relative');
         d3.select('#' + this.pieChartName + '_svg').remove();
 
@@ -280,7 +282,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             .append('svg')
             .attr('width', divWidth)
             .attr('height', svgHeight)
-            .attr('style', 'margin-top: 15px;')
+            .attr('style', 'margin-top: 15px; margin-bottom: 10px')
             .attr('id', this.pieChartName + '_svg');
 
         if (svg.selectAll('rect')) {

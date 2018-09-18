@@ -1,9 +1,11 @@
-<div id="latestdatasetspanel" class="panel panel-default" style="height: 100%">
-    <div class="">
-        <h4 class="icon icon-functional " data-icon="z"> Latest Datasets</h4>
+<div class="mt-card" style="height: 100%; margin-top: 0">
+    <div class="mt-card-header">
+        <h4 class="mt-card-title" style="margin-left: 5px">
+            Latest Datasets
+        </h4>
     </div>
-    <div>
-        <ul class="nobullet">
+    <div class="mt-card-body">
+        <ul class="nobullet" style="margin-top: 0">
 
             <li *ngIf="isRequestLatestDatasetFailed()" class="error-info">
                 Sorry, the accessing to this datasets list was temporally failed.

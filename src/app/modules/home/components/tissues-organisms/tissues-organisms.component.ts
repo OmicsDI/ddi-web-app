@@ -86,7 +86,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         const self = this
             , body = d3.select('#' + self.bubChartName)
             , divWidth: number = parseInt(body.style('width'), 10)
-            , divHeight: number = parseInt(body.style('height'), 10)
+            , divHeight = 305
             , diameter = Math.min(divWidth, divHeight) / 1.15;
 
         body.selectAll('svg').remove();
@@ -125,12 +125,14 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         let formdiv = d3.select('#' + self.bubChartName + '_formdiv');
         if (d3.select('#' + self.bubChartName + '_formdiv').empty()) {
             formdiv = body.append('div');
+            formdiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
+            formdiv = formdiv.append('div');
         }
 
         formdiv
             .attr('class', 'center')
             .attr('id', self.bubChartName + '_formdiv')
-            .attr('style', 'width:266px; position:absolute; bottom: 15px; left:' + (divWidthTemp - 266) / 2 + 'px');
+            .attr('style', 'position: relative; left: -50%');
 
         let radio_form = formdiv.select(self.bubChartName + '_radio_form');
 
@@ -143,7 +145,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         radio_form
             .attr('id', self.bubChartName + '_radio_form')
             .attr('class', 'center')
-            .attr('style', 'margin-bottom:8px')
+            .attr('style', 'margin-bottom:8px;width:285px')
             //  .attr("style","width:70%")
             .append('input')
             .attr('type', 'radio')
@@ -201,7 +203,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             , body = d3.select('#' + self.bubChartName)
             , div_width_inside = parseInt(body.style('width'), 10)
             , div_height_inside = parseInt(body.style('height'), 10)
-            , diameter_inside = Math.min(div_height_inside, div_width_inside) - 24
+            , diameter_inside = Math.min(div_height_inside, div_width_inside)
             , format = d3.format(',d')
             , color: string[] = Array.from(d3.schemeCategory10.values());
 
