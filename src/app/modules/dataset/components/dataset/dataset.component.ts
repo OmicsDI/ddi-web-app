@@ -32,7 +32,6 @@ import {AuthService} from '@shared/services/auth.service';
 })
 export class DatasetComponent implements OnInit {
     d: DataSetDetail;
-    subscription: Subscription;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
 

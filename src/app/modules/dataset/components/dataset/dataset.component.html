@@ -169,12 +169,12 @@
                             <button type="button" class="btn btn-primary" (click)="citation()">
                                 <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
                             </button>
-                            <button type="button" *ngIf="isClaimable() && !isClaimed()" class="btn btn-danger" (click)="claimDataset()">
+                            <button type="button" *ngIf="isClaimable() && !isClaimed() && isLogged" class="btn btn-danger" (click)="claimDataset()">
                                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 <span [ngClass]="unselected"> Claim</span>
                             </button>
 
-                            <button type="button" *ngIf="isClaimed()" class="btn btn-danger" [routerLink]="['/dashboard','claimed']">
+                            <button type="button" *ngIf="isClaimed() && isLogged" class="btn btn-danger" [routerLink]="['/dashboard','claimed']">
                                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 <span [ngClass]="unselected"> View in profile</span>
                             </button>
