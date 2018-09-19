@@ -125,14 +125,12 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         let formdiv = d3.select('#' + self.bubChartName + '_formdiv');
         if (d3.select('#' + self.bubChartName + '_formdiv').empty()) {
             formdiv = body.append('div');
-            formdiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
-            formdiv = formdiv.append('div');
         }
 
         formdiv
             .attr('class', 'center')
-            .attr('id', self.bubChartName + '_formdiv')
-            .attr('style', 'position: relative; left: -50%');
+            .style('margin-bottom', '10px')
+            .attr('id', self.bubChartName + '_formdiv');
 
         let radio_form = formdiv.select(self.bubChartName + '_radio_form');
 
@@ -145,7 +143,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         radio_form
             .attr('id', self.bubChartName + '_radio_form')
             .attr('class', 'center')
-            .attr('style', 'margin-bottom:8px;width:285px')
+            .attr('style', 'width:285px;  position: absolute; left: 50%; margin-left: -142px; bottom: 10px')
             //  .attr("style","width:70%")
             .append('input')
             .attr('type', 'radio')
@@ -282,6 +280,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             .attr('dy', '.3em')
             .style('text-anchor', 'middle')
             .style('font-size', '10px')
+            .style('fill', 'white')
             .text(function (d: any) {
                 return d.r / d.data.className.length < 2.5 ? '' : d.data.className;
             });

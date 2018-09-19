@@ -1636,9 +1636,40 @@ app-image-cropper > div {
     background: silver !important;
 }
 
-.container_ddi > .panel-row {
-    display: flex;
-    flex: 1;
+@media (min-width: 992px) {
+    .container_ddi > .panel-row {
+        display: flex;
+        flex: 1;
+    }
+    .panel-row > div[class^="col-"]:first-child {
+        padding: 0 7px 0 15px;
+    }
+
+    .panel-row > div[class^="col-"]:last-child {
+        padding: 0 15px 0 7px;
+    }
+
+    .panel-row > div[class^="col-"] {
+        padding: 0 7px;
+    }
+}
+
+@media (min-width: 100px) {
+    .row > div[class^="col-"] {
+        padding: 0 7px 0 15px;
+    }
+    #search-filter {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .row > div[class^="col-"] {
+        padding: 0 15px 0 15px;
+    }
+    #search-filter {
+        display: inline-block;
+    }
 }
 
 .cut-text {
@@ -1646,16 +1677,4 @@ app-image-cropper > div {
     overflow: hidden;
     width: 95%;
     white-space: nowrap;
-}
-
-.panel-row > div[class^="col-"]:first-child {
-    padding: 0 7px 0 15px;
-}
-
-.panel-row > div[class^="col-"]:last-child {
-    padding: 0 15px 0 7px;
-}
-
-.panel-row > div[class^="col-"] {
-    padding: 0 7px;
 }

@@ -19,6 +19,10 @@ export class AppConfig {
         return `${environment.userServiceUrl}`;
     }
 
+    getStatisticsOmicsUrl(): string {
+        return `${environment.webServiceUrl}statistics/omics?r=${Math.random()}`;
+    }
+
     getStatisticsUrl(): string {
         return `${environment.webServiceUrl}statistics/general?r=${Math.random()}`;
     }

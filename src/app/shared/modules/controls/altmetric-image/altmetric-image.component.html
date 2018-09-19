@@ -1,1 +1,2 @@
-<a [href]="detail_url"><img src="{{image_url}}" alt="altmetric image"/></a>
+<a *ngIf="hasAltMetric()" [href]="detail_url" target="_blank"><img src="{{image_url}}" alt="altmetric image"/></a>
+<span *ngIf="!hasAltMetric()"><img src="{{image_url}}" alt="altmetric image"/></span>

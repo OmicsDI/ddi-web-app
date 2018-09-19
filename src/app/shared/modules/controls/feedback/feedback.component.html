@@ -1,32 +1,34 @@
-<div id="searchFeedback" class="list-group" style="width:100%; padding-right:20px" *ngIf="timeout">
+<div id="searchFeedback" class="row" *ngIf="timeout">
     <!-- feedback.isSatisfiedDiv -->
-    <div *ngIf="true" class="ddi-card-panel" style="width:100%;">
-        <div>
-            <h3>
-                <i class="fa fa-info-circle"> </i> Search Feedback
-            </h3>
-            <h4>
-                <i aria-hidden="true" style="font-size: 13px;"> Did you find what you were looking for?</i>
-            </h4>
-        </div>
-        <div style="padding: 10px;">
-            <label style="font-style: normal;font-weight: normal">
-                <input style="opacity:10;" type="radio" [(ngModel)]="isSatisfiedVal" value="true" name="level1"
-                       (click)="this.satisfiedClick"
-                       checked>
-                Yes
-            </label>
-            <label style="font-style: normal;font-weight: normal">
-                <input style="opacity: 10;" type="radio" [(ngModel)]="isSatisfiedVal" value="false" name="level2"
-                       (click)="this.satisfiedClick"
-                >
-                No
-            </label><br/>
-        </div>
+    <div *ngIf="true" class="col-xs-12">
+        <div class="mt-card" style="margin-top: 0; height: 100%">
+            <div class="mt-card-body">
+                <div>
+                    <h3>
+                        <i class="fa fa-info-circle"> </i> Search Feedback
+                    </h3>
+                    <h4>
+                        <i aria-hidden="true" style="font-size: 13px;"> Did you find what you were looking for?</i>
+                    </h4>
+                </div>
+                <div style="padding: 10px;">
+                    <label style="font-style: normal;font-weight: normal">
+                        <input style="opacity:10;" type="radio" [(ngModel)]="isSatisfiedVal" value="true" name="level1"
+                               (click)="this.satisfiedClick"
+                               checked>
+                        Yes
+                    </label>
+                    <label style="font-style: normal;font-weight: normal">
+                        <input style="opacity: 10;" type="radio" [(ngModel)]="isSatisfiedVal" value="false" name="level2"
+                               (click)="this.satisfiedClick"
+                        >
+                        No
+                    </label><br/>
+                </div>
 
-        <div *ngIf="isSatisfiedVal==='false'">
-            <label>Choose a category that best describes the issue that you are having with the search:</label>
-            <span class="a-dropdown-container">
+                <div *ngIf="isSatisfiedVal==='false'">
+                    <label>Choose a category that best describes the issue that you are having with the search:</label>
+                    <span class="a-dropdown-container">
                 <select name="category" autocomplete="off" tabIndex="-1"
                         class="a-native-dropdown" [(ngModel)]="selectMessage"
                         (change)="selectEvent(value)">
@@ -40,21 +42,23 @@
                 <option value="ITEM_REQUEST">Could you start carrying a database or omics type not listed here ?</option>
                 </select>
             </span>
-        </div>
-        <div *ngIf="isSatisfiedVal">
+                </div>
+                <div *ngIf="isSatisfiedVal">
             <textarea rows="5" id="feedtxtArea" style="width:100%;"
                       [(ngModel)]="messageData" required
                       placeholder="please enter your comments here.">
             </textarea>
-        </div>
-        <div *ngIf="isSatisfiedVal" style="padding:10px;">
-            <button (click)="save_feedback()">Submit</button>
-        </div>
-        <div>
-            <h4>
-                <i aria-hidden="true" style="font-size: 13px;"> If you need help or have a question, please visit <a
-                        href="http://blog.omicsdi.org/" class="a-button-text" role="button">Help Section</a></i>
-            </h4>
+                </div>
+                <div *ngIf="isSatisfiedVal" style="padding:10px;">
+                    <button (click)="save_feedback()">Submit</button>
+                </div>
+                <div>
+                    <h4>
+                        <i aria-hidden="true" style="font-size: 13px;"> If you need help or have a question, please visit <a
+                                href="http://blog.omicsdi.org/" class="a-button-text" role="button">Help Section</a></i>
+                    </h4>
+                </div>
+            </div>
         </div>
     </div>
 </div>
