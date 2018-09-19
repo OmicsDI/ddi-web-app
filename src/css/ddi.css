@@ -1668,7 +1668,7 @@ app-image-cropper > div {
         padding: 0 15px 0 15px;
     }
     #search-filter {
-        display: block;
+        display: inline-block;
     }
 }
 

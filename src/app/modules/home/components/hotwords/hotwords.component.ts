@@ -108,11 +108,12 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         d3.select('#' + self.hotwordsName).selectAll('div').remove();
 
         const formdiv = d3.select('#' + self.hotwordsName).append('div');
+        formdiv.style('margin-bottom', '20px');
         const radio_form = formdiv.append('form');
         radio_form
             .attr('id', self.hotwordsName + '_form')
             .attr('class', 'center')
-            .attr('style', 'margin-bottom:8px; width: 260px')
+            .attr('style', 'width: 260px; position: absolute; left: 50%; margin-left: -130px; bottom: 10px')
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
