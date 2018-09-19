@@ -1,4 +1,5 @@
-import {Directive, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, Input, OnInit} from '@angular/core';
+import * as d3 from 'd3';
 
 @Directive({
     selector: '[appBubbleChart]'
@@ -8,6 +9,10 @@ export class BubbleChartDirective implements OnInit {
         size: number,
         outerRadius: number
     };
+
+    constructor(private el: ElementRef) {
+
+    }
 
     extend(...args) {
         for (let i = 1; i < args.length; i++) {
@@ -25,6 +30,7 @@ export class BubbleChartDirective implements OnInit {
         const defaultOuterRadius = this.opts['size'] / 2;
         const defaultRadiusMin = this.opts['size'] / 10;
         const pi2 = Math.PI * 2;
+        const svg = d3.select(this.el.nativeElement).append('svg');
 
         const options = {};
         this.extend(options, {
@@ -41,6 +47,12 @@ export class BubbleChartDirective implements OnInit {
             radiusMax: (options['outerRadius'] - options['innerRadius']) / 2,
             intersectInc: options['intersectDelta']
         }, this.opts);
+        const maxWidth = parseInt(d3.select(this.el.nativeElement).style('width'), 10);
+        if (!options['size']) {
+            options['size'] = maxWidth;
+        } else {
+            options['size'] = options['size'] < maxWidth ? options['size'] : maxWidth;
+        }
 
         // if (typeof options['data'].color !== "function") {
         //  options['data'].color = d3.scale.category20();
@@ -51,7 +63,7 @@ export class BubbleChartDirective implements OnInit {
         const centerPoint = this.opts['size'] / 2;
         const intervalMax = this.opts['size'] * this.opts['size'];
         let values, valueMax, circlePositions;
-        const items = options['data'].items;
+        const items = options['data']['items'];
 
         const bb = {
             getValues: function () {
@@ -67,22 +79,22 @@ export class BubbleChartDirective implements OnInit {
                 let interval = 0;
                 while (circles.length < items.length && ++interval < intervalMax) {
                     const val = values[circles.length];
-                    const rad = Math.max((val * options['radiusMax']) / valueMax, options['radiusMin']);
+                    const rad = Math.max((val.length * options['radiusMax']) / valueMax, options['radiusMin']);
                     const dist = innerRadius + rad + Math.random() * (outerRadius - innerRadius - rad * 2);
                     const angle = Math.random() * pi2;
                     const cx = centerPoint + dist * Math.cos(angle);
                     const cy = centerPoint + dist * Math.sin(angle);
 
                     let hit = false;
-                    circles.forEach(circle => {
-                        const dx = circle.cx - cx;
-                        const dy = circle.cy - cy;
-                        const r = circle.r + rad;
+                    for (let i = 0; i < circles.length; i++) {
+                        const dx = circles[i]['cx'] - cx;
+                        const dy = circles[i]['cy'] - cy;
+                        const r = circles[i].r + rad;
                         if (dx * dx + dy * dy < Math.pow(r - delta, 2)) {
                             hit = true;
-                            return false;
+                            break;
                         }
-                    });
+                    }
                     if (!hit) {
                         circles.push({cx: cx, cy: cy, r: rad, item: items[circles.length]});
                     }
@@ -99,40 +111,33 @@ export class BubbleChartDirective implements OnInit {
                 return circles;
             },
 
-            moveToCenter: function (e) {
-                const toCenterPoint = d3.svg.transform()
-                    .translate(function (d) {
-                        const cx = e.select('circle').attr('cx');
-                        const dx = centerPoint - d.cx;
-                        const dy = centerPoint - d.cy;
-                        return [dx, dy];
-                    });
-
-                e.classed('active', true)
+            moveToCenter: function (_node) {
+                _node.classed('active', true)
                     .transition().duration(options['transitDuration'])
-                    .attr('transform', toCenterPoint)
+                    .attr('transform', function (d, i) {
+                        const dx = centerPoint - d['cx'];
+                        const dy = centerPoint - d['cy'];
+                        return 'translate(' + dx + ',' + dy + ')';
+                    })
                     .select('circle')
                     .attr('r', function (d) {return options['innerRadius']; });
             },
 
-            moveToReflection: function (e, swapped) {
-                const toReflectionPoint = d3.svg.transform()
-                    .translate(function (d) {
-                        const dx = 2 * (centerPoint - d.cx);
-                        const dy = 2 * (centerPoint - d.cy);
-                        return [dx, dy];
-                    });
-
-                e.transition()
+            moveToReflection: function (_node, swapped) {
+                _node.transition()
                     .duration(options['transitDuration'])
                     .delay(function (d, i) {return i * 10; })
-                    .attr('transform', swapped ? '' : toReflectionPoint)
+                    .attr('transform', swapped ? '' : function (d, i) {
+                        const dx = 2 * (centerPoint - d['cx']);
+                        const dy = 2 * (centerPoint - d['cy']);
+                        return 'translate(' + dx + ',' + dy + ')';
+                    })
                     .select('circle')
                     .attr('r', function (d) {return d.r; });
             },
 
-            reset: function (e) {
-                e.classed('active', false);
+            reset: function (_node) {
+                _node.classed('active', false);
                 // node.selectAll("text.clickMe").remove();
 
                 // node.selectAll("text.termCount").transition().duration(1000)
@@ -143,9 +148,9 @@ export class BubbleChartDirective implements OnInit {
                 //  .style("font-size", function (d) { return d.termLabel.fontSize + "px";});
             },
 
-            onClick: function (e) {
+            onClick: function (_node) {
                 let swapped = false;
-                e.style('cursor', 'pointer').on('click', function (d) {
+                _node.style('cursor', 'pointer').on('click', function (d) {
                     const d3Node = d3.select(this);
                     bb.reset(BubbleChart.selectAll('.node'));
                     bb.moveToCenter(d3Node);
@@ -153,18 +158,16 @@ export class BubbleChartDirective implements OnInit {
                     swapped = !swapped;
                 });
             }
-        }
+        };
 
         values = bb.getValues();
-        valueMax = values.reduce(function (x, y) {
-            return ( x > y ? x : y );
-        }, 0);
+        valueMax = 6;
 
-        const BubbleChart = d3.select(options['container']).append('svg')
+        const BubbleChart = svg
             .attr('preserveAspectRatio', 'xMidYMid')
             .attr('width', options['size'])
             .attr('height', options['size'])
-            .attr('class', 'bubbleChart')
+            .attr('class', 'bubbleChart, center')
             .attr('viewBox', function (d) {return ['0 0', options['viewBoxSize'], options['viewBoxSize']].join(' ')});
 
         circlePositions = bb.randomCirclesPositions(options['intersectDelta']);
@@ -172,17 +175,47 @@ export class BubbleChartDirective implements OnInit {
         const node = BubbleChart.selectAll('.node')
             ['data'](circlePositions)
             .enter().append('g')
-            .attr('class', function (d) {return ['node', options['data'].classed(d.item)].join(' '); });
-
-        const fnColor = d3.scale.category20();
+            .attr('class', function (d) {return ['node', options['data'].classed(d['item'])].join(' '); });
+        const fnColor = d3.scaleOrdinal(d3.schemeCategory10);
         node.append('circle')
-            .attr({r: function (d) {return d.r; }, cx: function (d) {return d.cx; }, cy: function (d) {return d.cy; }})
+            .attr('r', function (d, i) {return d['r']; })
+            .attr('cx', function (d, ) {
+                return d['cx'];
+            })
+            .attr('cy', function (d, i) {
+                return d['cy'];
+            })
             .style('fill', function (d) {
-                return options['data'].color !== undefined ? options['data'].color(d.item) : fnColor(d.item.text);
+                return options['data'].color !== undefined ? options['data'].color(d['item']) : fnColor(d['item'].text);
             })
             .attr('opacity', '0.8');
-
+        node
+            .append('text')
+            .classed('count', true)
+            .style('font-size', '28px')
+            .style('text-anchor', 'middle')
+            .style('fill', 'white')
+            .attr('dy', '0px')
+            .attr('x', function (d, ) {return d['cx']; })
+            .attr('y', function (d, i) {return d['cy']; })
+            .text(function (d) {
+                return d['item']['count']; });
+        node
+            .append('text')
+            .classed('text', true)
+            .style('font-size', '14px')
+            .style('text-anchor', 'middle')
+            .style('fill', 'white')
+            .attr('dy', '20px')
+            .attr('x', function (d, ) {return d['cx']; })
+            .attr('y', function (d, i) {return d['cy']; })
+            .text(function (d) {
+                return d['item']['text']; });
         bb.onClick(node);
-        return BubbleChart;
+        const firstNode = BubbleChart.selectAll('.node')
+            .filter(function (d, i) {return i === 0; });
+        bb.reset(BubbleChart.selectAll('.node'));
+        bb.moveToCenter(firstNode);
+        bb.moveToReflection(BubbleChart.selectAll('.node:not(.active)'), true);
     }
 }

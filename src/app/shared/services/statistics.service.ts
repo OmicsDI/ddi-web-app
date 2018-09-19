@@ -13,7 +13,7 @@ export class StatisticsService extends BaseService {
         super();
     }
 
-    public getStatisticsList(): Promise<Object> {
+    public getStatisticsList(): Promise<any> {
 
         return this.http.get(this.appConfig.getStatisticsUrl())
             .toPromise();
@@ -22,5 +22,9 @@ export class StatisticsService extends BaseService {
     public getDatasetStats(): Observable<DomainStat[]> {
         return this.http.get(this.appConfig.getDatasetStatsUrl())
             .pipe(map(res => this.extractData<DomainStat[]>(res)));
+    }
+
+    public getOmicsStats(): Promise<any> {
+        return this.http.get(this.appConfig.getStatisticsOmicsUrl()).toPromise();
     }
 }
