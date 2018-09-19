@@ -67,7 +67,6 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
                 t['id'] = that.find('.timeline-Tweet').data('tweet-id');
                 let dateStr = that.find('time.dt-updated').attr('datetime').replace(/-/g, '/');
                 dateStr = dateStr.split('T')[0];
-                console.log(dateStr);
                 const publishedtime = new Date(dateStr)
                     , publishedmonth = monthNamesShort[publishedtime.getMonth()]
                     , publishedday = publishedtime.getDate();
