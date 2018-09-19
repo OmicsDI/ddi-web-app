@@ -125,14 +125,11 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         let formdiv = d3.select('#' + self.bubChartName + '_formdiv');
         if (d3.select('#' + self.bubChartName + '_formdiv').empty()) {
             formdiv = body.append('div');
-            formdiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
-            formdiv = formdiv.append('div');
         }
 
         formdiv
             .attr('class', 'center')
-            .attr('id', self.bubChartName + '_formdiv')
-            .attr('style', 'position: relative; left: -50%');
+            .attr('id', self.bubChartName + '_formdiv');
 
         let radio_form = formdiv.select(self.bubChartName + '_radio_form');
 

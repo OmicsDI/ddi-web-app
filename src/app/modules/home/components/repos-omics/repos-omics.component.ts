@@ -181,10 +181,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         let formDiv = d3.select('#' + pieChartName + '_formdiv');
         if (formDiv.empty()) {
             formDiv = body.append('div');
-            formDiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
-            formDiv = formDiv.append('div');
-            formDiv
-                .attr('style', 'position: relative; left: -50%');
         }
         formDiv
             .attr('id', pieChartName + '_formdiv');
@@ -199,7 +195,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         radioForm
             .attr('id', pieChartName + '_radio_form')
             .attr('class', 'center')
-            .attr('style', 'margin-bottom:8px;')
+            .attr('style', 'margin-bottom:8px; width: 190px')
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
