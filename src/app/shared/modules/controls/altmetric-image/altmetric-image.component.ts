@@ -21,6 +21,10 @@ export class AltmetricImageComponent implements OnInit, OnChanges {
     ngOnInit() {
     }
 
+    hasAltMetric() {
+        return this.detail_url !== '';
+    }
+
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         for (const propName in changes) {
             if (propName === 'PMID') {
