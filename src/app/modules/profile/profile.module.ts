@@ -19,8 +19,6 @@ import {DisqusModule} from 'ngx-disqus';
         ProfileRoutingModule,
         DisqusModule.forRoot('omicsdi'),
         NgxPaginationModule,
-        // BrowserModule,
-        // for input,select.etc
         FormsModule,
         ClipboardModule,
         UtilsModule,

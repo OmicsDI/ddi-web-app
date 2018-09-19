@@ -19,6 +19,10 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {NgProgress} from '@ngx-progressbar/core';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
+import {Profile} from 'model/Profile';
+import {DataSetShort} from 'model/DataSetShort';
+import * as moment from 'moment';
+import {AuthService} from '@shared/services/auth.service';
 
 
 @Component({
@@ -28,7 +32,6 @@ import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 })
 export class DatasetComponent implements OnInit {
     d: DataSetDetail;
-    subscription: Subscription;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
 
@@ -53,6 +56,9 @@ export class DatasetComponent implements OnInit {
     reanalysedBy = [];
     relatedOmics = [];
 
+    profile: Profile;
+    isLogged = false;
+
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
                 private enrichmentService: EnrichmentService,
@@ -62,12 +68,19 @@ export class DatasetComponent implements OnInit {
                 private dialogService: DialogService,
                 private notificationService: NotificationsService,
                 private logger: LogService,
+                private auth: AuthService,
                 private slimLoadingBarService: NgProgress,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
         this.index_dataset = this.current_url.indexOf('dataset');
         this.web_service_url = dataSetService.getWebServiceUrl();
+        this.auth.loggedIn().then(isLogged => {
+            this.isLogged = isLogged;
+            if (isLogged) {
+                this.profile = this.profileService.getProfileFromLocal();
+            }
+        })
     }
 
     ngOnInit() {
@@ -115,6 +128,41 @@ export class DatasetComponent implements OnInit {
                     this.slimLoadingBarService.complete();
                 });
             });
+        });
+    }
+
+    isClaimable() {
+        return this.d.claimable != null && this.d.claimable;
+    }
+
+    isClaimed() {
+        if (this.isLogged) {
+            const profile: Profile = this.profile;
+            let obj: any;
+            if (null != profile.dataSets) {
+                obj = profile.dataSets.find(x => x.id === this.d.id && x.source === this.d.source);
+            }
+            return (null != obj);
+        }
+        return false;
+    }
+
+    claimDataset() {
+        const dataset: DataSetShort = new DataSetShort();
+        dataset.source = this.d.source;
+        dataset.id = this.d.id;
+        dataset.claimed = moment().format('ll');
+        dataset.name = this.d.name;
+        dataset.omics_type = this.d.omics_type;
+
+        this.auth.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
+                this.profileService.claimDataset(this.profile.userId, dataset);
+                //
+                this.profile.dataSets.push(dataset);
+                this.profileService.setProfile(this.profile);
+            }
         });
     }
 
