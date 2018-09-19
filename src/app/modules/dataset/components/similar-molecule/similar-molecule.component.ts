@@ -8,7 +8,7 @@ import {Chord2} from 'model/Chord2';
 import * as d3 from 'd3';
 
 @Component({
-    selector: 'similar-molecule',
+    selector: 'app-similar-molecule',
     templateUrl: './similar-molecule.component.html',
     styleUrls: ['./similar-molecule.component.css']
 })

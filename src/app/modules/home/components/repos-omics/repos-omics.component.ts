@@ -1,13 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 
 @Component({
-    selector: 'repos-omics',
+    selector: 'app-repos-omics',
     templateUrl: './repos-omics.component.html',
     styleUrls: ['./repos-omics.component.css'],
     providers: [ {provide: AsyncInitialisedComponent, useExisting: ReposOmicsComponent }]
@@ -22,7 +21,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
     private pieChartName = 'chart_repos_omics';
     private body;
-    private retryLimitTimes = 2;
 
     private reposDataSimple = [];
     private data = [];
@@ -43,24 +41,18 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     }
 
     public startRequest() {
-        d3.queue()
-            .defer(d3.json, this.webServiceUrl + 'statistics/domains')
-            .defer(d3.json, this.webServiceUrl + 'statistics/omics')
-            .await((err: any, domains: any[], omicstype: any[]) => {
-                if (err) {
-                    this.retryLimitTimes--;
-                    if (this.retryLimitTimes <= 0) {
-                        this.componentLoaded();
-                        ChartsErrorHandler.outputErrorInfo(this.pieChartName);
-                        return;
-                    }
-                    ChartsErrorHandler.outputGettingInfo(this.pieChartName);
-                    this.startRequest();
-                } else {
-                    this.componentLoaded();
-                    this.draw(domains, omicstype);
-                }
-            });
+        const self = this;
+        const urls = [
+            this.webServiceUrl + 'statistics/domains',
+            this.webServiceUrl + 'statistics/omics'
+        ];
+
+        Promise.all(urls.map(url => d3.json(url))).then(function([domains, omicstype]) {
+            self.draw(domains as any[], omicstype as any[]);
+        }, (err) => {
+            ChartsErrorHandler.outputErrorInfo(self.pieChartName);
+        });
+        this.componentLoaded();
     }
 
     public draw(domains: any[], omicsType: any[]): void {
@@ -163,8 +155,8 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
         const body = self.body = d3.select('#' + self.pieChartName);
 
-        self.setTheRadio();
         self.drawBarGraphic(self.data, self.reposDataSimple);
+        self.setTheRadio();
         self.showTip('repository:"', self.reposDataSimple);
 
         // give different namespace after 'resize' to add window listener
@@ -189,11 +181,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         let formDiv = d3.select('#' + pieChartName + '_formdiv');
         if (formDiv.empty()) {
             formDiv = body.append('div');
+            formDiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
+            formDiv = formDiv.append('div');
+            formDiv
+                .attr('style', 'position: relative; left: -50%');
         }
         formDiv
-            .attr('id', pieChartName + '_formdiv')
-            .attr('class', 'center')
-            .attr('style', 'width: 180px; position: absolute; bottom: 15px; left:' + (divWidth / 2 - 60) + 'px');
+            .attr('id', pieChartName + '_formdiv');
 
         let radioForm = d3.select('#' + pieChartName + '_radio_form');
         if (radioForm.empty()) {
@@ -270,7 +264,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         const body = d3.select('#' + this.pieChartName);
 
         const divWidth = parseInt(body.style('width'), 10);
-        const divHeight = parseInt(body.style('height'), 10);
+        const divHeight = 365;
         body.attr('position', 'relative');
         d3.select('#' + this.pieChartName + '_svg').remove();
 
@@ -288,7 +282,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             .append('svg')
             .attr('width', divWidth)
             .attr('height', svgHeight)
-            .attr('style', 'margin-top: 15px;')
+            .attr('style', 'margin-top: 15px; margin-bottom: 10px')
             .attr('id', this.pieChartName + '_svg');
 
         if (svg.selectAll('rect')) {

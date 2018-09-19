@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from '@angular/http';
 import {AppConfig} from 'app/app.config';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-login-dialog',
@@ -9,7 +9,7 @@ import {AppConfig} from 'app/app.config';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(public http: Http, public appConfig: AppConfig) {
+    constructor(public http: HttpClient, public appConfig: AppConfig) {
     }
 
     ngOnInit() {

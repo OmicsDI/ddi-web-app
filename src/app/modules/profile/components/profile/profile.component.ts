@@ -6,12 +6,12 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs/Rx';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {AuthService} from '@shared/services/auth.service';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-profile',
@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
                 private router: Router,
                 private logger: LogService,
                 private databaseListService: DatabaseListService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private route: ActivatedRoute) {
     }
 
@@ -78,7 +78,7 @@ export class ProfileComponent implements OnInit {
                         this.profileX = profile;
                         this.profileImageUrl = this.getProfileImageUrl();
 
-                        Observable.forkJoin(this.profileX.dataSets.map(x => {
+                        forkJoin(this.profileX.dataSets.map(x => {
                             return this.dataSetService.getDataSetDetail(x.id, x.source);
                         })).subscribe(
                             y => {
@@ -90,17 +90,19 @@ export class ProfileComponent implements OnInit {
                     }
                 );
         } else {
-            if (this.authService.loggedIn()) {
-                this.profileX = this.profileService.getProfileFromLocal();
-                this.name = this.profileX.userName;
-                this.dataSetDetails = [];
+            this.authService.loggedIn().then(isLogged => {
+                if (isLogged) {
+                    this.profileX = this.profileService.getProfileFromLocal();
+                    this.name = this.profileX.userName;
+                    this.dataSetDetails = [];
 
-                this.userId = this.profileX.userId;
+                    this.userId = this.profileX.userId;
 
-                this.profileImageUrl = this.getProfileImageUrl();
-            } else {
-                this.router.navigate(['unauthorized']);
-            }
+                    this.profileImageUrl = this.getProfileImageUrl();
+                } else {
+                    this.router.navigate(['unauthorized']);
+                }
+            });
         }
     }
 

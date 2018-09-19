@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http, RequestOptions} from '@angular/http';
 import {OrcidWorkList} from 'model/thor/OrcidWorkList';
 import {OrcidWork} from 'model/thor/OrcidWork';
 import {WorkExternalIdentifier} from 'model/thor/WorkExternalIdentifier';
 import {OrcidRecord} from 'model/thor/OrcidRecord';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {Observable} from 'rxjs/Observable';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {Observable} from 'rxjs';
+import {NotificationsService} from 'angular2-notifications';
 import {SyncResult} from 'model/thor/SyncResult';
 import {DatabaseListService} from './database-list.service';
 import {DataSetService} from './dataset.service';
@@ -15,6 +14,8 @@ import {ProfileService} from './profile.service';
 import {AppConfig} from 'app/app.config';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {AuthService} from '@shared/services/auth.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class ThorService {
@@ -26,7 +27,7 @@ export class ThorService {
     public syncResult: SyncResult;
     public datasets: DataSetDetail[];
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private authService: AuthService,
                 private notificationsService: NotificationsService,
                 private databaseListService: DatabaseListService,
@@ -76,22 +77,17 @@ export class ThorService {
     getUserInfo(): Observable<any> {
         const claimUrl = this.appConfig.getThorUrl() + 'claiming?clientAddress=https://www.ebi.ac.uk&ordIdWorkJson={}';
 
-        const options = new RequestOptions();
-        options.withCredentials = true;
-
-        return this.http.get(claimUrl, options).map(data => {
-            this.isUserLoggedIn = data.json().isUserLoggedIn;
-            this.loginUrl = data.json().loginUrl;
-            this.logoutUrl = data.json().logoutUrl;
-            this.orcIdRecord = data.json().orcIdRecord;
-        });
+        return this.http.get(claimUrl, {withCredentials: true}).pipe(map(data => {
+            this.isUserLoggedIn = data['isUserLoggedIn'];
+            this.loginUrl = data['loginUrl'];
+            this.logoutUrl = data['logoutUrl'];
+            this.orcIdRecord = data['orcIdRecord'];
+        }));
     }
 
     claim() {
         const claimUrl = this.appConfig.getThorUrl() + 'claimWorkBatch';
-        const headers = new Headers({'Content-Type': 'application/json'});
-        const options = new RequestOptions({headers: headers});
-        options.withCredentials = true; // session id must be passed to europepmc
+        const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
         const orcidWorkList = new OrcidWorkList();
         orcidWorkList.orcIdWorkLst = [];
@@ -131,7 +127,7 @@ export class ThorService {
             });
         }
         if (orcidWorkList.orcIdWorkLst.length > 0) {
-            this.http.post(claimUrl, JSON.stringify(orcidWorkList), options).subscribe(
+            this.http.post(claimUrl, JSON.stringify(orcidWorkList), {headers: headers, withCredentials: true}).subscribe(
                 data => {
                     this.syncResult.newOrcid = orcidWorkList.orcIdWorkLst.length;
                     this.syncResult.newOmicsDI = 0;
@@ -158,10 +154,12 @@ export class ThorService {
                                 d.name = x.title;
                                 d.omics_type = x.omicsType;
                                 let profile;
-                                if (this.authService.loggedIn()) {
-                                    profile = this.profileService.getProfileFromLocal();
-                                    this.profileService.claimDataset(profile.userId, d);
-                                }
+                                this.authService.loggedIn().then(isLogged => {
+                                    if (isLogged) {
+                                        profile = this.profileService.getProfileFromLocal();
+                                        this.profileService.claimDataset(profile.userId, d);
+                                    }
+                                });
                             }
                         }
                     }
@@ -174,10 +172,7 @@ export class ThorService {
 
         this.syncResult = null;
 
-        const options = new RequestOptions();
-        options.withCredentials = true;
-
-        this.http.get(this.logoutUrl, options).subscribe(
+        this.http.get(this.logoutUrl, {withCredentials: true}).subscribe(
             data => {
                 this.notificationsService.success('ORCID credentials removed');
                 this.getUserInfo().subscribe();

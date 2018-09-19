@@ -1,8 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Http, Response} from '@angular/http';
 import {AutocompleteResult} from 'model/AutocompleteResult';
 import {AppConfig} from 'app/app.config';
-import {SearchService} from '@shared/services/search.service';
+import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-autocomplete-n',
@@ -19,7 +19,7 @@ export class AutocompleteNComponent implements OnInit {
     @Input()
     searchText: string;
 
-    constructor(private http: Http, public appConfig: AppConfig) {
+    constructor(private http: HttpClient, public appConfig: AppConfig) {
     }
 
     ngOnInit() {
@@ -27,11 +27,11 @@ export class AutocompleteNComponent implements OnInit {
 
     observableSource(keyword: any) {
         return this.http.get(this.appConfig.getAutocompleteUrl(keyword))
-            .map(this.extractData);
+            .pipe(map(this.extractData));
     }
 
-    private extractData(res: Response): string[] {
-        const body = res.json();
+    private extractData(res: Object): string[] {
+        const body = res;
         // return body || { };
         let searchResult: AutocompleteResult;
         searchResult = (body || {}) as AutocompleteResult;

@@ -22,7 +22,7 @@
         <div *ngFor="let rule of searchQuery.rules; let i = index;" class="condition">
             <div>
                 <div *ngIf="null!=rule.query">
-                    <query-builder [parent]="this" [index]="i" [searchQuery]="rule.query"></query-builder>
+                    <app-query-builder [parent]="this" [index]="i" [searchQuery]="rule.query"></app-query-builder>
                 </div>
                 <div *ngIf="null==rule.query">
                     <div class="form-inline" style="margin-top:3px">

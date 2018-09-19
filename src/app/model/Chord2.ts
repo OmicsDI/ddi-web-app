@@ -25,7 +25,7 @@ export class Chord2 {
     outerRadius = this.innerRadius * 1.1;
     fontsize = 15;
     colorschemeArcs = ['#000000', '#FFDD89', '#957244', '#F26223', '#d9d9d9'];
-    fillChords = d3.schemeCategory20;
+    fillChords = d3.schemeCategory10;
 
     public constructor() {
     }

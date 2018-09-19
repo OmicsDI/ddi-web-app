@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
 import {Profile} from 'model/Profile';
 import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
 import {DataSetService} from '@shared/services/dataset.service';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {ThorService} from '@shared/services/thor.service';
-import {DataSet} from 'model/DataSet';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {WatchedDataset} from 'model/WatchedDataset';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 @Component({
     selector: 'app-profile-result',
@@ -60,7 +60,7 @@ export class ProfileResultComponent implements OnInit {
             if (!this.profile.dataSets) {
                 return;
             }
-            Observable.forkJoin(this.profile.dataSets.map(x => {
+            forkJoin(this.profile.dataSets.map(x => {
                 return this.dataSetService.getDataSetDetail(x.id, x.source);
             })).subscribe(
                 y => {

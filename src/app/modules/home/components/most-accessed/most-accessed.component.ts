@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -60,7 +60,6 @@ export class MostAccessedComponent extends AsyncInitialisedComponent implements 
     private handleError(error: any) {
 
         MostAccessedComponent.requestMostAccessedDatasetFailed = true;
-        this.logger.error('GET error with url: http://www.omicsdi.org/ws/dataset/mostAccessed?size=20');
         return Promise.reject(error.message || error);
     }
 

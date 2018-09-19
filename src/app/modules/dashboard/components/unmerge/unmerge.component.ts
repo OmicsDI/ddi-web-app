@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {UnMergeDatasets} from 'model/unmerge/UnMergeDatasets';
 import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-unmerge',
@@ -22,7 +22,7 @@ export class UnmergeComponent implements OnInit {
     constructor(private datasetService: DataSetService,
                 private notificationService: NotificationsService,
                 private logger: LogService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private dialogService: DialogService) {
     }
 

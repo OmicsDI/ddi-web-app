@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {MergeCandidate} from 'model/MergeCandidate';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {ProfileService} from '@shared/services/profile.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-merge',
@@ -28,7 +28,7 @@ export class MergeComponent implements OnInit {
     constructor(public profileService: ProfileService,
                 private datasetService: DataSetService,
                 private notificationService: NotificationsService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private logger: LogService,
                 private dialogService: DialogService) {
     }

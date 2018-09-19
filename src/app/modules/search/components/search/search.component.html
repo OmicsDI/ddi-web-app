@@ -1,5 +1,4 @@
 <div *ngIf="searchResult">
-    <div class="hidden-lg" AppSearchBoxSearch style="width:100%; padding-bottom: 20px;"></div>
     <app-search-total [searchCount]="searchResult.count" [searchQuery]="query" (ignoreAllFacet)="removeAllFacet()">
     </app-search-total>
 

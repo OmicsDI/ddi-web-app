@@ -10,7 +10,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
 
 @Component({
-    selector: '[AppSearchBox]',
+    selector: '[app-search-box]',
     templateUrl: 'search-box.component.html',
     styleUrls: ['search-box.component.css']
 })

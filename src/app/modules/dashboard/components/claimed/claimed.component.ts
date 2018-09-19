@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {DialogService} from '@shared/services/dialog.service';
 import {Profile} from 'model/Profile';
 

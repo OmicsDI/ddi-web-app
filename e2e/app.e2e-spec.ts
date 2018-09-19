@@ -14,7 +14,7 @@ describe('web App', function() {
           this.ngZone.run(() => {
               page.getTitle()
                   .then((title: string) => {
-                      expect(title).toEqual('OmicsDI: Home');
+                      expect<any>(title).toEqual('OmicsDI: Home');
                   });
           });
       }, 30000);

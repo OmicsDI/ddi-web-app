@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {Observable, Subscription} from 'rxjs/Rx';
+import {Subscription} from 'rxjs';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
 import {EnrichmentService} from '@shared/services/enrichment.service';
@@ -13,11 +13,16 @@ import {ProfileService} from '@shared/services/profile.service';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {DialogService} from '@shared/services/dialog.service';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
+import {NgProgress} from '@ngx-progressbar/core';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
+import {Profile} from 'model/Profile';
+import {DataSetShort} from 'model/DataSetShort';
+import * as moment from 'moment';
+import {AuthService} from '@shared/services/auth.service';
 
 
 @Component({
@@ -27,7 +32,6 @@ import {Database} from 'model/Database';
 })
 export class DatasetComponent implements OnInit {
     d: DataSetDetail;
-    subscription: Subscription;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
 
@@ -52,6 +56,9 @@ export class DatasetComponent implements OnInit {
     reanalysedBy = [];
     relatedOmics = [];
 
+    profile: Profile;
+    isLogged = false;
+
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
                 private enrichmentService: EnrichmentService,
@@ -61,12 +68,19 @@ export class DatasetComponent implements OnInit {
                 private dialogService: DialogService,
                 private notificationService: NotificationsService,
                 private logger: LogService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private auth: AuthService,
+                private slimLoadingBarService: NgProgress,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
         this.index_dataset = this.current_url.indexOf('dataset');
         this.web_service_url = dataSetService.getWebServiceUrl();
+        this.auth.loggedIn().then(isLogged => {
+            this.isLogged = isLogged;
+            if (isLogged) {
+                this.profile = this.profileService.getProfileFromLocal();
+            }
+        })
     }
 
     ngOnInit() {
@@ -114,6 +128,41 @@ export class DatasetComponent implements OnInit {
                     this.slimLoadingBarService.complete();
                 });
             });
+        });
+    }
+
+    isClaimable() {
+        return this.d.claimable != null && this.d.claimable;
+    }
+
+    isClaimed() {
+        if (this.isLogged) {
+            const profile: Profile = this.profile;
+            let obj: any;
+            if (null != profile.dataSets) {
+                obj = profile.dataSets.find(x => x.id === this.d.id && x.source === this.d.source);
+            }
+            return (null != obj);
+        }
+        return false;
+    }
+
+    claimDataset() {
+        const dataset: DataSetShort = new DataSetShort();
+        dataset.source = this.d.source;
+        dataset.id = this.d.id;
+        dataset.claimed = moment().format('ll');
+        dataset.name = this.d.name;
+        dataset.omics_type = this.d.omics_type;
+
+        this.auth.loggedIn().then(isLogged => {
+            if (isLogged) {
+                this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
+                this.profileService.claimDataset(this.profile.userId, dataset);
+                //
+                this.profile.dataSets.push(dataset);
+                this.profileService.setProfile(this.profile);
+            }
         });
     }
 
@@ -253,7 +302,7 @@ export class DatasetComponent implements OnInit {
             this.ontology_highlighted = false;
         } else {
 
-            Observable.forkJoin(
+            forkJoin(
                 [this.enrichmentService.getEnrichmentInfo(this.repository, this.acc),
                     this.enrichmentService.getSynonyms(this.repository, this.acc)]
             ).subscribe(

@@ -1,7 +1,7 @@
 import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from '@angular/core';
 
 @Component({
-    selector: 'tooltip-content',
+    selector: 'app-tooltip-content',
     template: `
 <div class="tooltip {{ placement }}"
      [style.top]="top + 'px'"
@@ -9,11 +9,11 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from '@a
      [class.in]="isIn"
      [class.fade]="isFade"
      role="tooltip">
-    <div class="tooltip-arrow"></div> 
+    <div class="tooltip-arrow"></div>
     <div class="tooltip-inner">
         <ng-content></ng-content>
         {{ content }}
-    </div> 
+    </div>
 </div>
 `
 })
@@ -39,8 +39,8 @@ export class TooltipContentComponent implements AfterViewInit {
     // Properties
     // -------------------------------------------------------------------------
 
-    top: number = -100000;
-    left: number = -100000;
+    top = -100000;
+    left = -100000;
     isIn = false;
     isFade = false;
 

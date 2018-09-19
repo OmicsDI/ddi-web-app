@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs';
 import {LogEntry} from '@shared/modules/logs/log.entry';
 
 export abstract class LogPublisher {

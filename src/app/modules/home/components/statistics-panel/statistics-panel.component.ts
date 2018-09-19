@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -54,7 +54,7 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
                 }
 
             })
-            .catch(this.handleError);
+            .catch(err => this.handleError(err));
 
         this.profileService.getUsersCount().subscribe(
             data => {
@@ -65,7 +65,6 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
 
     private handleError(error: any) {
         this.componentLoaded();
-        this.logger.error('GET error with url: http://www.omicsdi.org/ws/statistics/general');
         return Promise.reject(error.message || error);
     }
 }

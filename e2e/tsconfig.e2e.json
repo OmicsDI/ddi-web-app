@@ -11,6 +11,14 @@
     "target": "es5",
     "typeRoots": [
       "../node_modules/@types"
+    ],
+    "types": [
+      "jasmine",
+      "node"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
     ]
   }
 }

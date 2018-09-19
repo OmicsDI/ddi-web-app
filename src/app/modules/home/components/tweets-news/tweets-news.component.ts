@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 import * as cheerio from 'cheerio';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -65,8 +65,9 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
             .each(function (i) {
                 const that = $(this);
                 t['id'] = that.find('.timeline-Tweet').data('tweet-id');
-
-                const publishedtime = new Date(that.find('time.dt-updated').attr('datetime'))
+                let dateStr = that.find('time.dt-updated').attr('datetime').replace(/-/g, '/');
+                dateStr = dateStr.split('T')[0];
+                const publishedtime = new Date(dateStr)
                     , publishedmonth = monthNamesShort[publishedtime.getMonth()]
                     , publishedday = publishedtime.getDate();
 
@@ -102,7 +103,7 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
             .each(function () {
                     const entrydiv = d3.select(this);
                     entrydiv.attr('class', 'row')
-                        .attr('style', 'margin-left:8px; width:96%; margin-bottom:5px');
+                        .attr('style', 'margin-left:8px; width:96%; margin-bottom:10px');
                     const datebox = entrydiv.append('div').attr('class', 'date-box');
 
                     datebox.append('span').attr('class', 'month')

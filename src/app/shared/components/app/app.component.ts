@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     private yScrollStack: number[] = [];
     selectedComponents = 0;
     selectedChannel: 'selected_channel';
+    isLogged = false;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
     constructor(public auth: AuthService,
@@ -53,14 +54,17 @@ export class AppComponent implements OnInit {
                 }
             }
         });
-        if (this.auth.loggedIn()) {
-            this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
-                this.selectedComponents = datasets.length;
-            });
-            this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
-                this.selectedComponents = datasets.length;
-            });
-        }
+        this.auth.loggedIn().then(isLogged => {
+            if (isLogged) {
+                isLogged = true;
+                this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
+                    this.selectedComponents = datasets.length;
+                });
+                this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
+                    this.selectedComponents = datasets.length;
+                });
+            }
+        });
     }
 
     getTitle(): string {

@@ -159,40 +159,47 @@
                 </div>
                 <!--dataset_bottom-->
 
-                <div class="row" style="margin-bottom:20px; margin-right: 0px; margin-left:40px;">
+                <div class="row" style="margin-bottom:20px; margin-right: 0px; margin-left:50px;">
                     <div class="col-lg-2">
-                        <a href="{{d.full_dataset_link}}" class="access-data" style="white-space: nowrap" id="full_dataset_link">ACCESS
+                        <a href="{{d.full_dataset_link}}" class="btn btn-primary" style="color: white; border: 1px solid transparent" id="full_dataset_link">ACCESS
                             DATA</a>
                     </div>
                     <div class="col-lg-10">
-                        <span class="pull-right">
-                            <div class="dot-button" style="background-color: #87CEFA" (click)="citation()">
+                        <div class="btn-group pull-right widget-btn-group" role="group">
+                            <button type="button" class="btn btn-primary" (click)="citation()">
                                 <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
-                            </div>
+                            </button>
+                            <button type="button" *ngIf="isClaimable() && !isClaimed() && isLogged" class="btn btn-danger" (click)="claimDataset()">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                <span [ngClass]="unselected"> Claim</span>
+                            </button>
 
-                            <app-claim-button [dataSet]="d"></app-claim-button>
+                            <button type="button" *ngIf="isClaimed() && isLogged" class="btn btn-danger" [routerLink]="['/dashboard','claimed']">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                <span [ngClass]="unselected"> View in profile</span>
+                            </button>
 
-                            <a class="dot-button" style="background-color: #94D67A; color:black;"
+                            <a class="btn btn-success" style="color: white; border: 1px solid transparent"
                                href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank"
                                title="Download Dataset as JSON">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <span [ngClass]="'unselected'"> Json&nbsp;&nbsp; </span>
+                                <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                <span> Json</span>
                             </a>
 
-                            <a class="dot-button" style="background-color: #E69E7A; color:black;"
+                            <a class="btn btn-warning" style="color: white; border: 1px solid transparent"
                                href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank"
                                title="Download Dataset as XML">
-                                    <i class="fa fa-file-code-o" aria-hidden="true"></i>
-                                    <span [ngClass]="'unselected'"> Xml&nbsp;&nbsp; </span>
+                                <i class="fa fa-file-code-o" aria-hidden="true"></i>
+                                <span> Xml</span>
                             </a>
-                        </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <app-publication [ids]="d.publicationIds"></app-publication>
 
-            <similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></similar-molecule>
+            <app-similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></app-similar-molecule>
 
             <!--dataset_upper -->
             <div class="panel panel-default">

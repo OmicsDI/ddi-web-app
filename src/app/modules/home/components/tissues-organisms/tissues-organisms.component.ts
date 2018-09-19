@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
-
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -40,35 +39,25 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
 
     private startRequest(): void {
         const self = this;
+        const urls = [
+            this.webServiceUrl + 'statistics/tissues?size=100',
+            this.webServiceUrl + 'statistics/organisms?size=100',
+            this.webServiceUrl + 'statistics/diseases?size=100'
+        ];
 
-        d3.queue()
-            .defer(d3.json, this.webServiceUrl + 'statistics/tissues?size=100')
-            .defer(d3.json, this.webServiceUrl + 'statistics/organisms?size=100') // geojson points
-            .defer(d3.json, this.webServiceUrl + 'statistics/diseases?size=100') // geojson points
-            .await(function (error: any, tissues: StatisticsDomainsDetail[], organisms: StatisticsDomainsDetail[],
-                             diseases: StatisticsDomainsDetail[]) {
-                if (error) {
-                    self.retryLimitTimes--;
+        Promise.all(urls.map(url => d3.json(url))).then(function([tissues, organisms, diseases]) {
+            self.componentLoaded();
+            ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
-                    if (self.retryLimitTimes <= 0) {
-                        self.componentLoaded();
-                        ChartsErrorHandler.outputErrorInfo(self.bubChartName);
-                        return;
-                    }
+            self.tissues = tissues as StatisticsDomainsDetail[];
+            self.organisms = organisms as StatisticsDomainsDetail[];
+            self.diseases = diseases as StatisticsDomainsDetail[];
 
-                    ChartsErrorHandler.outputGettingInfo(self.bubChartName);
-                    self.startRequest();
-                } else {
-                    self.componentLoaded();
-                    ChartsErrorHandler.removeGettingInfo(self.bubChartName);
-
-                    self.tissues = tissues;
-                    self.organisms = organisms;
-                    self.diseases = diseases;
-
-                    self.prepareData();
-                }
-            });
+            self.prepareData();
+        }, (err) => {
+            self.componentLoaded();
+            ChartsErrorHandler.outputErrorInfo(self.bubChartName);
+        });
     }
 
     private prepareData(): void {
@@ -97,7 +86,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         const self = this
             , body = d3.select('#' + self.bubChartName)
             , divWidth: number = parseInt(body.style('width'), 10)
-            , divHeight: number = parseInt(body.style('height'), 10)
+            , divHeight = 305
             , diameter = Math.min(divWidth, divHeight) / 1.15;
 
         body.selectAll('svg').remove();
@@ -136,12 +125,14 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         let formdiv = d3.select('#' + self.bubChartName + '_formdiv');
         if (d3.select('#' + self.bubChartName + '_formdiv').empty()) {
             formdiv = body.append('div');
+            formdiv.attr('style', 'position: absolute; left: 50%; bottom: 10px')
+            formdiv = formdiv.append('div');
         }
 
         formdiv
             .attr('class', 'center')
             .attr('id', self.bubChartName + '_formdiv')
-            .attr('style', 'width:266px; position:absolute; bottom: 15px; left:' + (divWidthTemp - 266) / 2 + 'px');
+            .attr('style', 'position: relative; left: -50%');
 
         let radio_form = formdiv.select(self.bubChartName + '_radio_form');
 
@@ -154,7 +145,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         radio_form
             .attr('id', self.bubChartName + '_radio_form')
             .attr('class', 'center')
-            .attr('style', 'margin-bottom:8px')
+            .attr('style', 'margin-bottom:8px;width:285px')
             //  .attr("style","width:70%")
             .append('input')
             .attr('type', 'radio')
@@ -212,15 +203,15 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             , body = d3.select('#' + self.bubChartName)
             , div_width_inside = parseInt(body.style('width'), 10)
             , div_height_inside = parseInt(body.style('height'), 10)
-            , diameter_inside = Math.min(div_height_inside, div_width_inside) - 24
+            , diameter_inside = Math.min(div_height_inside, div_width_inside)
             , format = d3.format(',d')
-            , color: string[] = d3.schemeCategory20b;
+            , color: string[] = Array.from(d3.schemeCategory10.values());
 
         body.selectAll('svg').remove();
         const svg_inside = body.append('svg')
             .attr('width', diameter_inside)
             .attr('height', diameter_inside)
-            .attr('style', 'margin-top: 15px;')
+            .attr('style', 'margin-top: 10px;')
             .attr('class', 'bubble center');
         //         .attr("style", "position:relative");
 

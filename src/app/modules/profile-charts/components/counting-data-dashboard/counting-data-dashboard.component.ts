@@ -1,16 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {Profile} from 'model/Profile';
 import {ProfileService} from '@shared/services/profile.service';
-
-
-import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {ThorService} from '@shared/services/thor.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 @Component({
     selector: 'app-counting-data-dashboard',
@@ -44,12 +42,6 @@ export class CountingDataDashboardComponent implements OnInit {
 
     ngOnInit() {
         this.reloadDataSets();
-        // Listen page size
-        Observable.fromEvent(window, 'resize')
-            .subscribe((event) => {
-                this.reloadDataSets();
-            });
-
         this.web_service_url = this.dataSetService.getWebServiceUrl();
     }
 
@@ -59,7 +51,7 @@ export class CountingDataDashboardComponent implements OnInit {
             this.dataSets = [];
             return;
         }
-        Observable.forkJoin(this.profile.dataSets.map(x => {
+        forkJoin(this.profile.dataSets.map(x => {
             return this.dataSetService.getDataSetDetail(x.id, x.source);
         })).subscribe(
             y => {

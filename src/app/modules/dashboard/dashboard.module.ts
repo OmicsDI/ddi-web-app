@@ -6,7 +6,7 @@ import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
 import {UiSwitchModule} from 'angular2-ui-switch';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {DashboardClaimedComponent} from '@modules/dashboard/components/claimed/claimed.component';

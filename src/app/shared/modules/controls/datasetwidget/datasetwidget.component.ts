@@ -5,7 +5,7 @@ import {ProfileService} from '@shared/services/profile.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {WatchedDataset} from 'model/WatchedDataset';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -13,7 +13,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-datasetwidget',

@@ -8,10 +8,12 @@ import {DashboardClaimCountComponent} from './components/dashboard-claim-count/d
 import {DashboardCitationsCountComponent} from './components/dashboard-citations-count/dashboard-citations-count.component';
 import {FormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
 
 @NgModule({
   imports: [
-    CommonModule,
+      CommonModule,
+      UtilsModule,
       FormsModule,
       NgxPaginationModule
   ],

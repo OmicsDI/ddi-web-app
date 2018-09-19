@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SavedSearch} from 'model/SavedSearch';
 import {ProfileService} from '@shared/services/profile.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {Profile} from 'model/Profile';
 
 @Component({

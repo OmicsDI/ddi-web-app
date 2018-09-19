@@ -28,7 +28,8 @@
       ],
       "@test/*": [
         "test/*"
-      ]
+      ],
+      "stream": ["../node_modules/readable-stream/readable.js"]
     },
     "declaration": false,
     "emitDecoratorMetadata": true,

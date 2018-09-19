@@ -1,12 +1,9 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
-
-
-import {Observable} from 'rxjs/Observable';
 import {DataSetDetail} from 'model/DataSetDetail';
 
 @Component({
