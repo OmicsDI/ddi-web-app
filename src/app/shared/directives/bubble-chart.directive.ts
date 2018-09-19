@@ -54,9 +54,12 @@ export class BubbleChartDirective implements OnInit {
             options['size'] = options['size'] < maxWidth ? options['size'] : maxWidth;
         }
 
-        // if (typeof options['data'].color !== "function") {
-        //  options['data'].color = d3.scale.category20();
-        // }
+        const BubbleChart = svg
+            .attr('preserveAspectRatio', 'xMidYMid')
+            .attr('width', options['size'])
+            .attr('height', options['size'])
+            .attr('class', 'bubbleChart, center')
+            .attr('viewBox', function (d) {return ['0 0', options['viewBoxSize'], options['viewBoxSize']].join(' ')});
 
         const innerRadius = options['innerRadius'];
         const outerRadius = options['outerRadius'];
@@ -162,13 +165,6 @@ export class BubbleChartDirective implements OnInit {
 
         values = bb.getValues();
         valueMax = 6;
-
-        const BubbleChart = svg
-            .attr('preserveAspectRatio', 'xMidYMid')
-            .attr('width', options['size'])
-            .attr('height', options['size'])
-            .attr('class', 'bubbleChart, center')
-            .attr('viewBox', function (d) {return ['0 0', options['viewBoxSize'], options['viewBoxSize']].join(' ')});
 
         circlePositions = bb.randomCirclesPositions(options['intersectDelta']);
 
