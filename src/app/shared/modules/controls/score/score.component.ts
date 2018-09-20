@@ -6,7 +6,7 @@ import {DataSet} from 'model/DataSet';
     templateUrl: './score.component.html',
     styleUrls: ['./score.component.css']
 })
-export class ScoreComponent implements OnInit, OnChanges {
+export class ScoreComponent implements OnInit {
 
     views = 0;
     citations = 0;
@@ -21,16 +21,36 @@ export class ScoreComponent implements OnInit, OnChanges {
     ngOnInit() {
     }
 
-    ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        for (const propName in changes) {
-            if (propName === 'dataset') {
-                if (null != changes[propName].currentValue) {
-                    this.views = this.dataset.viewsCount;
-                    this.citations = this.dataset.citationsCount;
-                    this.reanalysis = this.dataset.reanalysisCount;
-                    this.connections = this.dataset.connectionsCount;
-                }
+    getData() {
+        return [
+            {
+                'order': 1,
+                'score': this.dataset.viewsCount,
+                'weight': 1,
+                'color': '#337ab7',
+                'label': 'Views'
+            },
+            {
+                'order': 1,
+                'score': this.dataset.connectionsCount,
+                'weight': 1,
+                'color': '#C93029',
+                'label': 'Connections'
+            },
+            {
+                'order': 2,
+                'score': this.dataset.citationsCount,
+                'weight': 1,
+                'color': '#5cb85c',
+                'label': 'Citations'
+            },
+            {
+                'order': 3,
+                'score': this.dataset.reanalysisCount,
+                'weight': 1,
+                'color': '#f0ad4e',
+                'label': 'Reanalyses'
             }
-        }
+        ]
     }
 }

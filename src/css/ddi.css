@@ -359,10 +359,14 @@ input[type=radio]:not(old):checked + label > span > span {
 .chart_tooltip {
     position: absolute;
     /*border: 1px solid #000;           */
-    text-align: left;
+    text-align: center;
+    min-width: 100px;
     padding: 3px;
     font: 12px sans-serif;
-    background: white;
+    background: black;
+    color: white;
+    overflow-wrap: normal;
+    width: auto;
     border-radius: 4px;
     pointer-events: none;
 }
