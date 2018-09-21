@@ -55,6 +55,13 @@ export class SearchBoxComponent implements OnInit {
         this.loadFacetForAdvancedSearch();
     }
 
+    getQueryValue() {
+        if (this.query.match(/^"[^"]*"$/)) {
+            return this.query.substring(1, this.query.length - 1);
+        }
+        return this.query;
+    }
+
     caret_class(): string {
         return this.trigger.menuOpen ? 'fa-caret-up' : 'fa-caret-down';
     }

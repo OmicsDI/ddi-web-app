@@ -2,7 +2,7 @@
     <form novalidate name="queryForm" class="local-search" [ngClass]="isHomeSearch ? 'global-search' : 'local-search'">
         <div class="form-group ">
             <div class="input-group ">
-                <app-autocomplete-n (submit)="search()" [searchText]="query"></app-autocomplete-n>
+                <app-autocomplete-n (submit)="search()" [searchText]="getQueryValue()"></app-autocomplete-n>
                 <div class="input-group-btn">
                     <button [matMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
                         <i class="fa {{this.caret_class()}}" aria-hidden="true"></i>
