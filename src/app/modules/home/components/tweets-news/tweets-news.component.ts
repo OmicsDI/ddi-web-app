@@ -20,9 +20,7 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
         const statisticWidth = document.getElementById('statisticspanel').offsetWidth;
         const aboutHeight = document.getElementById('home-about').offsetHeight;
         this.width = statisticWidth;
-        console.log('aboutHeight: ' + aboutHeight);
         this.height = statisticWidth > aboutHeight ? statisticWidth * 0.9 : aboutHeight;
-        console.log(this.height);
         this.fetchTweets();
         this.componentLoaded();
     }
