@@ -10,6 +10,7 @@ import {AsyncInitialisedComponent} from '@shared/components/async/async.initiali
 export class TweetsNewsComponent extends AsyncInitialisedComponent implements OnInit {
 
     height: number;
+    width: number;
 
     constructor() {
         super();
@@ -18,6 +19,7 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
     ngOnInit() {
         const statisticWidth = document.getElementById('statisticspanel').offsetWidth;
         const aboutHeight = document.getElementById('home-about').offsetHeight;
+        this.width = statisticWidth;
         console.log('aboutHeight: ' + aboutHeight);
         this.height = statisticWidth > aboutHeight ? statisticWidth * 0.9 : aboutHeight;
         console.log(this.height);
