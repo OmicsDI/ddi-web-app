@@ -41,7 +41,7 @@
                 }
               ]
             },
-            "production": {
+            "prod": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -69,8 +69,8 @@
             "dev": {
               "browserTarget": "web:build:dev"
             },
-            "production": {
-              "browserTarget": "web:build:production"
+            "prod": {
+              "browserTarget": "web:build:prod"
             }
           }
         },
