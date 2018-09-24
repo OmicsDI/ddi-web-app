@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as d3 from 'd3';
 
 import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
@@ -33,7 +33,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
-        this.fill = d3.schemeCategory20b;
+        this.fill = Array.from(d3.schemeCategory10.values());
         this.field = '';
         this.terms = {
             Omics_description: [],
@@ -50,14 +50,19 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         const self = this;
         const webServiceUrl = this.webServiceUrl;
 
-        d3.queue()
-            .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description')
-            .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol')
-            .defer(d3.json, webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol')
-            .await((error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]) => {
-                this.componentLoaded();
-                self.drawWordCloud(error, omicsDes, omicsDatap, omicsSamp);
-            });
+        const urls = [
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol'
+        ];
+
+        Promise.all(urls.map(url => d3.json(url))).then(function([omicsDes, omicsDatap, omicsSamp]) {
+            self.componentLoaded();
+            self.drawWordCloud(null, omicsDes as FrequentlyTerm[], omicsDatap as FrequentlyTerm[], omicsSamp as FrequentlyTerm[]);
+        }, (err) => {
+            self.componentLoaded();
+            self.drawWordCloud(err, [], [], []);
+        });
     }
 
     private drawWordCloud(error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]): void {
@@ -103,16 +108,12 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         d3.select('#' + self.hotwordsName).selectAll('div').remove();
 
         const formdiv = d3.select('#' + self.hotwordsName).append('div');
-
-        formdiv
-            .attr('class', 'center')
-            .attr('style', 'width:280px; position: absolute; bottom: 15px; left: 25%');
-
+        formdiv.style('margin-bottom', '20px');
         const radio_form = formdiv.append('form');
         radio_form
             .attr('id', self.hotwordsName + '_form')
             .attr('class', 'center')
-            .attr('style', 'margin-bottom:8px')
+            .attr('style', 'width: 260px; position: absolute; left: 50%; margin-left: -130px; bottom: 10px')
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')

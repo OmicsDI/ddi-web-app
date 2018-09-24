@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {FormsModule} from '@angular/forms';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
@@ -18,8 +18,13 @@ import {ReposOmicsComponent} from '@modules/home/components/repos-omics/repos-om
 import {StatisticsPanelComponent} from '@modules/home/components/statistics-panel/statistics-panel.component';
 import {TissuesOrganismsComponent} from '@modules/home/components/tissues-organisms/tissues-organisms.component';
 import {TweetsNewsComponent} from '@modules/home/components/tweets-news/tweets-news.component';
+import {BubbleChartDirective} from '@shared/directives/bubble-chart.directive';
+import {MegaNumberPipe} from '@shared/pipes/mega-number.pipe';
 
 @NgModule({
+    providers: [
+      MegaNumberPipe
+    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -40,7 +45,8 @@ import {TweetsNewsComponent} from '@modules/home/components/tweets-news/tweets-n
         ReposOmicsComponent,
         StatisticsPanelComponent,
         TissuesOrganismsComponent,
-        TweetsNewsComponent
+        TweetsNewsComponent,
+        BubbleChartDirective
     ]
 })
 export class HomeModule {

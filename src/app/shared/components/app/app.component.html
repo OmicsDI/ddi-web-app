@@ -30,19 +30,14 @@
                             class="fa fa-bell"></i> Help <b class="caret"></b></a>
 
                     <div class="dropdown-menu" style="background-color: #ffffff">
-                        <ul nav navbar-nav>
+                        <ul>
                             <li class="nav-item" id="li1">
                                 <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
                                     Omics Help
                                 </div>
                             </li>
-                            <li class="nav-item" id="li2">
-                                <div class="text-center" mat-menu-item routerLink="/help/about" id="item-div2">
-                                    About Omicsdi
-                                </div>
-                            </li>
                             <li class="nav-item" id="li3">
-                                <div class="text-center" *ngIf="auth.loggedIn()" mat-menu-item
+                                <div class="text-center" *appIsLogged mat-menu-item
                                      [routerLink]="['dashboard','feedback']" id="item-div3">
                                     Feedback
                                 </div>
@@ -50,21 +45,23 @@
                         </ul>
                     </div>
                 </li>
-                <li AppLoginLauncher class="nav-item dropdown text-center" id="item6">
+                <li app-login-launcher class="nav-item dropdown text-center" id="item6">
                 </li>
-                <li class="nav-item" *ngIf="(this.selectedService.selected() > 0) && auth.loggedIn()"><a
+                <li class="nav-item" *ngIf="selectedComponents > 0"><a
                         routerLink="/dashboard/selected"
                         style="color:white !important;text-decoration:none;border-color: transparent;"><i
-                        class="fa fa-fw fa-shopping-basket"></i> {{this.selectedService.selected()}}</a></li>
+                        class="fa fa-fw fa-shopping-basket"></i> {{selectedComponents}}</a></li>
             </ul>
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5">
-            <li style="width:100%;" *ngIf="!homePage" AppSearchBox [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
+            <li style="width:100%;" *ngIf="!homePage" app-search-box [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
         </ul>
     </nav>
     <!-- /local-nav -->
-    <ng2-slim-loading-bar></ng2-slim-loading-bar>
+    <ng-progress [direction]="'ltr+'" [min]="20" [max]="1" [speed]="200"  [trickleSpeed]="300"
+                 [spinner]="false" [spinnerPosition]="'left'" [thick]="false" [meteor]="true"
+                 [color]="'red'" [ease]="'linear'"></ng-progress>
     <!--main container of page -->
     <div style="min-height: 600px;">
         <router-outlet></router-outlet>
@@ -158,7 +155,6 @@
                 <div class="col-md-2 col-sm-4 col-xs-12">
                     <h3 class="about">Information</h3>
                     <ul>
-                        <li><a [routerLink]="['about']">About OmicsDI</a></li>
                         <li><a [routerLink]="['database']">Databases</a></li>
                         <li><a href="http://blog.omicsdi.org/">Help</a></li>
                         <li><a [routerLink]="['api']">API</a></li>

@@ -4,11 +4,11 @@
         <span id="metasearch-results-count" class="ng-binding ng-scope">{{searchCount}}</span>
         Results
     </h3>
-    <span>
-        <a class="showall" (click)="showAllClick()"><i class="fa fa-filter" aria-hidden="true"></i> show all</a>&nbsp;&nbsp;
+    <span id="search-filter">
+        <a class="showall" (click)="showAllClick()"><i class="fa fa-filter" aria-hidden="true"></i> Show all</a>&nbsp;&nbsp;
         <a class="showall" (click)="saveSearchClick()"><i class="fa fa-bookmark-o"
-                                                          aria-hidden="true"></i> save search</a>&nbsp;&nbsp;
+                                                          aria-hidden="true"></i> Save search</a>&nbsp;&nbsp;
         <a class="showall" ngxClipboard [cbContent]="searchQuery" (click)="copyQueryClick()"><i class="fa fa-files-o"
-                                                                                                aria-hidden="true"></i> copy query</a>
+                                                                                                aria-hidden="true"></i> Copy query</a>
   </span>
 </div>

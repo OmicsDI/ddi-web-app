@@ -1,6 +1,6 @@
 <div *ngIf="searchQuery" class="alert alert-warning alert-group" style="position: relative; z-index: 1">
     <div class="form-inline" style="position: relative;">
-        <select [(ngModel)]="searchQuery.operator" class="form-control input-sm">
+        <select [(ngModel)]="searchQuery.operator" class="form-control input-sm" (change)="notify()">
             <option *ngFor="let o of operators">{{o.name}}</option>
         </select>
         <button style="margin-left: 5px" (click)="addCondition()" class="btn btn-sm btn-success"><i class="fa fa-plus"
@@ -22,7 +22,7 @@
         <div *ngFor="let rule of searchQuery.rules; let i = index;" class="condition">
             <div>
                 <div *ngIf="null!=rule.query">
-                    <query-builder [parent]="this" [index]="i" [searchQuery]="rule.query"></query-builder>
+                    <app-query-builder [parent]="this" [index]="i" [searchQuery]="rule.query"></app-query-builder>
                 </div>
                 <div *ngIf="null==rule.query">
                     <div class="form-inline" style="margin-top:3px">

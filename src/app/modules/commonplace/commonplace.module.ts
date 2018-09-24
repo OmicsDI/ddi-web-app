@@ -3,12 +3,11 @@ import {CommonModule} from '@angular/common';
 
 import {CheckComponent} from '@modules/commonplace/components/check/check.component';
 import {NotfoundComponent} from '@modules/commonplace/components/notfound/notfound.component';
-import {SelectedComponent} from '@modules/commonplace/components/selected/selected.component';
 import {TermsComponent} from '@modules/commonplace/components/terms/terms.component';
 import {UnauthorizedComponent} from '@modules/commonplace/components/unauthorized/unauthorized.component';
 import {WelcomeComponent} from '@modules/commonplace/components/welcome/welcome.component';
 import {PipesModule} from '@shared/pipes/pipes.module';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
@@ -33,7 +32,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     declarations: [
         CheckComponent,
         NotfoundComponent,
-        SelectedComponent,
         TermsComponent,
         UnauthorizedComponent,
         WelcomeComponent

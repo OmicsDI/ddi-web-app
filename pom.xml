@@ -84,7 +84,7 @@
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>run release -- --environment=${angular.environment} --base-href=${angular.base.href}</arguments>
+              <arguments>run release -- --configuration=${angular.environment} --base-href=${angular.base.href}</arguments>
             </configuration>
           </execution>
         </executions>

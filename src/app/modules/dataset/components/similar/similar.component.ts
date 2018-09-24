@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {SimilarityService} from '@shared/services/similarity.service';
 import {SimilarityResult} from 'model/SimilarityResult';
-import {Subscription} from 'rxjs/Subscription';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
 import {DatabaseListService} from '@shared/services/database-list.service';
@@ -18,7 +17,6 @@ export class SimilarComponent implements OnInit, OnChanges {
 
 
     d: SimilarityResult = new SimilarityResult;
-    subscription: Subscription;
     DEFAULT_DATASET_NUMBER = 5;
     datasetNumber: number = this.DEFAULT_DATASET_NUMBER;
 

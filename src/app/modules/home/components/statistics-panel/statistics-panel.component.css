@@ -15,10 +15,4 @@ i#species_icon.icon-conceptual::before {
 }
 
 .statistic-panel-item {
-    padding-left: 10px;
-    padding-right: 0px;
-}
-
-.statistic-panel-item .panel .panel-heading .row div {
-    padding-left: 10px;
 }

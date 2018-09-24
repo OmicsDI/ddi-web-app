@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {Database} from 'model/Database';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {map} from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class DatabaseListService extends BaseService {
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private logger: LogService,
                 public appConfig: AppConfig) {
         super();
@@ -17,9 +18,7 @@ export class DatabaseListService extends BaseService {
 
     public getDatabaseList(): Observable<Database[]> {
         return this.http.get(this.appConfig.getDatabasesUrl())
-            .map(x => {
-                return this.extractData<Database[]>(x);
-            });
+            .pipe(map(x => this.extractData<Database[]>(x)));
     }
 
     public getDatabaseBySource(source: string, databases: Database[]): Database {

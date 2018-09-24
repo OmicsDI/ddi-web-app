@@ -23,6 +23,10 @@ export class DropDownComponent implements OnInit {
     ngOnInit() {
     }
 
+    updateValue() {
+        this.valueChange.emit(this.value);
+    }
+
     setRuleData(facet: FacetValue) {
         this.value = facet.value;
         this.valueChange.emit(this.value);

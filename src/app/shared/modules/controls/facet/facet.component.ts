@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FacetValue} from 'model/FacetValue';
-import {SearchService} from '@shared/services/search.service';
 
 class FacetValueFiltered extends FacetValue {
 

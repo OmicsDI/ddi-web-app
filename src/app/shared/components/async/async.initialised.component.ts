@@ -1,5 +1,5 @@
 
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 export abstract class AsyncInitialisedComponent {
     loadedState: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

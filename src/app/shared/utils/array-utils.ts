@@ -17,9 +17,13 @@ export class ArrayUtils {
      * @param source
      * @param dest
      */
-    public static addAll<K, V>(source: Map<K, V>, dest: Map<K, V>): Map<K, V> {
+    public static addAll<K, V>(source: Map<K, V[]>, dest: Map<K, V[]>): Map<K, V[]> {
         dest.forEach((value, key) => {
-            source.set(key, value);
+            if (source.has(key)) {
+                source.set(key, value.concat(source.get(key)));
+            } else {
+                source.set(key, value);
+            }
         });
         return source;
     }

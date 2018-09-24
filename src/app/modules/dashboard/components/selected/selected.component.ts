@@ -1,17 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {SelectedService} from '@shared/services/selected.service';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs';
 import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from '@shared/services/profile.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
-import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {Profile} from 'model/Profile';
+import {DataSet} from 'model/DataSet';
+import {DataTransportService} from '@shared/services/data.transport.service';
+import {map} from 'rxjs/operators';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -20,43 +23,41 @@ import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 })
 export class DashboardSelectedComponent implements OnInit {
 
-    dataSets: DataSetDetail[];
+    dataSets: DataSetShort[];
     p: 0;
-    toDataset = DataSetDetail.toDataset;
     databases: Database[];
+    profile: Profile;
+    watchedDatasets: WatchedDataset[];
+    selectedChannel: 'selected_channel';
 
-    constructor(public selectedService: SelectedService,
-                private dataSetService: DataSetService,
+    constructor(private dataSetService: DataSetService,
                 public appConfig: AppConfig,
                 public profileService: ProfileService,
                 private notificationService: NotificationsService,
-                private slimLoadingBarService: SlimLoadingBarService,
+                private slimLoadingBarService: NgProgress,
                 private databaseListService: DatabaseListService,
+                private dataTransporterService: DataTransportService,
                 private dialogService: DialogService) {
     }
 
     ngOnInit() {
         this.slimLoadingBarService.start();
+        this.profile = this.profileService.getProfileFromLocal();
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
+            this.watchedDatasets = x;
+        });
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
-            this.reloadDataSets();
+            this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
+                this.dataSets = datasets;
+                this.slimLoadingBarService.complete();
+                this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
+            });
         });
     }
 
-    reloadDataSets() {
-        if (!this.selectedService.dataSets) {
-            this.dataSets = [];
-            this.slimLoadingBarService.complete();
-            return;
-        }
-        Observable.forkJoin(this.selectedService.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail(x.id, x.source);
-        })).subscribe(
-            y => {
-                this.dataSets = y;
-                this.slimLoadingBarService.complete();
-            }
-        );
+    getDataset(accession: string, repository: string): Observable<DataSet> {
+        return this.dataSetService.getDataSetDetail(accession, repository).pipe(map(x => DataSetDetail.toDataset(x)));
     }
 
     remove(source, id) {
@@ -64,15 +65,13 @@ export class DashboardSelectedComponent implements OnInit {
         if (i > -1) {
             this.dataSets.splice(i, 1);
         }
-        i = this.selectedService.dataSets.findIndex(x => x.id === id && x.source === source);
+        i = this.dataSets.findIndex(x => x.id === id && x.source === source);
         if (i > -1) {
-            this.selectedService.dataSets.splice(i, 1);
+            this.dataSets.splice(i, 1);
         }
+        this.profileService.setSelected(this.profile.userId, this.dataSets).subscribe(x => {});
+        this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
         this.notificationService.success('Dataset removed', 'from selected');
-    }
-
-    exportClick() {
-        alert('exportClick');
     }
 
     claimClick() {
@@ -82,12 +81,9 @@ export class DashboardSelectedComponent implements OnInit {
             d.source = dataSet.source;
             d.id = dataSet.id;
 
-            this.profileService.claimDataset(this.profileService.userId, d);
+            this.profileService.claimDataset(this.profile.userId, d);
         }
-        this.notificationService.success(
-            'Datasets claimed',
-            'to your dashboard'
-        );
+        this.notificationService.success('Datasets claimed', 'to your dashboard');
     }
 
     watchClick() {
@@ -96,63 +92,43 @@ export class DashboardSelectedComponent implements OnInit {
 
             d.source = dataSet.source;
             d.accession = dataSet.id;
-            d.userId = this.profileService.userId;
+            d.userId = this.profile.userId;
 
             this.profileService.saveWatchedDataset(d);
         }
-        this.notificationService.success(
-            'Datasets watched',
-            'to your dashboard'
-        );
+        this.notificationService.success('Datasets watched', 'to your dashboard');
     }
 
 
     deleteClick() {
-        const confirm = this.dialogService.confirm('Unselect all datasets', 'Are you sure you want to do this?')
+        this.dialogService.confirm('Unselect all datasets', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
-                    this.selectedService.dataSets = [];
-
-                    this.reloadDataSets();
-
-                    this.notificationService.success(
-                        'Datasets deleted',
-                        'from selected'
-                    );
-
+                    this.dataSets = [];
+                    this.profileService.setSelected(this.profile.userId, this.dataSets).subscribe(x => {});
+                    this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
+                    this.notificationService.success('Datasets deleted', 'from selected');
                 }
             });
     }
 
     download() {
-
-        const confirm = this.dialogService.confirm('Download selected.txt', 'Are you sure you want to do this?')
+        this.dialogService.confirm('Download selected.txt', 'Are you sure you want to do this?')
             .subscribe(res => {
                 if (res) {
                     let IDs = '';
-                    for (const d of this.selectedService.dataSets) {
+                    for (const d of this.dataSets) {
                         IDs += ((IDs === '' ? '' : ',') + d.source + '/' + d.id);
                     }
 
-                    const storageObj = {hello: 'world'};
                     const dataStr = 'data:text;charset=utf-8,' + encodeURIComponent(IDs);
                     const dlAnchorElem = document.getElementById('downloadAnchorElem');
                     dlAnchorElem.setAttribute('href', dataStr);
                     dlAnchorElem.setAttribute('download', 'selected.txt');
                     dlAnchorElem.click();
 
-                    this.notificationService.success(
-                        'Dataset IDs downloaded',
-                        'to your computer'
-                    );
-
+                    this.notificationService.success('Dataset IDs downloaded', 'to your computer');
                 }
             });
-
-
     }
 }
-
-
-// <img style="float:right;cursor:pointer;" src="img/delete.png" title="delete"
-// (click)="selectedService.unselect(d.source, d.id); remove(d.source, d.id);">

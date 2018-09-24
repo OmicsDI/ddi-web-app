@@ -1,22 +1,34 @@
 <div>
-    <div id="page-wrapper">
         <div class="container-fluid3 col-md-12" *ngIf="profileX">
 
-            <div class="col-md-10 col-sm-12 col-xs-12">
+            <div class="col-md-9 col-sm-12 col-xs-12">
                     <app-profile-info [profile]="profileX"></app-profile-info>
 
                     <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
 
-                    <div style="display:inline-block; width:100%" id="datasets">
-                        <div *ngIf="profileX?.dataSets?.length>0" class="datasetsCaption" id="datasetsCaptionId">Datasets</div>
-                        <ul *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0" class="list-unstyled"
+                    <div style="display:inline-block; width:100%" id="datasets" *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0">
+                        <div class="mt-card">
+                            <div class="mt-card-header">
+                                <h4 class="mt-card-title" style="margin-left: 20px">
+                                    Datasets
+                                </h4>
+                            </div>
+                            <div class="mt-card-body">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding: 0 25px;">
+                                        <input type="text" placeholder="Filter {{profileX.email}}'s datasets ..." [ngModel]="filter" (ngModelChange)="filterDatasets($event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul *ngIf="datasetShowed && datasetShowed.length>0" class="list-unstyled"
                             style="display:inline-block; width:100%" >
-                            <li *ngFor="let d of this.dataSetDetails | paginate: { itemsPerPage: 10, currentPage: p }"
+                            <li *ngFor="let d of datasetShowed | paginate: { itemsPerPage: 8, currentPage: p }"
                                 class="repeated-item ng-scope"
                                 style="min-width:400px;">
 
                                 <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
-                                                       [allowWatch]="false" [databases]="databases"
+                                                       [allowWatch]="false" [databases]="databases" [profile]="profileX"
                                                        [allowDelete]="false"></app-datasetwidget>
 
                             </li>
@@ -30,13 +42,31 @@
                     </div>
             </div>
 
-            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"
                  style="display:inline-block; vertical-align: top; text-align: right;"
                  id="profile_div" *ngIf="profileX">
-                <app-profile-contacts [profile]="profileX"></app-profile-contacts>
+                <div class="mt-card">
+                    <div class="mt-card-header">
+                        <h4 class="mt-card-title" style="margin-left: 20px">
+                            Datasets statistics
+                        </h4>
+                    </div>
+                    <div class="mt-card-body" style="margin-top: 20px">
+                        <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
+                    </div>
+                </div>
+                <div class="mt-card">
+                    <div class="mt-card-header">
+                        <h4 class="mt-card-title" style="margin-left: 20px">
+                            Feedbacks
+                        </h4>
+                    </div>
+                    <div class="mt-card-body">
+                        <disqus [identifier]="profileX.userId"></disqus>
+                    </div>
+                </div>
                 <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
                 <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
-                <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
                 <!--<app-profile-repo-omics></app-profile-repo-omics>-->
                 <!--<app-dashboard-citations-count-profile [profile]="profileX"></app-dashboard-citations-count-profile>-->
                 <!--<app-dashboard-reanalisys-count-profile [profile]="profileX"></app-dashboard-reanalisys-count-profile>-->
@@ -46,6 +76,5 @@
 
             </div>
         </div>
-    </div>
 
 </div>

@@ -1,36 +1,62 @@
-<div class="caption" id="userName">{{this.profile?.userName}}</div>
-<br />
-<div>
-    <div class="col-md-3" style="margin: 15px 0; padding-left: 0">
-        <img [src]="this.profileImageUrl" id="gsc_prf_pup">
+<div class="mt-card" *ngIf="profile">
+    <div class="mt-card-header">
+        <h4 class="mt-card-title" style="margin-left: 20px" id="userName">
+            {{profile.userName}}
+        </h4>
     </div>
-    <div class="col-md-9">
-        <div *ngIf="!this.profile?.bio" class="bio" style="position:relative;">
-            <h5>Congratulations! You have created OmicsDI profile. What next?</h5>
-            <ul class="available-tasks">
-                <li>Upload best <a [routerLink]="['/dashboard','update']">photo</a>
-                <li>Write short <a [routerLink]="['/dashboard','update']">bio</a> to stand out of colleagues
-                <li>Use <a [routerLink]="['/search']" [queryParams]="{q: this.profile?.userName}">search</a> and claim
-                    your datasets!
-                <li>When you are happy with the content, you can make your profile <a
-                        [routerLink]="['/dashboard','update']">public</a> and use short URL in communication
-                <li>Please consult <a href="http://blog.omicsdi.org/post/claiming-datasests/">help</a> for detailed
-                    step-by-step instructions
-                <li>We are waiting for your <a [routerLink]="['/dashboard','feedback']">feedback</a>
-            </ul>
+    <div class="mt-card-body">
+        <div class="col-md-3" style="padding: 10px;">
+            <div style="width: 150px; height: 150px">
+                <img [src]="this.profileImageUrl" id="gsc_prf_pup" class="image-rounded">
+            </div>
         </div>
-        <div class="bio" *ngIf="this.profile?.bio" id="bio">{{this.profile?.bio}}</div>
+        <div class="col-md-9">
+            <div class="row">
+                <label class="col-md-2 mt-col-form-label">Email</label>
+                <div class="col-md-10">
+                    <div class="form-group has-default bmd-form-group">
+                        <a id="email" href="mailto:{{this.profile?.email}}">{{this.profile?.email}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 mt-col-form-label">Affiliation</label>
+                <div class="col-md-10">
+                    <div class="form-group has-default bmd-form-group">
+                        <span id="affiliation">{{this.profile?.affiliation}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 mt-col-form-label">OrcID</label>
+                <div class="col-md-10">
+                    <div class="form-group has-default bmd-form-group" id="orcid">
+                        <a *ngIf="profile.orcid"
+                           href="http://europepmc.org/search?query=AUTHORID:%22{{profile?.orcid}}%22&amp;sortby=Date" target="_blank">&nbsp;{{profile?.orcid}}</a>
+                        <span *ngIf="!profile.orcid">OrcID unavailable</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 mt-col-form-label">Public profile</label>
+                <div class="col-md-10">
+                    <div class="form-group has-default bmd-form-group" id="publicProfile">
+                        <a [routerLink]="['/profile', profile.userId]" title="OmicsDI public profile">{{baseUrl}}/profile/{{profile.userId}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-2 mt-col-form-label">Home page</label>
+                <div class="col-md-10">
+                    <div class="form-group has-default bmd-form-group" id="homepage">
+                        <a href="{{this.profile?.homepage}}">{{this.profile?.homepage}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 line-bottom" style="margin: 15px 0" *ngIf="this.profile.bio">
+        </div>
+        <div class="col-md-12 ql-editor" id="bio" *ngIf="this.profile.bio" [innerHTML]="profile.bio | keepHtml">
+        </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-

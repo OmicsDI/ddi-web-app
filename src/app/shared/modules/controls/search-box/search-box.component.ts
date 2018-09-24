@@ -10,7 +10,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
 
 @Component({
-    selector: '[AppSearchBox]',
+    selector: '[app-search-box]',
     templateUrl: 'search-box.component.html',
     styleUrls: ['search-box.component.css']
 })
@@ -43,9 +43,11 @@ export class SearchBoxComponent implements OnInit {
             if (this.router.url.indexOf('/dataset/') === -1) {
                 this.params = params;
                 this.queryParams = QueryUtils.extractQuery(params);
-                this.query = this.queryParams.toQueryString();
-                if (this.query[0] === '(') {
-                    this.query = this.query.slice(1, this.query.length - 1);
+                const query = this.queryParams.toQueryString();
+                if (query.match(/^"[^"]*"$/)) {
+                    this.query = query.substring(1, query.length - 1);
+                } else {
+                    this.query = query;
                 }
                 this.logger.debug('query: {}', this.query);
             }
@@ -53,17 +55,24 @@ export class SearchBoxComponent implements OnInit {
         this.loadFacetForAdvancedSearch();
     }
 
+    getQueryValue() {
+        if (this.query && this.query.match(/^"[^"]*"$/)) {
+            return this.query.substring(1, this.query.length - 1);
+        }
+        return this.query;
+    }
+
     caret_class(): string {
         return this.trigger.menuOpen ? 'fa-caret-up' : 'fa-caret-down';
     }
 
     doSearch(keyword) {
-        this.searchService.triggerSearch(this.params, keyword, null);
+        this.searchService.triggerSearch(this.params, keyword, new DataControl());
     }
 
     search() {
         const searchText = this.autocompleteComponent.searchText;
-        this.searchService.triggerSearch(this.params, searchText, null);
+        this.doSearch(searchText);
     }
 
     updateQueryParams($event: SearchQuery) {

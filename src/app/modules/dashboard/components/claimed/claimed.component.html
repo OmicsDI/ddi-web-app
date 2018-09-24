@@ -1,15 +1,12 @@
-<div id="wrapper">
-    <app-nav></app-nav>
-    <div id="page-wrapper">
-        <div class="container-fluid3">
-
-
+<div id="wrapper" *ngIf="profile">
+    <div class="container-fluid3">
+        <div class="col-md-12 col-xs-12">
             <div class="row align-top">
                 <div class="col-lg-6">
-                    <div class="caption">Edit Datasets</div>
+                    <div class="caption">My Datasets</div>
                 </div>
                 <div class="col-lg-6 justify-content-end">
-                    <div *ngIf="(profileService.profile?.dataSets?.length>0)"
+                    <div *ngIf="(profile?.dataSets?.length>0)"
                          style="float: right; position:relative; top: 15px; left:-10px;">
                         <div class="score"
                              style="background-color: #FFF; color: black; border: dotted 1px black; cursor:pointer;"
@@ -23,16 +20,14 @@
             </div>
 
 
-            <app-profile-result [profile]="profileService.profile"
-                                                 (change)="updateProfile()"></app-profile-result>
+            <app-profile-result [profile]="profile" (change)="updateProfile()"></app-profile-result>
 
-            <div *ngIf="!(profileService.profile?.dataSets?.length>0)"
+            <div *ngIf="!(profile?.dataSets?.length>0)"
                  style="text-align:center; position: fixed; top: 50%; left:50%;">
                 No Datasets Claimed, please use <a [routerLink]="['/search']"
-                                                   [queryParams]="{q:profileService.profile?.userName}">search</a> to
+                                                   [queryParams]="{q:profile?.userName}">search</a> to
                 find and claim your dataset.
             </div>
-
         </div>
     </div>
 </div>

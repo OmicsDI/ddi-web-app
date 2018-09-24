@@ -68,23 +68,16 @@ export class ProfilePage {
         return element.all(by.css('app-datasetwidget .database_source'));
     }
 
-    getAppProfileContacts() {
-        return element(by.css('app-profile-contacts'));
-    }
     getAffiliation() {
-        return element(by.css('app-profile-contacts .affiliation'));
+        return element(by.css('app-profile-info #affiliation'));
     }
     getHomepage() {
-        return element(by.css('app-profile-contacts .homepage a'));
+        return element(by.css('app-profile-info #homepage a'));
     }
     getOrcid() {
-        return element(by.css('app-profile-contacts .orcid'));
+        return element(by.css('app-profile-info #orcid a'));
     }
     getPublicProfile() {
-        return element(by.css('app-profile-contacts .publicProfile'));
-    }
-
-    getAppCountingDataDashboard() {
-        return element(by.css('app-counting-data-dashboard'));
+        return element(by.css('app-profile-info #publicProfile'));
     }
 }

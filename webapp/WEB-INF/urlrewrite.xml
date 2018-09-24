@@ -21,7 +21,7 @@
     <to>/</to>
   </rule>
   <rule match-type="wildcard">
-    <from>/about</from>
+    <from>/help/*</from>
     <to>/</to>
   </rule>
   <rule match-type="wildcard">
@@ -66,7 +66,11 @@
   </rule>
   <rule match-type="wildcard">
     <from>/merge</from>
-    <to>/</to>
+    <to>/dashboard/merge</to>
+  </rule>
+  <rule match-type="wildcard">
+    <from>/unmerge</from>
+    <to>/dashboard/unmerge</to>
   </rule>
   <rule match-type="wildcard">
     <from>/.git*</from>

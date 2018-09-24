@@ -1,8 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {MegaNumberPipe} from '@shared/pipes/mega-number.pipe';
+import {ObjectUtils} from '@shared/utils/object-utils';
+import {ArrayUtils} from '@shared/utils/array-utils';
 
 @Component({
     selector: 'app-statistics-panel',
@@ -12,60 +15,57 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 })
 export class StatisticsPanelComponent extends AsyncInitialisedComponent implements OnInit {
 
-    statisticsList: any;
-    repositories: number;
-    datasets: number;
-    diseases: number;
-    tissues: number;
-    organisms: number;
-    users = 99;
+    opts: {};
 
-    constructor(private statisticsService: StatisticsService, public profileService: ProfileService, private logger: LogService) {
+    constructor(private statisticsService: StatisticsService,
+                public profileService: ProfileService,
+                private megaNumber: MegaNumberPipe,
+                private logger: LogService) {
         super();
     }
 
 
     ngOnInit() {
-        this.statisticsService.getStatisticsList()
-            .then(data => {
-                this.componentLoaded();
-                this.statisticsList = data;
-
-
-                for (let i = 0; i < this.statisticsList.length; i++) {
-                    switch (this.statisticsList[i].name) {
-                        case 'Different Repositories/Databases':
-                            this.repositories = this.statisticsList[i].value;
-                            break;
-                        case 'Different Datasets' :
-                            this.datasets = this.statisticsList[i].value;
-                            break;
-                        case 'Different Diseases' :
-                            this.diseases = this.statisticsList[i].value;
-                            break;
-                        case 'Different Tissues' :
-                            this.tissues = this.statisticsList[i].value;
-                            break;
-                        case 'Different Species/Organisms' :
-                            this.organisms = this.statisticsList[i].value;
-                            break;
-                        // case "Users" : this.users = this.statisticsList[i].value; break;
+        const general = this.statisticsService.getStatisticsList();
+        const omics = this.statisticsService.getOmicsStats();
+        const self = this;
+        Promise.all([general, omics]).then(function ([generalData, omicsData]) {
+            self.profileService.getUsersCount().subscribe(
+                users => {
+                    const opts = {};
+                    for (let i = 0; i < generalData.length; i++) {
+                        opts[generalData[i].label] = generalData[i].value;
                     }
-                }
-
-            })
-            .catch(this.handleError);
-
-        this.profileService.getUsersCount().subscribe(
-            data => {
-                this.users = data;
-            }
-        );
-    }
-
-    private handleError(error: any) {
-        this.componentLoaded();
-        this.logger.error('GET error with url: http://www.omicsdi.org/ws/statistics/general');
-        return Promise.reject(error.message || error);
+                    for (let i = 0; i < 4; i++) {
+                        opts[omicsData[i].label] = omicsData[i].value;
+                    }
+                    ObjectUtils.renameKey('Different Repositories/Databases', 'Repositories', opts);
+                    ObjectUtils.renameKey('Different Datasets', 'Datasets', opts);
+                    ObjectUtils.renameKey('Different Diseases', 'Diseases', opts);
+                    ObjectUtils.renameKey('Different Tissues', 'Tissues', opts);
+                    ObjectUtils.renameKey('Different Species/Organisms', 'Species', opts);
+                    delete opts['Not available'];
+                    delete opts['Total'];
+                    delete opts['Unknown'];
+                    opts['Users'] = users;
+                    let items = [];
+                    Object.keys(opts).forEach(function(key) {
+                        if (key !== 'Datasets') {
+                            items.push({text: key, count: self.megaNumber.transform(opts[key], 1)});
+                        }
+                    });
+                    items = ArrayUtils.prepend(
+                        {text: 'Datasets', count: self.megaNumber.transform(opts['Datasets'], 1)}, items);
+                    self.opts = {size: 500,
+                        innerRadius: 400 / 3.5,
+                        radiusMin: 50,
+                        data: {
+                            items: items,
+                            eval: function (item) {return item.count; },
+                            classed: function (item) {return item.text.split(' ').join(''); }
+                        }};
+                    self.componentLoaded();
+                });
+        });
     }
 }

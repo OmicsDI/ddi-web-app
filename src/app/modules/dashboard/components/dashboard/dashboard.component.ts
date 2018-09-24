@@ -3,8 +3,14 @@ import {ProfileService} from '@shared/services/profile.service';
 import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {DialogService} from '@shared/services/dialog.service';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {Profile} from 'model/Profile';
+import {Observable} from 'rxjs';
+import {DataSetDetail} from 'model/DataSetDetail';
+import {DataSetService} from '@shared/services/dataset.service';
+import {ThorService} from '@shared/services/thor.service';
+import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 
 @Component({
     selector: 'app-dashboard',
@@ -15,39 +21,42 @@ export class DashboardComponent implements OnInit {
 
     public savedSearches: SavedSearch[] = [];
     public watchedDatasets: WatchedDataset[] = [];
+    profile: Profile;
+    public dataSets: DataSetDetail[];
 
     constructor(public profileService: ProfileService,
                 private dialogService: DialogService,
                 private logger: LogService,
+                private dataSetService: DataSetService,
+                private thorService: ThorService,
                 private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
-        if (this.profileService.profile) {
-            this.profileService.getSavedSearches(this.profileService.profile.userId).subscribe(x => {
-                this.logger.debug('saved searches received: {}', x.length);
-                this.savedSearches = x;
-            });
-            this.profileService.getWatchedDatasets(this.profileService.profile.userId).subscribe(x => {
-                this.logger.debug('saved searches received: {}', x.length);
-                this.watchedDatasets = x;
-            });
-        } else {
-            this.profileService.onProfileReceived.subscribe(x => {
-                this.profileService.getSavedSearches(x.userId).subscribe(r => {
-                    this.logger.debug('saved searches received: {}', r.length);
-                    this.savedSearches = r;
-                });
-                this.profileService.getWatchedDatasets(this.profileService.profile.userId).subscribe(r => {
-                    this.logger.debug('saved searches received: {}', r.length);
-                    this.watchedDatasets = r;
-                });
-            });
+        this.profile = this.profileService.getProfileFromLocal();
+        this.profileService.getSavedSearches(this.profile.userId).subscribe(x => {
+            this.logger.debug('saved searches received: {}', x.length);
+            this.savedSearches = x;
+        });
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe(x => {
+            this.logger.debug('saved searches received: {}', x.length);
+            this.watchedDatasets = x;
+        });
+        if (!this.profile.dataSets) {
+            this.dataSets = [];
+            return;
         }
+        forkJoin(this.profile.dataSets.map(x => {
+            return this.dataSetService.getDataSetDetail(x.id, x.source);
+        })).subscribe(
+            y => {
+                this.dataSets = y;
+                this.thorService.datasets = y;
+            }
+        );
     }
-
     delete(id: string) {
-        this.profileService.deleteSavedSearch(id).subscribe(
+        this.profileService.deleteSavedSearch(this.profile.userId, id).subscribe(
             x => {
                 this.logger.debug('savedSearch deleted');
                 const i = this.savedSearches.findIndex(r => r.id === id);
@@ -58,7 +67,7 @@ export class DashboardComponent implements OnInit {
     }
 
     deleteWatch(id: string) {
-        this.profileService.deleteWatchedDataset(id).subscribe(
+        this.profileService.deleteWatchedDataset(this.profile.userId, id).subscribe(
             x => {
                 this.logger.debug('watchedDataset deleted');
                 const i = this.watchedDatasets.findIndex(r => r.id === id);

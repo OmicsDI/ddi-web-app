@@ -3,23 +3,20 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Http, HttpModule, RequestOptions} from '@angular/http';
 import {AppComponent} from '@shared/components/app/app.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
-import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {SimpleNotificationsModule} from 'angular2-notifications/dist';
+import {SimpleNotificationsModule} from 'angular2-notifications';
 import {routing} from './app.routes';
 import {RouterModule} from '@angular/router';
 import {ProfileService} from '@shared/services/profile.service';
-import {AuthConfig, AuthHttp} from 'angular2-jwt';
+import {JwtModule} from '@auth0/angular-jwt';
 import {AuthService} from '@shared/services/auth.service';
-import {AuthGuardService} from '@shared/services/auth-guard.service';
 import {SearchService} from '@shared/services/search.service';
 import {DataSetService} from '@shared/services/dataset.service';
 import {EnrichmentService} from '@shared/services/enrichment.service';
@@ -32,7 +29,6 @@ import {SimilarMoleculeService} from '@shared/services/similar-molecule.service'
 import {FeedbackService} from '@shared/services/feedback.service';
 import {StatisticsService} from '@shared/services/statistics.service';
 import {AltmetricService} from '@shared/services/altmetric.service';
-import {SelectedService} from '@shared/services/selected.service';
 import {ScoreService} from '@shared/services/score.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {InviteService} from '@shared/services/invite.service';
@@ -46,36 +42,34 @@ import {CommonplaceModule} from '@modules/commonplace/commonplace.module';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.service';
+import {UploadService} from '@shared/services/upload.service';
+import {HttpClientModule} from '@angular/common/http';
+import {NgProgressModule} from '@ngx-progressbar/core';
 
-
-export function getParameterByName(name): string {
-  const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-  return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+export function jwtTokenGetter() {
+    return localStorage.getItem('id_token');
 }
-
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-    return new AuthHttp(new AuthConfig({
-        tokenName: 'id_token',
-        tokenGetter: (() => localStorage.getItem('id_token')),
-        globalHeaders: [{'Content-Type': 'application/json'}],
-        headerName: 'X-AUTH-TOKEN',
-        noTokenScheme: true,
-        noJwtError: true
-    }), http, options);
-}
-
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     imports: [
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: jwtTokenGetter,
+                headerName: 'X-AUTH-TOKEN',
+                whitelistedDomains: ['wwwdev.ebi.ac.uk'],
+                blacklistedRoutes: new Array(new RegExp('wwwdev.ebi.ac.uk\/Tools\/omicsdi\/ws\/.*'))
+            }
+        }),
         CommonModule,
         PipesModule,
         HomeModule,
         BrowserModule,
         FormsModule,
-        HttpModule,
+        HttpClientModule,
+        NgProgressModule.forRoot(),
         MatDialogModule,
         MatMenuModule,
         MatButtonModule,
@@ -87,7 +81,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         DisqusModule.forRoot('omicsdi'),
         AlertModule.forRoot(),
         UtilsModule,
-        SlimLoadingBarModule.forRoot(),
         UiSwitchModule,
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),
@@ -98,15 +91,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     exports: [
         RouterModule
     ],
-    providers: [ProfileService
-        , {
-            provide: AuthHttp,
-            useFactory: authHttpServiceFactory,
-            deps: [Http, RequestOptions]
-        },
+    providers: [ProfileService,
         {provide: LocationStrategy, useClass: PathLocationStrategy}
         , AuthService
-        , AuthGuardService
         , DataTransportService
         , SearchService
         , DataSetService
@@ -120,7 +107,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         , AppConfig
         , StatisticsService
         , AltmetricService
-        , SelectedService
         , DialogService
         , ScoreService
         , ThorService
@@ -129,6 +115,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         , MatButtonModule
         , LogService
         , LogPublisherService
+        , UploadService
         , InviteService],
     entryComponents: [
         // ConfirmDialogComponent

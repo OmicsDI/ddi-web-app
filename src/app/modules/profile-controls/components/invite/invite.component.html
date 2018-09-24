@@ -5,14 +5,14 @@
 
         <div style="width:500px; height:300px; overflow: scroll;">
 
-            <div *ngIf="this.profileService.profile" class="editContainer">
+            <div *ngIf="profile" class="editContainer">
 
                 <div class="form-group">
                     <label for="userName">Name</label>
                     <input type="text" id="userName" class="form-control"
                            required minlength="4" maxlength="24"
                            pattern="[^\/\\\s][^\/\\]*[^\/\\\s]"
-                           name="userName" [(ngModel)]="this.profileService.profile.userName"
+                           name="userName" [(ngModel)]="profile.userName"
                            #userName="ngModel">
 
                     <div *ngIf="userName.errors && (userName.dirty || userName.touched)"
@@ -37,7 +37,7 @@
                     <input type="text" id="email" class="form-control"
                            maxlength="100"
                            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                           name="email" [(ngModel)]="this.profileService.profile.email"
+                           name="email" [(ngModel)]="profile.email"
                            #email="ngModel">
 
                     <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">

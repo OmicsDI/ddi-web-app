@@ -1,8 +1,5 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Headers, RequestOptionsArgs, Response} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
 import {Profile} from 'model/Profile';
-import {AuthHttp} from 'angular2-jwt';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
 import {DataSetShort} from 'model/DataSetShort';
@@ -11,47 +8,42 @@ import {SavedSearch} from 'model/SavedSearch';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {CookieUtils} from '@shared/utils/cookie-utils';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {throwError} from 'rxjs/internal/observable/throwError';
 
 
 @Injectable()
 export class ProfileService extends BaseService {
 
-    public profile: Profile; // this.profile.userId
-    public userId: string;
-    public watchedDatasets: WatchedDataset[];
-
-    onProfileReceived: EventEmitter<Profile> = new EventEmitter();
-
-    constructor(private http: AuthHttp, public appConfig: AppConfig, private logger: LogService) {
+    constructor(private http: HttpClient,
+                public appConfig: AppConfig,
+                private logger: LogService) {
         super();
     }
 
+    setProfile(profile: Profile): void {
+        localStorage.removeItem('profile');
+        localStorage.setItem('profile', JSON.stringify(profile));
+    };
+    removeProfile() {
+        localStorage.removeItem('profile');
+    };
+    getProfileFromLocal(): Profile {
+        return JSON.parse(localStorage.getItem('profile'));
+    };
+
     getProfile(): Observable<Profile> {
-        return this.http.get(this.appConfig.getProfileUrl(null)) // ,config // { withCredentials: true }
-            .map(x => {
-                this.profile = this.extractData<Profile>(x);
-                if (!this.profile || !this.profile.userId) {
-                    this.logger.debug('Profile not received');
-                } else {
-                    this.logger.debug('Profile received: {}', this.profile.userId);
-                    this.userId = this.profile.userId;
-                    this.getCoAuthors(this.profile.userId);
-                    this.getWatchedDatasets(this.profile.userId).subscribe(
-                        d => {
-                            this.watchedDatasets = d;
-                        }
-                    );
-                    this.onProfileReceived.emit(this.profile);
-                }
-                return this.profile;
-            });
-        // .catch(this.handleError);
+        return this.http.get(this.appConfig.getProfileUrl(null))
+            .pipe(map(data => this.extractData<Profile>(data)));
     }
 
     getPublicProfile(username): Observable<Profile> {
         let _profile;
-        return this.http.get(this.appConfig.getProfileUrl(username)) // ,config //{ withCredentials: true }
-            .map(x => {
+        return this.http.get(this.appConfig.getProfileUrl(username))
+            .pipe(map(x => {
                 _profile = this.extractData<Profile>(x);
                 if (!_profile) {
                     this.logger.debug('public profile not received');
@@ -59,14 +51,13 @@ export class ProfileService extends BaseService {
                     this.logger.debug('public profile received: {}', _profile.userId);
                 }
                 return _profile;
-            });
-        // .catch(this.handleError);
+            }));
     }
 
     getAllProfiles(): Observable<Profile[]> {
         let _profiles;
-        return this.http.get(this.appConfig.getAllProfilesUrl()) // ,config //{ withCredentials: true }
-            .map(x => {
+        return this.http.get(this.appConfig.getAllProfilesUrl())
+            .pipe(map(x => {
                 _profiles = this.extractData<Profile[]>(x);
                 if (!_profiles) {
                     this.logger.debug('public profile not received');
@@ -74,113 +65,72 @@ export class ProfileService extends BaseService {
                     this.logger.debug('public profiles received: {}', _profiles.length);
                 }
                 return _profiles;
-            })
-            .catch(this.handleError);
+            }), catchError(e => this.handleError(e)));
     }
 
     getUserConnections(userId: string): Observable<string[]> {
-        return this.http.get(this.appConfig.getUserConnectionsUrl(userId)) // { withCredentials: true }
-            .map(x => this.extractData<string[]>(x));
-        // .catch(this.handleError);
+        return this.http.get(this.appConfig.getUserConnectionsUrl(userId))
+            .pipe(map(x => this.extractData<string[]>(x)));
     }
 
     getUserConnection(userId: string, provider: string): Observable<ConnectionData> {
-        return this.http.get(this.appConfig.getUserConnectionUrl(userId, provider)) // { withCredentials: true }
-            .map(x => this.extractData<ConnectionData>(x))
-            .catch(this.handleError);
+        return this.http.get(this.appConfig.getUserConnectionUrl(userId, provider))
+            .pipe(
+                map(x => this.extractData<ConnectionData>(x)),
+                catchError(e => this.handleError(e)));
     }
 
     deleteConnection(userId: string, provider: string): Observable<any> {
         const deleteConnectionUrl = this.appConfig.getDeleteConnectionUrl(userId, provider);
         return this.http.delete(deleteConnectionUrl)
-            .map(res => res.json())
-            .catch(this.handleError);
+            .pipe(map(res => res), catchError(e => this.handleError(e)));
     }
 
     getCoAuthors(userId: string): Observable<UserShort[]> {
         return this.http.get(this.appConfig.getUserCoAuthorsUrl(userId))//
-            .map(x => this.extractData<UserShort[]>(x));
-        // .catch(this.handleError);
+            .pipe(map(x => this.extractData<UserShort[]>(x)));
     }
 
-    public updateUser(): Observable<string> {
-
-        const headers = new Headers();
-        /**
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-        let authToken = this.getParameterByName("auth");
-        if(authToken) {
-            headers.append('X-AUTH-TOKEN', authToken);
-        }**/
-
-        const config: RequestOptionsArgs = {headers: headers};
-        // $http.post(url, config) .success ...
-
-        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(this.profile), config)
-            .map(res => {
-                return 'OK';
-            });
+    public updateUser(profile: Profile): Observable<string> {
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), httpOptions)
+            .pipe(map(() => 'OK'));
     }
 
-    private handleError(error: Response | any) {
-        // In a real world app, we might use a remote logging infrastructure
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    private handleError(error: HttpErrorResponse) {
+        if (error.error instanceof ErrorEvent) {
+            // A client-side or network error occurred. Handle it accordingly.
+            this.logger.error('An error occurred:', error.error.message);
         } else {
-            errMsg = error.message ? error.message : error.toString();
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            this.logger.error('Backend returned code {}, body was: {}', error.status, error.error);
         }
-        this.logger.error(errMsg);
-        return Observable.throw(errMsg);
-    }
-
-    private extractDataLogin(res: Response) {
-        this.logger.warn('logging out - extracting data..');
-    }
-
-    private handleErrorLogin(error: Response | any) {
-        this.logger.warn('logging out - error..');
-        return Observable.throw('Error in logout');
+        // return an observable with a user-facing error message
+        return throwError('Something bad happened; please try again later.');
     }
 
     public saveDataSets(userID: string, datasets: DataSetShort[]) {
-        let r: string;
-        this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets))
-            .map(res => res.json()).subscribe(data => {
-            r = data;
-        });
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets), httpOptions)
+            .pipe(map(res => res)).subscribe(() => {});
     }
 
     public claimDataset(userID: string, dataset: DataSetShort) {
-        // alert(`claim ${userID} ${accession} ${repository}`);
-        // let datasetId:DataSetId = new DataSetId();
-        // datasetId.accession = accession;
-        // datasetId.repository = repository;
-
-        this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID), JSON.stringify(dataset))
-            .subscribe(x => {
-                this.profile.dataSets.push(dataset);
-            });
-    }
-
-    setCookie(name, value, path) {
-        if (null == path) {
-            path = '/';
-        }
-
-        const today = new Date();
-        const expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000);
-
-        document.cookie = name + '=' + value + '; path=' + path + '; expires=' + expiry.toUTCString();
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID), JSON.stringify(dataset), httpOptions)
+            .subscribe(x => {});
     }
 
     public connect(provider: string) {
 
         const form = document.createElement('form');
-        const element1 = document.createElement('input');
 
         form.method = 'POST';
         form.action = this.appConfig.getConnectUrl(provider);
@@ -191,85 +141,65 @@ export class ProfileService extends BaseService {
         // /form.appendChild(element1);
 
         document.body.appendChild(form);
-
-        this.setCookie('X-AUTH-TOKEN', localStorage.getItem('id_token'), this.appConfig.getConnectCookiePath(provider));
+        const expire = new Date(new Date().getTime() + 30 * 24 * 3600 * 1000);
+        CookieUtils.setCookie('X-AUTH-TOKEN',
+            localStorage.getItem('id_token'), this.appConfig.getConnectCookiePath(provider), expire);
 
         form.submit();
     }
 
-    public isClaimed(source, id) {
-        let obj: any;
-        if (null != this.profile.dataSets) {
-            obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
-        }
-        return (null != obj);
-    }
-
-    public isWatched(source, id) {
-        let obj: any;
-        if (null != this.watchedDatasets) {
-            obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
-        }
-        return (null != obj);
-    }
-
     getSavedSearches(userId: string): Observable<SavedSearch[]> {
         return this.http.get(this.appConfig.getUserSavedSearchesUrl(userId))//
-            .map(x => this.extractData<SavedSearch[]>(x));
-        // .catch(this.handleError);
+            .pipe(map(x => this.extractData<SavedSearch[]>(x)));
     }
 
     saveSavedSearch(savedSearch: SavedSearch) {
         this.logger.debug('Saving saved search');
-        this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId), JSON.stringify(savedSearch)).subscribe(
-            x => {
-                this.logger.debug('Search saved saved');
-            }
-        );
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId), JSON.stringify(savedSearch), httpOptions)
+            .subscribe(() => this.logger.debug('Search saved saved'));
     }
 
-    deleteSavedSearch(id: string): Observable<String> {
-        return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(this.userId, id)).map(
-            x => 'ok'
-        ).catch(this.handleError);
+    deleteSavedSearch(userId: string, id: string): Observable<String> {
+        return this.http.delete(this.appConfig.getUserSavedSearchesDeleteUrl(userId, id))
+            .pipe(map(x => 'ok'), catchError(e => this.handleError(e)));
     }
 
     getWatchedDatasets(userId: string): Observable<WatchedDataset[]> {
         return this.http.get(this.appConfig.getWatchedDatasetsUrl(userId))//
-            .map(x => this.extractData<WatchedDataset[]>(x));
-        // .catch(this.handleError);
+            .pipe(map(x => this.extractData<WatchedDataset[]>(x)));
     }
 
     saveWatchedDataset(watchedDataset: WatchedDataset) {
         this.logger.debug('Saving saved search');
-        this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset)).subscribe(
-            x => {
-                this.logger.debug('Watched dataset saved');
-                this.watchedDatasets.push(watchedDataset);
-            }
-        );
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset), httpOptions)
+            .subscribe(() => this.logger.debug('Watched dataset saved'));
     }
 
-    deleteWatchedDataset(id: string): Observable<String> {
-        return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(this.userId, id)).map(
-            x => 'ok');
-        // ).catch(this.handleError);
+    deleteWatchedDataset(userId: string, id: string): Observable<String> {
+        return this.http.delete(this.appConfig.getWatchedDatasetsDeleteUrl(userId, id)).pipe(map(x => 'ok'));
     }
 
     getUsersCount(): Observable<number> {
-        return this.http.get(this.appConfig.getUserCountUrl()).map(x => this.extractData<number>(x));
+        return this.http.get(this.appConfig.getUserCountUrl()).pipe(map(x => this.extractData<number>(x)));
     }
 
     setSelected(userId: string, datasets: DataSetShort[]): Observable<String> {
-        return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets)).map(
-            x => 'ok');
-        // ).catch(this.handleError);
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets), httpOptions)
+            .pipe(map(x => 'ok'));
     }
 
     getSelected(userId: string): Observable<DataSetShort[]> {
         return this.http.get(this.appConfig.getSelectedDatasetsUrl(userId))//
-            .map(x => this.extractData<DataSetShort[]>(x));
-        // .catch(this.handleError);
+            .pipe(map(x => this.extractData<DataSetShort[]>(x)));
     }
 
     getAdminUsers() {

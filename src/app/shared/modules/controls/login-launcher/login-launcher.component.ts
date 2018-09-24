@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {AuthService} from '@shared/services/auth.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {Profile} from 'model/Profile';
 
 @Component({
-    selector: '[AppLoginLauncher]',
+    selector: '[app-login-launcher]',
     templateUrl: './login-launcher.component.html',
     styleUrls: ['./login-launcher.component.css']
 })
@@ -16,10 +15,8 @@ export class LoginLauncherComponent implements OnInit {
     public name: string;
     public userId: string;
     public isPublic: boolean;
-    public mergeControl: boolean;
 
-    constructor(public profileService: ProfileService, private router: Router, public auth: AuthService) {
-        this.name = null;
+    constructor(public profileService: ProfileService, public auth: AuthService) {
     }
 
     ngOnInit() {
@@ -27,23 +24,14 @@ export class LoginLauncherComponent implements OnInit {
     }
 
     getProfile() {
-        this.profileService.getAdminUsers().subscribe( x => {
-            this.profileService.getProfile()
-                .subscribe(
-                    profile => {
-                        this.profile = profile;
-                        this.name = profile.userName;
-                        this.userId = profile.userId;
-                        this.isPublic = profile.isPublic;
-                        if (this.userId !== null) {
-                            for (const user of x.json().users) {
-                                if (user === this.userId) {
-                                    this.mergeControl = true;
-                                }
-                            }
-                        }
-                    }
-                );
+        this.auth.loggedIn().then(isLogged => {
+            if (isLogged) {
+                const profile = this.profileService.getProfileFromLocal();
+                this.profile = profile;
+                this.name = profile.userName;
+                this.userId = profile.userId;
+                this.isPublic = profile.isPublic;
+            }
         });
     }
 
@@ -60,10 +48,8 @@ export class LoginLauncherComponent implements OnInit {
 
     LogOut() {
         // this.deleteCookie('AUTH-TOKEN');
-        this.mergeControl = false;
         localStorage.removeItem('id_token');
-        this.profileService.profile = null;
-        this.profileService.userId = null;
-        this.router.navigate(['home']);
+        this.profileService.removeProfile();
+        window.location.href = '/home';
     }
 }

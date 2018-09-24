@@ -1,12 +1,4 @@
-<div class="panel panel-default" style="height:100%; min-height:260px;">
-    <div id="tweets-of-the-month" class="" style="margin-bottom: 15px">
-        <h4 data-icon="N" class="icon icon-generic" style="margin-bottom: 15px">
-            News
-        </h4>
-    </div>
-
-    <div>
-        <a href="https://twitter.com/OmicsDI" data-icon="T" style="margin-left: 8px"
-           class="justify-body-text icon icon-socialmedia">More tweets</a>
-    </div>
+<div class="mt-card" style="height: 100%; margin-top: 0; margin-bottom: 0" *ngIf="height">
+    <a class="twitter-timeline" attr.data-height="{{height}}" attr.data-width="{{width + 5}}"
+       href="https://twitter.com/OmicsDI?ref_src=twsrc%5Etfw">Tweets by OmicsDI</a>
 </div>

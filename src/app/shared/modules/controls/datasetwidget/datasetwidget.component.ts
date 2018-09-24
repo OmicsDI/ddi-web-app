@@ -1,18 +1,19 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataSet} from 'model/DataSet';
-import {SelectedService} from '@shared/services/selected.service';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {DataSetShort} from 'model/DataSetShort';
 import {WatchedDataset} from 'model/WatchedDataset';
-import {NotificationsService} from 'angular2-notifications/dist';
+import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
+import {Profile} from 'model/Profile';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-datasetwidget',
@@ -24,13 +25,17 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() d: DataSet;
     @Input() allowSelect = true;
     @Output() buttonClicked = new EventEmitter<any>();
+    @Output() toggleDataset = new EventEmitter<DataSetShort>();
     @Input() allowDelete = true;
     @Input() allowClaim = true;
     @Input() allowWatch = true;
     @Input() databases: Database[];
+    @Input() profile: Profile;
+    @Input() watchedDatasets: WatchedDataset[] = [];
+    @Input() observableDataset: Observable<DataSet>;
+    @Input() isSelected = false;
 
-    constructor(public selectedService: SelectedService,
-                public appConfig: AppConfig,
+    constructor(public appConfig: AppConfig,
                 public profileService: ProfileService,
                 private databaseListServce: DatabaseListService,
                 private router: Router,
@@ -41,6 +46,11 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.observableDataset) {
+            this.observableDataset.subscribe(dataset => {
+                this.d = dataset;
+            });
+        }
     }
 
     getDatabaseUrl(source) {
@@ -77,24 +87,22 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     claimClicked($event, source, id) {
-        if (!this.profileService.isClaimed(source, id)) {
+        if (!this.isClaimed(source, id)) {
             const d: DataSetShort = new DataSetShort();
 
             d.source = source;
             d.id = id;
 
-            this.profileService.claimDataset(this.profileService.userId, d);
+            this.profileService.claimDataset(this.profile.userId, d);
+            this.profile.dataSets.push(d);
+            this.profileService.setProfile(this.profile);
+            this.notificationService.success('Dataset claimed', 'to your dashboard');
         } else {
-            this.router.navigate(['profile']);
+            this.router.navigate(['dashboard', 'claimed']);
         }
 
         $event.stopPropagation();
         $event.preventDefault();
-
-        this.notificationService.success(
-            'Dataset claimed',
-            'to your dashboard'
-        );
     }
 
     watchClicked($event, source, id) {
@@ -102,33 +110,49 @@ export class DatasetWidgetComponent implements OnInit {
 
         d.source = source;
         d.accession = id;
-        d.userId = this.profileService.userId;
+        d.userId = this.profile.userId;
 
+        if (this.isWatched(source, id)) {
+            return;
+        }
         this.profileService.saveWatchedDataset(d);
+        this.watchedDatasets.push(d);
 
         $event.stopPropagation();
         $event.preventDefault();
 
-        this.notificationService.success(
-            'Dataset watched',
-            'in your dashboard'
-        );
+        this.notificationService.success('Dataset watched', 'in your dashboard');
     }
 
-    toggle(source: string, id: string) {
+    toggle(datasetShort: DataSetShort) {
         if (!this.allowSelect) {
             return;
         }
 
-        if (!this.profileService.userId) {
+        if (!this.profile) {
             return;
         }
 
-        this.selectedService.toggle(source, id);
-        this.logger.debug('Toggling {}, {}', source, id);
+        this.toggleDataset.emit(datasetShort);
     }
 
     deleteClicked($event, source, id) {
         this.buttonClicked.emit();
+    }
+
+    public isClaimed(source, id) {
+        let obj: any;
+        if (null != this.profile.dataSets) {
+            obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
+        }
+        return (null != obj);
+    }
+
+    public isWatched(source, id) {
+        let obj: any;
+        if (null != this.watchedDatasets) {
+            obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
+        }
+        return (null != obj);
     }
 }

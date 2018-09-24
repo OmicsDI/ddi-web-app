@@ -15,6 +15,7 @@ import {MatCheckboxModule} from '@angular/material';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {RouterModule} from '@angular/router';
+import {UtilsModule} from '@shared/modules/utils/utils.module';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {RouterModule} from '@angular/router';
         MatCheckboxModule,
         UiSwitchModule,
         PipesModule,
+        UtilsModule,
         ControlsModule
     ],
     declarations: [

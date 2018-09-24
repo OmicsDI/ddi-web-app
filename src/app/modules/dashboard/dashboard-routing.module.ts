@@ -5,19 +5,26 @@ import {DashboardFeedbackComponent} from '@modules/dashboard/components/feedback
 import {DashboardProfileComponent} from '@modules/dashboard/components/profile/profile.component';
 import {DashboardUpdateComponent} from '@modules/dashboard/components/update/update.component';
 import {DashboardClaimedComponent} from '@modules/dashboard/components/claimed/claimed.component';
-import {DashboardPictureComponent} from '@modules/dashboard/components/picture/picture.component';
 import {SettingsComponent} from '@modules/dashboard/components/settings/settings.component';
 import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashboard.component';
+import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
+import {MergeComponent} from '@modules/dashboard/components/merge/merge.component';
+import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.component';
 
 const routes: Routes = [
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'selected', component: DashboardSelectedComponent},
-    {path: 'feedback', component: DashboardFeedbackComponent},
-    {path: 'profile', component: DashboardProfileComponent},
-    {path: 'update', component: DashboardUpdateComponent},
-    {path: 'claimed', component: DashboardClaimedComponent},
-    {path: 'picture', component: DashboardPictureComponent},
-    {path: 'settings', component: SettingsComponent}
+    {
+        path: '', component: NavComponent, children: [
+            {path: 'dashboard', component: DashboardComponent},
+            {path: 'selected', component: DashboardSelectedComponent},
+            {path: 'feedback', component: DashboardFeedbackComponent},
+            {path: 'profile', component: DashboardProfileComponent},
+            {path: 'update', component: DashboardUpdateComponent},
+            {path: 'claimed', component: DashboardClaimedComponent},
+            {path: 'settings', component: SettingsComponent},
+            {path: 'merge', component: MergeComponent},
+            {path: 'unmerge', component: UnmergeComponent}
+        ]
+    }
 ];
 
 @NgModule({

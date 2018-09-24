@@ -30,3 +30,13 @@
     background-color: white; /* Green */
     color: black;
 }
+
+.elements > span {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.btn {
+    padding: 5px 12px;
+    min-width: 100px;
+}

@@ -1,33 +1,46 @@
 <nav>
-    <div id="navbar-ex1-collapse" class="collapse navbar-collapse ">
+    <div id="navbar-ex1-collapse" class="collapse navbar-collapse" *ngIf="profile">
         <ul class="nav navbar-nav side-nav">
-            <li data-target="#profileLinks">
-                <a [routerLink]="['/dashboard','profile']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-user-circle"></i> Profile</a>
-                <ul id="profileLinks">
-                    <li>
-                        <a [routerLink]="['/dashboard','update']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-file-text-o"></i> Edit
-                            Profile</a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/dashboard','picture']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-file-image-o"></i> Edit Picture</a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/dashboard','claimed']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-bar-chart"></i> Edit
-                            Datasets</a>
-                    </li>
-                </ul>
+            <li style="width: 100%; margin-bottom: 20px" [routerLink]="['/dashboard','profile']">
+                <div class="user line-bottom">
+                    <div style="width: 40px; height: 40px; display: inline-block">
+                        <img [src]="this.profileImageUrl" class="image-rounded">
+                    </div>
+                    <span style="display: inline-block">{{profile.userName}}</span>
+                </div>
             </li>
             <li>
                 <a [routerLink]="['/dashboard', 'dashboard']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
+                <a [routerLink]="['/dashboard','update']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-file-text-o"></i> Edit
+                    Profile</a>
+            </li>
+            <li>
+                <a [routerLink]="['/dashboard','claimed']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-bar-chart"></i> My Datasets</a>
+            </li>
+            <li>
                 <a [routerLink]="['/dashboard','selected']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-shopping-basket"></i> Selected
                     Datasets</a>
             </li>
-
+            <li *ngIf="isAdmin">
+                <!--- data-toggle="collapse" data-target="#profileLinks" -->
+                <a data-toggle="collapse" data-target="#adminNav">
+                    <i class="fa fa-fw fa-user-circle"></i> Admin Zone<i class="fa fa-fw fa-caret-down"></i>
+                </a>
+                <ul id="adminNav" class="collapse">
+                    <li>
+                        <a [routerLink]="['/dashboard', 'merge']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-code-fork"></i> Merge Datasets</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/dashboard', 'unmerge']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-undo"></i> Unmerge Datasets</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a [routerLink]="['/dashboard','feedback']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-commenting-o"></i> Feedback</a>
             </li>
         </ul>
     </div>
 </nav>
+<router-outlet></router-outlet>

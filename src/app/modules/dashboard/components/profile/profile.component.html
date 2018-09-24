@@ -1,35 +1,48 @@
 <div id="wrapper">
-    <app-nav></app-nav>
-    <div id="page-wrapper">
-        <div class="container-fluid3" *ngIf="profileX">
-            <div class="row">
-                <div class="col-md-10 col-sm-12 col-xs-12">
-                    <app-profile-info [profile]="profileX"></app-profile-info>
-                    <div class="row align-top" style="margin-left: 0">
-                        <div *ngIf="profileX?.dataSets?.length>0" class="caption">Datasets</div>
-
-                        <app-profile-result [profile]="profileX" (change)="updateProfile()"></app-profile-result>
+    <div class="container-fluid3" *ngIf="profileX">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="!this.profileX.bio">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="mt-card">
+                        <div class="mt-card-header">
+                            <h4 class="mt-card-title" style="margin-left: 20px">
+                                Congratulations! You have created OmicsDI profile. What next?
+                            </h4>
+                        </div>
+                        <div class="mt-card-body">
+                            <div>
+                                <ul class="available-tasks">
+                                    <li>Upload best <a [routerLink]="['/dashboard','update']">photo</a>
+                                    <li>Write short <a [routerLink]="['/dashboard','update']">bio</a> to stand out of colleagues
+                                    <li>Use <a [routerLink]="['/search']" [queryParams]="{q: this.profileX?.userName}">search</a> and claim
+                                        your datasets!
+                                    <li>When you are happy with the content, you can make your profile <a
+                                            [routerLink]="['/dashboard','update']">public</a> and use short URL in communication
+                                    <li>Please consult <a href="http://blog.omicsdi.org/post/claiming-datasests/">help</a> for detailed
+                                        step-by-step instructions
+                                    <li>We are waiting for your <a [routerLink]="['/dashboard','feedback']">feedback</a>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"
-                     style="display:inline-block; vertical-align: top; text-align: right;"
-                     id="profile_div" *ngIf="profileX">
-                    <app-profile-contacts [profile]="profileX"></app-profile-contacts>
-                    <app-profile-connections *ngIf="isMy()"
-                                             [profile]="profileService.profile"></app-profile-connections>
-                    <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length"></app-claim-orcid>
-
-                    <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
-
-                    <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
-                    <!--<app-dashboard-citations-count [profile]="profileX"></app-dashboard-citations-count>-->
-                    <!--<app-dashboard-reanalisys-count [profile]="profileX"></app-dashboard-reanalisys-count>-->
-                    <!--<app-dashboard-views-count [profile]="profileX"></app-dashboard-views-count>-->
-                    <!--<app-dashboard-connections-count [profile]="profileX"></app-dashboard-connections-count>-->
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <app-profile-info [profile]="profileX"></app-profile-info>
                 </div>
             </div>
-
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <app-profile-connections *ngIf="isMy()"
+                                             [profile]="profileX"></app-profile-connections>
+                </div>
+                <div class="col-md-4">
+                    <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length"></app-claim-orcid>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>
 

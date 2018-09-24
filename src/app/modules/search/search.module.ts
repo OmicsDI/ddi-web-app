@@ -6,7 +6,7 @@ import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
-import {ClipboardModule} from 'ngx-clipboard/dist';
+import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SearchComponent} from './components/search/search.component';

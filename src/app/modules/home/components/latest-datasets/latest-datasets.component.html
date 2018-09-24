@@ -1,14 +1,16 @@
-<div id="latestdatasetspanel" class="panel panel-default">
-    <div class="">
-        <h4 class="icon icon-functional " data-icon="z"> Latest Datasets</h4>
+<div class="mt-card" style="height: 100%; margin-top: 0">
+    <div class="mt-card-header">
+        <h4 class="mt-card-title" style="margin-left: 5px">
+            Latest Datasets
+        </h4>
     </div>
-    <div class="panel-body ">
-        <ul class="nobullet">
+    <div class="mt-card-body">
+        <ul class="nobullet" style="margin-top: 0">
 
             <li *ngIf="isRequestLatestDatasetFailed()" class="error-info">
                 Sorry, the accessing to this datasets list was temporally failed.
             </li>
-            <li *ngFor="let _dataset of latestDatasets" class="title_one_line">
+            <li *ngFor="let _dataset of latestDatasets" class="cut-text" style="line-height: 2">
                 <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"></app-omics-image>
                 <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" title={{_dataset.title}}>
                     {{getMonthDay(_dataset.publicationDate)}}{{_dataset.title}}
