@@ -56,7 +56,7 @@ export class SearchBoxComponent implements OnInit {
     }
 
     getQueryValue() {
-        if (this.query.match(/^"[^"]*"$/)) {
+        if (this.query && this.query.match(/^"[^"]*"$/)) {
             return this.query.substring(1, this.query.length - 1);
         }
         return this.query;
