@@ -9,7 +9,7 @@ import {WatchedDataset} from 'model/WatchedDataset';
 import {ConnectionData} from 'model/ConnectionData';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {CookieUtils} from '@shared/utils/cookie-utils';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs/internal/observable/throwError';
@@ -92,7 +92,10 @@ export class ProfileService extends BaseService {
     }
 
     public updateUser(profile: Profile): Observable<string> {
-        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile))
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), httpOptions)
             .pipe(map(() => 'OK'));
     }
 
@@ -110,12 +113,18 @@ export class ProfileService extends BaseService {
     }
 
     public saveDataSets(userID: string, datasets: DataSetShort[]) {
-        this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets))
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.put(this.appConfig.getProfileSaveDatasetsUrl(userID), JSON.stringify(datasets), httpOptions)
             .pipe(map(res => res)).subscribe(() => {});
     }
 
     public claimDataset(userID: string, dataset: DataSetShort) {
-        this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID), JSON.stringify(dataset))
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.post(this.appConfig.getProfileClaimDatasetUrl(userID), JSON.stringify(dataset), httpOptions)
             .subscribe(x => {});
     }
 
@@ -146,8 +155,11 @@ export class ProfileService extends BaseService {
 
     saveSavedSearch(savedSearch: SavedSearch) {
         this.logger.debug('Saving saved search');
-        this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId), JSON.stringify(savedSearch)).subscribe(
-            () => this.logger.debug('Search saved saved'));
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.post(this.appConfig.getUserSavedSearchesUrl(savedSearch.userId), JSON.stringify(savedSearch), httpOptions)
+            .subscribe(() => this.logger.debug('Search saved saved'));
     }
 
     deleteSavedSearch(userId: string, id: string): Observable<String> {
@@ -162,8 +174,11 @@ export class ProfileService extends BaseService {
 
     saveWatchedDataset(watchedDataset: WatchedDataset) {
         this.logger.debug('Saving saved search');
-        this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset)).subscribe(
-            () => this.logger.debug('Watched dataset saved'));
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset), httpOptions)
+            .subscribe(() => this.logger.debug('Watched dataset saved'));
     }
 
     deleteWatchedDataset(userId: string, id: string): Observable<String> {
@@ -175,7 +190,11 @@ export class ProfileService extends BaseService {
     }
 
     setSelected(userId: string, datasets: DataSetShort[]): Observable<String> {
-        return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets)).pipe(map(x => 'ok'));
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type':  'application/json'})
+        };
+        return this.http.post(this.appConfig.getSelectedDatasetsUrl(userId), JSON.stringify(datasets), httpOptions)
+            .pipe(map(x => 'ok'));
     }
 
     getSelected(userId: string): Observable<DataSetShort[]> {
