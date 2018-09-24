@@ -64,7 +64,12 @@ export class DataSetService extends BaseService {
     }
 
     public getDatasetByUrl(url: string): Observable<DataSet> {
-        return this.http.post(this.appConfig.getDatasetByUrl(), url)
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type':  'application/json'
+            })
+        };
+        return this.http.post(this.appConfig.getDatasetByUrl(), url, httpOptions)
             .pipe(map(x => this.extractData<DataSet>(x)));
     }
 
@@ -87,7 +92,6 @@ export class DataSetService extends BaseService {
         const url = this.appConfig.getMergeUrl();
 
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-
         return this.http.post(url, JSON.stringify(result), {headers: headers})
             .pipe(map(res => 'OK'));
     }

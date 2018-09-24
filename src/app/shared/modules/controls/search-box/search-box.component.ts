@@ -43,11 +43,23 @@ export class SearchBoxComponent implements OnInit {
             if (this.router.url.indexOf('/dataset/') === -1) {
                 this.params = params;
                 this.queryParams = QueryUtils.extractQuery(params);
-                this.query = this.queryParams.toQueryString();
+                const query = this.queryParams.toQueryString();
+                if (query.match(/^"[^"]*"$/)) {
+                    this.query = query.substring(1, query.length - 1);
+                } else {
+                    this.query = query;
+                }
                 this.logger.debug('query: {}', this.query);
             }
         });
         this.loadFacetForAdvancedSearch();
+    }
+
+    getQueryValue() {
+        if (this.query && this.query.match(/^"[^"]*"$/)) {
+            return this.query.substring(1, this.query.length - 1);
+        }
+        return this.query;
     }
 
     caret_class(): string {
