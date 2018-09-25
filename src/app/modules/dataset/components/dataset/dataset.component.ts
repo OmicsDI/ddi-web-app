@@ -84,6 +84,7 @@ export class DatasetComponent implements OnInit {
     }
 
     ngOnInit() {
+        const self = this;
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.route.params.subscribe(params => {
                 this.slimLoadingBarService.start();
@@ -91,7 +92,9 @@ export class DatasetComponent implements OnInit {
                 this.repository = params['domain'];
                 this.databases = databases;
                 this.dataSetService.getDataSetDetail(this.acc, this.repository).subscribe(result => {
-                    this.reanalysisOf = this.reanalysedBy = this.relatedOmics = [];
+                    self.reanalysisOf = [];
+                    self.reanalysedBy = [];
+                    self.relatedOmics = [];
                     this.d = result;
                     this.acc = result.id;
                     this.repository = result.source;
@@ -111,17 +114,17 @@ export class DatasetComponent implements OnInit {
                     if (result.similars != null) {
                         result.similars.filter(s => s.relationType === 'Reanalysis of').map(reanalysis => {
                             const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysis.database, databases);
-                            this.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
+                            self.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
                         });
 
                         result.similars.filter(s => s.relationType === 'Reanalyzed by').map(reanalysedBy => {
                             const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysedBy.database, databases);
-                            this.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
+                            self.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
                         });
 
                         result.similars.filter(s => s.relationType !== 'Reanalyzed by' && s.relationType !== 'Reanalysis of').map(omics => {
                             const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(omics.database, databases);
-                            this.relatedOmics.push({reanalysis: omics, db: reanalyDb});
+                            self.relatedOmics.push({reanalysis: omics, db: reanalyDb});
                         });
                     }
 
