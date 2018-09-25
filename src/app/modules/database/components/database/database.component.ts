@@ -57,8 +57,8 @@ export class DatabaseComponent implements OnInit {
     }
 
     getDatasetCount(domain: string) {
-        if (domain === 'omics_ena_project') {
-            domain = 'Omics-ENA';
+        if (domain === 'Omics-ENA') {
+            domain = 'Omics ENA Project';
         }
         if (this.domainStats.has(domain)) {
             return this.domainStats.get(domain).domain.value;
