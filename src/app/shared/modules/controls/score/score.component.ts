@@ -26,6 +26,7 @@ export class ScoreComponent implements OnInit {
             {
                 'order': 1,
                 'score': this.dataset.viewsCount,
+                'rad': this.dataset.viewsCountScaled,
                 'weight': 1,
                 'color': '#337ab7',
                 'label': 'Views'
@@ -33,6 +34,7 @@ export class ScoreComponent implements OnInit {
             {
                 'order': 1,
                 'score': this.dataset.connectionsCount,
+                'rad': this.dataset.connectionsCountScaled,
                 'weight': 1,
                 'color': '#C93029',
                 'label': 'Connections'
@@ -40,6 +42,7 @@ export class ScoreComponent implements OnInit {
             {
                 'order': 2,
                 'score': this.dataset.citationsCount,
+                'rad': this.dataset.citationsCountScaled,
                 'weight': 1,
                 'color': '#5cb85c',
                 'label': 'Citations'
@@ -47,6 +50,7 @@ export class ScoreComponent implements OnInit {
             {
                 'order': 3,
                 'score': this.dataset.reanalysisCount,
+                'rad': this.dataset.reanalysisCountScaled,
                 'weight': 1,
                 'color': '#f0ad4e',
                 'label': 'Reanalyses'

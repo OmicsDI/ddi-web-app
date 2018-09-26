@@ -21,7 +21,7 @@ export class PieChartDirective implements OnInit {
             format = d3.format(',d'),
             pie = d3.pie()
                 .sort(null)
-                .value(function(d) { return d['width']; });
+                .value(function(d) { return d['weight']; });
 
         const tool_tip = body.append('div')
             .attr('class', 'chart_tooltip d3-tip')
@@ -32,7 +32,7 @@ export class PieChartDirective implements OnInit {
         const arc = d3.arc()
             .innerRadius(innerRadius)
             .outerRadius(function (d) {
-                return (radius - innerRadius) * (d['data'].rad / 100.0) + innerRadius;
+                return (radius - innerRadius) * (d['data'].rad) + innerRadius;
             });
         const outlineArc = d3.arc()
             .innerRadius(innerRadius * 0.999)
@@ -46,14 +46,6 @@ export class PieChartDirective implements OnInit {
         if (max === 0) {
             return;
         }
-
-        this.data.forEach(function(d) {
-            d.order  = +d.order;
-            d.weight = +d.weight;
-            d.score  = +d.score;
-            d.rad = (d.score * 100 / max > 0 && d.score * 100 / max < 5) ? 10 : d.score * 100 / max;
-            d.width  = +d.weight;
-        });
 
         svg.selectAll('.solidArc')
             .data(pie(this.data))
