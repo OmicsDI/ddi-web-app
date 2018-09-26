@@ -26,6 +26,8 @@ export class PieChartDirective implements OnInit {
         const tool_tip = body.append('div')
             .attr('class', 'chart_tooltip d3-tip')
             .style('opacity', 0)
+            .style('width', '20px')
+            .style('right', 0)
             .attr('position', 'absolute');
         const arc = d3.arc()
             .innerRadius(innerRadius)

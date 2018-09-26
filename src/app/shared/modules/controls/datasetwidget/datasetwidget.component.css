@@ -101,3 +101,10 @@ span.buttons-span {
 .tag:hover::after {
     border-left-color: crimson;
 }
+
+@media (min-width: 992px) {
+    .tool-box {
+        display: flex;
+        align-items: flex-end;
+    }
+}
