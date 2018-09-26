@@ -2,32 +2,14 @@
   "compilerOptions": {
     "baseUrl": "",
     "paths": {
-      "services/*": [
-        "app/services/*"
-      ],
-      "search/*": [
-        "app/search/*"
-      ],
       "model/*": [
         "app/model/*"
-      ],
-      "profile/*": [
-        "app/profile/*"
-      ],
-      "controls/*": [
-        "app/controls/*"
-      ],
-      "utils/*": [
-        "app/utils/*"
       ],
       "@modules/*": [
         "app/modules/*"
       ],
       "@shared/*": [
         "app/shared/*"
-      ],
-      "@test/*": [
-        "test/*"
       ],
       "stream": ["../node_modules/readable-stream/readable.js"]
     },
