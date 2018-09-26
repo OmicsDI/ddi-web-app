@@ -1,5 +1,6 @@
 <div class="mt-card" [ngStyle]="{'cursor':  allowSelect && profile ? 'pointer' : 'default'}"
      [ngClass]="allowSelect && isSelected ? 'grey' : 'white'"
+     style="margin-top: 10px; margin-bottom: 10px"
      (click)="toggle(d);" *ngIf="d">
     <div class="mt-card-body">
         <div style="float: right; text-align: right">

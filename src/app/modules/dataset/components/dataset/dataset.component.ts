@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {Subscription} from 'rxjs';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
 import {EnrichmentService} from '@shared/services/enrichment.service';
