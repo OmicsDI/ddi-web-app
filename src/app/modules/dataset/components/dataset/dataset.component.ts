@@ -338,4 +338,10 @@ export class DatasetComponent implements OnInit {
 
         return dialogRef.afterClosed();
     }
+
+    upperName(lower: string) {
+        return lower.replace(/^\w/, function (chr) {
+            return chr.toUpperCase();
+        });
+    }
 }

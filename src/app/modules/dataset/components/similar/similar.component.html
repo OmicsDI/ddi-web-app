@@ -1,31 +1,36 @@
-<ul class="list-unstyled">
-
-    <li *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope" style="">
-        <div class="project-widget  list-group-item ddi-card-panel">
-            <div class="project-widget-accession">
-                <app-omics-image [omics]="ds?.omicsType"></app-omics-image>
-                <a target="" class="align-justify ng-binding" (click)="openDataset(ds)" class="similar_title">
-                    {{ds.title}}</a>
-            </div>
-            <div class="project-widget-paragraph hidden ng-binding">
-                <b>Project description:</b>{{ds.description}}
-                <span *ngIf="null==ds.description">Not available</span>
-            </div>
-            <div *ngIf="ds.organisms != null && ds.organisms.length > 0" class="project-widget-paragraph">
-                <b>Organism: </b>
-                <span *ngFor="let o of ds.organisms">{{o}}&nbsp;</span>
-            </div>
-            <div class="project-widget-paragraph ng-binding">
-                <span class="ng-binding"> <span class="similar_publicationDate">{{ds.publicationDate | toDateString}}</span> | </span>
-                <span class="similar_id">{{ds.id}}</span> |
-                <span class="similar_source">{{this.getDatabaseTitle(ds.source)}}</span>
+<div class="mt-card" *ngIf="d" id="dataset_middle_publication" style="position: relative;">
+    <div class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd">
+        <div class="col-xs-10" style="display: flex; align-items: center">
+            <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Similar Datasets</h3>
+        </div>
+    </div>
+    <div class="mt-card-body">
+        <div *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope" style="">
+            <div class="project-widget  list-group-item ddi-card-panel">
+                <div class="project-widget-accession">
+                    <app-omics-image [omics]="ds?.omicsType"></app-omics-image>
+                    <a target="" class="align-justify ng-binding" (click)="openDataset(ds)" class="similar_title">
+                        {{ds.title}}</a>
+                </div>
+                <div class="project-widget-paragraph hidden ng-binding">
+                    <b>Project description:</b>{{ds.description}}
+                    <span *ngIf="null==ds.description">Not available</span>
+                </div>
+                <div *ngIf="ds.organisms != null && ds.organisms.length > 0" class="project-widget-paragraph">
+                    <b>Organism: </b>
+                    <span *ngFor="let o of ds.organisms">{{o}}&nbsp;</span>
+                </div>
+                <div class="project-widget-paragraph ng-binding">
+                    <span class="ng-binding"> <span class="similar_publicationDate">{{ds.publicationDate | toDateString}}</span> | </span>
+                    <span class="similar_id">{{ds.id}}</span> |
+                    <span class="similar_source">{{this.getDatabaseTitle(ds.source)}}</span>
+                </div>
             </div>
         </div>
-    </li>
-
-</ul>
-<div class="input-btn center" style="width: 102px; margin-bottom: 10px;">
-    <button type="submit" class="btn btn-default  ng-binding" (click)="loadMore()">
-        <i class="fa fa-search"></i>{{ loadMoreButtonText }}
-    </button>
+        <div class="input-btn center" style="width: 102px; margin: 10px auto;">
+            <button type="submit" class="btn btn-default  ng-binding" (click)="loadMore()">
+                <i class="fa fa-search"></i>{{ loadMoreButtonText }}
+            </button>
+        </div>
+    </div>
 </div>

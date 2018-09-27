@@ -17,7 +17,7 @@ export class SimilarComponent implements OnInit, OnChanges {
 
 
     d: SimilarityResult = new SimilarityResult;
-    DEFAULT_DATASET_NUMBER = 5;
+    DEFAULT_DATASET_NUMBER = 10;
     datasetNumber: number = this.DEFAULT_DATASET_NUMBER;
 
     @Input() acc: string;
