@@ -1,101 +1,99 @@
-<div id="wrapper" *ngIf="profile">
-    <div class="row">
-        <div class="col-md-12 col-xs-12">
-            <div class="mt-card" *ngIf="dataSets">
-                <div class="mt-card-header">
-                    <h4 class="mt-card-title" style="margin-left: 20px">
-                        Datasets statistics
-                    </h4>
-                </div>
-                <div class="mt-card-body" style="margin-top: 10px">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <app-dashboard-claim-count [datasets]="dataSets"></app-dashboard-claim-count>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <app-dashboard-citations-count [datasets]="dataSets"></app-dashboard-citations-count>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <app-dashboard-reanalisys-count [datasets]="dataSets"></app-dashboard-reanalisys-count>
-                        </div>
+<div class="row" *ngIf="profile">
+    <div class="col-md-12 col-xs-12">
+        <div class="mt-card" *ngIf="dataSets">
+            <div class="mt-card-header">
+                <h4 class="mt-card-title" style="margin-left: 20px">
+                    Datasets statistics
+                </h4>
+            </div>
+            <div class="mt-card-body" style="margin-top: 10px">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <app-dashboard-claim-count [datasets]="dataSets"></app-dashboard-claim-count>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <app-dashboard-views-count [datasets]="dataSets"></app-dashboard-views-count>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <app-dashboard-connections-count [datasets]="dataSets"></app-dashboard-connections-count>
-                        </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <app-dashboard-citations-count [datasets]="dataSets"></app-dashboard-citations-count>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <app-dashboard-reanalisys-count [datasets]="dataSets"></app-dashboard-reanalisys-count>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <app-dashboard-views-count [datasets]="dataSets"></app-dashboard-views-count>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <app-dashboard-connections-count [datasets]="dataSets"></app-dashboard-connections-count>
                     </div>
                 </div>
             </div>
-            <div class="mt-card">
-                <div class="mt-card-header">
-                    <h4 class="mt-card-title" style="margin-left: 20px">
-                        Saved Searches
-                    </h4>
-                </div>
-                <div class="mt-card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                            <tr>
-                                <th>Search</th>
-                                <th># Results</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let s of savedSearches">
-                                <td><a [routerLink]="['/search']" [queryParams]="{q: s.search}">{{s.search}}</a></td>
-                                <td> {{s.count}}</td>
-                                <td><a (click)="delete(s.id)" title="delete">x</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div style="padding-bottom: 20px;">To add - navigate to <a
-                                [routerLink]="['/search']">browse</a> page and select "<i class="fa fa-bookmark-o"
-                                                                                          aria-hidden="true"></i> save
-                            search"
-                        </div>
+        </div>
+        <div class="mt-card">
+            <div class="mt-card-header">
+                <h4 class="mt-card-title" style="margin-left: 20px">
+                    Saved Searches
+                </h4>
+            </div>
+            <div class="mt-card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Search</th>
+                            <th># Results</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let s of savedSearches">
+                            <td><a [routerLink]="['/search']" [queryParams]="{q: s.search}">{{s.search}}</a></td>
+                            <td> {{s.count}}</td>
+                            <td><a (click)="delete(s.id)" title="delete">x</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding-bottom: 20px;">To add - navigate to <a
+                            [routerLink]="['/search']">browse</a> page and select "<i class="fa fa-bookmark-o"
+                                                                                      aria-hidden="true"></i> save
+                        search"
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="mt-card">
-                <div class="mt-card-header">
-                    <h4 class="mt-card-title" style="margin-left: 20px">
-                        Watch Notifications
-                    </h4>
-                </div>
-                <div class="mt-card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                            <tr>
-                                <th>Dataset</th>
-                                <th>Database</th>
-                                <th>Accession</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngFor="let s of watchedDatasets">
-                                <td>
-                                    <app-datasetwidget-small [id]="s.accession"
-                                                             [source]="s.source"></app-datasetwidget-small>
-                                </td>
-                                <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.source}}</a></td>
-                                <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.accession}}</a></td>
-                                <td><a (click)="deleteWatch(s.id)" title="delete">x</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div style="padding-bottom: 20px;">To add - navigate to <a
-                                [routerLink]="['/search']">browse</a> page and select "<i class="fa fa-envelope-o"
-                                                                                          aria-hidden="true"></i> Watch" on
-                            dataset panel
-                        </div>
+        <div class="mt-card">
+            <div class="mt-card-header">
+                <h4 class="mt-card-title" style="margin-left: 20px">
+                    Watch Notifications
+                </h4>
+            </div>
+            <div class="mt-card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Dataset</th>
+                            <th>Database</th>
+                            <th>Accession</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let s of watchedDatasets">
+                            <td>
+                                <app-datasetwidget-small [id]="s.accession"
+                                                         [source]="s.source"></app-datasetwidget-small>
+                            </td>
+                            <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.source}}</a></td>
+                            <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.accession}}</a></td>
+                            <td><a (click)="deleteWatch(s.id)" title="delete">x</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div style="padding-bottom: 20px;">To add - navigate to <a
+                            [routerLink]="['/search']">browse</a> page and select "<i class="fa fa-envelope-o"
+                                                                                      aria-hidden="true"></i> Watch" on
+                        dataset panel
                     </div>
                 </div>
             </div>

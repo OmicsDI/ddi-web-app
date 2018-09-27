@@ -575,15 +575,6 @@ td.gsc_a_c {
     clear: both;
 }
 
-@media (min-width: 992px) {
-    .col-md-10 {
-        width: 80%;
-    }
-    .col-md-2 {
-        width: 19.9%;
-    }
-}
-
 :host ::ng-deep .bio {
     font-size: 1.3em !important;
 }

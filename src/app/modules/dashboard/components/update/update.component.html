@@ -1,207 +1,205 @@
-<div id="wrapper" *ngIf="profile">
-    <div class="row">
-        <div class="col-md-12 col-xs-12">
+<div class="row" *ngIf="profile">
+    <div class="col-md-12 col-xs-12">
 
-            <!-- Modal -->
-            <div class="modal fade" id="previewPage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <app-profile-info [profile]="profile"></app-profile-info>
-                </div>
+        <!-- Modal -->
+        <div class="modal fade" id="previewPage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <app-profile-info [profile]="profile"></app-profile-info>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="profileImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="mt-card">
-                        <div class="mt-card-header">
-                            <h4 class="mt-card-title" style="margin-left: 20px">
-                                Update profile picture
-                            </h4>
-                        </div>
-                        <div class="mt-card-body" style="margin-top: 20px">
-                            <div class="row" style="height: 250px" *ngIf="!imageChangedEvent">
-                                <div class="drop">
-                                    <div class="cont">
-                                        <i class="fa fa-cloud-upload"></i>
-                                        <div class="tit">
-                                            Drag & Drop
-                                        </div>
-                                        <div class="desc">
-                                            your photo to Assets, or
-                                        </div>
-                                        <div class="browse">
-                                            click here to browse
-                                        </div>
-                                    </div>
-                                    <input id="image-upload" multiple="false" name="image-upload" type="file" (change)="fileChangeEvent($event)" accept="image/*" />
-                                </div>
-                            </div>
-                            <div class="row" *ngIf="imageChangedEvent && imageLoadFailed">
-                                <div class="col-xs-12">
-                                    <div class="alert alert-danger">
-                                        Your input image can't be opened, please select another one!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" *ngIf="imageChangedEvent">
-                                <app-image-cropper
-                                        [imageChangedEvent]="imageChangedEvent"
-                                        [maintainAspectRatio]="true"
-                                        [resizeToWidth]="256"
-                                        format="png"
-                                        [roundCropper]="true"
-                                        (imageCroppedBase64)="imageCropped($event)"
-                                        (imageLoaded)="imageLoaded()"
-                                        (loadImageFailed)="loadImageFailed()"
-                                        style="max-height: 500px; max-width: 80%; margin: auto"
-                                ></app-image-cropper>
-                            </div>
-                        </div>
-                        <div class="mt-card-body">
-                            <div class="row edit-form">
-                                <div class="col-md-12 col-xs-12">
-                                    <button type="button" class="btn btn-primary" (click)="imageChangedEvent = null; imageLoadFailed=false;" *ngIf="imageChangedEvent">Pick another image</button>
-                                    <button type="button" class="btn btn-default pull-right" style="margin-left: 5px" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-success pull-right" (click)="profileImageChange()" data-dismiss="modal">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <form class="form-horizontal" #f="ngForm" style="padding: 0" novalidate>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="profileImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="mt-card">
                     <div class="mt-card-header">
                         <h4 class="mt-card-title" style="margin-left: 20px">
-                            Edit Profile
+                            Update profile picture
                         </h4>
                     </div>
                     <div class="mt-card-body" style="margin-top: 20px">
-                        <div class="row">
-                            <div class="col-md-3 col-xs-12">
-                                <div style="width: 200px; height: 200px; position: relative">
-                                    <img [src]="this.profileImageUrl" id="gsc_prf_pup" class="image-rounded">
-                                    <div class="click-to-change" data-toggle="modal" data-target="#profileImage">Update profile picture</div>
+                        <div class="row" style="height: 250px" *ngIf="!imageChangedEvent">
+                            <div class="drop">
+                                <div class="cont">
+                                    <i class="fa fa-cloud-upload"></i>
+                                    <div class="tit">
+                                        Drag & Drop
+                                    </div>
+                                    <div class="desc">
+                                        your photo to Assets, or
+                                    </div>
+                                    <div class="browse">
+                                        click here to browse
+                                    </div>
                                 </div>
+                                <input id="image-upload" multiple="false" name="image-upload" type="file" (change)="fileChangeEvent($event)" accept="image/*" />
                             </div>
-                            <div class="col-md-9 col-xs-12 edit-form">
-                                <h4 style="margin-bottom: 20px">Account Setting</h4>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Email</label>
-                                    <div class="col-sm-8 controls">
-                                        <div class="row">
-                                            <div class="col-xs-9">
-                                                <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                                                    <div *ngIf="email.errors.maxlength" class="error-message">
-                                                        Email must not be more than 100 characters
-                                                    </div>
-                                                    <div *ngIf="email.errors.minlength" class="error-message">
-                                                        Email must not be less than 4 characters
-                                                    </div>
-                                                    <div *ngIf="email.errors.pattern" class="error-message">
-                                                        Email format incorrect
-                                                    </div>
-                                                </div>
-                                                <input class="form-control" type="email" name="email" required minlength="4" maxlength="100" placeholder="email@yourcompany.com"
-                                                       [(ngModel)]="profile.email" #email="ngModel" email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
-                                            </div>
-                                        </div>
-                                        <!-- row -->
-                                    </div>
-                                    <!-- col-sm-10 -->
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Name</label>
-                                    <div class="col-sm-8 controls">
-                                        <div class="row">
-                                            <div class="col-xs-9">
-                                                <div *ngIf="name.invalid && (name.dirty || name.touched)">
-                                                    <div *ngIf="name.errors.maxlength" class="error-message">
-                                                        Email must not be more than 100 characters
-                                                    </div>
-                                                    <div *ngIf="name.errors.minlength" class="error-message">
-                                                        Email must not be less than 4 characters
-                                                    </div>
-                                                </div>
-                                                <input class="form-control" type="text" name="name" required minlength="4" maxlength="100" placeholder="your name"
-                                                       [(ngModel)]="profile.userName" #name="ngModel">
-                                            </div>
-                                        </div>
-                                        <!-- row -->
-                                    </div>
-                                    <!-- col-sm-10 -->
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Orcid ID</label>
-                                    <div class="col-sm-8 controls">
-                                        <div class="row mgbt-xs-0">
-                                            <div class="col-xs-9">
-                                                <div *ngIf="orcid.invalid && (orcid.dirty || orcid.touched)">
-                                                    <div *ngIf="orcid.errors.pattern" class="error-message">
-                                                        OrcID format incorrect
-                                                    </div>
-                                                </div>
-                                                <input class="form-control" type="text" name="orcid" placeholder="0000-0000-0000-0000" [(ngModel)]="profile.orcid" #orcid="ngModel" pattern="^$|^\d{4}-\d{4}-\d{4}-\d{4}$">
-                                            </div>
-                                        </div>
-                                        <!-- row -->
-                                    </div>
-                                    <!-- col-sm-10 -->
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Public Profile</label>
-                                    <div class="col-sm-8 controls">
-                                        <div class="row mgbt-xs-0">
-                                            <div class="col-xs-9">
-                                                <ui-switch size="small" name="isPublic" color="rgb(66, 139, 202)" [(ngModel)]="profile.isPublic"></ui-switch>
-                                            </div>
-                                        </div>
-                                        <!-- row -->
-                                    </div>
-                                    <!-- col-sm-10 -->
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Homepage</label>
-                                    <div class="col-sm-8 controls">
-                                        <div class="row mgbt-xs-0">
-                                            <div class="col-xs-9">
-                                                <div *ngIf="homepage.invalid && (homepage.dirty || homepage.touched)">
-                                                    <div *ngIf="homepage.errors.pattern" class="error-message">
-                                                        Homepage format incorrect
-                                                    </div>
-                                                </div>
-                                                <input class="form-control" type="text" name="homepage" placeholder="https://your-website.com"
-                                                       [(ngModel)]="profile.homepage"
-                                                       pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
-                                                       #homepage="ngModel">
-                                            </div>
-                                        </div>
-                                        <!-- row -->
-                                    </div>
-                                    <!-- col-sm-10 -->
+                        </div>
+                        <div class="row" *ngIf="imageChangedEvent && imageLoadFailed">
+                            <div class="col-xs-12">
+                                <div class="alert alert-danger">
+                                    Your input image can't be opened, please select another one!
                                 </div>
                             </div>
                         </div>
-                        <div class="row line-bottom" style="margin: 25px 0">
+                        <div class="row" *ngIf="imageChangedEvent">
+                            <app-image-cropper
+                                    [imageChangedEvent]="imageChangedEvent"
+                                    [maintainAspectRatio]="true"
+                                    [resizeToWidth]="256"
+                                    format="png"
+                                    [roundCropper]="true"
+                                    (imageCroppedBase64)="imageCropped($event)"
+                                    (imageLoaded)="imageLoaded()"
+                                    (loadImageFailed)="loadImageFailed()"
+                                    style="max-height: 500px; max-width: 80%; margin: auto"
+                            ></app-image-cropper>
                         </div>
-                        <div class="row edit-form">
-                            <h4 style="margin-bottom: 20px; margin-left: 5px">Bio Information</h4>
-                            <div class="col-sm-12">
-                                <quill-editor [style]="{height: '250px'}" [(ngModel)]="profile.bio" name="bio"></quill-editor>
-                            </div>
-                        </div>
-
-                        <div class="row line-bottom" style="margin: 10px 0">
-                        </div>
+                    </div>
+                    <div class="mt-card-body">
                         <div class="row edit-form">
                             <div class="col-md-12 col-xs-12">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previewPage">Preview</button>
-                                <button type="reset" class="btn btn-default pull-right" style="margin-left: 5px">Reset</button>
-                                <button [disabled]="f.invalid" type="submit" class="btn btn-success pull-right" (click)="updateProfile()">Update</button>
+                                <button type="button" class="btn btn-primary" (click)="imageChangedEvent = null; imageLoadFailed=false;" *ngIf="imageChangedEvent">Pick another image</button>
+                                <button type="button" class="btn btn-default pull-right" style="margin-left: 5px" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-success pull-right" (click)="profileImageChange()" data-dismiss="modal">OK</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
+        <form class="form-horizontal" #f="ngForm" style="padding: 0" novalidate>
+            <div class="mt-card">
+                <div class="mt-card-header">
+                    <h4 class="mt-card-title" style="margin-left: 20px">
+                        Edit Profile
+                    </h4>
+                </div>
+                <div class="mt-card-body" style="margin-top: 20px">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-12">
+                            <div style="width: 200px; height: 200px; position: relative">
+                                <img [src]="this.profileImageUrl" id="gsc_prf_pup" class="image-rounded">
+                                <div class="click-to-change" data-toggle="modal" data-target="#profileImage">Update profile picture</div>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-xs-12 edit-form">
+                            <h4 style="margin-bottom: 20px">Account Setting</h4>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-8 controls">
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                                                <div *ngIf="email.errors.maxlength" class="error-message">
+                                                    Email must not be more than 100 characters
+                                                </div>
+                                                <div *ngIf="email.errors.minlength" class="error-message">
+                                                    Email must not be less than 4 characters
+                                                </div>
+                                                <div *ngIf="email.errors.pattern" class="error-message">
+                                                    Email format incorrect
+                                                </div>
+                                            </div>
+                                            <input class="form-control" type="email" name="email" required minlength="4" maxlength="100" placeholder="email@yourcompany.com"
+                                                   [(ngModel)]="profile.email" #email="ngModel" email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
+                                        </div>
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col-sm-10 -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name</label>
+                                <div class="col-sm-8 controls">
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                                                <div *ngIf="name.errors.maxlength" class="error-message">
+                                                    Email must not be more than 100 characters
+                                                </div>
+                                                <div *ngIf="name.errors.minlength" class="error-message">
+                                                    Email must not be less than 4 characters
+                                                </div>
+                                            </div>
+                                            <input class="form-control" type="text" name="name" required minlength="4" maxlength="100" placeholder="your name"
+                                                   [(ngModel)]="profile.userName" #name="ngModel">
+                                        </div>
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col-sm-10 -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Orcid ID</label>
+                                <div class="col-sm-8 controls">
+                                    <div class="row mgbt-xs-0">
+                                        <div class="col-xs-9">
+                                            <div *ngIf="orcid.invalid && (orcid.dirty || orcid.touched)">
+                                                <div *ngIf="orcid.errors.pattern" class="error-message">
+                                                    OrcID format incorrect
+                                                </div>
+                                            </div>
+                                            <input class="form-control" type="text" name="orcid" placeholder="0000-0000-0000-0000" [(ngModel)]="profile.orcid" #orcid="ngModel" pattern="^$|^\d{4}-\d{4}-\d{4}-\d{4}$">
+                                        </div>
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col-sm-10 -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Public Profile</label>
+                                <div class="col-sm-8 controls">
+                                    <div class="row mgbt-xs-0">
+                                        <div class="col-xs-9">
+                                            <ui-switch size="small" name="isPublic" color="rgb(66, 139, 202)" [(ngModel)]="profile.isPublic"></ui-switch>
+                                        </div>
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col-sm-10 -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Homepage</label>
+                                <div class="col-sm-8 controls">
+                                    <div class="row mgbt-xs-0">
+                                        <div class="col-xs-9">
+                                            <div *ngIf="homepage.invalid && (homepage.dirty || homepage.touched)">
+                                                <div *ngIf="homepage.errors.pattern" class="error-message">
+                                                    Homepage format incorrect
+                                                </div>
+                                            </div>
+                                            <input class="form-control" type="text" name="homepage" placeholder="https://your-website.com"
+                                                   [(ngModel)]="profile.homepage"
+                                                   pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+                                                   #homepage="ngModel">
+                                        </div>
+                                    </div>
+                                    <!-- row -->
+                                </div>
+                                <!-- col-sm-10 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row line-bottom" style="margin: 25px 0">
+                    </div>
+                    <div class="row edit-form">
+                        <h4 style="margin-bottom: 20px; margin-left: 5px">Bio Information</h4>
+                        <div class="col-sm-12">
+                            <quill-editor [style]="{height: '250px'}" [(ngModel)]="profile.bio" name="bio"></quill-editor>
+                        </div>
+                    </div>
+
+                    <div class="row line-bottom" style="margin: 10px 0">
+                    </div>
+                    <div class="row edit-form">
+                        <div class="col-md-12 col-xs-12">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previewPage">Preview</button>
+                            <button type="reset" class="btn btn-default pull-right" style="margin-left: 5px">Reset</button>
+                            <button [disabled]="f.invalid" type="submit" class="btn btn-success pull-right" (click)="updateProfile()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

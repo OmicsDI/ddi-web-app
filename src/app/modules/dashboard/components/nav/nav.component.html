@@ -1,12 +1,14 @@
 <nav>
-    <div id="navbar-collapse" class="collapse navbar-collapse" *ngIf="profile">
-        <ul class="nav navbar-nav side-nav">
-            <li style="width: 100%; margin-bottom: 20px" [routerLink]="['/dashboard','profile']">
-                <div class="user line-bottom">
-                    <div style="width: 40px; height: 40px; display: inline-block">
+    <div id="navbar-collapse" class="navbar-collapse" [class.collapse]="isCollapsed" *ngIf="profile">
+        <ul class="nav navbar-nav side-nav" id="nav-bar">
+            <li style="width: 100%; margin-bottom: 20px">
+                <div class="user line-bottom" style="display: flex; align-items: baseline">
+                    <div style="width: 40px; height: 40px; display: inline-block" [routerLink]="['/dashboard','profile']">
                         <img [src]="this.profileImageUrl" class="image-rounded">
                     </div>
-                    <span style="display: inline-block">{{profile.userName}}</span>
+                    <span style="display: inline-block" [routerLink]="['/dashboard','profile']">{{profile.userName}}</span>
+                    <span style="margin-left: auto; cursor: pointer" class="hidden-lg hidden-md hidden-sm" (click)="isCollapsed = !isCollapsed">
+                        <i class="fa fa-times" aria-hidden="true"></i></span>
                 </div>
             </li>
             <li>
@@ -43,4 +45,7 @@
         </ul>
     </div>
 </nav>
-<router-outlet></router-outlet>
+<div id="wrapper">
+    <button type="button" class="btn btn-primary hidden-lg hidden-md hidden-sm" (click)="isCollapsed = !isCollapsed">Open sidebar</button>
+    <router-outlet></router-outlet>
+</div>
