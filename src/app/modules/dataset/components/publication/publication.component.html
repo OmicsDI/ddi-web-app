@@ -21,7 +21,7 @@
                 <p style="margin-right:20px" class="align-justify ng-binding"  id="journal_date_issu">
                     {{d.journal}} {{d.date}} {{d.issue}}</p>
             </div>
-            <hr style="margin-right:30px">
+            <hr *ngIf="d.id" style="margin-right:30px">
             <p *ngIf="!d.id" class="align-justify" style="">
                 Sorry, this publication's infomation has not been loaded in the Indexer, please go directly to
                 <a href="http://www.ncbi.nlm.nih.gov/pubmed/?term={{d.id}}">

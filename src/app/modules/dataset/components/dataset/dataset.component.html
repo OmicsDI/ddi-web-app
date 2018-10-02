@@ -1,14 +1,14 @@
 <div class="container_ddi" id="datasetCtrl" *ngIf="d">
     <div class="row" style="">
-        <div class="col-md-1 col-sm-2 col-xs-4 " style="display: block;" id="app-social">
-            <span class="visible-lg">
+        <div class="col-md-1 col-sm-2 col-xs-4 visible-lg" style="display: block;" id="app-social">
+            <span>
                 <app-socialnetworks></app-socialnetworks>
             </span>
         </div>
         <!-- col-md-1-->
         <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel">
             <div class="mt-card">
-                <div class="mt-card-header" style="padding-top: 5px; border-bottom: 1px solid #dddddd">
+                <div class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd; display: flex; align-items: center">
                     <div class="col-xs-10" style="display: flex; align-items: center">
                         <div style="width: 50px">
                             <app-omics-image [omics]="d?.omics_type" [size]="'large'"></app-omics-image>
@@ -16,13 +16,13 @@
                         <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Dataset Information</h3>
                     </div>
                     <div class="col-xs-2">
-                        <app-score class="pull-right" [dataset]="d" style="padding: 10px 0"></app-score>
+                        <app-score class="pull-right" [dataset]="d"></app-score>
                     </div>
                 </div>
                 <div class="mt-card-body">
                     <div class="" id="dataset_upper_right" style="overflow:hidden;">
                         <div style="margin-bottom: 25px">
-                            <h3>
+                            <h3 id="dataset-title">
                                 <app-annotated-text [text]="upperName(d.name)"
                                                     [sections]="title_sections"></app-annotated-text>
                             </h3>
@@ -30,6 +30,7 @@
                                 <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
                             </p>
                         </div>
+                        <hr />
                         <div>
                             <div>
                                 <p class="elements"><b>ABSTRACT</b>:

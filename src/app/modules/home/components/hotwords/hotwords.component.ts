@@ -81,14 +81,6 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         self.addWordCloudOrChange();  // draw wordcloud
         self.addInputAndLabel();      // draw form input and label
         self.addWordCloudToolTip();   // draw wordcloud tooltip
-
-        // give different namespace after 'resize' to add window listener
-        d3.select(window).on('resize.hotwords', function () {
-            if (self.router.url === '/home' || self.router.url === '/') {
-                self.addWordCloudOrChange();
-            }
-        });  // add window resize event listener
-
     }
 
     private addWordCloudToolTip(): void {

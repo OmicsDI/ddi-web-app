@@ -158,14 +158,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         self.drawBarGraphic(self.data, self.reposDataSimple);
         self.setTheRadio();
         self.showTip('repository:"', self.reposDataSimple);
-
-        // give different namespace after 'resize' to add window listener
-        d3.select(window).on('resize.repos_omics', function () {
-            if (self.router.url === '/home') {
-                self.drawBarGraphic(self.data, self.reposDataSimple);
-                self.showTip('repository:"', self.reposDataSimple);
-            }
-        });
     }
 
 // radio form set up ---------------------------//

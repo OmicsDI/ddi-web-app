@@ -1,15 +1,15 @@
-<div class="mt-card" *ngIf="d" id="dataset_middle_publication" style="position: relative;">
+<div class="mt-card" *ngIf="d" style="position: relative;">
     <div class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd">
         <div class="col-xs-10" style="display: flex; align-items: center">
             <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Similar Datasets</h3>
         </div>
     </div>
-    <div class="mt-card-body">
-        <div *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope" style="">
+    <div class="mt-card-body" id="similar-datasets">
+        <div *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope similar-item" style="">
             <div class="project-widget  list-group-item ddi-card-panel">
                 <div class="project-widget-accession">
                     <app-omics-image [omics]="ds?.omicsType"></app-omics-image>
-                    <a target="" class="align-justify ng-binding" (click)="openDataset(ds)" class="similar_title">
+                    <a target="" class="align-justify ng-binding similar_title" (click)="openDataset(ds)">
                         {{ds.title}}</a>
                 </div>
                 <div class="project-widget-paragraph hidden ng-binding">

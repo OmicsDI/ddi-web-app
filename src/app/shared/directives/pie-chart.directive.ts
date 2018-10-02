@@ -60,7 +60,7 @@ export class PieChartDirective implements OnInit {
                 const mouse_coords = d3.mouse(self.el.nativeElement);
                 tool_tip.html(d['data']['label'] + ': ' +
                     format(d['data']['score']))
-                    .style('right', (mouse_coords[0] - 40) + 'px')
+                    .style('right', (mouse_coords[0]) + 'px')
                     .style('top', (mouse_coords[1] - 40) + 'px')
                     .style('padding', '3px');
             })
