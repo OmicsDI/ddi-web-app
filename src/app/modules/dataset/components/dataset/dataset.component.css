@@ -37,6 +37,13 @@
 }
 
 .btn {
-    padding: 5px 12px;
-    min-width: 100px;
+    padding: 4px 7px;
+    min-width: 85px;
+}
+
+@media (min-width: 768px) {
+    .btn {
+        padding: 5px 12px;
+        min-width: 100px;
+    }
 }

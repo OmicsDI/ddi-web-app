@@ -53,15 +53,6 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
 
         this.drawGraph(processedData);
         const self = this;
-        // d3.select(window).on('resize',function(){
-        //   self.drawGraph(processedData);
-        // });
-        d3.select(window)
-            .on('resize.annual_omicstype', function () {
-                if (self.router.url === '/home') {
-                    self.drawGraph(processedData);
-                }
-            });
     }
 
     private drawGraph(processedData: any): void {

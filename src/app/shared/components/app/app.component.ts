@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     private yScrollStack: number[] = [];
     selectedComponents = 0;
     selectedChannel: 'selected_channel';
+    isCollapsedNav = true;
     isLogged = false;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
             this.lastPoppedUrl = ev.url;
         });
         this.router.events.subscribe((ev: any) => {
+            this.isCollapsedNav = true;
             this.homePage = (this.router.url === '/home') || (this.router.url === '/');
             if (ev instanceof NavigationStart) {
                 if (ev.url !== this.lastPoppedUrl) {

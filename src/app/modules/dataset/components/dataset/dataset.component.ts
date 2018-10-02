@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
-import {Subscription} from 'rxjs';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
 import {EnrichmentService} from '@shared/services/enrichment.service';
@@ -338,5 +337,11 @@ export class DatasetComponent implements OnInit {
         dialogRef.componentInstance.datasetDetail = this.d;
 
         return dialogRef.afterClosed();
+    }
+
+    upperName(lower: string) {
+        return lower.replace(/^\w/, function (chr) {
+            return chr.toUpperCase();
+        });
     }
 }

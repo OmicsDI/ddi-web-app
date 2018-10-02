@@ -26,6 +26,11 @@ export class DataSet {
     reanalysisCount: number;
     viewsCount: number;
 
+    citationsCountScaled: number;
+    connectionsCountScaled: number;
+    reanalysisCountScaled: number;
+    viewsCountScaled: number;
+
     constructor() {
         this.omicsType = [];
     }

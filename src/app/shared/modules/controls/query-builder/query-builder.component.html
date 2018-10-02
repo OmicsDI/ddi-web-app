@@ -25,7 +25,7 @@
                     <app-query-builder [parent]="this" [index]="i" [searchQuery]="rule.query"></app-query-builder>
                 </div>
                 <div *ngIf="null==rule.query">
-                    <div class="form-inline" style="margin-top:3px">
+                    <div class="form-inline" style="margin-top:3px; display: flex; align-items: center;">
                         <select [(ngModel)]="rule.field" class="form-control input-sm" (select)="selectField(rule)">
                             <option *ngFor="let field of allFacets" [ngValue]="field.id">{{field.label}}
                             </option>
@@ -33,11 +33,11 @@
                         <select style="margin-left: 3px" [(ngModel)]="rule.condition" class="form-control input-sm">
                             <option *ngFor="let condition of conditions">{{condition.name}}</option>
                         </select>
-                        <div class="input-group" style="margin-left:3px;">
+                        <div class="input-group" style="margin-left:3px; flex-grow: 2">
                             <app-drop-down [(value)]="rule.data" [facetValues]="getFieldsData(rule.field)"
                                            (valueChange)="dropDownValueChange()"></app-drop-down>
                         </div>
-                        <div *ngIf="rule.condition=='range'" class="input-group" style="margin-left:3px;">
+                        <div *ngIf="rule.condition=='range'" class="input-group" style="margin-left:3px; flex-grow: 2">
                             <app-drop-down [(ngModel)]="rule.data2"
                                            [facetValues]="getFieldsData(rule.field)"></app-drop-down>
                         </div>

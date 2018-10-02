@@ -12,3 +12,9 @@ h4.icon.icon-generic::before {
     display: -ms-flexbox;
     display: flex;
 }
+
+@media (min-width: 992px) {
+    .panel-row {
+        margin-bottom: 20px;
+    }
+}

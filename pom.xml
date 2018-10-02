@@ -104,6 +104,9 @@
               <directory>sitemaps</directory>
             </resource>
             <resource>
+              <directory>robots</directory>
+            </resource>
+            <resource>
               <directory>webapp/WEB-INF</directory>
               <targetPath>WEB-INF</targetPath>
             </resource>
