@@ -22,7 +22,7 @@ export class DatasetPage {
     }
 
     getDatasetTitle() {
-        return element(by.css('h4'));
+        return element(by.css('#dataset-title'));
     }
 
     getAbstract () {
@@ -115,7 +115,7 @@ export class DatasetPage {
     }
 
     getSimilar () {
-        return element.all(by.css('app-similar li'));
+        return element.all(by.css('#similar-datasets > .similar-item'));
     }
 
     clickGetMoreSimilar () {
@@ -123,19 +123,19 @@ export class DatasetPage {
     }
 
     getSimilar_title () {
-        return element.all(by.css('app-similar li .similar_title'));
+        return element.all(by.css('.similar_title'));
     }
 
     getSimilar_publicationDate () {
-        return element.all(by.css('app-similar li .similar_publicationDate'));
+        return element.all(by.css('.similar_publicationDate'));
     }
 
     getSimilar_id () {
-        return element.all(by.css('app-similar li .similar_id'));
+        return element.all(by.css('.similar_id'));
     }
 
     getSimilar_source () {
-        return element.all(by.css('app-similar li .similar_source'));
+        return element.all(by.css('.similar_source'));
     }
 
 }

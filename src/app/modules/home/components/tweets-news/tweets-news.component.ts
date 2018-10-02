@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
-import {html} from 'd3-fetch';
 
 @Component({
     selector: 'app-tweets-news',
@@ -20,7 +19,11 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
     ngOnInit() {
         const statisticWidth = document.getElementById('statisticspanel').offsetWidth;
         const statisticHeight = document.getElementById('statisticspanel').offsetHeight;
-        this.height = Math.sqrt(statisticWidth * statisticWidth + statisticHeight * statisticHeight) * 0.8;
+        let height = Math.sqrt(statisticWidth * statisticWidth + statisticHeight * statisticHeight) * 0.8;
+        if (height < 400) {
+           height = 400;
+        }
+        this.height = height;
         this.fetchTweets();
         this.componentLoaded();
     }

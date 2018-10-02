@@ -27,6 +27,7 @@ import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
+import {PieChartDirective} from '@shared/directives/pie-chart.directive';
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/au
 
     ],
     declarations: [
+        PieChartDirective,
         ConfirmDialogComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,

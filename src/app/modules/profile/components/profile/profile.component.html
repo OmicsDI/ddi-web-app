@@ -1,12 +1,12 @@
 <div>
-        <div class="container-fluid3 col-md-12" *ngIf="profileX">
+        <div class="row" *ngIf="profileX">
 
             <div class="col-md-9 col-sm-12 col-xs-12">
                     <app-profile-info [profile]="profileX"></app-profile-info>
 
                     <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
 
-                    <div style="display:inline-block; width:100%" id="datasets" *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0">
+                    <div id="datasets" *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0">
                         <div class="mt-card">
                             <div class="mt-card-header">
                                 <h4 class="mt-card-title" style="margin-left: 20px">
@@ -21,18 +21,15 @@
                                 </div>
                             </div>
                         </div>
-                        <ul *ngIf="datasetShowed && datasetShowed.length>0" class="list-unstyled"
-                            style="display:inline-block; width:100%" >
-                            <li *ngFor="let d of datasetShowed | paginate: { itemsPerPage: 8, currentPage: p }"
-                                class="repeated-item ng-scope"
-                                style="min-width:400px;">
+                        <div *ngIf="datasetShowed && datasetShowed.length>0">
+                            <div *ngFor="let d of datasetShowed | paginate: { itemsPerPage: 8, currentPage: p }">
 
                                 <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
                                                        [allowWatch]="false" [databases]="databases" [profile]="profileX"
                                                        [allowDelete]="false"></app-datasetwidget>
 
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                         <pagination-controls (pageChange)="p = $event"
                                              previousLabel=""
                                              nextLabel=""

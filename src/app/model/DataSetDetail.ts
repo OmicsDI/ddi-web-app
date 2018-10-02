@@ -43,6 +43,10 @@ export class DataSetDetail {
     connectionsCount = 0;
     reanalysisCount = 0;
     viewsCount = 0;
+    citationsCountScaled: number;
+    connectionsCountScaled: number;
+    reanalysisCountScaled: number;
+    viewsCountScaled: number;
 
     public static toDataset(datasetDetails: DataSetDetail): DataSet {
         const dataset = new DataSet();

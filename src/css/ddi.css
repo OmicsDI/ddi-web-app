@@ -359,10 +359,14 @@ input[type=radio]:not(old):checked + label > span > span {
 .chart_tooltip {
     position: absolute;
     /*border: 1px solid #000;           */
-    text-align: left;
+    text-align: center;
+    min-width: 100px;
     padding: 3px;
     font: 12px sans-serif;
-    background: white;
+    background: black;
+    color: white;
+    overflow-wrap: normal;
+    width: auto;
     border-radius: 4px;
     pointer-events: none;
 }
@@ -820,10 +824,6 @@ input[type="file"], input[type="text"], input[type="password"], input[type="date
     padding: 10px;
 }
 
-.ddi-card-panel {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-}
-
 .ddi-blockquote {
     margin: 6px 6px 6px 10px;
     padding: 5px;
@@ -1117,7 +1117,6 @@ ul.affix-bottom {
 #ontology_highlight_box {
     text-align: right;
     display: block;
-    margin-top: -15px;
     margin-bottom: -10px;
 }
 
@@ -1515,7 +1514,7 @@ ul li.no-match-found {display: none;}
 }
 
 .activated {
-    background-color: #337ab7;
+    background-color: #337ab7 !important;
     color: white !important;
 }
 

@@ -1,8 +1,9 @@
 <div class="mt-card" [ngStyle]="{'cursor':  allowSelect && profile ? 'pointer' : 'default'}"
      [ngClass]="allowSelect && isSelected ? 'grey' : 'white'"
+     style="margin-top: 10px; margin-bottom: 10px"
      (click)="toggle(d);" *ngIf="d">
     <div class="mt-card-body">
-        <div style="float: right; width: 200px; text-align: right">
+        <div style="float: right; text-align: right">
             <app-score [dataset]="d"></app-score>
         </div>
 
@@ -49,7 +50,7 @@
                         class="ng-binding" class="database_source">{{getDatabaseTitle(d.source)}}</span> </a>
             </div>
         </div>
-        <div class="row" style="padding-top:10px; display: flex; align-items: flex-end;">
+        <div class="row tool-box" style="padding-top:10px;">
             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                 <div *ngIf="d.keywords" class="tags">
                     <a type="button" *ngFor="let o of d.keywords" [title]="o" class="tag"

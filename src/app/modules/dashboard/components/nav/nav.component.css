@@ -28,13 +28,20 @@
     background-color: inherit;
 }
 
-@media (min-width: 768px) {
-    .side-nav {
-        left: 240px;
-        width: 240px;
-        margin-left: -240px;
-    }
-    .side-nav>li>a {
-        width: 240px;
-    }
+#nav-bar {
+    left: 240px;
+    width: 240px;
+    margin-left: -240px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    padding-top: 50px;
+    z-index: 999;
+}
+#nav-bar>li>a {
+    width: 240px;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #337ab7;
 }

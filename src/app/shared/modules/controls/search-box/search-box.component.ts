@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatMenuTrigger} from '@angular/material';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
@@ -12,7 +12,8 @@ import {DataControl} from 'model/DataControl';
 @Component({
     selector: '[app-search-box]',
     templateUrl: 'search-box.component.html',
-    styleUrls: ['search-box.component.css']
+    styleUrls: ['search-box.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchBoxComponent implements OnInit {
 

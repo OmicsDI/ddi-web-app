@@ -102,3 +102,13 @@
 .error-message {
     color: red;
 }
+
+@media (min-width: 768px) {
+    .edit-form {
+        margin-top: 0;
+    }
+}
+
+.edit-form {
+    margin-top: 20px;
+}

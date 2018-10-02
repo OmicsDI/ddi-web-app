@@ -2,20 +2,20 @@
     <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex1-collapse1">
+            <div class="nav-item" style="padding-left: 15px">
+                <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"
+                   id="item7"><img src="./static/images/logo/imageedit_2_3220380406.png" alt="logo"
+                                   style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
+            </div>
+            <button type="button" class="navbar-toggle" (click)="isCollapsedNav = !isCollapsedNav">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="nav navbar-left top-nav col-lg-7 col-md-12 col-sm-12">
-            <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 collapse navbar-collapse" id="navbar-ex1-collapse1">
-                <li class="nav-item">
-                    <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"
-                       id="item7"><img src="./static/images/logo/imageedit_2_3220380406.png" alt="logo"
-                                       style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
-                </li>
+        <div class="nav navbar-left top-nav col-lg-6 col-md-10 col-sm-11 col-xs-12" style="padding: 0">
+            <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 navbar-collapse" [class.collapse]="isCollapsedNav">
                 <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/home']" id="item1">Home</a></li>
                 <li class="nav-item"><a class="nav-link text-center" routerLink="/search" id="item2">Browse</a></li>
                 <li class="nav-item"><a class="nav-link text-center" (click)="toSubmission();" id="item8">Submit
@@ -47,9 +47,9 @@
                 </li>
                 <li app-login-launcher class="nav-item dropdown text-center" id="item6">
                 </li>
-                <li class="nav-item" *ngIf="selectedComponents > 0"><a
+                <li class="nav-item text-center" *ngIf="selectedComponents > 0"><a
                         routerLink="/dashboard/selected"
-                        style="color:white !important;text-decoration:none;border-color: transparent;"><i
+                        style="color:white !important;text-decoration:none;border-color: transparent;display: inline-block"><i
                         class="fa fa-fw fa-shopping-basket"></i> {{selectedComponents}}</a></li>
             </ul>
         </div>

@@ -109,13 +109,6 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         }
 
         self.change();
-
-        d3.select(window)
-            .on('resize.tiss_organism', function () {
-                if (self.router.url === '/home') {
-                    self.change();
-                }
-            });
     }
 
     private resetRadio(divWidthTemp: number): void {
