@@ -57,15 +57,19 @@ export class AppComponent implements OnInit {
             }
         });
         this.auth.loggedIn().then(isLogged => {
-            if (isLogged) {
-                isLogged = true;
-                this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
-                    this.selectedComponents = datasets.length;
-                });
-                this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
-                    this.selectedComponents = datasets.length;
-                });
-            }
+            // Always reload user information one time when user refresh the page
+            this.profileService.getProfile().subscribe(profile => {
+                this.profileService.setProfile(profile);
+                if (isLogged) {
+                    isLogged = true;
+                    this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
+                        this.selectedComponents = datasets.length;
+                    });
+                    this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
+                        this.selectedComponents = datasets.length;
+                    });
+                }
+            });
         });
     }
 

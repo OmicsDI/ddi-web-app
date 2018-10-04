@@ -1,12 +1,12 @@
-<div class="container_ddi" id="datasetCtrl" *ngIf="d">
-    <div class="row" style="">
-        <div class="col-md-1 col-sm-2 col-xs-4 visible-lg" style="display: block;" id="app-social">
-            <span>
+<div class="container_ddi" id="datasetCtrl">
+    <div class="row" *ngIf="d">
+        <div class="col-lg-1 visible-lg" style="display: block; position: relative" id="app-social">
+            <span style="position: fixed; left: 2.5%">
                 <app-socialnetworks></app-socialnetworks>
             </span>
         </div>
         <!-- col-md-1-->
-        <div class="col-md-8 col-sm-12 col-xs-12" id="centerpanel">
+        <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12" id="centerpanel">
             <div class="mt-card">
                 <div class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd; display: flex; align-items: center">
                     <div class="col-xs-10" style="display: flex; align-items: center">
@@ -126,23 +126,10 @@
                             <span *ngFor="let o of d.repositories; let isLast=last"  class="repositories">{{o}}{{isLast ? '' : ', '}}</span>
                         </p>
                         <p><a href="{{d.full_dataset_link}}" class="hidden-sm hidden-md hidden-lg">ACCESS DATA</a></p>
-                        <!-- dataset_protocol_bottom-->
-                        <!-- div id="buttons_highlight_box">
-                          <a href="{{d.full_dataset_link}}" class="access-data">ACCESS DATA</a>
-
-
-                          <claim-button-dataset [dataSet]="d"></claim-button-dataset>
-
-
-                          <a (click)="citation()" class="citation-button" style="">&lt;CITE&gt;</a>&nbsp;
-                          <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.json" target="_blank" title="Download Dataset as JSON" class="json-button">&lt;JSON&gt;</a>&nbsp;
-                          <a href="{{web_service_url}}dataset/{{repository}}/{{acc}}.xml" target="_blank" title="Download Dataset as XML" class="xml-button">&lt;XML&gt;</a>
-                        </div -->
                     </div>
 
                     <div class="row" id="dataset_bottom_repository" style="margin-top:10px">
                     </div>
-                    <!--dataset_bottom-->
 
                     <div class="row">
                         <div class="col-lg-2 hidden-xs">
@@ -194,10 +181,34 @@
             </div>
         </div>
         <!-- col-md-8 centerpanel-->
-        <div class="col-md-3 col-sm-6 col-xs-12" id="rightpanel">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" id="rightpanel">
             <app-similar [acc]="acc" [repository]="repository" [databases]="databases"></app-similar>
         </div>
     </div>
+    <div class="row" *ngIf="notfound">
+        <div id="notfound-background">
+            <section id="not-found">
+                <div id="err-title"></div>
+                <div class="circles">
+                    <div class="circles-cut"></div>
+                    <div id="err-message">
+                        <h1>Oh no...</h1>
+                        <h3>An error has occurred !!!</h3>
+                        <br />
+                        <p>Sorry, this is not working properly. We know about this mistake and are working to fix it.</p>
+                        <p>In the meantime, here is what you can do:</p>
+                        <ul style="margin: auto">
+                            <li><i class="glyphicon glyphicon-refresh"></i><b> Refresh the page </b><span>(sometimes this helps)</span></li>
+                            <li><i class="glyphicon glyphicon-time"></i><b> Try again in 30 minutes</b></li>
+                            <li><i class="fa fa-bell"></i><b> Report this error</b> <span> by click <a href="https://www.ebi.ac.uk/support/index.php?query=omics-di" target="_blank">here</a></span></li>
+                            <li [routerLink]="['/']" style="cursor: pointer"><i class="fa fa-undo"></i><b> Get back to homepage</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 </div>
+
 
 
