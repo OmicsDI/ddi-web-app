@@ -69,41 +69,23 @@ export class ProfileComponent implements OnInit {
 
     getProfile(username: string = null) {
         this.logger.debug('current username: {}', username);
-
-        if (username) {
-            this.profileService.getPublicProfile(username)
-                .subscribe(
-                    profile => {
-
-                        this.profileX = profile;
-                        this.profileImageUrl = this.getProfileImageUrl();
-
-                        forkJoin(this.profileX.dataSets.map(x => {
-                            return this.dataSetService.getDataSetDetail(x.id, x.source);
-                        })).subscribe(
-                            y => {
-                                this.dataSetDetails = y;
-                                this.datasetShowed = y;
-                                this.slimLoadingBarService.complete();
-                            }
-                        );
+        this.profileService.getPublicProfile(username).subscribe(profile => {
+            this.profileX = profile;
+            this.profileImageUrl = this.getProfileImageUrl();
+            if (this.profileX.dataSets != null) {
+                forkJoin(this.profileX.dataSets.map(x => {
+                    return this.dataSetService.getDataSetDetail(x.id, x.source);
+                })).subscribe(
+                    y => {
+                        this.dataSetDetails = y;
+                        this.datasetShowed = y;
+                        this.slimLoadingBarService.complete();
                     }
                 );
-        } else {
-            this.authService.loggedIn().then(isLogged => {
-                if (isLogged) {
-                    this.profileX = this.profileService.getProfileFromLocal();
-                    this.name = this.profileX.userName;
-                    this.dataSetDetails = [];
-
-                    this.userId = this.profileX.userId;
-
-                    this.profileImageUrl = this.getProfileImageUrl();
-                } else {
-                    this.router.navigate(['unauthorized']);
-                }
-            });
-        }
+            } else {
+                this.slimLoadingBarService.complete();
+            }
+        });
     }
 
     getProfileImageUrl(): string {
