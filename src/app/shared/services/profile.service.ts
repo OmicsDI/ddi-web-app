@@ -13,6 +13,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs/internal/observable/throwError';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 
 @Injectable()
@@ -20,6 +21,7 @@ export class ProfileService extends BaseService {
 
     constructor(private http: HttpClient,
                 public appConfig: AppConfig,
+                private dataTransporterService: DataTransportService,
                 private logger: LogService) {
         super();
     }
@@ -96,7 +98,11 @@ export class ProfileService extends BaseService {
             headers: new HttpHeaders({'Content-Type':  'application/json'})
         };
         return this.http.post(this.appConfig.getProfileUrl(null), JSON.stringify(profile), httpOptions)
-            .pipe(map(() => 'OK'));
+            .pipe(map(() => {
+                this.setProfile(profile);
+                this.dataTransporterService.fire('user_profile', true);
+                return 'OK'
+            }));
     }
 
     private handleError(error: HttpErrorResponse) {

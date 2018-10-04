@@ -4,7 +4,7 @@ import {AppConfig} from 'app/app.config';
 import {Profile} from 'model/Profile';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {AuthService} from '@shared/services/auth.service';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-nav',
@@ -32,6 +32,9 @@ export class NavComponent implements OnInit {
         });
         this.dataTransportService.listen('image_change').subscribe(message => {
              this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
+        });
+        this.dataTransportService.listen('user_profile').subscribe(() => {
+            this.profile = this.profileService.getProfileFromLocal();
         });
         this.authService.loggedIn().then(isLogged => {
             if (isLogged) {
