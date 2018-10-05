@@ -1511,6 +1511,9 @@ ul li.no-match-found {display: none;}
     #app-social {
         width: 6%;
     }
+    #rightpanel {
+        width: 27%;
+    }
 }
 
 .activated {
