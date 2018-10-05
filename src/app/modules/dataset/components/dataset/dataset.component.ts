@@ -48,6 +48,7 @@ export class DatasetComponent implements OnInit {
     web_service_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
+    notfound = false;
 
     databases: Database[];
 
@@ -128,6 +129,9 @@ export class DatasetComponent implements OnInit {
                     }
 
                     this.slimLoadingBarService.complete();
+                }, err => {
+                    this.slimLoadingBarService.complete();
+                    self.notfound = true;
                 });
             });
         });

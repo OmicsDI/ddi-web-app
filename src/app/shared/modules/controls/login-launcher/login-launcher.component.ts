@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {Profile} from 'model/Profile';
+import {DataTransportService} from '@shared/services/data.transport.service';
 
 @Component({
     selector: '[app-login-launcher]',
@@ -16,11 +17,14 @@ export class LoginLauncherComponent implements OnInit {
     public userId: string;
     public isPublic: boolean;
 
-    constructor(public profileService: ProfileService, public auth: AuthService) {
+    constructor(public profileService: ProfileService, public auth: AuthService, private dataTransportService: DataTransportService) {
     }
 
     ngOnInit() {
         this.getProfile();
+        this.dataTransportService.listen('user_profile').subscribe(() => {
+            this.getProfile();
+        })
     }
 
     getProfile() {
@@ -33,17 +37,6 @@ export class LoginLauncherComponent implements OnInit {
                 this.isPublic = profile.isPublic;
             }
         });
-    }
-
-    private deleteCookie(name) {
-        this.setCookie(name, '', -1);
-    }
-
-    private setCookie(name: string, value: string, expireDays: number, path = '') {
-        const d: Date = new Date();
-        d.setTime(d.getTime() + expireDays * 24 * 60 * 60 * 1000);
-        const expires: string = 'expires=' + d.toUTCString();
-        document.cookie = name + '=' + value + '; ' + expires + (path.length > 0 ? '; path=' + path : '');
     }
 
     LogOut() {
