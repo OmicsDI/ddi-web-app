@@ -13,6 +13,7 @@
 
 .side-nav li {
     border-bottom: 0px solid #393d41;
+    cursor: pointer;
 }
 
 .user {
