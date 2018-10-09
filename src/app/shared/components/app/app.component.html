@@ -25,11 +25,11 @@
                                         id="item4">Database</a></li>
 
 
-                <li class="nav-item dropdown" dropdown>
-                    <a class="nav-link text-center dropdown-toggle" dropdownToggle id="item5"><i
+                <li class="nav-item" dropdown>
+                    <a class="nav-link text-center dropdown-toggle" dropdownToggle id="item5" aria-controls="help-dropdown"><i
                             class="fa fa-bell"></i> Help <b class="caret"></b></a>
 
-                    <ul *dropdownMenu class="dropdown-menu" style="background-color: #ffffff">
+                    <ul *dropdownMenu class="dropdown-menu" id="help-dropdown" style="background-color: #ffffff">
                         <li class="nav-item" id="li1">
                             <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
                                 Omics Help
