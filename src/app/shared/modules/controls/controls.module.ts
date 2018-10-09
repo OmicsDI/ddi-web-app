@@ -19,7 +19,6 @@ import {DropDownComponent} from '@shared/modules/controls/drop-down/drop-down.co
 import {FacetComponent} from '@shared/modules/controls/facet/facet.component';
 import {FacetOmicsComponent} from '@shared/modules/controls/facet-omics/facet-omics.component';
 import {LoginComponent} from '@shared/modules/controls/login/login.component';
-import {LoginLauncherComponent} from '@shared/modules/controls/login-launcher/login-launcher.component';
 import {QueryBuilderComponent} from '@shared/modules/controls/query-builder/query-builder.component';
 import {SearchBoxComponent} from '@shared/modules/controls/search-box/search-box.component';
 import {MatMenuModule} from '@angular/material';
@@ -28,6 +27,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
 import {PieChartDirective} from '@shared/directives/pie-chart.directive';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 @NgModule({
     imports: [
@@ -38,8 +38,8 @@ import {PieChartDirective} from '@shared/directives/pie-chart.directive';
         ClipboardModule,
         FormsModule,
         MatMenuModule,
-        NguiAutoCompleteModule
-
+        NguiAutoCompleteModule,
+        BsDropdownModule.forRoot()
     ],
     declarations: [
         PieChartDirective,
@@ -55,7 +55,6 @@ import {PieChartDirective} from '@shared/directives/pie-chart.directive';
         FacetOmicsComponent,
         FeedbackComponent,
         LoginComponent,
-        LoginLauncherComponent,
         OmicsImageComponent,
         QueryBuilderComponent,
         ScoreComponent,
@@ -77,7 +76,6 @@ import {PieChartDirective} from '@shared/directives/pie-chart.directive';
         FacetOmicsComponent,
         FeedbackComponent,
         LoginComponent,
-        LoginLauncherComponent,
         OmicsImageComponent,
         QueryBuilderComponent,
         ScoreComponent,
