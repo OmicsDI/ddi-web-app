@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {DataSet} from 'model/DataSet';
 
 @Component({
@@ -6,12 +6,9 @@ import {DataSet} from 'model/DataSet';
     templateUrl: './score.component.html',
     styleUrls: ['./score.component.css']
 })
-export class ScoreComponent implements OnInit {
+export class ScoreComponent implements OnInit, OnChanges {
 
-    views = 0;
-    citations = 0;
-    reanalysis = 0;
-    connections = 0;
+    refresh = false;
 
     @Input() dataset: DataSet;
 
@@ -56,5 +53,11 @@ export class ScoreComponent implements OnInit {
                 'label': 'Reanalyses'
             }
         ]
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.dataset) {
+            this.refresh = !this.refresh;
+        }
     }
 }
