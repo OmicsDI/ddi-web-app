@@ -24,7 +24,7 @@ import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
 import {MergeComponent} from '@modules/dashboard/components/merge/merge.component';
 import {OnlyAdminDirective} from '@shared/directives/only-admin.directive';
 import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.component';
-
+import {CollapseModule} from 'ngx-bootstrap/collapse';
 
 @NgModule({
     imports: [
@@ -41,7 +41,8 @@ import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.co
         ClipboardModule,
         UtilsModule,
         NgxPaginationModule,
-        ImageCropperModule
+        ImageCropperModule,
+        CollapseModule.forRoot()
     ],
     declarations: [
         DashboardComponent,
