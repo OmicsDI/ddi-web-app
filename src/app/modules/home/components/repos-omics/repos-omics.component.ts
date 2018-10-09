@@ -397,7 +397,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     .style('top', parseInt(d3.select(this).attr('y'), 10) - 30 + 'px')
                     // .style('height', '2.8em')
                     // .style('width', (self.getLength(dataAddKey[i].name, dataAddKey[i].size) * 7.5) + 'px')
-                    .style('padding', '3px')
                     .style('font-size', 'monospace');
             })
             .on('mouseout', function () {
