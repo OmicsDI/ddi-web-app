@@ -24,8 +24,8 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
            height = 400;
         }
         this.height = height;
-        this.fetchTweets();
         this.componentLoaded();
+        this.fetchTweets();
     }
 
     private fetchTweets() {
