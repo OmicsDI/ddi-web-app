@@ -25,6 +25,7 @@ import {AuthService} from '@shared/services/auth.service';
 import {throwError} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
+import {Meta, Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -73,6 +74,8 @@ export class DatasetComponent implements OnInit {
                 private logger: LogService,
                 private auth: AuthService,
                 private slimLoadingBarService: NgProgress,
+                private titleService: Title,
+                private metaTagService: Meta,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
@@ -106,6 +109,8 @@ export class DatasetComponent implements OnInit {
                         self.reanalysedBy = [];
                         self.relatedOmics = [];
                         this.d = result;
+                        this.titleService.setTitle(result.name + ' - ' + 'OmicsDI');
+                        this.metaTagService.updateTag({name: 'description', content: result.description.replace(/<[^>]*>/g, '')});
                         this.acc = result.id;
                         this.repository = result.source;
 

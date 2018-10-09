@@ -15,6 +15,7 @@ import {Profile} from 'model/Profile';
 import {AuthService} from '@shared/services/auth.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {NgProgress} from '@ngx-progressbar/core';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-search',
@@ -38,6 +39,7 @@ export class SearchComponent implements OnInit {
                 private authService: AuthService,
                 private profileService: ProfileService,
                 private databaseListService: DatabaseListService,
+                private titleService: Title,
                 private dataTransportService: DataTransportService) {
     }
 
@@ -51,6 +53,9 @@ export class SearchComponent implements OnInit {
                     this.params = params;
                     this.slimLoadingBarService.start();
                     this.query = QueryUtils.getBaseQuery(params);
+                    if (this.query !== '') {
+                        this.titleService.setTitle(this.query + ' - ' + 'OmicsDI');
+                    }
                     this.dataControl = QueryUtils.getDataControl(params);
                     this.selectedFacets = QueryUtils.getAllFacets(params);
                     this.logger.debug('Facet selected: {}', this.selectedFacets);
