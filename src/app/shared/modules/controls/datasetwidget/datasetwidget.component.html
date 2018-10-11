@@ -4,7 +4,7 @@
      (click)="toggle(d);" *ngIf="d">
     <div class="mt-card-body">
         <div style="float: right; text-align: right">
-            <app-score [dataset]="d"></app-score>
+            <div appPieChart class="pull-right" [width]="40" [circleRadius]="5" [dataset]="d"></div>
         </div>
 
         <div class="project-widget-accession">

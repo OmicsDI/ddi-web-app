@@ -8,8 +8,8 @@
             <span class="pull-right" style="margin-right:10px;">
                 <span style="border:none;">
                     <span (click)="sortOrderChanged(dataControl.order);" style="cursor:pointer;">Sort
-                        <i *ngIf="dataControl.order === 'ascending'" class="fa fa-caret-down " style="font-size:19px;"></i>
-                        <i *ngIf="dataControl.order === 'descending'" class="fa fa-caret-up" style="font-size:19px"></i>
+                        <i *ngIf="dataControl.order === 'descending'" class="fa fa-caret-down " style="font-size:19px;"></i>
+                        <i *ngIf="dataControl.order === 'ascending'" class="fa fa-caret-up" style="font-size:19px"></i>
                     </span> by:
                     <select (change)="sortByChanged($event.target.value)" [ngModel]="this.dataControl.sortBy">
                         <option value="">Relevance</option>

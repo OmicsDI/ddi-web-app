@@ -1680,3 +1680,11 @@ app-image-cropper > div {
     width: 95%;
     white-space: nowrap;
 }
+
+.badge-circle {
+    fill: white;
+}
+
+.grey .badge-circle {
+    fill: silver !important;
+}

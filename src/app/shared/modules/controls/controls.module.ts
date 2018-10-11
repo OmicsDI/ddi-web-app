@@ -8,7 +8,6 @@ import {DeleteButtonComponent} from '@shared/modules/controls/delete-button/dele
 import {DatasetwidgetSmallComponent} from '@shared/modules/controls/datasetwidget-small/datasetwidget-small.component';
 import {SocialnetworksComponent} from '@shared/modules/controls/socialnetworks/socialnetworks.component';
 import {CommonModule} from '@angular/common';
-import {ScoreComponent} from '@shared/modules/controls/score/score.component';
 import {RouterModule} from '@angular/router';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {OmicsImageComponent} from '@shared/modules/controls/omics-image/omics-image.component';
@@ -26,7 +25,6 @@ import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
-import {PieChartDirective} from '@shared/directives/pie-chart.directive';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 @NgModule({
@@ -42,7 +40,6 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         BsDropdownModule.forRoot()
     ],
     declarations: [
-        PieChartDirective,
         ConfirmDialogComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
@@ -57,14 +54,12 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         LoginComponent,
         OmicsImageComponent,
         QueryBuilderComponent,
-        ScoreComponent,
         SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
         CitationDialogComponent
     ],
     exports: [
-        ScoreComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
         DatasetWidgetComponent,
@@ -78,7 +73,6 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         LoginComponent,
         OmicsImageComponent,
         QueryBuilderComponent,
-        ScoreComponent,
         SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
