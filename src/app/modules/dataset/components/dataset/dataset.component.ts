@@ -62,6 +62,7 @@ export class DatasetComponent implements OnInit {
 
     profile: Profile;
     isLogged = false;
+    datasetChanged = false;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -93,6 +94,7 @@ export class DatasetComponent implements OnInit {
         const self = this;
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.route.params.subscribe(params => {
+                this.datasetChanged = !this.datasetChanged;
                 this.slimLoadingBarService.start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
