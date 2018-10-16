@@ -88,7 +88,7 @@ export class PieChartDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        const abs_path = this.location.prepareExternalUrl(this.location.path());
+        const abs_path = '';
         const body = d3.select(this.el.nativeElement),
             data = this.convertData(),
             self = this,
@@ -125,7 +125,7 @@ export class PieChartDirective implements OnInit {
                 gradient.append('stop').attr('offset', '100%')
                     .attr('style', 'stop-color:' + leafs[i]['color'] + ';stop-opacity:1');
             } else {
-                gradient.append('stop').attr('offset', '100%').attr('style', 'stop-color:rgb(41,41,41);stop-opacity:1');
+                gradient.append('stop').attr('offset', '100%').attr('style', 'stop-color:#D3D3D3;stop-opacity:1');
             }
         }
         let color_index = 0;
@@ -254,6 +254,6 @@ export class PieChartDirective implements OnInit {
             .attr('cx', 355)
             .attr('cy', 355)
             .attr('fill', 'white')
-            .attr('r', 45)
+            .attr('r', 50)
     }
 }
