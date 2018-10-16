@@ -18,7 +18,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].omics.length; j++) {
-                if (parseInt(data[i].omics[j].year) === year && data[i].omics[j].value === value) {
+                if (parseInt(data[i].omics[j].year, 10) === year && data[i].omics[j].value === value) {
                     return data[i].omics[j].name;
                 }
             }
