@@ -8,7 +8,6 @@ import {DeleteButtonComponent} from '@shared/modules/controls/delete-button/dele
 import {DatasetwidgetSmallComponent} from '@shared/modules/controls/datasetwidget-small/datasetwidget-small.component';
 import {SocialnetworksComponent} from '@shared/modules/controls/socialnetworks/socialnetworks.component';
 import {CommonModule} from '@angular/common';
-import {ScoreComponent} from '@shared/modules/controls/score/score.component';
 import {RouterModule} from '@angular/router';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {OmicsImageComponent} from '@shared/modules/controls/omics-image/omics-image.component';
@@ -19,7 +18,6 @@ import {DropDownComponent} from '@shared/modules/controls/drop-down/drop-down.co
 import {FacetComponent} from '@shared/modules/controls/facet/facet.component';
 import {FacetOmicsComponent} from '@shared/modules/controls/facet-omics/facet-omics.component';
 import {LoginComponent} from '@shared/modules/controls/login/login.component';
-import {LoginLauncherComponent} from '@shared/modules/controls/login-launcher/login-launcher.component';
 import {QueryBuilderComponent} from '@shared/modules/controls/query-builder/query-builder.component';
 import {SearchBoxComponent} from '@shared/modules/controls/search-box/search-box.component';
 import {MatMenuModule} from '@angular/material';
@@ -27,7 +25,7 @@ import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
-import {PieChartDirective} from '@shared/directives/pie-chart.directive';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 @NgModule({
     imports: [
@@ -38,11 +36,10 @@ import {PieChartDirective} from '@shared/directives/pie-chart.directive';
         ClipboardModule,
         FormsModule,
         MatMenuModule,
-        NguiAutoCompleteModule
-
+        NguiAutoCompleteModule,
+        BsDropdownModule.forRoot()
     ],
     declarations: [
-        PieChartDirective,
         ConfirmDialogComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
@@ -55,17 +52,14 @@ import {PieChartDirective} from '@shared/directives/pie-chart.directive';
         FacetOmicsComponent,
         FeedbackComponent,
         LoginComponent,
-        LoginLauncherComponent,
         OmicsImageComponent,
         QueryBuilderComponent,
-        ScoreComponent,
         SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
         CitationDialogComponent
     ],
     exports: [
-        ScoreComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
         DatasetWidgetComponent,
@@ -77,10 +71,8 @@ import {PieChartDirective} from '@shared/directives/pie-chart.directive';
         FacetOmicsComponent,
         FeedbackComponent,
         LoginComponent,
-        LoginLauncherComponent,
         OmicsImageComponent,
         QueryBuilderComponent,
-        ScoreComponent,
         SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,

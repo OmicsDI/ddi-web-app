@@ -27,10 +27,10 @@
             </li>
             <li *ngIf="isAdmin">
                 <!--- data-toggle="collapse" data-target="#profileLinks" -->
-                <a data-toggle="collapse" data-target="#adminNav">
+                <a data-toggle="collapse" data-target="#adminNav" (click)="isAdminCollapsed = !isAdminCollapsed">
                     <i class="fa fa-fw fa-user-circle"></i> Admin Zone<i class="fa fa-fw fa-caret-down"></i>
                 </a>
-                <ul id="adminNav" class="collapse">
+                <ul id="adminNav" class="collapse" [collapse]="isAdminCollapsed">
                     <li>
                         <a [routerLink]="['/dashboard', 'merge']" [routerLinkActive]="'activated'"><i class="fa fa-fw fa-code-fork"></i> Merge Datasets</a>
                     </li>

@@ -18,7 +18,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].omics.length; j++) {
-                if (data[i].omics[j].year === year && data[i].omics[j].value === value) {
+                if (parseInt(data[i].omics[j].year) === year && data[i].omics[j].value === value) {
                     return data[i].omics[j].name;
                 }
             }
@@ -182,9 +182,8 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
                     .style('opacity', .9);
 
                 toolTip.html(d.name.toString() + ': <br>' + d.value.toString() + ' datasets')
-                    .style('left', ((mouse_coords[0] + 5) + 'px'))
+                    .style('left', ((mouse_coords[0] - 100) + 'px'))
                     .style('top', (parseInt(d3.select(this).attr('cy'), 10) - 13 + 'px'))
-                    .style('height', '2.5em')
                     .style('width', ((d.year.toString().length + 9) * 8 + 'px'))
                     .style('padding', '5px');
             })

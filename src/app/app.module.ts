@@ -45,6 +45,7 @@ import {LogPublisherService} from '@shared/modules/logs/services/log.publisher.s
 import {UploadService} from '@shared/services/upload.service';
 import {HttpClientModule} from '@angular/common/http';
 import {NgProgressModule} from '@ngx-progressbar/core';
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 
 export function jwtTokenGetter() {
     return localStorage.getItem('id_token');
@@ -88,7 +89,8 @@ export function jwtTokenGetter() {
         SimpleNotificationsModule.forRoot(),
         ClipboardModule,
         ControlsModule,
-        CommonplaceModule
+        CommonplaceModule,
+        BsDropdownModule.forRoot()
     ],
     exports: [
         RouterModule

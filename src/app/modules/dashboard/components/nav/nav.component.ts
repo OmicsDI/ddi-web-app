@@ -18,6 +18,7 @@ export class NavComponent implements OnInit {
     profile: Profile;
     isAdmin = false;
     isCollapsed = true;
+    isAdminCollapsed = true;
 
     constructor(private profileService: ProfileService,
                 private authService: AuthService,

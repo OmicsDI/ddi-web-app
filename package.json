@@ -29,7 +29,6 @@
     "@ngx-progressbar/core": "^5.1.2",
     "angular2-notifications": "^1.0.4",
     "angular2-ui-switch": "git+https://github.com/daominhsangvn/angular2-ui-switch.git",
-    "cheerio": "^1.0.0-rc.1",
     "core-js": "^2.4.1",
     "d3": "^5.7.0",
     "d3-cloud": "^1.2.4",
@@ -41,7 +40,6 @@
     "ngx-disqus": "~2.4.0",
     "ngx-pagination": "^3.0.0",
     "ngx-quill": "^3.4.0",
-    "process": "^0.11.10",
     "rxjs": "^6.3.2",
     "cryptiles": "^4.1.2",
     "zone.js": "^0.8.4"

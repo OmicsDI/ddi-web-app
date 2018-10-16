@@ -1,4 +1,4 @@
-<span *ngIf="null==sections" [innerHTML]="text"></span>
+<span *ngIf="null==sections" [innerHTML]="text | keepHtml"></span>
 
 <ng-container *ngIf="null!=sections">
     <ng-container *ngFor="let s of sections">
