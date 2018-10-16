@@ -96,7 +96,7 @@ export class DatasetWidgetComponent implements OnInit {
             this.profileService.claimDataset(this.profile.userId, d);
             this.profile.dataSets.push(d);
             this.profileService.setProfile(this.profile);
-            this.notificationService.success('Dataset claimed', 'to your dashboard');
+            this.notificationService.success('Dataset claimed', 'to your dashboard', {timeOut: 1500});
         } else {
             this.router.navigate(['dashboard', 'claimed']);
         }
@@ -121,7 +121,7 @@ export class DatasetWidgetComponent implements OnInit {
         $event.stopPropagation();
         $event.preventDefault();
 
-        this.notificationService.success('Dataset watched', 'in your dashboard');
+        this.notificationService.success('Dataset watched', 'in your dashboard', {timeOut: 1500});
     }
 
     toggle(datasetShort: DataSetShort) {

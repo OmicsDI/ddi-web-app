@@ -1511,6 +1511,9 @@ ul li.no-match-found {display: none;}
     #app-social {
         width: 6%;
     }
+    #rightpanel {
+        width: 27%;
+    }
 }
 
 .activated {
@@ -1676,4 +1679,12 @@ app-image-cropper > div {
     overflow: hidden;
     width: 95%;
     white-space: nowrap;
+}
+
+.badge-circle {
+    fill: white;
+}
+
+.grey .badge-circle {
+    fill: silver !important;
 }

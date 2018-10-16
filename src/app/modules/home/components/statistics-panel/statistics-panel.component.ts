@@ -32,6 +32,7 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
         Promise.all([general, omics]).then(function ([generalData, omicsData]) {
             self.profileService.getUsersCount().subscribe(
                 users => {
+                    self.componentLoaded();
                     const opts = {};
                     for (let i = 0; i < generalData.length; i++) {
                         opts[generalData[i].label] = generalData[i].value;
@@ -64,7 +65,6 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
                             eval: function (item) {return item.count; },
                             classed: function (item) {return item.text.split(' ').join(''); }
                         }};
-                    self.componentLoaded();
                 });
         });
     }

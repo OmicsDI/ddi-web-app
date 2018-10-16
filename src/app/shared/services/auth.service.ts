@@ -20,6 +20,12 @@ export class AuthService implements CanActivate {
             if (isNotExpired) {
                 if (profile == null || (profile != null && profile.userId == null)) {
                     profile = await this.profileService.getProfile().toPromise();
+                    if (profile.userId == null) {
+                        // Token expired on the server (i.e restarted server)
+                        localStorage.removeItem('id_token');
+                        this.profileService.removeProfile();
+                        return false;
+                    }
                     this.profileService.setProfile(profile);
                 }
             }

@@ -20,11 +20,11 @@ export class AppConfig {
     }
 
     getStatisticsOmicsUrl(): string {
-        return `${environment.webServiceUrl}statistics/omics?r=${Math.random()}`;
+        return `${environment.webServiceUrl}statistics/omics`;
     }
 
     getStatisticsUrl(): string {
-        return `${environment.webServiceUrl}statistics/general?r=${Math.random()}`;
+        return `${environment.webServiceUrl}statistics/general`;
     }
 
     getSimilarUrl(acc: string, repository: string): string {
@@ -77,11 +77,11 @@ export class AppConfig {
     }
 
     getDatasetLatestUrl(): string {
-        return `${environment.webServiceUrl}dataset/latest?size=10&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/latest?size=10`;
     }
 
     getDatasetMostAccessedUrl(): string {
-        return `${environment.webServiceUrl}dataset/mostAccessed?size=20&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/mostAccessed?size=20`;
     }
 
     getDatasetByUrl(): string {
@@ -146,7 +146,7 @@ export class AppConfig {
     }
 
     getUserCountUrl() {
-        return `${environment.userServiceUrl}users/count?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/count`;
     }
 
     getConnectUrl(provider: string) {

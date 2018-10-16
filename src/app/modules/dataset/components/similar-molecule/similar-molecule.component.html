@@ -1,52 +1,60 @@
-<div *ngIf="show" class="panel panel-default" id="dataset_middle_publication">
-    <div class="panel-footer ">
-        <h3>Shared Molecules</h3>
+<div class="mt-card" *ngIf="show">
+    <div class="mt-card-header" style="padding: 20px 0; border-bottom: 1px solid #dddddd">
+        <div class="col-xs-10" style="display: flex; align-items: center">
+            <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Shared Molecules</h3>
+        </div>
     </div>
-
-    <h4 style="text-align: center">
-        Only show the datasets with similarity scores above:
-        <span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span>
-    </h4>
-
-    <div class="row">
-        <div class="col-md-1" id="chord_diagram_input">
-            <h5 style="margin-top: 100px">Threshold:<br> <span id="threshold_text2" style="color: darkgoldenrod">&nbsp;&nbsp;&nbsp;&nbsp;{{threshold}}</span>
+    <div class="mt-card-body">
+        <div class="row" style="margin-bottom: 10px">
+            <h5 class="col-md-offset-1" style="padding-left: 0">
+                Only show the datasets with similarity scores above:
+                <span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span>
             </h5>
-            <input id="slider1" style="margin-left: 30px" type="range" class="center" orient="vertical" min="0.50"
-                   max="1" step=".01" value="0.50" [(ngModel)]="threshold" (ngModelChange)="thresholdChanged()"/>
         </div>
+        <div class="row">
+            <div class="col-md-1">
+                <div id="chord_diagram_input">
+                    <div style="margin-top: 100px;">
+                        <h5>Threshold</h5>
+                        <h5 id="threshold_text2" style="color: darkgoldenrod; ">{{threshold}}</h5>
+                    </div>
+                    <input id="slider1" style="margin: auto" type="range" class="center" orient="vertical" min="0.50"
+                           max="1" step=".01" value="0.50" [(ngModel)]="threshold" (ngModelChange)="thresholdChanged()"/>
+                </div>
+            </div>
 
-        <div class="col-md-6" id="chord_diagram" style="text-align:center;">
-            <button (click)="thresholdChange(-0.10)"
-                    class="threshold_botton fa fa-angle-double-left fa-2x ddi-transparent-button"></button>
-            <button (click)="thresholdChange(-0.01)"
-                    class="threshold_botton fa fa-angle-left fa-2x ddi-transparent-button "></button>
-            <span>&nbsp;&nbsp; </span>
-            <button (click)="thresholdChange(0)"
-                    class="threshold_botton fa fa-refresh fa-2x  ddi-transparent-button"></button>
-            <span>&nbsp;&nbsp; </span>
-            <button (click)="thresholdChange(0.01)"
-                    class="threshold_botton fa fa-angle-right fa-2x  ddi-transparent-button "></button>
-            <button (click)="thresholdChange(0.10)"
-                    class="threshold_botton fa fa-angle-double-right fa-2x  ddi-transparent-button "></button>
-            <br>
-            <i id="chord_diagram_fa-spinner" style="margin-top:50px" class="fa fa-spinner fa-spin fa-5x"></i>
-        </div>
+            <div class="col-md-6" id="chord_diagram" style="text-align:center;">
+                <button (click)="thresholdChange(-0.10)"
+                        class="threshold_botton fa fa-angle-double-left fa-2x ddi-transparent-button"></button>
+                <button (click)="thresholdChange(-0.01)"
+                        class="threshold_botton fa fa-angle-left fa-2x ddi-transparent-button "></button>
+                <span>&nbsp;&nbsp; </span>
+                <button (click)="thresholdChange(0)"
+                        class="threshold_botton fa fa-refresh fa-2x  ddi-transparent-button"></button>
+                <span>&nbsp;&nbsp; </span>
+                <button (click)="thresholdChange(0.01)"
+                        class="threshold_botton fa fa-angle-right fa-2x  ddi-transparent-button "></button>
+                <button (click)="thresholdChange(0.10)"
+                        class="threshold_botton fa fa-angle-double-right fa-2x  ddi-transparent-button "></button>
+                <br>
+                <i id="chord_diagram_fa-spinner" style="margin-top:50px" class="fa fa-spinner fa-spin fa-5x"></i>
+            </div>
 
-        <div class="col-md-5" style="text-align:center;" *ngIf="related_datasets_by_biological != null">
-            <div class="panel-body ">
-                <ul class="nobullet">
-                    <li *ngFor="let relatedDataset of filteredDatasets" class="title_one_line"
-                        style="margin-bottom: 2px; height:22px;">
+            <div class="col-md-5" style="text-align:center;" *ngIf="related_datasets_by_biological != null">
+                <div class="panel-body ">
+                    <ul class="nobullet">
+                        <li *ngFor="let relatedDataset of filteredDatasets" class="cut-text"
+                            style="margin-bottom: 4px; height:22px;">
 
-                        <app-omics-image [omics]="relatedDataset.omicsType"></app-omics-image>
-                        <a target="" class="align-justify"
-                           [routerLink]="['/dataset',relatedDataset.source, relatedDataset.id]">
-                            {{relatedDataset.title}}
-                        </a>
-                    </li>
-                    <!-- this.appConfig.getDatasetUrl(relatedDataset.id,relatedDataset.source) -->
-                </ul>
+                            <app-omics-image [omics]="relatedDataset.omicsType"></app-omics-image>
+                            <a target="" class="align-justify"
+                               [routerLink]="['/dataset',relatedDataset.source, relatedDataset.id]">
+                                {{relatedDataset.title}}
+                            </a>
+                        </li>
+                        <!-- this.appConfig.getDatasetUrl(relatedDataset.id,relatedDataset.source) -->
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -25,27 +25,58 @@
                                         id="item4">Database</a></li>
 
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link text-center dropdown-toggle" id="navbardrop" data-toggle="dropdown" id="item5"><i
+                <li class="nav-item" dropdown>
+                    <a class="nav-link text-center dropdown-toggle" dropdownToggle id="item5" aria-controls="help-dropdown"><i
                             class="fa fa-bell"></i> Help <b class="caret"></b></a>
 
-                    <div class="dropdown-menu" style="background-color: #ffffff">
-                        <ul>
-                            <li class="nav-item" id="li1">
-                                <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
-                                    Omics Help
-                                </div>
-                            </li>
-                            <li class="nav-item" id="li3">
-                                <div class="text-center" *appIsLogged mat-menu-item
-                                     [routerLink]="['dashboard','feedback']" id="item-div3">
-                                    Feedback
-                                </div>
-                            </li>
-                        </ul>
+                    <ul *dropdownMenu class="dropdown-menu" id="help-dropdown" style="background-color: #ffffff">
+                        <li class="nav-item" id="li1">
+                            <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
+                                Omics Help
+                            </div>
+                        </li>
+                        <li class="nav-item" id="li3">
+                            <div class="text-center" *appIsLogged mat-menu-item
+                                 [routerLink]="['dashboard','feedback']" id="item-div3">
+                                Feedback
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li *ngIf="!profile" dropdown>
+                    <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle" data-icon="M" dropdownToggle
+                       style="color:white; border: none" aria-controls="login-dropdown">
+                        <span class="glyphicon glyphicon-user"></span> Login
+                    </a>
+
+                    <div *dropdownMenu id="login-dropdown" class="dropdown-menu" style="background-color: #ffffff">
+                        <app-login-dialog></app-login-dialog>
                     </div>
                 </li>
-                <li app-login-launcher class="nav-item dropdown text-center" id="item6">
+                <li *ngIf="profile" dropdown class="nav-item dropdown text-center" id="item6">
+                    <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle"
+                       dropdownToggle data-icon="M" style="color:white !important;" aria-controls="profile-dropdown">
+                        <span class="glyphicon glyphicon-user"></span>
+                        {{profile.userName}} <b class="caret"></b>
+                    </a>
+                    <ul *dropdownMenu class="dropdown-menu" style="background-color: #ffffff" id="profile-dropdown">
+                        <li class="nav-item">
+                            <button *ngIf="profile.isPublic" [routerLink]="['/profile', profile.userId]" mat-menu-item>
+                                Public profile
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button mat-menu-item [routerLink]="['/dashboard', 'dashboard']">
+                                Dashboard
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button mat-menu-item (click)="logOut()">
+                                Log Out
+                            </button>
+                        </li>
+                    </ul>
+
                 </li>
                 <li class="nav-item text-center" *ngIf="selectedComponents > 0"><a
                         routerLink="/dashboard/selected"
@@ -63,7 +94,7 @@
                  [spinner]="false" [spinnerPosition]="'left'" [thick]="false" [meteor]="true"
                  [color]="'red'" [ease]="'linear'"></ng-progress>
     <!--main container of page -->
-    <div style="min-height: 600px;">
+    <div style="">
         <router-outlet></router-outlet>
     </div>
     <!-- </div> ResultsListCtrl -->
@@ -89,7 +120,7 @@
                     <a class="img_at_footer" href="http://www.proteomexchange.org/" target="_blank">
                         <img src="img/home/proteome.png" style="width:150px; margin-top:9px"></a>
                     <a class="img_at_footer" href="https://www.ebi.ac.uk/ega/" target="_blank">
-                        <img src="img/db-logos/ega_phenome_logo.jpg" style="width:80px; margin-top:9px">
+                        <img src="img/db-logos/ega_phenome_logo.jpg" style="width:150px; margin-top:9px">
                     </a>
                 </div>
 

@@ -4,6 +4,7 @@ import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/r
 import {Location, PopStateEvent} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
 import {DataTransportService} from '@shared/services/data.transport.service';
+import {Profile} from 'model/Profile';
 
 @Component({
     selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
     selectedChannel: 'selected_channel';
     isCollapsedNav = true;
     isLogged = false;
+    profile: Profile;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
     constructor(public auth: AuthService,
@@ -58,15 +60,32 @@ export class AppComponent implements OnInit {
         });
         this.auth.loggedIn().then(isLogged => {
             if (isLogged) {
-                isLogged = true;
-                this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
-                    this.selectedComponents = datasets.length;
-                });
-                this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
-                    this.selectedComponents = datasets.length;
-                });
+                this.profile = this.profileService.getProfileFromLocal();
             }
+            // Always reload user information one time when user refresh the page
+            this.profileService.getProfile().subscribe(profile => {
+                this.profileService.setProfile(profile);
+                if (isLogged) {
+                    isLogged = true;
+                    this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
+                        this.selectedComponents = datasets.length;
+                    });
+                    this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
+                        this.selectedComponents = datasets.length;
+                    });
+                    this.dataTransporterService.listen('user_profile').subscribe(() => {
+                        this.profile = this.profileService.getProfileFromLocal();
+                    });
+                }
+            });
         });
+    }
+
+    logOut() {
+        // this.deleteCookie('AUTH-TOKEN');
+        localStorage.removeItem('id_token');
+        this.profileService.removeProfile();
+        window.location.href = '/home';
     }
 
     getTitle(): string {

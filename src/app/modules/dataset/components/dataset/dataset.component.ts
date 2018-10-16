@@ -22,6 +22,10 @@ import {Profile} from 'model/Profile';
 import {DataSetShort} from 'model/DataSetShort';
 import * as moment from 'moment';
 import {AuthService} from '@shared/services/auth.service';
+import {throwError} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {Meta, Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -48,6 +52,7 @@ export class DatasetComponent implements OnInit {
     web_service_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
+    notfound = false;
 
     databases: Database[];
 
@@ -57,6 +62,7 @@ export class DatasetComponent implements OnInit {
 
     profile: Profile;
     isLogged = false;
+    datasetChanged = false;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -69,6 +75,8 @@ export class DatasetComponent implements OnInit {
                 private logger: LogService,
                 private auth: AuthService,
                 private slimLoadingBarService: NgProgress,
+                private titleService: Title,
+                private metaTagService: Meta,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
@@ -86,48 +94,59 @@ export class DatasetComponent implements OnInit {
         const self = this;
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.route.params.subscribe(params => {
+                this.datasetChanged = !this.datasetChanged;
                 this.slimLoadingBarService.start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
                 this.databases = databases;
-                this.dataSetService.getDataSetDetail(this.acc, this.repository).subscribe(result => {
-                    self.reanalysisOf = [];
-                    self.reanalysedBy = [];
-                    self.relatedOmics = [];
-                    this.d = result;
-                    this.acc = result.id;
-                    this.repository = result.source;
+                this.dataSetService.getDataSetDetail(this.acc, this.repository)
+                    .pipe(catchError((err: HttpErrorResponse) => {
+                        self.slimLoadingBarService.complete();
+                        self.notfound = true;
+                        return throwError(
+                            'Can\'t get dataset, err: ' + err.message);
+                    }))
+                    .subscribe(result => {
+                        self.reanalysisOf = [];
+                        self.reanalysedBy = [];
+                        self.relatedOmics = [];
+                        this.d = result;
+                        this.titleService.setTitle(result.name + ' - ' + 'OmicsDI');
+                        this.metaTagService.updateTag({name: 'description', content: result.description.replace(/<[^>]*>/g, '')});
+                        this.acc = result.id;
+                        this.repository = result.source;
 
-                    this.logger.debug('DataSetDetailResult: {}', result);
+                        this.logger.debug('DataSetDetailResult: {}', result);
 
-                    if (this.d.secondary_accession) {
-                        this.d.secondary_accession.forEach(item => {
-                            this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, databases);
-                        });
-                    }
+                        if (this.d.secondary_accession) {
+                            this.d.secondary_accession.forEach(item => {
+                                this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, databases);
+                            });
+                        }
 
-                    const db = this.databaseListService.getDatabaseBySource(result.source, databases);
-                    this.repositoryName = db.databaseName;
-                    this.databaseUrl = db.sourceUrl;
+                        const db = this.databaseListService.getDatabaseBySource(result.source, databases);
+                        this.repositoryName = db.databaseName;
+                        this.databaseUrl = db.sourceUrl;
 
-                    if (result.similars != null) {
-                        result.similars.filter(s => s.relationType === 'Reanalysis of').map(reanalysis => {
-                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysis.database, databases);
-                            self.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
-                        });
+                        if (result.similars != null) {
+                            result.similars.filter(s => s.relationType === 'Reanalysis of').map(reanalysis => {
+                                const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysis.database, databases);
+                                self.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
+                            });
 
-                        result.similars.filter(s => s.relationType === 'Reanalyzed by').map(reanalysedBy => {
-                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysedBy.database, databases);
-                            self.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
-                        });
+                            result.similars.filter(s => s.relationType === 'Reanalyzed by').map(reanalysedBy => {
+                                const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysedBy.database, databases);
+                                self.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
+                            });
 
-                        result.similars.filter(s => s.relationType !== 'Reanalyzed by' && s.relationType !== 'Reanalysis of').map(omics => {
-                            const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(omics.database, databases);
-                            self.relatedOmics.push({reanalysis: omics, db: reanalyDb});
-                        });
-                    }
+                            result.similars.filter(s => s.relationType !== 'Reanalyzed by' && s.relationType !== 'Reanalysis of')
+                                .map(omics => {
+                                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(omics.database, databases);
+                                    self.relatedOmics.push({reanalysis: omics, db: reanalyDb});
+                            });
+                        }
 
-                    this.slimLoadingBarService.complete();
+                        this.slimLoadingBarService.complete();
                 });
             });
         });

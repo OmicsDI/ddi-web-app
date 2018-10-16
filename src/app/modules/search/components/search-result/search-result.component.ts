@@ -79,7 +79,7 @@ export class SearchResultComponent implements OnInit {
         }
         this.profileService.setSelected(this.profile.userId, this.selectedDatasets).subscribe(x => {});
         this.dataTransporterService.fire(this.selectedChannel, this.selectedDatasets);
-        this.notificationService.success('Selection saved', 'in your dashboard');
+        this.notificationService.success('Selection saved', 'in your dashboard', {timeOut: 1500});
     }
 
     citation(source, id) {
