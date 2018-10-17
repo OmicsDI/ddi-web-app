@@ -67,6 +67,10 @@ export class DataSetDetail {
         dataset.connectionsCount = datasetDetails.connectionsCount;
         dataset.reanalysisCount = datasetDetails.reanalysisCount;
         dataset.viewsCount = datasetDetails.viewsCount;
+        dataset.reanalysisCountScaled = datasetDetails.reanalysisCountScaled;
+        dataset.citationsCountScaled = datasetDetails.citationsCountScaled;
+        dataset.connectionsCountScaled = datasetDetails.connectionsCountScaled;
+        dataset.viewsCountScaled = datasetDetails.viewsCountScaled;
         return dataset;
     }
 
