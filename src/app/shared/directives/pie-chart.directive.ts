@@ -254,6 +254,6 @@ export class PieChartDirective implements OnInit {
             .attr('cx', 355)
             .attr('cy', 355)
             .attr('fill', 'white')
-            .attr('r', 50)
+            .attr('r', self.circleRadius)
     }
 }
