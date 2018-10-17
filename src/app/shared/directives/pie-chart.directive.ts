@@ -88,7 +88,7 @@ export class PieChartDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        const abs_path = '';
+        const abs_path = this.location.prepareExternalUrl(this.location.path());
         const body = d3.select(this.el.nativeElement),
             data = this.convertData(),
             self = this,
@@ -138,7 +138,7 @@ export class PieChartDirective implements OnInit {
             ' -12.1487673822503,-44.6243573250858 0.00602185554,-65.67706984024 5.9880211686214,-10.3715569008459' +
             ' 14.3702453380125,-18.4586997617603 24.0528968555452,-24.0266605769822 -0.088750556225,-0.1532609037314' +
             ' -0.1756740404876,-0.307601595516 -0.2656250000002,-0.4600759957605 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
         path = graph.append('path').attr('d', 'm 420.8837824508476,288.3712819635018 c -0.1064304300389,-11.3318698969113 ' +
@@ -147,7 +147,7 @@ export class PieChartDirective implements OnInit {
             '3e-13,65.6562500000003 0.023391619619,-22.6783841986843 11.7910374848463,-44.7202107622037 32.8437499999955,' +
             '-56.8750000000028 10.371556900848,-5.9880211686176 21.6743474022139,-8.8005802455077 32.8437500000001,-8.7812500000001 ' +
             '-2.297844251e-4,-0.1771031141508 0.00166261591,-0.3542278162052 -2e-13,-0.5312500000001 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
         path = graph.append('path').attr('d', 'm 445.1770761619407,330.0824755505187 c 5.5737634923062,-9.8669024181249 ' +
@@ -157,7 +157,7 @@ export class PieChartDirective implements OnInit {
             '32.5714433799533,-32.8333198402394 56.8810218555426,-32.8333198402444 11.9760423372391,2e-12 23.1708255835205,' +
             '3.2156476404536 32.8341468555453,8.8170894230179 0.088352557926,-0.1534906881563 0.1785537757177,-0.3059389796057 ' +
             '0.2656249999998,-0.4600759957606 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
         path = graph.append('path').attr('d', 'm 445.3600888638353,378.352075674592 c 9.760471988086,-5.758106404605 ' +
@@ -166,7 +166,7 @@ export class PieChartDirective implements OnInit {
             '13.1997639769654 -56.8599804172219,32.8281250000004 19.6517526426538,-11.3189343625165 44.6243573250856,-12.1487673822505 ' +
             '65.6770698402401,0.00602185554 10.371556900846,5.9880211686212 18.4586997617602,14.3702453380126 24.0266605769822,' +
             '24.0528968555453 0.1532609037312,-0.088750556225 0.307601595516,-0.1756740404876 0.4600759957604,-0.2656250000003 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -176,7 +176,7 @@ export class PieChartDirective implements OnInit {
             '-65.65625,4e-13 22.6783841986841,0.023391619619 44.7202107622035,11.7910374848462 56.8750000000027,32.8437499999955 ' +
             '5.9880211686178,10.371556900848 8.8005802455077,21.674347402214 8.78125,32.8437500000002 0.1771031141507,-2.297844253e-4 ' +
             '0.3542278162053,0.00166261591 0.5312500000001,-2e-13 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -186,7 +186,7 @@ export class PieChartDirective implements OnInit {
             '-56.8599804172221,-32.8281249999996 19.6283610230345,11.3594498361679 32.8333198402394,32.5714433799532 32.8333198402444,' +
             '56.8810218555426 -2.1e-12,11.9760423372391 -3.2156476404539,23.1708255835205 -8.8170894230179,32.8341468555455 ' +
             '0.1534906881566,0.088352557925 0.3059389796059,0.1785537757177 0.4600759957606,0.2656249999997 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -196,7 +196,7 @@ export class PieChartDirective implements OnInit {
             '-32.8281250000003,-56.8599804172217 11.3189343625163,19.6517526426537 12.1487673822505,44.6243573250857 -0.00602185554,' +
             '65.67706984024 -5.9880211686216,10.3715569008459 -14.370245338013,18.4586997617602 -24.0528968555454,24.0266605769824 ' +
             '0.088750556226,0.1532609037307 0.1756740404877,0.307601595516 0.2656250000002,0.4600759957603 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -206,7 +206,7 @@ export class PieChartDirective implements OnInit {
             '-5e-13,-65.6562499999997 -0.023391619619,22.6783841986841 -11.7910374848461,44.7202107622035 -32.8437499999954,' +
             '56.8750000000026 -10.3715569008481,5.9880211686177 -21.6743474022142,8.8005802455077 -32.8437500000004,8.7812500000003 ' +
             '2.297844263e-4,0.1771031141507 -0.00166261591,0.3542278162052 3e-13,0.5312499999998 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -216,7 +216,7 @@ export class PieChartDirective implements OnInit {
             '32.8281249999995,-56.859980417222 -11.359449836168,19.6283610230345 -32.5714433799531,32.8333198402395 -56.8810218555425,' +
             '32.8333198402444 -11.9760423372391,-2.2e-12 -23.1708255835207,-3.2156476404538 -32.8341468555456,-8.8170894230179 ' +
             '-0.088352557924,0.1534906881571 -0.1785537757177,0.3059389796057 -0.2656249999997,0.4600759957606 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -226,7 +226,7 @@ export class PieChartDirective implements OnInit {
             '-13.1997639769654 56.8599804172215,-32.8281250000001 -19.6517526426535,11.3189343625163 -44.6243573250855,12.1487673822505' +
             ' -65.6770698402397,-0.00602185554 -10.3715569008459,-5.9880211686215 -18.4586997617603,-14.3702453380129 -24.0266605769824,' +
             '-24.0528968555454 -0.1532609037301,0.088750556226 -0.3076015955161,0.1756740404876 -0.4600759957603,0.2656250000003 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -236,7 +236,7 @@ export class PieChartDirective implements OnInit {
             '-5e-13 -22.6783841986841,-0.023391619619 -44.7202107622035,-11.791037484846 -56.8750000000025,-32.8437499999955 ' +
             '-5.9880211686176,-10.3715569008482 -8.8005802455075,-21.6743474022142 -8.7812500000001,-32.8437500000003 -0.1771031141501,' +
             '2.297844264e-4 -0.3542278162053,-0.00166261591 -0.53125,3e-13 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index++, tool_tip, self.el.nativeElement);
 
@@ -246,7 +246,7 @@ export class PieChartDirective implements OnInit {
             '56.8599804172221,32.8281249999995 -19.6283610230345,-11.359449836168 -32.8333198402396,-32.571443379953 -32.8333198402443,' +
             '-56.8810218555425 2.1e-12,-11.9760423372393 3.2156476404538,-23.1708255835206 8.8170894230178,-32.8341468555454 ' +
             '-0.1534906881565,-0.088352557924 -0.3059389796056,-0.1785537757178 -0.4600759957605,-0.2656249999999 z')
-            .attr('fill', 'url(' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + ')')
+            .attr('fill', 'url(\'' + abs_path + '#' + self.dataset.id + '_gradient_' + color_index + '\')')
             .attr('style', 'stroke:none');
         self.add_tooltip(path, leafs, color_index, tool_tip, self.el.nativeElement);
 
