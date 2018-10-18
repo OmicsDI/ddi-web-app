@@ -699,11 +699,6 @@ ul#local-nav li.functional {
 }
 */
 
-@font-face {
-    src: url(http://lab.web-gate.fr/fonts/proxima-nova/ProximaNova-Light.ttf);
-    font-family: proximaNova;
-}
-
 #card {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
