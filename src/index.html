@@ -56,25 +56,24 @@
             overflow: visible;
         }
     </style>
+    <script>
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
 
+        var authToken = getParameterByName('AUTH_TOKEN');
+        if (authToken) {
+            localStorage.setItem('id_token', authToken);
+            window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
+        }
+    </script>
 </head>
-<script>
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-
-    var authToken = getParameterByName('AUTH_TOKEN');
-    if (authToken) {
-        localStorage.setItem('id_token', authToken);
-        window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
-    }
-</script>
 
 
 <body class="level22" style="padding-top: 70px; background-color: #FFF;">
