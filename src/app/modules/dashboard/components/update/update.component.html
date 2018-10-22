@@ -2,71 +2,67 @@
     <div class="col-md-12 col-xs-12">
 
         <!-- Modal -->
-        <div class="modal fade" id="previewPage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <app-profile-info [profile]="profile"></app-profile-info>
-            </div>
-        </div>
+        <ng-template #previewPage>
+            <app-profile-info [profile]="profile"></app-profile-info>
+        </ng-template>
         <!-- Modal -->
-        <div class="modal fade" id="profileImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="mt-card">
-                    <div class="mt-card-header">
-                        <h4 class="mt-card-title" style="margin-left: 20px">
-                            Update profile picture
-                        </h4>
-                    </div>
-                    <div class="mt-card-body" style="margin-top: 20px">
-                        <div class="row" style="height: 250px" *ngIf="!imageChangedEvent">
-                            <div class="drop">
-                                <div class="cont">
-                                    <i class="fa fa-cloud-upload"></i>
-                                    <div class="tit">
-                                        Drag & Drop
-                                    </div>
-                                    <div class="desc">
-                                        your photo to Assets, or
-                                    </div>
-                                    <div class="browse">
-                                        click here to browse
-                                    </div>
+        <ng-template #profileImage>
+            <div class="mt-card" style="margin: 0">
+                <div class="mt-card-header">
+                    <h4 class="mt-card-title" style="margin-left: 20px">
+                        Update profile picture
+                    </h4>
+                </div>
+                <div class="mt-card-body" style="margin-top: 20px">
+                    <div class="row" style="height: 250px" *ngIf="!imageChangedEvent">
+                        <div class="drop">
+                            <div class="cont">
+                                <i class="fa fa-cloud-upload"></i>
+                                <div class="tit">
+                                    Drag & Drop
                                 </div>
-                                <input id="image-upload" multiple="false" name="image-upload" type="file" (change)="fileChangeEvent($event)" accept="image/*" />
-                            </div>
-                        </div>
-                        <div class="row" *ngIf="imageChangedEvent && imageLoadFailed">
-                            <div class="col-xs-12">
-                                <div class="alert alert-danger">
-                                    Your input image can't be opened, please select another one!
+                                <div class="desc">
+                                    your photo to Assets, or
+                                </div>
+                                <div class="browse">
+                                    click here to browse
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" *ngIf="imageChangedEvent">
-                            <app-image-cropper
-                                    [imageChangedEvent]="imageChangedEvent"
-                                    [maintainAspectRatio]="true"
-                                    [resizeToWidth]="256"
-                                    format="png"
-                                    [roundCropper]="true"
-                                    (imageCroppedBase64)="imageCropped($event)"
-                                    (imageLoaded)="imageLoaded()"
-                                    (loadImageFailed)="loadImageFailed()"
-                                    style="max-height: 500px; max-width: 80%; margin: auto"
-                            ></app-image-cropper>
+                            <input id="image-upload" multiple="false" name="image-upload" type="file" (change)="fileChangeEvent($event)" accept="image/*" />
                         </div>
                     </div>
-                    <div class="mt-card-body">
-                        <div class="row edit-form">
-                            <div class="col-md-12 col-xs-12">
-                                <button type="button" class="btn btn-primary" (click)="imageChangedEvent = null; imageLoadFailed=false;" *ngIf="imageChangedEvent">Pick another image</button>
-                                <button type="button" class="btn btn-default pull-right" style="margin-left: 5px" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-success pull-right" (click)="profileImageChange()" data-dismiss="modal">OK</button>
+                    <div class="row" *ngIf="imageChangedEvent && imageLoadFailed">
+                        <div class="col-xs-12">
+                            <div class="alert alert-danger">
+                                Your input image can't be opened, please select another one!
                             </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="imageChangedEvent">
+                        <app-image-cropper
+                                [imageChangedEvent]="imageChangedEvent"
+                                [maintainAspectRatio]="true"
+                                [resizeToWidth]="256"
+                                format="png"
+                                [roundCropper]="true"
+                                (imageCroppedBase64)="imageCropped($event)"
+                                (imageLoaded)="imageLoaded()"
+                                (loadImageFailed)="loadImageFailed()"
+                                style="max-height: 500px; max-width: 80%; margin: auto"
+                        ></app-image-cropper>
+                    </div>
+                </div>
+                <div class="mt-card-body">
+                    <div class="row edit-form">
+                        <div class="col-md-12 col-xs-12">
+                            <button type="button" class="btn btn-primary" (click)="imageChangedEvent = null; imageLoadFailed=false;" *ngIf="imageChangedEvent">Pick another image</button>
+                            <button type="button" class="btn btn-default pull-right" style="margin-left: 5px" (click)="modalRef.hide()">Cancel</button>
+                            <button type="submit" class="btn btn-success pull-right" (click)="profileImageChange()" data-dismiss="modal">OK</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-template>
         <form class="form-horizontal" #f="ngForm" style="padding: 0" novalidate>
             <div class="mt-card">
                 <div class="mt-card-header">
@@ -79,7 +75,7 @@
                         <div class="col-md-3 col-xs-12">
                             <div style="width: 200px; height: 200px; position: relative">
                                 <img [src]="this.profileImageUrl" id="gsc_prf_pup" class="image-rounded">
-                                <div class="click-to-change" data-toggle="modal" data-target="#profileImage">Update profile picture</div>
+                                <div class="click-to-change" (click)="openModel(profileImage)" >Update profile picture</div>
                             </div>
                         </div>
                         <div class="col-md-9 col-xs-12 edit-form">
@@ -193,7 +189,7 @@
                     </div>
                     <div class="row edit-form">
                         <div class="col-md-12 col-xs-12">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#previewPage">Preview</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" (click)="openModel(previewPage)">Preview</button>
                             <button type="reset" class="btn btn-default pull-right" style="margin-left: 5px">Reset</button>
                             <button [disabled]="f.invalid" type="submit" class="btn btn-success pull-right" (click)="updateProfile()">Update</button>
                         </div>
