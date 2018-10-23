@@ -4,7 +4,7 @@ import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
-import {fromEvent} from "rxjs";
+import {fromEvent} from 'rxjs';
 
 @Component({
     selector: 'app-annual-omicstype',

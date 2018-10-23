@@ -5,7 +5,7 @@ import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
-import {fromEvent} from "rxjs";
+import {fromEvent} from 'rxjs';
 
 const cloud = require('d3-cloud');
 

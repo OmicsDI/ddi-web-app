@@ -6,7 +6,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {MegaNumberPipe} from '@shared/pipes/mega-number.pipe';
 import {ObjectUtils} from '@shared/utils/object-utils';
 import {ArrayUtils} from '@shared/utils/array-utils';
-import {fromEvent} from "rxjs";
+import {fromEvent} from 'rxjs';
 
 @Component({
     selector: 'app-statistics-panel',
