@@ -4,6 +4,7 @@ import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {fromEvent} from "rxjs";
 
 @Component({
     selector: 'app-annual-omicstype',
@@ -14,6 +15,7 @@ import {AsyncInitialisedComponent} from '@shared/components/async/async.initiali
 export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implements OnInit {
 
     private web_service_url = this.appConfig.getWebServiceUrl();
+    private processedDatas: any;
 
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
@@ -31,6 +33,9 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
 
     ngOnInit() {
         this.startRequest();
+        fromEvent(window, 'resize').subscribe( x => {
+            this.draw(this.processedDatas);
+        })
     }
 
     private startRequest() {
@@ -42,6 +47,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
         Promise.all(urls.map(url => d3.json(url))).then(function([annualData]) {
             ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
             const processedData = self.prepareData(annualData as any[]);
+            self.processedDatas = processedData;
             self.draw(processedData);
         }, (err) => {
             ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');

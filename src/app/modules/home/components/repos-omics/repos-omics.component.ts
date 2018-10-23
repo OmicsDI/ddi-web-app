@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {fromEvent} from 'rxjs';
 
 @Component({
     selector: 'app-repos-omics',
@@ -38,6 +39,9 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
     ngOnInit() {
         this.startRequest();
+        fromEvent(window, 'resize').subscribe( x => {
+            this.drawBarGraphic(this.data, this.reposDataSimple);
+        });
     }
 
     public startRequest() {

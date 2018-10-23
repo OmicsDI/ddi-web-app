@@ -5,6 +5,7 @@ import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {fromEvent} from "rxjs";
 
 const cloud = require('d3-cloud');
 
@@ -44,6 +45,9 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
     ngOnInit() {
         this.startRequest();
+        fromEvent(window, 'resize').subscribe( x => {
+            this.drawWordCloud(null, this.terms.Omics_description, this.terms.Omics_data_protocol, this.terms.Omics_sample_protocol);
+        })
     }
 
     private startRequest() {
