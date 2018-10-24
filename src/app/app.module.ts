@@ -5,7 +5,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from '@shared/components/app/app.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
-import {AlertModule} from 'ngx-bootstrap';
+import {AlertModule, BsModalService} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
 import {ClipboardModule} from 'ngx-clipboard';
@@ -98,6 +98,7 @@ export function jwtTokenGetter() {
     providers: [ProfileService,
         {provide: LocationStrategy, useClass: PathLocationStrategy}
         , AuthService
+        , BsModalService
         , DataTransportService
         , SearchService
         , DataSetService

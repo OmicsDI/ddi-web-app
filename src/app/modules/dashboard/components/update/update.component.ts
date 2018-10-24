@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
 import {AppConfig} from 'app/app.config';
 import {Router} from '@angular/router';
@@ -6,6 +6,7 @@ import {Profile} from 'model/Profile';
 import {UploadService} from '@shared/services/upload.service';
 import {NotificationsService} from 'angular2-notifications';
 import {DataTransportService} from '@shared/services/data.transport.service';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 
 @Component({
     selector: 'app-update',
@@ -20,13 +21,22 @@ export class DashboardUpdateComponent implements OnInit {
     croppedImage: any = '';
     imageLoadFailed = false;
     isProfileImageChanged = false;
+    modalRef: BsModalRef;
 
     constructor(public profileService: ProfileService,
                 public appConfig: AppConfig,
                 private uploadService: UploadService,
                 private notification: NotificationsService,
                 private dataTransporterService: DataTransportService,
+                private modalService: BsModalService,
                 private router: Router) {
+    }
+
+    openModel(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(
+            template,
+            Object.assign({}, { class: 'modal-lg' })
+        );
     }
 
     ngOnInit() {
@@ -77,6 +87,7 @@ export class DashboardUpdateComponent implements OnInit {
         if (!this.imageLoadFailed) {
             this.profileImageUrl = this.croppedImage;
             this.isProfileImageChanged = true;
+            this.modalRef.hide();
         }
     }
 }
