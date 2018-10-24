@@ -82,13 +82,11 @@ describe('public dataset page', function() {
         // similar
         expect<any>(datasetPage.getSimilar().count()).toBe(10);
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Jejunum, Protein Intensity (Geiger,MCP,2013)');
-        expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Midbrain, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Liver, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Colon, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Ileum, Protein Intensity (Geiger,MCP,2013)');
 
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('100909');
-        expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090400');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090488');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090378');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090222');
@@ -102,11 +100,10 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_source().getText()).toContain('PAXDB');
 
         datasetPage.clickGetMoreSimilar();
-        expect<any>(datasetPage.getSimilar().count()).toBe(14);
+        expect<any>(datasetPage.getSimilar().count()).toBe(15);
 
 
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Jejunum, Protein Intensity (Geiger,MCP,2013)');
-        expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Midbrain, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Liver, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Colon, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Ileum, Protein Intensity (Geiger,MCP,2013)');
@@ -121,7 +118,6 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Heart, Protein Intensity (Geiger,MCP,2013)');
 
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('100909');
-        expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090400');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090488');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090378');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090222');
