@@ -27,7 +27,7 @@ export class PieChartDirective implements OnInit {
             {
                 'score': this.dataset.connectionsCount,
                 'scale': this.dataset.connectionsCountScaled,
-                'color': '#00008B',
+                'color': '#0099cc',
                 'label': 'Connections'
             },
             {
@@ -103,10 +103,10 @@ export class PieChartDirective implements OnInit {
             .style('right', 0)
             .attr('position', 'absolute');
         const defs = svg.append('defs');
-        const max_scale = data.reduce((a, b) => a + b['scale'], 0);
+        // const max_scale = data.reduce((a, b) => a + b['scale'], 0);
         const leafs = [];
         for (let i = 0; i < data.length; i++) {
-            const contributed_scale = Math.min(data[i]['scale'] / max_scale, data[i]['scale']);
+            const contributed_scale = data[i]['scale'] / data.length;
             const total_leafs = contributed_scale / (1 / 12);
             data[i]['leafs'] = (total_leafs > 0 && total_leafs < 1) ? 1 : Math.round(total_leafs);
             for (let j = 0; j < data[i]['leafs']; j++) {

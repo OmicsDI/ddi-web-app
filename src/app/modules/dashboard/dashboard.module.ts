@@ -25,6 +25,7 @@ import {MergeComponent} from '@modules/dashboard/components/merge/merge.componen
 import {OnlyAdminDirective} from '@shared/directives/only-admin.directive';
 import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
+import {ModalModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import {CollapseModule} from 'ngx-bootstrap/collapse';
         ProfileControlsModule,
         ProfileChartsModule,
         DisqusModule.forRoot('omicsdi'),
+        ModalModule.forRoot(),
         FormsModule,
         UiSwitchModule,
         ClipboardModule,
