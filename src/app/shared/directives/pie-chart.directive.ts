@@ -86,7 +86,7 @@ export class PieChartDirective implements OnInit {
             .attr('position', 'absolute');
         const defs = svg.append('defs');
         const total_scale = data.reduce((a, b) => a + b['scale'], 0);
-        const total_score = data.reduce((a, b) => a + b['score'], 0);
+        const omics_score = Math.round(data.reduce((a, b) => a + b['scale'] * 1000, 0));
         const leafs = [];
         for (let i = 0; i < data.length; i++) {
             const contributed_scale = data[i]['scale'] / total_scale;
@@ -232,7 +232,7 @@ export class PieChartDirective implements OnInit {
             .attr('dy', '.3em')
             .attr('style', 'font-size: 32px')
             .attr('text-anchor', 'middle')
-            .text(self.megaNumber.transform(total_score, 1));
+            .text(self.megaNumber.transform(omics_score, 1));
 
         graph.on('mouseover', function () {
             tool_tip.html('');
@@ -274,7 +274,7 @@ export class PieChartDirective implements OnInit {
             tool_tip.append('hr').style('width', '96%').style('margin', '10px auto');
             tool_tip.append('div').style('width', '100%')
                 .style('padding', '0 0 10px 10px')
-                .text('Total score: ').append('b').text(total_score);
+                .text('Omics score: ').append('b').text(omics_score);
             tool_tip.append('div').style('width', 0).style('height', 0)
                 .style('border-top', '8px solid transparent')
                 .style('border-bottom', '8px solid transparent')
