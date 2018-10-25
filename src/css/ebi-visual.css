@@ -473,20 +473,12 @@ table.data {
 }
 
 a, a:link, a:visited {
-    border-bottom-width: 1px;
-    border-bottom-style: dotted;
-    border-bottom-color: inherit
+    border-bottom: 1px dotted;
+    border-bottom-color: inherit;
 }
 
 a:hover, a:focus, a:active {
     border-bottom-style: solid
-}
-
-a.special {
-    font-style: italic;
-    border-bottom-style: double;
-    border-bottom-width: 3px;
-    padding: 0.1em 0.3em
 }
 
 td a, td a:link, td a:visited, td a:hover, td a:focus, td a:active {

@@ -27,7 +27,6 @@
               "src/test"
             ],
             "styles": [
-              "src/css/bootstrap.min.css",
               "src/css/984-24-col-fluid.css",
               "src/css/autocomplete.css",
               "src/css/boilerplate-style.css",
@@ -42,7 +41,24 @@
             "scripts": []
           },
           "configurations": {
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
             "dev": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -75,6 +91,9 @@
             "browserTarget": "web:build"
           },
           "configurations": {
+            "local": {
+              "browserTarget": "web:build:local"
+            },
             "dev": {
               "browserTarget": "web:build:dev"
             },
