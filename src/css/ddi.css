@@ -1683,3 +1683,27 @@ app-image-cropper > div {
 .grey .badge-circle {
     fill: silver !important;
 }
+
+.circular-chart {
+    display: block;
+    margin: 5px 10px;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 5;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+}
+
+.percentage {
+    fill: #666;
+    font-family: sans-serif;
+    font-size: .8em;
+    text-anchor: middle;
+}

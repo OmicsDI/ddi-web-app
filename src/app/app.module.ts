@@ -46,6 +46,7 @@ import {UploadService} from '@shared/services/upload.service';
 import {HttpClientModule} from '@angular/common/http';
 import {NgProgressModule} from '@ngx-progressbar/core';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {NgCircleProgressModule} from 'ng-circle-progress';
 
 export function jwtTokenGetter() {
     return localStorage.getItem('id_token');
@@ -90,7 +91,8 @@ export function jwtTokenGetter() {
         ClipboardModule,
         ControlsModule,
         CommonplaceModule,
-        BsDropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
+        NgCircleProgressModule.forRoot({})
     ],
     exports: [
         RouterModule
