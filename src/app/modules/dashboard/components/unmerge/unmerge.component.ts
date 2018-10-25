@@ -32,7 +32,7 @@ export class UnmergeComponent implements OnInit {
     }
 
     load() {
-        this.slimLoadingBarService.start();
+        this.slimLoadingBarService.ref().start();
         this.datasetService
             .getUnMergeCandidates()
             .subscribe(
@@ -40,7 +40,7 @@ export class UnmergeComponent implements OnInit {
                     this.logger.debug('Unmerge candidates: {}', result);
                     this.unMergeCandidates = result;
                     this.counts = this.unMergeCandidates.length;
-                    this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.ref().complete();
                 }
             );
 

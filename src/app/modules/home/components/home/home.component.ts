@@ -17,7 +17,7 @@ export class HomeComponent implements AfterViewInit {
     constructor(private loadingBarService: NgProgress,
                 private metaService: Meta,
                 private titleService: Title) {
-        this.loadingBarService.start();
+        this.loadingBarService.ref().start();
     }
 
     ngAfterViewInit() {
@@ -35,7 +35,7 @@ export class HomeComponent implements AfterViewInit {
                 total -= 1;
             }
             if (total === 0) {
-                this.loadingBarService.complete();
+                this.loadingBarService.ref().complete();
             }
         }));
     }

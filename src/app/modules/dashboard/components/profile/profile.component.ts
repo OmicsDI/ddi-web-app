@@ -37,7 +37,7 @@ export class DashboardProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.slimLoadingBarService.start();
+        this.slimLoadingBarService.ref().start();
         this.profileX = this.profileService.getProfileFromLocal();
         this.name = this.profileX.userName;
         this.dataSetDetails = [];
@@ -47,7 +47,7 @@ export class DashboardProfileComponent implements OnInit {
         if (window.location.search) {
             this.showWelcomeDialog();
         }
-        this.slimLoadingBarService.complete();
+        this.slimLoadingBarService.ref().complete();
     }
 
 

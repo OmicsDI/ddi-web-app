@@ -41,7 +41,7 @@ export class DashboardSelectedComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.slimLoadingBarService.start();
+        this.slimLoadingBarService.ref().start();
         this.profile = this.profileService.getProfileFromLocal();
         this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
             this.watchedDatasets = x;
@@ -50,7 +50,7 @@ export class DashboardSelectedComponent implements OnInit {
             this.databases = databases;
             this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
                 this.dataSets = datasets;
-                this.slimLoadingBarService.complete();
+                this.slimLoadingBarService.ref().complete();
                 this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
             });
         });
