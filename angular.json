@@ -27,7 +27,16 @@
               "src/test"
             ],
             "styles": [
+              "src/css/bootstrap.min.css",
+              "src/css/984-24-col-fluid.css",
+              "src/css/autocomplete.css",
+              "src/css/boilerplate-style.css",
+              "src/css/ebi-global.css",
+              "src/css/ebi-visual.css",
+              "src/css/quill/quill.snow.css",
+              "src/css/sb-admin.css",
               "src/styles.css",
+              "src/css/ddi.css",
               "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": []
