@@ -37,7 +37,7 @@
     "font-awesome": "^4.7.0",
     "moment": "^2.18.1",
     "ngx-bootstrap": "^3.0.1",
-    "ngx-clipboard": "^11.1.7",
+    "ngx-clipboard": "^11.1.9",
     "ngx-disqus": "^2.4.0",
     "ngx-pagination": "^3.0.0",
     "ngx-quill": "^4.0.0",
