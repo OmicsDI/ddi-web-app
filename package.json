@@ -5,6 +5,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
+    "webdriver-update": "webdriver-manager update",
     "start": "ng serve",
     "test": "ng test",
     "e2e": "ng e2e",
