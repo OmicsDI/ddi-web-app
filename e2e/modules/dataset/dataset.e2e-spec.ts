@@ -100,7 +100,7 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_source().getText()).toContain('PAXDB');
 
         datasetPage.clickGetMoreSimilar();
-        expect<any>(datasetPage.getSimilar().count()).toBe(15);
+        expect<any>(datasetPage.getSimilar().count()).toBe(14);
 
 
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Jejunum, Protein Intensity (Geiger,MCP,2013)');
@@ -109,13 +109,11 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Ileum, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Spleen, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Uterus, Protein Intensity (Geiger,MCP,2013)');
-        expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Pancreas, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Diaphragm, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Cerebellum, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Lung, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Duodenum, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Stomach, Protein Intensity (Geiger,MCP,2013)');
-        expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Heart, Protein Intensity (Geiger,MCP,2013)');
 
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('100909');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090488');
@@ -123,13 +121,11 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090222');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090364');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090320');
-        expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090319');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090439');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090218');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090339');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('100906');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('1009080');
-        expect<any>(datasetPage.getSimilar_id().getText()).toContain('1009072');
     });
 });
 

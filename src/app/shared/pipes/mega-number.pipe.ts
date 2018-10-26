@@ -12,7 +12,7 @@ export class MegaNumberPipe implements PipeTransform {
             return '0';
         }
 
-        if (!fractionSize || fractionSize < 0) {
+        if (fractionSize < 0) {
             fractionSize = 1;
         }
 
