@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import * as d3 from 'd3';
 import {MathUtils} from '@shared/utils/math-utils';
 import {DataSet} from 'model/DataSet';
@@ -8,7 +8,7 @@ import {MegaNumberPipe} from '@shared/pipes/mega-number.pipe';
 @Directive({
     selector: '[appPieChart]'
 })
-export class PieChartDirective implements OnInit {
+export class PieChartDirective implements OnChanges {
 
     @Input() dataset: DataSet;
     @Input() width: number;
@@ -97,12 +97,13 @@ export class PieChartDirective implements OnInit {
         }
     }
 
-    ngOnInit(): void {
+    initialize(): void {
         const abs_path = this.location.prepareExternalUrl(this.location.path());
         const body = d3.select(this.el.nativeElement),
             data = this.convertData(),
-            self = this,
-            svg = body.append('svg').attr('width', this.width)
+            self = this;
+        body.html('');
+        const svg = body.append('svg').attr('width', this.width)
                 .attr('viewBox', '0 0 720 720')
                 .attr('height', this.width);
 
@@ -328,5 +329,11 @@ export class PieChartDirective implements OnInit {
                     .duration(200)
                     .style('display', 'none');
             });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.dataset) {
+            this.initialize();
+        }
     }
 }
