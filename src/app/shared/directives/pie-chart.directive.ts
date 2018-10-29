@@ -20,36 +20,61 @@ export class PieChartDirective implements OnInit {
     convertData() {
         return [
             {
-                'score': this.dataset.viewsCount,
-                'scale': this.dataset.viewsCountScaled,
+                'score': this.dataset.viewsCount || 0,
+                'scale': this.dataset.viewsCountScaled || 0,
                 'color': '#2E8B57',
                 'label': 'Views'
             },
             {
-                'score': this.dataset.connectionsCount,
-                'scale': this.dataset.connectionsCountScaled,
+                'score': this.dataset.connectionsCount || 0,
+                'scale': this.dataset.connectionsCountScaled || 0,
                 'color': '#0099cc',
                 'label': 'Connections'
             },
             {
-                'score': this.dataset.citationsCount,
-                'scale': this.dataset.citationsCountScaled,
+                'score': this.dataset.citationsCount || 0,
+                'scale': this.dataset.citationsCountScaled || 0,
                 'color': '#FF0000',
                 'label': 'Citations'
             },
             {
-                'score': this.dataset.reanalysisCount,
-                'scale': this.dataset.reanalysisCountScaled,
+                'score': this.dataset.reanalysisCount || 0,
+                'scale': this.dataset.reanalysisCountScaled || 0,
                 'color': '#4B0082',
                 'label': 'Reanalyses'
             },
             {
-                'score': this.dataset.downloadCount,
-                'scale': this.dataset.downloadCountScaled,
+                'score': this.dataset.downloadCount || 0,
+                'scale': this.dataset.downloadCountScaled || 0,
                 'color': '#FFA500',
                 'label': 'Downloads'
             }
         ]
+    }
+
+    normalise_number_leaves(data, max_leaves) {
+        const total_scale = data.reduce((a, b) => a + b['scale'], 0);
+        let max_scale = 0;
+        let index_max_scale = 0;
+        for (let i = 0; i < data.length; i++) {
+            data[i]['norm_leaves'] = (data[i]['scale'] / total_scale) * (1 / max_leaves);
+            if (max_scale < data[i]['norm_leaves']) {
+                max_scale = data[i]['norm_leaves'];
+                index_max_scale = i;
+            }
+        }
+        let current_total_leaves = 0;
+        for (let i = 0; i < data.length; i++) {
+            if (i !== index_max_scale && data[i]['norm_leaves'] > 0) {
+                if (data[i]['norm_leaves'] < 1) {
+                    data[i]['norm_leaves'] = 1;
+                } else {
+                    data[i]['norm_leaves'] = Math.round(data[i]['norm_leaves']);
+                }
+            }
+            current_total_leaves += data[i]['norm_leaves'];
+        }
+        data[index_max_scale]['norm_leaves'] = max_leaves - current_total_leaves;
     }
 
     svg_linear_gradient_direction(angle) {
@@ -91,14 +116,11 @@ export class PieChartDirective implements OnInit {
             .style('z-index', '9999')
             .attr('position', 'absolute');
         const defs = svg.append('defs');
-        const total_scale = data.reduce((a, b) => a + b['scale'], 0);
         const omics_score = Math.round(data.reduce((a, b) => a + b['scale'] * 1000, 0));
         const leafs = [];
+        self.normalise_number_leaves(data, 12);
         for (let i = 0; i < data.length; i++) {
-            const contributed_scale = data[i]['scale'] / total_scale;
-            const total_leafs = contributed_scale / (1 / 12);
-            data[i]['leafs'] = (total_leafs > 0 && total_leafs < 1) ? 1 : Math.round(total_leafs);
-            for (let j = 0; j < data[i]['leafs']; j++) {
+            for (let j = 0; j < data[i]['norm_leaves']; j++) {
                 leafs.push(data[i]);
             }
         }
