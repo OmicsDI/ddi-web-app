@@ -103,6 +103,7 @@ export class PieChartDirective implements OnChanges {
             data = this.convertData(),
             self = this;
         body.html('');
+        body.style('position', 'relative');
         const svg = body.append('svg').attr('width', this.width)
                 .attr('viewBox', '0 0 720 720')
                 .attr('height', this.width);
@@ -308,19 +309,19 @@ export class PieChartDirective implements OnChanges {
                 .style('border-top', '8px solid transparent')
                 .style('border-bottom', '8px solid transparent')
                 .style('position', 'absolute')
-                .style('top', '95px')
+                .style('top', '110px')
                 .style('right', '-8px')
                 .style('border-left', '8px solid #C0C0C0');
             tool_tip.append('div').style('width', 0).style('height', 0)
                 .style('border-top', '8px solid transparent')
                 .style('border-bottom', '8px solid transparent')
                 .style('position', 'absolute')
-                .style('top', '95px')
+                .style('top', '110px')
                 .style('right', '-7px')
                 .style('border-left', '8px solid white');
             tool_tip
-                .style('right', self.width + 20 + 'px')
-                .style('top', '-80px')
+                .style('right', self.width + 10 + 'px')
+                .style('top', '-100px')
                 .style('padding', '3px');
         })
             .on('mouseout', function (d) {
