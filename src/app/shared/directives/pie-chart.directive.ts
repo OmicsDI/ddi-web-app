@@ -42,6 +42,12 @@ export class PieChartDirective implements OnInit {
                 'scale': this.dataset.reanalysisCountScaled,
                 'color': '#4B0082',
                 'label': 'Reanalyses'
+            },
+            {
+                'score': this.dataset.downloadCount,
+                'scale': this.dataset.downloadCountScaled,
+                'color': '#FFA500',
+                'label': 'Downloads'
             }
         ]
     }
