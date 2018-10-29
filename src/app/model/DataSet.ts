@@ -20,6 +20,8 @@ export class DataSet {
     score?: any;
     omicsType: string[];
     claimable: boolean;
+    downloadCount = 0;
+    downloadCountScaled = 0;
 
     citationsCount: number;
     connectionsCount: number;
