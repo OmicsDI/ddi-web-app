@@ -19,13 +19,13 @@ import {DashboardComponent} from '@modules/dashboard/components/dashboard/dashbo
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
 import {QuillModule} from 'ngx-quill';
-import {ImageCropperModule} from '@shared/components/ngx-image-cropper/image-cropper.module';
 import {NavComponent} from '@modules/dashboard/components/nav/nav.component';
 import {MergeComponent} from '@modules/dashboard/components/merge/merge.component';
 import {OnlyAdminDirective} from '@shared/directives/only-admin.directive';
 import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {ModalModule} from 'ngx-bootstrap';
+import {ImageCropperModule} from 'ngx-image-cropper';
 
 @NgModule({
     imports: [

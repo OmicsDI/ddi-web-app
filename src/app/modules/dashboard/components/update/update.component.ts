@@ -7,6 +7,7 @@ import {UploadService} from '@shared/services/upload.service';
 import {NotificationsService} from 'angular2-notifications';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {ImageCroppedEvent} from 'ngx-image-cropper/src/image-cropper.component';
 
 @Component({
     selector: 'app-update',
@@ -63,7 +64,7 @@ export class DashboardUpdateComponent implements OnInit {
             });
             this.isProfileImageChanged = false;
         }
-        this.profileService.updateUser(this.profile).subscribe(success => {
+        this.profileService.updateUser(this.profile).subscribe(() => {
             this.notification.success('Profile updated');
         }, error => {
             this.notification.error('An exception occurred while saving your profile: ' + error);
@@ -73,8 +74,8 @@ export class DashboardUpdateComponent implements OnInit {
     fileChangeEvent(event: any): void {
         this.imageChangedEvent = event;
     }
-    imageCropped(image: string) {
-        this.croppedImage = image;
+    imageCropped(event: ImageCroppedEvent) {
+        this.croppedImage = event.base64;
     }
     imageLoaded() {
         this.imageLoadFailed = false;
