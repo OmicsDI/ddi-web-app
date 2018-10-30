@@ -13,6 +13,7 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-profile-result',
@@ -21,7 +22,7 @@ import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 })
 export class ProfileResultComponent implements OnInit {
 
-    dataSets: DataSetDetail[];
+    dataSets: DataSet[];
 
     @Input() profile: Profile;
     @Output() change = new EventEmitter();
@@ -64,7 +65,7 @@ export class ProfileResultComponent implements OnInit {
                 return this.dataSetService.getDataSetDetail(x.id, x.source);
             })).subscribe(
                 y => {
-                    this.dataSets = y;
+                    this.dataSets = y.map(x => DataSetDetail.toDataset(x));
                     this.thorService.datasets = y;
                 }
             );
