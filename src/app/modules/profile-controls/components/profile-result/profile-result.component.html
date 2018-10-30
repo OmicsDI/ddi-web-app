@@ -10,7 +10,7 @@
 
 
 
-        <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
+        <app-datasetwidget [d]="d" [allowSelect]="false" [allowClaim]="false"
                                [databases]="databases" (buttonClicked)="deleteDataset(d.source, d.id)"
                                [profile]="profile" [watchedDatasets]="watchedDatasets"></app-datasetwidget>
 

@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
             this.databaseListService.getDatabaseList().subscribe(databases => {
                 this.route.queryParams.subscribe(params => {
                     this.params = params;
-                    this.slimLoadingBarService.start();
+                    this.slimLoadingBarService.ref().start();
                     this.query = QueryUtils.getBaseQuery(params);
                     if (this.query !== '') {
                         this.titleService.setTitle(this.query + ' - ' + 'OmicsDI');
@@ -70,7 +70,7 @@ export class SearchComponent implements OnInit {
                             }, error => {
                                 this.logger.error('Exception occurred when getting search result, {}', error);
                             }, () => {
-                                this.slimLoadingBarService.complete();
+                                this.slimLoadingBarService.ref().complete();
                             });
                 });
             });

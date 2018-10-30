@@ -95,13 +95,13 @@ export class DatasetComponent implements OnInit {
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.route.params.subscribe(params => {
                 this.datasetChanged = !this.datasetChanged;
-                this.slimLoadingBarService.start();
+                this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
                 this.databases = databases;
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
                     .pipe(catchError((err: HttpErrorResponse) => {
-                        self.slimLoadingBarService.complete();
+                        self.slimLoadingBarService.ref().complete();
                         self.notfound = true;
                         return throwError(
                             'Can\'t get dataset, err: ' + err.message);
@@ -146,7 +146,7 @@ export class DatasetComponent implements OnInit {
                             });
                         }
 
-                        this.slimLoadingBarService.complete();
+                        this.slimLoadingBarService.ref().complete();
                 });
             });
         });

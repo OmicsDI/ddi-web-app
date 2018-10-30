@@ -39,17 +39,17 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="imageChangedEvent">
-                        <app-image-cropper
+                        <image-cropper
                                 [imageChangedEvent]="imageChangedEvent"
                                 [maintainAspectRatio]="true"
                                 [resizeToWidth]="256"
                                 format="png"
                                 [roundCropper]="true"
-                                (imageCroppedBase64)="imageCropped($event)"
+                                (imageCropped)="imageCropped($event)"
                                 (imageLoaded)="imageLoaded()"
                                 (loadImageFailed)="loadImageFailed()"
                                 style="max-height: 500px; max-width: 80%; margin: auto"
-                        ></app-image-cropper>
+                        ></image-cropper>
                     </div>
                 </div>
                 <div class="mt-card-body">

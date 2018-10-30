@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.slimLoadingBarService.start();
+        this.slimLoadingBarService.ref().start();
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.route.params.subscribe(params => {
@@ -84,7 +84,7 @@ export class ProfileComponent implements OnInit {
                             y => {
                                 this.dataSetDetails = y;
                                 this.datasetShowed = y;
-                                this.slimLoadingBarService.complete();
+                                this.slimLoadingBarService.ref().complete();
                             }
                         );
                     }

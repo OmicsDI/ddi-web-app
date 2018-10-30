@@ -39,6 +39,7 @@
   <rule match-type="wildcard">
     <from>/dataset/**</from>
     <to>/</to>
+    <set type="expires">30 minutes</set>
   </rule>
   <rule match-type="wildcard">
     <from>/terms</from>
@@ -76,4 +77,8 @@
     <from>/.git*</from>
     <to>/</to>
   </rule>
+    <rule>
+        <from>^.*\.(js|css|gif|jpg|png)$</from>
+        <set type="expires">6 hours</set>
+    </rule>
 </urlrewrite>
