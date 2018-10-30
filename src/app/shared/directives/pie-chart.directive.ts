@@ -264,7 +264,7 @@ export class PieChartDirective implements OnChanges {
             .attr('text-anchor', 'middle')
             .text(self.megaNumber.transform(omics_score, 1));
 
-        graph.on('mouseover', function () {
+        svg.on('mouseenter', function () {
             tool_tip.html('');
             tool_tip.transition()
                 .duration(200)
@@ -324,7 +324,7 @@ export class PieChartDirective implements OnChanges {
                 .style('top', '-100px')
                 .style('padding', '3px');
         })
-            .on('mouseout', function (d) {
+            .on('mouseleave', function (d) {
                 tool_tip
                     .transition()
                     .duration(200)

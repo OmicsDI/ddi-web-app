@@ -39,14 +39,14 @@ export class MergeComponent implements OnInit {
     }
 
     load() {
-        this.slimLoadingBarService.start();
+        this.slimLoadingBarService.ref().start();
         this.datasetService
             .getMergeCandidates(10 * (this.currentPage - 1), 10)
             .subscribe(
                 result => {
                     this.logger.debug('Merge candidates: {}', result);
                     this.mergeCandidates = result;
-                    this.slimLoadingBarService.complete();
+                    this.slimLoadingBarService.ref().complete();
                 }
             );
 
