@@ -138,7 +138,9 @@
             "tsConfig": [
               "src/tsconfig.app.json"
             ],
-            "exclude": []
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
