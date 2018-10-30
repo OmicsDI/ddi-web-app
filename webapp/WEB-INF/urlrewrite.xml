@@ -76,4 +76,8 @@
     <from>/.git*</from>
     <to>/</to>
   </rule>
+    <rule>
+        <from>^.*\.(js|css|gif|jpg|png)$</from>
+        <set type="expires">6 hours</set>
+    </rule>
 </urlrewrite>
