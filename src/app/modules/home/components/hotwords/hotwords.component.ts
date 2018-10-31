@@ -33,7 +33,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         super();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
-        this.fill = Array.from(d3.schemeCategory10.values());
+        this.fill = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
         this.field = '';
         this.terms = {
             Omics_description: [],

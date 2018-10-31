@@ -1,7 +1,8 @@
-import {Injectable} from '@angular/core';
+import {Injectable, PLATFORM_ID} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ProfileService} from '@shared/services/profile.service';
+import {isPlatformBrowser} from '@angular/common';
 
 
 @Injectable()
@@ -12,6 +13,10 @@ export class AuthService implements CanActivate {
     }
 
     async loggedIn() {
+        // Server side rendering
+        if (!isPlatformBrowser(PLATFORM_ID)) {
+            return false;
+        }
         const token = localStorage.getItem('id_token');
         if (token != null) {
             const expired = this.helper.decodeToken(token).expires;

@@ -196,7 +196,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             , div_height_inside = parseInt(body.style('height'), 10)
             , diameter_inside = Math.min(div_height_inside, div_width_inside)
             , format = d3.format(',d')
-            , color: string[] = Array.from(d3.schemeCategory10.values());
+            , color = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 
         body.selectAll('svg').remove();
         const svg_inside = body.append('svg')

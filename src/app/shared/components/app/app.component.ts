@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {Location, PopStateEvent} from '@angular/common';
+import {isPlatformBrowser, Location, PopStateEvent} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {Profile} from 'model/Profile';
@@ -45,16 +45,18 @@ export class AppComponent implements OnInit {
         this.router.events.subscribe((ev: any) => {
             this.isCollapsedNav = true;
             this.homePage = (this.router.url === '/home') || (this.router.url === '/');
-            if (ev instanceof NavigationStart) {
-                if (ev.url !== this.lastPoppedUrl) {
-                    this.yScrollStack.push(window.scrollY);
-                }
-            } else if (ev instanceof NavigationEnd) {
-                if (ev.url === this.lastPoppedUrl) {
-                    this.lastPoppedUrl = undefined;
-                    window.scrollTo(0, this.yScrollStack.pop());
-                } else {
-                    window.scrollTo(0, 0);
+            if (isPlatformBrowser(PLATFORM_ID)) {
+                if (ev instanceof NavigationStart) {
+                    if (ev.url !== this.lastPoppedUrl) {
+                        this.yScrollStack.push(window.scrollY);
+                    }
+                } else if (ev instanceof NavigationEnd) {
+                    if (ev.url === this.lastPoppedUrl) {
+                        this.lastPoppedUrl = undefined;
+                        window.scrollTo(0, this.yScrollStack.pop());
+                    } else {
+                        window.scrollTo(0, 0);
+                    }
                 }
             }
         });

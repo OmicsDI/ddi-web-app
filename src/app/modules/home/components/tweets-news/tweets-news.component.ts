@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, PLATFORM_ID} from '@angular/core';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
     selector: 'app-tweets-news',
@@ -17,6 +18,10 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
     }
 
     ngOnInit() {
+        if (!isPlatformBrowser(PLATFORM_ID)) {
+            this.componentLoaded();
+            return;
+        }
         const statisticWidth = document.getElementById('statisticspanel').offsetWidth;
         const statisticHeight = document.getElementById('statisticspanel').offsetHeight;
         let height = Math.sqrt(statisticWidth * statisticWidth + statisticHeight * statisticHeight) * 0.8;
@@ -24,7 +29,6 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
            height = 400;
         }
         this.height = height;
-        this.componentLoaded();
         this.fetchTweets();
     }
 

@@ -32,12 +32,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favico/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="./img/favico/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favico/favicon-16x16.png">
-    <link rel="manifest" href="./img/favico/manifest.json">
+    <!--<link rel="manifest" href="./img/favico/manifest.json">-->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="./img/favico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script>
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
@@ -50,7 +50,7 @@
         }
 
         var authToken = getParameterByName('AUTH_TOKEN');
-        if (authToken) {
+        if (authToken && typeof localStorage === 'undefined') {
             localStorage.setItem('id_token', authToken);
             window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
         }
@@ -86,31 +86,33 @@
             xhr.send(null);
         }
 
-        (function () {
-            var loc = window.location.href;
-            var baseURL = document.getElementsByTagName('base')[0].href;
-            var path = loc.replace(baseURL, "");
-
-            if (path === "") {
-                path = "home?r=" + Math.random();
-            }
-
-            if (path.indexOf('#') >= 0) {
-                var split = path.split('#');
-                path = split[split.length - 1];
-            }
-
-            switch (path) {
-                case "dashboard/selected":
-                    console.log("no seo");
-                    break;
-                case "merge":
-                    console.log("no seo");
-                    break;
-                default:
-                    XhrGet('ws/seo/' + path);
-            }
-        })(document);
+        // (function () {
+        //     if (typeof localStorage !== 'undefined') {
+        //         var loc = window.location.href;
+        //         var baseURL = document.getElementsByTagName('base')[0].href;
+        //         var path = loc.replace(baseURL, "");
+        //
+        //         if (path === "") {
+        //             path = "home?r=" + Math.random();
+        //         }
+        //
+        //         if (path.indexOf('#') >= 0) {
+        //             var split = path.split('#');
+        //             path = split[split.length - 1];
+        //         }
+        //
+        //         switch (path) {
+        //             case "dashboard/selected":
+        //                 console.log("no seo");
+        //                 break;
+        //             case "merge":
+        //                 console.log("no seo");
+        //                 break;
+        //             default:
+        //                 XhrGet('ws/seo/' + path);
+        //         }
+        //     }
+        // })(document);
     </script>
 
     <app-root>
