@@ -1,6 +1,6 @@
 import {Component, OnInit, PLATFORM_ID} from '@angular/core';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
-import {isPlatformBrowser} from '@angular/common';
+import {isPlatformServer} from '@angular/common';
 
 @Component({
     selector: 'app-tweets-news',
@@ -18,7 +18,7 @@ export class TweetsNewsComponent extends AsyncInitialisedComponent implements On
     }
 
     ngOnInit() {
-        if (!isPlatformBrowser(PLATFORM_ID)) {
+        if (isPlatformServer(PLATFORM_ID)) {
             this.componentLoaded();
             return;
         }
