@@ -20,32 +20,32 @@ export class PieChartDirective implements OnChanges {
     convertData() {
         return [
             {
-                'score': this.dataset.viewsCount || 0,
-                'scale': this.dataset.viewsCountScaled || 0,
+                'score': parseInt(this.dataset.viewsCount.toString(), 10) || 0,
+                'scale': parseFloat(this.dataset.viewsCountScaled.toString()) || 0,
                 'color': '#2E8B57',
                 'label': 'Views'
             },
             {
-                'score': this.dataset.connectionsCount || 0,
-                'scale': this.dataset.connectionsCountScaled || 0,
+                'score': parseInt(this.dataset.connectionsCount.toString(), 10) || 0,
+                'scale': parseFloat(this.dataset.connectionsCountScaled.toString()) || 0,
                 'color': '#0099cc',
                 'label': 'Connections'
             },
             {
-                'score': this.dataset.citationsCount || 0,
-                'scale': this.dataset.citationsCountScaled || 0,
+                'score': parseInt(this.dataset.citationsCount.toString(), 10) || 0,
+                'scale': parseFloat(this.dataset.citationsCountScaled.toString()) || 0,
                 'color': '#FF0000',
                 'label': 'Citations'
             },
             {
-                'score': this.dataset.reanalysisCount || 0,
-                'scale': this.dataset.reanalysisCountScaled || 0,
+                'score': parseInt(this.dataset.reanalysisCount.toString(), 10) || 0,
+                'scale': parseFloat(this.dataset.reanalysisCountScaled.toString()) || 0,
                 'color': '#4B0082',
                 'label': 'Reanalyses'
             },
             {
-                'score': this.dataset.downloadCount || 0,
-                'scale': this.dataset.downloadCountScaled || 0,
+                'score': parseInt(this.dataset.downloadCount.toString(), 10) || 0,
+                'scale': parseFloat(this.dataset.downloadCountScaled.toString()) || 0,
                 'color': '#FFA500',
                 'label': 'Downloads'
             }
