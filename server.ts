@@ -8,7 +8,6 @@ import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import {join} from 'path';
-import 'fetch-everywhere';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -27,7 +26,8 @@ const fs = require('fs');
 const path = require('path');
 const template = fs.readFileSync('dist/browser/index.html').toString();
 const win = domino.createWindow(template);
-
+const fetch = require('node-fetch-polyfill');
+global['fetch'] = fetch;
 global['window'] = win;
 global['document'] = win.document;
 global['DOMTokenList'] = win.DOMTokenList;
