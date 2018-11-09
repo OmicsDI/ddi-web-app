@@ -1,20 +1,21 @@
-import {Injectable, PLATFORM_ID} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ProfileService} from '@shared/services/profile.service';
-import {isPlatformBrowser} from '@angular/common';
+import {isPlatformServer} from '@angular/common';
 
 
 @Injectable()
 export class AuthService implements CanActivate {
     helper = new JwtHelperService();
-
-    constructor(private router: Router, private profileService: ProfileService) {
+    isServer: boolean
+    constructor(private router: Router, private profileService: ProfileService, @Inject(PLATFORM_ID) platformId) {
+        this.isServer = isPlatformServer(platformId);
     }
 
     async loggedIn() {
         // Server side rendering
-        if (!isPlatformBrowser(PLATFORM_ID)) {
+        if (this.isServer) {
             return false;
         }
         const token = localStorage.getItem('id_token');

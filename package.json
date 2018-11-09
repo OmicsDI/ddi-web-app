@@ -10,11 +10,13 @@
     "test": "ng test",
     "e2e": "ng e2e",
     "build": "ng build",
-    "release": "ng build",
-    "compile:server": "webpack --config webpack.server.config.js --progress --colors",
-    "serve:ssr": "node dist/server",
-    "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --configuration=dev && ng run web:server:dev"
+    "webpack": "webpack",
+    "compile:server:dev": "webpack --env.envKey dev --config webpack.server.config.js --progress --colors",
+    "compile:server:prod": "webpack --env.envKey prod --config webpack.server.config.js --progress --colors",
+    "compile:server:local": "webpack --env.envKey local --config webpack.server.config.js --progress --colors",
+    "serve:ssr": "npm run build:ssr:local && node dist/server",
+    "build:ssr:local": "npm run build:client-and-server-bundles:local && npm run compile:server:local",
+    "build:client-and-server-bundles:local": "ng build --configuration=local && ng run web:server:local"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +39,7 @@
     "@ngx-progressbar/core": "^5.2.1",
     "angular2-notifications": "^1.0.4",
     "angular2-ui-switch": "git+https://github.com/daominhsangvn/angular2-ui-switch.git",
+    "compression": "^1.7.3",
     "core-js": "^2.5.7",
     "cryptiles": "^4.1.2",
     "d3": "^5.7.0",

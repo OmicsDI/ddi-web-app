@@ -1,4 +1,4 @@
-import {Injectable, PLATFORM_ID} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {Profile} from 'model/Profile';
 import {AppConfig} from 'app/app.config';
 import {BaseService} from './base.service';
@@ -14,7 +14,7 @@ import {Observable} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs/internal/observable/throwError';
 import {DataTransportService} from '@shared/services/data.transport.service';
-import {isPlatformBrowser} from '@angular/common';
+import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 
 
 @Injectable()
@@ -22,13 +22,14 @@ export class ProfileService extends BaseService {
 
     constructor(private http: HttpClient,
                 public appConfig: AppConfig,
+                @Inject(PLATFORM_ID) private platformId,
                 private dataTransporterService: DataTransportService,
                 private logger: LogService) {
         super();
     }
 
     setProfile(profile: Profile): void {
-        if (!isPlatformBrowser(PLATFORM_ID)) {
+        if (isPlatformServer(this.platformId)) {
             return;
         }
         localStorage.removeItem('profile');
@@ -38,7 +39,7 @@ export class ProfileService extends BaseService {
         localStorage.removeItem('profile');
     };
     getProfileFromLocal(): Profile {
-        if (!isPlatformBrowser(PLATFORM_ID)) {
+        if (!isPlatformBrowser(this.platformId)) {
             return null;
         }
         return JSON.parse(localStorage.getItem('profile'));

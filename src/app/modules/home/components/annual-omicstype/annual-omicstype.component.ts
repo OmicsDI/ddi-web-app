@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AppConfig} from 'app/app.config';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {isPlatformServer} from '@angular/common';
+import {forkJoin} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-annual-omicstype',
@@ -14,7 +17,7 @@ import {AsyncInitialisedComponent} from '@shared/components/async/async.initiali
 export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implements OnInit {
 
     private web_service_url = this.appConfig.getWebServiceUrl();
-
+    isServer: boolean;
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].omics.length; j++) {
@@ -25,34 +28,33 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
         }
     }
 
-    constructor(private router: Router, public appConfig: AppConfig) {
+    constructor(private router: Router,
+                public appConfig: AppConfig,
+                private http: HttpClient,
+                @Inject(PLATFORM_ID) private platformId: string) {
         super();
+        this.isServer = isPlatformServer(this.platformId);
     }
 
     ngOnInit() {
-        this.startRequest();
-    }
+        if (!isPlatformServer(this.platformId)) {
+            const self = this;
+            const urls = [
+                this.web_service_url + 'statistics/omicsByYear',
+            ];
 
-    private startRequest() {
-        const self = this;
-        const urls = [
-            this.web_service_url + 'statistics/omicsByYear',
-        ];
-
-        Promise.all(urls.map(url => d3.json(url))).then(function([annualData]) {
-            ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
-            const processedData = self.prepareData(annualData as any[]);
-            self.draw(processedData);
-        }, (err) => {
-            ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
-        });
-        self.componentLoaded();
-    }
-
-    private draw(processedData: any) {
-
-        this.drawGraph(processedData);
-        const self = this;
+            forkJoin(
+                urls.map(url => this.http.get(url))
+            ).subscribe(data => {
+                ChartsErrorHandler.removeGettingInfo('barchart_omicstype_annual');
+                const processedData = self.prepareData(data[0] as any[]);
+                self.drawGraph(processedData);
+            }, err => {
+                ChartsErrorHandler.outputErrorInfo('barchart_omicstype_annual');
+            }, () => {
+                self.componentLoaded();
+            });
+        }
     }
 
     private drawGraph(processedData: any): void {

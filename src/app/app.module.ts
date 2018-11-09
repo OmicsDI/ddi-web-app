@@ -32,7 +32,7 @@ import {AltmetricService} from '@shared/services/altmetric.service';
 import {ScoreService} from '@shared/services/score.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {InviteService} from '@shared/services/invite.service';
-import {CommonModule, isPlatformBrowser, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {APP_BASE_HREF, CommonModule, isPlatformBrowser, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {ThorService} from '@shared/services/thor.service';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
@@ -47,15 +47,13 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgProgressModule} from '@ngx-progressbar/core';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {
-    TRANSFER_RESPONSE_BASE_URLS,
-    TransferHttpResponseModule
-} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
+    TRANSFER_RESPONSE_BASE_URLS} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
 import {environment} from '../environments/environment';
 
 
 export function jwtTokenGetter() {
     let token = null;
-    if (isPlatformBrowser(PLATFORM_ID)) {
+    if (typeof localStorage !== 'undefined') {
         token = localStorage.getItem('id_token');
     }
     return token;
@@ -106,6 +104,7 @@ export function jwtTokenGetter() {
         RouterModule
     ],
     providers: [ProfileService,
+        {provide: APP_BASE_HREF, useValue: environment.baseHref},
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         {
             provide: TRANSFER_RESPONSE_BASE_URLS,

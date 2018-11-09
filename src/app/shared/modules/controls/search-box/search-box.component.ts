@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, Input, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatMenuTrigger} from '@angular/material';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
@@ -8,6 +8,7 @@ import {SearchService} from '@shared/services/search.service';
 import {QueryUtils} from '@shared/utils/query-utils';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
+import {isPlatformServer} from '@angular/common';
 
 @Component({
     selector: '[app-search-box]',
@@ -36,10 +37,14 @@ export class SearchBoxComponent implements OnInit {
                 private dataTransportService: DataTransportService,
                 private searchService: SearchService,
                 private logger: LogService,
+                @Inject(PLATFORM_ID) private platformId,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit() {
+        if (isPlatformServer(this.platformId)) {
+            return;
+        }
         this.route.queryParams.subscribe(params => {
             this.params = params;
             if (this.router.url.indexOf('/dataset/') === -1) {

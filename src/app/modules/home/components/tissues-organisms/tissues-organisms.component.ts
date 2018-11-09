@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {StatisticsDomainsDetail} from 'app/model/StatisticsDomainsDetail';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
@@ -6,6 +6,9 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
+import {isPlatformServer} from '@angular/common';
+import {forkJoin} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-tissues-organisms',
@@ -25,39 +28,42 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
     private tissues: StatisticsDomainsDetail[];
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
+    isServer: boolean;
 
-    constructor(datasetService: DataSetService, private router: Router, private logger: LogService) {
+    constructor(datasetService: DataSetService, private router: Router, private logger: LogService,
+                private http: HttpClient,
+                @Inject(PLATFORM_ID) private platformId: string) {
         super();
+        this.isServer = isPlatformServer(this.platformId);
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
     }
 
     ngOnInit() {
-        this.startRequest();
-    }
+        if (!isPlatformServer(this.platformId)) {
+            const self = this;
+            const urls = [
+                this.webServiceUrl + 'statistics/tissues?size=100',
+                this.webServiceUrl + 'statistics/organisms?size=100',
+                this.webServiceUrl + 'statistics/diseases?size=100'
+            ];
+            forkJoin(
+                urls.map(url => this.http.get(url))
+            ).subscribe(data => {
+                ChartsErrorHandler.removeGettingInfo(self.bubChartName);
 
-    private startRequest(): void {
-        const self = this;
-        const urls = [
-            this.webServiceUrl + 'statistics/tissues?size=100',
-            this.webServiceUrl + 'statistics/organisms?size=100',
-            this.webServiceUrl + 'statistics/diseases?size=100'
-        ];
+                self.tissues = data[0] as StatisticsDomainsDetail[];
+                self.organisms = data[1] as StatisticsDomainsDetail[];
+                self.diseases = data[2] as StatisticsDomainsDetail[];
 
-        Promise.all(urls.map(url => d3.json(url))).then(function([tissues, organisms, diseases]) {
-            self.componentLoaded();
-            ChartsErrorHandler.removeGettingInfo(self.bubChartName);
-
-            self.tissues = tissues as StatisticsDomainsDetail[];
-            self.organisms = organisms as StatisticsDomainsDetail[];
-            self.diseases = diseases as StatisticsDomainsDetail[];
-
-            self.prepareData();
-        }, (err) => {
-            self.componentLoaded();
-            ChartsErrorHandler.outputErrorInfo(self.bubChartName);
-        });
+                self.prepareData();
+            }, err => {
+                ChartsErrorHandler.outputErrorInfo(self.bubChartName);
+            }, () => {
+                self.componentLoaded();
+            });
+        }
     }
 
     private prepareData(): void {

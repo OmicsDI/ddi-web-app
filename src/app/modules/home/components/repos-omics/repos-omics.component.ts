@@ -1,9 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {isPlatformServer} from '@angular/common';
+import {forkJoin} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-repos-omics',
@@ -26,9 +29,14 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     private data = [];
     private omicsDataSimple = [];
     private omicsDataNum = [];
+    isServer: boolean;
 
-    constructor(dataSetService: DataSetService, private router: Router) {
+    constructor(dataSetService: DataSetService,
+                private router: Router,
+                private http: HttpClient,
+                @Inject(PLATFORM_ID) private platformId: string) {
         super();
+        this.isServer = isPlatformServer(this.platformId);
         this.webServiceUrl = dataSetService.getWebServiceUrl();
         this.proteomicsList = dataSetService.getProteomicsList();
         this.metabolomicsList = dataSetService.getMetabolomicsList();
@@ -37,22 +45,22 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     }
 
     ngOnInit() {
-        this.startRequest();
-    }
-
-    public startRequest() {
-        const self = this;
-        const urls = [
-            this.webServiceUrl + 'statistics/domains',
-            this.webServiceUrl + 'statistics/omics'
-        ];
-
-        Promise.all(urls.map(url => d3.json(url))).then(function([domains, omicstype]) {
-            self.draw(domains as any[], omicstype as any[]);
-        }, (err) => {
-            ChartsErrorHandler.outputErrorInfo(self.pieChartName);
-        });
-        this.componentLoaded();
+        if (!isPlatformServer(this.platformId)) {
+            const self = this;
+            const urls = [
+                this.webServiceUrl + 'statistics/domains',
+                this.webServiceUrl + 'statistics/omics'
+            ];
+            forkJoin(
+                urls.map(url => this.http.get(url))
+            ).subscribe(data => {
+                self.draw(data[0] as any[], data[1] as any[]);
+            }, err => {
+                ChartsErrorHandler.outputErrorInfo(self.pieChartName);
+            }, () => {
+                this.componentLoaded();
+            });
+        }
     }
 
     public draw(domains: any[], omicsType: any[]): void {

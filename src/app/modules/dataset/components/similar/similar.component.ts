@@ -80,8 +80,4 @@ export class SimilarComponent implements OnInit, OnChanges {
             return db.databaseName;
         }
     }
-
-    openDataset(dataset: DataSet) {
-        this.router.navigate(['dataset', dataset.source, dataset.id]);
-    }
 }

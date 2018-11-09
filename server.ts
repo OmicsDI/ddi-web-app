@@ -5,9 +5,9 @@ import {enableProdMode} from '@angular/core';
 import {ngExpressEngine} from '@nguniversal/express-engine';
 // Import module map for lazy loading
 import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
-
 import * as express from 'express';
 import {join} from 'path';
+import { environment } from './src/environments/environment';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -24,10 +24,9 @@ const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main'
 const domino = require('domino');
 const fs = require('fs');
 const path = require('path');
+const compression = require('compression');
 const template = fs.readFileSync('dist/browser/index.html').toString();
 const win = domino.createWindow(template);
-const fetch = require('node-fetch-polyfill');
-global['fetch'] = fetch;
 global['window'] = win;
 global['document'] = win.document;
 global['DOMTokenList'] = win.DOMTokenList;
@@ -50,13 +49,26 @@ app.set('views', DIST_FOLDER);
 // Example Express Rest API endpoints
 // app.get('/api/**', (req, res) => { });
 // Server static files from /browser
-app.get('*.*', express.static(DIST_FOLDER, {
+app.use(compression());
+
+app.use(environment.baseHref, express.static(DIST_FOLDER, {
   maxAge: '1y'
 }));
 
-// All regular routes use the Universal engine
+app.get(path.join(environment.baseHref, 'dashboard/*'), (req, res) => {
+    res.sendFile(join(DIST_FOLDER, 'index.html'));
+});
+
+app.get(path.join(environment.baseHref, 'profile'), (req, res) => {
+    res.sendFile(join(DIST_FOLDER, 'index.html'));
+});
+
+app.get(environment.baseHref, (req, res) => {
+    res.render('index', { req });
+});
+
 app.get('*', (req, res) => {
-  res.render('index', { req });
+    res.render('index', { req });
 });
 
 // Start up the Node server

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -26,6 +26,7 @@ import {throwError} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {Meta, Title} from '@angular/platform-browser';
+import {isPlatformServer} from '@angular/common';
 
 
 @Component({
@@ -62,7 +63,7 @@ export class DatasetComponent implements OnInit {
 
     profile: Profile;
     isLogged = false;
-    datasetChanged = false;
+    isServer = true;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -76,12 +77,14 @@ export class DatasetComponent implements OnInit {
                 private auth: AuthService,
                 private slimLoadingBarService: NgProgress,
                 private titleService: Title,
+                @Inject(PLATFORM_ID) platformId,
                 private metaTagService: Meta,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
         this.index_dataset = this.current_url.indexOf('dataset');
         this.web_service_url = dataSetService.getWebServiceUrl();
+        this.isServer = isPlatformServer(platformId);
         this.auth.loggedIn().then(isLogged => {
             this.isLogged = isLogged;
             if (isLogged) {
@@ -90,15 +93,66 @@ export class DatasetComponent implements OnInit {
         })
     }
 
+    parseDataset(dataset: DataSetDetail) {
+        const self = this;
+        self.reanalysisOf = [];
+        self.reanalysedBy = [];
+        self.relatedOmics = [];
+        this.d = dataset;
+        this.titleService.setTitle(dataset.name + ' - ' + 'OmicsDI');
+        this.metaTagService.updateTag({name: 'description', content: dataset.description.replace(/<[^>]*>/g, '')});
+        this.acc = dataset.id;
+        this.repository = dataset.source;
+
+        this.logger.debug('DataSetDetailResult: {}', dataset);
+
+        if (this.d.secondary_accession) {
+            this.d.secondary_accession.forEach(item => {
+                this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, this.databases);
+            });
+        }
+
+        const db = this.databaseListService.getDatabaseBySource(dataset.source, this.databases);
+        this.repositoryName = db.databaseName;
+        this.databaseUrl = db.sourceUrl;
+
+        if (dataset.similars != null) {
+            dataset.similars.forEach(similar => {
+                if (similar.relationType === 'Reanalysis of') {
+                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
+                    self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
+                } else if (similar.relationType === 'Reanalyzed by') {
+                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
+                    self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
+                } else {
+                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
+                    self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
+                }
+            });
+        }
+        this.slimLoadingBarService.ref().complete();
+    }
+
     ngOnInit() {
         const self = this;
+        if (this.isServer) {
+            this.acc = this.route.snapshot.params['acc'];
+            this.repository = this.route.snapshot.params['domain'];
+            forkJoin(this.databaseListService.getDatabaseList(), this.dataSetService.getDataSetDetail(this.acc, this.repository))
+                .subscribe(data => {
+                    this.databases = data[0];
+                    this.parseDataset(data[1]);
+                }, () => {
+                    self.notfound = true;
+                });
+            return;
+        }
         this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
             this.route.params.subscribe(params => {
-                this.datasetChanged = !this.datasetChanged;
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
-                this.databases = databases;
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
                     .pipe(catchError((err: HttpErrorResponse) => {
                         self.slimLoadingBarService.ref().complete();
@@ -107,46 +161,7 @@ export class DatasetComponent implements OnInit {
                             'Can\'t get dataset, err: ' + err.message);
                     }))
                     .subscribe(result => {
-                        self.reanalysisOf = [];
-                        self.reanalysedBy = [];
-                        self.relatedOmics = [];
-                        this.d = result;
-                        this.titleService.setTitle(result.name + ' - ' + 'OmicsDI');
-                        this.metaTagService.updateTag({name: 'description', content: result.description.replace(/<[^>]*>/g, '')});
-                        this.acc = result.id;
-                        this.repository = result.source;
-
-                        this.logger.debug('DataSetDetailResult: {}', result);
-
-                        if (this.d.secondary_accession) {
-                            this.d.secondary_accession.forEach(item => {
-                                this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, databases);
-                            });
-                        }
-
-                        const db = this.databaseListService.getDatabaseBySource(result.source, databases);
-                        this.repositoryName = db.databaseName;
-                        this.databaseUrl = db.sourceUrl;
-
-                        if (result.similars != null) {
-                            result.similars.filter(s => s.relationType === 'Reanalysis of').map(reanalysis => {
-                                const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysis.database, databases);
-                                self.reanalysisOf.push({reanalysis: reanalysis, db: reanalyDb});
-                            });
-
-                            result.similars.filter(s => s.relationType === 'Reanalyzed by').map(reanalysedBy => {
-                                const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(reanalysedBy.database, databases);
-                                self.reanalysedBy.push({reanalysis: reanalysedBy, db: reanalyDb});
-                            });
-
-                            result.similars.filter(s => s.relationType !== 'Reanalyzed by' && s.relationType !== 'Reanalysis of')
-                                .map(omics => {
-                                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(omics.database, databases);
-                                    self.relatedOmics.push({reanalysis: omics, db: reanalyDb});
-                            });
-                        }
-
-                        this.slimLoadingBarService.ref().complete();
+                    this.parseDataset(result);
                 });
             });
         });
