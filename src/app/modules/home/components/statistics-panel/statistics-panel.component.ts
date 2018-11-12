@@ -67,9 +67,6 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
                     eval: function (item) {return item.count; },
                     classed: function (item) {return item.text.split(' ').join(''); }
                 }};
-        }, err => {
-        }, () => {
-            self.componentLoaded();
         });
     }
 }

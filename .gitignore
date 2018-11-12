@@ -49,3 +49,5 @@ Thumbs.db
 
 coverage
 sitemaps/*.xml
+deploy.*
+rollback.*

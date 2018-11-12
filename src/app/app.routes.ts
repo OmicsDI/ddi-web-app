@@ -20,7 +20,8 @@ export const routes: Routes = [
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule', canActivate: [AuthService]},
-    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthService]}
+    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthService]},
+    {path: '**', component: NotfoundComponent}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];

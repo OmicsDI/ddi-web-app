@@ -51,6 +51,18 @@ app.set('views', DIST_FOLDER);
 // Server static files from /browser
 app.use(compression());
 
+app.get(environment.baseHref, (req, res) => {
+    res.render('index', { req });
+});
+
+app.get(environment.baseHref + '/', (req, res) => {
+    res.render('index', { req });
+});
+
+app.get('/', (req, res) => {
+    res.render('index', { req });
+});
+
 app.use(environment.baseHref, express.static(DIST_FOLDER, {
   maxAge: '1y'
 }));
@@ -61,10 +73,6 @@ app.get(path.join(environment.baseHref, 'dashboard/*'), (req, res) => {
 
 app.get(path.join(environment.baseHref, 'profile'), (req, res) => {
     res.sendFile(join(DIST_FOLDER, 'index.html'));
-});
-
-app.get(environment.baseHref, (req, res) => {
-    res.render('index', { req });
 });
 
 app.get('*', (req, res) => {

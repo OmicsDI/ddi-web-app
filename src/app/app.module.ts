@@ -1,7 +1,7 @@
 // <reference path="..node_modules/@angular/forms/src/form_providers.d.ts"/>
 // <reference path="services/ontology.service.ts"/>
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, PLATFORM_ID} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from '@shared/components/app/app.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
@@ -32,7 +32,7 @@ import {AltmetricService} from '@shared/services/altmetric.service';
 import {ScoreService} from '@shared/services/score.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {InviteService} from '@shared/services/invite.service';
-import {APP_BASE_HREF, CommonModule, isPlatformBrowser, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {ThorService} from '@shared/services/thor.service';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
@@ -78,7 +78,6 @@ export function jwtTokenGetter() {
         PipesModule,
         HomeModule,
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        FormsModule,
         HttpClientModule,
         NgProgressModule.forRoot(),
         MatDialogModule,
