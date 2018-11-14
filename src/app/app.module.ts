@@ -1,6 +1,5 @@
 // <reference path="..node_modules/@angular/forms/src/form_providers.d.ts"/>
 // <reference path="services/ontology.service.ts"/>
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from '@shared/components/app/app.component';
@@ -49,6 +48,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {
     TRANSFER_RESPONSE_BASE_URLS} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
 import {environment} from '../environments/environment';
+import {WORKER_APP_LOCATION_PROVIDERS, WorkerAppModule} from '@angular/platform-webworker';
 
 
 export function jwtTokenGetter() {
@@ -77,7 +77,6 @@ export function jwtTokenGetter() {
         CommonModule,
         PipesModule,
         HomeModule,
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         HttpClientModule,
         NgProgressModule.forRoot(),
         MatDialogModule,
@@ -97,13 +96,14 @@ export function jwtTokenGetter() {
         ClipboardModule,
         ControlsModule,
         CommonplaceModule,
-        BsDropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
+        WorkerAppModule
     ],
     exports: [
         RouterModule
     ],
     providers: [ProfileService,
-        {provide: APP_BASE_HREF, useValue: environment.baseHref},
+        {provide: APP_BASE_HREF, useValue: '/'},
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         {
             provide: TRANSFER_RESPONSE_BASE_URLS,
@@ -133,7 +133,9 @@ export function jwtTokenGetter() {
         , LogService
         , LogPublisherService
         , UploadService
-        , InviteService],
+        , InviteService
+        , WORKER_APP_LOCATION_PROVIDERS
+    ],
     entryComponents: [
         // ConfirmDialogComponent
         //   CitationDialogSearchComponent

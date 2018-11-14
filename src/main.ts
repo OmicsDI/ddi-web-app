@@ -1,13 +1,12 @@
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {enableProdMode} from '@angular/core';
 import {environment} from './environments/environment';
-import {AppModule} from './app/app.module';
+import {bootstrapWorkerUi, WORKER_UI_LOCATION_PROVIDERS} from '@angular/platform-webworker';
 
 if (environment.production) {
     enableProdMode();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic().bootstrapModule(AppModule)
-      .catch(err => console.log(err));
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//
+// });
+bootstrapWorkerUi('webworker.bundle.js', WORKER_UI_LOCATION_PROVIDERS);
