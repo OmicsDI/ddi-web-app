@@ -101,7 +101,10 @@ export class PieChartDirective implements OnChanges {
     }
 
     initialize(): void {
-        const abs_path = this.location.prepareExternalUrl(this.location.path());
+        let abs_path = this.location.prepareExternalUrl(this.location.path());
+        if (isPlatformServer(this.platformId)) {
+            abs_path = this.location.path();
+        }
         const body = d3.select(this.el.nativeElement),
             data = this.convertData(),
             self = this;

@@ -7,7 +7,6 @@ import {ngExpressEngine} from '@nguniversal/express-engine';
 import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
 import * as express from 'express';
 import {join} from 'path';
-import { environment } from './src/environments/environment';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -23,8 +22,6 @@ const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main'
 
 const domino = require('domino');
 const fs = require('fs');
-const path = require('path');
-const compression = require('compression');
 const template = fs.readFileSync('dist/browser/index.html').toString();
 const win = domino.createWindow(template);
 global['window'] = win;
@@ -46,33 +43,12 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);
 
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
-// Server static files from /browser
-app.use(compression());
-
-app.get(environment.baseHref, (req, res) => {
-    res.render('index', { req });
-});
-
-app.get(environment.baseHref + '/', (req, res) => {
-    res.render('index', { req });
-});
+app.use('/', express.static(DIST_FOLDER, {
+    maxAge: '1y'
+}));
 
 app.get('/', (req, res) => {
     res.render('index', { req });
-});
-
-app.use(environment.baseHref, express.static(DIST_FOLDER, {
-  maxAge: '1y'
-}));
-
-app.get(path.join(environment.baseHref, 'dashboard/*'), (req, res) => {
-    res.sendFile(join(DIST_FOLDER, 'index.html'));
-});
-
-app.get(path.join(environment.baseHref, 'profile'), (req, res) => {
-    res.sendFile(join(DIST_FOLDER, 'index.html'));
 });
 
 app.get('*', (req, res) => {

@@ -3,6 +3,5 @@ export const environment = {
     webServiceUrl : 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
     userServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/profilews/api/',
     userServiceCookiePath: '/Tools/omicsdi/profilews/',
-    baseHref: '/Tools/omicsdi',
     thorUrl: 'https://www.ebi.ac.uk/europepmc/hubthor/api/dataclaiming/'
 };

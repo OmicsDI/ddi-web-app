@@ -4,7 +4,6 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = function (env) {
-  const envKey = env.envKey || 'prod';
   return {
       mode: 'none',
       entry: {
@@ -44,10 +43,6 @@ module.exports = function (env) {
               /(.+)?express(\\|\/)(.+)?/,
               path.join(__dirname, 'src'),
               {}
-          ),
-          new webpack.NormalModuleReplacementPlugin(
-              /\.\/src\/environments\/environment/,
-              `./src/environments/environment.${envKey}`
           )
       ]
   };

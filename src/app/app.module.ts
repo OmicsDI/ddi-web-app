@@ -103,7 +103,6 @@ export function jwtTokenGetter() {
         RouterModule
     ],
     providers: [ProfileService,
-        {provide: APP_BASE_HREF, useValue: environment.baseHref},
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         {
             provide: TRANSFER_RESPONSE_BASE_URLS,
