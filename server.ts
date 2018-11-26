@@ -43,10 +43,6 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);
 
-app.use('/', express.static(DIST_FOLDER, {
-    maxAge: '1y'
-}));
-
 app.get('/', (req, res) => {
     res.render('index', { req });
 });
