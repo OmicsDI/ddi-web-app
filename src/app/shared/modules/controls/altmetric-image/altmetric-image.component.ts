@@ -1,6 +1,8 @@
-import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
+import {Component, Inject, Input, OnChanges, OnInit, PLATFORM_ID, SimpleChange} from '@angular/core';
 import {AltmetricService} from '@shared/services/altmetric.service';
 import {AppConfig} from 'app/app.config';
+import {LogService} from '@shared/modules/logs/services/log.service';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
     selector: 'app-altmetric-image',
@@ -15,7 +17,10 @@ export class AltmetricImageComponent implements OnInit, OnChanges {
     image_url = 'static/images/altmetric/altmetric_unknown.png';
     detail_url = '';
 
-    constructor(private altmetricService: AltmetricService, public appConfig: AppConfig) {
+    constructor(private altmetricService: AltmetricService,
+                private logger: LogService,
+                @Inject(PLATFORM_ID) private platformId,
+                public appConfig: AppConfig) {
     }
 
     ngOnInit() {
@@ -30,13 +35,16 @@ export class AltmetricImageComponent implements OnInit, OnChanges {
             if (propName === 'PMID') {
                 if (null != changes[propName].currentValue) {
                     const PMID = changes[propName].currentValue;
-
-                    this.altmetricService.get(PMID).subscribe(
-                        result => {
-                            this.image_url = result.image_url;
-                            this.detail_url = result.detail_url;
-                        }
-                    );
+                    if (isPlatformBrowser(this.platformId)) {
+                        this.altmetricService.get(PMID).subscribe(
+                            result => {
+                                this.image_url = result.image_url;
+                                this.detail_url = result.detail_url;
+                            }, err => {
+                                this.logger.debug('PMID ' + PMID + ' got error: ' + err);
+                            }
+                        );
+                    }
                 }
             }
         }

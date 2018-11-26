@@ -1,5 +1,6 @@
-import {Directive, ElementRef, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, Inject, Input, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
+import {isPlatformServer} from '@angular/common';
 
 @Directive({
     selector: '[appBubbleChart]'
@@ -10,8 +11,10 @@ export class BubbleChartDirective implements OnInit {
         outerRadius: number
     };
 
-    constructor(private el: ElementRef) {
+    private isServer: boolean;
 
+    constructor(private el: ElementRef, @Inject(PLATFORM_ID) platformId) {
+        this.isServer = isPlatformServer(platformId);
     }
 
     extend(...args) {
@@ -30,6 +33,7 @@ export class BubbleChartDirective implements OnInit {
         const defaultOuterRadius = this.opts['size'] / 2;
         const defaultRadiusMin = this.opts['size'] / 10;
         const pi2 = Math.PI * 2;
+        const self = this;
         const svg = d3.select(this.el.nativeElement).append('svg');
 
         const options = {};
@@ -56,8 +60,6 @@ export class BubbleChartDirective implements OnInit {
 
         const BubbleChart = svg
             .attr('preserveAspectRatio', 'xMidYMid')
-            .attr('width', options['size'])
-            .attr('height', options['size'])
             .attr('class', 'bubbleChart, center')
             .attr('viewBox', function (d) {return ['0 0', options['viewBoxSize'], options['viewBoxSize']].join(' ')});
 
@@ -181,16 +183,14 @@ export class BubbleChartDirective implements OnInit {
             .attr('cy', function (d, i) {
                 return d['cy'];
             })
-            .style('fill', function (d) {
+            .attr('fill', function (d) {
                 return options['data'].color !== undefined ? options['data'].color(d['item']) : fnColor(d['item'].text);
             })
             .attr('opacity', '0.8');
         node
             .append('text')
             .classed('count', true)
-            .style('font-size', '28px')
-            .style('text-anchor', 'middle')
-            .style('fill', 'white')
+            .attr('style', 'font-size: 28px; text-anchor: middle; fill: white')
             .attr('dy', '0px')
             .attr('x', function (d, ) {return d['cx']; })
             .attr('y', function (d, i) {return d['cy']; })
@@ -199,19 +199,19 @@ export class BubbleChartDirective implements OnInit {
         node
             .append('text')
             .classed('text', true)
-            .style('font-size', '14px')
-            .style('text-anchor', 'middle')
-            .style('fill', 'white')
+            .attr('style', 'font-size: 14px; text-anchor: middle; fill: white')
             .attr('dy', '20px')
             .attr('x', function (d, ) {return d['cx']; })
             .attr('y', function (d, i) {return d['cy']; })
             .text(function (d) {
                 return d['item']['text']; });
-        bb.onClick(node);
-        const firstNode = BubbleChart.selectAll('.node')
-            .filter(function (d, i) {return i === 0; });
-        bb.reset(BubbleChart.selectAll('.node'));
-        bb.moveToCenter(firstNode);
-        bb.moveToReflection(BubbleChart.selectAll('.node:not(.active)'), true);
+        if (!self.isServer) {
+            bb.onClick(node);
+            const firstNode = BubbleChart.selectAll('.node')
+                .filter(function (d, i) {return i === 0; });
+            bb.reset(BubbleChart.selectAll('.node'));
+            bb.moveToCenter(firstNode);
+            bb.moveToReflection(BubbleChart.selectAll('.node:not(.active)'), true);
+        }
     }
 }

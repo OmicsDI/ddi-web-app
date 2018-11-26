@@ -7,4 +7,7 @@ if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+document.addEventListener('DOMContentLoaded', () => {
+    // tslint:disable-next-line
+    platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.log(err));
+});

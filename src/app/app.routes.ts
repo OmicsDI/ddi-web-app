@@ -10,7 +10,6 @@ import {AuthService} from '@shared/services/auth.service';
 export const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
-    {path: 'profile', redirectTo: 'dashboard/profile', canActivate: [AuthService]},
     {path: 'profile/:username', loadChildren: '@modules/profile/profile.module#ProfileModule'},
     {path: 'database', loadChildren: '@modules/database/database.module#DatabaseModule'},
     {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},
@@ -20,9 +19,10 @@ export const routes: Routes = [
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule', canActivate: [AuthService]},
-    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthService]}
+    {path: 'dashboard', loadChildren: '@modules/dashboard/dashboard.module#DashboardModule', canActivate: [AuthService]},
+    {path: '**', component: NotfoundComponent}
     // { path: 'welcome/:inviteId', component: WelcomeComponent },
 
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {useHash: false});
+export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {initialNavigation: 'enabled'});

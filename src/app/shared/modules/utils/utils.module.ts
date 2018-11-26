@@ -4,10 +4,12 @@ import {TooltipDirective} from './tooltip/tooltip.directive';
 import {TooltipContentComponent} from './tooltip/tooltip-content.component';
 import {IsLoggedDirective} from '@shared/directives/is-logged.directive';
 import {PieChartDirective} from '@shared/directives/pie-chart.directive';
+import {TransferHttpResponseModule} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        TransferHttpResponseModule
     ],
     declarations: [
         TooltipDirective,

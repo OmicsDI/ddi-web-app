@@ -1,31 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
     selector: 'app-tweets-news',
     templateUrl: './tweets-news.component.html',
-    styleUrls: ['./tweets-news.component.css'],
-    providers: [ {provide: AsyncInitialisedComponent, useExisting: TweetsNewsComponent }]
+    styleUrls: ['./tweets-news.component.css']
 })
-export class TweetsNewsComponent extends AsyncInitialisedComponent implements OnInit {
+export class TweetsNewsComponent implements OnInit {
 
     height: number;
     width: number;
 
-    constructor() {
-        super();
+    constructor(@Inject(PLATFORM_ID) private platformId: string) {
     }
 
     ngOnInit() {
-        const statisticWidth = document.getElementById('statisticspanel').offsetWidth;
-        const statisticHeight = document.getElementById('statisticspanel').offsetHeight;
-        let height = Math.sqrt(statisticWidth * statisticWidth + statisticHeight * statisticHeight) * 0.8;
-        if (height < 400) {
-           height = 400;
+        if (isPlatformBrowser(this.platformId)) {
+            const statisticWidth = document.getElementById('statisticspanel').offsetWidth;
+            const statisticHeight = document.getElementById('statisticspanel').offsetHeight;
+            let height = Math.sqrt(statisticWidth * statisticWidth + statisticHeight * statisticHeight) * 0.8;
+            if (height < 400) {
+                height = 400;
+            }
+            this.height = height;
+            this.fetchTweets();
         }
-        this.height = height;
-        this.componentLoaded();
-        this.fetchTweets();
     }
 
     private fetchTweets() {

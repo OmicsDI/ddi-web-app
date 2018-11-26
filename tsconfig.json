@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "model/*": [
+        "app/model/*"
+      ],
+      "@modules/*": [
+        "app/modules/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
+      "stream": ["node_modules/readable-stream/readable.js"]
+    },
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "mapRoot": "./",
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "dist/out-tsc",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  }
+}

@@ -172,10 +172,10 @@
 
             <app-publication [ids]="d.publicationIds"></app-publication>
 
-            <app-similar-molecule *ngIf="acc && repository" [acc]="acc" [repository]="repository"></app-similar-molecule>
+            <app-similar-molecule *ngIf="acc && repository && !isServer" [acc]="acc" [repository]="repository"></app-similar-molecule>
 
             <!--dataset_upper -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" *ngIf="!isServer">
                 <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
                 <disqus [identifier]="repository+'/'+acc" [url]="repository+'/'+acc"></disqus>
             </div>
@@ -209,6 +209,5 @@
         </div>
     </div>
 </div>
-
-
+<ngx-json-ld [json]="schema" *ngIf="schema"></ngx-json-ld>
 

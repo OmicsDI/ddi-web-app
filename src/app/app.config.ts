@@ -76,6 +76,10 @@ export class AppConfig {
         return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}&r=${Math.random()}`;
     }
 
+    getDatasetSchemaUrl(acc: string, repository: string): string {
+        return `${environment.schemaServiceUrl}/dataset/${repository}/${acc}`;
+    }
+
     getDatasetLatestUrl(): string {
         return `${environment.webServiceUrl}dataset/latest?size=10`;
     }
