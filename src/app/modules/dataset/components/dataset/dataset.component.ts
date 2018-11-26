@@ -64,6 +64,7 @@ export class DatasetComponent implements OnInit {
     profile: Profile;
     isLogged = false;
     isServer = true;
+    schema: any;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -73,7 +74,6 @@ export class DatasetComponent implements OnInit {
                 private dialog: MatDialog,
                 private dialogService: DialogService,
                 private notificationService: NotificationsService,
-                private logger: LogService,
                 private auth: AuthService,
                 private slimLoadingBarService: NgProgress,
                 private titleService: Title,
@@ -104,8 +104,6 @@ export class DatasetComponent implements OnInit {
         this.acc = dataset.id;
         this.repository = dataset.source;
 
-        this.logger.debug('DataSetDetailResult: {}', dataset);
-
         if (this.d.secondary_accession) {
             this.d.secondary_accession.forEach(item => {
                 this.databaseByAccession[item] = this.databaseListService.getDatabaseByAccession(item, this.databases);
@@ -133,14 +131,26 @@ export class DatasetComponent implements OnInit {
         this.slimLoadingBarService.ref().complete();
     }
 
+    parseSchema(schema: any) {
+        schema['description'] = schema['description'].replace(/<[^>]*>/g, '');
+        schema['distribution'] = {
+            '@type': 'DataDownload',
+            'contentUrl': this.web_service_url + 'dataset/' + this.repository + '/' + this.acc + '.json'
+        };
+        return schema;
+    }
+
     ngOnInit() {
         const self = this;
         if (this.isServer) {
             this.acc = this.route.snapshot.params['acc'];
             this.repository = this.route.snapshot.params['domain'];
-            forkJoin(this.databaseListService.getDatabaseList(), this.dataSetService.getDataSetDetail(this.acc, this.repository))
+            forkJoin(this.databaseListService.getDatabaseList(),
+                this.dataSetService.getDataSetDetail(this.acc, this.repository),
+                this.dataSetService.getSchemaMarkup(this.acc, this.repository))
                 .subscribe(data => {
                     this.databases = data[0];
+                    this.schema = this.parseSchema(data[2]);
                     this.parseDataset(data[1]);
                 }, () => {
                     self.notfound = true;
@@ -153,16 +163,18 @@ export class DatasetComponent implements OnInit {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
+                this.dataSetService.getSchemaMarkup(this.acc, this.repository).subscribe(result => {
+                    this.parseSchema(result);
+                });
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
                     .pipe(catchError((err: HttpErrorResponse) => {
                         self.slimLoadingBarService.ref().complete();
                         self.notfound = true;
-                        return throwError(
-                            'Can\'t get dataset, err: ' + err.message);
+                        return throwError('Can\'t get dataset, err: ' + err.message);
                     }))
                     .subscribe(result => {
-                    this.parseDataset(result);
-                });
+                        this.schema = this.parseDataset(result);
+                    });
             });
         });
     }
@@ -193,9 +205,7 @@ export class DatasetComponent implements OnInit {
 
         this.auth.loggedIn().then(isLogged => {
             if (isLogged) {
-                this.logger.debug('Claiming dataset for user: {}', this.profile.userId);
                 this.profileService.claimDataset(this.profile.userId, dataset);
-                //
                 this.profile.dataSets.push(dataset);
                 this.profileService.setProfile(this.profile);
             }
@@ -333,8 +343,6 @@ export class DatasetComponent implements OnInit {
             this.abstract_sections = null;
             this.sample_protocol_sections = null;
             this.data_protocol_sections = null;
-
-            this.logger.debug('remove hightlighting');
             this.ontology_highlighted = false;
         } else {
 
@@ -344,10 +352,7 @@ export class DatasetComponent implements OnInit {
             ).subscribe(
                 data => {
                     this.enrichmentInfo = data[0];
-                    this.logger.debug('Enrichment info: {}', this.enrichmentInfo);
                     this.synonymResult = data[1];
-                    this.logger.debug('Synonym result: {}', this.synonymResult);
-                    this.logger.debug('calling processSections');
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {

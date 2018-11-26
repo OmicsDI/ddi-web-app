@@ -3,7 +3,7 @@
      style="margin-top: 10px; margin-bottom: 10px"
      (click)="toggle(d);" *ngIf="d">
     <div class="mt-card-body">
-        <div style="float: right; text-align: right; margin-top: -5px; margin-right: -5px">
+        <div style="float: right; text-align: right; margin-top: -5px; margin-right: -5px; margin-left: 10px">
             <div appPieChart class="pull-right" [width]="65" [circleRadius]="52" [dataset]="d"></div>
         </div>
 
@@ -19,9 +19,9 @@
                 <!--
                     <b>Project description:</b>
                 -->
-                <span *ngIf="d.description" class="description" [innerHTML]="d.description | truncate : 200 : '...'"></span>
+                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : 200 : '...'"></span>
 
-                <span *ngIf="!!!d.description" class="description">Not available</span>
+                <span *ngIf="!!!d.description || d.description.length < 3" class="description">Not available</span>
             </div>
 
             <div class="project-widget-paragraph">

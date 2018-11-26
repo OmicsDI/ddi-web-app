@@ -34,6 +34,7 @@
     "@ngui/auto-complete": "^2.0.0",
     "@nguniversal/express-engine": "^7.0.2",
     "@nguniversal/module-map-ngfactory-loader": "v7.0.2",
+    "@ngx-lite/json-ld": "^0.5.2",
     "@ngx-progressbar/core": "^5.2.1",
     "angular2-notifications": "^1.0.4",
     "angular2-ui-switch": "git+https://github.com/daominhsangvn/angular2-ui-switch.git",
