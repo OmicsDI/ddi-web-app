@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {ProfileService} from '@shared/services/profile.service';
 import {FormBuilder} from '@angular/forms';
 import {Profile} from 'model/Profile';
@@ -12,6 +12,7 @@ import {Database} from 'model/Database';
 import {AuthService} from '@shared/services/auth.service';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 import {NgProgress} from '@ngx-progressbar/core';
+import {isPlatformServer} from '@angular/common';
 
 @Component({
     selector: 'app-profile',
@@ -31,6 +32,7 @@ export class ProfileComponent implements OnInit {
 
     toDataset = DataSetDetail.toDataset;
     datasetShowed: DataSetDetail[];
+    isServer = false
 
     constructor(public profileService: ProfileService,
                 private dataSetService: DataSetService,
@@ -41,7 +43,11 @@ export class ProfileComponent implements OnInit {
                 private logger: LogService,
                 private databaseListService: DatabaseListService,
                 private slimLoadingBarService: NgProgress,
+                @Inject(PLATFORM_ID) private platformId,
                 private route: ActivatedRoute) {
+        if (isPlatformServer(platformId)) {
+            this.isServer = true;
+        }
     }
 
     filterDatasets(keyword) {

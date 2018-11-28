@@ -16,3 +16,10 @@ i#species_icon.icon-conceptual::before {
 
 .statistic-panel-item {
 }
+
+@media (min-width: 1200px) {
+    #statistics-panel-body {
+        width: 95%;
+        margin: auto;
+    }
+}

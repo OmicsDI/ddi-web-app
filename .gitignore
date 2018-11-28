@@ -49,3 +49,7 @@ Thumbs.db
 
 coverage
 sitemaps/*.xml
+deploy.*
+rollback.*
+package-lock.json
+nginx.conf.template

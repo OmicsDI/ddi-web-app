@@ -49,7 +49,7 @@
                         </h4>
                     </div>
                     <div class="mt-card-body" style="margin-top: 20px">
-                        <app-counting-data-dashboard [profile]="profileX"></app-counting-data-dashboard>
+                        <app-counting-data-dashboard [profile]="profileX" *ngIf="!isServer"></app-counting-data-dashboard>
                     </div>
                 </div>
                 <div class="mt-card">
@@ -59,7 +59,7 @@
                         </h4>
                     </div>
                     <div class="mt-card-body">
-                        <disqus [identifier]="profileX.userId"></disqus>
+                        <disqus [identifier]="profileX.userId" *ngIf="!isServer"></disqus>
                     </div>
                 </div>
                 <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->

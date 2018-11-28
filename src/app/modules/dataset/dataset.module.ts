@@ -12,6 +12,7 @@ import {PublicationComponent} from '@modules/dataset/components/publication/publ
 import {SimilarComponent} from '@modules/dataset/components/similar/similar.component';
 import {SimilarMoleculeComponent} from '@modules/dataset/components/similar-molecule/similar-molecule.component';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
+import {NgxJsonLdModule} from '@ngx-lite/json-ld';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
         FormsModule,
         UtilsModule,
         ControlsModule,
-        PipesModule
+        PipesModule,
+        NgxJsonLdModule
     ],
     declarations: [
         DatasetComponent,

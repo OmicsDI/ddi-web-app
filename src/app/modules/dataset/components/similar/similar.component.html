@@ -9,7 +9,7 @@
             <div class="project-widget  list-group-item ddi-card-panel">
                 <div class="project-widget-accession">
                     <app-omics-image [omics]="ds?.omicsType"></app-omics-image>
-                    <a target="" class="align-justify ng-binding similar_title" (click)="openDataset(ds)">
+                    <a class="align-justify ng-binding similar_title" [routerLink]="['/dataset', ds.source, ds.id]">
                         {{ds.title}}</a>
                 </div>
                 <div class="project-widget-paragraph hidden ng-binding">

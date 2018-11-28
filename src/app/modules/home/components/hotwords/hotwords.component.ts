@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 
 import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
 import {DataSetService} from '@shared/services/dataset.service';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
+import {isPlatformServer} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {forkJoin} from 'rxjs';
 
 const cloud = require('d3-cloud');
 
@@ -29,20 +32,26 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
     private fill: string[];
     private field: string;
 
-    constructor(datasetService: DataSetService, private router: Router) {
+    constructor(private datasetService: DataSetService,
+                private router: Router,
+                private http: HttpClient,
+                @Inject(PLATFORM_ID) private platformId: string) {
         super();
-        this.webServiceUrl = datasetService.getWebServiceUrl();
+    }
+
+    ngOnInit() {
+        if (isPlatformServer(this.platformId)) {
+            return;
+        }
+        this.webServiceUrl = this.datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
-        this.fill = Array.from(d3.schemeCategory10.values());
+        this.fill = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
         this.field = '';
         this.terms = {
             Omics_description: [],
             Omics_data_protocol: [],
             Omics_sample_protocol: []
         };
-    }
-
-    ngOnInit() {
         this.startRequest();
     }
 
@@ -55,14 +64,15 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
             webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol',
             webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol'
         ];
-
-        Promise.all(urls.map(url => d3.json(url))).then(function([omicsDes, omicsDatap, omicsSamp]) {
-            self.componentLoaded();
-            self.drawWordCloud(null, omicsDes as FrequentlyTerm[], omicsDatap as FrequentlyTerm[], omicsSamp as FrequentlyTerm[]);
-        }, (err) => {
-            self.componentLoaded();
+        forkJoin(
+            urls.map(url => this.http.get(url))
+        ).subscribe(data => {
+            self.drawWordCloud(null, data[0] as FrequentlyTerm[], data[1] as FrequentlyTerm[], data[2] as FrequentlyTerm[]);
+        }, err => {
             self.drawWordCloud(err, [], [], []);
-        });
+        }, () => {
+            self.componentLoaded();
+        })
     }
 
     private drawWordCloud(error: any, omicsDes: FrequentlyTerm[], omicsDatap: FrequentlyTerm[], omicsSamp: FrequentlyTerm[]): void {

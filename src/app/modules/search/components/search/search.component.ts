@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {SearchService} from '@shared/services/search.service';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResult} from 'model/SearchResult';
@@ -16,6 +16,8 @@ import {AuthService} from '@shared/services/auth.service';
 import {ProfileService} from '@shared/services/profile.service';
 import {NgProgress} from '@ngx-progressbar/core';
 import {Title} from '@angular/platform-browser';
+import {isPlatformServer} from '@angular/common';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-search',
@@ -31,6 +33,7 @@ export class SearchComponent implements OnInit {
     selectedFacets: Map<string, string[]>;
     databases: Database[];
     profile: Profile;
+    isServer = true;
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: NgProgress,
@@ -40,10 +43,29 @@ export class SearchComponent implements OnInit {
                 private profileService: ProfileService,
                 private databaseListService: DatabaseListService,
                 private titleService: Title,
+                @Inject(PLATFORM_ID) platformId,
                 private dataTransportService: DataTransportService) {
+        this.isServer = isPlatformServer(platformId);
     }
 
     ngOnInit() {
+        if (this.isServer) {
+            this.params = this.route.snapshot.params;
+            this.query = QueryUtils.getBaseQuery(this.params);
+            if (this.query !== '') {
+                this.titleService.setTitle(this.query + ' - ' + 'OmicsDI');
+            }
+            this.dataControl = QueryUtils.getDataControl(this.params);
+            this.selectedFacets = QueryUtils.getAllFacets(this.params);
+            forkJoin(this.databaseListService.getDatabaseList(), this.searchService
+                .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order))
+                .subscribe(data => {
+                    this.databases = data[0];
+                    this.searchResult = data[1];
+                    this.dataTransportService.fire(this.facetsChannel, data[1].facets);
+                });
+            return;
+        }
         this.authService.loggedIn().then(isLogged => {
             if (isLogged) {
                 this.profile = this.profileService.getProfileFromLocal();

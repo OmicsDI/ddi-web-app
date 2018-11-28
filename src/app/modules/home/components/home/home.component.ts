@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Inject, PLATFORM_ID, QueryList, ViewChildren} from '@angular/core';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
 import {NgProgress} from '@ngx-progressbar/core';
 import {Meta, Title} from '@angular/platform-browser';
+import {isPlatformServer} from '@angular/common';
 
 @Component({
     selector: 'app-home',
@@ -16,12 +17,11 @@ export class HomeComponent implements AfterViewInit {
 
     constructor(private loadingBarService: NgProgress,
                 private metaService: Meta,
+                @Inject(PLATFORM_ID) private platformId: string,
                 private titleService: Title) {
-        this.loadingBarService.ref().start();
     }
 
     ngAfterViewInit() {
-        let total = this.asyncComponents.length;
         this.titleService.setTitle('OmicsDI: Home');
         this.metaService.updateTag({name: 'description', content: 'Omics Discovery Index is an integrated and open source platform ' +
                 'facilitating the access and dissemination of omics datasets. It provides a unique infrastructure to integrate datasets ' +
@@ -30,14 +30,18 @@ export class HomeComponent implements AfterViewInit {
                 'which is able to integrate different biological entities including genes, proteins and metabolites with the relevant ' +
                 'life science literature. OmicsDI is updated daily, as new datasets get publicly available in the contributing ' +
                 'repositories.'});
-        this.asyncComponents.map(e => e.loadedState$).forEach(e => e.subscribe(loaded => {
-            if (loaded) {
-                total -= 1;
-            }
-            if (total === 0) {
-                this.loadingBarService.ref().complete();
-            }
-        }));
+        if (!isPlatformServer(this.platformId)) {
+            let total = this.asyncComponents.length;
+            this.loadingBarService.ref().start();
+            this.asyncComponents.map(e => e.loadedState$).forEach(e => e.subscribe(loaded => {
+                if (loaded) {
+                    total -= 1;
+                }
+                if (total === 0) {
+                    this.loadingBarService.ref().complete();
+                }
+            }));
+        }
     }
 
 }

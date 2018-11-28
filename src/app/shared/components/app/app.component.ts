@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {Location, PopStateEvent} from '@angular/common';
+import {isPlatformBrowser, isPlatformServer, Location, PopStateEvent} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {Profile} from 'model/Profile';
@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
     selectedComponents = 0;
     selectedChannel: 'selected_channel';
     isCollapsedNav = true;
-    isLogged = false;
     profile: Profile;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
@@ -28,6 +27,7 @@ export class AppComponent implements OnInit {
                 private route: ActivatedRoute,
                 private router: Router,
                 private location: Location,
+                @Inject(PLATFORM_ID) private platformId,
                 private dataTransporterService: DataTransportService,
                 private profileService: ProfileService) {
 
@@ -39,24 +39,27 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (isPlatformServer(this.platformId)) {
+            return;
+        }
         this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
         this.router.events.subscribe((ev: any) => {
             this.isCollapsedNav = true;
             this.homePage = (this.router.url === '/home') || (this.router.url === '/');
-            if (ev instanceof NavigationStart) {
-                if (ev.url !== this.lastPoppedUrl) {
-                    this.yScrollStack.push(window.scrollY);
+                if (ev instanceof NavigationStart) {
+                    if (ev.url !== this.lastPoppedUrl) {
+                        this.yScrollStack.push(window.scrollY);
+                    }
+                } else if (ev instanceof NavigationEnd) {
+                    if (ev.url === this.lastPoppedUrl) {
+                        this.lastPoppedUrl = undefined;
+                        window.scrollTo(0, this.yScrollStack.pop());
+                    } else {
+                        window.scrollTo(0, 0);
+                    }
                 }
-            } else if (ev instanceof NavigationEnd) {
-                if (ev.url === this.lastPoppedUrl) {
-                    this.lastPoppedUrl = undefined;
-                    window.scrollTo(0, this.yScrollStack.pop());
-                } else {
-                    window.scrollTo(0, 0);
-                }
-            }
         });
         this.auth.loggedIn().then(isLogged => {
             if (isLogged) {
