@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -14,7 +14,6 @@ import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications';
 import {DialogService} from '@shared/services/dialog.service';
-import {LogService} from '@shared/modules/logs/services/log.service';
 import {Database} from 'model/Database';
 import {NgProgress} from '@ngx-progressbar/core';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
@@ -22,7 +21,7 @@ import {Profile} from 'model/Profile';
 import {DataSetShort} from 'model/DataSetShort';
 import * as moment from 'moment';
 import {AuthService} from '@shared/services/auth.service';
-import {throwError} from 'rxjs';
+import {Subscription, throwError} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {Meta, Title} from '@angular/platform-browser';
@@ -34,7 +33,7 @@ import {isPlatformServer} from '@angular/common';
     templateUrl: './dataset.component.html',
     styleUrls: ['./dataset.component.css']
 })
-export class DatasetComponent implements OnInit {
+export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
@@ -65,6 +64,7 @@ export class DatasetComponent implements OnInit {
     isLogged = false;
     isServer = true;
     schema: any;
+    private subscription: Subscription;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -99,10 +99,7 @@ export class DatasetComponent implements OnInit {
         self.reanalysedBy = [];
         self.relatedOmics = [];
         this.d = dataset;
-        this.titleService.setTitle(dataset.name + ' - ' + 'OmicsDI');
-        this.metaTagService.updateTag({name: 'description', content: dataset.description.replace(/<[^>]*>/g, '')});
-        this.acc = dataset.id;
-        this.repository = dataset.source;
+        this.titleService.setTitle(this.acc + ' - ' + dataset.name + ' - ' + 'OmicsDI');
 
         if (this.d.secondary_accession) {
             this.d.secondary_accession.forEach(item => {
@@ -132,11 +129,10 @@ export class DatasetComponent implements OnInit {
     }
 
     parseSchema(schema: any) {
-        schema['description'] = schema['description'].replace(/<[^>]*>/g, '');
-        schema['distribution'] = {
-            '@type': 'DataDownload',
-            'contentUrl': this.web_service_url + 'dataset/' + this.repository + '/' + this.acc + '.json'
-        };
+        if (schema) {
+            // Avoid html tags in dataset.description object
+            this.metaTagService.updateTag({name: 'description', content: schema['mainEntity']['description']});
+        }
         return schema;
     }
 
@@ -146,25 +142,26 @@ export class DatasetComponent implements OnInit {
             this.acc = this.route.snapshot.params['acc'];
             this.repository = this.route.snapshot.params['domain'];
             forkJoin(this.databaseListService.getDatabaseList(),
-                this.dataSetService.getDataSetDetail(this.acc, this.repository),
-                this.dataSetService.getSchemaMarkup(this.acc, this.repository))
+                this.dataSetService.getDataSetDetail(this.acc, this.repository))
                 .subscribe(data => {
                     this.databases = data[0];
-                    this.schema = this.parseSchema(data[2]);
                     this.parseDataset(data[1]);
                 }, () => {
                     self.notfound = true;
                 });
+            this.dataSetService.getSchemaMarkup(this.acc, this.repository).subscribe(result => {
+                this.schema = this.parseSchema(result);
+            });
             return;
         }
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
-            this.route.params.subscribe(params => {
+            this.subscription = this.route.params.subscribe(params => {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
                 this.dataSetService.getSchemaMarkup(this.acc, this.repository).subscribe(result => {
-                    this.parseSchema(result);
+                    this.schema = this.parseSchema(result);
                 });
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
                     .pipe(catchError((err: HttpErrorResponse) => {
@@ -173,7 +170,7 @@ export class DatasetComponent implements OnInit {
                         return throwError('Can\'t get dataset, err: ' + err.message);
                     }))
                     .subscribe(result => {
-                        this.schema = this.parseDataset(result);
+                        this.parseDataset(result);
                     });
             });
         });
@@ -382,5 +379,11 @@ export class DatasetComponent implements OnInit {
         return lower.replace(/^\w/, function (chr) {
             return chr.toUpperCase();
         });
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

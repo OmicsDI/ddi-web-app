@@ -32,7 +32,7 @@ import {AltmetricService} from '@shared/services/altmetric.service';
 import {ScoreService} from '@shared/services/score.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {InviteService} from '@shared/services/invite.service';
-import {APP_BASE_HREF, CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {CommonModule, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {ThorService} from '@shared/services/thor.service';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
@@ -49,6 +49,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {
     TRANSFER_RESPONSE_BASE_URLS} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
 import {environment} from '../environments/environment';
+import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
 
 
 export function jwtTokenGetter() {
@@ -132,6 +133,7 @@ export function jwtTokenGetter() {
         , LogService
         , LogPublisherService
         , UploadService
+        , GoogleAnalyticsService
         , InviteService],
     entryComponents: [
         // ConfirmDialogComponent

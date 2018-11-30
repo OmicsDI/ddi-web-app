@@ -1,16 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FacetValue} from 'model/FacetValue';
 import {SearchQuery} from 'model/SearchQuery';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {Facet} from 'model/Facet';
 import {ArrayUtils} from '@shared/utils/array-utils';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-query-builder',
     templateUrl: './query-builder.component.html',
     styleUrls: ['./query-builder.component.css']
 })
-export class QueryBuilderComponent implements OnInit {
+export class QueryBuilderComponent implements OnInit, OnDestroy {
 
     hideBasicInfo: boolean;
 
@@ -34,6 +35,8 @@ export class QueryBuilderComponent implements OnInit {
 
     @Input() searchQuery: SearchQuery;
 
+    private subscription: Subscription;
+
     allFacets: Facet[] = [];
 
     constructor(private dataTransportService: DataTransportService) {
@@ -43,7 +46,7 @@ export class QueryBuilderComponent implements OnInit {
         if (this.parent) {
             this.allFacets = this.parent.allFacets;
         }
-        this.dataTransportService.listen(this.facetsChannel).subscribe((m: Facet[]) => {
+        this.subscription = this.dataTransportService.listen(this.facetsChannel).subscribe((m: Facet[]) => {
             this.allFacets = m;
             const star = new Facet();
             star.id = 'all_fields';
@@ -161,6 +164,12 @@ export class QueryBuilderComponent implements OnInit {
             }
         }
         return result;
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }
 

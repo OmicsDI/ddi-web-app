@@ -1,10 +1,12 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {isPlatformBrowser, isPlatformServer, Location, PopStateEvent} from '@angular/common';
+import {isPlatformServer, Location, PopStateEvent} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {Profile} from 'model/Profile';
+import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
+import {Subscription, SubscriptionLike} from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -12,7 +14,7 @@ import {Profile} from 'model/Profile';
     styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     title: string;
     homePage = true;
     private lastPoppedUrl: string;
@@ -21,6 +23,8 @@ export class AppComponent implements OnInit {
     selectedChannel: 'selected_channel';
     isCollapsedNav = true;
     profile: Profile;
+    private subscriptions: Subscription[] = [];
+    private locationSubcription: SubscriptionLike;
     public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
 
     constructor(public auth: AuthService,
@@ -29,6 +33,7 @@ export class AppComponent implements OnInit {
                 private location: Location,
                 @Inject(PLATFORM_ID) private platformId,
                 private dataTransporterService: DataTransportService,
+                private googleAnalyticsService: GoogleAnalyticsService,
                 private profileService: ProfileService) {
 
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
@@ -42,10 +47,11 @@ export class AppComponent implements OnInit {
         if (isPlatformServer(this.platformId)) {
             return;
         }
-        this.location.subscribe((ev: PopStateEvent) => {
+        this.googleAnalyticsService.subscribe();
+        this.locationSubcription = this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
-        this.router.events.subscribe((ev: any) => {
+        this.subscriptions.push(this.router.events.subscribe((ev: any) => {
             this.isCollapsedNav = true;
             this.homePage = (this.router.url === '/home') || (this.router.url === '/');
                 if (ev instanceof NavigationStart) {
@@ -60,7 +66,7 @@ export class AppComponent implements OnInit {
                         window.scrollTo(0, 0);
                     }
                 }
-        });
+        }));
         this.auth.loggedIn().then(isLogged => {
             if (isLogged) {
                 this.profile = this.profileService.getProfileFromLocal();
@@ -73,12 +79,12 @@ export class AppComponent implements OnInit {
                     this.profileService.getSelected(this.profileService.getProfileFromLocal().userId).subscribe(datasets => {
                         this.selectedComponents = datasets.length;
                     });
-                    this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
+                    this.subscriptions.push(this.dataTransporterService.listen(this.selectedChannel).subscribe(datasets => {
                         this.selectedComponents = datasets.length;
-                    });
-                    this.dataTransporterService.listen('user_profile').subscribe(() => {
+                    }));
+                    this.subscriptions.push(this.dataTransporterService.listen('user_profile').subscribe(() => {
                         this.profile = this.profileService.getProfileFromLocal();
-                    });
+                    }));
                 }
             });
         });
@@ -86,6 +92,7 @@ export class AppComponent implements OnInit {
 
     logOut() {
         // this.deleteCookie('AUTH-TOKEN');
+        this.googleAnalyticsService.trackEvent('security', `logout ${this.profile.userId}`);
         localStorage.removeItem('id_token');
         this.profileService.removeProfile();
         window.location.href = '/home';
@@ -103,6 +110,16 @@ export class AppComponent implements OnInit {
 
     toSubmission() {
         window.location.href = 'https://www.ebi.ac.uk/biostudies/';
+    }
+
+    ngOnDestroy(): void {
+        if (!isPlatformServer(this.platformId)) {
+            this.googleAnalyticsService.unsubscribe();
+            this.locationSubcription.unsubscribe();
+            this.subscriptions.forEach(sub => {
+                sub.unsubscribe();
+            });
+        }
     }
 
 }
