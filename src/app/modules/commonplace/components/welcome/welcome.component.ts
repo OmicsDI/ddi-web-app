@@ -19,23 +19,18 @@ export class WelcomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            this.inviteId = params['inviteId'];
-            this.inviteService.getInvite(this.inviteId).subscribe(
-                x => {
-                    if (!x) {
-                        this.router.navigate(['/notfound']);
-                    }
+        this.inviteId = this.route.snapshot.params['inviteId'];
+        this.inviteService.getInvite(this.inviteId).subscribe(
+            x => {
+                if (!x) {
+                    this.router.navigate(['/notfound']);
                 }
-            );
-        });
+            }
+        );
     }
-
 
     submit(provider: string, scope: string) {
         window.location.href = this.appConfig.getLoginUrl(provider, scope) + '&state=' + this.inviteId +
             '&' + Math.random().toString(36).substring(7);
     }
-
-
 }

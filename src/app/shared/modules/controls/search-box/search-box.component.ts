@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatMenuTrigger} from '@angular/material';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
@@ -9,6 +9,7 @@ import {QueryUtils} from '@shared/utils/query-utils';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
 import {isPlatformServer} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: '[app-search-box]',
@@ -16,13 +17,14 @@ import {isPlatformServer} from '@angular/common';
     styleUrls: ['search-box.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class SearchBoxComponent implements OnInit {
+export class SearchBoxComponent implements OnInit, OnDestroy {
 
     @ViewChild(AutocompleteNComponent) autocompleteComponent: AutocompleteNComponent;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
     query: string;
 
     queryParams: SearchQuery = new SearchQuery();
+    private subscription: Subscription;
 
     @Input()
     isHomeSearch: boolean;
@@ -45,7 +47,7 @@ export class SearchBoxComponent implements OnInit {
         if (isPlatformServer(this.platformId)) {
             return;
         }
-        this.route.queryParams.subscribe(params => {
+        this.subscription = this.route.queryParams.subscribe(params => {
             this.params = params;
             if (this.router.url.indexOf('/dataset/') === -1) {
                 this.queryParams = QueryUtils.extractQuery(params);
@@ -95,5 +97,11 @@ export class SearchBoxComponent implements OnInit {
             .subscribe(result => {
                 this.dataTransportService.fire(this.facetsChannel, result.facets);
             });
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }
