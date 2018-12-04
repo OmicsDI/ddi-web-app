@@ -1,7 +1,15 @@
-#chord_diagram_input {
-    position: absolute;
-}
-
 #chord_diagram_input h5 {
     text-align: center
+}
+
+@media (min-width: 0px) {
+    #shared_molecules_message {
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    #shared_molecules_message {
+        text-align: left;
+    }
 }
