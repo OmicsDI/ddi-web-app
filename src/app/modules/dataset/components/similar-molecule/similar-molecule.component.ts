@@ -18,12 +18,12 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
     @Input() repository: string;
 
     show = true;
-    threshold: any = 0.50;
+    threshold: any = 0.5;
+    default_connections_to_display = 20;
     minimumThreshold = 0.50;
     biological_similarity_info: SimilarMolecule;
     related_datasets_by_biological: DataSet[];
     filteredDatasets: DataSet[];
-    related_datasets_by_biological_limit = 0;
     inputdata = {
         connections: [],
         labels: {},
@@ -39,23 +39,26 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         const self = this;
+        self.show = true;
+        self.threshold = 0.5;
+        d3.select('#chord_diagram')
+            .selectAll('svg')
+            .remove();
+
+        d3.select('#chord_diagram')
+            .selectAll('div')
+            .remove();
         if (self.acc && self.repository) {
             if (self.repository === 'metabolomics_workbench') {
                 self.repository = 'MetabolomicsWorkbench';
             }
 
-            if (!self.threshold) {
-                self.threshold = 0.5;
-            }
             this.simiMoleService
                 .search(self.acc, self.repository)
                 .subscribe(result => {
                     self.similarityData = result;
                     self.biological_similarity_info = result;
-                    if (self.biological_similarity_info != null) {
-                        self.related_datasets_by_biological_limit = self.find_similarity_limit(
-                            self.biological_similarity_info.scores, self.threshold);
-                    }
+                    this.sortSimilarityScores(this.similarityData.scores);
                     self.drawTheChord();
                     // this.filteredDatasets = this.getRelatedDatasets();
                 });
@@ -68,25 +71,6 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                     this.getRelatedDatasets(self.threshold);
                 });
         }
-    }
-
-    find_similarity_limit(scores, threshold) {
-        const main_key = this.acc + '@' + this.repository;
-        let limit = 0;
-        if (scores != null) {
-            for (let i = 0; i < scores.length; i++) {
-                const score = scores[i];
-                const key1 = score.key1;
-                const key2 = score.key2;
-                if (score.value < threshold) {
-                    continue;
-                }
-                if (key1 === main_key || key2 === main_key) {
-                    limit++;
-                }
-            }
-        }
-        return limit;
     }
 
     thresholdChange(step_value: number) {
@@ -106,9 +90,6 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                 this.threshold = this.threshold.toPrecision(2);
             }
         }
-        if (this.biological_similarity_info != null) {
-            this.related_datasets_by_biological_limit = this.find_similarity_limit(this.biological_similarity_info.scores, this.threshold);
-        }
         this.getRelatedDatasets(this.threshold);
     }
 
@@ -120,16 +101,11 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
         const self = this;
 
         if (self.similarityData.scores.length < 1) {
-            // d3.select('#dataset_bottom_chord_diagram').style('visibility', 'hidden');
-            // d3.select('#dataset_bottom_chord_diagram').remove();
             self.show = false;
             return;
         }
 
         if (!this.findAScoreBiggerThan(self.similarityData.scores, this.minimumThreshold)) {
-            // d3.select('#dataset_bottom_chord_diagram').style('visibility', 'hidden');
-            // d3.select('#dataset_bottom_chord_diagram').remove();
-            // d3.select('#chord_diagram_fa-spinner').remove();
             self.show = false;
             return;
         }
@@ -200,16 +176,15 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
         connection[0] = bend1;
         connection[1] = bend2;
         inputdata.connections.push(connection);
+        let elements = 0;
 
-        this.sortSimilarityScores(this.similarityData.scores);
         for (let i = 0, indexOfLabels = 1; i < this.similarityData.scores.length; i++) {
             const score = this.similarityData.scores[i]
                 , key1 = score.key1
-                , key2 = score.key2
-                , intScore = Math.round(score.value * 100);
+                , key2 = score.key2;
 
-            if (score.value < this.threshold) {
-                continue;
+            if (score.value < this.threshold && this.threshold > 0.5) {
+                break;
             }
 
             if (key1 === main_key || key2 === main_key) {
@@ -224,6 +199,15 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                     labels[indexOfLabels] = key2;
                     indexOfLabels++;
                 }
+
+                // Automatic determine threshold
+                if (this.threshold === 0.5) {
+                    elements += 1;
+                    if (elements === this.default_connections_to_display) {
+                        this.threshold = score.value;
+                        this.getRelatedDatasets(this.threshold);
+                    }
+                }
             }
         }
 
@@ -236,7 +220,10 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
             const intScore = Math.round(score.value * 100);
 
             // remove the connections which are less than threshold
-            if (score.value < this.threshold || labels.indexOf(key1) < 0 || labels.indexOf(key2) < 0) {
+            if (score.value < this.threshold) {
+                break;
+            }
+            if (labels.indexOf(key1) < 0 || labels.indexOf(key2) < 0) {
                 continue;
             }
 
@@ -275,8 +262,12 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
         for (let i = 0; i < scores.length; i++) {
             const key1 = scores[i].key1;
             const key2 = scores[i].key2;
-            if (scores[i].value >= minimumThreshold && (key1 === main_key || key2 === main_key)) {
-                return true;
+            if (scores[i].value >= minimumThreshold) {
+                if (key1 === main_key || key2 === main_key) {
+                    return true;
+                }
+            } else {
+                return false;
             }
         }
         return false;
