@@ -6,15 +6,15 @@
     </div>
     <div class="mt-card-body">
         <div class="row" style="margin-bottom: 10px">
-            <h5 class="col-md-offset-1" style="padding-left: 0">
+            <h5 class="col-md-offset-1" style="padding-left: 0;" id="shared_molecules_message">
                 Only show the datasets with similarity scores above:
                 <span id="threshold_text" style="color:darkgoldenrod">{{threshold}}</span>
             </h5>
         </div>
-        <div class="row">
-            <div class="col-md-1">
-                <div id="chord_diagram_input">
-                    <div style="margin-top: 100px;">
+        <div class="row" style="display: flex; align-items: center">
+            <div class="col-md-1 hidden-sm hidden-xs">
+                <div id="chord_diagram_input" style="width: 111px">
+                    <div>
                         <h5>Threshold</h5>
                         <h5 id="threshold_text2" style="color: darkgoldenrod; ">{{threshold}}</h5>
                     </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6" id="chord_diagram" style="text-align:center;">
+            <div class="col-md-6" id="chord_diagram" style="text-align:center; margin: auto">
                 <button (click)="thresholdChange(-0.10)"
                         class="threshold_botton fa fa-angle-double-left fa-2x ddi-transparent-button"></button>
                 <button (click)="thresholdChange(-0.01)"
@@ -40,7 +40,7 @@
                 <i id="chord_diagram_fa-spinner" style="margin-top:50px" class="fa fa-spinner fa-spin fa-5x"></i>
             </div>
 
-            <div class="col-md-5" style="text-align:center;" *ngIf="related_datasets_by_biological != null">
+            <div class="col-md-5 hidden-sm hidden-xs" style="text-align:center" *ngIf="related_datasets_by_biological != null">
                 <div class="panel-body ">
                     <ul class="nobullet">
                         <li *ngFor="let relatedDataset of filteredDatasets" class="cut-text"
