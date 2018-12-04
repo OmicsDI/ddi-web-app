@@ -66,10 +66,7 @@ export class ProfileComponent implements OnInit {
         this.slimLoadingBarService.ref().start();
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
-            this.route.params.subscribe(params => {
-                this.username = params['username'];
-                this.getProfile(this.username);
-            });
+            this.getProfile(this.route.snapshot.params['username']);
         });
     }
 

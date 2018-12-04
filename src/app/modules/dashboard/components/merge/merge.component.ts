@@ -6,6 +6,7 @@ import {ProfileService} from '@shared/services/profile.service';
 import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {NgProgress} from '@ngx-progressbar/core';
+import {DatabaseListService} from '@shared/services/database-list.service';
 
 @Component({
     selector: 'app-merge',
@@ -30,6 +31,7 @@ export class MergeComponent implements OnInit {
                 private notificationService: NotificationsService,
                 private slimLoadingBarService: NgProgress,
                 private logger: LogService,
+                private databaseListService: DatabaseListService,
                 private dialogService: DialogService) {
     }
 
@@ -335,28 +337,8 @@ export class MergeComponent implements OnInit {
         this.currentPage = page;
         this.load();
     }
-    // todo as a service,not hard coded
-    getDatabaseName(dbname) {
-        if (dbname) {
-            switch (dbname.toLowerCase()) {
-                case 'arrayexpress':
-                    return 'arrayexpress-repository';
-                case 'expressionatlas':
-                    return 'atlas-experiments';
-                case 'jpost repository':
-                    return 'jpost';
-                case 'metabolights':
-                    return 'metabolights_dataset';
-                case 'peptideatlas':
-                    return 'peptide_atlas';
-                case 'metabolomicsworkbench':
-                    return 'metabolomics_workbench';
-                case 'metabolomeexpress':
-                    return 'metabolome_express';
-                default :
-                    return dbname.toLowerCase();
-            }
 
-        }
+    getDatabaseName(dbname) {
+        return this.databaseListService.getDomainFromDatabaseName(dbname);
     }
 }

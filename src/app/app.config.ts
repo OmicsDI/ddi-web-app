@@ -77,7 +77,7 @@ export class AppConfig {
     }
 
     getDatasetSchemaUrl(acc: string, repository: string): string {
-        return `${environment.schemaServiceUrl}/dataset/${repository}/${acc}`;
+        return `${environment.schemaServiceUrl}/schema/${repository}/${acc}`;
     }
 
     getDatasetLatestUrl(): string {

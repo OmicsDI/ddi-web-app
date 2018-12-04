@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {SearchService} from '@shared/services/search.service';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResult} from 'model/SearchResult';
@@ -17,14 +17,14 @@ import {ProfileService} from '@shared/services/profile.service';
 import {NgProgress} from '@ngx-progressbar/core';
 import {Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-search',
     templateUrl: 'search.component.html',
     styleUrls: ['./search.component.css'],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
     query: string;
     facetsChannel = 'facet_channel';
     searchResult: SearchResult;
@@ -34,6 +34,7 @@ export class SearchComponent implements OnInit {
     databases: Database[];
     profile: Profile;
     isServer = true;
+    private subscription: Subscription;
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: NgProgress,
@@ -71,7 +72,7 @@ export class SearchComponent implements OnInit {
                 this.profile = this.profileService.getProfileFromLocal();
             }
             this.databaseListService.getDatabaseList().subscribe(databases => {
-                this.route.queryParams.subscribe(params => {
+                this.subscription = this.route.queryParams.subscribe(params => {
                     this.params = params;
                     this.slimLoadingBarService.ref().start();
                     this.query = QueryUtils.getBaseQuery(params);
@@ -238,5 +239,11 @@ export class SearchComponent implements OnInit {
             });
         });
         this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), null);
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

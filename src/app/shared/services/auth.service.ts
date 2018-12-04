@@ -3,13 +3,17 @@ import {CanActivate, Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ProfileService} from '@shared/services/profile.service';
 import {isPlatformServer} from '@angular/common';
+import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
 
 
 @Injectable()
 export class AuthService implements CanActivate {
     helper = new JwtHelperService();
     isServer: boolean
-    constructor(private router: Router, private profileService: ProfileService, @Inject(PLATFORM_ID) platformId) {
+    constructor(private router: Router,
+                private profileService: ProfileService,
+                private googleAnalytics: GoogleAnalyticsService,
+                @Inject(PLATFORM_ID) platformId) {
         this.isServer = isPlatformServer(platformId);
     }
 
@@ -32,6 +36,7 @@ export class AuthService implements CanActivate {
                         this.profileService.removeProfile();
                         return false;
                     }
+                    this.googleAnalytics.trackEvent('login', profile.userId, 'success');
                     this.profileService.setProfile(profile);
                 }
             }
