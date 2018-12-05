@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
     toDataset = DataSetDetail.toDataset;
     datasetShowed: DataSetDetail[];
-    isServer = false
+    isServer = false;
 
     constructor(public profileService: ProfileService,
                 private dataSetService: DataSetService,
