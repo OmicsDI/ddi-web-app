@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.isServer) {
-            this.params = this.route.snapshot.params;
+            this.params = this.route.snapshot.queryParams;
             this.query = QueryUtils.getBaseQuery(this.params);
             if (this.query !== '') {
                 this.titleService.setTitle(this.query + ' - ' + 'OmicsDI');
