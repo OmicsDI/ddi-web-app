@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /ws
+Allow: /ws/dataset
 
 Sitemap: https://www.omicsdi.org/sitemap.xml
