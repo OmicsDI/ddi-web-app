@@ -46,6 +46,8 @@ export class SimilarComponent implements OnInit, OnChanges {
                 this.similarityService.search(this.acc, this.repository).subscribe(
                     result => {
                         this.d = result;
+                    }, err => {
+                        this.d = null;
                     });
             }
         }
@@ -63,10 +65,10 @@ export class SimilarComponent implements OnInit, OnChanges {
 
     getDatasets(): DataSet[] {
         if (null == this.d) {
-            return null;
+            return [];
         }
         if (null == this.d.datasets) {
-            return null;
+            return [];
         }
 
         return this.d.datasets.slice(0, this.datasetNumber);

@@ -1545,3 +1545,6 @@ app-image-cropper > div {
     font-size: .8em;
     text-anchor: middle;
 }
+.rosette-chart:hover + .tooltip-rosette {
+    display: block !important;
+}
