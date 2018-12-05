@@ -112,10 +112,11 @@ export class PieChartDirective implements OnChanges {
         body.style('position', 'relative');
         const svg = body.append('svg').attr('width', this.width)
                 .attr('viewBox', '0 0 720 720')
+                .attr('class', 'rosette-chart')
                 .attr('height', this.width);
 
         const tool_tip = body.append('div')
-            .attr('class', 'mt-card')
+            .attr('class', 'mt-card tooltip-rosette')
             .style('position', 'absolute')
             .style('display', 'none')
             .style('width', '220px')
@@ -270,73 +271,60 @@ export class PieChartDirective implements OnChanges {
             .attr('text-anchor', 'middle')
             .text(self.megaNumber.transform(omics_score, 1));
 
-        if (!isPlatformServer(this.platformId)) {
-            svg.on('mouseenter', function () {
-                tool_tip.html('');
-                tool_tip.transition()
-                    .duration(200)
-                    .style('display',  'block');
-                for (let i = 0; i < data.length; i++) {
-                    const tool_tip_box = tool_tip.append('div').style('width', '100%')
-                        .style('display', 'flex').style('align-items', 'center');
-                    const tool_tip_circle = tool_tip_box.append('svg').attr('viewBox', '0 0 36 36')
-                        .attr('width', '28px')
-                        .attr('height', '28px')
-                        .attr('class', 'circular-chart');
-                    tool_tip_circle
-                        .append('path').attr('class', 'circle-bg')
-                        .attr('d', 'M18 2.0845\n' +
-                            '          a 15.9155 15.9155 0 0 1 0 31.831\n' +
-                            '          a 15.9155 15.9155 0 0 1 0 -31.831');
-                    if (data[i]['score'] > 0) {
-                        tool_tip_circle.append('path')
-                            .attr('class', 'circle')
-                            .attr('stroke-dasharray', data[i]['scale'] * 100 + ', 100')
-                            .style('stroke', data[i]['color'])
-                            .attr('d', 'M18 2.0845\n' +
-                                '          a 15.9155 15.9155 0 0 1 0 31.831\n' +
-                                '          a 15.9155 15.9155 0 0 1 0 -31.831');
-                    }
-                    const percent = data[i]['scale'] * 100;
-                    let percent_display = Math.round(percent) + '';
-                    if (percent > 0 && percent < 1) {
-                        percent_display = '<1'
-                    }
-                    tool_tip_circle.append('text')
-                        .attr('x', '18').attr('y', '22')
-                        .attr('class', 'percentage').text(percent_display);
-                    tool_tip_box.append('p').style('margin', '0 10px').style('padding', '0')
-                        .text(data[i]['score'] + ' ' + data[i]['label']);
-                }
-                tool_tip.append('hr').style('width', '96%').style('margin', '10px auto');
-                tool_tip.append('div').style('width', '100%')
-                    .style('padding', '0 0 10px 10px')
-                    .text('Omics score: ').append('b').text(omics_score);
-                tool_tip.append('div').style('width', 0).style('height', 0)
-                    .style('border-top', '8px solid transparent')
-                    .style('border-bottom', '8px solid transparent')
-                    .style('position', 'absolute')
-                    .style('top', '110px')
-                    .style('right', '-8px')
-                    .style('border-left', '8px solid #C0C0C0');
-                tool_tip.append('div').style('width', 0).style('height', 0)
-                    .style('border-top', '8px solid transparent')
-                    .style('border-bottom', '8px solid transparent')
-                    .style('position', 'absolute')
-                    .style('top', '110px')
-                    .style('right', '-7px')
-                    .style('border-left', '8px solid white');
-                tool_tip
-                    .style('right', self.width + 10 + 'px')
-                    .style('top', '-100px')
-                    .style('padding', '3px');
-            }).on('mouseleave', function (d) {
-                tool_tip
-                    .transition()
-                    .duration(200)
-                    .style('display', 'none');
-            });
+        for (let i = 0; i < data.length; i++) {
+            const tool_tip_box = tool_tip.append('div').style('width', '100%')
+                .style('display', 'flex').style('align-items', 'center');
+            const tool_tip_circle = tool_tip_box.append('svg').attr('viewBox', '0 0 36 36')
+                .attr('width', '28px')
+                .attr('height', '28px')
+                .attr('class', 'circular-chart');
+            tool_tip_circle
+                .append('path').attr('class', 'circle-bg')
+                .attr('d', 'M18 2.0845\n' +
+                    '          a 15.9155 15.9155 0 0 1 0 31.831\n' +
+                    '          a 15.9155 15.9155 0 0 1 0 -31.831');
+            if (data[i]['score'] > 0) {
+                tool_tip_circle.append('path')
+                    .attr('class', 'circle')
+                    .attr('stroke-dasharray', data[i]['scale'] * 100 + ', 100')
+                    .style('stroke', data[i]['color'])
+                    .attr('d', 'M18 2.0845\n' +
+                        '          a 15.9155 15.9155 0 0 1 0 31.831\n' +
+                        '          a 15.9155 15.9155 0 0 1 0 -31.831');
+            }
+            const percent = data[i]['scale'] * 100;
+            let percent_display = Math.round(percent) + '';
+            if (percent > 0 && percent < 1) {
+                percent_display = '<1'
+            }
+            tool_tip_circle.append('text')
+                .attr('x', '18').attr('y', '22')
+                .attr('class', 'percentage').text(percent_display);
+            tool_tip_box.append('p').style('margin', '0 10px').style('padding', '0')
+                .text(data[i]['score'] + ' ' + data[i]['label']);
         }
+        tool_tip.append('hr').style('width', '96%').style('margin', '10px auto');
+        tool_tip.append('div').style('width', '100%')
+            .style('padding', '0 0 10px 10px')
+            .text('Omics score: ').append('b').text(omics_score);
+        tool_tip.append('div').style('width', 0).style('height', 0)
+            .style('border-top', '8px solid transparent')
+            .style('border-bottom', '8px solid transparent')
+            .style('position', 'absolute')
+            .style('top', '110px')
+            .style('right', '-8px')
+            .style('border-left', '8px solid #C0C0C0');
+        tool_tip.append('div').style('width', 0).style('height', 0)
+            .style('border-top', '8px solid transparent')
+            .style('border-bottom', '8px solid transparent')
+            .style('position', 'absolute')
+            .style('top', '110px')
+            .style('right', '-7px')
+            .style('border-left', '8px solid white');
+        tool_tip
+            .style('right', self.width + 10 + 'px')
+            .style('top', '-100px')
+            .style('padding', '3px');
     }
 
     ngOnChanges(changes: SimpleChanges): void {
