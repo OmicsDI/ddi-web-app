@@ -119,7 +119,11 @@ export class QueryUtils {
         for (let i = 0; i < conditions.length; i++) {
             const condition = conditions[i].trim();
             if (condition !== '') {
-                search.rules.push(this.extractCondition(condition));
+                const rules = this.extractCondition(condition);
+                rules.forEach(rule => {
+                    search.rules.push(rule);
+                });
+                search.rules.concat()
             }
         }
         for (let i = 0; i < queryRules.length; i++) {
@@ -128,7 +132,7 @@ export class QueryUtils {
         return search;
     }
 
-    private static extractCondition(condition: string): Rule {
+    private static extractCondition(condition: string): Rule[] {
         const parts = condition.split(/:(.+)/);
         const rule = new Rule();
         let value = condition;
@@ -139,19 +143,32 @@ export class QueryUtils {
         let match = /\["([^"]*)"\]/.exec(value);
         if (match) {
             rule.data = match[1];
-            return rule;
+            return [rule];
         }
         match = /\["([^"]*)"\s+TO\s+"([^"]*)"\]/.exec(value);
         if (match) {
             rule.data = match[1];
             rule.data2 = match[2];
             rule.condition = 'range';
-            return rule;
+            return [rule];
+        }
+
+        // Case: repository: "GEO" E-GEOD-30197
+        // https://multiomics.atlassian.net/browse/OF-111
+        match = /\"([^"]*)\"([^"]+)/.exec(value);
+        if (match) {
+            rule.data = match[1];
+            const subRules = this.extractCondition(match[2]);
+            const rules = [rule];
+            subRules.forEach(subRule => {
+                rules.push(subRule);
+            });
+            return rules;
         }
         if (value[0] === '"') {
             value = value.slice(1, value.length - 1);
         }
         rule.data = value;
-        return rule;
+        return [rule];
     }
 }
