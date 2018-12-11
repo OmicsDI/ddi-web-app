@@ -54,35 +54,4 @@ export class DatabaseListService extends BaseService {
         this.logger.debug('Database with accession {} can\'t be found', accession);
         return null;
     }
-
-    // todo fetch from API
-    public getDomainFromDatabaseName(databaseName: string) {
-        const dbnameLower = databaseName.toLocaleLowerCase();
-
-        if (dbnameLower === 'arrayexpress') {
-            return 'arrayexpress-repository';
-        }
-        if (dbnameLower === 'expressionatlas') {
-            return 'atlas-experiments';
-        }
-        if (dbnameLower === 'jpost repository') {
-            return 'jpost';
-        }
-        if (dbnameLower === 'metabolights') {
-            return 'metabolights_dataset';
-        }
-        if (dbnameLower === 'peptideatlas') {
-            return 'peptide_atlas'
-        }
-        if (dbnameLower === 'metabolomicsworkbench') {
-            return 'metabolomics_workbench'
-        }
-        if (dbnameLower === 'metabolomeexpress') {
-            return 'metabolome_express';
-        }
-        if (dbnameLower === 'ena') {
-            return 'omics_ena_project';
-        }
-        return dbnameLower
-    }
 }
