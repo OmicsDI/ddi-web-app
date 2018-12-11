@@ -7,6 +7,7 @@ import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {NgProgress} from '@ngx-progressbar/core';
 import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-merge',
@@ -20,6 +21,7 @@ export class MergeComponent implements OnInit {
     test: boolean;
     mergeCandidates: MergeCandidate[];
     count: number;
+    databases: Database[];
 
     checkedDatasets: { basedatabase: string, baseaccession: string, database: string, accession: string }[] = [];
     currentPage = 1;
@@ -37,7 +39,10 @@ export class MergeComponent implements OnInit {
 
     ngOnInit() {
         this.test = false;
-        this.load();
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.load();
+        });
     }
 
     load() {
@@ -339,6 +344,6 @@ export class MergeComponent implements OnInit {
     }
 
     getDatabaseName(dbname) {
-        return this.databaseListService.getDomainFromDatabaseName(dbname);
+        return this.databaseListService.getDatabaseByDatabaseName(dbname, this.databases).domain;
     }
 }

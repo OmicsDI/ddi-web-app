@@ -140,7 +140,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         const self = this;
         if (this.isServer) {
             this.acc = this.route.snapshot.params['acc'];
-            this.repository = this.databaseListService.getDomainFromDatabaseName(this.route.snapshot.params['domain']);
+            this.repository = this.route.snapshot.params['domain'];
             forkJoin(this.databaseListService.getDatabaseList(),
                 this.dataSetService.getDataSetDetail(this.acc, this.repository))
                 .subscribe(data => {
@@ -159,7 +159,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             this.subscription = this.route.params.subscribe(params => {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
-                this.repository = this.databaseListService.getDomainFromDatabaseName(params['domain']);
+                this.repository = params['domain'];
                 this.dataSetService.getSchemaMarkup(this.acc, this.repository).subscribe(result => {
                     this.schema = this.parseSchema(result);
                 });

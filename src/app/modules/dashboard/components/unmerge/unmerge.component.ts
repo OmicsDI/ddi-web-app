@@ -6,6 +6,7 @@ import {DialogService} from '@shared/services/dialog.service';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {NgProgress} from '@ngx-progressbar/core';
 import {DatabaseListService} from '@shared/services/database-list.service';
+import {Database} from 'model/Database';
 
 @Component({
     selector: 'app-unmerge',
@@ -19,6 +20,7 @@ export class UnmergeComponent implements OnInit {
     counts: number;
     checkedDatasets: { basedatabase: string, baseaccession: string, database: string, accession: string }[] = [];
     currentPage = 1;
+    databases: Database[];
 
     constructor(private datasetService: DataSetService,
                 private notificationService: NotificationsService,
@@ -30,7 +32,10 @@ export class UnmergeComponent implements OnInit {
 
     ngOnInit() {
         this.test = false;
-        this.load();
+        this.databaseListService.getDatabaseList().subscribe(databases => {
+            this.databases = databases;
+            this.load();
+        });
     }
 
     load() {
@@ -122,7 +127,7 @@ export class UnmergeComponent implements OnInit {
     }
 
     getDatabaseName(dbname) {
-        return this.databaseListService.getDomainFromDatabaseName(dbname);
+        return this.databaseListService.getDatabaseByDatabaseName(dbname, this.databases).domain;
     }
 
 }
