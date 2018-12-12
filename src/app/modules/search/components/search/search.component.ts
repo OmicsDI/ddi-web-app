@@ -108,82 +108,58 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searchService.triggerSearch(this.params, null, dataControl);
     }
 
-    facetValueFindAndUpdate(searchQuery: SearchQuery, key: string, facet: string): boolean {
-        let foundKey = false;
+    findRule(searchQuery: SearchQuery, key: string, parent, parentIndex): {} {
         for (let i = 0; i < searchQuery.rules.length; i++) {
-            if (searchQuery.rules[i].query !== null) {
-                const tmpQuery = searchQuery.rules[i].query;
-                for (let j = 0; j < tmpQuery.rules.length; j++) {
-                    if (tmpQuery.rules[j].field === key) {
-                        foundKey = true;
-                        if (tmpQuery.rules[j].data === facet) {
-                            return;
-                        }
-                    }
+            if (searchQuery.rules[i].query === null) {
+                if (searchQuery.rules[i].field === key) {
+                    return {'rules': searchQuery.rules, 'index': i, 'query': searchQuery, 'parent': parent, 'parent_index': parentIndex};
                 }
-                if (foundKey) {
-                    if (key !== 'omics_type') {
-                        searchQuery.rules[i].query.operator = 'OR';
-                    }
-                    const rule = new Rule();
-                    rule.field = key;
-                    rule.data = facet;
-                    searchQuery.rules[i].query.rules.push(rule);
-                    break;
+            } else {
+                const rule = this.findRule(searchQuery.rules[i].query, key, searchQuery, i);
+                if (rule != null) {
+                    return rule;
                 }
             }
         }
-        return foundKey;
+        return null;
     }
 
     /**
      * Add a facet into query
+     * Warning: Think about pointer
      * @param {string} key i.e: Organisms
      * @param {string} facet i.e: 10090
      */
     facetValueSelected(key: string, facet: string) {
         const searchQuery = QueryUtils.extractQuery(this.params);
-
-        // Find key & update
-        let foundKey = this.facetValueFindAndUpdate(searchQuery, key, facet);
-
-        // If key not found, check the first level of query
-        // If yes, then move that first level to second level
-        if (!foundKey) {
-            for (let i = 0; i < searchQuery.rules.length; i++) {
-                if (searchQuery.rules[i].query === null) {
-                    if (searchQuery.rules[i].field === key) {
-                        if (searchQuery.rules[i].data === facet) {
-                            return;
-                        }
-                        const newSearchQuery = new SearchQuery();
-                        newSearchQuery.operator = 'OR';
-                        newSearchQuery.rules = [];
-                        const rule = new Rule();
-                        rule.field = searchQuery.rules[i].field;
-                        rule.data = searchQuery.rules[i].data;
-                        newSearchQuery.rules.push(rule);
-                        searchQuery.rules.splice(i, 1);
-                        searchQuery.rules.push({condition: null, data: null, field: null, data2: null, query: newSearchQuery});
-                        foundKey = this.facetValueFindAndUpdate(searchQuery, key, facet);
-                        break;
-                    }
-                }
+        let ruleLocation = this.findRule(searchQuery, key, searchQuery, 0);
+        if (ruleLocation != null) {
+            let index = ruleLocation['rules'].findIndex(x => x.data === facet);
+            index = (index !== -1) ? index : ruleLocation['index'];
+            if (ruleLocation['rules'][index].data === facet) {
+                return;
             }
+            if (ruleLocation['query'] === searchQuery) {
+                const tmpRule = ruleLocation['rules'][index];
+                ruleLocation['rules'].splice(index, 1);
+                const newSearchQuery = new SearchQuery();
+                newSearchQuery.operator = (key !== 'omics_type') ? 'OR' : newSearchQuery.operator;
+                newSearchQuery.rules = [tmpRule];
+                ruleLocation['rules'].push({condition: null, data: null, field: null, data2: null, query: newSearchQuery});
+                ruleLocation['rules'] = newSearchQuery.rules;
+            } else {
+                ruleLocation['query'].operator = (key !== 'omics_type') ? 'OR' : ruleLocation['query'].operator;
+            }
+        } else {
+            ruleLocation = {'query': searchQuery, 'rules': searchQuery.rules}
         }
-
-        // If key still not found, add new facet to query
-        if (!foundKey) {
-            const newSearchQuery = new SearchQuery();
-            newSearchQuery.operator = 'OR';
-            newSearchQuery.rules = [];
-            const rule = new Rule();
-            rule.field = key;
-            rule.data = facet;
-            newSearchQuery.rules.push(rule);
-            searchQuery.rules.push({condition: null, data: null, field: null, data2: null, query: newSearchQuery});
-        }
-        this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), null);
+        const rule = new Rule();
+        rule.field = key;
+        rule.data = facet;
+        ruleLocation['rules'].push(rule);
+        const dataControl = QueryUtils.getDataControl(this.params);
+        dataControl.page = 1;
+        this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), dataControl);
     }
 
     /**
@@ -193,21 +169,20 @@ export class SearchComponent implements OnInit, OnDestroy {
      */
     facetValueRemoved(key: string, facet: string) {
         const searchQuery = QueryUtils.extractQuery(this.params);
-        for (let i = 0; i < searchQuery.rules.length; i++) {
-            if (searchQuery.rules[i].query !== null) {
-                for (let j = 0; j < searchQuery.rules[i].query.rules.length; j++) {
-                    const rule = searchQuery.rules[i].query.rules[j];
-                    if (rule.field === key && rule.data === facet) {
-                        searchQuery.rules[i].query.rules.splice(j, 1);
-                        if (searchQuery.rules[i].query.rules.length === 0) {
-                            searchQuery.rules.splice(i, 1);
-                        }
-                        break;
-                    }
-                }
+        const ruleLocation = this.findRule(searchQuery, key, searchQuery, 0);
+        if (ruleLocation != null) {
+            const index = ruleLocation['rules'].findIndex(x => x.data === facet);
+            if (index === -1) {
+                return;
+            }
+            ruleLocation['rules'].splice(index, 1);
+            if (ruleLocation['rules'].length === 0) {
+                ruleLocation['parent'].rules.splice(ruleLocation['parent_index'], 1);
             }
         }
-        this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), null);
+        const dataControl = QueryUtils.getDataControl(this.params);
+        dataControl.page = 1;
+        this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), dataControl);
     }
 
     /**
@@ -238,7 +213,9 @@ export class SearchComponent implements OnInit, OnDestroy {
                 }
             });
         });
-        this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), null);
+        const dataControl = QueryUtils.getDataControl(this.params);
+        dataControl.page = 1;
+        this.searchService.triggerSearch(this.params, searchQuery.toQueryString(), dataControl);
     }
 
     ngOnDestroy(): void {
