@@ -171,6 +171,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
+                        this.title_sections = null;
+                        this.abstract_sections = null;
+                        this.sample_protocol_sections = null;
+                        this.data_protocol_sections = null;
+                        this.ontology_highlighted = false;
                     });
             });
         });
@@ -317,20 +322,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }
 
     removeTags() {
-        let count = 0;
         for (const section of this.abstract_sections) {
-            section.text = section.text.replace(
-                /<\/?[ib]*(br|span|h|u|strike|pre|code|tt|blockquote|small|center|em|strong)*\/?>/g, '');
-            section.text = section.text.replace(/<[\s\S]*>/g, '');
-            if (section.text.indexOf('<') !== -1 && section.text.indexOf('>') === -1) {
-                section.text = section.text.replace(/<[\s\S]*/g, '');
-                count = count + 1;
-            } else if (section.text.indexOf('>') !== -1 && section.text.indexOf('<') === -1) {
-                section.text = section.text.replace(/[\s\S]*>/g, '');
-                count = count - 1;
-            } else if (section.text.indexOf('>') === -1 && section.text.indexOf('<') === -1 && count > 0) {
-                section.text = section.text.replace(/[\s\S]*/g, '');
-            }
+            section.text = section.text.replace(/<(?:.|\n)*?>/gm, '');
         }
     }
 
@@ -342,7 +335,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             this.data_protocol_sections = null;
             this.ontology_highlighted = false;
         } else {
-
+            this.slimLoadingBarService.ref().start();
             forkJoin(
                 [this.enrichmentService.getEnrichmentInfo(this.repository, this.acc),
                     this.enrichmentService.getSynonyms(this.repository, this.acc)]
@@ -358,7 +351,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     } else {
                         this.processSections();
                     }
-
+                    this.slimLoadingBarService.ref().complete();
                 }
             );
         }
