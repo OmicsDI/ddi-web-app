@@ -140,12 +140,16 @@ export class SearchComponent implements OnInit, OnDestroy {
                 return;
             }
             if (ruleLocation['query'] === searchQuery) {
+                // Found the same rule key in the first level of query
+                // We're going to move this rule into second level of query
                 const tmpRule = ruleLocation['rules'][index];
                 ruleLocation['rules'].splice(index, 1);
                 const newSearchQuery = new SearchQuery();
                 newSearchQuery.operator = (key !== 'omics_type') ? 'OR' : newSearchQuery.operator;
                 newSearchQuery.rules = [tmpRule];
                 ruleLocation['rules'].push({condition: null, data: null, field: null, data2: null, query: newSearchQuery});
+                // Leave the previous memory address
+                // Assign ruleLocation['rules'] to the new memory address
                 ruleLocation['rules'] = newSearchQuery.rules;
             } else {
                 ruleLocation['query'].operator = (key !== 'omics_type') ? 'OR' : ruleLocation['query'].operator;
