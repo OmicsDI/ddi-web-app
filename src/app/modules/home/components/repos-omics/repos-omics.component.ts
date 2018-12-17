@@ -426,9 +426,22 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 if (dataAddKey[index].name.toString() === 'Metabolome Workbench') {
                     searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
                 }
+                if (dataAddKey[index].name.toString() === 'Metabolomics Workbench') {
+                    searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
+                }
                 if (dataAddKey[index].name.toString() === 'Expression Atlas Experiments') {
                     searchWord = searchWordPre + 'ExpressionAtlas' + '"';
                 }
+                if (dataAddKey[index].name.toString() === 'jPOST') {
+                    searchWord = searchWordPre + 'JPOST Repository' + '"';
+                }
+                if (dataAddKey[index].name.toString() === 'GPMdb') {
+                    searchWord = searchWordPre + 'GPMDB' + '"';
+                }
+                if (dataAddKey[index].name.toString() === 'Paxdb') {
+                    searchWord = searchWordPre + 'PAXDB' + '"';
+                }
+
 
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
