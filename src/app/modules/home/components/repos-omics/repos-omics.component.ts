@@ -66,7 +66,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     public draw(domains: any[], omicsType: any[]): void {
         const self = this;
         ChartsErrorHandler.removeGettingInfo(self.pieChartName);
-
         const repos = self.transformDomains(domains);
         omicsType.shift();
         omicsType.pop();
@@ -420,6 +419,9 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 let searchWord = searchWordPre + dataAddKey[index].name.toString() + '"';
                 if (dataAddKey[index].name.toString() === 'MetaboLights Dataset') {
                     searchWord = searchWordPre + 'MetaboLights' + '"';
+                }
+                if (dataAddKey[index].name.toString() === 'PRIDE') {
+                    searchWord = searchWordPre + 'Pride' + '"';
                 }
                 if (dataAddKey[index].name.toString() === 'Metabolome Workbench') {
                     searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
