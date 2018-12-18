@@ -1547,4 +1547,9 @@ app-image-cropper > div {
 }
 .rosette-chart:hover + .tooltip-rosette {
     display: block !important;
+    transition: all 1s ease-in-out;
+}
+
+.tooltip-rosette:hover {
+    display: block !important;
 }
