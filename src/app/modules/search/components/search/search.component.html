@@ -57,3 +57,23 @@
 
     </div>
 </div>
+<ng-template #paging_limit>
+    <div class="mt-card" style="margin: 0">
+        <div class="mt-card-header" style="border-bottom: 1px solid #dddddd; padding-bottom: 10px">
+            <h4 class="mt-card-title" style="margin-left: 20px">
+                Omics DI paging limit reached!
+            </h4>
+        </div>
+        <div class="mt-card-body">
+            Omics DI searching pagination currently supported only {{250000 / dataControl.pageSize}} pages. Please considering to apply some filters to
+            make your result more accurate.
+        </div>
+        <div class="mt-card-body">
+            <div class="row edit-form">
+                <div class="col-md-12 col-xs-12">
+                    <button type="button" class="btn btn-default pull-right" style="margin-left: 5px" (click)="goToPage(1)">Back to first page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

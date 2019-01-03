@@ -13,6 +13,7 @@ import {SearchComponent} from './components/search/search.component';
 import {SearchTotalComponent} from './components/search-total/search-total.component';
 import {SearchResultComponent} from './components/search-result/search-result.component';
 import {SearchPagerComponent} from './components/search-pager/search-pager.component';
+import {ModalModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import {SearchPagerComponent} from './components/search-pager/search-pager.compo
         FormsModule,
         ClipboardModule,
         UtilsModule,
+        ModalModule.forRoot(),
         NgxPaginationModule
     ],
     declarations: [

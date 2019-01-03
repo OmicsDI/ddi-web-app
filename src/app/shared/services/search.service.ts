@@ -15,6 +15,8 @@ import {map} from 'rxjs/operators';
 @Injectable()
 export class SearchService extends BaseService {
 
+    private static EBISEARCH_START_LIMIT = 250_000;
+
     constructor(private http: HttpClient, public appConfig: AppConfig, private router: Router) {
         super();
     }
@@ -41,5 +43,9 @@ export class SearchService extends BaseService {
             this.appConfig.getSearchUrl(
                 searchQuery, 100, pageSize, sortBy, order, (page - 1) * pageSize))
             .pipe(map(x => this.extractData<SearchResult>(x)));
+    }
+
+    public isReachedPageLimit(dataControl: DataControl): boolean {
+        return (dataControl.page - 1) * dataControl.pageSize >= SearchService.EBISEARCH_START_LIMIT;
     }
 }

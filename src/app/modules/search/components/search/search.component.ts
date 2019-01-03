@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID, TemplateRef, ViewChild} from '@angular/core';
 import {SearchService} from '@shared/services/search.service';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResult} from 'model/SearchResult';
@@ -18,6 +18,8 @@ import {NgProgress} from '@ngx-progressbar/core';
 import {Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
 import {forkJoin, Subscription} from 'rxjs';
+import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import {BsModalService} from 'ngx-bootstrap';
 
 @Component({
     selector: 'app-search',
@@ -34,7 +36,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     databases: Database[];
     profile: Profile;
     isServer = true;
+    modalRef: BsModalRef;
     private subscription: Subscription;
+    @ViewChild('paging_limit') public modal: TemplateRef<any>;
 
     constructor(private searchService: SearchService,
                 private slimLoadingBarService: NgProgress,
@@ -45,6 +49,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 private databaseListService: DatabaseListService,
                 private titleService: Title,
                 @Inject(PLATFORM_ID) platformId,
+                private modalService: BsModalService,
                 private dataTransportService: DataTransportService) {
         this.isServer = isPlatformServer(platformId);
     }
@@ -74,12 +79,16 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.databaseListService.getDatabaseList().subscribe(databases => {
                 this.subscription = this.route.queryParams.subscribe(params => {
                     this.params = params;
-                    this.slimLoadingBarService.ref().start();
                     this.query = QueryUtils.getBaseQuery(params);
                     if (this.query !== '') {
                         this.titleService.setTitle(this.query + ' - ' + 'OmicsDI');
                     }
                     this.dataControl = QueryUtils.getDataControl(params);
+                    if (this.searchService.isReachedPageLimit(this.dataControl)) {
+                        this.modalRef = this.modalService.show(this.modal);
+                        return;
+                    }
+                    this.slimLoadingBarService.ref().start();
                     this.selectedFacets = QueryUtils.getAllFacets(params);
                     this.logger.debug('Facet selected: {}', this.selectedFacets);
                     this.databases = databases;
@@ -106,6 +115,14 @@ export class SearchComponent implements OnInit, OnDestroy {
      */
     requestData(dataControl: DataControl) {
         this.searchService.triggerSearch(this.params, null, dataControl);
+    }
+
+    goToPage(page: number) {
+        if (this.modalRef != null) {
+            this.modalRef.hide();
+        }
+        this.dataControl.page = 1;
+        this.requestData(this.dataControl);
     }
 
     findRule(searchQuery: SearchQuery, key: string, parent, parentIndex): {} {
