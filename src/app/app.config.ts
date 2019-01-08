@@ -80,6 +80,10 @@ export class AppConfig {
         return `${environment.schemaServiceUrl}/schema/${repository}/${acc}`;
     }
 
+    getHomeSchemaUrl(): string {
+        return `${environment.schemaServiceUrl}/home`;
+    }
+
     getDatasetLatestUrl(): string {
         return `${environment.webServiceUrl}dataset/latest?size=10`;
     }
