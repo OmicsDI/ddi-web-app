@@ -20,6 +20,7 @@ import {TissuesOrganismsComponent} from '@modules/home/components/tissues-organi
 import {TweetsNewsComponent} from '@modules/home/components/tweets-news/tweets-news.component';
 import {BubbleChartDirective} from '@shared/directives/bubble-chart.directive';
 import {MegaNumberPipe} from '@shared/pipes/mega-number.pipe';
+import {NgxJsonLdModule} from '@ngx-lite/json-ld';
 
 @NgModule({
     providers: [
@@ -33,7 +34,8 @@ import {MegaNumberPipe} from '@shared/pipes/mega-number.pipe';
         RouterModule,
         UtilsModule,
         PipesModule,
-        ClipboardModule
+        ClipboardModule,
+        NgxJsonLdModule
     ],
     declarations: [
         HomeComponent,

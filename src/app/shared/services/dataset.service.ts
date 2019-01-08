@@ -30,10 +30,6 @@ export class DataSetService extends BaseService {
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
 
-    public getSchemaMarkup(accession: string, repository: string): Observable<any> {
-        return this.http.get(this.appConfig.getDatasetSchemaUrl(accession, repository));
-    }
-
     public getWebServiceUrl(): string {
         return this.appConfig.getWebServiceUrl();
     }

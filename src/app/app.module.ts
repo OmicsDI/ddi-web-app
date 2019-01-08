@@ -50,6 +50,7 @@ import {
     TRANSFER_RESPONSE_BASE_URLS} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
 import {environment} from '../environments/environment';
 import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
+import {SchemaService} from '@shared/services/schema.service';
 
 
 export function jwtTokenGetter() {
@@ -110,6 +111,7 @@ export function jwtTokenGetter() {
             useValue: [environment.webServiceUrl]
         }
         , AuthService
+        , SchemaService
         , BsModalService
         , DataTransportService
         , SearchService

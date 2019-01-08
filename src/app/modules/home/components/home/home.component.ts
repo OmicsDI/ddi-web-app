@@ -3,6 +3,7 @@ import {AsyncInitialisedComponent} from '@shared/components/async/async.initiali
 import {NgProgress} from '@ngx-progressbar/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
+import {SchemaService} from '@shared/services/schema.service';
 
 @Component({
     selector: 'app-home',
@@ -14,9 +15,11 @@ export class HomeComponent implements AfterViewInit {
 
     @ViewChildren(AsyncInitialisedComponent)
     asyncComponents: QueryList<AsyncInitialisedComponent>;
+    schema: any;
 
     constructor(private loadingBarService: NgProgress,
                 private metaService: Meta,
+                private schemaService: SchemaService,
                 @Inject(PLATFORM_ID) private platformId: string,
                 private titleService: Title) {
     }
@@ -30,6 +33,9 @@ export class HomeComponent implements AfterViewInit {
                 'which is able to integrate different biological entities including genes, proteins and metabolites with the relevant ' +
                 'life science literature. OmicsDI is updated daily, as new datasets get publicly available in the contributing ' +
                 'repositories.'});
+        this.schemaService.getHomeSchema().subscribe(result => {
+            this.schema = result;
+        });
         if (!isPlatformServer(this.platformId)) {
             let total = this.asyncComponents.length;
             this.loadingBarService.ref().start();

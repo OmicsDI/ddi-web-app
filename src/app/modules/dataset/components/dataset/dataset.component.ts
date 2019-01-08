@@ -26,6 +26,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {Meta, Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
+import {SchemaService} from '@shared/services/schema.service';
 
 
 @Component({
@@ -79,6 +80,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 private titleService: Title,
                 @Inject(PLATFORM_ID) platformId,
                 private metaTagService: Meta,
+                private schemaService: SchemaService,
                 private databaseListService: DatabaseListService) {
 
         this.current_url = route.pathFromRoot.toString();
@@ -149,7 +151,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 }, () => {
                     self.notfound = true;
                 });
-            this.dataSetService.getSchemaMarkup(this.acc, this.repository).subscribe(result => {
+            this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
                 this.schema = this.parseSchema(result);
             });
             return;
@@ -160,7 +162,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
-                this.dataSetService.getSchemaMarkup(this.acc, this.repository).subscribe(result => {
+                this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
                     this.schema = this.parseSchema(result);
                 });
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
