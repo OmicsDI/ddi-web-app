@@ -1,4 +1,4 @@
-import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from '@angular/core';
+import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef, HostListener, ComponentRef} from '@angular/core';
 
 @Component({
     selector: 'app-tooltip-content',
@@ -9,7 +9,7 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from '@a
      [class.in]="isIn"
      [class.fade]="isFade"
      role="tooltip">
-    <div class="tooltip-arrow"></div>
+    <div class="tooltip-arrow" style="border-bottom-color: #00acd6"></div>
     <div class="tooltip-inner">
         <ng-content></ng-content>
         {{ content }}
@@ -43,6 +43,10 @@ export class TooltipContentComponent implements AfterViewInit {
     left = -100000;
     isIn = false;
     isFade = false;
+
+    stopGratefulDestroy = false;
+
+    tooltipInstance: ComponentRef<TooltipContentComponent>;
 
     // -------------------------------------------------------------------------
     // Constructor
@@ -210,5 +214,31 @@ export class TooltipContentComponent implements AfterViewInit {
             offsetParent = offsetParent.offsetParent;
         }
         return offsetParent || window.document;
+    }
+
+    @HostListener('focusout')
+    @HostListener('mouseleave')
+    mouseOut() {
+        if (this.tooltipInstance != null) {
+            this.tooltipInstance.destroy();
+        } else {
+            this.hide()
+        }
+    }
+
+    gratefulDestroy(timeout: number) {
+        setTimeout(() => {
+            if (this.tooltipInstance != null && !this.stopGratefulDestroy) {
+                this.tooltipInstance.destroy();
+            } else if (!this.stopGratefulDestroy) {
+                this.hide();
+            }
+        }, timeout);
+    }
+
+    @HostListener('focusin')
+    @HostListener('mouseenter')
+    mouseIn() {
+        this.stopGratefulDestroy = true;
     }
 }

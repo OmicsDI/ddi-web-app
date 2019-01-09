@@ -2,9 +2,9 @@
 
 <ng-container *ngIf="null!=sections">
     <ng-container *ngFor="let s of sections">
-        <a *ngIf="s.beAnnotated && s.synonyms && s.synonyms.length>0" style="color:darkcyan" [appTooltip]="myTooltip">{{s.text}}</a>
+        <a *ngIf="s.beAnnotated && s.synonyms && s.synonyms.length>0" style="color:darkcyan; display: inline-block" [appTooltip]="myTooltip">{{s.text}}</a>
         <app-tooltip-content #myTooltip>
-            <h5>Synonyms</h5>
+            <h5 style="padding-left: 0">Synonyms</h5>
             <ul class="list-unstyled">
                 <li *ngFor="let sy of s.synonyms; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                     {{sy}}
