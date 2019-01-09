@@ -3,5 +3,7 @@ Allow: /
 Disallow: /ws
 Disallow: /ws/dataset/search
 Allow: /ws/dataset
+Allow: /ws/term
+Allow: /ws/statistics
 
 Sitemap: https://www.omicsdi.org/sitemap.xml
