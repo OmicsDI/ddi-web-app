@@ -57,19 +57,20 @@
                         </div>
                         <p class="elements" *ngIf="null!=d.instruments" id="instruments">
                             <b>INSTRUMENT(S): </b>
-                            <span>{{d.instruments}}</span>
+                            {{d.instruments.join(", ")}}
                         </p>
                         <p class="elements" *ngIf="null!=d.organisms" id="organisms">
                             <b>ORGANISM(S): </b>
                             <span *ngFor="let o of d.organisms">
-                            <a class="biological" [routerLink]="['/search']"
-                               [queryParams]="{q: 'TAXONOMY:&quot;'+o.acc+'&quot;'}">
-                                   {{o.name}}
-                            </a>&nbsp;
-                        </span>
+                                <a class="biological" [routerLink]="['/search']"
+                                   [queryParams]="{q: 'TAXONOMY:&quot;'+o.acc+'&quot;'}">
+                                       {{o.name}}
+                                </a>&nbsp;
+                            </span>
                         </p>
-                        <p class="elements ng-hide" *ngIf="null!=d.tissues" id="tissues"><b>TISSUE(S): </b>
-                            <span>{{d.tissues}}</span>
+                        <p class="elements ng-hide" *ngIf="null!=d.tissues" id="tissues">
+                            <b>TISSUE(S): </b>
+                            {{d.tissues.join(", ")}}
                         </p>
                         <p class="elements ng-hide" *ngIf="null!=d.diseases && d.diseases.length > 0" id="diseases">
                             <b>DISEASE(S): </b>
@@ -98,7 +99,7 @@
                             <a [href]="d.full_dataset_link" id="id">{{d.id}}</a> |
                             <a [href]="databaseUrl"> <span class="ng-binding" id="source">{{repositoryName}}</span>
                             </a>
-                            <span id="publicationDate">| {{d.publicationDate}} </span>
+                            <span id="publicationDate"> | {{d.publicationDate}} </span>
                         </span>
                         </p>
 

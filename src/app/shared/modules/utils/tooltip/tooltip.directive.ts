@@ -79,11 +79,12 @@ export class TooltipDirective {
 
         this.visible = false;
         if (this.tooltipComponent) {
-            this.tooltipComponent.destroy();
+            this.tooltipComponent.instance.tooltipInstance = this.tooltipComponent;
+            this.tooltipComponent.instance.gratefulDestroy(50);
         }
 
         if (this.appTooltip instanceof TooltipContentComponent) {
-            (this.appTooltip as TooltipContentComponent).hide();
+            (this.appTooltip as TooltipContentComponent).gratefulDestroy(50);
         }
     }
 }
