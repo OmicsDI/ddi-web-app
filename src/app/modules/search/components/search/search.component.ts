@@ -55,6 +55,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        const config = {
+            backdrop: true,
+            ignoreBackdropClick: true
+        };
         if (this.isServer) {
             this.params = this.route.snapshot.queryParams;
             this.query = QueryUtils.getBaseQuery(this.params);
@@ -85,7 +89,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     }
                     this.dataControl = QueryUtils.getDataControl(params);
                     if (this.searchService.isReachedPageLimit(this.dataControl)) {
-                        this.modalRef = this.modalService.show(this.modal);
+                        this.modalRef = this.modalService.show(this.modal, config);
                         return;
                     }
                     this.slimLoadingBarService.ref().start();
