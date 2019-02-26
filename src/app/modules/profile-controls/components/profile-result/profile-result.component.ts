@@ -14,6 +14,7 @@ import {Database} from 'model/Database';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 import {DataSet} from 'model/DataSet';
+import {NgProgress} from '@ngx-progressbar/core';
 
 @Component({
     selector: 'app-profile-result',
@@ -38,6 +39,7 @@ export class ProfileResultComponent implements OnInit {
                 private dataSetService: DataSetService,
                 public appConfig: AppConfig,
                 private router: Router,
+                private slimLoadingBarService: NgProgress,
                 private notificationService: NotificationsService,
                 private databaseListServive: DatabaseListService,
                 private logger: LogService,
@@ -52,6 +54,7 @@ export class ProfileResultComponent implements OnInit {
     }
 
     reloadDataSets() {
+        this.slimLoadingBarService.ref().start();
         this.databaseListServive.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.dataSets = [];
@@ -67,6 +70,7 @@ export class ProfileResultComponent implements OnInit {
                 y => {
                     this.dataSets = y.map(x => DataSetDetail.toDataset(x));
                     this.thorService.datasets = y;
+                    this.slimLoadingBarService.ref().complete();
                 }
             );
         });
