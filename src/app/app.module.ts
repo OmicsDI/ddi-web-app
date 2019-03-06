@@ -81,7 +81,7 @@ export function jwtTokenGetter() {
         HomeModule,
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
         HttpClientModule,
-        NgProgressModule.forRoot(),
+        NgProgressModule,
         MatDialogModule,
         MatMenuModule,
         MatButtonModule,
