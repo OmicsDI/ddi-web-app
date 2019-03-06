@@ -7,7 +7,7 @@ import {UploadService} from '@shared/services/upload.service';
 import {NotificationsService} from 'angular2-notifications';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {ImageCroppedEvent} from 'ngx-image-cropper/src/image-cropper.component';
+import {ImageCroppedEvent} from 'ngx-image-cropper';
 
 @Component({
     selector: 'app-update',
