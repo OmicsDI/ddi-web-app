@@ -186,13 +186,13 @@ export class ProfileService extends BaseService {
             .pipe(map(x => this.extractData<WatchedDataset[]>(x)));
     }
 
-    saveWatchedDataset(watchedDataset: WatchedDataset) {
+    saveWatchedDataset(watchedDataset: WatchedDataset): Observable<WatchedDataset> {
         this.logger.debug('Saving saved search');
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type':  'application/json'})
         };
-        this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset), httpOptions)
-            .subscribe(() => this.logger.debug('Watched dataset saved'));
+        return this.http.post(this.appConfig.getWatchedDatasetsUrl(watchedDataset.userId), JSON.stringify(watchedDataset), httpOptions)
+            .pipe(map(x => this.extractData<WatchedDataset>(x)));
     }
 
     deleteWatchedDataset(userId: string, id: string): Observable<String> {

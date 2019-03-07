@@ -49,8 +49,8 @@
         <div>
             <div *ngFor="let d of dataSets | paginate: { itemsPerPage: 10, currentPage: p };">
 
-                <app-datasetwidget [observableDataset]="getDataset(d.id, d.source)" (buttonClicked)="this.remove(d.source,d.id)" [profile]="profile"
-                                   [databases]="databases" [allowSelect]="false" [watchedDatasets]="watchedDatasets">
+                <app-datasetwidget [d]="d" [observableDataset]="getDataset(d.id, d.source)" (buttonClicked)="this.remove(d.source,d.id)" [profile]="profile"
+                                   [databases]="databases" [allowSelect]="false" [watchedDataset]="watchedDatasets.get(d.source + d.id)">
                 </app-datasetwidget>
 
 

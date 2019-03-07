@@ -31,9 +31,10 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() allowWatch = true;
     @Input() databases: Database[];
     @Input() profile: Profile;
-    @Input() watchedDatasets: WatchedDataset[] = [];
     @Input() observableDataset: Observable<DataSet>;
     @Input() isSelected = false;
+    @Input() watchedDataset: WatchedDataset;
+    isClaimed = false;
 
     constructor(public appConfig: AppConfig,
                 public profileService: ProfileService,
@@ -51,6 +52,12 @@ export class DatasetWidgetComponent implements OnInit {
                 this.d = dataset;
             });
         }
+        if (this.profile) {
+            const obj = this.profile.dataSets.find(x => x.id === this.d.id && x.source === this.d.source)
+            if (obj) {
+                this.isClaimed = true;
+            }
+        }
     }
 
     getDatabaseUrl(source) {
@@ -67,16 +74,10 @@ export class DatasetWidgetComponent implements OnInit {
         }
     }
 
-    citeClicked($event, source, id) {
-        this.citation(source, id);
-        $event.stopPropagation();
-        $event.preventDefault();
-    }
-
-    citation(source, id) {
+    citeClicked($event) {
         let dialogRef: MatDialogRef<CitationDialogComponent>;
 
-        this.dataSetService.getDataSetDetail(id, source).subscribe(
+        this.dataSetService.getDataSetDetail(this.d.id, this.d.source).subscribe(
             x => {
                 dialogRef = this.dialog.open(CitationDialogComponent);
                 dialogRef.componentInstance.title = 'Dataset citation';
@@ -84,14 +85,16 @@ export class DatasetWidgetComponent implements OnInit {
                 return dialogRef.afterClosed();
             }
         );
+        $event.stopPropagation();
+        $event.preventDefault();
     }
 
-    claimClicked($event, source, id) {
-        if (!this.isClaimed(source, id)) {
+    claimClicked($event) {
+        if (!this.isClaimed) {
             const d: DataSetShort = new DataSetShort();
 
-            d.source = source;
-            d.id = id;
+            d.source = this.d.source;
+            d.id = this.d.id;
 
             this.profileService.claimDataset(this.profile.userId, d);
             this.profile.dataSets.push(d);
@@ -105,23 +108,29 @@ export class DatasetWidgetComponent implements OnInit {
         $event.preventDefault();
     }
 
-    watchClicked($event, source, id) {
+    watchClicked($event) {
         const d: WatchedDataset = new WatchedDataset();
 
-        d.source = source;
-        d.accession = id;
+        d.source = this.d.source;
+        d.accession = this.d.id;
         d.userId = this.profile.userId;
 
-        if (this.isWatched(source, id)) {
+        if (this.watchedDataset) {
+            this.profileService.deleteWatchedDataset(this.profile.userId, this.watchedDataset.id).subscribe(
+                x => {
+                    this.watchedDataset = null;
+                    this.notificationService.success('Watched dataset removed', 'from dashboard');
+                }
+            );
             return;
         }
-        this.profileService.saveWatchedDataset(d);
-        this.watchedDatasets.push(d);
+        this.profileService.saveWatchedDataset(d).subscribe(watchedDataset => {
+            this.watchedDataset = watchedDataset;
+            this.notificationService.success('Dataset watched', 'in your dashboard', {timeOut: 1500});
+        });
 
         $event.stopPropagation();
         $event.preventDefault();
-
-        this.notificationService.success('Dataset watched', 'in your dashboard', {timeOut: 1500});
     }
 
     toggle(datasetShort: DataSetShort) {
@@ -136,23 +145,7 @@ export class DatasetWidgetComponent implements OnInit {
         this.toggleDataset.emit(datasetShort);
     }
 
-    deleteClicked($event, source, id) {
+    deleteClicked($event) {
         this.buttonClicked.emit();
-    }
-
-    public isClaimed(source, id) {
-        let obj: any;
-        if (null != this.profile.dataSets) {
-            obj = this.profile.dataSets.find(x => x.id === id && x.source === source);
-        }
-        return (null != obj);
-    }
-
-    public isWatched(source, id) {
-        let obj: any;
-        if (null != this.watchedDatasets) {
-            obj = this.watchedDatasets.find(x => x.accession === id && x.source === source);
-        }
-        return (null != obj);
     }
 }
