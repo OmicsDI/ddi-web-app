@@ -30,9 +30,7 @@ export class ProfileResultComponent implements OnInit {
 
     databases: Database[];
 
-    toDataset = DataSetDetail.toDataset;
-
-    watchedDatasets: WatchedDataset[];
+    watchedDatasets: Map<string, WatchedDataset>;
 
 
     constructor(public profileService: ProfileService,
@@ -48,8 +46,11 @@ export class ProfileResultComponent implements OnInit {
 
     ngOnInit() {
         this.reloadDataSets();
-        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
-            this.watchedDatasets = x;
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watches => {
+            this.watchedDatasets = new Map<string, WatchedDataset> ();
+            watches.forEach(watch => {
+                this.watchedDatasets.set(watch.source + watch.accession, watch);
+            })
         });
     }
 

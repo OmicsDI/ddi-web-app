@@ -42,12 +42,12 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                    <span *ngIf="d.publicationDate" class="ng-binding ng-hide" class="publicationDate">
+                    <span *ngIf="d.publicationDate" class="ng-binding ng-hide publicationDate">
                         <span>{{d.publicationDate | toDateString }}</span> |
                     </span>
-                <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding" class="dataset_id">{{d.id}}</span></a> |
+                <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding dataset_id">{{d.id}}</span></a> |
                 <a [href]="getDatabaseUrl(d.source)"> <span
-                        class="ng-binding" class="database_source">{{getDatabaseTitle(d.source)}}</span> </a>
+                        class="ng-binding database_source">{{getDatabaseTitle(d.source)}}</span> </a>
             </div>
         </div>
         <div class="row tool-box" style="padding-top:10px;">
@@ -60,25 +60,25 @@
             </div>
             <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                 <div class="btn-group pull-right widget-btn-group" role="group">
-                    <button type="button" class="btn btn-primary" (click)="citeClicked($event,d.source,d.id)">
+                    <button type="button" class="btn btn-primary" (click)="citeClicked($event)">
                         <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
                     </button>
-                    <button type="button" class="btn btn-warning" *ngIf="this.allowClaim && profile && d.claimable"
-                            (click)="claimClicked($event,d.source,d.id)">
+                    <button type="button" class="btn btn-warning" *ngIf="allowClaim && profile && d.claimable"
+                            (click)="claimClicked($event)">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
-                        <span [ngClass]="isClaimed(d.source,d.id) ? 'selected' : 'unselected'">
-                             {{isClaimed(d.source,d.id) ? 'Claimed' : 'Claim'}} </span>
+                        <span [ngClass]="isClaimed ? 'selected' : 'unselected'">
+                             {{isClaimed ? 'Claimed' : 'Claim'}} </span>
                     </button>
 
                     <button type="button" *ngIf="allowWatch && profile" class="btn btn-success"
-                            (click)="watchClicked($event,d.source,d.id)">
+                            (click)="watchClicked($event)">
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        <span [ngClass]="isWatched(d.source,d.id) ? 'selected' : 'unselected'">
-                             {{isWatched(d.source,d.id) ? 'Watched' : 'Watch'}} </span>
+                        <span [ngClass]="watchedDataset ? 'selected' : 'unselected'">
+                             {{watchedDataset ? 'Watched' : 'Watch'}} </span>
                     </button>
 
                     <button type="button" *ngIf="allowDelete && profile" class="btn btn-danger"
-                            (click)="deleteClicked($event,d.source,d.id)">
+                            (click)="deleteClicked($event)">
                         <i class="fa fa-times" aria-hidden="true"></i>
                         <span [ngClass]="'unselected'"> Delete </span>
                     </button>

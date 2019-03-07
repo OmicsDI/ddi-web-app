@@ -27,7 +27,7 @@ export class DashboardSelectedComponent implements OnInit {
     p: 0;
     databases: Database[];
     profile: Profile;
-    watchedDatasets: WatchedDataset[];
+    watchedDatasets: Map<string, WatchedDataset>;
     selectedChannel: 'selected_channel';
 
     constructor(private dataSetService: DataSetService,
@@ -43,8 +43,11 @@ export class DashboardSelectedComponent implements OnInit {
     ngOnInit() {
         this.slimLoadingBarService.ref().start();
         this.profile = this.profileService.getProfileFromLocal();
-        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
-            this.watchedDatasets = x;
+        this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watches => {
+            this.watchedDatasets = new Map<string, WatchedDataset> ();
+            watches.forEach(watch => {
+                this.watchedDatasets.set(watch.source + watch.accession, watch);
+            })
         });
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
@@ -94,7 +97,8 @@ export class DashboardSelectedComponent implements OnInit {
             d.accession = dataSet.id;
             d.userId = this.profile.userId;
 
-            this.profileService.saveWatchedDataset(d);
+            this.profileService.saveWatchedDataset(d).subscribe(() => {
+            })
         }
         this.notificationService.success('Datasets watched', 'to your dashboard');
     }

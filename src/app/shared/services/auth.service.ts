@@ -28,7 +28,7 @@ export class AuthService implements CanActivate {
             const isNotExpired = new Date().getMilliseconds() < expired;
             let profile = this.profileService.getProfileFromLocal();
             if (isNotExpired) {
-                if (profile == null || (profile != null && profile.userId == null)) {
+                if (profile == null || profile.userId == null) {
                     profile = await this.profileService.getProfile().toPromise();
                     if (profile.userId == null) {
                         // Token expired on the server (i.e restarted server)

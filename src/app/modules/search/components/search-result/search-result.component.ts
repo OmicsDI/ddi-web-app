@@ -35,9 +35,9 @@ export class SearchResultComponent implements OnInit {
     @Input()
     profile: Profile;
 
-    watchedDatasets: WatchedDataset[];
+    watchedDatasets: Map<string, WatchedDataset>;
 
-    selectedDatasets: DataSetShort[];
+    selectedDatasets: Map<string, DataSetShort>;
 
     selectedChannel: 'selected_channel';
 
@@ -52,48 +52,37 @@ export class SearchResultComponent implements OnInit {
     ngOnInit() {
         this.authService.loggedIn().then(isLogged => {
             if (isLogged) {
-                this.profileService.getWatchedDatasets(this.profile.userId).subscribe( x => {
-                    this.watchedDatasets = x;
+                this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watches => {
+                    this.watchedDatasets = new Map<string, WatchedDataset> ();
+                    watches.forEach(watch => {
+                        this.watchedDatasets.set(watch.source + watch.accession, watch);
+                    })
                 });
                 this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
-                    this.selectedDatasets = datasets;
+                    this.selectedDatasets = new Map<string, DataSetShort> ();
+                    datasets.forEach(dataset => {
+                        this.selectedDatasets.set(dataset.source + dataset.id, dataset);
+                    })
                 });
             } else {
-                this.watchedDatasets = [];
-                this.selectedDatasets = [];
+                this.watchedDatasets = new Map<string, WatchedDataset> ();
+                this.selectedDatasets = new Map<string, DataSetShort> ();
             }
         });
     }
 
     isDatasetSelected(accession: string, repository: string): boolean {
-        const i: number = this.selectedDatasets.findIndex(x => x.id === accession && x.source === repository);
-        return (i > -1);
+        return this.selectedDatasets.get(repository + accession) != null;
     }
 
     toggleDataset(datasetShort: DataSetShort) {
         if (this.isDatasetSelected(datasetShort.id, datasetShort.source)) {
-            const i = this.selectedDatasets.findIndex(x => x.id === datasetShort.id && x.source === datasetShort.source);
-            this.selectedDatasets.splice(i, 1);
+            this.selectedDatasets.delete(datasetShort.source + datasetShort.id);
         } else {
-            this.selectedDatasets.push(datasetShort);
+            this.selectedDatasets.set(datasetShort.source + datasetShort.id, datasetShort);
         }
-        this.profileService.setSelected(this.profile.userId, this.selectedDatasets).subscribe(x => {});
+        this.profileService.setSelected(this.profile.userId, Array.from(this.selectedDatasets.values())).subscribe(x => {});
         this.dataTransporterService.fire(this.selectedChannel, this.selectedDatasets);
         this.notificationService.success('Selection saved', 'in your dashboard', {timeOut: 1500});
     }
-
-    citation(source, id) {
-        let dialogRef: MatDialogRef<CitationDialogComponent>;
-
-        this.dataSetService.getDataSetDetail(id, source).subscribe(
-            x => {
-                dialogRef = this.dialog.open(CitationDialogComponent);
-                dialogRef.componentInstance.title = 'Dataset citation';
-                dialogRef.componentInstance.datasetDetail = x;
-                return dialogRef.afterClosed();
-            }
-        );
-    }
-
-
 }
