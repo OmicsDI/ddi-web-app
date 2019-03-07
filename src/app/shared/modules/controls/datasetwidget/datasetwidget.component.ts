@@ -99,6 +99,7 @@ export class DatasetWidgetComponent implements OnInit {
             this.profileService.claimDataset(this.profile.userId, d);
             this.profile.dataSets.push(d);
             this.profileService.setProfile(this.profile);
+            this.isClaimed = true;
             this.notificationService.success('Dataset claimed', 'to your dashboard', {timeOut: 1500});
         } else {
             this.router.navigate(['dashboard', 'claimed']);
