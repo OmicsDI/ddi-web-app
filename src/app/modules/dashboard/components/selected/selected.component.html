@@ -47,16 +47,16 @@
 
 
         <div>
-            <div *ngFor="let d of dataSets | paginate: { itemsPerPage: 10, currentPage: p };">
+            <div *ngFor="let d of datasetDetails | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: dataSets.length };">
 
-                <app-datasetwidget [d]="d" [observableDataset]="getDataset(d.id, d.source)" (buttonClicked)="this.remove(d.source,d.id)" [profile]="profile"
+                <app-datasetwidget [d]="d" (buttonClicked)="this.remove(d.source,d.id)" [profile]="profile"
                                    [databases]="databases" [allowSelect]="false" [watchedDataset]="watchedDatasets.get(d.source + d.id)">
                 </app-datasetwidget>
 
 
             </div>
         </div>
-        <pagination-controls (pageChange)="p = $event"
+        <pagination-controls (pageChange)="fetchPage($event)"
                              previousLabel=""
                              nextLabel=""
                              *ngIf="this.dataSets && this.dataSets.length > 10"

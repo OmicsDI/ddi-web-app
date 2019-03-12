@@ -1,6 +1,6 @@
 <div *ngIf="profile?.dataSets && profile?.dataSets.length>0">
 
-    <ng-container *ngFor="let d of dataSets | paginate: { itemsPerPage: 10, currentPage: p }">
+    <ng-container *ngFor="let d of dataSets | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: profile.dataSets.length }">
 
 
         <div class="col-sm-1" *ngIf="thorService.isClaimed(d.source,d.id)" class="rotate"
@@ -19,10 +19,10 @@
 
 
 </div>
-<pagination-controls (pageChange)="p = $event"
+<pagination-controls (pageChange)="fetchPage($event)"
                      previousLabel=""
                      nextLabel=""
-                     *ngIf="dataSets && dataSets.length > 10"
+                     *ngIf="dataSets && profile.dataSets.length > itemsPerPage"
                      class="my-pagination">
 </pagination-controls>
 

@@ -79,17 +79,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let s of watchedDatasets">
+                        <tr *ngFor="let s of watchedDatasetDetails | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: watchedDatasets.length }">
                             <td>
-                                <app-datasetwidget-small [id]="s.accession"
-                                                         [source]="s.source"></app-datasetwidget-small>
+                                <app-omics-image [omics]="s?.omics_type"></app-omics-image> {{s?.name}}
                             </td>
-                            <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.source}}</a></td>
-                            <td><a [routerLink]="['/dataset',s.source, s.accession]">{{s.accession}}</a></td>
-                            <td><a (click)="deleteWatch(s.id)" title="delete">x</a></td>
+                            <td><a [routerLink]="['/dataset',s.source, s.id]">{{s.source}}</a></td>
+                            <td><a [routerLink]="['/dataset',s.source, s.id]">{{s.id}}</a></td>
+                            <td><a (click)="deleteWatch(s.id, s.source)" title="delete">x</a></td>
                         </tr>
                         </tbody>
                     </table>
+                    <pagination-controls (pageChange)="fetchPage($event)"
+                                         previousLabel=""
+                                         nextLabel=""
+                                         *ngIf="watchedDatasets && watchedDatasets.length > itemsPerPage"
+                                         class="my-pagination">
+                    </pagination-controls>
                     <div style="padding-bottom: 20px;">To add - navigate to <a
                             [routerLink]="['/search']">browse</a> page and select "<i class="fa fa-envelope-o"
                                                                                       aria-hidden="true"></i> Watch" on

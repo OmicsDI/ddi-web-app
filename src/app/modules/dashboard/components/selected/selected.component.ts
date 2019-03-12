@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {AppConfig} from 'app/app.config';
-import {Observable} from 'rxjs';
 import {DataSetShort} from 'model/DataSetShort';
 import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications';
@@ -11,10 +10,9 @@ import {DialogService} from '@shared/services/dialog.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
-import {DataSet} from 'model/DataSet';
 import {DataTransportService} from '@shared/services/data.transport.service';
-import {map} from 'rxjs/operators';
 import {NgProgress} from '@ngx-progressbar/core';
+import {DataSet} from 'model/DataSet';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -24,7 +22,9 @@ import {NgProgress} from '@ngx-progressbar/core';
 export class DashboardSelectedComponent implements OnInit {
 
     dataSets: DataSetShort[];
-    p: 0;
+    datasetDetails: DataSet[];
+    currentPage = 1;
+    itemsPerPage = 10;
     databases: Database[];
     profile: Profile;
     watchedDatasets: Map<string, WatchedDataset>;
@@ -53,14 +53,24 @@ export class DashboardSelectedComponent implements OnInit {
             this.databases = databases;
             this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
                 this.dataSets = datasets;
+                this.fetchPage(1);
                 this.slimLoadingBarService.ref().complete();
                 this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
             });
         });
     }
 
-    getDataset(accession: string, repository: string): Observable<DataSet> {
-        return this.dataSetService.getDataSetDetail(accession, repository).pipe(map(x => DataSetDetail.toDataset(x)));
+    fetchPage(page: number) {
+        this.slimLoadingBarService.ref().start();
+        const fromIndex = (page - 1) * this.itemsPerPage;
+        const toIndex = page * this.itemsPerPage;
+        const datasets = this.dataSets.slice(fromIndex, toIndex);
+        this.dataSetService.getBatchDatasets(datasets).subscribe(batchResult => {
+            this.datasetDetails = batchResult.datasets.map(x => DataSetDetail.toDataset(x));
+            this.slimLoadingBarService.ref().complete();
+            this.currentPage = page;
+            window.scrollTo(0, 0);
+        });
     }
 
     remove(source, id) {

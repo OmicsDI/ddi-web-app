@@ -1,77 +1,74 @@
-<div>
-        <div class="row" *ngIf="profileX">
+<div class="row" *ngIf="dataSetDetails">
 
-            <div class="col-md-9 col-sm-12 col-xs-12">
-                    <app-profile-info [profile]="profileX"></app-profile-info>
+    <div class="col-md-9 col-sm-12 col-xs-12">
+            <app-profile-info [profile]="profileX"></app-profile-info>
 
-                    <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
+            <!-- app-profile-coauthors [profile]="profileService.profile" (change)="updateProfile()"></app-profile-coauthors -->
 
-                    <div id="datasets" *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0">
-                        <div class="mt-card">
-                            <div class="mt-card-header">
-                                <h4 class="mt-card-title" style="margin-left: 20px">
-                                    Datasets
-                                </h4>
-                            </div>
-                            <div class="mt-card-body">
-                                <div class="row">
-                                    <div class="col-xs-12" style="padding: 0 25px;">
-                                        <input type="text" placeholder="Filter {{profileX.email}}'s datasets ..." [ngModel]="filter" (ngModelChange)="filterDatasets($event)">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div *ngIf="datasetShowed && datasetShowed.length>0">
-                            <div *ngFor="let d of datasetShowed | paginate: { itemsPerPage: 8, currentPage: p }">
-
-                                <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
-                                                       [allowWatch]="false" [databases]="databases" [profile]="profileX"
-                                                       [allowDelete]="false"></app-datasetwidget>
-
-                            </div>
-                        </div>
-                        <pagination-controls (pageChange)="p = $event"
-                                             previousLabel=""
-                                             nextLabel=""
-                                             *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length > 10"
-                                             class="my-pagination">
-                        </pagination-controls>
-                    </div>
-            </div>
-
-            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"
-                 style="display:inline-block; vertical-align: top; text-align: right;"
-                 id="profile_div" *ngIf="profileX">
+            <div id="datasets" *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length>0">
                 <div class="mt-card">
                     <div class="mt-card-header">
                         <h4 class="mt-card-title" style="margin-left: 20px">
-                            Datasets statistics
-                        </h4>
-                    </div>
-                    <div class="mt-card-body" style="margin-top: 20px">
-                        <app-counting-data-dashboard [profile]="profileX" *ngIf="!isServer"></app-counting-data-dashboard>
-                    </div>
-                </div>
-                <div class="mt-card">
-                    <div class="mt-card-header">
-                        <h4 class="mt-card-title" style="margin-left: 20px">
-                            Feedbacks
+                            Datasets
                         </h4>
                     </div>
                     <div class="mt-card-body">
-                        <disqus [identifier]="profileX.userId" *ngIf="!isServer"></disqus>
+                        <div class="row">
+                            <div class="col-xs-12" style="padding: 0 25px;">
+                                <input type="text" placeholder="Filter {{profileX.email}}'s datasets ..." [ngModel]="filter" (ngModelChange)="filterDatasets($event)">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
-                <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
-                <!--<app-profile-repo-omics></app-profile-repo-omics>-->
-                <!--<app-dashboard-citations-count-profile [profile]="profileX"></app-dashboard-citations-count-profile>-->
-                <!--<app-dashboard-reanalisys-count-profile [profile]="profileX"></app-dashboard-reanalisys-count-profile>-->
-                <!--<app-dashboard-views-count-profile [profile]="profileX"></app-dashboard-views-count-profile>-->
-                <!--<app-dashboard-connections-count-profile [profile]="profileX"></app-dashboard-connections-count-profile>-->
+                <div *ngIf="datasetShowed && datasetShowed.length>0">
+                    <div *ngFor="let d of datasetShowed | paginate: { itemsPerPage: 8, currentPage: p }">
 
+                        <app-datasetwidget [d]="toDataset(d)" [allowSelect]="false" [allowClaim]="false"
+                                               [allowWatch]="false" [databases]="databases" [profile]="profileX"
+                                               [allowDelete]="false"></app-datasetwidget>
 
+                    </div>
+                </div>
+                <pagination-controls (pageChange)="p = $event"
+                                     previousLabel=""
+                                     nextLabel=""
+                                     *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length > 10"
+                                     class="my-pagination">
+                </pagination-controls>
+            </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"
+         style="display:inline-block; vertical-align: top; text-align: right;"
+         id="profile_div" *ngIf="profileX">
+        <div class="mt-card">
+            <div class="mt-card-header">
+                <h4 class="mt-card-title" style="margin-left: 20px">
+                    Datasets statistics
+                </h4>
+            </div>
+            <div class="mt-card-body" style="margin-top: 20px">
+                <app-counting-data-dashboard [dataSets]="dataSetDetails" [profile]="profileX" *ngIf="!isServer"></app-counting-data-dashboard>
             </div>
         </div>
+        <div class="mt-card">
+            <div class="mt-card-header">
+                <h4 class="mt-card-title" style="margin-left: 20px">
+                    Feedbacks
+                </h4>
+            </div>
+            <div class="mt-card-body">
+                <disqus [identifier]="profileX.userId" *ngIf="!isServer"></disqus>
+            </div>
+        </div>
+        <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
+        <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
+        <!--<app-profile-repo-omics></app-profile-repo-omics>-->
+        <!--<app-dashboard-citations-count-profile [profile]="profileX"></app-dashboard-citations-count-profile>-->
+        <!--<app-dashboard-reanalisys-count-profile [profile]="profileX"></app-dashboard-reanalisys-count-profile>-->
+        <!--<app-dashboard-views-count-profile [profile]="profileX"></app-dashboard-views-count-profile>-->
+        <!--<app-dashboard-connections-count-profile [profile]="profileX"></app-dashboard-connections-count-profile>-->
 
+
+    </div>
 </div>

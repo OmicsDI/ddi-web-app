@@ -29,7 +29,8 @@ export class ProfileResultComponent implements OnInit {
     @Output() change = new EventEmitter();
 
     databases: Database[];
-
+    currentPage = 1;
+    itemsPerPage = 10;
     watchedDatasets: Map<string, WatchedDataset>;
 
 
@@ -54,8 +55,21 @@ export class ProfileResultComponent implements OnInit {
         });
     }
 
-    reloadDataSets() {
+    fetchPage(page: number) {
         this.slimLoadingBarService.ref().start();
+        const fromIndex = (page - 1) * this.itemsPerPage;
+        const toIndex = page * this.itemsPerPage;
+        const datasets = this.profile.dataSets.slice(fromIndex, toIndex);
+        this.dataSetService.getBatchDatasets(datasets).subscribe(batchResult => {
+            this.dataSets = batchResult.datasets.map(x => DataSetDetail.toDataset(x));
+            this.thorService.datasets = batchResult.datasets;
+            this.slimLoadingBarService.ref().complete();
+            this.currentPage = page;
+            window.scrollTo(0, 0);
+        });
+    }
+
+    reloadDataSets() {
         this.databaseListServive.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.dataSets = [];
@@ -65,15 +79,7 @@ export class ProfileResultComponent implements OnInit {
             if (!this.profile.dataSets) {
                 return;
             }
-            forkJoin(this.profile.dataSets.map(x => {
-                return this.dataSetService.getDataSetDetail(x.id, x.source);
-            })).subscribe(
-                y => {
-                    this.dataSets = y.map(x => DataSetDetail.toDataset(x));
-                    this.thorService.datasets = y;
-                    this.slimLoadingBarService.ref().complete();
-                }
-            );
+            this.fetchPage(1);
         });
     }
 
