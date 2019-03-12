@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {forkJoin, Observable} from 'rxjs';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
@@ -8,6 +8,8 @@ import {MergeCandidate} from 'model/MergeCandidate';
 import {UnMergeDatasets} from 'model/unmerge/UnMergeDatasets';
 import {map} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {DataSetShort} from 'model/DataSetShort';
+import {DatasetBatchResult} from 'model/DatasetBatchResult';
 
 @Injectable()
 export class DataSetService extends BaseService {
@@ -28,6 +30,25 @@ export class DataSetService extends BaseService {
     public getDataSetDetail(accession: string, repository: string): Observable<DataSetDetail> {
         return this.http.get(this.appConfig.getDatasetUrl(accession, repository))
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
+    }
+
+    public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
+        const chunk = 50;
+        const chunks = [];
+        for (let i = 0, j = datasets.length; i < j; i += chunk) {
+            chunks.push(datasets.slice(i, i + chunk));
+        }
+        return forkJoin(chunks.map(x => this.getBatchDatasets(x)));
+    }
+
+    public getBatchDatasets(datasets: DataSetShort[]): Observable<DatasetBatchResult> {
+        let url = this.appConfig.getDatasetBatchUrl();
+        const queries = [];
+        datasets.forEach(dataset => {
+            queries.push(`acc=${dataset.id}&database=${dataset.source}`);
+        });
+        url = url + '?' + queries.join('&');
+        return this.http.get(url).pipe(map(x => this.extractData<DatasetBatchResult>(x)));
     }
 
     public getWebServiceUrl(): string {
