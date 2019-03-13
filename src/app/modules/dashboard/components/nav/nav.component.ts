@@ -44,15 +44,9 @@ export class NavComponent implements OnInit, OnDestroy {
                 this.profile = this.profileService.getProfileFromLocal();
                 this.userId = this.profile.userId;
                 this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
-                this.profileService.getAdminUsers().subscribe( x => {
-                    if (this.userId !== null) {
-                        for (const user of x['users']) {
-                            if (user === this.userId) {
-                                this.isAdmin = true;
-                            }
-                        }
-                    }
-                });
+                if (this.profile.roles.split(',').indexOf('ADMIN') > -1) {
+                    this.isAdmin = true;
+                }
             }
         });
     }

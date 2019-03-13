@@ -5,7 +5,6 @@ import {AnnotatedTextComponent} from '@shared/modules/controls/annotated-text/an
 import {DatasetWidgetComponent} from '@shared/modules/controls/datasetwidget/datasetwidget.component';
 import {DeleteAllButtonComponent} from '@shared/modules/controls/delete-all-button/delete-all-button.component';
 import {DeleteButtonComponent} from '@shared/modules/controls/delete-button/delete-button.component';
-import {DatasetwidgetSmallComponent} from '@shared/modules/controls/datasetwidget-small/datasetwidget-small.component';
 import {SocialnetworksComponent} from '@shared/modules/controls/socialnetworks/socialnetworks.component';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
@@ -44,7 +43,6 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         AltmetricImageComponent,
         AnnotatedTextComponent,
         DatasetWidgetComponent,
-        DatasetwidgetSmallComponent,
         DeleteAllButtonComponent,
         DeleteButtonComponent,
         DropDownComponent,
@@ -63,7 +61,6 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         AltmetricImageComponent,
         AnnotatedTextComponent,
         DatasetWidgetComponent,
-        DatasetwidgetSmallComponent,
         DeleteAllButtonComponent,
         DeleteButtonComponent,
         DropDownComponent,

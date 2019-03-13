@@ -13,6 +13,9 @@ import {AuthService} from '@shared/services/auth.service';
 import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 import {NgProgress} from '@ngx-progressbar/core';
 import {isPlatformServer} from '@angular/common';
+import {DataSetShort} from 'model/DataSetShort';
+import {Observable} from 'rxjs';
+import {DatasetBatchResult} from 'model/DatasetBatchResult';
 
 @Component({
     selector: 'app-profile',
@@ -22,7 +25,7 @@ import {isPlatformServer} from '@angular/common';
 export class ProfileComponent implements OnInit {
     profileX: Profile;
     public name: String;
-    dataSetDetails: DataSetDetail[] = [];
+    dataSetDetails: DataSetDetail[];
     profileImageUrl = '';
     coauthors: string[];
     userId = 'xxx';
@@ -76,15 +79,15 @@ export class ProfileComponent implements OnInit {
             this.profileX = profile;
             this.profileImageUrl = this.getProfileImageUrl();
 
-            forkJoin(this.profileX.dataSets.map(x => {
-                return this.dataSetService.getDataSetDetail(x.id, x.source);
-            })).subscribe(
-                y => {
-                    this.dataSetDetails = y;
-                    this.datasetShowed = y;
-                    this.slimLoadingBarService.ref().complete();
-                }
-            );
+            this.dataSetService.getDatasetDetails(this.profileX.dataSets).subscribe(batches => {
+                const tmpresult = [];
+                batches.forEach(batch => {
+                    tmpresult.push.apply(tmpresult, batch.datasets);
+                });
+                this.dataSetDetails = tmpresult;
+                this.datasetShowed = tmpresult;
+                this.slimLoadingBarService.ref().complete();
+            })
         });
     }
 

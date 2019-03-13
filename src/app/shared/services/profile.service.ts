@@ -215,10 +215,6 @@ export class ProfileService extends BaseService {
         return this.http.get(this.appConfig.getSelectedDatasetsUrl(userId))//
             .pipe(map(x => this.extractData<DataSetShort[]>(x)));
     }
-
-    getAdminUsers() {
-        return this.http.get('static/adminUser/adminUser.json');
-    }
 }
 
 

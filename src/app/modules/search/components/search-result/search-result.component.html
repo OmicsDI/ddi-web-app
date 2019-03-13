@@ -1,7 +1,6 @@
 <div class="row" *ngIf="selectedDatasets && watchedDatasets">
-    <div class="col-xs-12 col-sm-12 col-md-12" *ngFor="let ds of searchResult.datasets | paginate: { itemsPerPage: dataControl.pageSize,
-    currentPage: dataControl.page, totalItems: totalResults }"
-        style="">
+    <div class="col-xs-12 col-sm-12 col-md-12" *ngFor="let ds of searchResult.datasets | paginate:
+     { itemsPerPage: dataControl.pageSize, currentPage: dataControl.page, totalItems: totalResults }">
 
         <app-datasetwidget [d]="ds" [allowDelete]="false" [databases]="databases" [profile]="profile"
                            [watchedDataset]="watchedDatasets.get(ds.source + ds.id)" [isSelected]="isDatasetSelected(ds.id, ds.source)"

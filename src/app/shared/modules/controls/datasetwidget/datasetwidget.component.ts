@@ -52,8 +52,8 @@ export class DatasetWidgetComponent implements OnInit {
                 this.d = dataset;
             });
         }
-        if (this.profile) {
-            const obj = this.profile.dataSets.find(x => x.id === this.d.id && x.source === this.d.source)
+        if (this.profile && this.profile.dataSets) {
+            const obj = this.profile.dataSets.find(x => x.id === this.d.id && x.source === this.d.source);
             if (obj) {
                 this.isClaimed = true;
             }
@@ -99,6 +99,7 @@ export class DatasetWidgetComponent implements OnInit {
             this.profileService.claimDataset(this.profile.userId, d);
             this.profile.dataSets.push(d);
             this.profileService.setProfile(this.profile);
+            this.isClaimed = true;
             this.notificationService.success('Dataset claimed', 'to your dashboard', {timeOut: 1500});
         } else {
             this.router.navigate(['dashboard', 'claimed']);

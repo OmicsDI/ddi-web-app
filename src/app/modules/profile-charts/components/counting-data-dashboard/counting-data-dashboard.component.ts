@@ -20,23 +20,17 @@ export class CountingDataDashboardComponent implements OnInit {
 
     @Output()
     notifyHomeLoader: EventEmitter<string> = new EventEmitter<string>();
-    private username: string;
     private web_service_url = this.appConfig.getWebServiceUrl();
-    private retryLimitTimes = 2;
     private userServiceUrl: string;
-    public dataSets: DataSetDetail[];
+
+    @Input() dataSets: DataSetDetail[];
 
 
     @Input() profile: Profile;
 
 
     constructor(private dataSetService: DataSetService,
-                private route: ActivatedRoute,
-                public appConfig: AppConfig, public profileService: ProfileService,
-                private router: Router,
-                private notificationService: NotificationsService,
-                private logger: LogService,
-                private thorService: ThorService) {
+                public appConfig: AppConfig, public profileService: ProfileService) {
         this.userServiceUrl = dataSetService.getProfileServiceUrl();
     }
 
@@ -51,13 +45,5 @@ export class CountingDataDashboardComponent implements OnInit {
             this.dataSets = [];
             return;
         }
-        forkJoin(this.profile.dataSets.map(x => {
-            return this.dataSetService.getDataSetDetail(x.id, x.source);
-        })).subscribe(
-            y => {
-                this.dataSets = y;
-                this.thorService.datasets = y;
-            }
-        );
     }
 }

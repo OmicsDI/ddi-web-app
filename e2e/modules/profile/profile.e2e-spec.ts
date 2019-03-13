@@ -41,11 +41,6 @@ describe('public profile page', function() {
             'of computational methods have been recently developed for analyzing differential ' +
             'gene expression (DE) in RNA-seq data. We report on a comprehensive evaluation of the commonly used DE me...');
 
-        // organisms
-        expect<any>(profilePage.getOrganisms().getText()).toContain('Homo sapiens ');
-        expect<any>(profilePage.getOrganisms().getText()).toContain('Rattus norvegicus ');
-        expect<any>(profilePage.getOrganisms().getText()).toContain('Homo sapiens ');
-
 
         // publicationDate
         expect<any>(profilePage.getPublicationDate().getText()).toContain('2014-05-01 |');

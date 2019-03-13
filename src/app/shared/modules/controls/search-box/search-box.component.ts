@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {MatMenuTrigger} from '@angular/material';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
 import {SearchQuery} from 'model/SearchQuery';
@@ -47,20 +47,27 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         if (isPlatformServer(this.platformId)) {
             return;
         }
-        this.subscription = this.route.queryParams.subscribe(params => {
-            this.params = params;
-            if (this.router.url.indexOf('/dataset/') === -1) {
-                this.queryParams = QueryUtils.extractQuery(params);
-                const query = this.queryParams.toQueryString();
-                if (query.match(/^"[^"]*"$/)) {
-                    this.query = query.substring(1, query.length - 1);
-                } else {
-                    this.query = query;
-                }
-                this.logger.debug('query: {}', this.query);
+        this.analyseParams(this.route.snapshot.queryParams);
+        this.subscription = this.router.events.subscribe(e => {
+            if (e instanceof NavigationEnd) {
+                this.analyseParams(this.route.snapshot.queryParams);
             }
         });
         this.loadFacetForAdvancedSearch();
+    }
+
+    analyseParams(params) {
+        this.params = params;
+        if (this.router.url.indexOf('/dataset/') === -1) {
+            this.queryParams = QueryUtils.extractQuery(params);
+            const query = this.queryParams.toQueryString();
+            if (query.match(/^"[^"]*"$/)) {
+                this.query = query.substring(1, query.length - 1);
+            } else {
+                this.query = query;
+            }
+            this.logger.debug('query: {}', this.query);
+        }
     }
 
     getQueryValue() {

@@ -76,6 +76,11 @@ export class AppConfig {
         return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}&r=${Math.random()}`;
     }
 
+    getDatasetBatchUrl(): string {
+        return `${environment.webServiceUrl}dataset/batch`;
+
+    }
+
     getDatasetSchemaUrl(acc: string, repository: string): string {
         return `${environment.schemaServiceUrl}/schema/${repository}/${acc}`;
     }

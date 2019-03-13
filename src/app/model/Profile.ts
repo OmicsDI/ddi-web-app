@@ -18,6 +18,7 @@ export class Profile {
     public coauthors: UserShort[];
 
     constructor() {
+        this.dataSets = [];
     }
 }
 
