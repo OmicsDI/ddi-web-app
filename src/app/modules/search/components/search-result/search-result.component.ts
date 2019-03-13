@@ -82,7 +82,7 @@ export class SearchResultComponent implements OnInit {
             this.selectedDatasets.set(datasetShort.source + datasetShort.id, datasetShort);
         }
         this.profileService.setSelected(this.profile.userId, Array.from(this.selectedDatasets.values())).subscribe(x => {});
-        this.dataTransporterService.fire(this.selectedChannel, this.selectedDatasets);
+        this.dataTransporterService.fire(this.selectedChannel, Array.from(this.selectedDatasets.values()));
         this.notificationService.success('Selection saved', 'in your dashboard', {timeOut: 1500});
     }
 }

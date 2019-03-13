@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {forkJoin, Observable, of} from 'rxjs';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
@@ -33,6 +33,9 @@ export class DataSetService extends BaseService {
     }
 
     public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
+        if (datasets == null) {
+            return of([]);
+        }
         const chunk = 50;
         const chunks = [];
         for (let i = 0, j = datasets.length; i < j; i += chunk) {
@@ -42,6 +45,11 @@ export class DataSetService extends BaseService {
     }
 
     public getBatchDatasets(datasets: DataSetShort[]): Observable<DatasetBatchResult> {
+        if (datasets.length === 0) {
+            const result = new DatasetBatchResult();
+            result.datasets = [];
+            return of(result);
+        }
         let url = this.appConfig.getDatasetBatchUrl();
         const queries = [];
         datasets.forEach(dataset => {

@@ -1,28 +1,30 @@
-<div *ngIf="profile?.dataSets && profile?.dataSets.length>0">
+<div *ngIf="profile && profile.dataSets && profile.dataSets.length>0">
+    <div>
 
-    <ng-container *ngFor="let d of dataSets | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: profile.dataSets.length }">
-
-
-        <div class="col-sm-1" *ngIf="thorService.isClaimed(d.source,d.id)" class="rotate"
-             style="float:left; position: relative; top: 60px; left:-45px; z-index: 1000; color: #A6CE39; padding-bottom: 5px; display: inline;">
-            linked to orcid <img src="assets/orcid.png">
-        </div>
+        <ng-container *ngFor="let d of dataSets | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: profile.dataSets.length }">
 
 
+            <div class="col-sm-1" *ngIf="thorService.isClaimed(d.source,d.id)" class="rotate"
+                 style="float:left; position: relative; top: 60px; left:-45px; z-index: 1000; color: #A6CE39; padding-bottom: 5px; display: inline;">
+                linked to orcid <img src="assets/orcid.png">
+            </div>
 
-        <app-datasetwidget [d]="d" [allowSelect]="false" [allowClaim]="false"
+
+
+            <app-datasetwidget [d]="d" [allowSelect]="false" [allowClaim]="false"
                                [databases]="databases" (buttonClicked)="deleteDataset(d.source, d.id)"
                                [profile]="profile" [watchedDataset]="watchedDatasets.get(d.source + d.id)"></app-datasetwidget>
 
 
-    </ng-container>
+        </ng-container>
 
 
+    </div>
+    <pagination-controls (pageChange)="fetchPage($event)"
+                         previousLabel=""
+                         nextLabel=""
+                         *ngIf="dataSets && profile.dataSets.length > itemsPerPage"
+                         class="my-pagination">
+    </pagination-controls>
 </div>
-<pagination-controls (pageChange)="fetchPage($event)"
-                     previousLabel=""
-                     nextLabel=""
-                     *ngIf="dataSets && profile.dataSets.length > itemsPerPage"
-                     class="my-pagination">
-</pagination-controls>
 

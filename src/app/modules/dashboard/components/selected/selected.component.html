@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="dataSets">
     <div class="col-md-12 col-xs-12">
         <div class="align-top">
             <div class="col-lg-6 col-xs-12 col-sm-12 col-md-6" style="padding: 0">
@@ -41,7 +41,7 @@
             <div style="clear: both"></div>
         </div>
 
-        <div *ngIf="dataSets && dataSets.length == 0" style="text-align:center; position: fixed; top: 50%; left:50%;">
+        <div *ngIf="dataSets && dataSets.length === 0" style="text-align:center; position: fixed; top: 50%; left:50%;">
             no datasets selected, please <a [routerLink]="['/search']">browse</a> and select some
         </div>
 
@@ -59,7 +59,7 @@
         <pagination-controls (pageChange)="fetchPage($event)"
                              previousLabel=""
                              nextLabel=""
-                             *ngIf="this.dataSets && this.dataSets.length > 10"
+                             *ngIf="this.dataSets && this.dataSets.length > itemsPerPage"
                              class="my-pagination">
         </pagination-controls>
     </div>
