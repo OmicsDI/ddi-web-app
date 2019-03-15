@@ -13,6 +13,7 @@ import {Profile} from 'model/Profile';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {NgProgress} from '@ngx-progressbar/core';
 import {DataSet} from 'model/DataSet';
+import {forkJoin} from 'rxjs';
 
 @Component({
     selector: 'app-dashboard-selected',
@@ -49,14 +50,17 @@ export class DashboardSelectedComponent implements OnInit {
                 this.watchedDatasets.set(watch.source + watch.accession, watch);
             })
         });
-        this.databaseListService.getDatabaseList().subscribe(databases => {
-            this.databases = databases;
-            this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
-                this.dataSets = datasets;
+
+        forkJoin(this.databaseListService.getDatabaseList(), this.profileService.getSelected(this.profile.userId)).subscribe(res => {
+            this.databases = res[0];
+            this.dataSets = res[1];
+            if (this.dataSets.length > 0) {
                 this.fetchPage(1);
+            } else {
+                this.datasetDetails = [];
                 this.slimLoadingBarService.ref().complete();
-                this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
-            });
+            }
+            this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
         });
     }
 
