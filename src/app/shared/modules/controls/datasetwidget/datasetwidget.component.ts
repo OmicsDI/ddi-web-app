@@ -34,6 +34,7 @@ export class DatasetWidgetComponent implements OnInit {
     @Input() observableDataset: Observable<DataSet>;
     @Input() isSelected = false;
     @Input() watchedDataset: WatchedDataset;
+    @Input() hightlightKeyword: string;
     isClaimed = false;
 
     constructor(public appConfig: AppConfig,

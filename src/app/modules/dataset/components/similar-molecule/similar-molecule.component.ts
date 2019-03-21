@@ -204,7 +204,7 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
                 if (this.threshold === 0.5) {
                     elements += 1;
                     if (elements === this.default_connections_to_display) {
-                        this.threshold = score.value;
+                        this.threshold = score.value.toPrecision(3);
                         this.getRelatedDatasets(this.threshold);
                     }
                 }
