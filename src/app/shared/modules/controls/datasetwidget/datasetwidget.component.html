@@ -10,7 +10,9 @@
         <div class="project-widget-accession">
             <app-omics-image [omics]="d.omicsType"></app-omics-image>
 
-            <a [routerLink]="['/dataset',d.source, d.id]"><span class="ng-binding"> {{d.title}}</span></a>
+            <a [routerLink]="['/dataset',d.source, d.id]" style="margin-left: 5px">
+                <span class="ng-binding" [innerHTML]="d.title | truncate : 1000 : '...' : hightlightKeyword"></span>
+            </a>
 
         </div>
 
@@ -19,7 +21,7 @@
                 <!--
                     <b>Project description:</b>
                 -->
-                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : 200 : '...'"></span>
+                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : 500 : '...' : hightlightKeyword"></span>
 
                 <span *ngIf="!!!d.description || d.description.length < 3" class="description">Not available</span>
             </div>

@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchResult} from 'model/SearchResult';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
-import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {DataControl} from 'model/DataControl';
 import {Database} from 'model/Database';
 import {Profile} from 'model/Profile';
@@ -12,6 +11,7 @@ import {DataSetShort} from 'model/DataSetShort';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {NotificationsService} from 'angular2-notifications';
 import {AuthService} from '@shared/services/auth.service';
+import {SearchQuery, Rule} from 'model/SearchQuery';
 
 @Component({
     selector: 'app-search-result',
@@ -35,11 +35,16 @@ export class SearchResultComponent implements OnInit {
     @Input()
     profile: Profile;
 
+    @Input()
+    searchQuery: SearchQuery;
+
     watchedDatasets: Map<string, WatchedDataset>;
 
     selectedDatasets: Map<string, DataSetShort>;
 
     selectedChannel: 'selected_channel';
+
+    keyword: string;
 
     constructor(private dataSetService: DataSetService,
                 private dialog: MatDialog,
@@ -69,6 +74,20 @@ export class SearchResultComponent implements OnInit {
                 this.selectedDatasets = new Map<string, DataSetShort> ();
             }
         });
+        this.keyword = this.findKeywords(this.searchQuery.rules).join(';');
+    }
+
+    findKeywords(rules: Rule[]): string[] {
+        let result = [];
+        rules.forEach(rule => {
+            if (rule.field === 'all_fields') {
+                result.push(rule.data);
+            }
+            if (rule.query != null) {
+                result = result.concat(this.findKeywords(rule.query.rules));
+            }
+        });
+        return result;
     }
 
     isDatasetSelected(accession: string, repository: string): boolean {

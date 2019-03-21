@@ -47,7 +47,7 @@
         <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12  metasearch-results" style="border-left: none;">
             <app-search-pager [totalResults]="searchResult.count" (dataControlChange)="requestData($event)"
                               [dataControl]="dataControl"></app-search-pager>
-            <app-search-result [totalResults]="searchResult.count" [dataControl]="dataControl"
+            <app-search-result [totalResults]="searchResult.count" [dataControl]="dataControl" [searchQuery]="searchQuery"
                                [searchResult]="searchResult" [databases]="databases" [profile]="profile">
             </app-search-result>
             <app-search-pager [totalResults]="searchResult.count"

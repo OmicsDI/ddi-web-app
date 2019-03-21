@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     profile: Profile;
     isServer = true;
     modalRef: BsModalRef;
+    searchQuery: SearchQuery;
     private subscription: Subscription;
     @ViewChild('paging_limit') public modal: TemplateRef<any>;
 
@@ -96,6 +97,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.selectedFacets = QueryUtils.getAllFacets(params);
                     this.logger.debug('Facet selected: {}', this.selectedFacets);
                     this.databases = databases;
+                    this.searchQuery = QueryUtils.extractQuery(params);
                     this.searchService
                         .fullSearch(
                             this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)

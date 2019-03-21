@@ -88,6 +88,7 @@ export class DashboardSelectedComponent implements OnInit {
         }
         this.profileService.setSelected(this.profile.userId, this.dataSets).subscribe(x => {});
         this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
+        this.datasetDetails = [];
         this.notificationService.success('Dataset removed', 'from selected');
     }
 

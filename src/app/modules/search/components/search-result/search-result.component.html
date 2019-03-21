@@ -4,7 +4,7 @@
 
         <app-datasetwidget [d]="ds" [allowDelete]="false" [databases]="databases" [profile]="profile"
                            [watchedDataset]="watchedDatasets.get(ds.source + ds.id)" [isSelected]="isDatasetSelected(ds.id, ds.source)"
-                           (toggleDataset)="toggleDataset($event)">
+                           (toggleDataset)="toggleDataset($event)" [hightlightKeyword]="keyword">
         </app-datasetwidget>
     </div>
 </div>
