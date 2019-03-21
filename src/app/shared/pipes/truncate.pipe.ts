@@ -10,10 +10,10 @@ export class TruncatePipe implements PipeTransform {
         }
         const limit = args.length > 0 ? parseInt(args[0], 10) : 200;
         const trail = args.length > 1 ? args[1] : '...';
-        const hightlight = args.length > 2 ? args[2] : null;
-        if (hightlight != null) {
+        const highlight = args.length > 2 ? args[2] : null;
+        if (highlight != null) {
             let indexes = [];
-            const keywords = hightlight.split(';');
+            const keywords = highlight.split(';');
             keywords.forEach(keyword => {
                 const index = value.toLowerCase().indexOf(keyword.toLowerCase());
                 if (index !== -1) {
