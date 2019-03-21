@@ -7,7 +7,7 @@ span.unselected {
 }
 
 .grey {
-    background-color: silver;
+    background-color: #c0c0c05e;
     cursor: pointer;
 }
 

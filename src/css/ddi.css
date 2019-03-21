@@ -1468,7 +1468,7 @@ app-image-cropper > div {
     font-weight: 300;
 }
 .grey .tag::before, .grey .tag::after {
-    background: silver !important;
+    background: rgb(232, 232, 232) !important;
 }
 
 @media (min-width: 992px) {
