@@ -10,7 +10,7 @@
         <div class="project-widget-accession">
             <app-omics-image [omics]="d.omicsType"></app-omics-image>
 
-            <a [routerLink]="['/dataset',d.source, d.id]" style="margin-left: 5px">
+            <a [routerLink]="['/dataset',d.source, d.id]" style="margin-left: 5px; font-size: 12pt; vertical-align: middle">
                 <span class="ng-binding" [innerHTML]="d.title | truncate : 1000 : '...' : hightlightKeyword"></span>
             </a>
 
