@@ -1,11 +1,12 @@
 <div id="wrapper1" class="container_ddi" style="margin:0px;">
-    <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation" style="border: none">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <div class="nav-item" style="padding-left: 15px">
-                <a class="nav-link text-center" [routerLink]="['/']" title="OmicsDI Homepage" class="navbar-brand"
-                   id="item7"><img src="./static/images/logo/imageedit_2_3220380406.png" alt="logo"
-                                   style="padding-bottom: 8px;height: 28px;padding-right: 0px;padding-top: 1px;"></a>
+            <div class="nav-item" style="padding: 10px 0 10px 15px">
+                <a class="nav-link text-center item" style="padding: 20px 15px" [routerLink]="['/']" title="OmicsDI Homepage">
+                    <img src="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="height: 25px;" />
+                    <span style="margin-left: 8px; font-size: 10pt; vertical-align: bottom">Omics DI</span>
+                </a>
             </div>
             <button type="button" class="navbar-toggle" (click)="isCollapsedNav = !isCollapsedNav">
                 <span class="sr-only">Toggle navigation</span>
@@ -16,28 +17,25 @@
         </div>
         <div class="nav navbar-left top-nav col-lg-6 col-md-10 col-sm-11 col-xs-12" style="padding: 0">
             <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 navbar-collapse" [class.collapse]="isCollapsedNav">
-                <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/home']" id="item1">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-center" routerLink="/search" id="item2">Browse</a></li>
-                <li class="nav-item"><a class="nav-link text-center" (click)="toSubmission();" id="item8">Submit
-                    Data</a></li>
-                <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/help/api']" id="item3">API</a></li>
-                <li class="nav-item"><a class="nav-link text-center" [routerLink]="['/database']"
-                                        id="item4">Database</a></li>
+                <li class="nav-item"><a class="nav-link text-center item" [routerLink]="['/home']">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-center item" routerLink="/search">Browse</a></li>
+                <li class="nav-item"><a class="nav-link text-center item" (click)="toSubmission();">Submit Data</a></li>
+                <li class="nav-item"><a class="nav-link text-center item" [routerLink]="['/help/api']">API</a></li>
+                <li class="nav-item"><a class="nav-link text-center item" [routerLink]="['/database']">Database</a></li>
 
 
                 <li class="nav-item" dropdown>
-                    <a class="nav-link text-center dropdown-toggle" dropdownToggle id="item5" aria-controls="help-dropdown"><i
+                    <a class="nav-link text-center dropdown-toggle item" dropdownToggle aria-controls="help-dropdown"><i
                             class="fa fa-bell"></i> Help <b class="caret"></b></a>
 
                     <ul *dropdownMenu class="dropdown-menu" id="help-dropdown" style="background-color: #ffffff">
                         <li class="nav-item" id="li1">
-                            <div class="text-center" (click)="gotoHelp()" mat-menu-item id="item-div1">
+                            <div class="text-center" (click)="gotoHelp()" mat-menu-item>
                                 Omics Help
                             </div>
                         </li>
                         <li class="nav-item" id="li3">
-                            <div class="text-center" *appIsLogged mat-menu-item
-                                 [routerLink]="['dashboard','feedback']" id="item-div3">
+                            <div class="text-center" *appIsLogged mat-menu-item [routerLink]="['dashboard','feedback']">
                                 Feedback
                             </div>
                         </li>
@@ -53,7 +51,7 @@
                         <app-login-dialog></app-login-dialog>
                     </div>
                 </li>
-                <li *ngIf="profile" dropdown class="nav-item dropdown text-center" id="item6">
+                <li *ngIf="profile" dropdown class="nav-item dropdown text-center item">
                     <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle"
                        dropdownToggle data-icon="M" style="color:white !important;" aria-controls="profile-dropdown">
                         <span class="glyphicon glyphicon-user"></span>
@@ -78,10 +76,10 @@
                     </ul>
 
                 </li>
-                <li class="nav-item text-center" *ngIf="selectedComponents > 0"><a
-                        routerLink="/dashboard/selected"
-                        style="color:white !important;text-decoration:none;border-color: transparent;display: inline-block"><i
-                        class="fa fa-fw fa-shopping-basket"></i> {{selectedComponents}}</a></li>
+                <li class="nav-item" *ngIf="selectedComponents > 0">
+                    <a routerLink="/dashboard/selected" class="nav-link text-center item">
+                        <i class="fa fa-fw fa-shopping-basket"></i> {{selectedComponents}}</a>
+                </li>
             </ul>
         </div>
         <!-- Top Menu Items -->

@@ -13,7 +13,7 @@ export class TruncatePipe implements PipeTransform {
         const highlight = args.length > 2 ? args[2] : null;
         if (highlight != null) {
             let indexes = [];
-            const keywords = highlight.split(';');
+            const keywords = highlight.split(/[\s;]+/);
             keywords.forEach(keyword => {
                 const index = value.toLowerCase().indexOf(keyword.toLowerCase());
                 if (index !== -1) {

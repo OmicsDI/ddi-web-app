@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {SearchResult} from 'model/SearchResult';
 import {MatDialog} from '@angular/material';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -18,7 +18,7 @@ import {SearchQuery, Rule} from 'model/SearchQuery';
     templateUrl: './search-result.component.html',
     styleUrls: ['./search-result.component.css']
 })
-export class SearchResultComponent implements OnInit {
+export class SearchResultComponent implements OnInit, OnChanges {
 
     @Input()
     searchResult: SearchResult;
@@ -74,7 +74,6 @@ export class SearchResultComponent implements OnInit {
                 this.selectedDatasets = new Map<string, DataSetShort> ();
             }
         });
-        this.keyword = this.findKeywords(this.searchQuery.rules).join(';');
     }
 
     findKeywords(rules: Rule[]): string[] {
@@ -103,5 +102,9 @@ export class SearchResultComponent implements OnInit {
         this.profileService.setSelected(this.profile.userId, Array.from(this.selectedDatasets.values())).subscribe(x => {});
         this.dataTransporterService.fire(this.selectedChannel, Array.from(this.selectedDatasets.values()));
         this.notificationService.success('Selection saved', 'in your dashboard', {timeOut: 1500});
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.keyword = this.findKeywords(this.searchQuery.rules).join(';');
     }
 }

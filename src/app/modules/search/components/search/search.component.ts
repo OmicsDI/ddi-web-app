@@ -97,13 +97,13 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.selectedFacets = QueryUtils.getAllFacets(params);
                     this.logger.debug('Facet selected: {}', this.selectedFacets);
                     this.databases = databases;
-                    this.searchQuery = QueryUtils.extractQuery(params);
                     this.searchService
                         .fullSearch(
                             this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
                         .subscribe(
                             result => {
                                 this.searchResult = result;
+                                this.searchQuery = QueryUtils.extractQuery(params);
                                 this.dataTransportService.fire(this.facetsChannel, result.facets);
                             }, error => {
                                 this.logger.error('Exception occurred when getting search result, {}', error);

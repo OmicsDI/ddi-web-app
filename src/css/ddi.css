@@ -1278,12 +1278,21 @@ ul li.no-match-found {display: none;}
     margin-bottom: 10px;
 }
 
+.item {
+    color:white !important;
+    text-decoration:none;
+    border-color: transparent;
+}
+
 #item1,#item2,#item3,#item4,#item5,#item6,#item7,#item8{
     color:white !important;
     text-decoration:none;
     border-color: transparent;
 }
 
+.item:hover {
+    background-color:#2e6da4 !important;
+}
 
 #item1:hover {
     background-color:#2e6da4 !important;
@@ -1552,4 +1561,12 @@ app-image-cropper > div {
 
 .tooltip-rosette:hover {
     display: block !important;
+}
+
+a, a:link, a:visited {
+    border: 0 !important;
+}
+
+a:hover {
+    color: #00b7ea;
 }

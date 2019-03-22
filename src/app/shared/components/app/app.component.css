@@ -1,0 +1,7 @@
+ul li {
+    font-size: 10pt;
+}
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+    background-color: #2e6da4;
+}
