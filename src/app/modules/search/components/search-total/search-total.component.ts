@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SavedSearch} from 'model/SavedSearch';
 import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications';
@@ -7,7 +7,8 @@ import {Profile} from 'model/Profile';
 @Component({
     selector: 'app-search-total',
     templateUrl: './search-total.component.html',
-    styleUrls: ['./search-total.component.css']
+    styleUrls: ['./search-total.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchTotalComponent implements OnInit {
 

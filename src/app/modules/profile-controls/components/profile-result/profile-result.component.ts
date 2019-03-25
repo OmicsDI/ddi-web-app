@@ -28,7 +28,7 @@ export class ProfileResultComponent implements OnInit {
     @Input() profile: Profile;
     @Output() change = new EventEmitter();
 
-    databases: Database[];
+    databases: Map<string, Database>;
     currentPage = 1;
     itemsPerPage = 10;
     watchedDatasets: Map<string, WatchedDataset>;
@@ -71,7 +71,10 @@ export class ProfileResultComponent implements OnInit {
 
     reloadDataSets() {
         this.databaseListServive.getDatabaseList().subscribe(databases => {
-            this.databases = databases;
+            this.databases = new Map<string, Database>();
+            databases.forEach(db => {
+                this.databases.set(db.source, db);
+            });
             this.dataSets = [];
             if (!this.profile) {
                 return;

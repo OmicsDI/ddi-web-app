@@ -43,7 +43,7 @@
 
 @media (min-width: 768px) {
     .btn {
-        padding: 5px 12px;
+        padding: 4px 12px;
         min-width: 100px;
     }
 }

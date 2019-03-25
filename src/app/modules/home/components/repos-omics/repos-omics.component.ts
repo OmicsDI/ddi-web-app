@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
@@ -12,7 +12,8 @@ import {HttpClient} from '@angular/common/http';
     selector: 'app-repos-omics',
     templateUrl: './repos-omics.component.html',
     styleUrls: ['./repos-omics.component.css'],
-    providers: [ {provide: AsyncInitialisedComponent, useExisting: ReposOmicsComponent }]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: ReposOmicsComponent }],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReposOmicsComponent extends AsyncInitialisedComponent implements OnInit {
 

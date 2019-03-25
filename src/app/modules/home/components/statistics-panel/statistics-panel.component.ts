@@ -11,7 +11,7 @@ import {forkJoin} from 'rxjs';
     selector: 'app-statistics-panel',
     templateUrl: './statistics-panel.component.html',
     styleUrls: ['./statistics-panel.component.css'],
-    providers: [ {provide: AsyncInitialisedComponent, useExisting: StatisticsPanelComponent }]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: StatisticsPanelComponent }],
 })
 export class StatisticsPanelComponent extends AsyncInitialisedComponent implements OnInit {
 

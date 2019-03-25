@@ -30,7 +30,7 @@ export class SearchResultComponent implements OnInit, OnChanges {
     dataControl: DataControl;
 
     @Input()
-    databases: Database[];
+    databases: Map<string, Database>;
 
     @Input()
     profile: Profile;
@@ -41,6 +41,8 @@ export class SearchResultComponent implements OnInit, OnChanges {
     watchedDatasets: Map<string, WatchedDataset>;
 
     selectedDatasets: Map<string, DataSetShort>;
+
+    claimedDatasets = new Map<string, DataSetShort>();
 
     selectedChannel: 'selected_channel';
 
@@ -57,17 +59,20 @@ export class SearchResultComponent implements OnInit, OnChanges {
     ngOnInit() {
         this.authService.loggedIn().then(isLogged => {
             if (isLogged) {
+                this.profile.dataSets.forEach(dataset => {
+                    this.claimedDatasets.set(dataset.source + dataset.id, dataset);
+                });
                 this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watches => {
                     this.watchedDatasets = new Map<string, WatchedDataset> ();
                     watches.forEach(watch => {
                         this.watchedDatasets.set(watch.source + watch.accession, watch);
-                    })
+                    });
                 });
                 this.profileService.getSelected(this.profile.userId).subscribe(datasets => {
                     this.selectedDatasets = new Map<string, DataSetShort> ();
                     datasets.forEach(dataset => {
                         this.selectedDatasets.set(dataset.source + dataset.id, dataset);
-                    })
+                    });
                 });
             } else {
                 this.watchedDatasets = new Map<string, WatchedDataset> ();
@@ -91,6 +96,10 @@ export class SearchResultComponent implements OnInit, OnChanges {
 
     isDatasetSelected(accession: string, repository: string): boolean {
         return this.selectedDatasets.get(repository + accession) != null;
+    }
+
+    isDatasetClaimed(accession: string, repository: string): boolean {
+        return this.claimedDatasets.get(repository + accession) != null;
     }
 
     toggleDataset(datasetShort: DataSetShort) {

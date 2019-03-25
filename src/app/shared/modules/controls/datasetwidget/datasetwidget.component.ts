@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataSet} from 'model/DataSet';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
@@ -18,24 +18,25 @@ import {Observable} from 'rxjs';
 @Component({
     selector: 'app-datasetwidget',
     templateUrl: './datasetwidget.component.html',
-    styleUrls: ['./datasetwidget.component.css']
+    styleUrls: ['./datasetwidget.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatasetWidgetComponent implements OnInit {
 
     @Input() d: DataSet;
     @Input() allowSelect = true;
-    @Output() buttonClicked = new EventEmitter<any>();
+    @Output() deleteButtonClicked = new EventEmitter<any>();
     @Output() toggleDataset = new EventEmitter<DataSetShort>();
     @Input() allowDelete = true;
     @Input() allowClaim = true;
     @Input() allowWatch = true;
-    @Input() databases: Database[];
+    @Input() databases: Map<string, Database>;
     @Input() profile: Profile;
     @Input() observableDataset: Observable<DataSet>;
     @Input() isSelected = false;
     @Input() watchedDataset: WatchedDataset;
     @Input() hightlightKeyword: string;
-    isClaimed = false;
+    @Input() isClaimed;
 
     constructor(public appConfig: AppConfig,
                 public profileService: ProfileService,
@@ -44,6 +45,7 @@ export class DatasetWidgetComponent implements OnInit {
                 private notificationService: NotificationsService,
                 private dataSetService: DataSetService,
                 private logger: LogService,
+                private cd: ChangeDetectorRef,
                 private dialog: MatDialog) {
     }
 
@@ -53,23 +55,17 @@ export class DatasetWidgetComponent implements OnInit {
                 this.d = dataset;
             });
         }
-        if (this.profile && this.profile.dataSets) {
-            const obj = this.profile.dataSets.find(x => x.id === this.d.id && x.source === this.d.source);
-            if (obj) {
-                this.isClaimed = true;
-            }
-        }
     }
 
     getDatabaseUrl(source) {
-        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
+        const db = this.databases.get(source);
         if (db) {
             return db.sourceUrl;
         }
     }
 
     getDatabaseTitle(source) {
-        const db = this.databaseListServce.getDatabaseBySource(source, this.databases);
+        const db = this.databases.get(source);
         if (db) {
             return db.databaseName;
         }
@@ -101,6 +97,7 @@ export class DatasetWidgetComponent implements OnInit {
             this.profile.dataSets.push(d);
             this.profileService.setProfile(this.profile);
             this.isClaimed = true;
+            this.cd.detectChanges();
             this.notificationService.success('Dataset claimed', 'to your dashboard', {timeOut: 1500});
         } else {
             this.router.navigate(['dashboard', 'claimed']);
@@ -121,6 +118,7 @@ export class DatasetWidgetComponent implements OnInit {
             this.profileService.deleteWatchedDataset(this.profile.userId, this.watchedDataset.id).subscribe(
                 x => {
                     this.watchedDataset = null;
+                    this.cd.detectChanges();
                     this.notificationService.success('Watched dataset removed', 'from dashboard');
                 }
             );
@@ -128,6 +126,7 @@ export class DatasetWidgetComponent implements OnInit {
         }
         this.profileService.saveWatchedDataset(d).subscribe(watchedDataset => {
             this.watchedDataset = watchedDataset;
+            this.cd.detectChanges();
             this.notificationService.success('Dataset watched', 'in your dashboard', {timeOut: 1500});
         });
 
@@ -148,6 +147,6 @@ export class DatasetWidgetComponent implements OnInit {
     }
 
     deleteClicked($event) {
-        this.buttonClicked.emit();
+        this.deleteButtonClicked.emit();
     }
 }

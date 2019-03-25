@@ -1217,11 +1217,6 @@ input[type=range][orient=vertical]
     padding: 0 9px 0 0;
 }
 
-.ngx-pagination .disabled {
-    border-bottom: 1px dotted;
-    border-bottom-color: inherit;
-}
-
 div#local-masthead ul.dropdown-menu {
   background-color: white;
 }
@@ -1278,7 +1273,7 @@ ul li.no-match-found {display: none;}
     margin-bottom: 10px;
 }
 
-.item {
+.nav-element {
     color:white !important;
     text-decoration:none;
     border-color: transparent;
@@ -1290,7 +1285,7 @@ ul li.no-match-found {display: none;}
     border-color: transparent;
 }
 
-.item:hover {
+.nav-element:hover {
     background-color:#2e6da4 !important;
 }
 

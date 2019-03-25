@@ -26,9 +26,10 @@ export class DashboardSelectedComponent implements OnInit {
     datasetDetails: DataSet[];
     currentPage = 1;
     itemsPerPage = 10;
-    databases: Database[];
+    databases: Map<string, Database>;
     profile: Profile;
     watchedDatasets: Map<string, WatchedDataset>;
+    claimedDatasets = new Map<string, DataSetShort>();
     selectedChannel: 'selected_channel';
 
     constructor(private dataSetService: DataSetService,
@@ -44,6 +45,10 @@ export class DashboardSelectedComponent implements OnInit {
     ngOnInit() {
         this.slimLoadingBarService.ref().start();
         this.profile = this.profileService.getProfileFromLocal();
+
+        this.profile.dataSets.forEach(dataset => {
+            this.claimedDatasets.set(dataset.source + dataset.id, dataset);
+        });
         this.profileService.getWatchedDatasets(this.profile.userId).subscribe( watches => {
             this.watchedDatasets = new Map<string, WatchedDataset> ();
             watches.forEach(watch => {
@@ -52,7 +57,10 @@ export class DashboardSelectedComponent implements OnInit {
         });
 
         forkJoin(this.databaseListService.getDatabaseList(), this.profileService.getSelected(this.profile.userId)).subscribe(res => {
-            this.databases = res[0];
+            this.databases = new Map<string, Database>();
+            res[0].forEach(db => {
+                this.databases.set(db.source, db);
+            });
             this.dataSets = res[1];
             if (this.dataSets.length > 0) {
                 this.fetchPage(1);

@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     dataControl = new DataControl();
     params = {};
     selectedFacets: Map<string, string[]>;
-    databases: Database[];
+    databases: Map<string, Database>;
     profile: Profile;
     isServer = true;
     modalRef: BsModalRef;
@@ -71,7 +71,10 @@ export class SearchComponent implements OnInit, OnDestroy {
             forkJoin(this.databaseListService.getDatabaseList(), this.searchService
                 .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order))
                 .subscribe(data => {
-                    this.databases = data[0];
+                    this.databases = new Map<string, Database>();
+                    data[0].forEach(db => {
+                        this.databases.set(db.source, db);
+                    });
                     this.searchResult = data[1];
                     this.dataTransportService.fire(this.facetsChannel, data[1].facets);
                 });
@@ -82,6 +85,10 @@ export class SearchComponent implements OnInit, OnDestroy {
                 this.profile = this.profileService.getProfileFromLocal();
             }
             this.databaseListService.getDatabaseList().subscribe(databases => {
+                this.databases = new Map<string, Database>();
+                databases.forEach(db => {
+                    this.databases.set(db.source, db);
+                });
                 this.subscription = this.route.queryParams.subscribe(params => {
                     this.params = params;
                     this.query = QueryUtils.getBaseQuery(params);
@@ -96,14 +103,13 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.slimLoadingBarService.ref().start();
                     this.selectedFacets = QueryUtils.getAllFacets(params);
                     this.logger.debug('Facet selected: {}', this.selectedFacets);
-                    this.databases = databases;
                     this.searchService
                         .fullSearch(
                             this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order)
                         .subscribe(
                             result => {
-                                this.searchResult = result;
                                 this.searchQuery = QueryUtils.extractQuery(params);
+                                this.searchResult = result;
                                 this.dataTransportService.fire(this.facetsChannel, result.facets);
                             }, error => {
                                 this.logger.error('Exception occurred when getting search result, {}', error);

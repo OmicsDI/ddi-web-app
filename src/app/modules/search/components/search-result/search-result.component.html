@@ -3,7 +3,9 @@
      { itemsPerPage: dataControl.pageSize, currentPage: dataControl.page, totalItems: totalResults }">
 
         <app-datasetwidget [d]="ds" [allowDelete]="false" [databases]="databases" [profile]="profile"
-                           [watchedDataset]="watchedDatasets.get(ds.source + ds.id)" [isSelected]="isDatasetSelected(ds.id, ds.source)"
+                           [watchedDataset]="watchedDatasets.get(ds.source + ds.id)"
+                           [isSelected]="isDatasetSelected(ds.id, ds.source)"
+                           [isClaimed]="isDatasetClaimed(ds.id, ds.source)"
                            (toggleDataset)="toggleDataset($event)" [hightlightKeyword]="keyword">
         </app-datasetwidget>
     </div>

@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
@@ -12,6 +12,7 @@ import {HttpClient} from '@angular/common/http';
     selector: 'app-annual-omicstype',
     templateUrl: './annual-omicstype.component.html',
     styleUrls: ['./annual-omicstype.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ {provide: AsyncInitialisedComponent, useExisting: AnnualOmicstypeComponent }]
 })
 export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implements OnInit {

@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
-    databases: Database[];
+    databases: Map<string, Database>;
     filter = '';
 
     toDataset = DataSetDetail.toDataset;
@@ -68,7 +68,10 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
         this.slimLoadingBarService.ref().start();
         this.databaseListService.getDatabaseList().subscribe(databases => {
-            this.databases = databases;
+            this.databases = new Map<string, Database>();
+            databases.forEach(db => {
+                this.databases.set(db.source, db);
+            });
             this.getProfile(this.route.snapshot.params['username']);
         });
     }
