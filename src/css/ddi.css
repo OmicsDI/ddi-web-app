@@ -1558,10 +1558,9 @@ app-image-cropper > div {
     display: block !important;
 }
 
-a, a:link, a:visited {
-    border: 0 !important;
-}
-
 a:hover {
     color: #00b7ea;
+}
+.nav-link {
+    border: 0 !important;
 }
