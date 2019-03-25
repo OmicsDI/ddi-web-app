@@ -1564,3 +1564,8 @@ a:hover {
 .nav-link {
     border: 0 !important;
 }
+
+.ngx-pagination .disabled {
+    border-bottom: 1px dotted;
+    border-bottom-color: inherit;
+}
