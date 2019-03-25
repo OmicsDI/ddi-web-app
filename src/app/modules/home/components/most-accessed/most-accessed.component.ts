@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -8,7 +8,8 @@ import {LogService} from '@shared/modules/logs/services/log.service';
     selector: 'app-most-accessed',
     templateUrl: './most-accessed.component.html',
     styleUrls: ['./most-accessed.component.css'],
-    providers: [ {provide: AsyncInitialisedComponent, useExisting: MostAccessedComponent }]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: MostAccessedComponent }],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MostAccessedComponent extends AsyncInitialisedComponent implements OnInit {
@@ -19,7 +20,7 @@ export class MostAccessedComponent extends AsyncInitialisedComponent implements 
     genomics_list: string;
     transcriptomics_list: string;
 
-    constructor(private dataSetService: DataSetService, private logger: LogService) {
+    constructor(private dataSetService: DataSetService, private logger: LogService, private cd: ChangeDetectorRef) {
         super();
         MostAccessedComponent.requestMostAccessedDatasetFailed = false;
     }
@@ -46,11 +47,13 @@ export class MostAccessedComponent extends AsyncInitialisedComponent implements 
                 });
 
                 this.componentLoaded();
+                this.cd.detectChanges();
             })
             .then(() => {
                 if (this.mostAccessedDatasets == null) {
                     MostAccessedComponent.requestMostAccessedDatasetFailed = true;
                     this.logger.debug('datasets array is empty');
+                    this.cd.detectChanges();
                 }
             })
             .catch(this.handleError)
@@ -60,6 +63,7 @@ export class MostAccessedComponent extends AsyncInitialisedComponent implements 
     private handleError(error: any) {
 
         MostAccessedComponent.requestMostAccessedDatasetFailed = true;
+        this.cd.detectChanges();
         return Promise.reject(error.message || error);
     }
 

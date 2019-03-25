@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 
 import {FrequentlyTerm} from 'app/model/FrequentlyTerm';
@@ -15,7 +15,8 @@ const cloud = require('d3-cloud');
     selector: 'app-hotwords',
     templateUrl: './hotwords.component.html',
     styleUrls: ['./hotwords.component.css'],
-    providers: [ {provide: AsyncInitialisedComponent, useExisting: HotwordsComponent }]
+    providers: [ {provide: AsyncInitialisedComponent, useExisting: HotwordsComponent }],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HotwordsComponent extends AsyncInitialisedComponent implements OnInit {
 

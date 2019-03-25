@@ -5,15 +5,14 @@
         </h4>
     </div>
     <div class="mt-card-body">
-        <ul class="nobullet" style="margin-top: 0">
+        <ul class="nobullet" style="margin-top: 10px">
 
             <li *ngIf="isRequestMostAccessedDatasetFailed()" class="error-info">
                 Sorry, the accessing to this datasets list was temporally failed.
             </li>
             <li *ngFor="let _dataset of mostAccessedDatasets " class="cut-text" style="line-height: 2">
                 <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"></app-omics-image>
-                <span class="icon icon-functional" data-icon="4" style="margin-left: 5px"></span>
-                <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" title={{_dataset.title}}>
+                <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" style="margin-left: 5px" title={{_dataset.title}}>
                     {{_dataset.viewsCount|megaNumber}}
                     {{_dataset.title}}
                 </a>

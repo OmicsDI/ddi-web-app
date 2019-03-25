@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataControl} from 'model/DataControl';
 
 @Component({
     selector: 'app-search-pager',
     templateUrl: './search-pager.component.html',
-    styleUrls: ['./search-pager.component.css']
+    styleUrls: ['./search-pager.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchPagerComponent implements OnInit {
 

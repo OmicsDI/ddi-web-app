@@ -10,7 +10,7 @@
         <div class="project-widget-accession">
             <app-omics-image [omics]="d.omicsType"></app-omics-image>
 
-            <a [routerLink]="['/dataset',d.source, d.id]" style="margin-left: 5px">
+            <a [routerLink]="['/dataset',d.source, d.id]" style="margin-left: 5px; font-size: 12pt; vertical-align: middle">
                 <span class="ng-binding" [innerHTML]="d.title | truncate : 1000 : '...' : hightlightKeyword"></span>
             </a>
 
@@ -29,16 +29,16 @@
             <div class="project-widget-paragraph">
             </div>
             <div *ngIf="!appConfig.isEmpty(d.organisms)" class="project-widget-paragraph">
-                <strong>ORGANISM(S):</strong> <span *ngFor="let o of d.organisms" class="organisms">{{o.name}}&nbsp;</span>
+                <strong>ORGANISM(S): </strong> <span *ngFor="let o of d.organisms" class="organisms">{{o.name}}&nbsp;</span>
                 <span *ngIf="!d.organisms" class="organisms">Not available</span>
             </div>
 
             <div *ngIf="!appConfig.isEmpty(d.tissues)" class="project-widget-paragraph ng-hide">
-                <strong>TISSUE(S):</strong> <span *ngFor="let o of d.tissues" class="tissues">{{o.name}}&nbsp;</span>
+                <strong>TISSUE(S): </strong> <span *ngFor="let o of d.tissues" class="tissues">{{o.name}}&nbsp;</span>
                 <span *ngIf="!d.tissues" class="tissues">Not available</span>
             </div>
             <div *ngIf="!appConfig.isEmpty(d.diseases)" class="project-widget-paragraph ng-hide">
-                <strong>DISEASE(S):</strong> <span *ngFor="let o of d.diseases" class="diseases">{{o.name}}&nbsp;</span>
+                <strong>DISEASE(S): </strong> <span *ngFor="let o of d.diseases" class="diseases">{{o.name}}&nbsp;</span>
                 <span *ngIf="!d.diseases" class="diseases">Not available</span>
             </div>
         </div>

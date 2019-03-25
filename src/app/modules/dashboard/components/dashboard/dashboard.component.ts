@@ -6,14 +6,11 @@ import {DialogService} from '@shared/services/dialog.service';
 import {NotificationsService} from 'angular2-notifications';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {Profile} from 'model/Profile';
-import {Observable} from 'rxjs';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ThorService} from '@shared/services/thor.service';
-import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 import {NgProgress} from '@ngx-progressbar/core';
 import {DataSetShort} from 'model/DataSetShort';
-import {DatasetBatchResult} from 'model/DatasetBatchResult';
 
 @Component({
     selector: 'app-dashboard',

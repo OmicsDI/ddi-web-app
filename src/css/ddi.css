@@ -1217,11 +1217,6 @@ input[type=range][orient=vertical]
     padding: 0 9px 0 0;
 }
 
-.ngx-pagination .disabled {
-    border-bottom: 1px dotted;
-    border-bottom-color: inherit;
-}
-
 div#local-masthead ul.dropdown-menu {
   background-color: white;
 }
@@ -1278,12 +1273,21 @@ ul li.no-match-found {display: none;}
     margin-bottom: 10px;
 }
 
+.nav-element {
+    color:white !important;
+    text-decoration:none;
+    border-color: transparent;
+}
+
 #item1,#item2,#item3,#item4,#item5,#item6,#item7,#item8{
     color:white !important;
     text-decoration:none;
     border-color: transparent;
 }
 
+.nav-element:hover {
+    background-color:#2e6da4 !important;
+}
 
 #item1:hover {
     background-color:#2e6da4 !important;
@@ -1552,4 +1556,11 @@ app-image-cropper > div {
 
 .tooltip-rosette:hover {
     display: block !important;
+}
+
+a:hover {
+    color: #00b7ea;
+}
+.nav-link {
+    border: 0 !important;
 }

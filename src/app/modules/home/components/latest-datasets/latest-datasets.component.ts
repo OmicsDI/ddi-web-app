@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataSet} from 'app/model/DataSet';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -10,6 +10,7 @@ import {TimeUtils} from '@shared/utils/time-utils';
     selector: 'app-latest-datasets',
     templateUrl: './latest-datasets.component.html',
     styleUrls: ['./latest-datasets.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ {provide: AsyncInitialisedComponent, useExisting: LatestDatasetsComponent }]
 })
 export class LatestDatasetsComponent extends AsyncInitialisedComponent implements OnInit {
@@ -22,7 +23,7 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     genomics_list: string;
     transcriptomics_list: string;
 
-    constructor(private dataSetService: DataSetService, private logger: LogService) {
+    constructor(private dataSetService: DataSetService, private logger: LogService, private cd: ChangeDetectorRef) {
         super();
         LatestDatasetsComponent.requestLatestDatasetFailed = false;
     }
@@ -39,10 +40,12 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
                 this.componentLoaded();
 
                 this.latestDatasets = res['datasets'];
+                this.cd.detectChanges();
             })
             .then(() => {
                 if (this.latestDatasets == null) {
                     LatestDatasetsComponent.requestLatestDatasetFailed = true;
+                    this.cd.detectChanges();
                     this.logger.debug('datasets array is empty');
                 }
             })
@@ -53,6 +56,7 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     private handleError(error: any) {
 
         LatestDatasetsComponent.requestLatestDatasetFailed = true;
+        this.cd.detectChanges();
         return Promise.reject(error.message || error);
     }
 
