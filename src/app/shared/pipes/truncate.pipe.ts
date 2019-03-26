@@ -50,8 +50,8 @@ export class TruncatePipe implements PipeTransform {
                             maxDistance['to'] = indexes[i]['index'];
                         }
                     }
-                    maxDistance['from'] = maxDistance['from'] - fromIndex + 150;
-                    maxDistance['to'] = maxDistance['to'] - fromIndex - 150;
+                    maxDistance['from'] = maxDistance['from'] - fromIndex + 100;
+                    maxDistance['to'] = maxDistance['to'] - fromIndex - 100;
 
                     if (maxDistance['to'] > maxDistance['from']) {
                         newVal = newVal.substring(0, maxDistance['from']) + trail + '<br />' + trail + newVal.substring(maxDistance['to']);

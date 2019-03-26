@@ -1,0 +1,7 @@
+.ddi-card-panel {
+    margin: 0;
+    border: 0;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;;
+    border-radius: unset;
+}
