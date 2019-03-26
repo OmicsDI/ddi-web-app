@@ -16,7 +16,7 @@ import {Subscription, SubscriptionLike} from 'rxjs';
 
 export class AppComponent implements OnInit, OnDestroy {
     title: string;
-    homePage = true;
+    showSmallSearch = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
     selectedComponents = 0;
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
     profile: Profile;
     private subscriptions: Subscription[] = [];
     private locationSubcription: SubscriptionLike;
-    public simpleNotificationsOptions = {timeOut: 500, position: ['bottom', 'right'], animate: 'scale'};
+    public simpleNotificationsOptions = {timeOut: 1000, position: ['bottom', 'right'], animate: 'scale'};
 
     constructor(public auth: AuthService,
                 private route: ActivatedRoute,
@@ -53,19 +53,20 @@ export class AppComponent implements OnInit, OnDestroy {
         });
         this.subscriptions.push(this.router.events.subscribe((ev: any) => {
             this.isCollapsedNav = true;
-            this.homePage = (this.router.url === '/home') || (this.router.url === '/');
-                if (ev instanceof NavigationStart) {
-                    if (ev.url !== this.lastPoppedUrl) {
-                        this.yScrollStack.push(window.scrollY);
-                    }
-                } else if (ev instanceof NavigationEnd) {
-                    if (ev.url === this.lastPoppedUrl) {
-                        this.lastPoppedUrl = undefined;
-                        window.scrollTo(0, this.yScrollStack.pop());
-                    } else {
-                        window.scrollTo(0, 0);
-                    }
+            const url = this.router.url;
+            this.showSmallSearch = url !== '/home' && url !== '/';
+            if (ev instanceof NavigationStart) {
+                if (ev.url !== this.lastPoppedUrl) {
+                    this.yScrollStack.push(window.scrollY);
                 }
+            } else if (ev instanceof NavigationEnd) {
+                if (ev.url === this.lastPoppedUrl) {
+                    this.lastPoppedUrl = undefined;
+                    window.scrollTo(0, this.yScrollStack.pop());
+                } else {
+                    window.scrollTo(0, 0);
+                }
+            }
         }));
         this.auth.loggedIn().then(isLogged => {
             if (isLogged) {

@@ -1394,7 +1394,7 @@ img.image-rounded {
     border: 1px solid #dddddd;
     margin-bottom: 15px;
     margin-top: 15px;
-    border-radius: 6px;
+    border-radius: 4px;
     color: #333;
     background: #fff;
     width: 100%;
@@ -1563,4 +1563,9 @@ a:hover {
 }
 .nav-link {
     border: 0 !important;
+}
+
+.ngx-pagination .disabled {
+    border-bottom: 1px dotted;
+    border-bottom-color: inherit;
 }

@@ -1,7 +1,6 @@
 <div *ngIf="searchResult">
     <app-search-total [searchCount]="searchResult.count" [searchQuery]="query" (ignoreAllFacet)="removeAllFacet()">
     </app-search-total>
-
     <div class="row">
         <div class="col-lg-2 col-md-3 col-sm-4 hidden-xs metasearch-facets">
             <div style="vertical-align: top; border:none;">

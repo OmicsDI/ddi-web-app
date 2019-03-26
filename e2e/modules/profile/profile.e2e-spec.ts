@@ -33,19 +33,16 @@ describe('public profile page', function() {
         // Description
         expect<any>(profilePage.getDescription().getText()).toContain('A large number of computational methods have been ' +
             'recently developed for analyzing differential gene expression (DE) in RNA-seq data. We report on a comprehensive ' +
-            'evaluation of the commonly used DE methods using the SEQC benchmark data set and data from ENCODE project. We evaluated ' +
-            'a number of key features including: normalization, accuracy of DE detection and DE analysis when one condition has no ' +
-            'detectable expression. We found significant differences among the methods. Furthermore, computation...');
+            'evaluation of the commonly used DE methods using the SEQC benchmark data set and data from ENCODE project. ' +
+            'We evaluated a number of key f...');
         expect<any>(profilePage.getDescription().getText()).toContain('Puberty unmasks or accelerates nephropathies, ' +
-            'including the nephropathy of diabetes mellitus (DM). A number of cellular systems implicated in the kidney disease of ' +
-            'DM interweave, forming an interdependent functional web. We performed focused microarray analysis to test the hypothesis ' +
-            'that one or more genes in the transforming growth factor beta (TGF-β) signaling system would be differentially regulated ' +
-            'in male rats depending on the age of onset of DM. Experiment Overall Design: Male rat litterm...');
+            'including the nephropathy of diabetes mellitus (DM). A number of cellular systems implicated in the kidney disease ' +
+            'of DM interweave, forming an interdependent functional web. We performed focused microarray analysis to test' +
+            ' the hypothesis that one or mor...');
         expect<any>(profilePage.getDescription().getText()).toContain('The objective of the study was to evaluate ' +
-            'transcriptional response of endotoxin-stimulated human monocytic cells in presence or absence of host defense peptide ' +
-            'LL-37 at low physiologically relevant concentrations. Human monocytic cells THP-1 were stimulated with LPS (10ng/ml) ' +
-            'in presence or absence of LL-37 (5 ug/ml), as well as with the peptide alone, for 4 hours. The trends of LPS-induced ' +
-            'altered gene expression in presence of the peptide were further validated by quantitative real-time PCR...');
+            'transcriptional response of endotoxin-stimulated human monocytic cells in presence or absence of host defense ' +
+            'peptide LL-37 at low physiologically relevant concentrations. Human monocytic cells THP-1 were stimulated with ' +
+            'LPS (10ng/ml) in presence or absenc...');
 
 
         // publicationDate

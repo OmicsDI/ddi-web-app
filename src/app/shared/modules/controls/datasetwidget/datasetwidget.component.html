@@ -21,7 +21,7 @@
                 <!--
                     <b>Project description:</b>
                 -->
-                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : 500 : '...' : hightlightKeyword"></span>
+                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : 300 : '...' : hightlightKeyword"></span>
 
                 <span *ngIf="!!!d.description || d.description.length < 3" class="description">Not available</span>
             </div>

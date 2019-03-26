@@ -9,3 +9,11 @@
 .list-group-item2 {
     margin-top: 10px;
 }
+
+.metasearch-facets {
+    padding-right: 0 !important;
+}
+
+.metasearch-organism-facet {
+    padding: 10px;
+}

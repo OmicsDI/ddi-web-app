@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="nav navbar-left top-nav col-lg-5 col-md-10 col-sm-11 col-xs-12" style="padding: 0">
+        <div class="nav navbar-left top-nav col-lg-5 col-md-10 col-sm-10 col-xs-12" style="padding: 0">
             <ul class="nav navbar-nav col-lg-7 col-md-12 col-sm-12 navbar-collapse" [class.collapse]="isCollapsedNav">
                 <li class="nav-item"><a class="nav-link text-center nav-element" routerLink="/search">Browse</a></li>
                 <li class="nav-item"><a class="nav-link text-center nav-element" (click)="toSubmission();">Submit Data</a></li>
@@ -83,7 +83,7 @@
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5 omics-search-box">
-            <li style="width:100%;" *ngIf="!homePage" app-search-box [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
+            <li style="width:100%;" *ngIf="showSmallSearch" app-search-box [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
         </ul>
     </nav>
     <!-- /local-nav -->
