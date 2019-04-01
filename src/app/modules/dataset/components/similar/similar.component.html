@@ -21,9 +21,9 @@
                     <span *ngFor="let o of ds.organisms">{{o}}&nbsp;</span>
                 </div>
                 <div class="project-widget-paragraph ng-binding">
-                    <span class="ng-binding"> <span class="similar_publicationDate">{{ds.publicationDate | toDateString}}</span> | </span>
+                    <span class="ng-binding"> <span class="similar_publicationDate">{{ds.publicationDate | toDateString : []}}</span> | </span>
                     <span class="similar_id">{{ds.id}}</span> |
-                    <span class="similar_source">{{this.getDatabaseTitle(ds.source)}}</span>
+                    <span class="similar_source">{{getDatabaseTitle(ds.source)}}</span>
                 </div>
             </div>
         </div>

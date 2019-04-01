@@ -32,7 +32,7 @@
                 <pagination-controls (pageChange)="p = $event"
                                      previousLabel=""
                                      nextLabel=""
-                                     *ngIf="this.profileX?.dataSets && this.profileX?.dataSets.length > 10"
+                                     *ngIf="profileX?.dataSets && profileX?.dataSets.length > 10"
                                      class="my-pagination">
                 </pagination-controls>
             </div>
@@ -61,14 +61,5 @@
                 <disqus [identifier]="profileX.userId" *ngIf="!isServer"></disqus>
             </div>
         </div>
-        <!--<app-profile-annual-omicstype></app-profile-annual-omicstype>-->
-        <!--<app-dashboard-profile-annual-omicstype [profile]="profileX"></app-dashboard-profile-annual-omicstype>-->
-        <!--<app-profile-repo-omics></app-profile-repo-omics>-->
-        <!--<app-dashboard-citations-count-profile [profile]="profileX"></app-dashboard-citations-count-profile>-->
-        <!--<app-dashboard-reanalisys-count-profile [profile]="profileX"></app-dashboard-reanalisys-count-profile>-->
-        <!--<app-dashboard-views-count-profile [profile]="profileX"></app-dashboard-views-count-profile>-->
-        <!--<app-dashboard-connections-count-profile [profile]="profileX"></app-dashboard-connections-count-profile>-->
-
-
     </div>
 </div>
