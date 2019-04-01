@@ -325,7 +325,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     removeTags() {
         for (const section of this.abstract_sections) {
-            section.text = section.text.replace(/<(?:.|\n)*?>/gm, '');
+            if (section.text != null) {
+                section.text = section.text.replace(/<(?:.|\n)*?>/gm, '');
+            }
         }
     }
 
