@@ -107,7 +107,6 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Colon, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Ileum, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Spleen, Protein Intensity (Geiger,MCP,2013)');
-        expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Cerebellum, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Lung, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Duodenum, Protein Intensity (Geiger,MCP,2013)');
         expect<any>(datasetPage.getSimilar_title().getText()).toContain('M.musculus - Stomach, Protein Intensity (Geiger,MCP,2013)');
@@ -116,7 +115,6 @@ describe('public dataset page', function() {
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090378');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090222');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090364');
-        expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090218');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('10090339');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('100906');
         expect<any>(datasetPage.getSimilar_id().getText()).toContain('1009080');
