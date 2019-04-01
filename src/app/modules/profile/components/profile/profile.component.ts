@@ -10,12 +10,8 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {Database} from 'model/Database';
 import {AuthService} from '@shared/services/auth.service';
-import {forkJoin} from 'rxjs/internal/observable/forkJoin';
 import {NgProgress} from '@ngx-progressbar/core';
 import {isPlatformServer} from '@angular/common';
-import {DataSetShort} from 'model/DataSetShort';
-import {Observable} from 'rxjs';
-import {DatasetBatchResult} from 'model/DatasetBatchResult';
 
 @Component({
     selector: 'app-profile',
@@ -29,13 +25,13 @@ export class ProfileComponent implements OnInit {
     profileImageUrl = '';
     coauthors: string[];
     userId = 'xxx';
-    username: string = null;
     databases: Map<string, Database>;
     filter = '';
-
+    p = 1;
     toDataset = DataSetDetail.toDataset;
     datasetShowed: DataSetDetail[];
     isServer = false;
+    userNotFound = false;
 
     constructor(public profileService: ProfileService,
                 private dataSetService: DataSetService,
@@ -67,12 +63,13 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.slimLoadingBarService.ref().start();
+        this.userId = this.route.snapshot.params['username'];
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = new Map<string, Database>();
             databases.forEach(db => {
                 this.databases.set(db.source, db);
             });
-            this.getProfile(this.route.snapshot.params['username']);
+            this.getProfile(this.userId);
         });
     }
 
@@ -80,7 +77,7 @@ export class ProfileComponent implements OnInit {
         this.logger.debug('current username: {}', username);
         this.profileService.getPublicProfile(username).subscribe(profile => {
             this.profileX = profile;
-            this.profileImageUrl = this.getProfileImageUrl();
+            this.profileImageUrl = this.appConfig.getProfileImageUrl(this.userId);
 
             this.dataSetService.getDatasetDetails(this.profileX.dataSets).subscribe(batches => {
                 const tmpresult = [];
@@ -89,13 +86,12 @@ export class ProfileComponent implements OnInit {
                 });
                 this.dataSetDetails = tmpresult;
                 this.datasetShowed = tmpresult;
+            }, () => {}, () => {
                 this.slimLoadingBarService.ref().complete();
-            })
+            });
+        }, () => {
+            this.userNotFound = true;
+            this.slimLoadingBarService.ref().complete();
         });
     }
-
-    getProfileImageUrl(): string {
-        return this.appConfig.getProfileImageUrl(this.userId);
-    }
-
 }

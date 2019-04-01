@@ -309,14 +309,14 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     processSections() {
         // TODO: encoding problems
-        const description = this.enrichmentInfo.originalAttributes.description.replace('Â³loopingÂ²', 'WloopingW');
+        const description = this.enrichmentInfo.originalAttributes.description;
 
         this.title_sections = this.getSection(this.enrichmentInfo.originalAttributes.name, this.enrichmentInfo.synonyms.name);
         this.abstract_sections = this.getSection(description, this.enrichmentInfo.synonyms.description);
-        this.sample_protocol_sections = this.getSection(
-            this.enrichmentInfo.originalAttributes.sample_protocol, this.enrichmentInfo.synonyms.sample_protocol);
-        this.data_protocol_sections = this.getSection(
-            this.enrichmentInfo.originalAttributes.data_protocol, this.enrichmentInfo.synonyms.data_protocol);
+        // this.sample_protocol_sections = this.getSection(
+        //     this.enrichmentInfo.originalAttributes.sample_protocol, this.enrichmentInfo.synonyms.sample_protocol);
+        // this.data_protocol_sections = this.getSection(
+        //     this.enrichmentInfo.originalAttributes.data_protocol, this.enrichmentInfo.synonyms.data_protocol);
 
         const str = this.enrichmentInfo.originalAttributes.name;
         this.ontology_highlighted = true;
@@ -325,7 +325,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     removeTags() {
         for (const section of this.abstract_sections) {
-            section.text = section.text.replace(/<(?:.|\n)*?>/gm, '');
+            if (section.text != null) {
+                section.text = section.text.replace(/<(?:.|\n)*?>/gm, '');
+            }
         }
     }
 
@@ -347,9 +349,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     this.synonymResult = data[1];
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
-                    } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {
-                        this.dialogService.confirm('Alert' , 'no synonymous words in name or description');
-                        this.processSections();
+                    } else if (!this.enrichmentInfo.synonyms.name && !this.enrichmentInfo.synonyms.description) {
+                        this.dialogService.confirm('Alert' , 'no synonymous words in both name and description');
                     } else {
                         this.processSections();
                     }

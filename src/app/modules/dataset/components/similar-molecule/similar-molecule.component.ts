@@ -49,10 +49,6 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
             .selectAll('div')
             .remove();
         if (self.acc && self.repository) {
-            if (self.repository === 'metabolomics_workbench') {
-                self.repository = 'MetabolomicsWorkbench';
-            }
-
             this.simiMoleService
                 .search(self.acc, self.repository)
                 .subscribe(result => {
