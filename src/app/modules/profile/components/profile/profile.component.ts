@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
     toDataset = DataSetDetail.toDataset;
     datasetShowed: DataSetDetail[];
     isServer = false;
+    userNotFound = false;
 
     constructor(public profileService: ProfileService,
                 private dataSetService: DataSetService,
@@ -85,8 +86,12 @@ export class ProfileComponent implements OnInit {
                 });
                 this.dataSetDetails = tmpresult;
                 this.datasetShowed = tmpresult;
+            }, () => {}, () => {
                 this.slimLoadingBarService.ref().complete();
-            })
+            });
+        }, () => {
+            this.userNotFound = true;
+            this.slimLoadingBarService.ref().complete();
         });
     }
 }

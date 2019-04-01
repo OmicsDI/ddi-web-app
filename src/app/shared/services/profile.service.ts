@@ -10,7 +10,7 @@ import {ConnectionData} from 'model/ConnectionData';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {CookieUtils} from '@shared/utils/cookie-utils';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {throwError} from 'rxjs/internal/observable/throwError';
 import {DataTransportService} from '@shared/services/data.transport.service';
@@ -32,12 +32,17 @@ export class ProfileService extends BaseService {
         if (isPlatformServer(this.platformId)) {
             return;
         }
+        if (profile.dataSets == null) {
+            profile.dataSets = [];
+        }
         localStorage.removeItem('profile');
         localStorage.setItem('profile', JSON.stringify(profile));
     };
+
     removeProfile() {
         localStorage.removeItem('profile');
     };
+
     getProfileFromLocal(): Profile {
         if (!isPlatformBrowser(this.platformId)) {
             return null;
@@ -55,10 +60,8 @@ export class ProfileService extends BaseService {
         return this.http.get(this.appConfig.getProfileUrl(username))
             .pipe(map(x => {
                 _profile = this.extractData<Profile>(x);
-                if (!_profile) {
-                    this.logger.debug('public profile not received');
-                } else {
-                    this.logger.debug('public profile received: {}', _profile.userId);
+                if (!_profile.userId) {
+                    throw new Error('User not found');
                 }
                 return _profile;
             }));
