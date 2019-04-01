@@ -347,9 +347,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     this.synonymResult = data[1];
                     if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
-                    } else if (!this.enrichmentInfo.synonyms.name || !this.enrichmentInfo.synonyms.description) {
-                        this.dialogService.confirm('Alert' , 'no synonymous words in name or description');
-                        this.processSections();
+                    } else if (!this.enrichmentInfo.synonyms.name && !this.enrichmentInfo.synonyms.description) {
+                        this.dialogService.confirm('Alert' , 'no synonymous words in both name and description');
                     } else {
                         this.processSections();
                     }
