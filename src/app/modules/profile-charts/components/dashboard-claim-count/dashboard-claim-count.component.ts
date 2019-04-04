@@ -81,7 +81,13 @@ export class DashboardClaimCountComponent implements OnInit {
         const x0 = d3.scaleTime().range([0, width - 30]);
         const y0 = d3.scaleLinear().range([height - heightOffset, 0]);
         const y1 = d3.scaleLinear().range([height - heightOffset, 0]);
-        const xAxis = d3.axisBottom(x0).ticks(yearSet.size + 2);
+
+        const nYearsToDisplay = width / 50;
+        const toDisplay = Math.round(yearSet.size / nYearsToDisplay);
+        const xAxis = d3.axisBottom(x0)
+            .ticks(yearSet.size + 2).tickFormat(function (d: any, i: number) {
+                return (i % toDisplay === 0) ? d.getFullYear() : '';
+            });
         const yAxisLeft = d3.axisLeft(y0).ticks(2);
         const yAxisRight = d3.axisRight(y1).ticks(2);
         const yLine = d3.scaleLinear().range([15, 0]);
