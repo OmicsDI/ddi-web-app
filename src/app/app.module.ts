@@ -70,10 +70,7 @@ export function jwtTokenGetter() {
             config: {
                 tokenGetter: jwtTokenGetter,
                 headerName: 'X-AUTH-TOKEN',
-                whitelistedDomains: ['wwwdev.ebi.ac.uk', 'www.omicsdi.org', 'omicsdi.org'],
-                blacklistedRoutes: new Array(
-                    new RegExp('wwwdev.ebi.ac.uk\/Tools\/omicsdi\/ws\/.*'),
-                    new RegExp('www.omicsdi.org\/ws\/.*'))
+                whitelistedDomains: ['wwwdev.ebi.ac.uk', 'www.omicsdi.org', 'omicsdi.org']
             }
         }),
         CommonModule,
