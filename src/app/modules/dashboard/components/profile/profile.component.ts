@@ -20,7 +20,6 @@ export class DashboardProfileComponent implements OnInit {
     profileX: Profile;
     public name: String;
     dataSetDetails: DataSetDetail[] = [];
-    profileImageUrl = '';
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
