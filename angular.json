@@ -38,7 +38,8 @@
               "src/css/sb-admin.css",
               "src/styles.css",
               "src/css/ddi.css",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/font-awesome/css/font-awesome.css",
+              "src/scss/omics-theme.scss"
             ],
             "scripts": []
           },

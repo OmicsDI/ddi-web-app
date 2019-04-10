@@ -5,7 +5,6 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
-import {UiSwitchModule} from 'angular2-ui-switch';
 import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -40,7 +39,6 @@ import {MatSlideToggleModule} from '@angular/material';
         DisqusModule.forRoot('omicsdi'),
         ModalModule.forRoot(),
         FormsModule,
-        UiSwitchModule,
         ClipboardModule,
         UtilsModule,
         NgxPaginationModule,

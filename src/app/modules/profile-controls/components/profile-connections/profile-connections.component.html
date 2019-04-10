@@ -7,11 +7,11 @@
                 </h4>
             </div>
             <div class="mt-card-body">
-                <ul class="connectionList">
+                <ul style="list-style-type: none; padding: 0 14px">
                     <li>
                         <span style="position: absolute; right:10px;">
-                          <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="orcidConnected"
-                                     (change)="connectedChanged(orcidConnected, 'orcid')"></ui-switch>
+                            <mat-slide-toggle [(ngModel)]="orcidConnected"
+                                              (change)="connectedChanged(orcidConnected, 'orcid')"></mat-slide-toggle>
                         </span>
                         <span class="connection"><img src="assets/orcid.png"/>&nbsp;<a
                             (click)="connectedChanged(orcidConnected,'orcid')">Orcid</a>
@@ -20,10 +20,9 @@
                     </li>
                     <li>
                         <span style="position: absolute; right:10px;">
-                                  <!-- a.class="disabled" ui-switch.disabled="true"-->
-                                  <ui-switch size="small" color="rgb(66, 139, 202)" [ngModel]="elixirConnected"
-                                             (change)="connectedChanged(elixirConnected,'elixir')"></ui-switch>
-                                </span>
+                            <mat-slide-toggle [(ngModel)]="elixirConnected"
+                                              (change)="connectedChanged(elixirConnected,'elixir')" ></mat-slide-toggle>
+                        </span>
                         <span class="connection"><img src="assets/elixir-small.png"/>&nbsp;<a
                             (click)="connectedChanged(elixirConnected,'elixir')">Elixir</a>
                                 <span *ngIf="elixirConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
@@ -31,9 +30,9 @@
                     </li>
                     <li>
                         <span style="position: absolute; right:10px;">
-                              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="googleConnected"
-                                         (change)="connectedChanged(googleConnected,'google')"></ui-switch>
-                            </span>
+                            <mat-slide-toggle [(ngModel)]="googleConnected"
+                                              (change)="connectedChanged(googleConnected,'google')" ></mat-slide-toggle>
+                        </span>
                         <span class="connection"><img src="assets/google.png"/>&nbsp;<a
                             (click)="connectedChanged(googleConnected,'google')">Google</a>
                             <span *ngIf="googleConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
@@ -41,9 +40,9 @@
                     </li>
                     <li>
                         <span style="position: absolute; right:10px;">
-                              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="twitterConnected"
-                                         (change)="connectedChanged(twitterConnected,'twitter')"></ui-switch>
-                            </span>
+                            <mat-slide-toggle [(ngModel)]="twitterConnected"
+                                              (change)="connectedChanged(twitterConnected,'twitter')" ></mat-slide-toggle>
+                        </span>
                         <span class="connection"><img src="assets/twitter.png"/>&nbsp;<a
                             (click)="connectedChanged(twitterConnected,'twitter')">Twitter</a>
                                     <span *ngIf="twitterConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
@@ -51,16 +50,14 @@
                     </li>
                     <li>
                         <span style="position: absolute; right:10px;">
-                              <ui-switch size="small" color="rgb(66, 139, 202)" [(ngModel)]="githubConnected"
-                                         (change)="connectedChanged(githubConnected,'github')"></ui-switch>
-                            </span>
+                            <mat-slide-toggle [(ngModel)]="githubConnected"
+                                              (change)="connectedChanged(githubConnected,'github')" ></mat-slide-toggle>
+                        </span>
                         <span class="connection"><img src="assets/github.png"/>&nbsp;<a
                             (click)="connectedChanged(githubConnected,'github')">GitHub</a>
                                     <span *ngIf="githubConnected">&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/link.png"></span>
                         </span>
                     </li>
-
-                    <li class="gsc_rsb_fade"></li>
                 </ul>
             </div>
         </div>
