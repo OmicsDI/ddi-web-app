@@ -25,6 +25,7 @@ import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {AdvancedSearchComponent} from '@shared/modules/controls/advanced-search/advanced-search.component';
 
 @NgModule({
     imports: [
@@ -55,7 +56,8 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
-        CitationDialogComponent
+        CitationDialogComponent,
+        AdvancedSearchComponent,
     ],
     exports: [
         AltmetricImageComponent,
@@ -73,7 +75,8 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
-        CitationDialogComponent
+        CitationDialogComponent,
+        AdvancedSearchComponent
     ],
     entryComponents: [
         ConfirmDialogComponent,

@@ -1,11 +1,11 @@
-<div [ngClass]="isHomeSearch ? '' : 'search-box'">
+<div>
     <form novalidate name="queryForm" class="local-search" [ngClass]="isHomeSearch ? 'global-search' : 'local-search'">
         <div class="form-group ">
             <div class="input-group">
                 <app-autocomplete-n (submit)="search()" [searchText]="getQueryValue()"></app-autocomplete-n>
                 <div class="input-group-btn">
-                    <button [matMenuTriggerFor]="advancedSearchMenu" type="button" class="btn btn-primary ddi-btn">
-                        <i class="fa {{this.caret_class()}}" aria-hidden="true"></i>
+                    <button type="button" class="btn btn-primary ddi-btn" (click)="isAdvancedOpened = !isAdvancedOpened">
+                        <i class="fa {{isAdvancedOpened ? 'fa-caret-up' : 'fa-caret-down'}}" aria-hidden="true"></i>
                         Advanced
                     </button>
                     <button type="submit" value="submit" class="btn btn-primary ddi-btn" (click)="search()">
@@ -13,7 +13,7 @@
                     </button>
                 </div>
             </div>
-            <span class="help-block example-searches" *ngIf="isHomeSearch" style="margin-top: 10px">
+            <span class="help-block example-searches" *ngIf="!isAdvancedOpened" style="margin-top: 10px">
                  <i>
                      Examples:
                      <a rel="nofollow" (click)="doSearch('Cancer')">Cancer</a>,
@@ -26,19 +26,10 @@
                  </i>
              </span>
         </div>
+        <div class="form-group">
+            <div class="input-group">
+
+            </div>
+        </div>
     </form>
 </div>
-
-<mat-menu id="advancedSearchMenu" #advancedSearchMenu="matMenu" [overlapTrigger]="false">
-    <div class="mat-menu-content col-xs-12">
-        <div class="alert alert-info" (click)="doNotPropagate($event);">
-            <div style="position: relative;">
-                <strong>Full Text Query:</strong><br/>
-                <input type="text" [(ngModel)]="query"/>
-            </div>
-
-        </div>
-        <app-query-builder [searchQuery]="queryParams" (queryChange)="updateQueryParams($event)" (click)="doNotPropagate($event);">
-        </app-query-builder>
-    </div>
-</mat-menu>
