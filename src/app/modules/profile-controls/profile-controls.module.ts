@@ -12,7 +12,6 @@ import {FormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
-import {UiSwitchModule} from 'angular2-ui-switch';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {RouterModule} from '@angular/router';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
@@ -24,7 +23,6 @@ import {UtilsModule} from '@shared/modules/utils/utils.module';
         FormsModule,
         NgxPaginationModule,
         MatCheckboxModule,
-        UiSwitchModule,
         PipesModule,
         UtilsModule,
         ControlsModule,
