@@ -1,34 +1,37 @@
 <div style="min-height: 60px;">
-    <div class="row" *ngIf="loading || (this.totalResults > 0)" style="margin-top:10px;">
+    <div class="row" *ngIf="loading || (totalResults > 0)" style="margin-top:10px;">
         <div class="col-lg-8">
             <pagination-controls (pageChange)="getPage($event)"></pagination-controls>
         </div>
 
-        <div class="col-lg-4" style="margin: 1em 0">
-            <span class="pull-right" style="margin-right:10px;">
-                <span style="border:none;">
-                    <span (click)="sortOrderChanged(dataControl.order);" style="cursor:pointer;">Sort
-                        <i *ngIf="dataControl.order === 'descending'" class="fa fa-caret-down " style="font-size:19px;"></i>
-                        <i *ngIf="dataControl.order === 'ascending'" class="fa fa-caret-up" style="font-size:19px"></i>
-                    </span> by:
-                    <select (change)="sortByChanged($event.target.value)" [ngModel]="this.dataControl.sortBy">
-                        <option value="">Relevance</option>
-                        <option value="id">Accession</option>
-                        <option value="publication_date">Pub.Date</option>
-                        <option value="view_count_scaled">Views</option>
-                        <option value="citation_count_scaled">Citations</option>
-                        <option value="reanalysis_count_scaled">Reanalysis</option>
-                        <option value="download_count_scaled">Downloads</option>
-                        <option value="normalized_connections">Connections</option>
-                    </select>
-                </span>
-                <span>
-                    Page size&nbsp;
-                    <select [(ngModel)]="dataControl.pageSize" (change)="pageSizeChanged($event.target.value)">
-                        <option [value]="c" *ngFor="let c of pageSizes">{{c}}</option>
-                    </select>
-                </span>
-            </span>
+        <div class="col-lg-4">
+            <div class="form-group pull-right" style="margin-right:10px; margin-bottom: 0">
+                <div class="input-group">
+                    <span style="border:none;">
+                        <span (click)="sortOrderChanged(dataControl.order);" style="cursor:pointer;">Sort&nbsp;
+                            <i class="fa fa-caret-{{dataControl.order === 'descending' ? 'down' : 'up'}} " style="font-size:19px;"></i>
+                        </span> &nbsp;by: &nbsp;
+                        <mat-form-field style="width: 100px">
+                            <mat-select [ngModel]="dataControl.sortBy" (valueChange)="sortByChanged($event)">
+                                <mat-option [value]="''">Relevance</mat-option>
+                                <mat-option [value]="'id'">Accession</mat-option>
+                                <mat-option [value]="'publication_date'">Pub.Date</mat-option>
+                                <mat-option [value]="'view_count_scaled'">Views</mat-option>
+                                <mat-option [value]="'citation_count_scaled'">Citations</mat-option>
+                                <mat-option [value]="'reanalysis_count_scaled'">Reanalysis</mat-option>
+                                <mat-option [value]="'download_count_scaled'">Downloads</mat-option>
+                                <mat-option [value]="'normalized_connections'">Connections</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        &nbsp;Page size&nbsp;
+                        <mat-form-field style="width: 60px">
+                            <mat-select [(ngModel)]="dataControl.pageSize" (valueChange)="pageSizeChanged($event)">
+                                <mat-option [value]="c" *ngFor="let c of pageSizes">{{c}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

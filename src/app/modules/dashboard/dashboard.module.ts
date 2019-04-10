@@ -26,6 +26,7 @@ import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.co
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {ModalModule} from 'ngx-bootstrap';
 import {ImageCropperModule} from 'ngx-image-cropper';
+import {MatSlideToggleModule} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import {ImageCropperModule} from 'ngx-image-cropper';
         UtilsModule,
         NgxPaginationModule,
         ImageCropperModule,
-        CollapseModule.forRoot()
+        CollapseModule.forRoot(),
+        MatSlideToggleModule
     ],
     declarations: [
         DashboardComponent,

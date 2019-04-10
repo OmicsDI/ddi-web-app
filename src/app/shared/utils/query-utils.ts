@@ -38,7 +38,7 @@ export class QueryUtils {
             control.order = params['order'];
         }
         if (params.hasOwnProperty('pageSize')) {
-            control.pageSize = params['pageSize'];
+            control.pageSize = parseInt(params['pageSize'], 10);
         }
         if (params.hasOwnProperty('page')) {
             control.page = params['page'];
