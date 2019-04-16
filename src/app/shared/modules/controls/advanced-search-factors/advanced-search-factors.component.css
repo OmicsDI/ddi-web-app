@@ -1,0 +1,34 @@
+.search-factor {
+    padding: 6px 8px;
+    display: inline-block;
+}
+
+.search-delete, .search-add {
+    padding: 2px 0;
+}
+
+.search-add {
+    color: #0099cc;
+}
+
+.search-rule {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0;
+}
+
+.search-condition {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    padding: 1px 8px;
+}
+
+.search-field {
+    border: 2px solid #0099cc;
+    padding: 0 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.last-search-rule {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}

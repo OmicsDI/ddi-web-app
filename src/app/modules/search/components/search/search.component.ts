@@ -188,7 +188,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
         const rule = new Rule();
         rule.field = key;
-        rule.data = facet;
+        rule.data = [facet];
         ruleLocation['rules'].push(rule);
         const dataControl = QueryUtils.getDataControl(this.params);
         dataControl.page = 1;
@@ -227,14 +227,14 @@ export class SearchComponent implements OnInit, OnDestroy {
             originalFacet.facetValues.map((facet: FacetValue) => {
                 for (let i = 0; i < searchQuery.rules.length; i++) {
                     const rule = searchQuery.rules[i];
-                    if (rule.field !== null && rule.field === originalFacet.id && rule.data === facet.value) {
+                    if (rule.field !== null && rule.field === originalFacet.id) {
                         searchQuery.rules.splice(i, 1);
                         break;
                     }
                     if (rule.query != null) {
                         for (let j = 0; j < rule.query.rules.length; j++) {
                             const rule2 = rule.query.rules[j];
-                            if (rule2.field !== null && rule2.field === originalFacet.id && rule2.data === facet.value) {
+                            if (rule2.field !== null && rule2.field === originalFacet.id) {
                                 searchQuery.rules[i].query.rules.splice(j, 1);
                                 break;
                             }

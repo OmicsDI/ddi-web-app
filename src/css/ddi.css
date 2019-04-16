@@ -679,12 +679,6 @@ input[type=submit]:focus {
     border-bottom: 1px solid;
 }
 
-input[type="file"], input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], textarea {
-    width: 100%;
-    border: 1px solid #D5D5D5;
-    padding: 6px 6px 7px;
-}
-
 .ddi-btn {
     height: 32px;
 }
@@ -1572,4 +1566,46 @@ a:hover {
 
 mat-form-field {
     width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.2em 0 0.7em 0 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start {
+    border-width: 1px !important;
+    transition: none !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 0 !important;
+}
+
+.mat-stroked-button {
+    line-height: 31px !important;
+}
+
+.mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
+    border-radius: 0 !important;
+}
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 21px!important;
+}
+
+.mat-button-toggle-checked {
+    background-color: #0099cc !important;
+    color: white!important;
+}
+
+.mat-button-toggle {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard {
+    border: none!important;
 }

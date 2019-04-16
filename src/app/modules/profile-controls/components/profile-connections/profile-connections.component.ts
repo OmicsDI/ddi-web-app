@@ -32,8 +32,6 @@ export class ProfileConnectionsComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         for (const propName of Object.keys(changes)) {
             const chng = changes[propName];
-            const cur = JSON.stringify(chng.currentValue);
-            const prev = JSON.stringify(chng.previousValue);
             if (propName === 'profile') {
                 if (null != chng.currentValue) {
                     this.userId = chng.currentValue.userId;

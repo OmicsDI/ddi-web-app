@@ -7,9 +7,10 @@ import {DefaultParamImporter} from '@shared/utils/query/default.param.importer';
 import {QueryParamImporter} from '@shared/utils/query/query.param.importer';
 import {DatacontrolParamImporter} from '@shared/utils/query/datacontrol.param.importer';
 import {DataControl} from 'model/DataControl';
-import {Router} from '@angular/router';
+import {DefaultUrlSerializer, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {QueryUtils} from '@shared/utils/query-utils';
 
 
 @Injectable()
@@ -36,8 +37,10 @@ export class SearchService extends BaseService {
     }
 
     public fullSearch(searchQuery: string, page: number, pageSize: number, sortBy: string, order: string): Observable<SearchResult> {
-        if (searchQuery == null) {
+        if (searchQuery == null || searchQuery === '') {
             searchQuery = '';
+        } else {
+            searchQuery = QueryUtils.parseRealQuery(QueryUtils.parseQuery(searchQuery));
         }
         return this.http.get(
             this.appConfig.getSearchUrl(

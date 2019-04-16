@@ -2,57 +2,25 @@
  * Created by user on 4/7/2017.
  */
 export class Rule {
+    operator = 'AND';
     condition = 'equal';
     field = 'all_fields';
-    data = '';
-    data2 = '';
-    query: SearchQuery = null;
+    data = [];
+    subRule: Rule[] = [];
 }
 
 export class SearchQuery {
-    operator = 'AND';
     rules: Rule[] = [];
+
+    public static instance(rules: Rule[]) {
+        const searchQuery = new SearchQuery();
+        searchQuery.rules = rules;
+        return searchQuery;
+    }
 
     constructor() {
         const rule: Rule = new Rule();
         this.rules.push(rule);
-    }
-
-    public toQueryString(): string {
-        let str = '';
-        for (let i = 0; i < this.rules.length; i++) {
-            if (i > 0) {
-                str += ' ' + this.operator + ' ';
-            }
-            if (null != this.rules[i].query) {
-                const tmp = this.rules[i].query.toQueryString();
-                if (tmp !== '') {
-                    str += '(' + tmp + ')';
-                }
-            } else {
-                const rule = this.rules[i];
-                let strtemp = '';
-
-                if (rule.condition === 'range') {
-                    strtemp = '["' + rule.data + '" TO "' + (rule.data2 || '') + '"]';
-                }
-                if (rule.condition === 'equal') {
-                    if (rule.data !== '') {
-                        strtemp = '"' + rule.data + '"';
-                    }
-                }
-
-                if (rule.field === 'all_fields') {
-                    if (strtemp[0] === '"') {
-                        strtemp = strtemp.slice(1, strtemp.length - 1);
-                    }
-                    str += strtemp;
-                } else {
-                    str += rule.field + ': ' + strtemp;
-                }
-            }
-        }
-        return str;
     }
 }
 

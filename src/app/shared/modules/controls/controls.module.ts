@@ -17,15 +17,23 @@ import {DropDownComponent} from '@shared/modules/controls/drop-down/drop-down.co
 import {FacetComponent} from '@shared/modules/controls/facet/facet.component';
 import {FacetOmicsComponent} from '@shared/modules/controls/facet-omics/facet-omics.component';
 import {LoginComponent} from '@shared/modules/controls/login/login.component';
-import {QueryBuilderComponent} from '@shared/modules/controls/query-builder/query-builder.component';
-import {SearchBoxComponent} from '@shared/modules/controls/search-box/search-box.component';
-import {MatMenuModule} from '@angular/material';
+import {
+    MatAutocompleteModule, MatButtonModule, MatButtonToggleModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule
+} from '@angular/material';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import {AdvancedSearchComponent} from '@shared/modules/controls/advanced-search/advanced-search.component';
+import {AdvancedSearchFactorsComponent} from '@shared/modules/controls/advanced-search-factors/advanced-search-factors.component';
+import {AdvancedSearchInputComponent} from '@shared/modules/controls/advanced-search-input/advanced-search-input.component';
 
 @NgModule({
     imports: [
@@ -37,7 +45,15 @@ import {AdvancedSearchComponent} from '@shared/modules/controls/advanced-search/
         FormsModule,
         MatMenuModule,
         NguiAutoCompleteModule,
-        BsDropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
+        MatFormFieldModule,
+        MatSelectModule,
+        MatChipsModule,
+        MatIconModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatButtonToggleModule
     ],
     declarations: [
         ConfirmDialogComponent,
@@ -52,12 +68,12 @@ import {AdvancedSearchComponent} from '@shared/modules/controls/advanced-search/
         FeedbackComponent,
         LoginComponent,
         OmicsImageComponent,
-        QueryBuilderComponent,
-        SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
         CitationDialogComponent,
         AdvancedSearchComponent,
+        AdvancedSearchFactorsComponent,
+        AdvancedSearchInputComponent
     ],
     exports: [
         AltmetricImageComponent,
@@ -70,9 +86,8 @@ import {AdvancedSearchComponent} from '@shared/modules/controls/advanced-search/
         FacetOmicsComponent,
         FeedbackComponent,
         LoginComponent,
+        LoginComponent,
         OmicsImageComponent,
-        QueryBuilderComponent,
-        SearchBoxComponent,
         SocialnetworksComponent,
         AutocompleteNComponent,
         CitationDialogComponent,

@@ -12,7 +12,7 @@ import {ClipboardModule} from 'ngx-clipboard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {routing} from './app.routes';
-import {RouterModule} from '@angular/router';
+import {RouterModule, UrlSerializer} from '@angular/router';
 import {ProfileService} from '@shared/services/profile.service';
 import {JwtModule} from '@auth0/angular-jwt';
 import {AuthService} from '@shared/services/auth.service';
@@ -50,6 +50,7 @@ import {
 import {environment} from '../environments/environment';
 import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
 import {SchemaService} from '@shared/services/schema.service';
+import {CustomUrlSerializer} from '@shared/utils/custom-url-serializer';
 
 
 export function jwtTokenGetter() {
@@ -103,6 +104,7 @@ export function jwtTokenGetter() {
         RouterModule
     ],
     providers: [ProfileService,
+        {provide: UrlSerializer, useClass: CustomUrlSerializer},
         {provide: LocationStrategy, useClass: PathLocationStrategy},
         {
             provide: TRANSFER_RESPONSE_BASE_URLS,

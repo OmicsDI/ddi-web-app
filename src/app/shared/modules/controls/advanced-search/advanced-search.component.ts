@@ -1,8 +1,7 @@
-import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {MatMenuTrigger} from '@angular/material';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
-import {SearchQuery} from 'model/SearchQuery';
+import {Rule, SearchQuery} from 'model/SearchQuery';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {SearchService} from '@shared/services/search.service';
 import {QueryUtils} from '@shared/utils/query-utils';
@@ -10,6 +9,10 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
 import {isPlatformServer} from '@angular/common';
 import {Subscription} from 'rxjs';
+import {Facet} from 'model/Facet';
+import {ArrayUtils} from '@shared/utils/array-utils';
+import {FacetValue} from 'model/FacetValue';
+import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material';
 
 @Component({
     selector: '[app-advanced-search]',
@@ -17,17 +20,25 @@ import {Subscription} from 'rxjs';
     styleUrls: ['advanced-search.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class AdvancedSearchComponent implements OnInit, OnDestroy {
+export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    @ViewChild(AutocompleteNComponent) autocompleteComponent: AutocompleteNComponent;
-    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+    @ViewChild(AutocompleteNComponent)
+    autocompleteComponent: AutocompleteNComponent;
+
+    @ViewChild(MatAutocompleteTrigger)
+    private trigger: MatAutocompleteTrigger;
+
     query: string;
 
-    queryParams: SearchQuery = new SearchQuery();
+    searchQuery: SearchQuery;
     private subscription: Subscription;
+    private facetSubscription: Subscription;
 
     @Input()
     isHomeSearch: boolean;
+
+    facetMap = new Map<string, Facet>();
+    allFacet: Facet[];
 
     params: {};
 
@@ -36,6 +47,7 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
     // advance search
     dataControl = new DataControl();
     facetsChannel = 'facet_channel';
+    values: FacetValue[] = [];
 
     constructor(protected router: Router,
                 private dataTransportService: DataTransportService,
@@ -50,33 +62,53 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
         if (isPlatformServer(this.platformId)) {
             return;
         }
+        this.facetSubscription = this.dataTransportService.listen(this.facetsChannel).subscribe((m: Facet[]) => {
+            this.setAllFacets(m);
+        });
         this.subscription = this.router.events.subscribe(e => {
             if (e instanceof NavigationEnd) {
                 this.analyseParams(this.route.snapshot.queryParams);
             }
         });
-        this.loadFacetForAdvancedSearch();
+        this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
+            this.dataControl.order).subscribe(result => {
+                this.setAllFacets(result.facets);
+            });
+        // const rule = new Rule();
+        // rule.data = ['Cancer', 'patient'];
+        // this.searchQuery.rules.push(rule);
+        // const rule2 = new Rule();
+        // rule2.field = 'repository';
+        // rule2.condition = 'oneOf';
+        // rule2.data = ['ArrayExpress', 'ENA'];
+        // this.searchQuery.rules.push(rule2);
+        this.searchQuery = QueryUtils.parseQuery('["Cancer", "patient"] AND (tissue: ["Kidney", "Lung"] AND repository: ["ArrayExpress", "ENA"] OR (disease:~ ["Breast Cancer", "Reference"])) OR (repository: "GEO") AND (repository:~ ["ArrayExpress", "ENA"])');
+        this.query = QueryUtils.parseVirtualQuery(this.searchQuery.rules);
+    }
+
+
+    ngAfterViewInit(): void {
+    }
+
+    setAllFacets(value: Facet[]) {
+        const star = new Facet();
+        star.id = 'all_fields';
+        star.label = 'All fields';
+        star.facetValues = [];
+        this.facetMap.set(star.id, star);
+        value.forEach(facet => {
+            this.facetMap.set(facet.id, facet);
+        });
+        this.allFacet = ArrayUtils.prepend(star, value);
     }
 
     analyseParams(params) {
         this.params = params;
         if (this.router.url.indexOf('/dataset/') === -1) {
-            this.queryParams = QueryUtils.extractQuery(params);
-            const query = this.queryParams.toQueryString();
-            if (query.match(/^"[^"]*"$/)) {
-                this.query = query.substring(1, query.length - 1);
-            } else {
-                this.query = query;
-            }
+            this.searchQuery = QueryUtils.extractQuery(params);
+            this.query = QueryUtils.parseVirtualQuery(this.searchQuery.rules);
             this.logger.debug('query: {}', this.query);
         }
-    }
-
-    getQueryValue() {
-        if (this.query && this.query.match(/^"[^"]*"$/)) {
-            return this.query.substring(1, this.query.length - 1);
-        }
-        return this.query;
     }
 
     doSearch(keyword) {
@@ -88,12 +120,14 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
         this.doSearch(searchText);
     }
 
-    private loadFacetForAdvancedSearch() {
-        this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
-            this.dataControl.order)
-            .subscribe(result => {
-                this.dataTransportService.fire(this.facetsChannel, result.facets);
-            });
+    updateSearchQuery(searchQuery: SearchQuery) {
+        this.searchQuery = searchQuery;
+        this.query = QueryUtils.parseVirtualQuery(this.searchQuery.rules);
+    }
+
+    addRule(rule) {
+        this.searchQuery.rules.push(rule);
+        this.query = QueryUtils.parseVirtualQuery(this.searchQuery.rules);
     }
 
     ngOnDestroy(): void {

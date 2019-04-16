@@ -1,6 +1,8 @@
 import {DataControl} from 'model/DataControl';
 import {Rule, SearchQuery} from 'model/SearchQuery';
 import {ArrayUtils} from '@shared/utils/array-utils';
+import {KeyValuePair} from 'model/KeyValuePair';
+import {element} from 'protractor';
 
 export class Index {
     current = 0;
@@ -64,17 +66,17 @@ export class QueryUtils {
 
     private static getFacets(facetRules: Rule[]): Map<string, string[]> {
         const result = new Map<string, string[]>();
-        for (let i = 0; i < facetRules.length; i ++) {
-            if (facetRules[i].field != null) {
-                if (!result.has(facetRules[i].field)) {
-                    result.set(facetRules[i].field, [facetRules[i].data]);
-                } else {
-                    const prev = result.get(facetRules[i].field);
-                    prev.push(facetRules[i].data);
-                    result.set(facetRules[i].field, prev);
-                }
-            }
-        }
+        // for (let i = 0; i < facetRules.length; i ++) {
+        //     if (facetRules[i].field != null) {
+        //         if (!result.has(facetRules[i].field)) {
+        //             result.set(facetRules[i].field, [facetRules[i].data]);
+        //         } else {
+        //             const prev = result.get(facetRules[i].field);
+        //             prev.push(facetRules[i].data);
+        //             result.set(facetRules[i].field, prev);
+        //         }
+        //     }
+        // }
         return result;
     }
 
@@ -84,91 +86,132 @@ export class QueryUtils {
      * @returns {SearchQuery}
      */
     public static extractQuery(params: {}): SearchQuery {
-        let query = this.getBaseQuery(params);
-        query = '(' + query + ')';
-        query = query.replace(/\(("[^"]*")\)/g, '[$1]');
-        if (query[0] === '(') {
-            query = query.slice(1, query.length - 1);
-        }
-        return this.queryExtractor(query, new Index());
+        const query = this.getBaseQuery(params);
+        return this.parseQuery(query);
     }
 
-    private static queryExtractor(query: string, index: Index): SearchQuery {
-        const search = new SearchQuery();
-        search.rules = [];
-        const queryRules = [];
-        let message = '';
-        for (; index.current < query.length; index.current++) {
-            if (query.charAt(index.current) === '(') {
-                index.current++;
-                const rule = {
-                    query: this.queryExtractor(query, index), condition: null, field: null, data: null, data2: null};
-                queryRules.push(rule);
-            } else if (query.charAt(index.current) === ')') {
-                break;
+    public static getConditions(): Map<string, string> {
+        const result = new Map<string, string>();
+        this.getConditionList().forEach(x => {
+            result.set(x.key, x.value);
+        });
+        return result;
+    }
+
+    public static getConditionList(): KeyValuePair[] {
+        const result = [];
+        result.push(KeyValuePair.instance('equal', 'is'));
+        result.push(KeyValuePair.instance('oneOf', 'is one of'));
+        result.push(KeyValuePair.instance('not', 'is not'));
+        return result;
+    }
+
+    public static parseRealQuery(query: SearchQuery): string {
+        const result = [];
+        for (let i = 0; i < query.rules.length; i++) {
+            if (i !== 0) {
+                result.push(query.rules[i].operator);
+            }
+            result.push(this.parseRealRule(query.rules[i]));
+        }
+        return result.join(' ');
+    }
+
+    public static parseQuery(query: String): SearchQuery {
+        const newQuery = 'AND ' + query;
+        const regex = /(AND|OR)\s*\(*(\w+)?(:~|:-|:)?\s*\[?([\w|"|,|\s]+)\]?\)*/g;
+        let match = regex.exec(newQuery);
+        const rules: Rule[] = [];
+        const parents: Rule[] = [];
+        while (match != null) {
+            const rule = new Rule();
+            rule.operator = match[1];
+            if (match[3] == null || match[3] === ':') {
+                rule.condition = 'equal';
+            } else if (match[3] === ':~') {
+                rule.condition = 'oneOf';
             } else {
-                message += query.charAt(index.current);
+                rule.condition = 'not';
             }
-        }
-        if (message.indexOf('OR') > -1) {
-            search.operator = 'OR';
-        } else if (message.indexOf('NOT') > -1) {
-            search.operator = 'NOT';
-        }
-        const conditions = message.split(search.operator);
-        for (let i = 0; i < conditions.length; i++) {
-            const condition = conditions[i].trim();
-            if (condition !== '') {
-                const rules = this.extractCondition(condition);
-                rules.forEach(rule => {
-                    search.rules.push(rule);
-                });
-                search.rules.concat()
+            if (match[2] == null) {
+                rule.field = 'all_fields';
+            } else {
+                rule.field = match[2];
             }
+            rule.data = match[4].split(',').map(x => x.replace(/"/g, '').trim());
+            if (parents.length === 0) {
+                rules.push(rule);
+            } else {
+                parents[parents.length - 1].subRule.push(rule);
+            }
+            const nOpenBracket = match[0].split('(').length - 1;
+            const nCloseBracket = match[0].split(')').length - 1;
+            if (nOpenBracket > nCloseBracket) {
+                parents.push(rule);
+            }
+            if (nCloseBracket > nOpenBracket) {
+                parents.pop();
+            }
+            match = regex.exec(newQuery);
         }
-        for (let i = 0; i < queryRules.length; i++) {
-            search.rules.push(queryRules[i]);
-        }
-        return search;
+
+        return SearchQuery.instance(rules);
     }
 
-    private static extractCondition(condition: string): Rule[] {
-        const parts = condition.split(/:(.+)/);
-        const rule = new Rule();
-        let value = condition;
-        if (parts.length > 1) {
-            rule.field = parts[0].trim();
-            value = parts[1].trim();
+    public static parseRealRule(rule: Rule): string {
+        const result = [];
+        rule.data.forEach(e => {
+            let data = '"' + e + '"';
+            if (rule.field !== 'all_fields') {
+                data = rule.field + ':' + data;
+            }
+            result.push(data);
+        });
+        if (rule.condition === 'equal') {
+            return '(' + result.join(' AND ') + ')';
+        } else if (rule.condition === 'oneOf') {
+            return '(' + result.join(' OR ') + ')';
+        } else if (rule.condition === 'not') {
+            return '("*" NOT (' + result.join(' OR ') + '))';
         }
-        let match = /\["([^"]*)"\]/.exec(value);
-        if (match) {
-            rule.data = match[1];
-            return [rule];
+    }
+
+    public static parseVirtualQuery(rules: Rule[], isFirst = true): string {
+        let result = '';
+        for (let i = 0; i < rules.length; i++) {
+            let rule = this.parseVirtualRule(rules[i]);
+
+            if (rules[i].subRule.length > 0) {
+                rule = rule + this.parseVirtualQuery(rules[i].subRule, false);
+            }
+            if (i !== 0 || rules[i].subRule.length > 0) {
+                rule = '(' + rule + ')';
+            }
+            if (i !== 0 || !isFirst) {
+                rule = ' ' + rules[i].operator + ' ' + rule;
+            }
+            result += rule;
         }
-        match = /\["([^"]*)"\s+TO\s+"([^"]*)"\]/.exec(value);
-        if (match) {
-            rule.data = match[1];
-            rule.data2 = match[2];
-            rule.condition = 'range';
-            return [rule];
+        return result;
+    }
+
+    public static parseVirtualRule(rule: Rule): string {
+        let result = rule.field;
+        let condition = ':';
+        if (rule.condition === 'oneOf') {
+            condition = ':~'
+        } else if (rule.condition === 'not') {
+            condition = ':-'
         }
 
-        // Case: repository: "GEO" E-GEOD-30197
-        // https://multiomics.atlassian.net/browse/OF-111
-        match = /\"([^"]*)\"([^"]+)/.exec(value);
-        if (match) {
-            rule.data = match[1];
-            const subRules = this.extractCondition(match[2]);
-            const rules = [rule];
-            subRules.forEach(subRule => {
-                rules.push(subRule);
-            });
-            return rules;
+        let value = rule.data.map(x => '"' + x + '"').join(', ');
+        if (rule.data.length > 1) {
+            value = '[' + value + ']';
         }
-        if (value[0] === '"') {
-            value = value.slice(1, value.length - 1);
+        if (rule.field === 'all_fields' && condition === ':') {
+            return value;
         }
-        rule.data = value;
-        return [rule];
+        result += condition + ' ' + value;
+        return result;
     }
 }
