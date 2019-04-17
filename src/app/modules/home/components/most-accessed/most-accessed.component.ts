@@ -35,7 +35,7 @@ export class MostAccessedComponent extends AsyncInitialisedComponent implements 
         this.dataSetService.getMostAccessedDataSets()
             .then(res => {
                 this.mostAccessedDatasets = res['datasets'];
-                this.mostAccessedDatasets.length = 10;
+                this.mostAccessedDatasets.length = 12;
                 this.mostAccessedDatasets.sort(function (dataset1, dataset2) {
                     if (dataset1.visitCount > dataset2.visitCount) {
                         return -1;

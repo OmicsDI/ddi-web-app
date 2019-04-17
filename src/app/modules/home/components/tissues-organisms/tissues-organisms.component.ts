@@ -276,13 +276,13 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             });
 
         node_inside.append('text')
-            .attr('dy', '.3em')
             .style('text-anchor', 'middle')
             .style('font-size', '10px')
             .style('fill', 'white')
             .text(function (d: any) {
-                return d.r / d.data.className.length < 2.5 ? '' : d.data.className;
-            });
+                const show = d.data.className.split(' ').reduce((acc, val) => acc && d.r / val.length < 3, true);
+                return show ? '' : d.data.className;
+            }).call(this.wrap, 30);
 
         node_inside.on('mousemove', function (d: any) {
             const tooltip = d3.select('#tissue_organism_chart_tooltip');
@@ -309,6 +309,31 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
 
     }
 
+    private wrap(text, width) {
+        text.each(function() {
+            const self = d3.select(this),
+                words = self.text().split(/\s+/).reverse(),
+                lineHeight = 1.1, // ems
+                y = self.attr('y'),
+                dy = 0;
+            let word,
+                line = [],
+                lineNumber = 0,
+                tspan = self.text(null).append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em');
+            while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(' '));
+                if (tspan.node().getComputedTextLength() > width && line.length > 1) {
+                    line.pop();
+                    tspan.text(line.join(' '));
+                    line = [word];
+                    tspan = self.append('tspan').attr('x', 0).attr('y', y).attr('dy', ++lineNumber * lineHeight + dy + 'em').text(word);
+                }
+            }
+        });
+    }
+
+
     private calculateLoggedValue(data: StatisticsDomainsDetail[]): StatisticsDomainsDetail[] {
         const newdata = [];
         for (let i = 0; i < data.length; i++) {
@@ -316,7 +341,8 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
                 id: data[i].id,
                 label: data[i].label,
                 name: data[i].name,
-                value: 1 + Math.floor(Math.log(+data[i].value)),
+                // Todo: Find a proper algorithm for this
+                value: +data[i].value > 40000 ? +data[i].value / 4 : +data[i].value,
                 value_before_log_calc: +data[i].value
             };
             newdata.push(item);
