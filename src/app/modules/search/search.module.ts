@@ -14,6 +14,7 @@ import {SearchTotalComponent} from './components/search-total/search-total.compo
 import {SearchResultComponent} from './components/search-result/search-result.component';
 import {SearchPagerComponent} from './components/search-pager/search-pager.component';
 import {ModalModule} from 'ngx-bootstrap';
+import {MatSelectModule} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {ModalModule} from 'ngx-bootstrap';
         ClipboardModule,
         UtilsModule,
         ModalModule.forRoot(),
-        NgxPaginationModule
+        NgxPaginationModule,
+        MatSelectModule
     ],
     declarations: [
         SearchComponent,

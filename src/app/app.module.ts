@@ -9,7 +9,6 @@ import {AlertModule, BsModalService} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {DisqusModule} from 'ngx-disqus';
 import {ClipboardModule} from 'ngx-clipboard';
-import {UiSwitchModule} from 'angular2-ui-switch';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {routing} from './app.routes';
@@ -90,7 +89,6 @@ export function jwtTokenGetter() {
         DisqusModule.forRoot('omicsdi'),
         AlertModule.forRoot(),
         UtilsModule,
-        UiSwitchModule,
         BrowserAnimationsModule,
         SimpleNotificationsModule.forRoot(),
         ClipboardModule,

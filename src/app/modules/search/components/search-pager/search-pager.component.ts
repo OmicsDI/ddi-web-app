@@ -19,7 +19,7 @@ export class SearchPagerComponent implements OnInit {
     dataControl: DataControl;
 
     loading = true;
-    pageSizes = ['10', '20', '30', '50', '100'];
+    pageSizes = [10, 20, 30, 50, 100];
     Math: Math = Math;
 
     constructor() {
@@ -46,7 +46,7 @@ export class SearchPagerComponent implements OnInit {
         this.loading = true;
     }
 
-    pageSizeChanged(pageSize: number) {
+    pageSizeChanged(pageSize) {
         this.dataControl.pageSize = pageSize;
         this.dataControlChange.emit(this.dataControl);
         this.loading = true;

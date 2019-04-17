@@ -90,7 +90,7 @@ export class AppConfig {
     }
 
     getDatasetLatestUrl(): string {
-        return `${environment.webServiceUrl}dataset/latest?size=10`;
+        return `${environment.webServiceUrl}dataset/latest?size=12`;
     }
 
     getDatasetMostAccessedUrl(): string {

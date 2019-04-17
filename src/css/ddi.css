@@ -1569,3 +1569,7 @@ a:hover {
     border-bottom: 1px dotted;
     border-bottom-color: inherit;
 }
+
+mat-form-field {
+    width: 100%;
+}

@@ -5,7 +5,6 @@ import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
-import {UiSwitchModule} from 'angular2-ui-switch';
 import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {NgxPaginationModule} from 'ngx-pagination';
@@ -26,6 +25,7 @@ import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.co
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {ModalModule} from 'ngx-bootstrap';
 import {ImageCropperModule} from 'ngx-image-cropper';
+import {MatSlideToggleModule} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -39,12 +39,12 @@ import {ImageCropperModule} from 'ngx-image-cropper';
         DisqusModule.forRoot('omicsdi'),
         ModalModule.forRoot(),
         FormsModule,
-        UiSwitchModule,
         ClipboardModule,
         UtilsModule,
         NgxPaginationModule,
         ImageCropperModule,
-        CollapseModule.forRoot()
+        CollapseModule.forRoot(),
+        MatSlideToggleModule
     ],
     declarations: [
         DashboardComponent,
