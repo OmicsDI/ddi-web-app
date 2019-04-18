@@ -13,7 +13,7 @@ import {Profile} from 'model/Profile';
 export class SearchTotalComponent implements OnInit {
 
     @Input()
-    searchCount: string;
+    searchCount: number;
 
     @Input()
     searchQuery: string;

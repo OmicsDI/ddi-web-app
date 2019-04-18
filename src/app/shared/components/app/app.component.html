@@ -81,6 +81,10 @@
                 </li>
             </ul>
         </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right hidden-md hidden-sm hidden-xs col-lg-5 omics-search-box row" style="margin-right: 0; margin-top: 7px">
+            <li style="width:100%;" *ngIf="showSmallSearch" app-advanced-search [isHomeSearch]="false" class="functional">
+        </ul>
     </nav>
     <!-- /local-nav -->
     <ng-progress [direction]="'ltr+'" [min]="20" [max]="1" [speed]="200"  [trickleSpeed]="300"

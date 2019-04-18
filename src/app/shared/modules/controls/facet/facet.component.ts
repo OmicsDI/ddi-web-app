@@ -1,5 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FacetValue} from 'model/FacetValue';
+import {Rule, SearchQuery} from 'model/SearchQuery';
 
 class FacetValueFiltered extends FacetValue {
 
@@ -26,22 +27,21 @@ export class FacetComponent implements OnInit {
     @Input() label: string;
     @Input() facetValues: FacetValue[];
     @Input() id: string;
-    @Output() facetValueSelected: EventEmitter<string> = new EventEmitter<string>();
-    @Output() facetValueRemoved: EventEmitter<string> = new EventEmitter<string>();
+    @Input() searchQuery: SearchQuery;
+    @Output() searchQueryChange = new EventEmitter<SearchQuery>();
 
     @ViewChild('searchInput') searchInput: ElementRef;
 
     facetValuesFiltered: FacetValueFiltered[];
 
     @Input()
-    facetSelected: string[];
+    facetSelected: Rule[];
 
     constructor() {
     }
 
     ngOnInit() {
         this.facetValuesFiltered = this.facetValues.map(x => new FacetValueFiltered(x));
-        this.facetSelected = (this.facetSelected !== undefined) ? this.facetSelected : [];
     }
 
     checkBoxClicked(value: string, event) {
@@ -49,10 +49,41 @@ export class FacetComponent implements OnInit {
     }
 
     labelClicked(value: string, event, isCheckboxChecked: boolean) {
-        if (!isCheckboxChecked) {
-            this.facetValueRemoved.emit(value);
-        } else {
-            this.facetValueSelected.emit(value);
+        for (let i = 0; i < this.facetSelected.length; i++) {
+            const index = this.facetSelected[i].data.indexOf(value);
+            if (index > -1) {
+                this.facetSelected[i].data.splice(index, 1);
+                if (this.facetSelected[i].data.length === 0) {
+                    const ruleIndex = this.searchQuery.rules.indexOf(this.facetSelected[i]);
+                    if (ruleIndex > -1) {
+                        this.searchQuery.rules.splice(ruleIndex, 1);
+                    }
+                    this.facetSelected.splice(i, 1);
+                }
+                this.searchQueryChange.emit(this.searchQuery);
+                return;
+            }
+        }
+
+        if (isCheckboxChecked) {
+            for (let i = 0; i < this.facetSelected.length; i++) {
+                if (this.facetSelected[i].condition === 'oneOf') {
+                    this.facetSelected[i].data.push(value);
+                    this.searchQueryChange.emit(this.searchQuery);
+                    return;
+                } else if (this.facetSelected[i].condition === 'equal' && this.facetSelected[i].data.length === 1) {
+                    this.facetSelected[i].data.push(value);
+                    this.facetSelected[i].condition = 'oneOf';
+                    this.searchQueryChange.emit(this.searchQuery);
+                    return;
+                }
+            }
+            const rule = new Rule();
+            rule.condition = 'oneOf';
+            rule.field = this.id;
+            rule.data = [value];
+            this.searchQuery.rules.push(rule);
+            this.searchQueryChange.emit(this.searchQuery);
         }
     }
 
@@ -67,6 +98,13 @@ export class FacetComponent implements OnInit {
         if (this.facetSelected === undefined) {
             return false;
         }
-        return this.facetSelected.indexOf(value) > -1;
+        for (let i = 0; i < this.facetSelected.length; i++) {
+            for (let j = 0; j < this.facetSelected[i].data.length; j++) {
+                if (this.facetSelected[i].data[j] === value) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

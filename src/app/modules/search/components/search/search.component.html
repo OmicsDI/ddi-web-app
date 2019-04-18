@@ -7,9 +7,9 @@
                 <div *ngFor="let f of searchResult.facets">
                     <ng-container *ngIf="f.label === 'Omics type'">
                         <app-facet-omics [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
-                                         [facetSelected]="selectedFacets.get(f.id)"
-                                         (facetValueSelected)="facetValueSelected(f.id, $event)"
-                                         (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                                         [facetSelected]="selectedFacets.get(f.id) || []"
+                                         [searchQuery]="searchQuery"
+                                         (searchQueryChange)="facetValueChange($event)">
                         </app-facet-omics>
                     </ng-container>
                 </div>
@@ -20,9 +20,9 @@
                         <div class="metasearch-organism-facet force-scrollbars list-group-item"
                              style="overflow-x:hidden;">
                             <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
-                                       [facetSelected]="selectedFacets.get(f.id)"
-                                       (facetValueSelected)="facetValueSelected(f.id, $event)"
-                                       (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                                       [facetSelected]="selectedFacets.get(f.id) || []"
+                                       [searchQuery]="searchQuery"
+                                       (searchQueryChange)="facetValueChange($event)">
                             </app-facet>
                         </div>
                     </ng-container>
@@ -34,9 +34,9 @@
                         <div class="metasearch-organism-facet force-scrollbars list-group-item"
                              style="overflow-x:hidden;">
                             <app-facet [id]="f.id" [label]="f.label" [facetValues]="f.facetValues"
-                                       [facetSelected]="selectedFacets.get(f.id)"
-                                       (facetValueSelected)="facetValueSelected(f.id, $event)"
-                                       (facetValueRemoved)="facetValueRemoved(f.id, $event)">
+                                       [facetSelected]="selectedFacets.get(f.id) || []"
+                                       [searchQuery]="searchQuery"
+                                       (searchQueryChange)="facetValueChange($event)">
                             </app-facet>
                         </div>
                     </ng-container>

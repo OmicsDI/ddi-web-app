@@ -1,12 +1,7 @@
 import {DataControl} from 'model/DataControl';
 import {Rule, SearchQuery} from 'model/SearchQuery';
-import {ArrayUtils} from '@shared/utils/array-utils';
 import {KeyValuePair} from 'model/KeyValuePair';
-import {element} from 'protractor';
-
-export class Index {
-    current = 0;
-}
+import {ArrayUtils} from '@shared/utils/array-utils';
 
 export class QueryUtils {
 
@@ -49,35 +44,28 @@ export class QueryUtils {
     }
 
     /**
-     * Get all facets from url params
-     * @param {{}} params
-     * @returns {Map<string, string[]>}
+     * Get all facets from searchQuery object
+     * @param {{}} searchQuery
+     * @returns {Map<string, Rule[]>}
      */
-    public static getAllFacets(params: {}): Map<string, string[]> {
-        const searchQuery = this.extractQuery(params);
-        let result = this.getFacets(searchQuery.rules);
-        for (let j = 0; j < searchQuery.rules.length; j++) {
-            if (searchQuery.rules[j].query != null) {
-                result = ArrayUtils.addAll(result, this.getFacets(searchQuery.rules[j].query.rules));
-            }
-        }
+    public static getAllFacets(searchQuery: SearchQuery): Map<string, Rule[]> {
+        const result = new Map<string, Rule[]>();
+        this.findAllFacetsFromRole(searchQuery.rules, result);
         return result;
     }
 
-    private static getFacets(facetRules: Rule[]): Map<string, string[]> {
-        const result = new Map<string, string[]>();
-        // for (let i = 0; i < facetRules.length; i ++) {
-        //     if (facetRules[i].field != null) {
-        //         if (!result.has(facetRules[i].field)) {
-        //             result.set(facetRules[i].field, [facetRules[i].data]);
-        //         } else {
-        //             const prev = result.get(facetRules[i].field);
-        //             prev.push(facetRules[i].data);
-        //             result.set(facetRules[i].field, prev);
-        //         }
-        //     }
-        // }
-        return result;
+    private static findAllFacetsFromRole(roles: Rule[], facets: Map<string, Rule[]>) {
+        roles.forEach(role => {
+            if (role.field !== 'all_fields') {
+                if (role.condition === 'oneOf' || (role.condition === 'equal' && role.data.length === 1)) {
+                    if (facets.has(role.field)) {
+                        facets.get(role.field).push(role);
+                    } else {
+                        facets.set(role.field, [role]);
+                    }
+                }
+            }
+        });
     }
 
     /**

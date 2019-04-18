@@ -27,4 +27,8 @@ export class ArrayUtils {
         });
         return source;
     }
+
+    public static pushArray(arr: any[], arr2: any[]) {
+        arr.push.apply(arr, arr2);
+    }
 }

@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
-import {Rule, SearchQuery} from 'model/SearchQuery';
+import {SearchQuery} from 'model/SearchQuery';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {SearchService} from '@shared/services/search.service';
 import {QueryUtils} from '@shared/utils/query-utils';
@@ -12,7 +12,6 @@ import {Subscription} from 'rxjs';
 import {Facet} from 'model/Facet';
 import {ArrayUtils} from '@shared/utils/array-utils';
 import {FacetValue} from 'model/FacetValue';
-import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger} from '@angular/material';
 
 @Component({
     selector: '[app-advanced-search]',
@@ -25,14 +24,10 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewInit
     @ViewChild(AutocompleteNComponent)
     autocompleteComponent: AutocompleteNComponent;
 
-    @ViewChild(MatAutocompleteTrigger)
-    private trigger: MatAutocompleteTrigger;
-
     query: string;
 
     searchQuery: SearchQuery;
     private subscription: Subscription;
-    private facetSubscription: Subscription;
 
     @Input()
     isHomeSearch: boolean;
@@ -46,7 +41,6 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewInit
 
     // advance search
     dataControl = new DataControl();
-    facetsChannel = 'facet_channel';
     values: FacetValue[] = [];
 
     constructor(protected router: Router,
@@ -62,9 +56,6 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewInit
         if (isPlatformServer(this.platformId)) {
             return;
         }
-        this.facetSubscription = this.dataTransportService.listen(this.facetsChannel).subscribe((m: Facet[]) => {
-            this.setAllFacets(m);
-        });
         this.subscription = this.router.events.subscribe(e => {
             if (e instanceof NavigationEnd) {
                 this.analyseParams(this.route.snapshot.queryParams);
@@ -74,14 +65,6 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy, AfterViewInit
             this.dataControl.order).subscribe(result => {
                 this.setAllFacets(result.facets);
             });
-        // const rule = new Rule();
-        // rule.data = ['Cancer', 'patient'];
-        // this.searchQuery.rules.push(rule);
-        // const rule2 = new Rule();
-        // rule2.field = 'repository';
-        // rule2.condition = 'oneOf';
-        // rule2.data = ['ArrayExpress', 'ENA'];
-        // this.searchQuery.rules.push(rule2);
         this.searchQuery = QueryUtils.parseQuery('["Cancer", "patient"] AND (tissue: ["Kidney", "Lung"] AND repository: ["ArrayExpress", "ENA"] OR (disease:~ ["Breast Cancer", "Reference"])) OR (repository: "GEO") AND (repository:~ ["ArrayExpress", "ENA"])');
         this.query = QueryUtils.parseVirtualQuery(this.searchQuery.rules);
     }

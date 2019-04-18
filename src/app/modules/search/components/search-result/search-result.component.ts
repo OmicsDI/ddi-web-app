@@ -87,8 +87,8 @@ export class SearchResultComponent implements OnInit, OnChanges {
             if (rule.field === 'all_fields') {
                 result.push(rule.data);
             }
-            if (rule.query != null) {
-                result = result.concat(this.findKeywords(rule.query.rules));
+            if (rule.subRule.length > 0) {
+                result = result.concat(this.findKeywords(rule.subRule));
             }
         });
         return result;

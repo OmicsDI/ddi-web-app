@@ -2,7 +2,7 @@
     <div class="row">
         <form novalidate name="queryForm" class="local-search" [ngClass]="isHomeSearch ? 'global-search' : 'local-search'">
         <div class="col-xs-12">
-            <div class="form-group ">
+            <div class="form-group" style="margin-bottom: 0">
                 <div class="input-group">
                     <app-autocomplete-n (submit)="search()" [searchText]="query"></app-autocomplete-n>
                     <div class="input-group-btn">
@@ -15,34 +15,36 @@
                         </button>
                     </div>
                 </div>
-                <!--            <span class="help-block example-searches" *ngIf="!isAdvancedOpened" style="margin-top: 10px">-->
-                <!--                 <i>-->
-                <!--                     Examples:-->
-                <!--                     <a rel="nofollow" (click)="doSearch('Cancer')">Cancer</a>,-->
-                <!--                     <a rel="nofollow" (click)="doSearch('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,-->
-                <!--                     <a rel="nofollow" (click)="doSearch('Orbitrap')">Orbitrap</a>,-->
-                <!--                     <a rel="nofollow" (click)="doSearch('Q9HAU5')">Q9HAU5</a>,-->
-                <!--                     <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,-->
-                <!--                     <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>,-->
-                <!--                     <a rel="nofollow" (click)="doSearch('PXD001416')">PXD001416</a>-->
-                <!--                 </i>-->
-                <!--             </span>-->
+                <span class="help-block example-searches" *ngIf="!isAdvancedOpened && isHomeSearch" style="margin-top: 10px">
+                     <i>
+                         Examples:
+                         <a rel="nofollow" (click)="doSearch('Cancer')">Cancer</a>,
+                         <a rel="nofollow" (click)="doSearch('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                         <a rel="nofollow" (click)="doSearch('Orbitrap')">Orbitrap</a>,
+                         <a rel="nofollow" (click)="doSearch('Q9HAU5')">Q9HAU5</a>,
+                         <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,
+                         <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>,
+                         <a rel="nofollow" (click)="doSearch('PXD001416')">PXD001416</a>
+                     </i>
+                 </span>
             </div>
         </div>
         </form>
     </div>
-    <div class="row">
-        <div app-advanced-search-input [facetMap]="facetMap" [allFacet]="allFacet"
-             (addedNewRule)="addRule($event)"
-             [searchQuery]="searchQuery"></div>
-    </div>
-    <div class="row" style="margin-bottom: 15px">
-        <div class="col-xs-12">
-            <div app-advanced-search-factors [facetMap]="facetMap" [isSubRule]="false"
-                 (searchQueryChange)="updateSearchQuery($event)"
-                 [allFacet]="allFacet"
-                 [rules]="searchQuery.rules"
-                 [searchQuery]="searchQuery" class="row advanced-search-factors">
+    <div [ngClass]="!isHomeSearch? 'advanced-search-factors-container' : ''">
+        <div class="row" *ngIf="isAdvancedOpened" style="position: relative">
+            <div app-advanced-search-input [facetMap]="facetMap" [allFacet]="allFacet"
+                 (addedNewRule)="addRule($event)"
+                 [searchQuery]="searchQuery"></div>
+        </div>
+        <div class="row" style="margin-bottom: 15px" *ngIf="isAdvancedOpened">
+            <div class="col-xs-12">
+                <div app-advanced-search-factors [facetMap]="facetMap" [isSubRule]="false"
+                     (searchQueryChange)="updateSearchQuery($event)"
+                     [allFacet]="allFacet"
+                     [rules]="searchQuery.rules"
+                     [searchQuery]="searchQuery" class="row advanced-search-factors">
+                </div>
             </div>
         </div>
     </div>

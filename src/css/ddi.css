@@ -1609,3 +1609,7 @@ mat-form-field {
 .mat-button-toggle-standalone.mat-button-toggle-appearance-standard, .mat-button-toggle-group-appearance-standard {
     border: none!important;
 }
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+    z-index: 999!important;
+}

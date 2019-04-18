@@ -5,3 +5,12 @@
     border-radius: 2px;
     white-space: nowrap;
 }
+
+.advanced-search-factors-container {
+    position: absolute;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    background: white;
+    padding-top: 10px;
+    left: -500px;
+    margin-top: 8px;
+}
