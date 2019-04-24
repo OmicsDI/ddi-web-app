@@ -1,6 +1,7 @@
 import {DataControl} from 'model/DataControl';
 import {Rule, SearchQuery} from 'model/SearchQuery';
 import {ArrayUtils} from '@shared/utils/array-utils';
+import {KeyValuePair} from 'model/KeyValuePair';
 
 export class Index {
     current = 0;
@@ -170,5 +171,21 @@ export class QueryUtils {
         }
         rule.data = value;
         return [rule];
+    }
+
+    public static getConditions(): Map<string, string> {
+        const result = new Map<string, string>();
+        this.getConditionList().forEach(x => {
+            result.set(x.key, x.value);
+        });
+        return result;
+    }
+
+    public static getConditionList(): KeyValuePair[] {
+        const result = [];
+        result.push(KeyValuePair.instance('equal', 'is'));
+        result.push(KeyValuePair.instance('oneOf', 'is one of'));
+        result.push(KeyValuePair.instance('not', 'is not'));
+        return result;
     }
 }

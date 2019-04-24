@@ -1,0 +1,49 @@
+<div *ngIf="allFacet">
+    <div class="row">
+        <form novalidate name="queryForm" class="local-search" [ngClass]="isHomeSearch ? 'global-search' : 'local-search'">
+        <div class="col-xs-12">
+            <div class="form-group" style="margin-bottom: 0">
+                <div class="input-group">
+                    <app-autocomplete-n (submit)="search()" [searchText]="query"></app-autocomplete-n>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-primary ddi-btn" (click)="isAdvancedOpened = !isAdvancedOpened">
+                            <i class="fa {{isAdvancedOpened ? 'fa-caret-up' : 'fa-caret-down'}}" aria-hidden="true"></i>
+                            Advanced
+                        </button>
+                        <button type="submit" value="submit" class="btn btn-primary ddi-btn" (click)="search()">
+                            <i class="fa fa-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+                <span class="help-block example-searches" *ngIf="!isAdvancedOpened && isHomeSearch" style="margin-top: 10px">
+                     <i>
+                         Examples:
+                         <a rel="nofollow" (click)="doSearch('Cancer')">Cancer</a>,
+                         <a rel="nofollow" (click)="doSearch('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                         <a rel="nofollow" (click)="doSearch('Orbitrap')">Orbitrap</a>,
+                         <a rel="nofollow" (click)="doSearch('Q9HAU5')">Q9HAU5</a>,
+                         <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,
+                         <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>,
+                         <a rel="nofollow" (click)="doSearch('PXD001416')">PXD001416</a>
+                     </i>
+                 </span>
+            </div>
+        </div>
+        </form>
+    </div>
+    <div [ngClass]="!isHomeSearch? 'advanced-search-factors-container' : ''">
+        <div class="row" *ngIf="isAdvancedOpened" style="position: relative">
+            <div app-advanced-search-input [facetMap]="facetMap" [allFacet]="allFacet"
+                 [searchQuery]="searchQuery"></div>
+        </div>
+        <div class="row" style="margin-bottom: 15px" *ngIf="isAdvancedOpened && searchQuery.rules.length > 0">
+            <div class="col-xs-12">
+                <div app-advanced-search-factors [facetMap]="facetMap" [isSubRule]="false"
+                     (searchQueryChange)="updateSearchQuery($event)"
+                     [allFacet]="allFacet"
+                     [searchQuery]="searchQuery" class="row advanced-search-factors">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

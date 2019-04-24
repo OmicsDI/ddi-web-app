@@ -1,0 +1,46 @@
+<div *ngFor="let rule of rules; let first = first; let last = last">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="col-xs-12" style="padding-right: 10px; padding-left: 12px">
+                <div class="col-xs-12">
+            <div [class]="last && isParentLast ? 'last-search-rule col-xs-12 search-rule' : 'col-xs-12 search-rule'">
+                <div style="width: 100%;">
+                    <div class="search-factor">
+                        <div class="search-delete"><i class="fa fa-times"></i></div>
+                    </div>
+                    <div class="search-factor" *ngIf="!first || isSubRule">
+                        <mat-button-toggle-group name="operator" aria-label="Font Style" [value]="'AND'" (valueChange)="changeOperator($event, rule)">
+                            <mat-button-toggle value="AND">and</mat-button-toggle>
+                            <mat-button-toggle value="OR">or</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                    <div class="search-factor"><div class="search-field">{{facetMap.get(rule.field).label}}</div></div>
+                    <div class="search-factor"><div class="search-condition">{{conditions.get(rule.condition)}}</div></div>
+                    <div class="search-keywords search-factor" *ngFor="let c of rule.data">
+                        <div class="search-tags">
+                            <i class="fa fa-times" style="margin: 0 3px; cursor: pointer"></i>
+                            {{getFacetValue(c, facetMap.get(rule.field))}}
+                        </div>
+                    </div>
+                    <div class="search-factor">
+                        <div class="search-add" style="cursor: pointer" (click)="addSubRule(rule)"><i class="fa fa-plus-circle"></i></div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="showingRule.get(rule)">
+        <div class="col-xs-12" style="padding-left: 100px">
+            <div app-advanced-search-input [searchQuery]="searchQuery" [allFacet]="allFacet" [facetMap]="facetMap"></div>
+        </div>
+    </div>
+<!--    <div class="row" *ngIf="rule.subRule.length > 0">-->
+<!--        <div class="col-xs-12" style="padding-left: 100px">-->
+<!--            <div app-advanced-search-factors [rules]="rule.subRule" [facetMap]="facetMap" [allFacet]="allFacet"-->
+<!--                 [searchQuery]="searchQuery" [isSubRule]="true" [isParentLast]="last" (searchQueryChange)="updateSearchQuery($event)">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
