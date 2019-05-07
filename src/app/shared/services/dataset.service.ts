@@ -32,6 +32,10 @@ export class DataSetService extends BaseService {
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
 
+    public getDataSetFiles(accession: string, repository: string): Observable<any> {
+        return this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository));
+    }
+
     public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
         if (datasets == null) {
             return of([]);

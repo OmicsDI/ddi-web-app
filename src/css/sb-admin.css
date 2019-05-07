@@ -259,11 +259,6 @@ th {
     /*color: black*/
 }
 
-table, body.table-layout
-table.data {
-    border: 1px solid #DDD !important;
-}
-
 /********************* AZ: hides icons on home page *****************************
 html.fontface .icon-static:before, html.fontface .icon-generic:before {
     color: #fff !important;

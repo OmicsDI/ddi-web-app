@@ -113,3 +113,7 @@
 #err-message ul li i {
     margin-right: 5px;
 }
+
+table {
+    width: 100%;
+}

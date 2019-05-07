@@ -27,7 +27,7 @@
                 <div *ngIf="null==rule.query">
                     <div class="form-inline" style="margin-top:3px; display: flex; align-items: center;">
                         <select [(ngModel)]="rule.field" class="form-control input-sm" (select)="selectField(rule)">
-                            <option *ngFor="let field of allFacets" [ngValue]="field.id">{{field.label}}
+                            <option *ngFor="let field of allFacets" [value]="field.id">{{field.label}}
                             </option>
                         </select>
                         <select style="margin-left: 3px" [(ngModel)]="rule.condition" class="form-control input-sm">

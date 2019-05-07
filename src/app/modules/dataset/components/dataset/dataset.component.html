@@ -171,6 +171,79 @@
                 </div>
             </div>
 
+            <div class="mt-card" *ngIf="dataSource != null && dataSource.data.length > 0">
+                <div class="mt-card-header" style="padding: 5px; border-bottom: 1px solid #dddddd">
+                    <div class="col-xs-9" style="display: flex; align-items: center; margin-top: 7px">
+                        <div style="width: 50px">
+                            <i class="fa fa-3x fa-folder-open" style="color: #0099cc; margin-left: 3px"></i>
+                        </div>
+                        <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Dataset's files</h3>
+                    </div>
+                    <div class="col-xs-3">
+                        <span style="float: right">Source:
+                            <mat-form-field style="width: 80px;">
+                            <mat-select [(ngModel)]="currentProvider" (valueChange)="applyFilter($event)">
+                                <mat-option [value]="c" *ngFor="let c of providers">{{c}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        </span>
+                    </div>
+                </div>
+                <div class="mt-card-body">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox (change)="$event ? masterToggle() : null"
+                                              [checked]="selection.hasValue() && isAllSelected()"
+                                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                              [aria-label]="checkboxLabel()">
+                                </mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                                <mat-checkbox (click)="$event.stopPropagation()"
+                                              (change)="$event ? selection.toggle(row) : null"
+                                              [checked]="selection.isSelected(row)"
+                                              [aria-label]="checkboxLabel(row)">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="category">
+                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="selection.toggle(row)">
+                        </tr>
+                    </table>
+                    <button mat-stroked-button [matMenuTriggerFor]="menu"
+                            [disabled]="selection.selected.length === 0"
+                            style="float: left; margin-top: 15px">
+                        <i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload file(s) to Galaxy server
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="sendToGalaxy(ins['url'])" *ngFor="let ins of galaxyInstances">
+                            {{ins['url']}}
+                            <span style="float: right; font-size: 9pt; font-style: italic">({{ins['from']}})</span>
+                        </button>
+                    </mat-menu>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                   style="display: inherit; float: right"
+                                   showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+
             <app-publication [ids]="d.publicationIds"></app-publication>
 
             <app-similar-molecule *ngIf="acc && repository && !isServer" [acc]="acc" [repository]="repository"></app-similar-molecule>

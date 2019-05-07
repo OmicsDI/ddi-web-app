@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs';
 import {ConfirmDialogComponent} from '@shared/modules/controls/confirm-dialog/confirm-dialog.component';
+import {SingleInputDialogComponent} from '@shared/modules/controls/single-input-dialog/single-input-dialog.component';
 
 @Injectable()
 export class DialogService {
@@ -19,4 +20,10 @@ export class DialogService {
         return dialogRef.afterClosed();
     }
 
+    public singleInputDialog(title: string): Observable<string> {
+        let dialogRef: MatDialogRef<SingleInputDialogComponent>;
+        dialogRef = this.dialog.open(SingleInputDialogComponent);
+        dialogRef.componentInstance.title = title;
+        return dialogRef.afterClosed();
+    }
 }

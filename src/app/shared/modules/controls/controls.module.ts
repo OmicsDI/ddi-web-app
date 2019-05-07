@@ -19,12 +19,13 @@ import {FacetOmicsComponent} from '@shared/modules/controls/facet-omics/facet-om
 import {LoginComponent} from '@shared/modules/controls/login/login.component';
 import {QueryBuilderComponent} from '@shared/modules/controls/query-builder/query-builder.component';
 import {SearchBoxComponent} from '@shared/modules/controls/search-box/search-box.component';
-import {MatMenuModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatInputModule, MatMenuModule} from '@angular/material';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
 import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {SingleInputDialogComponent} from '@shared/modules/controls/single-input-dialog/single-input-dialog.component';
 
 @NgModule({
     imports: [
@@ -36,10 +37,14 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         FormsModule,
         MatMenuModule,
         NguiAutoCompleteModule,
-        BsDropdownModule.forRoot()
+        BsDropdownModule.forRoot(),
+        MatDialogModule,
+        MatInputModule,
+        MatButtonModule
     ],
     declarations: [
         ConfirmDialogComponent,
+        SingleInputDialogComponent,
         AltmetricImageComponent,
         AnnotatedTextComponent,
         DatasetWidgetComponent,
@@ -61,6 +66,7 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
         AltmetricImageComponent,
         AnnotatedTextComponent,
         DatasetWidgetComponent,
+        SingleInputDialogComponent,
         DeleteAllButtonComponent,
         DeleteButtonComponent,
         DropDownComponent,
@@ -77,7 +83,8 @@ import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
     ],
     entryComponents: [
         ConfirmDialogComponent,
-        CitationDialogComponent
+        CitationDialogComponent,
+        SingleInputDialogComponent
     ],
 })
 export class ControlsModule {

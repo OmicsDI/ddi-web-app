@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -9,7 +9,7 @@ import {SynonymResult} from 'model/enrichment-info/SynonymResult';
 import {Synonym} from 'model/enrichment-info/Synonym';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatPaginator, MatTableDataSource} from '@angular/material';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications';
@@ -27,6 +27,16 @@ import {catchError} from 'rxjs/operators';
 import {Meta, Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
 import {SchemaService} from '@shared/services/schema.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import {RedirectService} from '@shared/services/redirect.service';
+
+
+export class FileInfo {
+    position: number;
+    name: string;
+    provider: string;
+    category: string;
+}
 
 
 @Component({
@@ -38,6 +48,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
+    displayedColumns: string[] = ['select', 'name', 'category'];
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     acc: string;
     repository: string;
@@ -61,10 +74,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
     reanalysedBy = [];
     relatedOmics = [];
 
+    providers = [];
+    galaxyInstances = [];
+
+    currentProvider = 'primary';
+
     profile: Profile;
     isLogged = false;
     isServer = true;
     schema: any;
+    dataSource: MatTableDataSource<FileInfo>;
+    selection = new SelectionModel<FileInfo>(true, []);
     private subscription: Subscription;
 
     constructor(private dataSetService: DataSetService,
@@ -80,6 +100,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 private titleService: Title,
                 @Inject(PLATFORM_ID) platformId,
                 private metaTagService: Meta,
+                private redirectService: RedirectService,
                 private schemaService: SchemaService,
                 private databaseListService: DatabaseListService) {
 
@@ -138,16 +159,50 @@ export class DatasetComponent implements OnInit, OnDestroy {
         return schema;
     }
 
+    parseFiles(files: any) {
+        const elements: FileInfo[] = [];
+        let position = 0;
+        let versions = 1;
+        files['file_versions'].forEach(version => {
+            if (this.providers.indexOf(version['type']) > -1) {
+                this.providers.push(version['type'] + '_' + versions++);
+            } else {
+                this.providers.push(version['type']);
+            }
+            Object.keys(version['files']).forEach(function(fileType, index) {
+                version['files'][fileType].forEach(file => {
+                    const fileInfo = new FileInfo();
+                    fileInfo.category = fileType;
+                    fileInfo.name = file;
+                    fileInfo.provider = version['type'];
+                    elements.push(fileInfo);
+                });
+            });
+        });
+
+        elements.sort((a, b) => (a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0);
+        elements.forEach(e => e.position = position++);
+
+        this.dataSource = new MatTableDataSource<FileInfo>(elements);
+        this.dataSource.filterPredicate = function(data, filter: string): boolean {
+            return data.provider.toLowerCase().includes(filter);
+        };
+        setTimeout(x => this.dataSource.paginator = this.paginator);
+        this.dataSource.filter = this.currentProvider;
+    }
+
     ngOnInit() {
         const self = this;
         if (this.isServer) {
             this.acc = this.route.snapshot.params['acc'];
             this.repository = this.route.snapshot.params['domain'];
             forkJoin(this.databaseListService.getDatabaseList(),
-                this.dataSetService.getDataSetDetail(this.acc, this.repository))
+                this.dataSetService.getDataSetDetail(this.acc, this.repository),
+                this.dataSetService.getDataSetFiles(this.acc, this.repository))
                 .subscribe(data => {
                     this.databases = data[0];
                     this.parseDataset(data[1]);
+                    this.parseFiles(data[2]);
                 }, () => {
                     self.notfound = true;
                 });
@@ -173,6 +228,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
+                        this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
@@ -181,6 +237,16 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     });
             });
         });
+
+        if (sessionStorage.getItem('galaxy_instance') != null) {
+            this.galaxyInstances.push({'url': sessionStorage.getItem('galaxy_instance'), 'from': 'Previous session'});
+        }
+        if (this.isLogged && this.profile.galaxyInstance != null) {
+            this.galaxyInstances.push({'url': this.profile.galaxyInstance, 'from': 'Profile'});
+        }
+
+        this.galaxyInstances.push({'url': 'https://usegalaxy.org', 'from': 'Default'});
+        this.galaxyInstances.push({'url': 'Custom...', 'from': 'Enter your galaxy instance'});
     }
 
     isClaimable() {
@@ -381,5 +447,65 @@ export class DatasetComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        if (this.isAllSelected()) {
+            this.selection.clear();
+        } else if (this.selection.selected.length > 0) {
+            this.dataSource.data.forEach(row => this.selection.select(row));
+        } else {
+            this.dataSource.data.filter(r => r.provider === this.currentProvider)
+                .forEach(row => this.selection.select(row))
+        }
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: FileInfo): string {
+        if (!row) {
+            return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    }
+
+    applyFilter(val) {
+        this.dataSource.filter = val;
+    }
+
+    sendToGalaxy(galaxyUrl: string) {
+        if (galaxyUrl === 'Custom...') {
+            this.dialogService.singleInputDialog('Enter the Galaxy URL: ').subscribe(instance => {
+                if (instance != null) {
+                    this.sendToGalaxy(instance);
+                }
+            });
+            return;
+        }
+        if (galaxyUrl.indexOf('tool_runner') === -1) {
+            if (galaxyUrl[galaxyUrl.length - 1] !== '/') {
+                galaxyUrl = galaxyUrl + '/';
+            }
+            galaxyUrl = galaxyUrl + 'tool_runner';
+        }
+        const files = [];
+        this.selection.selected.forEach(file => {
+            files.push(file.position);
+        });
+
+        const url = `${this.web_service_url}dataset/${this.repository}/${this.acc}/files?position=${files.join(',')}`;
+        const request = {
+            'URL': url,
+            'name': this.acc,
+            'tool_id': 'omicsdi',
+            'type': 'json'};
+        this.redirectService.get(request, galaxyUrl);
     }
 }

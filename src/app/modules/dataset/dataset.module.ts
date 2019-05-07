@@ -13,6 +13,15 @@ import {SimilarComponent} from '@modules/dataset/components/similar/similar.comp
 import {SimilarMoleculeComponent} from '@modules/dataset/components/similar-molecule/similar-molecule.component';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NgxJsonLdModule} from '@ngx-lite/json-ld';
+import {
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatTableModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -24,7 +33,14 @@ import {NgxJsonLdModule} from '@ngx-lite/json-ld';
         UtilsModule,
         ControlsModule,
         PipesModule,
-        NgxJsonLdModule
+        NgxJsonLdModule,
+        MatTableModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatMenuModule,
+        MatButtonModule
     ],
     declarations: [
         DatasetComponent,
