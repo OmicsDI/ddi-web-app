@@ -8,12 +8,14 @@
         <!-- col-md-1-->
         <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12" id="centerpanel">
             <div class="mt-card">
-                <div class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd; display: flex; align-items: center">
+                <div class="mt-card-header"
+                     style="padding: 10px 0; border-bottom: 1px solid #dddddd; display: flex; align-items: center">
                     <div class="col-xs-10" style="display: flex; align-items: center">
                         <div style="width: 50px">
                             <app-omics-image [omics]="d?.omics_type" [size]="'large'"></app-omics-image>
                         </div>
-                        <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Dataset Information</h3>
+                        <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Dataset
+                            Information</h3>
                     </div>
                     <div class="col-xs-2">
                         <div appPieChart class="pull-right" [width]="65" [circleRadius]="52" [dataset]="d"></div>
@@ -30,12 +32,13 @@
                                 <i class="fa fa-pencil-square-o" aria-hidden="true">Ontology highlight</i>
                             </p>
                         </div>
-                        <hr />
+                        <hr/>
                         <div>
                             <div>
                                 <p class="elements"><b>ABSTRACT</b>:
                                     <app-annotated-text [text]="d.description"
-                                                        [sections]="abstract_sections" id="abstract"></app-annotated-text>
+                                                        [sections]="abstract_sections"
+                                                        id="abstract"></app-annotated-text>
                                 </p>
                             </div>
                         </div>
@@ -51,7 +54,8 @@
                                 <span *ngIf="d.similars && d.similars.length > 99">(first 100 items shown)</span>
                             </p>
                             <p class="elements" *ngIf="relatedOmics.length > 0" id="relate_omics">
-                                <b>OTHER RELATED OMICS DATASETS IN: </b> <span href="#" *ngFor="let s of relatedOmics"><a
+                                <b>OTHER RELATED OMICS DATASETS IN: </b> <span href="#"
+                                                                               *ngFor="let s of relatedOmics"><a
                                     [routerLink]="['/dataset', s['db'].source, s['reanalysis'].accession]">{{s['reanalysis'].accession}}</a> </span>
                             </p>
                         </div>
@@ -79,18 +83,12 @@
                         <p class="elements" *ngIf="null!=d.submitter" id="submitter">
                             <b>SUBMITTER: </b>
                             <span *ngFor="let o of d.submitter; let i = index;">
-                            <span *ngIf="d.submitterMail && d.submitterMail[i]">
-                              <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}"><img
-                                      src="static/images/logo/rsz_mail.png">{{o}}</a>
-                            </span>
-                            <span *ngIf="!(d.submitterMail && d.submitterMail[i])">
-                              {{o}}
-                            </span>&nbsp;
-                            </span>
-                                <span *ngFor="let o of d.submitterMail">
-                                <span>
-                                  <a href="#">{{o.name}}</a>
-                                </span>&nbsp;
+                                <span *ngIf="d.submitterMail && d.submitterMail[i]">
+                                  <a href="{{d.submitterMail && 'mailto:'+d.submitterMail[i]}}">
+                                      <img src="static/images/logo/rsz_mail.png">{{o}}
+                                  </a>
+                                </span>
+                                <span *ngIf="!(d.submitterMail && d.submitterMail[i])">{{o}}</span>&nbsp;
                             </span>
                         </p>
                         <p class="elements">
@@ -108,23 +106,16 @@
 
                             <span *ngFor="let o of d.secondary_accession;">
 
-                            <!--<a *ngIf="o.split('~').length>1" href="{{o.split('~')[1]}}">{{o.split('~')[0]}}</a>-->
-                            <a *ngIf="o.split('~').length > 1" href="{{o.substring(o.indexOf('~')+1)}}">{{o.substring(0,o.indexOf('~'))}}</a>
-                            <a *ngIf="o.split('~').length <= 1">{{o}}</a>
-                                <!--<span *ngIf="this.databaseByAccession && this.databaseByAccession[o]">-->
-                                <!--<a *ngIf="this.databaseByAccession[o].urlTemplate" class="biological" href="{{this.databaseByAccession[o].urlTemplate.replace('{accession}',o)}}" >-->
-                                <!--<img height="32" width="32" src="{{this.databaseByAccession[o].icon}}">&nbsp;{{o}}-->
-                                <!--</a>-->
-                                <!--</span>-->
-                                <!--<span *ngIf="this.databaseByAccession && !this.databaseByAccession[o]">-->
-                                <!--{{o}}-->
-                                <!--</span>-->
-                        </span>
+                                <a *ngIf="o.split('~').length > 1" href="{{o.substring(o.indexOf('~')+1)}}">
+                                    {{o.substring(0, o.indexOf('~'))}}</a>
+                                <a *ngIf="o.split('~').length <= 1">{{o}}</a>
+                            </span>
                         </p>
 
-                        <p class="elements" *ngIf="null!=d.repositories">
+                        <p class="elements" *ngIf="null != d.repositories">
                             <b>REPOSITORIES: </b>
-                            <span *ngFor="let o of d.repositories; let isLast=last"  class="repositories">{{o}}{{isLast ? '' : ', '}}</span>
+                            <span *ngFor="let o of d.repositories; let isLast=last" class="repositories">
+                                {{o}}{{isLast ? '' : ', '}}</span>
                         </p>
                         <p><a href="{{d.full_dataset_link}}" class="hidden-sm hidden-md hidden-lg">ACCESS DATA</a></p>
                     </div>
@@ -134,22 +125,25 @@
 
                     <div class="row">
                         <div class="col-lg-2 hidden-xs">
-                            <a href="{{d.full_dataset_link}}" class="btn btn-primary" style="color: white; border: 1px solid transparent; margin-left: 9px" id="full_dataset_link">ACCESS
-                                DATA</a>
+                            <a href="{{d.full_dataset_link}}" class="btn btn-primary"
+                               style="color: white; border: 1px solid transparent; margin-left: 9px"
+                               id="full_dataset_link">ACCESS DATA</a>
                         </div>
                         <div class="col-lg-10 col-xs-12">
                             <div class="btn-group pull-right widget-btn-group" role="group">
                                 <button type="button" class="btn btn-primary" (click)="citation()">
                                     <i class="fa fa-quote-left" aria-hidden="true"></i> Cite&nbsp;&nbsp;&nbsp;&nbsp;
                                 </button>
-                                <button type="button" *ngIf="isClaimable() && !isClaimed() && isLogged" class="btn btn-danger" (click)="claimDataset()">
+                                <button type="button" *ngIf="isClaimable() && !isClaimed() && isLogged"
+                                        class="btn btn-danger" (click)="claimDataset()">
                                     <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                    <span [ngClass]="unselected"> Claim</span>
+                                    <span [ngClass]="'unselected'"> Claim</span>
                                 </button>
 
-                                <button type="button" *ngIf="isClaimed() && isLogged" class="btn btn-danger" [routerLink]="['/dashboard','claimed']">
+                                <button type="button" *ngIf="isClaimed() && isLogged" class="btn btn-danger"
+                                        [routerLink]="['/dashboard','claimed']">
                                     <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                    <span [ngClass]="unselected"> View in profile</span>
+                                    <span [ngClass]="'unselected'"> View in profile</span>
                                 </button>
 
                                 <a class="btn btn-success" style="color: white; border: 1px solid transparent"
@@ -177,7 +171,8 @@
                         <div style="width: 50px">
                             <i class="fa fa-3x fa-folder-open" style="color: #0099cc; margin-left: 3px"></i>
                         </div>
-                        <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Dataset's files</h3>
+                        <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Dataset's
+                            files</h3>
                     </div>
                     <div class="col-xs-3">
                         <span style="float: right">Source:
@@ -212,13 +207,13 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <th mat-header-cell *matHeaderCellDef> Name</th>
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="category">
-                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <th mat-header-cell *matHeaderCellDef> Type</th>
                             <td mat-cell *matCellDef="let element"> {{element.category}} </td>
                         </ng-container>
 
@@ -238,19 +233,18 @@
                             <span style="float: right; font-size: 9pt; font-style: italic">({{ins['from']}})</span>
                         </button>
                     </mat-menu>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                                   style="display: inherit; float: right"
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" style="display: inherit; float: right"
                                    showFirstLastButtons></mat-paginator>
                 </div>
             </div>
 
             <app-publication [ids]="d.publicationIds"></app-publication>
 
-            <app-similar-molecule *ngIf="acc && repository && !isServer" [acc]="acc" [repository]="repository"></app-similar-molecule>
+            <app-similar-molecule *ngIf="acc && repository && !isServer" [acc]="acc"
+                                  [repository]="repository"></app-similar-molecule>
 
             <!--dataset_upper -->
             <div class="panel panel-default" *ngIf="!isServer">
-                <!--<disqus-thread [page-identifier]="page_identifier" [page-url]="current_url"></disqus-thread>-->
                 <disqus [identifier]="repository+'/'+acc" [url]="repository+'/'+acc"></disqus>
             </div>
         </div>
@@ -268,14 +262,18 @@
                     <div id="err-message">
                         <h1>Oh no...</h1>
                         <h3>An error has occurred !!!</h3>
-                        <br />
+                        <br/>
                         <p>Sorry, this is not working properly. The dataset couldn't be found.</p>
                         <p>We're working to fix this. In the meantime, here is what you can do:</p>
                         <ul style="margin: auto">
-                            <li><i class="glyphicon glyphicon-refresh"></i><b> Refresh the page </b><span>(sometimes this helps)</span></li>
+                            <li><i class="glyphicon glyphicon-refresh"></i><b> Refresh the page </b><span>(sometimes this helps)</span>
+                            </li>
                             <li><i class="glyphicon glyphicon-time"></i><b> Try again in 30 minutes</b></li>
-                            <li><i class="fa fa-bell"></i><b> Report this error</b> <span> by click <a href="https://www.ebi.ac.uk/support/index.php?query=omics-di" target="_blank">here</a></span></li>
-                            <li [routerLink]="['/']" style="cursor: pointer"><i class="fa fa-undo"></i><b> Get back to homepage</b></li>
+                            <li><i class="fa fa-bell"></i><b> Report this error</b> <span> by click <a
+                                    href="https://www.ebi.ac.uk/support/index.php?query=omics-di"
+                                    target="_blank">here</a></span></li>
+                            <li [routerLink]="['/']" style="cursor: pointer"><i class="fa fa-undo"></i><b> Get back to
+                                homepage</b></li>
                         </ul>
                     </div>
                 </div>

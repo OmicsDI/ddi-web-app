@@ -6,4 +6,10 @@ export class ObjectUtils {
             delete object[oldKey];
         }
     }
+
+    static upperName(lower: string) {
+        return lower.replace(/^\w/, function (chr) {
+            return chr.toUpperCase();
+        });
+    }
 }

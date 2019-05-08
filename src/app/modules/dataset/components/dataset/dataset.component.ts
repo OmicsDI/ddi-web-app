@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -29,6 +29,7 @@ import {isPlatformServer} from '@angular/common';
 import {SchemaService} from '@shared/services/schema.service';
 import {SelectionModel} from '@angular/cdk/collections';
 import {RedirectService} from '@shared/services/redirect.service';
+import {ObjectUtils} from '@shared/utils/object-utils';
 
 
 export class FileInfo {
@@ -86,6 +87,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     dataSource: MatTableDataSource<FileInfo>;
     selection = new SelectionModel<FileInfo>(true, []);
     private subscription: Subscription;
+    upperName = ObjectUtils.upperName;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -136,14 +138,12 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         if (dataset.similars != null) {
             dataset.similars.forEach(similar => {
+                const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                 if (similar.relationType === 'Reanalysis of') {
-                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                     self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
                 } else if (similar.relationType === 'Reanalyzed by') {
-                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                     self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
                 } else {
-                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                     self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
                 }
             });
@@ -161,6 +161,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     parseFiles(files: any) {
         const elements: FileInfo[] = [];
+        this.providers = [];
         let position = 0;
         let versions = 1;
         files['file_versions'].forEach(version => {
@@ -266,20 +267,18 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }
 
     claimDataset() {
-        const dataset: DataSetShort = new DataSetShort();
-        dataset.source = this.d.source;
-        dataset.id = this.d.id;
-        dataset.claimed = moment().format('ll');
-        dataset.name = this.d.name;
-        dataset.omics_type = this.d.omics_type;
+        if (this.isLogged) {
+            const dataset: DataSetShort = new DataSetShort();
+            dataset.source = this.d.source;
+            dataset.id = this.d.id;
+            dataset.claimed = moment().format('ll');
+            dataset.name = this.d.name;
+            dataset.omics_type = this.d.omics_type;
 
-        this.auth.loggedIn().then(isLogged => {
-            if (isLogged) {
-                this.profileService.claimDataset(this.profile.userId, dataset);
-                this.profile.dataSets.push(dataset);
-                this.profileService.setProfile(this.profile);
-            }
-        });
+            this.profileService.claimDataset(this.profile.userId, dataset);
+            this.profile.dataSets.push(dataset);
+            this.profileService.setProfile(this.profile);
+        }
     }
 
     getSynonyms(text: string): string[] {
@@ -296,22 +295,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
             return result;
         }
 
-        // todo array of Strange words
-        // todo hard coded
-        const reg = ['ï', '®', 'µ', 'å', '°' , '¾', 'è' ];
         let i = 0;
         for (let n = 0; n < synonyms.length; n++) {
-            let j = 0;
-            for (const key of reg) {
-                const phase = str.substring(0, i);
-                if (phase.indexOf(key) > 0) {
-                    j += phase.split(key).length - 1;
-
-                }
-            }
-
             if (i < synonyms[n].from - 1) {
-                const t = str.substr(i + j, synonyms[n].from - i - 1);
+                const t = str.substr(i, synonyms[n].from - i - 1);
 
                 result.push({text: t, beAnnotated: false, tobeReduced: false, synonyms: null});
 
@@ -328,14 +315,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
             );
             i = synonyms[n].to;
         }
-        // add space for strange words
-        let s = 0;
-        for (const t of reg) {
-            s = s + (str.split(t).length - 1);
-        }
 
         if (i < str.length) {
-            result.push({text: str.substr(i + s, str.length - i), beAnnotated: false, tobeReduced: false, synonyms: null});
+            result.push({text: str.substr(i, str.length - i), beAnnotated: false, tobeReduced: false, synonyms: null});
         }
         return result;
     }
@@ -383,8 +365,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
         //     this.enrichmentInfo.originalAttributes.sample_protocol, this.enrichmentInfo.synonyms.sample_protocol);
         // this.data_protocol_sections = this.getSection(
         //     this.enrichmentInfo.originalAttributes.data_protocol, this.enrichmentInfo.synonyms.data_protocol);
-
-        const str = this.enrichmentInfo.originalAttributes.name;
         this.ontology_highlighted = true;
         this.removeTags();
     }
@@ -435,12 +415,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
         dialogRef.componentInstance.datasetDetail = this.d;
 
         return dialogRef.afterClosed();
-    }
-
-    upperName(lower: string) {
-        return lower.replace(/^\w/, function (chr) {
-            return chr.toUpperCase();
-        });
     }
 
     ngOnDestroy(): void {
