@@ -5,6 +5,7 @@
 
 export const environment = {
     production: false,
+    baseHref: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/',
     webServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
     userServiceUrl: 'http://localhost:8080/profile-1.0-SNAPSHOT/api/',
     userServiceCookiePath: '/profile-1.0-SNAPSHOT/',

@@ -49,7 +49,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
-    displayedColumns: string[] = ['select', 'name', 'category'];
+    displayedColumns: string[] = ['select', 'name', 'category', 'action'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -115,7 +115,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             if (isLogged) {
                 this.profile = this.profileService.getProfileFromLocal();
             }
-        })
+        });
     }
 
     parseDataset(dataset: DataSetDetail) {
@@ -159,6 +159,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
         return schema;
     }
 
+    isClaimable() {
+        return this.d.claimable != null && this.d.claimable;
+    }
+
     parseFiles(files: any) {
         const elements: FileInfo[] = [];
         this.providers = [];
@@ -194,24 +198,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         const self = this;
-        if (this.isServer) {
-            this.acc = this.route.snapshot.params['acc'];
-            this.repository = this.route.snapshot.params['domain'];
-            forkJoin(this.databaseListService.getDatabaseList(),
-                this.dataSetService.getDataSetDetail(this.acc, this.repository),
-                this.dataSetService.getDataSetFiles(this.acc, this.repository))
-                .subscribe(data => {
-                    this.databases = data[0];
-                    this.parseDataset(data[1]);
-                    this.parseFiles(data[2]);
-                }, () => {
-                    self.notfound = true;
-                });
-            this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
-                this.schema = this.parseSchema(result);
-            });
-            return;
-        }
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.subscription = this.route.params.subscribe(params => {
@@ -238,20 +224,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     });
             });
         });
+        if (!this.isServer) {
+            if (sessionStorage.getItem('galaxy_instance') != null) {
+                this.galaxyInstances.push({'url': sessionStorage.getItem('galaxy_instance'), 'from': 'Redirected from'});
+            }
+            if (this.isLogged && this.profile.galaxyInstance != null) {
+                this.galaxyInstances.push({'url': this.profile.galaxyInstance, 'from': 'Profile'});
+            }
 
-        if (sessionStorage.getItem('galaxy_instance') != null) {
-            this.galaxyInstances.push({'url': sessionStorage.getItem('galaxy_instance'), 'from': 'Previous session'});
+            this.galaxyInstances.push({'url': 'https://usegalaxy.org', 'from': 'Default'});
+            this.galaxyInstances.push({'url': 'Custom...', 'from': 'Enter your galaxy instance'});
         }
-        if (this.isLogged && this.profile.galaxyInstance != null) {
-            this.galaxyInstances.push({'url': this.profile.galaxyInstance, 'from': 'Profile'});
-        }
-
-        this.galaxyInstances.push({'url': 'https://usegalaxy.org', 'from': 'Default'});
-        this.galaxyInstances.push({'url': 'Custom...', 'from': 'Enter your galaxy instance'});
-    }
-
-    isClaimable() {
-        return this.d.claimable != null && this.d.claimable;
     }
 
     isClaimed() {
@@ -481,5 +464,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
             'tool_id': 'omicsdi',
             'type': 'json'};
         this.redirectService.get(request, galaxyUrl);
+    }
+
+    underDevelopment() {
+        this.dialogService.confirm('', 'This feature is under development');
     }
 }

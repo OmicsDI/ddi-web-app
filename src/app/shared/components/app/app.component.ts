@@ -1,12 +1,13 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {isPlatformServer, Location, PopStateEvent} from '@angular/common';
+import {isPlatformServer, Location, PopStateEvent, DOCUMENT} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
 import {DataTransportService} from '@shared/services/data.transport.service';
 import {Profile} from 'model/Profile';
 import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
 import {Subscription, SubscriptionLike} from 'rxjs';
+import {environment} from 'environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private location: Location,
                 @Inject(PLATFORM_ID) private platformId,
+                @Inject(DOCUMENT) private document,
                 private dataTransporterService: DataTransportService,
                 private googleAnalyticsService: GoogleAnalyticsService,
                 private profileService: ProfileService) {
@@ -44,6 +46,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        const bases = this.document.getElementsByTagName('base');
+
+        if (bases.length > 0) {
+            bases[0].setAttribute('href', environment.baseHref);
+
+        }
         if (isPlatformServer(this.platformId)) {
             return;
         }

@@ -207,14 +207,24 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="name">
-                            <th mat-header-cell *matHeaderCellDef> Name</th>
-                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            <th mat-header-cell *matHeaderCellDef style="padding-left: 10px"> Name</th>
+                            <td mat-cell *matCellDef="let element" style="padding-left: 10px">
+                                <a href="{{element.name}}" target="_blank">{{element.name.substring(element.name.lastIndexOf('/') + 1)}}</a>
+                            </td>
                         </ng-container>
 
-                        <!-- Weight Column -->
                         <ng-container matColumnDef="category">
                             <th mat-header-cell *matHeaderCellDef> Type</th>
                             <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Action</th>
+                            <td mat-cell *matCellDef="let element">
+                                <a href="{{element.name}}" target="_blank" style="border-bottom: none">
+                                    <i class="fa fa-cloud-download" style="font-size: 1.5em"></i>
+                                </a>
+                            </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -222,9 +232,12 @@
                             (click)="selection.toggle(row)">
                         </tr>
                     </table>
-                    <button mat-stroked-button [matMenuTriggerFor]="menu"
-                            [disabled]="selection.selected.length === 0"
+
+                    <button mat-stroked-button
+                            (click)="underDevelopment()"
                             style="float: left; margin-top: 15px">
+<!--                        [matMenuTriggerFor]="menu"-->
+    <!--                    [disabled]="selection.selected.length === 0"-->
                         <i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload file(s) to Galaxy server
                     </button>
                     <mat-menu #menu="matMenu">
