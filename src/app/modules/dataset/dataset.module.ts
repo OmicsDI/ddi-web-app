@@ -16,10 +16,10 @@ import {NgxJsonLdModule} from '@ngx-lite/json-ld';
 import {
     MatButtonModule,
     MatCheckboxModule,
-    MatFormFieldModule,
+    MatFormFieldModule, MatInputModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatSelectModule,
+    MatSelectModule, MatSortModule,
     MatTableModule
 } from '@angular/material';
 
@@ -40,7 +40,9 @@ import {
         MatFormFieldModule,
         MatSelectModule,
         MatMenuModule,
-        MatButtonModule
+        MatButtonModule,
+        MatSortModule,
+        MatInputModule
     ],
     declarations: [
         DatasetComponent,

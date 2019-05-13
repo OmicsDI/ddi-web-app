@@ -9,7 +9,7 @@ import {SynonymResult} from 'model/enrichment-info/SynonymResult';
 import {Synonym} from 'model/enrichment-info/Synonym';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
-import {MatDialog, MatDialogRef, MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications';
@@ -39,6 +39,11 @@ export class FileInfo {
     category: string;
 }
 
+export class Filter {
+    source = 'primary';
+    keyword = '';
+}
+
 
 @Component({
     selector: 'app-dataset',
@@ -52,6 +57,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = ['select', 'name', 'category', 'action'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     acc: string;
     repository: string;
@@ -78,7 +84,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     providers = [];
     galaxyInstances = [];
 
-    currentProvider = 'primary';
+    filter = new Filter();
 
     profile: Profile;
     isLogged = false;
@@ -190,10 +196,14 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         this.dataSource = new MatTableDataSource<FileInfo>(elements);
         this.dataSource.filterPredicate = function(data, filter: string): boolean {
-            return data.provider.toLowerCase().includes(filter);
+            const filterObj = JSON.parse(filter);
+            return data.provider.includes(filterObj['source']) && data.name.toLowerCase().includes(filterObj['keyword'].toLowerCase());
         };
-        setTimeout(x => this.dataSource.paginator = this.paginator);
-        this.dataSource.filter = this.currentProvider;
+        setTimeout(x => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        });
+        this.dataSource.filter = JSON.stringify(this.filter);
     }
 
     ngOnInit() {
@@ -389,6 +399,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
     }
 
+    applyFilter() {
+        this.dataSource.filter = JSON.stringify(this.filter);
+    }
 
     citation() {
         let dialogRef: MatDialogRef<CitationDialogComponent>;
@@ -420,7 +433,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
         } else if (this.selection.selected.length > 0) {
             this.dataSource.data.forEach(row => this.selection.select(row));
         } else {
-            this.dataSource.data.filter(r => r.provider === this.currentProvider)
+            this.dataSource.data.filter(r => r.provider === this.filter.source)
                 .forEach(row => this.selection.select(row))
         }
     }
@@ -431,10 +444,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
             return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
         }
         return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-    }
-
-    applyFilter(val) {
-        this.dataSource.filter = val;
     }
 
     sendToGalaxy(galaxyUrl: string) {
@@ -464,9 +473,5 @@ export class DatasetComponent implements OnInit, OnDestroy {
             'tool_id': 'omicsdi',
             'type': 'json'};
         this.redirectService.get(request, galaxyUrl);
-    }
-
-    underDevelopment() {
-        this.dialogService.confirm('', 'This feature is under development');
     }
 }

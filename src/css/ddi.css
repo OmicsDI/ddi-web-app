@@ -1573,3 +1573,24 @@ a:hover {
 mat-form-field {
     width: 100%;
 }
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.2em 0 0.7em 0 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-gap, .mat-form-field-appearance-outline .mat-form-field-outline-thick .mat-form-field-outline-start {
+    border-width: 1px !important;
+    transition: none !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border-radius: 0 !important;
+}
+
+#file-filter .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
