@@ -54,6 +54,11 @@
             localStorage.setItem('id_token', authToken);
             window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
         }
+
+        var galaxyURL = getParameterByName('GALAXY_URL');
+        if (galaxyURL && typeof sessionStorage !== 'undefined') {
+            sessionStorage.setItem('galaxy_instance', galaxyURL);
+        }
     </script>
 </head>
 

@@ -342,7 +342,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
                 label: data[i].label,
                 name: data[i].name,
                 // Todo: Find a proper algorithm for this
-                value: +data[i].value > 40000 ? +data[i].value / 4 : +data[i].value,
+                value: +data[i].value > 40000 ? +data[i].value / 3.5 : +data[i].value,
                 value_before_log_calc: +data[i].value
             };
             newdata.push(item);

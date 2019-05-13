@@ -50,6 +50,7 @@ import {
 import {environment} from '../environments/environment';
 import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
 import {SchemaService} from '@shared/services/schema.service';
+import {RedirectService} from '@shared/services/redirect.service';
 
 
 export function jwtTokenGetter() {
@@ -105,6 +106,7 @@ export function jwtTokenGetter() {
             provide: TRANSFER_RESPONSE_BASE_URLS,
             useValue: [environment.webServiceUrl]
         }
+        , RedirectService
         , AuthService
         , SchemaService
         , BsModalService

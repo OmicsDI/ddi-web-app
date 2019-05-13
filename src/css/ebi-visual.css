@@ -602,56 +602,56 @@ form input.webform-submit:active {
 input.submit, input.webform-submit {
 }
 
-table, body.table-layout
-table.data {
-    border-collapse: collapse;
-    width: 99%;
-    background-color: white;
-    margin: 9px auto;
-    border: 5px solid #f1f1f1
-}
+/*table, body.table-layout*/
+/*table.data {*/
+/*    border-collapse: collapse;*/
+/*    width: 99%;*/
+/*    background-color: white;*/
+/*    margin: 9px auto;*/
+/*    border: 5px solid #f1f1f1*/
+/*}*/
 
-th, body.table-layout table.data th,
-td, body.table-layout table.data
-td {
-    padding: 8px 5px 5px 5px;
-    border: 1px solid #f1f1f1;
-    border-collapse: collapse;
-    vertical-align: top
-}
+/*th, body.table-layout table.data th,*/
+/*td, body.table-layout table.data*/
+/*td {*/
+/*    padding: 8px 5px 5px 5px;*/
+/*    border: 1px solid #f1f1f1;*/
+/*    border-collapse: collapse;*/
+/*    vertical-align: top*/
+/*}*/
 
-th, body.table-layout table.data th,
-td, body.table-layout table.data
-td {
-    font-size: 93%
-}
+/*th, body.table-layout table.data th,*/
+/*td, body.table-layout table.data*/
+/*td {*/
+/*    font-size: 93%*/
+/*}*/
 
-th, body.table-layout table.data
-th {
-    font-weight: bold;
-    background-color: #F2F2EC;
-    border-bottom: 3px solid #f7f7f7;
-    color: black
-}
+/*th, body.table-layout table.data*/
+/*th {*/
+/*    font-weight: bold;*/
+/*    background-color: #F2F2EC;*/
+/*    border-bottom: 3px solid #f7f7f7;*/
+/*    color: black*/
+/*}*/
 
-body.table-layout
-table {
-    margin: 0;
-    border: none
-}
+/*body.table-layout*/
+/*table {*/
+/*    margin: 0;*/
+/*    border: none*/
+/*}*/
 
-body.table-layout th, body.table-layout
-td {
-    padding: 0;
-    border: none;
-    font-size: 100%
-}
+/*body.table-layout th, body.table-layout*/
+/*td {*/
+/*    padding: 0;*/
+/*    border: none;*/
+/*    font-size: 100%*/
+/*}*/
 
-table.predoc-details
-th {
-    width: 20%;
-    background-color: #aad095
-}
+/*table.predoc-details*/
+/*th {*/
+/*    width: 20%;*/
+/*    background-color: #aad095*/
+/*}*/
 
 ul li > p {
     padding-left: 0

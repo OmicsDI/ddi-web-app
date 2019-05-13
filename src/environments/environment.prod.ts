@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+    baseHref: '/',
     webServiceUrl: 'https://www.omicsdi.org/ws/',
     userServiceUrl: 'https://www.omicsdi.org/profilews/api/',
     userServiceCookiePath: '/profilews/',

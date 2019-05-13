@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSetService} from '@shared/services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -9,7 +9,7 @@ import {SynonymResult} from 'model/enrichment-info/SynonymResult';
 import {Synonym} from 'model/enrichment-info/Synonym';
 import {AppConfig} from 'app/app.config';
 import {ProfileService} from '@shared/services/profile.service';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DatabaseListService} from '@shared/services/database-list.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {NotificationsService} from 'angular2-notifications';
@@ -27,6 +27,22 @@ import {catchError} from 'rxjs/operators';
 import {Meta, Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
 import {SchemaService} from '@shared/services/schema.service';
+import {SelectionModel} from '@angular/cdk/collections';
+import {RedirectService} from '@shared/services/redirect.service';
+import {ObjectUtils} from '@shared/utils/object-utils';
+
+
+export class FileInfo {
+    position: number;
+    name: string;
+    provider: string;
+    category: string;
+}
+
+export class Filter {
+    source = 'primary';
+    keyword = '';
+}
 
 
 @Component({
@@ -38,6 +54,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
+    displayedColumns: string[] = ['select', 'name', 'category', 'action'];
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     acc: string;
     repository: string;
@@ -61,11 +81,19 @@ export class DatasetComponent implements OnInit, OnDestroy {
     reanalysedBy = [];
     relatedOmics = [];
 
+    providers = [];
+    galaxyInstances = [];
+
+    filter = new Filter();
+
     profile: Profile;
     isLogged = false;
     isServer = true;
     schema: any;
+    dataSource: MatTableDataSource<FileInfo>;
+    selection = new SelectionModel<FileInfo>(true, []);
     private subscription: Subscription;
+    upperName = ObjectUtils.upperName;
 
     constructor(private dataSetService: DataSetService,
                 private route: ActivatedRoute,
@@ -80,6 +108,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 private titleService: Title,
                 @Inject(PLATFORM_ID) platformId,
                 private metaTagService: Meta,
+                private redirectService: RedirectService,
                 private schemaService: SchemaService,
                 private databaseListService: DatabaseListService) {
 
@@ -92,7 +121,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
             if (isLogged) {
                 this.profile = this.profileService.getProfileFromLocal();
             }
-        })
+        });
     }
 
     parseDataset(dataset: DataSetDetail) {
@@ -115,14 +144,12 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         if (dataset.similars != null) {
             dataset.similars.forEach(similar => {
+                const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                 if (similar.relationType === 'Reanalysis of') {
-                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                     self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
                 } else if (similar.relationType === 'Reanalyzed by') {
-                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                     self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
                 } else {
-                    const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
                     self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
                 }
             });
@@ -138,24 +165,49 @@ export class DatasetComponent implements OnInit, OnDestroy {
         return schema;
     }
 
+    isClaimable() {
+        return this.d.claimable != null && this.d.claimable;
+    }
+
+    parseFiles(files: any) {
+        const elements: FileInfo[] = [];
+        this.providers = [];
+        let position = 0;
+        let versions = 1;
+        files['file_versions'].forEach(version => {
+            if (this.providers.indexOf(version['type']) > -1) {
+                this.providers.push(version['type'] + '_' + versions++);
+            } else {
+                this.providers.push(version['type']);
+            }
+            Object.keys(version['files']).forEach(function(fileType, index) {
+                version['files'][fileType].forEach(file => {
+                    const fileInfo = new FileInfo();
+                    fileInfo.category = fileType;
+                    fileInfo.name = file;
+                    fileInfo.provider = version['type'];
+                    elements.push(fileInfo);
+                });
+            });
+        });
+
+        elements.sort((a, b) => (a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0);
+        elements.forEach(e => e.position = position++);
+
+        this.dataSource = new MatTableDataSource<FileInfo>(elements);
+        this.dataSource.filterPredicate = function(data, filter: string): boolean {
+            const filterObj = JSON.parse(filter);
+            return data.provider.includes(filterObj['source']) && data.name.toLowerCase().includes(filterObj['keyword'].toLowerCase());
+        };
+        setTimeout(x => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        });
+        this.dataSource.filter = JSON.stringify(this.filter);
+    }
+
     ngOnInit() {
         const self = this;
-        if (this.isServer) {
-            this.acc = this.route.snapshot.params['acc'];
-            this.repository = this.route.snapshot.params['domain'];
-            forkJoin(this.databaseListService.getDatabaseList(),
-                this.dataSetService.getDataSetDetail(this.acc, this.repository))
-                .subscribe(data => {
-                    this.databases = data[0];
-                    this.parseDataset(data[1]);
-                }, () => {
-                    self.notfound = true;
-                });
-            this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
-                this.schema = this.parseSchema(result);
-            });
-            return;
-        }
         this.databaseListService.getDatabaseList().subscribe(databases => {
             this.databases = databases;
             this.subscription = this.route.params.subscribe(params => {
@@ -173,6 +225,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
+                        this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
@@ -181,10 +234,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     });
             });
         });
-    }
+        if (!this.isServer) {
+            if (sessionStorage.getItem('galaxy_instance') != null) {
+                this.galaxyInstances.push({'url': sessionStorage.getItem('galaxy_instance'), 'from': 'Redirected from'});
+            }
+            if (this.isLogged && this.profile.galaxyInstance != null) {
+                this.galaxyInstances.push({'url': this.profile.galaxyInstance, 'from': 'Profile'});
+            }
 
-    isClaimable() {
-        return this.d.claimable != null && this.d.claimable;
+            this.galaxyInstances.push({'url': 'https://usegalaxy.org', 'from': 'Default'});
+            this.galaxyInstances.push({'url': 'Custom...', 'from': 'Enter your galaxy instance'});
+        }
     }
 
     isClaimed() {
@@ -200,20 +260,18 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }
 
     claimDataset() {
-        const dataset: DataSetShort = new DataSetShort();
-        dataset.source = this.d.source;
-        dataset.id = this.d.id;
-        dataset.claimed = moment().format('ll');
-        dataset.name = this.d.name;
-        dataset.omics_type = this.d.omics_type;
+        if (this.isLogged) {
+            const dataset: DataSetShort = new DataSetShort();
+            dataset.source = this.d.source;
+            dataset.id = this.d.id;
+            dataset.claimed = moment().format('ll');
+            dataset.name = this.d.name;
+            dataset.omics_type = this.d.omics_type;
 
-        this.auth.loggedIn().then(isLogged => {
-            if (isLogged) {
-                this.profileService.claimDataset(this.profile.userId, dataset);
-                this.profile.dataSets.push(dataset);
-                this.profileService.setProfile(this.profile);
-            }
-        });
+            this.profileService.claimDataset(this.profile.userId, dataset);
+            this.profile.dataSets.push(dataset);
+            this.profileService.setProfile(this.profile);
+        }
     }
 
     getSynonyms(text: string): string[] {
@@ -230,22 +288,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
             return result;
         }
 
-        // todo array of Strange words
-        // todo hard coded
-        const reg = ['ï', '®', 'µ', 'å', '°' , '¾', 'è' ];
         let i = 0;
         for (let n = 0; n < synonyms.length; n++) {
-            let j = 0;
-            for (const key of reg) {
-                const phase = str.substring(0, i);
-                if (phase.indexOf(key) > 0) {
-                    j += phase.split(key).length - 1;
-
-                }
-            }
-
             if (i < synonyms[n].from - 1) {
-                const t = str.substr(i + j, synonyms[n].from - i - 1);
+                const t = str.substr(i, synonyms[n].from - i - 1);
 
                 result.push({text: t, beAnnotated: false, tobeReduced: false, synonyms: null});
 
@@ -262,14 +308,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
             );
             i = synonyms[n].to;
         }
-        // add space for strange words
-        let s = 0;
-        for (const t of reg) {
-            s = s + (str.split(t).length - 1);
-        }
 
         if (i < str.length) {
-            result.push({text: str.substr(i + s, str.length - i), beAnnotated: false, tobeReduced: false, synonyms: null});
+            result.push({text: str.substr(i, str.length - i), beAnnotated: false, tobeReduced: false, synonyms: null});
         }
         return result;
     }
@@ -317,8 +358,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
         //     this.enrichmentInfo.originalAttributes.sample_protocol, this.enrichmentInfo.synonyms.sample_protocol);
         // this.data_protocol_sections = this.getSection(
         //     this.enrichmentInfo.originalAttributes.data_protocol, this.enrichmentInfo.synonyms.data_protocol);
-
-        const str = this.enrichmentInfo.originalAttributes.name;
         this.ontology_highlighted = true;
         this.removeTags();
     }
@@ -360,6 +399,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
     }
 
+    applyFilter() {
+        this.dataSource.filter = JSON.stringify(this.filter);
+    }
 
     citation() {
         let dialogRef: MatDialogRef<CitationDialogComponent>;
@@ -371,15 +413,65 @@ export class DatasetComponent implements OnInit, OnDestroy {
         return dialogRef.afterClosed();
     }
 
-    upperName(lower: string) {
-        return lower.replace(/^\w/, function (chr) {
-            return chr.toUpperCase();
-        });
-    }
-
     ngOnDestroy(): void {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        if (this.isAllSelected()) {
+            this.selection.clear();
+        } else if (this.selection.selected.length > 0) {
+            this.dataSource.data.forEach(row => this.selection.select(row));
+        } else {
+            this.dataSource.data.filter(r => r.provider === this.filter.source)
+                .forEach(row => this.selection.select(row))
+        }
+    }
+
+    /** The label for the checkbox on the passed row */
+    checkboxLabel(row?: FileInfo): string {
+        if (!row) {
+            return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+        }
+        return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    }
+
+    sendToGalaxy(galaxyUrl: string) {
+        if (galaxyUrl === 'Custom...') {
+            this.dialogService.singleInputDialog('Enter the Galaxy URL: ').subscribe(instance => {
+                if (instance != null) {
+                    this.sendToGalaxy(instance);
+                }
+            });
+            return;
+        }
+        if (galaxyUrl.indexOf('tool_runner') === -1) {
+            if (galaxyUrl[galaxyUrl.length - 1] !== '/') {
+                galaxyUrl = galaxyUrl + '/';
+            }
+            galaxyUrl = galaxyUrl + 'tool_runner';
+        }
+        const files = [];
+        this.selection.selected.forEach(file => {
+            files.push(file.position);
+        });
+
+        const url = `${this.web_service_url}dataset/${this.repository}/${this.acc}/files?position=${files.join(',')}`;
+        const request = {
+            'URL': url,
+            'name': this.acc,
+            'tool_id': 'omicsdi',
+            'type': 'json'};
+        this.redirectService.get(request, galaxyUrl);
     }
 }

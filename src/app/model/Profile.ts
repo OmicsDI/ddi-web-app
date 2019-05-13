@@ -13,7 +13,7 @@ export class Profile {
     public email: string;
     public bio: string;
     public imageUrl: string;
-
+    public galaxyInstance: string;
     public dataSets: DataSetShort[];
     public coauthors: UserShort[];
 

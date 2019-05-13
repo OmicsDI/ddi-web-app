@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, Optional, PLATFORM_ID} from '@angular/core';
 import {forkJoin, Observable, of} from 'rxjs';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {DataSet} from 'model/DataSet';
@@ -10,6 +10,8 @@ import {map} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {DataSetShort} from 'model/DataSetShort';
 import {DatasetBatchResult} from 'model/DatasetBatchResult';
+import {REQUEST} from '@nguniversal/express-engine/tokens';
+import {isPlatformServer} from '@angular/common';
 
 @Injectable()
 export class DataSetService extends BaseService {
@@ -23,13 +25,23 @@ export class DataSetService extends BaseService {
         'Expression Atlas Experiments, atlas-experiments,GEO';
     private genomicsList = 'ega,EGA,EVA,dbGaP';
 
-    constructor(private http: HttpClient, public appConfig: AppConfig) {
+    constructor(private http: HttpClient, public appConfig: AppConfig, @Optional() @Inject(REQUEST) private request: Request,
+                @Inject(PLATFORM_ID) private platformId) {
         super();
     }
 
     public getDataSetDetail(accession: string, repository: string): Observable<DataSetDetail> {
         return this.http.get(this.appConfig.getDatasetUrl(accession, repository))
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
+    }
+
+    public getDataSetFiles(accession: string, repository: string): Observable<any> {
+        const headers = new HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        if (isPlatformServer(this.platformId)) {
+            headers.append('X-Forwarded-For', this.request.headers.get('X-Forwarded-For'));
+        }
+        return this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers});
     }
 
     public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
