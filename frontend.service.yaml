@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: omicsdi-ssr
+  labels:
+    app: omicsdi-ssr
+spec:
+  ports:
+    - port: 8092
+      targetPort: 8092
+  selector:
+    app: omicsdi-ssr
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omicsdi-frontend
+  labels:
+    app: omicsdi-frontend
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: omicsdi-frontend

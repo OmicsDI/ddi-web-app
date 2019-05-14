@@ -1,0 +1,41 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: omicsdi-ssr
+spec:
+  selector:
+    matchLabels:
+      app: omicsdi-ssr
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: omicsdi-ssr
+    spec:
+      containers:
+        - name: omicsdi-ssr
+          image: omicsdi-ssr
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8092
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: omicsdi-frontend
+spec:
+  selector:
+    matchLabels:
+      app: omicsdi-frontend
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: omicsdi-frontend
+    spec:
+      containers:
+        - name: omicsdi-frontend
+          image: omicsdi-frontend
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
