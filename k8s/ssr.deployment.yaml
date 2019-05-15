@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omicsdi-ssr
+spec:
+  selector:
+    matchLabels:
+      app: omicsdi-ssr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: omicsdi-ssr
+    spec:
+      containers:
+        - name: omicsdi-ssr
+          image: omicsdi-ssr:imageTag
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8092

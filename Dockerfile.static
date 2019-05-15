@@ -1,7 +1,7 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
 FROM node:10-alpine as build-stage
 WORKDIR /app
-RUN apk add git
+RUN apk add --no-cache git
 COPY package*.json /app/
 RUN npm install
 COPY ./ /app/

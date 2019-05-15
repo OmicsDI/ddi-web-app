@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omicsdi-frontend
+spec:
+  selector:
+    matchLabels:
+      app: omicsdi-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: omicsdi-frontend
+    spec:
+      containers:
+        - name: omicsdi-frontend
+          image: omicsdi-frontend:imageTag
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
