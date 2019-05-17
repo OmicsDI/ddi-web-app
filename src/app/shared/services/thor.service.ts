@@ -34,6 +34,7 @@ export class ThorService {
                 public profileService: ProfileService,
                 private logger: LogService,
                 public appConfig: AppConfig) {
+        this.getUserInfo().subscribe();
     }
 
     isClaimed(source: string, id: string): boolean {
@@ -45,7 +46,8 @@ export class ThorService {
             return false;
         }
         // TODO search by database
-        return (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId === id) !== undefined);
+        return (this.orcIdRecord.works.find(x => x.workExternalIdentifiers != null &&
+            x.workExternalIdentifiers[0].workExternalIdentifierId === id) !== undefined);
 
     }
 
@@ -150,8 +152,8 @@ export class ThorService {
                                         const d = new DataSetShort();
                                         d.source = x.source;
                                         d.id = x.id;
-                                        d.name = x.title;
-                                        d.omics_type = x.omicsType;
+                                        d.name = x.name;
+                                        d.omics_type = x.omics_type;
                                         let profile;
                                         this.authService.loggedIn().then(isLogged => {
                                             if (isLogged) {

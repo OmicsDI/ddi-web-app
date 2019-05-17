@@ -105,14 +105,14 @@ export class DataSetService extends BaseService {
             .toPromise();
     }
 
-    public getDatasetByUrl(url: string): Observable<DataSet> {
+    public getDatasetByUrl(url: string): Observable<DataSetDetail> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type':  'application/json'
             })
         };
         return this.http.post(this.appConfig.getDatasetByUrl(), url, httpOptions)
-            .pipe(map(x => this.extractData<DataSet>(x)));
+            .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
 
     public getMergeCandidates(start: number, size: number): Observable<MergeCandidate[]> {

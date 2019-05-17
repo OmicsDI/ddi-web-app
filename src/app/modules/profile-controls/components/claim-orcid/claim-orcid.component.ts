@@ -17,7 +17,6 @@ export class ClaimOrcidComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.thorService.getUserInfo().subscribe();
     }
 
     openLoginScreen() {
