@@ -16,6 +16,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {AuthService} from '@shared/services/auth.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable()
 export class ThorService {
@@ -154,11 +155,14 @@ export class ThorService {
                                         d.id = x.id;
                                         d.name = x.name;
                                         d.omics_type = x.omics_type;
+                                        d.claimed = moment().format('ll');
                                         let profile;
                                         this.authService.loggedIn().then(isLogged => {
                                             if (isLogged) {
                                                 profile = this.profileService.getProfileFromLocal();
                                                 this.profileService.claimDataset(profile.userId, d);
+                                                profile.dataSets.push(d);
+                                                this.profileService.setProfile(profile);
                                             }
                                         });
                                     }
