@@ -62,7 +62,6 @@ export class ProfileResultComponent implements OnInit {
         const datasets = this.profile.dataSets.slice(fromIndex, toIndex);
         this.dataSetService.getBatchDatasets(datasets).subscribe(batchResult => {
             this.dataSets = batchResult.datasets.map(x => DataSetDetail.toDataset(x));
-            this.thorService.datasets = batchResult.datasets;
             this.slimLoadingBarService.ref().complete();
             this.currentPage = page;
             window.scrollTo(0, 0);

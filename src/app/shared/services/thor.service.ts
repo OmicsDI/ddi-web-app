@@ -25,7 +25,6 @@ export class ThorService {
     public isUserLoggedIn: boolean;
     public orcIdRecord: OrcidRecord;
     public syncResult: SyncResult;
-    public datasets: DataSetDetail[];
 
     constructor(private http: HttpClient,
                 private authService: AuthService,
@@ -61,14 +60,13 @@ export class ThorService {
 
         this.syncResult = new SyncResult();
 
-
         function checkChild() {
             if (child.closed) {
                 clearInterval(timer);
                 self.getUserInfo().subscribe(x => {
                     self.syncResult.oldOrcid = self.orcIdRecord.works ? self.orcIdRecord.works.length : 0;
-                    self.syncResult.oldOmicsDI = self.datasets ? self.datasets.length : 0;
-                    self.claim();
+                    self.syncResult.oldOmicsDI = datasets ? datasets.length : 0;
+                    self.claim(datasets);
                 });
             }
         }
@@ -85,19 +83,21 @@ export class ThorService {
         }));
     }
 
-    claim() {
+    claim(datasets: DataSetDetail[]) {
         const claimUrl = this.appConfig.getThorUrl() + 'claimWorkBatch';
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
         const orcidWorkList = new OrcidWorkList();
         orcidWorkList.orcIdWorkLst = [];
+        this.orcIdRecord.works = this.orcIdRecord.works == null ? [] : this.orcIdRecord.works;
 
         // omicsdi to orcid
-        if (this.datasets) {
+        if (datasets) {
             this.databaseListService.getDatabaseList().subscribe(databases => {
-                for (const dataset of this.datasets) {
-                    if (this.orcIdRecord && this.orcIdRecord.works) {
-                        if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers[0].workExternalIdentifierId === dataset.id)) {
+                for (const dataset of datasets) {
+                    if (this.orcIdRecord) {
+                        if (this.orcIdRecord.works.find(x => x.workExternalIdentifiers != null &&
+                            x.workExternalIdentifiers[0].workExternalIdentifierId === dataset.id)) {
                             continue;
                         }
                         const o = new OrcidWork();
@@ -124,47 +124,48 @@ export class ThorService {
                         orcidWorkList.orcIdWorkLst.push(o);
                     }
                 }
-            });
-        }
-        if (orcidWorkList.orcIdWorkLst.length > 0) {
-            this.http.post(claimUrl, JSON.stringify(orcidWorkList), {headers: headers, withCredentials: true}).subscribe(
-                data => {
-                    this.syncResult.newOrcid = orcidWorkList.orcIdWorkLst.length;
-                    this.syncResult.newOmicsDI = 0;
 
-                    this.getUserInfo().subscribe();
+                if (orcidWorkList.orcIdWorkLst.length > 0) {
+                    this.http.post(claimUrl, JSON.stringify(orcidWorkList), {headers: headers, withCredentials: true}).subscribe(
+                        data => {
+                            this.syncResult.newOrcid = orcidWorkList.orcIdWorkLst.length;
+                            this.syncResult.newOmicsDI = 0;
 
-                    this.notificationsService.success(orcidWorkList.orcIdWorkLst.length + ' datasets claimed in orcid');
-                },
-                err => this.notificationsService.error('error in claiming datasets')
-            );
-        }
+                            this.getUserInfo().subscribe();
 
-        // orcid to omicsdi
-        for (const orcidWork of this.orcIdRecord.works) {
-            if (orcidWork.url) {
-                this.datasetService.getDatasetByUrl(orcidWork.url).subscribe(
-                    x => {
-                        if (x) {
-                            if (!this.datasets.find(y => x.id === y.id && x.source === y.source)) {
+                            this.notificationsService.success(orcidWorkList.orcIdWorkLst.length + ' datasets claimed in orcid');
+                        },
+                        err => this.notificationsService.error('error in claiming datasets')
+                    );
+                }
 
-                                const d = new DataSetShort();
-                                d.source = x.source;
-                                d.id = x.id;
-                                d.name = x.title;
-                                d.omics_type = x.omicsType;
-                                let profile;
-                                this.authService.loggedIn().then(isLogged => {
-                                    if (isLogged) {
-                                        profile = this.profileService.getProfileFromLocal();
-                                        this.profileService.claimDataset(profile.userId, d);
+                // orcid to omicsdi
+                for (const orcidWork of this.orcIdRecord.works) {
+                    if (orcidWork.url) {
+                        this.datasetService.getDatasetByUrl(orcidWork.url).subscribe(
+                            x => {
+                                if (x) {
+                                    if (!datasets.find(y => x.id === y.id && x.source === y.source)) {
+
+                                        const d = new DataSetShort();
+                                        d.source = x.source;
+                                        d.id = x.id;
+                                        d.name = x.title;
+                                        d.omics_type = x.omicsType;
+                                        let profile;
+                                        this.authService.loggedIn().then(isLogged => {
+                                            if (isLogged) {
+                                                profile = this.profileService.getProfileFromLocal();
+                                                this.profileService.claimDataset(profile.userId, d);
+                                            }
+                                        });
                                     }
-                                });
+                                }
                             }
-                        }
+                        );
                     }
-                );
-            }
+                }
+            });
         }
     }
 
