@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: omicsdi-dev
+  namespace: dev
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: dev.omicsdi.org
+    http:
+      paths:    
+        - backend:
+            serviceName: omicsdi-frontend
+            servicePort: 8080
+      
