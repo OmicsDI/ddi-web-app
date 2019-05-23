@@ -28,7 +28,7 @@ export class AppConfig {
     }
 
     getSimilarUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/getSimilar?acc=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getSimilar?acc=${acc}&database=${repository}`;
     }
 
     getSearchUrl(query: string, facetcount: number, size: number, sortBy: string, sortOrder: string, start: number): string {
@@ -37,7 +37,7 @@ export class AppConfig {
     }
 
     getPublicationUrl(acc: string): string {
-        return `${environment.webServiceUrl}publication/list?acc=${acc}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}publication/list?acc=${acc}`;
     }
 
     getProfileUrl(username: string): string {
@@ -65,15 +65,15 @@ export class AppConfig {
     }
 
     getEnrichmentUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}`;
     }
 
     getSynonymsUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}`;
     }
 
     getDatasetUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}`;
     }
 
     getDatasetDownloadUrl(acc: string, repository: string): string {
@@ -102,11 +102,11 @@ export class AppConfig {
     }
 
     getDatasetByUrl(): string {
-        return `${environment.webServiceUrl}dataset/getDatasetByUrl?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getDatasetByUrl`;
     }
 
     getAutocompleteUrl(keyword: string): string {
-        return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10&r=${Math.random()}`;
+        return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10`;
     }
 
     getProfileClaimDatasetUrl(userId: string) {
@@ -126,7 +126,7 @@ export class AppConfig {
     }
 
     getDatabasesUrl() {
-        return `${environment.webServiceUrl}database/all?r=${Math.random()}`;
+        return `${environment.webServiceUrl}database/all`;
     }
 
     getDatabaseImageUrl(databaseName: string) {
@@ -183,12 +183,12 @@ export class AppConfig {
     }
 
     getSimilarityMoleculesUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}`;
     }
 
     getSimilarityDatasetsUrl(acc: string, repository: string) {
         return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&` +
-            `database=${repository}&r=${Math.random()}`;
+            `database=${repository}`;
     }
 
     getFeedbackUrl() {
@@ -204,19 +204,19 @@ export class AppConfig {
     }
 
     getScoreViewsUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/views/${repository}/${acc}`;
     }
 
     getScoreCitationsUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/citation/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/citation/${repository}/${acc}`;
     }
 
     getScoreReanalysisUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}`;
     }
 
     getScoreConnectionsUrl(acc: string) {
-        return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/search/${acc}`;
     }
 
     getThorUrl() {

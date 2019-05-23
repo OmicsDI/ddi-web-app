@@ -12,7 +12,6 @@ export class RequestKeyExtractorService {
 
   getKey(httpRequest: HttpRequest<any>): string {
     let url = httpRequest.url;
-    url = url.replace(/&?r=\d+\.\d+/, '');
     this.baseUrls.some((baseUrl, index) => {
       if (url.indexOf(baseUrl) === 0) {
         url = `__BASE_URL_${index}__` + url.slice(baseUrl.length);

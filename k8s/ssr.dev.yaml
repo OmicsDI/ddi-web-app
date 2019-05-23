@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omicsdi-ssr
+spec:
+  selector:
+    matchLabels:
+      app: omicsdi-ssr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: omicsdi-ssr
+    spec:
+      containers:
+        - name: omicsdi-ssr
+          image: omicsdi/omicsdi-ssr:omicsdi.dev.01
+          ports:
+            - containerPort: 8092
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omicsdi-ssr
+  labels:
+    app: omicsdi-ssr
+spec:
+  ports:
+    - port: 8092
+      targetPort: 8092
+  selector:
+    app: omicsdi-ssr
