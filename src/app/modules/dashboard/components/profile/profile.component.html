@@ -30,7 +30,7 @@
         <app-profile-connections *ngIf="isMy()"
                                  [profile]="profileX"></app-profile-connections>
     </div>
-    <div class="col-md-4">
-        <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length"></app-claim-orcid>
+    <div class="col-md-4" *ngIf="dataSetDetails">
+        <app-claim-orcid [datasetNumber]="profileX?.dataSets?.length" [datasets]="dataSetDetails"></app-claim-orcid>
     </div>
 </div>

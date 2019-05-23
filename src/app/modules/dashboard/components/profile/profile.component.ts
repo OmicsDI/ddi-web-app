@@ -19,7 +19,7 @@ import {NgProgress} from '@ngx-progressbar/core';
 export class DashboardProfileComponent implements OnInit {
     profileX: Profile;
     public name: String;
-    dataSetDetails: DataSetDetail[] = [];
+    dataSetDetails: DataSetDetail[];
     coauthors: string[];
     userId = 'xxx';
     username: string = null;
@@ -39,7 +39,14 @@ export class DashboardProfileComponent implements OnInit {
         this.slimLoadingBarService.ref().start();
         this.profileX = this.profileService.getProfileFromLocal();
         this.name = this.profileX.userName;
-        this.dataSetDetails = [];
+
+        this.dataSetService.getDatasetDetails(this.profileX.dataSets).subscribe(batches => {
+            const tmpresult = [];
+            batches.forEach(batch => {
+                tmpresult.push.apply(tmpresult, batch.datasets);
+            });
+            this.dataSetDetails = tmpresult;
+        });
 
         this.userId = this.profileX.userId;
 

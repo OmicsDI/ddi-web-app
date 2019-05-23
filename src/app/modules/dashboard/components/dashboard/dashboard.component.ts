@@ -74,7 +74,6 @@ export class DashboardComponent implements OnInit {
                 tmpresult.push.apply(tmpresult, batch.datasets);
             });
             this.dataSets = tmpresult;
-            this.thorService.datasets = tmpresult;
             this.slimLoadingBarService.ref().complete();
         })
     }
