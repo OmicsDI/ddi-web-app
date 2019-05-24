@@ -5,6 +5,7 @@ metadata:
   namespace: dev
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    service.alpha.kubernetes.io/external-traffic: OnlyLocal
 spec:
   rules:
   - host: dev.omicsdi.org
