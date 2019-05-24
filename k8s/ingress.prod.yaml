@@ -5,7 +5,6 @@ metadata:
   namespace: prod
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    service.alpha.kubernetes.io/external-traffic: OnlyLocal
 spec:
   rules:
   - host: stage.omicsdi.org
