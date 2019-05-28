@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: omicsdi-prod
   namespace: prod
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: stage.omicsdi.org
