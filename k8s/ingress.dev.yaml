@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: omicsdi-dev
   namespace: dev
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: dev.omicsdi.org
