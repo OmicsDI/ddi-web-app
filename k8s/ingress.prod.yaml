@@ -5,10 +5,10 @@ metadata:
   namespace: prod
 spec:
   rules:
-  - host: stage.omicsdi.org
-    http:
-      paths:    
-        - backend:
-            serviceName: omicsdi-frontend
-            servicePort: 8080
-      
+    - host: stage.omicsdi.org
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: omicsdi-frontend
+              servicePort: 8080
