@@ -5,10 +5,11 @@ metadata:
   namespace: dev
 spec:
   rules:
-  - host: dev.omicsdi.org
-    http:
-      paths:    
-        - backend:
-            serviceName: omicsdi-frontend
-            servicePort: 8080
+    - host: dev.omicsdi.org
+      http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: omicsdi-frontend
+              servicePort: 8080
       
