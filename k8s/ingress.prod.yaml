@@ -8,7 +8,7 @@ spec:
     - host: stage.omicsdi.org
       http:
         paths:
-          - path: /*
+          - path: /
             backend:
               serviceName: omicsdi-frontend
               servicePort: 8080
