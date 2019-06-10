@@ -10,5 +10,6 @@ export const environment = {
     userServiceUrl: 'http://localhost:8080/profile-1.0-SNAPSHOT/api/',
     userServiceCookiePath: '/profile-1.0-SNAPSHOT/',
     schemaServiceUrl: 'https://www.omicsdi.org/ws/seo',
+    whileList: ['localhost:4200'],
     thorUrl: 'https://www.ebi.ac.uk/europepmc/hubthor/api/dataclaiming/'
 };
