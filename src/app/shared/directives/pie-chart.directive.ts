@@ -304,9 +304,22 @@ export class PieChartDirective implements OnChanges {
                 .text(data[i]['score'] + ' ' + data[i]['label']);
         }
         tool_tip.append('hr').style('width', '96%').style('margin', '10px auto');
-        tool_tip.append('div').style('width', '100%')
+        const omics_parent = tool_tip.append('div');
+            omics_parent.style('width', '100%')
             .style('padding', '0 0 10px 10px')
             .text('Omics score: ').append('b').text(omics_score);
+            omics_parent
+                .append('a')
+                .style('float', 'right')
+                .attr('href', 'http://blog.omicsdi.org/post/rosette-chart')
+                .attr('target', '_blank')
+                .style('border-bottom', 'none')
+                .attr('class', 'rosette-help')
+                .append('i')
+                .style('font-size', '1.2em')
+                .style('margin-top', '3px')
+                .style('margin-right', '5px')
+                .attr('class', 'fa fa-question-circle');
         tool_tip.append('div').style('width', 0).style('height', 0)
             .style('border-top', '8px solid transparent')
             .style('border-bottom', '8px solid transparent')
