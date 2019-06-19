@@ -1,0 +1,33 @@
+# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
+FROM node:10-alpine as build-stage
+WORKDIR /app
+RUN apk add --no-cache git
+COPY package*.json /app/
+RUN npm install
+COPY ./ /app/
+
+ARG configuration=prod
+RUN npm run build -- --configuration $configuration
+RUN npm run ng run web:server:$configuration
+RUN npm run compile:server
+
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM node:10-alpine
+
+RUN npm install pm2 -g
+
+WORKDIR /app
+
+# Copy dependency definitions
+COPY --from=build-stage /app/package.json /app
+
+RUN mkdir /app/dist
+
+# Get all the code needed to run the app
+COPY --from=build-stage /app/dist /app/dist
+
+ENV PORT 8092
+EXPOSE 8092
+
+CMD ["pm2-runtime", "start", "/app/dist/server.js"]
+
