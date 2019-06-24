@@ -68,6 +68,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             }
             this.dataControl = QueryUtils.getDataControl(this.params);
             this.selectedFacets = QueryUtils.getAllFacets(this.params);
+            this.searchQuery = QueryUtils.extractQuery(this.params);
             forkJoin(this.databaseListService.getDatabaseList(), this.searchService
                 .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order))
                 .subscribe(data => {
