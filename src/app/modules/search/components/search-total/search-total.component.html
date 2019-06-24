@@ -7,7 +7,7 @@
         <a class="showall" (click)="showAllClick()"><i class="fa fa-filter" aria-hidden="true"></i> Show all</a>&nbsp;&nbsp;
         <a class="showall" (click)="saveSearchClick()"><i class="fa fa-bookmark-o"
                                                           aria-hidden="true"></i> Save search</a>&nbsp;&nbsp;
-        <a class="showall" ngxClipboard [cbContent]="searchQuery" (click)="copyQueryClick()"><i class="fa fa-files-o"
+        <a class="showall" *ngIf="!isServer" ngxClipboard [cbContent]="searchQuery" (click)="copyQueryClick()"><i class="fa fa-files-o"
                                                                                                 aria-hidden="true"></i> Copy query</a>
   </span>
 </div>
