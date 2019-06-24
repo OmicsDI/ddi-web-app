@@ -225,7 +225,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
-                        this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
+                        if (!this.isServer) {
+                            this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
+                        }
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
