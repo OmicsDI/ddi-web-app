@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
 import {SavedSearch} from 'model/SavedSearch';
 import {ProfileService} from '@shared/services/profile.service';
 import {NotificationsService} from 'angular2-notifications';
 import {Profile} from 'model/Profile';
+import {isPlatformServer} from '@angular/common';
 
 @Component({
     selector: 'app-search-total',
@@ -21,9 +22,12 @@ export class SearchTotalComponent implements OnInit {
     @Output()
     ignoreAllFacet = new EventEmitter<void>();
     profile: Profile;
+    isServer: boolean;
 
     constructor(public profileService: ProfileService,
+                @Inject(PLATFORM_ID) platformId,
                 private notificationService: NotificationsService) {
+        this.isServer = isPlatformServer(platformId);
     }
 
     ngOnInit() {
