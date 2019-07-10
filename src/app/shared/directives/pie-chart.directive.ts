@@ -21,6 +21,10 @@ export class PieChartDirective implements OnChanges {
     }
 
     convertData() {
+        let connectionScale = this.dataset.connectionsCountScaled || 0;
+        if (connectionScale > 1) {
+            connectionScale = 1;
+        }
         return [
             {
                 'score': this.dataset.viewsCount || 0,
@@ -30,7 +34,7 @@ export class PieChartDirective implements OnChanges {
             },
             {
                 'score': this.dataset.connectionsCount || 0,
-                'scale': this.dataset.connectionsCountScaled || 0,
+                'scale': connectionScale,
                 'color': '#0099cc',
                 'label': 'Connections'
             },
