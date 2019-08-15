@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: omicsdi-prod
+  namespace: prod
+spec:
+  rules:
+    - host: stage.omicsdi.org
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: omicsdi-frontend
+              servicePort: 8080
