@@ -91,6 +91,12 @@
                                 <span *ngIf="!(d.submitterMail && d.submitterMail[i])">{{o}}</span>&nbsp;
                             </span>
                         </p>
+
+                        <p class="elements" *ngIf="null != d.labHead">
+                            <b>LAB HEAD: </b>
+                            <span> {{d.labHead}}</span>
+                        </p>
+
                         <p class="elements">
                             <b>PROVIDER: </b>
                             <span>
@@ -117,6 +123,7 @@
                             <span *ngFor="let o of d.repositories; let isLast=last" class="repositories">
                                 {{o}}{{isLast ? '' : ', '}}</span>
                         </p>
+
                         <p><a href="{{d.full_dataset_link}}" class="hidden-sm hidden-md hidden-lg">ACCESS DATA</a></p>
                     </div>
 
