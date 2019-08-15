@@ -5,7 +5,6 @@ import { AppModule } from './app.module';
 import {AppComponent} from '@shared/components/app/app.component';
 import {ModuleMapLoaderModule} from '@nguniversal/module-map-ngfactory-loader';
 import {TRANSFER_RESPONSE_BASE_URLS} from '@shared/modules/angular-transfer-http-response/transfer-http-response.module';
-import {BrowserModule} from '@angular/platform-browser';
 
 @NgModule({
   imports: [
