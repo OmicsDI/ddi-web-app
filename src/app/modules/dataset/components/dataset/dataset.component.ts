@@ -219,7 +219,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
-                this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
+                this.schemaService.getDatasetSchema(this.acc, this.repository)
+                    .pipe(catchError((err: HttpErrorResponse) => {
+                        return throwError('Can\'t get schema, err: ' + err.message);
+                    }))
+                    .subscribe(result => {
                     this.schema = this.parseSchema(result);
                 });
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
