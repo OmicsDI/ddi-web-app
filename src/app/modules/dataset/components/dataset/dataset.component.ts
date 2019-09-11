@@ -129,6 +129,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
         self.reanalysisOf = [];
         self.reanalysedBy = [];
         self.relatedOmics = [];
+        if (!dataset.id) {
+            self.slimLoadingBarService.ref().complete();
+            self.notfound = true;
+            return throwError('Dataset not found');
+        }
         this.d = dataset;
         this.titleService.setTitle(this.acc + ' - ' + dataset.name + ' - ' + 'OmicsDI');
 
