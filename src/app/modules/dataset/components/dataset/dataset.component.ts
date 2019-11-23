@@ -193,6 +193,17 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
         elements.sort((a, b) => (a.name > b.name) ? 1 : (b.name > a.name) ? -1 : 0);
         elements.forEach(e => e.position = position++);
+        elements.forEach(e => {
+            if (!e.name.startsWith('http:') && !e.name.startsWith('ftp:')) {
+                if (e.name.startsWith('http')) {
+                    e.name = 'http://' + e.name;
+                } else if (e.name.startsWith('ftp')) {
+                    e.name = 'ftp://' + e.name
+                } else {
+                    e.name = e.name.substr(0, e.name.indexOf(',', 0)) + '://' + e.name;
+                }
+            }
+        })
 
         this.dataSource = new MatTableDataSource<FileInfo>(elements);
         this.dataSource.filterPredicate = function(data, filter: string): boolean {
