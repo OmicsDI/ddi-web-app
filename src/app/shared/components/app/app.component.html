@@ -32,7 +32,10 @@
                                 Omics Help
                             </div>
                         </li>
-                        <li class="nav-item"><div class="text-center" [routerLink]="['/help/api']" mat-menu-item>API</div></li>
+                        <li class="nav-item">
+                            <!--<div class="text-center" [routerLink]="['/help/api']" mat-menu-item>API</div>-->
+                            <div class="text-center" (click)="gotoHelpApi()" mat-menu-item>API</div>
+                        </li>
                         <li class="nav-item" id="li3">
                             <div class="text-center" *appIsLogged mat-menu-item [routerLink]="['dashboard','feedback']">
                                 Feedback
@@ -193,8 +196,8 @@
                     <ul>
                         <li><a [routerLink]="['database']">Databases</a></li>
                         <li><a href="http://blog.omicsdi.org/">Help</a></li>
-                        <li><a [routerLink]="['help', 'api']">API</a></li>
-
+                        <!--<li><a [routerLink]="['help', 'api']">API</a></li>-->
+                        <li><a href="http://blog.omicsdi.org/post/introduction-api/">API</a></li>
                         <li><a href="http://www.ebi.ac.uk/support/index.php?query=omics-di">Contact us</a></li>
                         <li><a target="_blank" href="https://github.com/OmicsDI/" class="no-icon">Code on GitHub</a>
                         </li>
