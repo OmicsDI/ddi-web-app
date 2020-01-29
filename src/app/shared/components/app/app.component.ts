@@ -119,11 +119,6 @@ export class AppComponent implements OnInit, OnDestroy {
     gotoHelpApi() {
         window.location.href = 'http://blog.omicsdi.org/post/introduction-api/';
     }
-
-    gotoWs() {
-        window.location.href = 'https://www.omicsdi.org/ws';
-    }
-
     toSubmission() {
         window.location.href = 'https://www.ebi.ac.uk/biostudies/';
     }
