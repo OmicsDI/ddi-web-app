@@ -28,7 +28,7 @@ export class AppConfig {
     }
 
     getSimilarUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/getSimilar?acc=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getSimilar?accession=${acc}&database=${repository}&r=${Math.random()}`;
     }
 
     getSearchUrl(query: string, facetcount: number, size: number, sortBy: string, sortOrder: string, start: number): string {
@@ -73,7 +73,7 @@ export class AppConfig {
     }
 
     getDatasetUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/get?acc=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/get?accession=${acc}&database=${repository}&r=${Math.random()}`;
     }
 
     getDatasetDownloadUrl(acc: string, repository: string): string {
