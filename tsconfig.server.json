@@ -1,0 +1,34 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "model/*": [
+        "app/model/*"
+      ],
+      "@modules/*": [
+        "app/modules/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
+      "stream": ["node_modules/readable-stream/readable.js"]
+    },
+    "outDir": "./out-tsc/app-server",
+    "module": "commonjs",
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "src/main.server.ts",
+    "src/polyfills.ts",
+    "./server.ts"
+  ],
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "entryModule": "app/app.server.module#AppServerModule"
+  }
+}

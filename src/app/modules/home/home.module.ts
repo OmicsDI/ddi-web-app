@@ -7,7 +7,7 @@ import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {RouterModule} from '@angular/router';
-import {MatCheckboxModule} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {HomeComponent} from '@modules/home/components/home/home.component';
 import {AnnualOmicstypeComponent} from '@modules/home/components/annual-omicstype/annual-omicstype.component';
 import {HomeAboutComponent} from '@modules/home/components/home-about/home-about.component';

@@ -11,7 +11,7 @@
             <app-omics-image [omics]="d.omicsType"></app-omics-image>
 
             <a [routerLink]="['/dataset',d.source, d.id]" style="margin-left: 5px; font-size: 12pt; vertical-align: middle">
-                <span class="ng-binding" [innerHTML]="d.title | truncate : 1000 : '...' : hightlightKeyword"></span>
+                <span class="ng-binding" [innerHTML]="d.title | truncate : '1000' : '...' : hightlightKeyword"></span>
             </a>
 
         </div>
@@ -21,7 +21,7 @@
                 <!--
                     <b>Project description:</b>
                 -->
-                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : 300 : '...' : hightlightKeyword"></span>
+                <span *ngIf="d.description && d.description.length >= 3" class="description" [innerHTML]="d.description | truncate : '300' : '...' : hightlightKeyword"></span>
 
                 <span *ngIf="!!!d.description || d.description.length < 3" class="description">Not available</span>
             </div>
@@ -45,7 +45,8 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                     <span *ngIf="d.publicationDate" class="ng-binding ng-hide publicationDate">
-                        <span>{{d.publicationDate | toDateString }}</span> |
+                        <span>{{d.publicationDate}}</span> |
+                        <!--<span>{{d.publicationDate | toDateString }}</span> |-->
                     </span>
                 <a [routerLink]="['/dataset',d.source,d.id]"><span class="ng-binding dataset_id">{{d.id}}</span></a> |
                 <a [href]="getDatabaseUrl(d.source)"> <span

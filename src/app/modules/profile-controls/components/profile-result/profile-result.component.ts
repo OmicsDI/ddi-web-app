@@ -42,7 +42,7 @@ export class ProfileResultComponent implements OnInit {
                 private notificationService: NotificationsService,
                 private databaseListServive: DatabaseListService,
                 private logger: LogService,
-                private thorService: ThorService) {
+                public thorService: ThorService) {
     }
 
     ngOnInit() {

@@ -12,6 +12,7 @@ import {NotificationsService} from 'angular2-notifications';
 export class FeedbackComponent implements OnInit {
 
     isSatisfiedVal: string;
+    value = '';
     issue: boolean;
     thanks: boolean;
     labelMessage = 'thank you for your feedback';

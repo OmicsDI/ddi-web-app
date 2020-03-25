@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Inject, Input, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {InviteService} from '@shared/services/invite.service';
 import {Observable} from 'rxjs';
 import {DataSetService} from '@shared/services/dataset.service';
@@ -23,7 +23,7 @@ export class InviteComponent implements OnInit {
 
     // private userName: String;
     // private email: String;
-    private dataSetDetails: DataSetDetail[];
+    public dataSetDetails: DataSetDetail[];
 
     public secondPage = false;
 

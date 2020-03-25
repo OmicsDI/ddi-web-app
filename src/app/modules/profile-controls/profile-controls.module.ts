@@ -11,7 +11,8 @@ import {ProfileTotalComponent} from './components/profile-total/profile-total.co
 import {FormsModule} from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
-import {MatCheckboxModule, MatSlideToggleModule} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {RouterModule} from '@angular/router';
 import {UtilsModule} from '@shared/modules/utils/utils.module';

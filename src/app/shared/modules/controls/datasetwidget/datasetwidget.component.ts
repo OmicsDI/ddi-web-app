@@ -7,7 +7,7 @@ import {DataSetShort} from 'model/DataSetShort';
 import {WatchedDataset} from 'model/WatchedDataset';
 import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DataSetService} from '@shared/services/dataset.service';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {LogService} from '@shared/modules/logs/services/log.service';

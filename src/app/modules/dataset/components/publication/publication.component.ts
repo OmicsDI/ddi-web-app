@@ -12,7 +12,8 @@ export class PublicationComponent implements OnInit, OnChanges {
     @Input() ids: string[] = [];
     d: Publication = new Publication;
     current_idx = 0;
-    ids_length = '';
+    ids_length = 0;
+    // ids_length = '';
     toggle = true;
 
 
@@ -38,7 +39,8 @@ export class PublicationComponent implements OnInit, OnChanges {
             result => {
                 this.d = result.publications[0];
             });
-        this.ids_length = String(this.ids.length);
+        // this.ids_length = String(this.ids.length);
+        this.ids_length = this.ids.length;
     }
 
     clickLeft() {

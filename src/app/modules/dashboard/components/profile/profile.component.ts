@@ -5,7 +5,7 @@ import {DataSetService} from '@shared/services/dataset.service';
 import {DataSetDetail} from 'model/DataSetDetail';
 import {AppConfig} from 'app/app.config';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {InviteComponent} from '@modules/profile-controls/components/invite/invite.component';
 import {LogService} from '@shared/modules/logs/services/log.service';
 import {AuthService} from '@shared/services/auth.service';

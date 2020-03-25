@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {MatMenuTrigger} from '@angular/material';
+import {MatMenuTrigger} from '@angular/material/menu';
 import {AutocompleteNComponent} from '@shared/modules/controls/autocomplete-n/autocomplete-n.component';
 import {SearchQuery} from 'model/SearchQuery';
 import {DataTransportService} from '@shared/services/data.transport.service';
@@ -78,7 +78,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
     }
 
     caret_class(): string {
-        return this.trigger.menuOpen ? 'fa-caret-up' : 'fa-caret-down';
+        return this.trigger === undefined ? 'fa-caret-up' : 'fa-caret-down';
     }
 
     doSearch(keyword) {

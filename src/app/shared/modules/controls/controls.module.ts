@@ -19,7 +19,10 @@ import {FacetOmicsComponent} from '@shared/modules/controls/facet-omics/facet-om
 import {LoginComponent} from '@shared/modules/controls/login/login.component';
 import {QueryBuilderComponent} from '@shared/modules/controls/query-builder/query-builder.component';
 import {SearchBoxComponent} from '@shared/modules/controls/search-box/search-box.component';
-import {MatButtonModule, MatDialogModule, MatInputModule, MatMenuModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
 import {CitationDialogComponent} from '@shared/modules/controls/citation-dialog/citation-dialog.component';
 import {UtilsModule} from '@shared/modules/utils/utils.module';

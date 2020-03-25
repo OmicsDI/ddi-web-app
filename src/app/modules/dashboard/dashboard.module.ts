@@ -25,7 +25,7 @@ import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.co
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {ModalModule} from 'ngx-bootstrap';
 import {ImageCropperModule} from 'ngx-image-cropper';
-import {MatSlideToggleModule} from '@angular/material';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
     imports: [

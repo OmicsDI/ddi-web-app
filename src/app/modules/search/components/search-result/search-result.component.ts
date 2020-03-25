@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {SearchResult} from 'model/SearchResult';
-import {MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
 import {DataSetService} from '@shared/services/dataset.service';
 import {DataControl} from 'model/DataControl';
 import {Database} from 'model/Database';

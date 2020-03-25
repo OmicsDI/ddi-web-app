@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Observable} from 'rxjs';
 import {ConfirmDialogComponent} from '@shared/modules/controls/confirm-dialog/confirm-dialog.component';
 import {SingleInputDialogComponent} from '@shared/modules/controls/single-input-dialog/single-input-dialog.component';

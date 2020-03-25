@@ -11,7 +11,7 @@ import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {MatCheckboxModule} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {NgxPaginationModule} from 'ngx-pagination';

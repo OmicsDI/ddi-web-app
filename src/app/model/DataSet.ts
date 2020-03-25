@@ -23,6 +23,10 @@ export class DataSet {
     downloadCount = 0;
     downloadCountScaled = 0;
 
+    claimed: string;
+    name: string;
+    omics_type: string[];
+
     citationsCount: number;
     connectionsCount: number;
     reanalysisCount: number;
