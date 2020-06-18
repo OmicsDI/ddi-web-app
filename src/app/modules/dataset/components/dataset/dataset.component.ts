@@ -129,6 +129,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
         self.reanalysisOf = [];
         self.reanalysedBy = [];
         self.relatedOmics = [];
+        if (!dataset.id) {
+            self.slimLoadingBarService.ref().complete();
+            self.notfound = true;
+            return throwError('Dataset not found');
+        }
         this.d = dataset;
         this.titleService.setTitle(this.acc + ' - ' + dataset.name + ' - ' + 'OmicsDI');
 
@@ -214,7 +219,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
-                this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
+                this.schemaService.getDatasetSchema(this.acc, this.repository)
+                    .pipe(catchError((err: HttpErrorResponse) => {
+                        return throwError('Can\'t get schema, err: ' + err.message);
+                    }))
+                    .subscribe(result => {
                     this.schema = this.parseSchema(result);
                 });
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
@@ -225,7 +234,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
-                        this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
+                        if (!this.isServer) {
+                            this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
+                        }
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
