@@ -23,7 +23,7 @@ import {MergeComponent} from '@modules/dashboard/components/merge/merge.componen
 import {OnlyAdminDirective} from '@shared/directives/only-admin.directive';
 import {UnmergeComponent} from '@modules/dashboard/components/unmerge/unmerge.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
-import {ModalModule} from 'ngx-bootstrap';
+import {ModalModule} from 'ngx-bootstrap/modal';
 import {ImageCropperModule} from 'ngx-image-cropper';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 

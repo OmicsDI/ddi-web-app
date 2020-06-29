@@ -13,7 +13,7 @@ import {SearchComponent} from './components/search/search.component';
 import {SearchTotalComponent} from './components/search-total/search-total.component';
 import {SearchResultComponent} from './components/search-result/search-result.component';
 import {SearchPagerComponent} from './components/search-pager/search-pager.component';
-import {ModalModule} from 'ngx-bootstrap';
+import {ModalModule} from 'ngx-bootstrap/modal';
 import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({

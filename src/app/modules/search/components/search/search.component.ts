@@ -19,7 +19,7 @@ import {Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
 import {forkJoin, Subscription} from 'rxjs';
 import {BsModalRef} from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import {BsModalService} from 'ngx-bootstrap';
+import {BsModalService} from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-search',

@@ -6,7 +6,7 @@ import {Profile} from 'model/Profile';
 import {UploadService} from '@shared/services/upload.service';
 import {NotificationsService} from 'angular2-notifications';
 import {DataTransportService} from '@shared/services/data.transport.service';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 
 @Component({

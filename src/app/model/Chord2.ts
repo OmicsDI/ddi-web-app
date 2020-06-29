@@ -1,7 +1,7 @@
 /**
  * Created by Ricardo on 6/13/2017.
  */
-/// <reference path="../../../node_modules/@types/d3/index.d.ts" />
+// / <reference path="../../../node_modules/@types/d3/index.d.ts" />
 import * as d3 from 'd3';
 
 const inputdata = {
