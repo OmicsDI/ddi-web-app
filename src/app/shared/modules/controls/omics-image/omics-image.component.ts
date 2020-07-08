@@ -11,7 +11,7 @@ export class OmicsImageComponent implements OnInit, OnChanges {
     @Input() size: string;
     width = '';
     height = '';
-    omicsImage = 'img/omics/Unknomics2.png';
+    omicsImage = 'img/omics/Unknown.svg';
 
     constructor() {
     }
@@ -21,35 +21,38 @@ export class OmicsImageComponent implements OnInit, OnChanges {
 
     calculateOmics() {
         if (this.size === 'small') {
-            this.width = '15px';
-            this.height = '15px';
+            this.width = '20px';
+            this.height = '20px';
         }
-
+        if (this.size !== 'large') {
+            this.width = '20px';
+            this.height = '20px';
+        }
         if (!this.omics) {
             if (this.size === 'large') {
-                this.omicsImage = 'img/omics/Unknomics.png';
+                this.omicsImage = 'img/omics/Unknown.svg';
             }
             return;
         }
 
         if (this.omics.indexOf('Multiomics') !== -1) {
-            this.omicsImage = 'img/omics/Multipleomics2.png';
+            this.omicsImage = 'img/omics/Multipleomics.svg';
         } else if (this.omics.indexOf('Proteomics') !== -1) {
-            this.omicsImage = 'img/omics/Proteomics2.png';
+            this.omicsImage = 'img/omics/Proteomics.svg';
         } else if (this.omics.indexOf('Transcriptomics') !== -1) {
-            this.omicsImage = 'img/omics/Transcriptomics2.png';
+            this.omicsImage = 'img/omics/Transcriptomics.svg';
         } else if (this.omics.indexOf('Metabolomics') !== -1) {
-            this.omicsImage = 'img/omics/Metabolomics2.png';
+            this.omicsImage = 'img/omics/Metabolomics.svg';
         } else if (this.omics.indexOf('Genomics') !== -1) {
-            this.omicsImage = 'img/omics/Genomics2.png';
+            this.omicsImage = 'img/omics/Genomics.svg';
         } else if (this.omics.indexOf('Models') !== -1) {
-            this.omicsImage = 'img/omics/BioModel2.png';
+            this.omicsImage = 'img/omics/Models.svg';
         } else {
-            this.omicsImage = 'img/omics/Unknomics2.png';
+            this.omicsImage = 'img/omics/Unknown.svg';
         }
 
         if (this.size === 'large') {
-            this.omicsImage = this.omicsImage.replace('2.png', '.png');
+            this.omicsImage = this.omicsImage.replace('.svg', '.svg');
         }
     }
 
