@@ -30,7 +30,7 @@ export class OmicsImageComponent implements OnInit, OnChanges {
         }
         if (!this.omics) {
             if (this.size === 'large') {
-                this.omicsImage = 'img/omics/Unknomics.svg';
+                this.omicsImage = 'img/omics/Unknown.svg';
             }
             return;
         }
