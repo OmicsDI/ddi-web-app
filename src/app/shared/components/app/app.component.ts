@@ -127,6 +127,14 @@ export class AppComponent implements OnInit, OnDestroy {
     toSubmission() {
         window.location.href = 'https://www.ebi.ac.uk/biostudies/';
     }
+    substrUserName(userName: string) {
+        if (userName.length >= 5) {
+            return userName.substr(0, 5) + '...';
+        } else {
+            return userName;
+        }
+
+    }
 
     ngOnDestroy(): void {
         if (!isPlatformServer(this.platformId)) {
