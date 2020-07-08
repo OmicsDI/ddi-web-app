@@ -116,9 +116,24 @@ export class AppComponent implements OnInit, OnDestroy {
         window.location.href = 'http://blog.omicsdi.org/';
     }
 
+    gotoHelpApi() {
+        window.location.href = 'http://blog.omicsdi.org/post/introduction-api/';
+    }
+
+    gotoWs() {
+        window.location.href = 'https://www.omicsdi.org/ws';
+    }
 
     toSubmission() {
         window.location.href = 'https://www.ebi.ac.uk/biostudies/';
+    }
+    substrUserName(userName: string) {
+        if (userName.length >= 5) {
+            return userName.substr(0, 5) + '...';
+        } else {
+            return userName;
+        }
+
     }
 
     ngOnDestroy(): void {
