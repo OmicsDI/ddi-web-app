@@ -65,7 +65,7 @@ export class DataSetService extends BaseService {
         let url = this.appConfig.getDatasetBatchUrl();
         const queries = [];
         datasets.forEach(dataset => {
-            queries.push(`accession=${dataset.id}&database=${dataset.source}`);
+            queries.push(`acc=${dataset.id}&database=${dataset.source}`);
         });
         url = url + '?' + queries.join('&');
         return this.http.get(url).pipe(map(x => this.extractData<DatasetBatchResult>(x)));
