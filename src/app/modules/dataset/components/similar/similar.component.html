@@ -8,7 +8,7 @@
         <div *ngFor="let ds of getDatasets()" class="result animate-repeat  ng-scope similar-item" style="">
             <div class="project-widget  list-group-item ddi-card-panel">
                 <div class="project-widget-accession">
-                    <app-omics-image [omics]="ds?.omicsType"></app-omics-image>
+                    <app-omics-image [omics]="ds?.omicsType" [size]="'small'"></app-omics-image>
                     <a class="align-justify ng-binding similar_title" [routerLink]="['/dataset', ds.source, ds.id]">
                         {{ds.title}}</a>
                 </div>
