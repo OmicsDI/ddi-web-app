@@ -97,6 +97,89 @@
     <div style="">
         <router-outlet></router-outlet>
     </div>
+    <div data-color="none" data-description="OmicsDI is an Elixir interoperability service" data-more-information-link="//www.elixir-europe.org/platforms/interoperability" data-name="OmicsDI" data-use-basic-styles="true" id="elixir-banner">
+        <div id="elixir-ribbon" class="elixir-ribbon">
+            <div class="row">
+                <div class="column">
+                    <a href="//www.elixir-europe.org/platforms/interoperability">
+                        <div class="elixir-logo-kite"></div>
+                        <h5>
+                            <span class="elixir-banner-name">OmicsDI</span> is part of the ELIXIR infrastructure
+                        </h5>
+                        <div id="elixir-banner-info">
+                            <small>
+                                <span class="elixir-banner-description">OmicsDI is an Elixir interoperability service</span>
+                                <span class="readmore">Learn more ›</span>
+                            </small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .elixir-ribbon {
+                padding: 1rem 0;
+                background-color: transparent;
+            }
+
+            .elixir-ribbon {
+                font-family: Helvetica, Arial, FreeSans, 'Liberation Sans', sans-serif;
+                clear: both;
+            }
+
+            .elixir-ribbon a, .elixir-ribbon a:active, .elixir-ribbon a:visited, .elixir-ribbon a:hover {
+                border-bottom: none;
+            }
+
+            .elixir-ribbon .row {
+                max-width: 1200px;
+                margin: 0 auto 1rem;
+            }
+
+            .elixir-ribbon .row::before,
+            .elixir-ribbon .row::after {
+                display: table;
+                content: ' ';
+            }
+
+            .elixir-ribbon h5 {
+                font-size: 1.3rem;
+                padding: 0;
+                display: inline-block;
+            }
+
+            .elixir-ribbon,
+            .elixir-ribbon h5,
+            .elixir-ribbon a,
+            .elixir-ribbon a:active,
+            .elixir-ribbon a:visited,
+            .elixir-ribbon a:hover {
+                color: #222;
+                text-decoration: none;
+            }
+            .elixir-ribbon a:hover {
+                opacity: .8;
+            }
+            .elixir-ribbon .readmore {
+                border-bottom: 1px dotted #222;
+            }
+            .elixir-ribbon h5 {
+                margin: 0;
+            }
+            .elixir-ribbon .elixir-logo-kite {
+                background: 80% 58% url("https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.2/images/logos/assorted/elixir_kitemark-60px.png") no-repeat;
+                position: relative;
+                top: -5px;
+                margin: 0 1rem -.5rem 0;
+                height: 60px;
+                width: 60px;
+                display: inline-block;
+                float: left;
+                background-size: 60px;
+            }
+        </style>
+    </div>
     <!-- </div> ResultsListCtrl -->
     <footer>
         <div class="row" id="global-footer" style="border-top:none;">
