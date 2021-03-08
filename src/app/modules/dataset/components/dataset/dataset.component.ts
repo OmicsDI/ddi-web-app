@@ -150,13 +150,15 @@ export class DatasetComponent implements OnInit, OnDestroy {
         if (dataset.similars != null) {
             dataset.similars.forEach(similar => {
                 const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
-                if (similar.relationType === 'Reanalysis of') {
-                    self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
-                } else if (similar.relationType === 'Reanalyzed by') {
-                    self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
-                } else {
-                    self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
-                }
+                if (reanalyDb != null) {
+                    if (similar.relationType === 'Reanalysis of') {
+                        self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
+                    } else if (similar.relationType === 'Reanalyzed by') {
+                        self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
+                    } else {
+                        self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
+                    }
+                }   
             });
         }
         this.slimLoadingBarService.ref().complete();
