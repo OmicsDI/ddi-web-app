@@ -8,7 +8,7 @@ export class ObjectUtils {
     }
 
     static upperName(lower: string) {
-        return lower.replace(/^\w/, function (chr) {
+        return lower == null ? "" : lower.replace(/^\w/, function (chr) {
             return chr.toUpperCase();
         });
     }
