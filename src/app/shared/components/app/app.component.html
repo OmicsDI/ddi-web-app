@@ -84,6 +84,7 @@
                 </li>
             </ul>
         </div>
+
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav hidden-md hidden-sm hidden-xs col-lg-5 omics-search-box">
             <li style="width:100%;" *ngIf="showSmallSearch" app-search-box [isHomeSearch]="false" class="col-md-6 col-sm-12 col-xs-12 functional">
@@ -93,9 +94,103 @@
     <ng-progress [direction]="'ltr+'" [min]="20" [max]="1" [speed]="200"  [trickleSpeed]="300"
                  [spinner]="false" [spinnerPosition]="'left'" [thick]="false" [meteor]="true"
                  [color]="'red'" [ease]="'linear'"></ng-progress>
+
+    <div>
+        <h3>
+            We need your help!
+            If you've ever found our data helpful, please take our impact survey (15 min).
+            Your replies will help keep the data flowing to the scientific community.
+            <a title="Survey URL" target="_blank" style="color:blue" href="https://www.surveymonkey.co.uk/r/EMBL-EBI_Impact_DR" >Please Click here for Survey
+            </a>
+        </h3>
+    </div>
     <!--main container of page -->
     <div style="">
         <router-outlet></router-outlet>
+    </div>
+
+    <div data-color="none" data-description="OmicsDI is an Elixir interoperability service" data-more-information-link="//www.elixir-europe.org/platforms/interoperability" data-name="OmicsDI" data-use-basic-styles="true" id="elixir-banner">
+        <div id="elixir-ribbon" class="elixir-ribbon">
+            <div class="row">
+                <div class="column">
+                    <a href="//www.elixir-europe.org/platforms/interoperability">
+                        <div class="elixir-logo-kite"></div>
+                        <h5>
+                            <span class="elixir-banner-name">OmicsDI</span> is part of the ELIXIR infrastructure
+                        </h5>
+                        <div id="elixir-banner-info">
+                            <small>
+                                <span class="elixir-banner-description">OmicsDI is an Elixir interoperability service. </span>
+                                <span class="readmore">Learn more ›</span>
+                            </small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .elixir-ribbon {
+                padding: 1rem 0;
+                background-color: transparent;
+            }
+
+            .elixir-ribbon {
+                font-family: Helvetica, Arial, FreeSans, 'Liberation Sans', sans-serif;
+                clear: both;
+            }
+
+            .elixir-ribbon a, .elixir-ribbon a:active, .elixir-ribbon a:visited, .elixir-ribbon a:hover {
+                border-bottom: none;
+            }
+
+            .elixir-ribbon .row {
+                max-width: 1200px;
+                margin: 0 auto 1rem;
+            }
+
+            .elixir-ribbon .row::before,
+            .elixir-ribbon .row::after {
+                display: table;
+                content: ' ';
+            }
+
+            .elixir-ribbon h5 {
+                font-size: 1.3rem;
+                padding: 0;
+                display: inline-block;
+            }
+
+            .elixir-ribbon,
+            .elixir-ribbon h5,
+            .elixir-ribbon a,
+            .elixir-ribbon a:active,
+            .elixir-ribbon a:visited,
+            .elixir-ribbon a:hover {
+                color: #222;
+                text-decoration: none;
+            }
+            .elixir-ribbon a:hover {
+                opacity: .8;
+            }
+            .elixir-ribbon .readmore {
+                border-bottom: 1px dotted #222;
+            }
+            .elixir-ribbon h5 {
+                margin: 0;
+            }
+            .elixir-ribbon .elixir-logo-kite {
+                background: 80% 58% url("https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.2/images/logos/assorted/elixir_kitemark-60px.png") no-repeat;
+                position: relative;
+                top: -5px;
+                margin: 0 1rem -.5rem 0;
+                height: 60px;
+                width: 60px;
+                display: inline-block;
+                float: left;
+                background-size: 60px;
+            }
+        </style>
     </div>
     <!-- </div> ResultsListCtrl -->
     <footer>
@@ -104,6 +199,12 @@
             <nav class="col-md-12" id="global-nav-expanded">
 
                 <div class="col-md-2 col-sm-12 col-xs-12">
+                    <a title="Elixir Interoperability" target="_blank" class="no-icon"
+                       href="https://elixir-europe.org/platforms/interoperability">
+                        <img class="img_at_footer ebi-img" alt="EMBL-EBI logo" src="img/logo/elixir1.png"
+                             style="width:150px; margin-top:9px">
+                    </a>
+
                     <a title="European Bioinformatics Institute homepage" target="_blank" class="no-icon"
                        href="http://www.ebi.ac.uk/">
                         <img class="img_at_footer ebi-img" alt="EMBL-EBI logo" src="img/logo/embl-ebi.jpg"
