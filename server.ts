@@ -32,6 +32,23 @@ global['Text'] = win.Text;
 global['HTMLElement'] = win.HTMLElement;
 global['navigator'] = win.navigator;
 
+/* https://github.com/angular/universal/issues/1159 - start 
+This code fixes 'ReferenceError: requestAnimationFrame is not defined' */
+global['requestAnimationFrame'] = function(callback, element) {
+  let lastTime = 0;
+  const currTime = new Date().getTime();
+  const timeToCall = Math.max(0, 16 - (currTime - lastTime));
+  const id = setTimeout(function() { callback(currTime + timeToCall); },
+    timeToCall);
+  lastTime = currTime + timeToCall;
+  return id;
+};
+
+global['cancelAnimationFrame'] = function(id) {
+  clearTimeout(id);
+};
+/* https://github.com/angular/universal/issues/1159 - end */
+
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
