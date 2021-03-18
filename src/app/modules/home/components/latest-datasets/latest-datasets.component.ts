@@ -56,7 +56,9 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     private handleError(error: any) {
 
         LatestDatasetsComponent.requestLatestDatasetFailed = true;
-        this.cd.detectChanges();
+        if (this) {
+            this.cd.detectChanges();
+        }
         return Promise.reject(error.message || error);
     }
 
