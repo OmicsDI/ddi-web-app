@@ -7,10 +7,6 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
     styleUrls: ['./notfound.component.css']
 })
 export class NotfoundComponent {
-    title = 'app';
-    selected = 'oh mama';
-    @ViewChild('txtInput') input: ElementRef;
-
     constructor() {
     }
 }
