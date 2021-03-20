@@ -95,7 +95,7 @@
                  [spinner]="false" [spinnerPosition]="'left'" [thick]="false" [meteor]="true"
                  [color]="'red'" [ease]="'linear'"></ng-progress>
 
-    <div>
+    <div [class.indent]="inDashboardView">
         <h3>
             We need your help!
             If you've ever found our data helpful, please take our impact survey (15 min).
@@ -109,7 +109,7 @@
         <router-outlet></router-outlet>
     </div>
 
-    <div data-color="none" data-description="OmicsDI is an Elixir interoperability service" data-more-information-link="//www.elixir-europe.org/platforms/interoperability" data-name="OmicsDI" data-use-basic-styles="true" id="elixir-banner">
+    <div [class.indent]="inDashboardView" data-color="none" data-description="OmicsDI is an Elixir interoperability service" data-more-information-link="//www.elixir-europe.org/platforms/interoperability" data-name="OmicsDI" data-use-basic-styles="true" id="elixir-banner">
         <div id="elixir-ribbon" class="elixir-ribbon">
             <div class="row">
                 <div class="column">

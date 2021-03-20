@@ -23,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     selectedComponents = 0;
     selectedChannel: 'selected_channel';
     isCollapsedNav = true;
+    inDashboardView = false;
     profile: Profile;
     private subscriptions: Subscription[] = [];
     private locationSubcription: SubscriptionLike;
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
             window.location.href = window.location.href.replace('http:', 'https:');
         }
+        this.inDashboardView = window.location.href.includes('www.omicsdi.org/dashboard');
 
         this.title = this.getTitle();
     }
