@@ -390,7 +390,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 data => {
                     this.enrichmentInfo = data[0];
                     this.synonymResult = data[1];
-                    if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
+                    if (!this.synonymResult || !this.enrichmentInfo || !this.synonymResult.synonymsList || this.synonymResult.synonymsList.length <= 0 ) {
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     } else if (!this.enrichmentInfo.synonyms.name && !this.enrichmentInfo.synonyms.description) {
                         this.dialogService.confirm('Alert' , 'no synonymous words in both name and description');
