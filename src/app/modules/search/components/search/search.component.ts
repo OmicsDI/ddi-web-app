@@ -110,7 +110,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                             result => {
                                 this.searchQuery = QueryUtils.extractQuery(params);
                                 this.searchResult = result;
-                                this.dataTransportService.fire(this.facetsChannel, result.facets);
+                                this.dataTransportService.fire(this.facetsChannel, QueryUtils.getSanitizedFacets(result.facets));
                             }, error => {
                                 this.logger.error('Exception occurred when getting search result, {}', error);
                             }, () => {
