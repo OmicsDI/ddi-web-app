@@ -122,6 +122,10 @@ export class AppComponent implements OnInit, OnDestroy {
         window.location.href = 'http://blog.omicsdi.org/post/introduction-api/';
     }
 
+    gotoOmicsDISpec() {
+        window.location.href = 'http://blog.omicsdi.org/post/omicsdi-spec/';
+    }
+
     gotoWs() {
         window.location.href = 'https://www.omicsdi.org/ws';
     }
