@@ -162,7 +162,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     }
 
     parseSchema(schema: any) {
-        if (schema) {
+        if (schema && schema['mainEntity']) {
             // Avoid html tags in dataset.description object
             this.metaTagService.updateTag({name: 'description', content: schema['mainEntity']['description']});
         }
