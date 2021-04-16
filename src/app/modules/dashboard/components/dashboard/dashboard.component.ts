@@ -84,6 +84,8 @@ export class DashboardComponent implements OnInit {
                 const i = this.savedSearches.findIndex(r => r.id === id);
                 this.savedSearches.splice(i, 1);
                 this.notificationService.success('Saved search removed', 'from dashboard');
+                // Refresh the window so that the user can see that the saved search was removed
+                window.location.reload();
             }
         );
     }
@@ -99,6 +101,8 @@ export class DashboardComponent implements OnInit {
                 const i = this.watchedDatasets.findIndex(r => r.id === watch.id);
                 this.watchedDatasets.splice(i, 1);
                 this.notificationService.success('Watched dataset removed', 'from dashboard');
+                // Refresh the window so that the user can see that the watch was removed
+                window.location.reload();
             }
         );
     }
