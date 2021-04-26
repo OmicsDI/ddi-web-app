@@ -80,6 +80,10 @@ export class AppConfig {
         return `${environment.webServiceUrl}dataset/${repository}/${acc}.json`;
     }
 
+    getDatasetDRSUrl(acc: string, repository: string): string {
+        return `${environment.webServiceUrl}dataset/getDRS?accession=${acc}&database=${repository}`;
+    }
+
     getDatasetBatchUrl(): string {
         return `${environment.webServiceUrl}dataset/batch`;
 
