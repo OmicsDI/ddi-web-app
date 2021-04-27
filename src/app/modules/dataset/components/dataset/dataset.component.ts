@@ -260,9 +260,14 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
-                        this.dataSetService.getDataSetFiles(this.acc, this.repository).then(
-                            (r) => {this.parseFiles(r)}
-                        ).catch(() => {}); // quiesce
+                        let drsUrlsJson: any = [];
+                        this.dataSetService.getDRSUrls(this.acc, this.repository).then(
+                           (r) => { drsUrlsJson = r }
+                        ).finally(() => {
+                           this.dataSetService.getDownloadUrls(this.acc, this.repository).then(
+                               (downloadUrlsJson) => { this.parseFiles([downloadUrlsJson, drsUrlsJson]) }
+                        ).catch(() => {})}); // quiesce
+
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
