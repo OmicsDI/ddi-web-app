@@ -241,7 +241,7 @@
                         <ng-container matColumnDef="drs">
                             <th mat-header-cell *matHeaderCellDef> DRS</th>
                             <td mat-cell *matCellDef="let element">
-                                <a ngxClipboard [cbContent]="element.drsUrl" (click)="copyDataDRSURLClick(element.drsUrl)">
+                                <a ngxClipboard *ngIf="element.drsUrl" [cbContent]="element.drsUrl" (click)="copyDataDRSURLClick(element.drsUrl)">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i>&nbsp;DRS
                                 </a>
                             </td>
@@ -261,7 +261,7 @@
                                     <i class="fa fa-cloud-upload" aria-hidden="true"></i> Upload file(s) to Galaxy server
                                 </button>
                             </td><td style="padding-left: 10px; text-align: center;">
-                                <a ngxClipboard [cbContent]="this.drs_url" (click)="copyDataDRSURLClick(this.drs_url)">
+                                <a ngxClipboard *ngIf="this.drs_url" [cbContent]="this.drs_url" (click)="copyDataDRSURLClick(this.drs_url)">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i>&nbsp;Copy Dataset DRS URL
                                 </a>
                             </td><td>
