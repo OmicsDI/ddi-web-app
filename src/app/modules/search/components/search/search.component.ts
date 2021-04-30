@@ -53,14 +53,22 @@ export class SearchComponent implements OnInit, OnDestroy {
                 private modalService: BsModalService,
                 private dataTransportService: DataTransportService) {
         this.isServer = isPlatformServer(platformId);
-    }
+     }
 
     ngOnInit() {
         const config = {
             backdrop: true,
             ignoreBackdropClick: true
         };
+        
         if (this.isServer) {
+            /*
+            // datasome: weirdly, the presence of this code (when built into server.js) 
+            // was causing the results for some (but not all) queries 
+            // (e.g. Cancer AND omics_type: "Genomics") to switch 
+            // from many results to 0 results - after browser refresh. In all such observed cases, 
+            // when the front end (port:8080) was showing 0 results, so was server.js (port: 8092)
+
             this.params = this.route.snapshot.queryParams;
             this.query = QueryUtils.getBaseQuery(this.params);
             if (this.query !== '') {
@@ -68,6 +76,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             }
             this.dataControl = QueryUtils.getDataControl(this.params);
             this.selectedFacets = QueryUtils.getAllFacets(this.params);
+
             forkJoin(this.databaseListService.getDatabaseList(), this.searchService
                 .fullSearch(this.query, this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy, this.dataControl.order))
                 .subscribe(data => {
@@ -78,8 +87,10 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.searchResult = data[1];
                     this.dataTransportService.fire(this.facetsChannel, data[1].facets);
                 });
+            */
             return;
         }
+
         this.authService.loggedIn().then(isLogged => {
             if (isLogged) {
                 this.profile = this.profileService.getProfileFromLocal();
