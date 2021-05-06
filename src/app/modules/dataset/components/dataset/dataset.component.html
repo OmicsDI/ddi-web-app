@@ -294,13 +294,13 @@
             <app-similar [acc]="acc" [repository]="repository" [databases]="databases"></app-similar>
         </div>
     </div>
-    <div class="row" *ngIf="notfound">
+    <div class="row" *ngIf="errorOccurred || notfound">
         <div id="notfound-background">
             <section id="not-found">
                 <div id="err-title"></div>
                 <div class="circles">
                     <div class="circles-cut"></div>
-                    <div id="err-message">
+                    <div *ngIf="errorOccurred" id="err-message">
                         <h1>Oh no...</h1>
                         <h3>An error has occurred !!!</h3>
                         <br/>
@@ -316,6 +316,16 @@
                             <li [routerLink]="['/']" style="cursor: pointer"><i class="fa fa-undo"></i><b> Get back to
                                 homepage</b></li>
                         </ul>
+                    </div>
+                    <div *ngIf="notfound" id="err-message">
+                        <p></p>
+                        <h3>This dataset was not found.</h3>
+                            <ul style="margin: auto">
+                            <li><i class="fa fa-bell"></i><b>To report it as an error, please click </b> <span><a
+                            href="https://www.ebi.ac.uk/support/index.php?query=omics-di"
+                            target="_blank">here</a></span></li>
+                            <li [routerLink]="['/']" style="cursor: pointer"><i class="fa fa-undo"></i><b> Get back to homepage</b></li>
+                            </ul>
                     </div>
                 </div>
             </section>
