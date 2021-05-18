@@ -38,6 +38,15 @@ export class SearchTotalComponent implements OnInit {
         this.ignoreAllFacet.emit();
     }
 
+    /**
+     *
+     * @param numVal
+     * @returns numVal as number
+     */
+    convertToNumber(numVal: string): number {
+        return parseInt(numVal);
+    }
+
     saveSearchClick() {
         const savedSearch: SavedSearch = new SavedSearch();
 
