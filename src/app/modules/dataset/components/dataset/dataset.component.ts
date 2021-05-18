@@ -144,9 +144,10 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
 
         const db = this.databaseListService.getDatabaseBySource(dataset.source, this.databases);
-        this.repositoryName = db.databaseName;
-        this.databaseUrl = db.sourceUrl;
-
+        if (db != null) {
+            this.repositoryName = db.databaseName;
+            this.databaseUrl = db.sourceUrl;
+        }
         if (dataset.similars != null) {
             dataset.similars.forEach(similar => {
                 const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
