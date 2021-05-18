@@ -39,7 +39,7 @@ export class DataSetService extends BaseService {
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
         if (isPlatformServer(this.platformId)) {
-            headers.append('X-Forwarded-For', this.request.headers.get('X-Forwarded-For'));
+            headers.append('X-Forwarded-For', this.request.headers['X-Forwarded-For']);
         }
         return this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers});
     }
