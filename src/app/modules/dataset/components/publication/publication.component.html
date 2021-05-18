@@ -1,5 +1,5 @@
 <div class="mt-card" *ngIf="ids" id="dataset_middle_publication" style="position: relative;">
-    <div class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd">
+    <div *ngIf="d" class="mt-card-header" style="padding: 10px 0; border-bottom: 1px solid #dddddd">
         <div class="col-xs-10" style="display: flex; align-items: center">
             <div style="width: 50px">
                 <app-altmetric-image [PMID]="d.id"></app-altmetric-image>
@@ -7,8 +7,8 @@
             <h3 class="mt-card-title" style="padding: 0; margin: 0 10px; font-weight: 500">Publications</h3>
         </div>
     </div>
-    <div class="mt-card-body">
-        <div *ngIf="d" class="" id="dataset_middle" style="overflow:hidden;">
+    <div *ngIf="d" class="mt-card-body">
+        <div class="" id="dataset_middle" style="overflow:hidden;">
             <div>
                 <h3 style="margin-right:20px; font-weight: 500" class="ng-binding" id="publication_title">
                     <span>{{d.title}}</span></h3>
