@@ -114,6 +114,8 @@ export class SearchResultComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.keyword = this.findKeywords(this.searchQuery.rules).join(';');
+        if (this.searchQuery) {
+           this.keyword = this.findKeywords(this.searchQuery.rules).join(';');
+        }
     }
 }
