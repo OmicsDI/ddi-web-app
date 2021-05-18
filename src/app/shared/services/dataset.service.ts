@@ -44,11 +44,14 @@ export class DataSetService extends BaseService {
         return headers;
    }
 
-   public async getDataSetFiles(accession: string, repository: string) {
+   public async getDRSUrls(accession: string, repository: string): Promise<Object> {
         const headers = this.getHeaders();
-        const downloadUrlsJson = await this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers}).toPromise();
-        const drsUrlsJson = await this.http.get(this.appConfig.getDatasetDRSUrl(accession, repository), {headers: headers}).toPromise();
-        return [downloadUrlsJson, drsUrlsJson];
+        return await this.http.get(this.appConfig.getDatasetDRSUrl(accession, repository), {headers: headers}).toPromise();
+   }
+
+   public async getDownloadUrls(accession: string, repository: string): Promise<Object> {
+        const headers = this.getHeaders();
+        return await this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers}).toPromise();
    }
 
    public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
