@@ -35,16 +35,23 @@ export class DataSetService extends BaseService {
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
 
-    public getDataSetFiles(accession: string, repository: string): Observable<any> {
-        const headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        if (isPlatformServer(this.platformId)) {
-            headers.append('X-Forwarded-For', this.request.headers['X-Forwarded-For']);
-        }
-        return this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers});
-    }
+    getHeaders(): HttpHeaders {
+         const headers = new HttpHeaders();
+         headers.append('Content-Type', 'application/json');
+         if (isPlatformServer(this.platformId)) {
+             headers.append('X-Forwarded-For', this.request.headers['X-Forwarded-For']);
+         }
+        return headers;
+   }
 
-    public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
+   public async getDataSetFiles(accession: string, repository: string) {
+        const headers = this.getHeaders();
+        const downloadUrlsJson = await this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers}).toPromise();
+        const drsUrlsJson = await this.http.get(this.appConfig.getDatasetDRSUrl(accession, repository), {headers: headers}).toPromise();
+        return [downloadUrlsJson, drsUrlsJson];
+   }
+
+   public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
         if (datasets == null) {
             return of([]);
         }
@@ -73,6 +80,12 @@ export class DataSetService extends BaseService {
 
     public getWebServiceUrl(): string {
         return this.appConfig.getWebServiceUrl();
+    }
+
+    public async getDataSetDRSUrl(accession: string, repository: string): Promise<Object> {
+        const headers = this.getHeaders();
+        const drsUrlsJson = await this.http.get(this.appConfig.getDatasetDRSUrl(accession, repository.toLowerCase()), {headers: headers}).toPromise();
+        return drsUrlsJson;
     }
 
     public getProfileServiceUrl(): string {
