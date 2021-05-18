@@ -37,6 +37,7 @@ export class FileInfo {
     name: string;
     provider: string;
     category: string;
+    drsUrl: string;
 }
 
 export class Filter {
@@ -54,7 +55,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
-    displayedColumns: string[] = ['select', 'name', 'category', 'action'];
+    displayedColumns: string[] = ['select', 'name', 'category', 'action', "drs"];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -71,6 +72,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     index_dataset: number;
     databaseUrl: string;
     web_service_url: string;
+    drs_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
     notfound = false;
@@ -162,6 +164,19 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 }   
             });
         }
+        this.drs_url = "Not available";
+        this.dataSetService.getDataSetDRSUrl(this.acc, this.repositoryName).then(
+            (drsUrlsJson) =>
+                {
+                    if (drsUrlsJson != null && Array.isArray(drsUrlsJson)) {
+                        drsUrlsJson.forEach(drsEntry => {
+                            if (drsEntry['name'] == this.acc) {
+                                this.drs_url = drsEntry['drsURL'];
+                            }
+                        });
+                    }
+                }).catch(() => {}); // quiesce
+
         this.slimLoadingBarService.ref().complete();
     }
 
@@ -182,7 +197,16 @@ export class DatasetComponent implements OnInit, OnDestroy {
         this.providers = [];
         let position = 0;
         let versions = 1;
-        files['file_versions'].forEach(version => {
+        const downloadUrlsJson = files[0];
+        const drsUrlsJson = files[1];
+        const fileName2DRSUrl = new Map<string, string[]>();
+        if (drsUrlsJson != null && Array.isArray(drsUrlsJson)) {
+            drsUrlsJson.forEach(drsEntry => {
+                fileName2DRSUrl[drsEntry['name'].split("/")[1]] = drsEntry['drsURL'];
+            });
+        }
+
+        downloadUrlsJson['file_versions'].forEach(version => {
             if (this.providers.indexOf(version['type']) > -1) {
                 this.providers.push(version['type'] + '_' + versions++);
             } else {
@@ -194,6 +218,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     fileInfo.category = fileType;
                     fileInfo.name = file;
                     fileInfo.provider = version['type'];
+                    const auxArr = fileInfo.name.split("/");
+                    fileInfo.drsUrl = fileName2DRSUrl[auxArr[auxArr.length - 1]];
+                    if (fileInfo.drsUrl == null) {
+                        fileInfo.drsUrl = "Not available";
+                    }
                     elements.push(fileInfo);
                 });
             });
@@ -237,9 +266,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
-                        if (!this.isServer) {
-                            this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
-                        }
+                        this.dataSetService.getDataSetFiles(this.acc, this.repository).then(
+                            (r) => {this.parseFiles(r)}
+                        ).catch(() => {}); // quiesce
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
@@ -487,5 +516,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
             'tool_id': 'omicsdi',
             'type': 'json'};
         this.redirectService.get(request, galaxyUrl);
+    }
+
+    copyDataDRSURLClick(drsURL: string) {
+        this.notificationService.success('Сopied to clipboard', drsURL);
     }
 }
