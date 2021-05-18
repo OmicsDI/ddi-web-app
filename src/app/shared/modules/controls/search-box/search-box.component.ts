@@ -102,7 +102,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
             this.dataControl.order)
             .subscribe(result => {
-                this.dataTransportService.fire(this.facetsChannel, result.facets);
+                this.dataTransportService.fire(this.facetsChannel, QueryUtils.getSanitizedFacets(result.facets));
             });
     }
 
