@@ -164,7 +164,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 }   
             });
         }
-        this.drs_url = "Not available";
         this.dataSetService.getDataSetDRSUrl(this.acc, this.repositoryName).then(
             (drsUrlsJson) =>
                 {
@@ -220,9 +219,6 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     fileInfo.provider = version['type'];
                     const auxArr = fileInfo.name.split("/");
                     fileInfo.drsUrl = fileName2DRSUrl[auxArr[auxArr.length - 1]];
-                    if (fileInfo.drsUrl == null) {
-                        fileInfo.drsUrl = "Not available";
-                    }
                     elements.push(fileInfo);
                 });
             });
