@@ -298,6 +298,6 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         d3.select('#' + this.hotwordsName)
             .append('p')
             .attr('class', 'error-info')
-            .html('Sorry, accessing to the word cloud web service was temporally failed.');
-    }
+            .html('Sorry, the word cloud service is temporarily unavailable.'); 
+   }
 }
