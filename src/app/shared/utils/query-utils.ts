@@ -1,6 +1,8 @@
 import {DataControl} from 'model/DataControl';
 import {Rule, SearchQuery} from 'model/SearchQuery';
 import {ArrayUtils} from '@shared/utils/array-utils';
+import {Facet} from 'model/Facet';
+import {FacetValue} from 'model/FacetValue';
 
 export class Index {
     current = 0;
@@ -79,6 +81,28 @@ export class QueryUtils {
     }
 
     /**
+     * 
+     * @param facets 
+     * @returns facets with all ids/labels/values stripped of round brackets - as these mess up
+     * both query extraction (queryExtractor() function treats them as query constructs - even if they are just part of
+     * facet label, e.g. "Illumina HiSeq 2000 (Homo sapiens)"). Round brackets in checkbox html element ids leads to user's
+     * failure in ticking that facet's checkbox when they click on it.
+     */
+    public static getSanitizedFacets(facets: Facet[]): Array<Facet> {
+        for (let i = 0; i < facets.length; i ++) {
+            let facet = facets[i];
+            facet.id = facet.id.replace(/[\(\)]*/g,'');
+            facet.label = facet.label.replace(/[\(\)]*/g,'');
+            for (let j = 0; j < facet.facetValues.length; j ++) {
+                let facetValue = facet.facetValues[j];
+                facetValue.label = facetValue.label.replace(/[\(\)]*/g,'');
+                facetValue.value = facetValue.value.replace(/[\(\)]*/g,'');
+            }
+        }
+        return facets;
+    } 
+
+    /**
      * Extract SearchQuery from url params
      * @param {{}} params
      * @returns {SearchQuery}
@@ -123,7 +147,6 @@ export class QueryUtils {
                 rules.forEach(rule => {
                     search.rules.push(rule);
                 });
-                search.rules.concat()
             }
         }
         for (let i = 0; i < queryRules.length; i++) {
