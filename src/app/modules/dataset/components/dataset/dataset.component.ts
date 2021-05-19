@@ -285,7 +285,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.galaxyInstances.push({'url': this.profile.galaxyInstance, 'from': 'Profile'});
             }
 
-            this.galaxyInstances.push({'url': 'https://usegalaxy.org', 'from': 'Default'});
+            this.galaxyInstances.push({'url': 'https://usegalaxy.eu', 'from': 'Default'});
             this.galaxyInstances.push({'url': 'Custom...', 'from': 'Enter your galaxy instance'});
         }
     }
