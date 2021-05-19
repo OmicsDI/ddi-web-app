@@ -398,7 +398,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     processSections() {
         // TODO: encoding problems
-        const description = this.enrichmentInfo.originalAttributes.description;
+        const description = this.enrichmentInfo.originalAttributes.description.replace(/^\s+/g, "").replace(/\n+/g, " ");
 
         this.title_sections = this.getSection(this.enrichmentInfo.originalAttributes.name, this.enrichmentInfo.synonyms.name);
         this.abstract_sections = this.getSection(description, this.enrichmentInfo.synonyms.description);
