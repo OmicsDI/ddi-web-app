@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
-import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
@@ -36,7 +35,6 @@ import {MatSlideToggleModule} from '@angular/material';
         ControlsModule,
         ProfileControlsModule,
         ProfileChartsModule,
-        DisqusModule.forRoot('omicsdi'),
         ModalModule.forRoot(),
         FormsModule,
         ClipboardModule,

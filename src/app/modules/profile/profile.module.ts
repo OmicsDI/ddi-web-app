@@ -11,13 +11,11 @@ import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
 import {ProfileControlsModule} from '@modules/profile-controls/profile-controls.module';
 import {ProfileChartsModule} from '@modules/profile-charts/profile-charts.module';
-import {DisqusModule} from 'ngx-disqus';
 
 @NgModule({
     imports: [
         CommonModule,
         ProfileRoutingModule,
-        DisqusModule.forRoot('omicsdi'),
         NgxPaginationModule,
         FormsModule,
         ClipboardModule,
