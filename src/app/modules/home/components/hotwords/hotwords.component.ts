@@ -261,8 +261,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
                 const searchWord = '"' + d.label + '"';
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                // redirect logic remains to do
-                self.router.navigate(['search'], {queryParams: {q: searchWord}});
+                self.router.navigate(['search'], {queryParams: {q: self.field + ':' + searchWord}});
             })
             .on('mousemove', function (d, i) {
                 const wordcloud_tooltip = d3.select('#word_cloud_chart_tooltip')
