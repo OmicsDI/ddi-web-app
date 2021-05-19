@@ -13,7 +13,7 @@
             <li *ngFor="let _dataset of latestDatasets" class="cut-text" style="line-height: 2">
                 <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"></app-omics-image>
                 <a [routerLink]="['/dataset',_dataset.source, _dataset.id]" title={{_dataset.title}}>
-                    {{getMonthDay(_dataset.publicationDate)}}{{_dataset.title}}
+                    {{getMonthDayYear(_dataset.publicationDate)}}{{_dataset.title}}
                     <!--{{dataset.title|limitTo:45}} {{dataset.title.length>45?'...':''}}-->
                     <span class="icon icon-functional" data-icon=""></span>
                 </a>

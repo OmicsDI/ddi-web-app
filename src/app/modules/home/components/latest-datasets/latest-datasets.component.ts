@@ -66,8 +66,8 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
         return LatestDatasetsComponent.requestLatestDatasetFailed;
     }
 
-    getMonthDay(dateString: string): string {
-        return TimeUtils.getMonthDay(dateString);
+    getMonthDayYear(dateString: string): string {
+        return TimeUtils.getMonthDayYear(dateString);
     }
 
 }
