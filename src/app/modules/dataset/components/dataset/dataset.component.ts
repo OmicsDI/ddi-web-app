@@ -76,6 +76,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     databaseByAccession: Object = {};
     ontology_highlighted = false;
     notfound = false;
+    errorOccurred = false;
 
     databases: Database[];
 
@@ -257,8 +258,12 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.dataSetService.getDataSetDetail(this.acc, this.repository)
                     .pipe(catchError((err: HttpErrorResponse) => {
                         self.slimLoadingBarService.ref().complete();
-                        self.notfound = true;
-                        return throwError('Can\'t get dataset, err: ' + err.message);
+                        if (err.status == 404) {
+                            self.notfound = true;
+                        } else {
+                            self.errorOccurred = true;
+                            return throwError('Can\'t get dataset, err: ' + err.message);
+                        }
                     }))
                     .subscribe(result => {
                         this.parseDataset(result);
