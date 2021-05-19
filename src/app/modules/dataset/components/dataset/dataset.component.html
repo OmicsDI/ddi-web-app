@@ -284,10 +284,6 @@
             <app-similar-molecule *ngIf="acc && repository && !isServer" [acc]="acc"
                                   [repository]="repository"></app-similar-molecule>
 
-            <!--dataset_upper -->
-            <div class="panel panel-default" *ngIf="!isServer">
-                <disqus [identifier]="repository+'/'+acc" [url]="repository+'/'+acc"></disqus>
-            </div>
         </div>
         <!-- col-md-8 centerpanel-->
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">

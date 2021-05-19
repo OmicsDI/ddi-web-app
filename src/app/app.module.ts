@@ -7,7 +7,6 @@ import {AppComponent} from '@shared/components/app/app.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule, BsModalService} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
-import {DisqusModule} from 'ngx-disqus';
 import {ClipboardModule} from 'ngx-clipboard';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SimpleNotificationsModule} from 'angular2-notifications';
@@ -87,7 +86,6 @@ export function jwtTokenGetter() {
         FormsModule,
         ReactiveFormsModule,
         NguiAutoCompleteModule,
-        DisqusModule.forRoot('omicsdi'),
         AlertModule.forRoot(),
         UtilsModule,
         BrowserAnimationsModule,
