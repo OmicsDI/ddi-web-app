@@ -35,6 +35,11 @@ export class DataSetService extends BaseService {
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
 
+    public async getDataSetDetailAsync(accession: string, repository: string): Promise<DataSetDetail> {
+        return await this.http.get(this.appConfig.getDatasetUrl(accession, repository))
+            .pipe(map(x => this.extractData<DataSetDetail>(x))).toPromise();
+    }
+
     getHeaders(): HttpHeaders {
         const headers = new HttpHeaders();
         headers.append('Content-Type', 'application/json');
