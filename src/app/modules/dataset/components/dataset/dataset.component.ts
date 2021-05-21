@@ -255,18 +255,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     .subscribe(result => {
                     this.schema = this.parseSchema(result);
                 });
-                this.dataSetService.getDataSetDetail(this.acc, this.repository)
-                    .pipe(catchError((err: HttpErrorResponse) => {
-                        self.slimLoadingBarService.ref().complete();
-                        if (err.status == 404) {
-                            self.notfound = true;
-                            return;
-                        } else {
-                            self.errorOccurred = true;
-                            return throwError('Can\'t get dataset, err: ' + err.message);
-                        }
-                    }))
-                    .subscribe(result => {
+                this.dataSetService.getDataSetDetailAsync(this.acc, this.repository).then(
+                    (result) => {                        
                         this.parseDataset(result);
                         let drsUrlsJson: any = [];
                         this.dataSetService.getDRSUrls(this.acc, this.repository).then(
@@ -281,6 +271,15 @@ export class DatasetComponent implements OnInit, OnDestroy {
                         this.sample_protocol_sections = null;
                         this.data_protocol_sections = null;
                         this.ontology_highlighted = false;
+                    }).catch((err) => {
+                        self.slimLoadingBarService.ref().complete();
+                        if (err.status == 404) {
+                            self.notfound = true;
+                            return;
+                        } else {
+                            self.errorOccurred = true;
+                            return throwError('Can\'t get dataset, err: ' + err.message);
+                        }
                     });
             });
         });
