@@ -260,6 +260,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                         self.slimLoadingBarService.ref().complete();
                         if (err.status == 404) {
                             self.notfound = true;
+                            return;
                         } else {
                             self.errorOccurred = true;
                             return throwError('Can\'t get dataset, err: ' + err.message);
