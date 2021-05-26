@@ -292,12 +292,14 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
                 .style('opacity', .9);
 
             const mouse_coords = d3.mouse(document.getElementById('tissue_organism_chart_tooltip').parentElement);
-
+            tooltip.html('Click to retrieve datasets that study <strong>' + d.data.className.toLowerCase()+ '</strong>')
+            /*
             tooltip.html('<div><strong>' + d.data.className + ': </strong></div><div>' +
                 format(d.data.value_before_log_calc) + '&nbsp;datasets</div>')
                 .style('left', (mouse_coords[0] + 25) + 'px')
                 .style('top', (mouse_coords[1] - 40) + 'px')
                 .style('padding', '3px');
+                */
             // .style("width", d.data.className.length * 5 + d.data.value_before_log_calc.toString().length * 5 + 30 + "px");
         })
             .on('mouseout', function (d) {

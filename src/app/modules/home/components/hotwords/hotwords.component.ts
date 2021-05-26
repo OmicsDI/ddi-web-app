@@ -271,7 +271,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
                     .duration(200)
                     .style('opacity', .9);
 
-                wordcloud_tooltip.html('<strong>' + d.frequent + '</strong> datasets')
+                    wordcloud_tooltip.html('Click to retrieve datasets that mention term <strong>' + d.label + '</strong> in field <strong>'+self.field+'<strong>')
                     .style('left', (mouse_coords[0] + 25) + 'px')
                     .style('top', (mouse_coords[1] - 25) + 'px');
             })
