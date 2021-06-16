@@ -47,6 +47,8 @@ export class OmicsImageComponent implements OnInit, OnChanges {
             this.omicsImage = 'img/omics/Genomics.svg';
         } else if (this.omics.indexOf('Models') !== -1) {
             this.omicsImage = 'img/omics/Models.svg';
+        } else if (this.omics.indexOf('Metagenomics') !== -1) {
+            this.omicsImage = 'img/omics/Metagenomics.svg';
         } else {
             this.omicsImage = 'img/omics/Unknown.svg';
         }
