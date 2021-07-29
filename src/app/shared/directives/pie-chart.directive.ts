@@ -322,7 +322,7 @@ export class PieChartDirective implements OnChanges {
                 .append('i')
                 .style('font-size', '1.2em')
                 .style('margin-top', '3px')
-                .style('margin-right', '5px')
+                .style('margin-right', '15px')
                 .attr('class', 'fa fa-question-circle');
         tool_tip.append('div').style('width', 0).style('height', 0)
             .style('border-top', '8px solid transparent')
@@ -346,7 +346,9 @@ export class PieChartDirective implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataset) {
-            this.initialize();
+            if (this.dataset) {
+                 this.initialize();
+            }
         }
     }
 }
