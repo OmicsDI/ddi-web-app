@@ -140,7 +140,7 @@ export function jwtTokenGetter() {
         //   CitationDialogSearchComponent
         // in some case dialog will not be loaded in lazy-load module,so we'd better put those component in here
     ],
-    bootstrap: [AppComponent]
+    bootstrap: []
 })
 export class AppModule {
     ngDoBootstrap(appRef: ApplicationRef) {    
