@@ -39,6 +39,14 @@
 
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script>
+     if (!window.location.href.includes("rosette")) {
+
+        var link = document.createElement('link');
+        link.href = './assets/css/bootstrap.min.css';
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        document.head.appendChild(link);
+
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");
@@ -59,6 +67,7 @@
         if (galaxyURL && typeof sessionStorage !== 'undefined') {
             sessionStorage.setItem('galaxy_instance', galaxyURL);
         }
+     }
     </script>
 </head>
 
@@ -77,4 +86,16 @@
     <script async src='https://www.google-analytics.com/analytics.js'></script>
     <!-- End Google Analytics -->
 </body>
+<script>
+    if (window.location.href.includes("rosette")) {    
+        // Remove Node.js scripts
+        var scripts = document.getElementsByTagName('script');
+        var i = scripts.length;
+        while (i--) {        
+            if (scripts[i].type == "text/javascript") {
+                scripts[i].parentNode.removeChild(scripts[i]);
+            }
+        }
+    }
+</script>
 </html>
