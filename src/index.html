@@ -12,8 +12,6 @@
     <meta content="width=device-width" name="viewport">
     <meta content="OmicsDI is a integrate resource to multiple omics repositories, including Proteomics,
         Metabolomics and Genomics" name="description">
-    <meta name="google-site-verification" content="rylKmRH17HeASfYu4pmNTaHi3eHYEopVnGERRiePpek"/>
-
     <title>OmicsDI: Home</title>
 
     <base href="/">
@@ -37,27 +35,34 @@
     <meta name="msapplication-TileImage" content="./img/favico/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <script>
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
+        if (!window.location.href.includes("rosette")) {
+            var link = document.createElement('link');
+            link.href = './assets/css/bootstrap.min.css';
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            document.head.appendChild(link);
 
-        var authToken = getParameterByName('AUTH_TOKEN');
-        if (authToken && typeof localStorage !== 'undefined') {
-            localStorage.setItem('id_token', authToken);
-            window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
-        }
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
 
-        var galaxyURL = getParameterByName('GALAXY_URL');
-        if (galaxyURL && typeof sessionStorage !== 'undefined') {
-            sessionStorage.setItem('galaxy_instance', galaxyURL);
+            var authToken = getParameterByName('AUTH_TOKEN');
+            if (authToken && typeof localStorage !== 'undefined') {
+                localStorage.setItem('id_token', authToken);
+                window.location.href = window.location.href.replace('AUTH_TOKEN=' + authToken, '');
+            }
+
+            var galaxyURL = getParameterByName('GALAXY_URL');
+            if (galaxyURL && typeof sessionStorage !== 'undefined') {
+                sessionStorage.setItem('galaxy_instance', galaxyURL);
+            }
         }
     </script>
 </head>
@@ -67,7 +72,6 @@
     <app-root>
         <div style="text-align:center; position: fixed; top: 50%; left:50%;">Loading OmicsDI...</div>
     </app-root>
-
     <!-- Google Analytics -->
     <script>
         window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -77,4 +81,16 @@
     <script async src='https://www.google-analytics.com/analytics.js'></script>
     <!-- End Google Analytics -->
 </body>
+<script>
+    if (window.location.href.includes("rosette")) {    
+        // Remove Node.js scripts
+        var scripts = document.getElementsByTagName('script');
+        var i = scripts.length;
+        while (i--) {        
+            if (scripts[i].type == "text/javascript") {
+                scripts[i].parentNode.removeChild(scripts[i]);
+            }
+        }
+    }
+</script>
 </html>
