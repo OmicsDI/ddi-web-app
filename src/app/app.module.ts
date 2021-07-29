@@ -2,8 +2,10 @@
 // <reference path="services/ontology.service.ts"/>
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {ApplicationRef} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from '@shared/components/app/app.component';
+import {RosetteComponent} from '@shared/components/rosette/rosette.component';
 import {MatButtonModule, MatCheckboxModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {AlertModule, BsModalService} from 'ngx-bootstrap';
 import {NguiAutoCompleteModule} from '@ngui/auto-complete';
@@ -50,7 +52,7 @@ import {environment} from '../environments/environment';
 import {GoogleAnalyticsService} from '@shared/services/google-analytics.service';
 import {SchemaService} from '@shared/services/schema.service';
 import {RedirectService} from '@shared/services/redirect.service';
-
+import { url } from 'inspector';
 
 export function jwtTokenGetter() {
     let token = null;
@@ -62,7 +64,7 @@ export function jwtTokenGetter() {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent, RosetteComponent
     ],
     imports: [
         JwtModule.forRoot({
@@ -133,12 +135,19 @@ export function jwtTokenGetter() {
         , GoogleAnalyticsService
         , InviteService],
     entryComponents: [
+        AppComponent, RosetteComponent
         // ConfirmDialogComponent
         //   CitationDialogSearchComponent
         // in some case dialog will not be loaded in lazy-load module,so we'd better put those component in here
     ],
-    bootstrap: [AppComponent]
+    bootstrap: []
 })
 export class AppModule {
-
+   ngDoBootstrap(appRef: ApplicationRef) {    
+        if (document.URL.includes("rosette")) {
+            appRef.bootstrap(RosetteComponent);
+        } else {
+            appRef.bootstrap(AppComponent);
+        }
+    }
 }
