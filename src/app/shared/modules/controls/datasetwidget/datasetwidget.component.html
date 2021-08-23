@@ -55,7 +55,7 @@
         <div class="row tool-box" style="padding-top:10px;">
             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                 <div *ngIf="d.keywords" class="tags">
-                    <a type="button" *ngFor="let o of d.keywords" [title]="o" class="tag"
+                    <a type="button" *ngFor="let o of d.keywords | filterarray:'Not available'" [title]="o" class="tag"
                        [routerLink]="['/search']" [queryParams]="{q:o}">{{o}}&nbsp;</a>
                 </div>
 
