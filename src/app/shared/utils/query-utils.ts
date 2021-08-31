@@ -178,7 +178,7 @@ export class QueryUtils {
 
         // Case: repository: "GEO" E-GEOD-30197
         // https://multiomics.atlassian.net/browse/OF-111
-        match = /\"([^"]*)\"([^"]+)/.exec(value);
+        match = /(\"[^"]*\")([^"]+)/.exec(value);
         if (match) {
             rule.data = match[1];
             const subRules = this.extractCondition(match[2]);
@@ -187,9 +187,6 @@ export class QueryUtils {
                 rules.push(subRule);
             });
             return rules;
-        }
-        if (value[0] === '"') {
-            value = value.slice(1, value.length - 1);
         }
         rule.data = value;
         return [rule];
