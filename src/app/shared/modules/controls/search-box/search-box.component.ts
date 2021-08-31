@@ -71,9 +71,6 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
     }
 
     getQueryValue() {
-        if (this.query && this.query.match(/^"[^"]*"$/)) {
-            return this.query.substring(1, this.query.length - 1);
-        }
         return this.query;
     }
 

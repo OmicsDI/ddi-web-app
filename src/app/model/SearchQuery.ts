@@ -38,7 +38,7 @@ export class SearchQuery {
                 }
                 if (rule.condition === 'equal') {
                     if (rule.data !== '') {
-                        strtemp = '"' + rule.data + '"';
+                        strtemp = rule.data;
                     }
                 }
 
