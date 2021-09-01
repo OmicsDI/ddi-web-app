@@ -60,12 +60,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         this.params = params;
         if (this.router.url.indexOf('/dataset/') === -1) {
             this.queryParams = QueryUtils.extractQuery(params);
-            const query = this.queryParams.toQueryString();
-            if (query.match(/^"[^"]*"$/)) {
-                this.query = query.substring(1, query.length - 1);
-            } else {
-                this.query = query;
-            }
+            this.query = this.queryParams.toQueryString();
             this.logger.debug('query: {}', this.query);
         }
     }
