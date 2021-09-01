@@ -43,9 +43,6 @@ export class SearchQuery {
                 }
 
                 if (rule.field === 'all_fields') {
-                    if (strtemp[0] === '"') {
-                        strtemp = strtemp.slice(1, strtemp.length - 1);
-                    }
                     str += strtemp;
                 } else {
                     str += rule.field + ': ' + strtemp;

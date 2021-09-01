@@ -109,11 +109,6 @@ export class QueryUtils {
      */
     public static extractQuery(params: {}): SearchQuery {
         let query = this.getBaseQuery(params);
-        query = '(' + query + ')';
-        query = query.replace(/\(("[^"]*")\)/g, '[$1]');
-        if (query[0] === '(') {
-            query = query.slice(1, query.length - 1);
-        }
         return this.queryExtractor(query, new Index());
     }
 
