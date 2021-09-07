@@ -1,6 +1,6 @@
 # Web
 
-This project's running with Angular 7.2.9
+This project's running with Angular  7.2.9
 
 ## Development server
 Run `ng serve --configuration=dev` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
