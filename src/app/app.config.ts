@@ -2,7 +2,7 @@ import {environment} from '../environments/environment';
 import {Injectable} from '@angular/core';
 import {INamed} from 'model/INamed';
 
-/** 
+/**
  * Created by user on 4/9/2017.
  */
 
