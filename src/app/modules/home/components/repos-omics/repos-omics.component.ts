@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -28,11 +29,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
     private reposDataSimple = [];
     private data = [];
+    private lastUpdated = [];
     private omicsDataSimple = [];
     private omicsDataNum = [];
     isServer: boolean;
 
     constructor(dataSetService: DataSetService,
+                private databaseListService: DatabaseListService,
                 private router: Router,
                 private http: HttpClient,
                 @Inject(PLATFORM_ID) private platformId: string) {
@@ -50,12 +53,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             const self = this;
             const urls = [
                 this.webServiceUrl + 'statistics/domains',
-                this.webServiceUrl + 'statistics/omics'
+                this.webServiceUrl + 'statistics/omics',
+                this.webServiceUrl + 'database/all?r=${Math.random()}`'
             ];
             forkJoin(
                 urls.map(url => this.http.get(url))
             ).subscribe(data => {
-                self.draw(data[0] as any[], data[1] as any[]);
+                self.draw(data[0] as any[], data[1] as any[], data[2] as any[]);
             }, err => {
                 ChartsErrorHandler.outputErrorInfo(self.pieChartName);
             }, () => {
@@ -64,7 +68,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         }
     }
 
-    public draw(domains: any[], omicsType: any[]): void {
+    public draw(domains: any[], omicsType: any[], databases: any[]): void {
         const self = this;
         ChartsErrorHandler.removeGettingInfo(self.pieChartName);
         const repos = self.transformDomains(domains);
@@ -108,31 +112,36 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
 
         for (let i = 0; i < repos.length; i++) {
+            var lastUpdated = new Date(this.databaseListService.getLastUpdatedByDomain(repos[i].name,databases)).getFullYear();
             if (self.proteomicsList.indexOf(repos[i].name) > -1) {
                 reposData[0].children.push({
                     name: repos[i].name,
-                    size: repos[i].value
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
                 continue;
             }
             if (self.genomicsList.indexOf(repos[i].name) > -1) {
                 reposData[1].children.push({
                     name: repos[i].name,
-                    size: repos[i].value
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
                 continue;
             }
             if (self.metabolomicsList.indexOf(repos[i].name) > -1) {
                 reposData[2].children.push({
                     name: repos[i].name,
-                    size: repos[i].value
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
                 continue;
             }
             if (self.transcriptomicsList.indexOf(repos[i].name) > -1) {
                 reposData[3].children.push({
                     name: repos[i].name,
-                    size: repos[i].value
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
             }
         }
@@ -145,10 +154,12 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
                 self.reposDataSimple.push({
                     name: reposData[i].children[j].name,
-                    size: reposData[i].children[j].size
+                    size: reposData[i].children[j].size,
+                    lastUpdated: reposData[i].children[j].lastUpdated
                 });
 
                 self.data.push(reposData[i].children[j].size);
+                self.lastUpdated.push(reposData[i].children[j].lastUpdated);
             }
             reposData[i].size = total;
         }
@@ -163,7 +174,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
         const body = self.body = d3.select('#' + self.pieChartName);
 
-        self.drawBarGraphic(self.data, self.reposDataSimple);
+        self.drawBarGraphic(self.data, self.lastUpdated, self.reposDataSimple);
         self.setTheRadio();
         self.showTip('repository:"', self.reposDataSimple);
     }
@@ -174,6 +185,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             , omicsDataSimple = this.omicsDataSimple
             , reposDataSimple = this.reposDataSimple
             , data = this.data
+            , lastUpdated = this.lastUpdated
             , pieChartName = this.pieChartName
             , body = this.body;
 
@@ -242,13 +254,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 d = omicsDataNum;
                 searchWordPre = 'omics_type:"';
 
-                self.drawBarGraphic(d, omicsDataSimple);
+                self.drawBarGraphic(d, [], omicsDataSimple);
                 self.showTip(searchWordPre, omicsDataSimple);
             } else if (value === 'Resources') {
                 d = data;
                 searchWordPre = 'repository:"';
 
-                self.drawBarGraphic(d, reposDataSimple);
+                self.drawBarGraphic(d, lastUpdated, reposDataSimple);
                 self.showTip(searchWordPre, reposDataSimple);
 
             }
@@ -256,7 +268,8 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     }
 
 //
-    private drawBarGraphic(dataNow: any[], dataAddKey: any[]): void {
+    private drawBarGraphic(dataNow: any[], lastUpdated: any[], dataAddKey: any[]): void {
+        const currentYear = new Date().getFullYear(); 
         const body = d3.select('#' + this.pieChartName);
 
         const divWidth = parseInt(body.style('width'), 10);
@@ -272,13 +285,14 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         const lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
             upper = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
             most = d3.scaleLinear().domain([5001, 80000]).range([rectHeight + 8, 8]).clamp(true),
-            color = d3.schemeCategory10;
+            omicsColor = d3.schemeCategory10,
+            reposColor = d3.scaleSequential().domain([9,1]).interpolator(d3.interpolateViridis);
 
         const svg = body
             .append('svg')
             .attr('width', divWidth)
             .attr('height', svgHeight)
-            .attr('style', 'margin-top: 15px;')
+            .attr('style', 'margin-top: 15px; font-size: 10px')
             .attr('id', this.pieChartName + '_svg');
 
         if (svg.selectAll('rect')) {
@@ -292,6 +306,19 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         if (svg.selectAll('text')) {
             svg.selectAll('text').remove();
         }
+
+        svg.selectAll('legend')
+        .data(["Lighter bar colour indicates more recently updated data for a given resource"])
+        .enter()
+        .append("text")
+        .attr("x", 75)
+        .attr("y", 13)
+        .text(function (d) {
+            if (lastUpdated.length > 0) {
+                // Repositories view
+                return d;
+            }
+        });
 
         svg
             .selectAll('rect.lower')
@@ -310,7 +337,14 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return rectHeight * 3 + 28 - lower(d);
             })
             .style('fill', function (d, i) {
-                return color[i % 10];
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 1);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }
             });
 
         svg.selectAll('rect.upper')
@@ -329,8 +363,16 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return d >= 1500 ? rectHeight * 2 + 18 - upper(d) : 0;
             })
             .style('fill', function (d, i) {
-                return color[i % 10];
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 1);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }
             });
+
 
         svg.selectAll('rect.most')
             .data(dataNow)
@@ -348,8 +390,16 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return d >= 10000 ? rectHeight + 8 - most(d) : 0;
             })
             .style('fill', function (d, i) {
-                return color[i % 10];
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 1);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }
             });
+
 
 
         svg.append('g').attr('transform', 'translate(60,0)')
@@ -400,7 +450,11 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     .duration(200)
                     .style('opacity', .9);
 
-                tooltip.html(dataAddKey[i].name.toString() + ': <br>' + dataAddKey[i].size.toString() + ' datasets')
+                var lastUpdateStr = "";
+                if (dataAddKey[i].lastUpdated != undefined) {
+                    lastUpdateStr = '<br>Last updated: ' +  dataAddKey[i].lastUpdated.toString();
+                }
+                tooltip.html(dataAddKey[i].name.toString() + ': <br>' + dataAddKey[i].size.toString() + ' datasets' + lastUpdateStr)
                     .style('left', (mouseCoords[0] - 100) + 'px')
                     .style('top', parseInt(d3.select(this).attr('y'), 10) - 30 + 'px')
                     // .style('height', '2.8em')
