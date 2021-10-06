@@ -340,7 +340,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 if (lastUpdated.length > 0) {
                     // Repositories view
                     // + 1 is to avoid using yellow in d3.interpolateViridis
-                    return reposColor(currentYear-lastUpdated[i] + 1);
+                    return reposColor(currentYear-lastUpdated[i] + 2);
                 } else {
                     // Omics view
                     return omicsColor[i % 10];
@@ -366,7 +366,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 if (lastUpdated.length > 0) {
                     // Repositories view
                     // + 1 is to avoid using yellow in d3.interpolateViridis
-                    return reposColor(currentYear-lastUpdated[i] + 1);
+                    return reposColor(currentYear-lastUpdated[i] + 2);
                 } else {
                     // Omics view
                     return omicsColor[i % 10];
@@ -392,7 +392,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 if (lastUpdated.length > 0) {
                     // Repositories view
                     // + 1 is to avoid using yellow in d3.interpolateViridis
-                    return reposColor(currentYear-lastUpdated[i] + 1);
+                    return reposColor(currentYear-lastUpdated[i] + 2);
                 } else {
                     // Omics view
                     return omicsColor[i % 10];
