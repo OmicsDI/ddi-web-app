@@ -23,6 +23,10 @@ export class QueryUtils {
         query = query.replace(/-AND-/g, ' AND ');
         query = query.replace(/-OR-/g, ' OR ');
         query = query.replace(/-NOT-/g, ' NOT ');
+        if (query == "*") {
+           query = "";
+        }
+
         return query;
     }
 
