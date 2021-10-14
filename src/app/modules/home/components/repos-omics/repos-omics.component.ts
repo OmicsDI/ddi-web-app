@@ -23,6 +23,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     private genomicsList: string;
     private metabolomicsList: string;
     private transcriptomicsList: string;
+    private otherList: string;
 
     private pieChartName = 'chart_repos_omics';
     private body;
@@ -46,6 +47,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         this.metabolomicsList = dataSetService.getMetabolomicsList();
         this.genomicsList = dataSetService.getGenomicsList();
         this.transcriptomicsList = dataSetService.getTranscriptomicsList();
+        this.otherList = dataSetService.getOtherList();
     }
 
     ngOnInit() {
@@ -107,7 +109,12 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 'name': 'Transcriptomics',
                 'size': null,
                 'children': []
-            }
+            },
+            {
+                'name': 'Other',
+                'size': null,
+                'children': []
+            }            
         ];
 
 
@@ -144,6 +151,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     lastUpdated: lastUpdated
                 });
             }
+            if (self.otherList.indexOf(repos[i].name) > -1) {
+                reposData[4].children.push({
+                    name: repos[i].name,
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
+                });
+            }            
         }
 
         for (let i = 0; i < reposData.length; i++) {
@@ -279,8 +293,8 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
         const svgHeight = divHeight - 40;
         const rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 3;
-        const rectWidth = (divWidth - 70) * 0.04514;
-        const marginValueBefore = (divWidth - 70 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
+        const rectWidth = (divWidth - 70) * 0.03514;
+        const marginValueBefore = (divWidth - 80 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
         const marginValue = marginValueBefore > 65 ? 65 : marginValueBefore;
         const lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
             upper = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
