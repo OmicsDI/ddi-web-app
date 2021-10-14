@@ -24,6 +24,7 @@ export class DataSetService extends BaseService {
     private transcriptomicsList = 'ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, ' +
         'Expression Atlas Experiments, atlas-experiments,GEO';
     private genomicsList = 'ega,EGA,EVA,dbGaP';
+    private otherList = 'BioStudies,cellcollective,Cell Collective,NODE,Physiome Model Repository';
 
     constructor(private http: HttpClient, public appConfig: AppConfig, @Optional() @Inject(REQUEST) private request: Request,
                 @Inject(PLATFORM_ID) private platformId) {
@@ -114,6 +115,10 @@ export class DataSetService extends BaseService {
 
     public getTranscriptomicsList(): string {
         return this.transcriptomicsList;
+    }
+
+    public getOtherList(): string {
+        return this.otherList;
     }
 
     public getLatestDataSets(): Promise<Object> {
