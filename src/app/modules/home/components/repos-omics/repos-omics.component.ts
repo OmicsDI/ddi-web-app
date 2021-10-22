@@ -322,11 +322,23 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         }
 
         svg.selectAll('legend')
-        .data(["Lighter bar colour indicates more recently updated data for a given resource"])
+        .data(["Lighter bar colour indicates"])
         .enter()
         .append("text")
         .attr("x", 75)
         .attr("y", 13)
+        .text(function (d) {
+            if (lastUpdated.length > 0) {
+                // Repositories view
+                return d;
+            }
+        });
+        svg.selectAll('legend')
+        .data(["more recently updated data"])
+        .enter()
+        .append("text")
+        .attr("x", 75)
+        .attr("y", 23)
         .text(function (d) {
             if (lastUpdated.length > 0) {
                 // Repositories view
