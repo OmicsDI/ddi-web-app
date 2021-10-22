@@ -23,7 +23,7 @@ export class DataSetService extends BaseService {
         'GNPS, gnps';
     private transcriptomicsList = 'ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, ' +
         'Expression Atlas Experiments, atlas-experiments,GEO';
-    private genomicsList = 'ega,EGA,EVA,dbGaP';
+    private genomicsList = 'ega,EGA,EVA,dbGaP,ENA,Omics ENA Project';
     private otherList = 'BioStudies,cellcollective,Cell Collective,NODE,Physiome Model Repository';
 
     constructor(private http: HttpClient, public appConfig: AppConfig, @Optional() @Inject(REQUEST) private request: Request,
