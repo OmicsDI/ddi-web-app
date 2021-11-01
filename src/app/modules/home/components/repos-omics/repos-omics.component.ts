@@ -292,13 +292,14 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         d3.select('#' + this.pieChartName + '_svg').remove();
 
         const svgHeight = divHeight - 40;
-        const rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 3;
+        const rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 4;
         const rectWidth = (divWidth - 70) * 0.03514;
         const marginValueBefore = (divWidth - 80 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
         const marginValue = marginValueBefore > 65 ? 65 : marginValueBefore;
-        const lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
-            upper = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
-            most = d3.scaleLinear().domain([5001, 80000]).range([rectHeight + 8, 8]).clamp(true),
+        const lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 4 + 38, rectHeight * 3 + 38]).clamp(true),
+            middle = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
+            upper = d3.scaleLinear().domain([5001, 90000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
+            most = d3.scaleLinear().domain([90001, 2000000]).range([rectHeight + 8, 8]).clamp(true),
             omicsColor = d3.schemeCategory10,
             reposColor = d3.scaleSequential().domain([9,1]).interpolator(d3.interpolateViridis);
 
@@ -322,23 +323,11 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         }
 
         svg.selectAll('legend')
-        .data(["Lighter bar colour indicates"])
+        .data(["Lighter bar colour indicates more recently updated data"])
         .enter()
         .append("text")
         .attr("x", 75)
         .attr("y", 13)
-        .text(function (d) {
-            if (lastUpdated.length > 0) {
-                // Repositories view
-                return d;
-            }
-        });
-        svg.selectAll('legend')
-        .data(["more recently updated data"])
-        .enter()
-        .append("text")
-        .attr("x", 75)
-        .attr("y", 23)
         .text(function (d) {
             if (lastUpdated.length > 0) {
                 // Repositories view
@@ -360,7 +349,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return lower(d);
             })
             .attr('height', function (d) {
-                return rectHeight * 3 + 28 - lower(d);
+                return rectHeight * 4 + 38 - lower(d);
             })
             .style('fill', function (d, i) {
                 if (lastUpdated.length > 0) {
@@ -372,6 +361,33 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     return omicsColor[i % 10];
                 }
             });
+
+        svg.selectAll('rect.middle')
+            .data(dataNow)
+            .enter()
+            .append('rect')
+            .attr('class', 'middle')
+            .attr('x', function (d, i) {
+                return 70 + i * marginValue;
+            })
+            .attr('width', rectWidth)
+            .attr('y', function (d) {
+                return middle(d);
+            })
+            .attr('height', function (d) {
+                return d >= 1500 ? rectHeight * 3 + 28 - middle(d) : 0;
+            })
+            .style('fill', function (d, i) {
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 2);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }            
+            });
+
 
         svg.selectAll('rect.upper')
             .data(dataNow)
@@ -386,7 +402,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return upper(d);
             })
             .attr('height', function (d) {
-                return d >= 1500 ? rectHeight * 2 + 18 - upper(d) : 0;
+                return d >= 10000 ? rectHeight * 2 + 18 - upper(d) : 0;
             })
             .style('fill', function (d, i) {
                 if (lastUpdated.length > 0) {
@@ -396,11 +412,10 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 } else {
                     // Omics view
                     return omicsColor[i % 10];
-                }            
+                }
             });
 
-
-        svg.selectAll('rect.most')
+            svg.selectAll('rect.most')
             .data(dataNow)
             .enter()
             .append('rect')
@@ -426,16 +441,17 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 }
             });
 
-
-
         svg.append('g').attr('transform', 'translate(60,0)')
             .call(d3.axisLeft(lower).ticks(4));
+
+        svg.append('g').attr('transform', 'translate(60,0)')
+            .call(d3.axisLeft(middle).ticks(4));
 
         svg.append('g').attr('transform', 'translate(60,0)')
             .call(d3.axisLeft(upper).ticks(4));
 
         svg.append('g').attr('transform', 'translate(60,0)')
-            .call(d3.axisLeft(most).ticks(4));
+            .call(d3.axisLeft(most).ticks(4));            
 
         this.setTheRadio();
     }
