@@ -87,6 +87,10 @@ export class DataSetService extends BaseService {
         return this.http.get(url).pipe(map(x => this.extractData<DatasetBatchResult>(x)));
     }
 
+    public getTopDomain(): string {
+        return this.appConfig.getTopDomain();
+    }
+
     public getWebServiceUrl(): string {
         return this.appConfig.getWebServiceUrl();
     }

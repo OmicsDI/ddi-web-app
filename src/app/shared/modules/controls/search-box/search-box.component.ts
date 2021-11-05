@@ -10,6 +10,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
 import {isPlatformServer} from '@angular/common';
 import {Subscription} from 'rxjs';
+import {AppConfig} from 'app/app.config';
 
 @Component({
     selector: '[app-search-box]',
@@ -22,6 +23,9 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
     @ViewChild(AutocompleteNComponent) autocompleteComponent: AutocompleteNComponent;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
     query: string;
+
+    topDomain: string;
+    topDomainIsOmicsDI = true;
 
     queryParams: SearchQuery = new SearchQuery();
     private subscription: Subscription;
@@ -40,7 +44,13 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
                 private searchService: SearchService,
                 private logger: LogService,
                 @Inject(PLATFORM_ID) private platformId,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                public appConfig: AppConfig) {
+
+        this.topDomain = this.appConfig.getTopDomain();
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
+        }
     }
 
     ngOnInit() {

@@ -47,6 +47,10 @@ nav.navbar-inverse {
     background-color: #0099cc;
 }
 
+nav.navbar-inverse-modelexchange {
+    background-color: #318f7e;
+}
+
 .top-nav {
     padding: 0 15px;
 }
@@ -68,6 +72,8 @@ nav.navbar-inverse {
 .top-nav>li>a:focus,
 .top-nav>.open>a,
 .top-nav>.open>a:hover,
+
+
 .top-nav>.open>a:focus {
     color: #fff;
     background-color: #2e6da4;

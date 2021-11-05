@@ -4,6 +4,10 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
+    topDomain: 'omics',
+    logoUri: './static/images/logo/imageedit_2_3220380406.png',
+    title: 'OmicsDI',
+    topStripClass: 'navbar-inverse',
     production: false,
     baseHref: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/',
     webServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',

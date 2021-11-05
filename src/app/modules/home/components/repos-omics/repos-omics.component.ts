@@ -18,6 +18,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ReposOmicsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private proteomicsList: string;
     private genomicsList: string;
@@ -42,6 +43,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 @Inject(PLATFORM_ID) private platformId: string) {
         super();
         this.isServer = isPlatformServer(this.platformId);
+        this.topDomain = dataSetService.getTopDomain();
         this.webServiceUrl = dataSetService.getWebServiceUrl();
         this.proteomicsList = dataSetService.getProteomicsList();
         this.metabolomicsList = dataSetService.getMetabolomicsList();
@@ -53,10 +55,17 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     ngOnInit() {
         if (!isPlatformServer(this.platformId)) {
             const self = this;
+            var allPostFix;
+            if (this.topDomain = "omics") {
+               allPostFix = "all"; 
+            } else {
+               // rpetry: TODO: allPostFix = topDomain;
+               allPostFix = "all";
+            }
             const urls = [
-                this.webServiceUrl + 'statistics/domains',
-                this.webServiceUrl + 'statistics/omics',
-                this.webServiceUrl + 'database/all?r=${Math.random()}`'
+                this.webServiceUrl + 'statistics/domains?domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/omics?domain=' + this.topDomain,
+                this.webServiceUrl + 'database/' + allPostFix + '?r=${Math.random()}`'
             ];
             forkJoin(
                 urls.map(url => this.http.get(url))
