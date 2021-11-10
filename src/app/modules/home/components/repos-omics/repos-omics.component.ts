@@ -541,9 +541,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 if (dataAddKey[index].name.toString() === 'jPOST') {
                     searchWord = searchWordPre + 'JPOST Repository' + '"';
                 }
-                if (dataAddKey[index].name.toString() === 'GPMdb') {
-                    searchWord = searchWordPre + 'GPMDB' + '"';
-                }
                 if (dataAddKey[index].name.toString() === 'Paxdb') {
                     searchWord = searchWordPre + 'PAXDB' + '"';
                 }
