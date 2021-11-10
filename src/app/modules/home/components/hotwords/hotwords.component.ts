@@ -63,9 +63,9 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         const webServiceUrl = this.webServiceUrl;
 
         const urls = [
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=${topDomain}&field=description',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=${topDomain}&field=data_protocol',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=${topDomain}&field=sample_protocol'
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=description',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=data_protocol',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=sample_protocol'
         ];
         forkJoin(
             urls.map(url => this.http.get(url))
