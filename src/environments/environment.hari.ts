@@ -1,4 +1,8 @@
 export const environment = {
+    topDomain: 'omics',
+    logoUri: './static/images/logo/imageedit_2_3220380406.png',
+    title: 'OmicsDI',
+    topStripClass: 'navbar-inverse',
     production: true,
     baseHref: '/',
     webServiceUrl: 'http://stage.omicsdi.org/ws/',

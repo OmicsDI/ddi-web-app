@@ -1,5 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
+import {AppConfig} from 'app/app.config';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {isPlatformServer, Location, PopStateEvent, DOCUMENT} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
@@ -17,6 +18,10 @@ import {environment} from 'environments/environment';
 
 export class AppComponent implements OnInit, OnDestroy {
     title: string;
+    topDomain: string;
+    logoUri: string;
+    topStripClass: string;
+    topDomainIsOmicsDI = true;
     showSmallSearch = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
@@ -37,14 +42,21 @@ export class AppComponent implements OnInit, OnDestroy {
                 @Inject(DOCUMENT) private document,
                 private dataTransporterService: DataTransportService,
                 private googleAnalyticsService: GoogleAnalyticsService,
-                private profileService: ProfileService) {
+                private profileService: ProfileService,
+                public appConfig: AppConfig) {
 
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
             window.location.href = window.location.href.replace('http:', 'https:');
         }
         this.inDashboardView = window.location.href.includes('www.omicsdi.org/dashboard');
-        this.title = this.getTitle();
-    }
+        this.topDomain = this.appConfig.getTopDomain();
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
+        }
+        this.title = this.appConfig.getTitle();
+        this.logoUri = this.appConfig.getLogoUri();
+        this.topStripClass = this.appConfig.getTopStripClass();    
+     }
 
     ngOnInit() {
         const bases = this.document.getElementsByTagName('base');
@@ -106,11 +118,6 @@ export class AppComponent implements OnInit, OnDestroy {
         localStorage.removeItem('id_token');
         this.profileService.removeProfile();
         window.location.href = '/home';
-    }
-
-    getTitle(): string {
-        const result = 'Omics DI 2.0';
-        return result;
     }
 
     gotoHelp() {
