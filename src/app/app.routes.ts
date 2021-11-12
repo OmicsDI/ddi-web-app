@@ -18,6 +18,7 @@ export const routes: Routes = [
     {path: 'search', loadChildren: '@modules/search/search.module#SearchModule' },
     {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'dataset/:domain/:acc', loadChildren: '@modules/dataset/dataset.module#DatasetModule'},
+    {path: 'rosette/:domain/:acc', loadChildren: '@modules/rosette/rosette.module#RosetteModule'},
     {path: 'terms', component: TermsComponent},
     {path: 'notfound', component: NotfoundComponent},
     {path: 'admin', loadChildren: '@modules/admin/admin.module#AdminModule', canActivate: [AuthService]},

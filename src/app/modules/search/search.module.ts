@@ -4,7 +4,6 @@ import {CommonModule} from '@angular/common';
 import {SearchRoutingModule} from './search-routing.module';
 import {ControlsModule} from '@shared/modules/controls/controls.module';
 import {PipesModule} from '@shared/pipes/pipes.module';
-import {DisqusModule} from 'ngx-disqus';
 import {FormsModule} from '@angular/forms';
 import {ClipboardModule} from 'ngx-clipboard';
 import {UtilsModule} from '@shared/modules/utils/utils.module';
@@ -22,7 +21,6 @@ import {MatSelectModule} from '@angular/material';
         SearchRoutingModule,
         ControlsModule,
         PipesModule,
-        DisqusModule.forRoot('omicsdi'),
         FormsModule,
         ClipboardModule,
         UtilsModule,

@@ -8,7 +8,7 @@ export class ChartsErrorHandler {
         tempDiv.selectAll('p').remove();
         tempDiv.append('p')
             .attr('class', 'error-info')
-            .text('Sorry, accessing to this web service was temporally failed.');
+            .text('Sorry, this service is temporarily unavailable.');
     }
 
     public static outputGettingInfo(errDiv: string): void {

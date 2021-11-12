@@ -98,6 +98,8 @@ export class DashboardSelectedComponent implements OnInit {
         this.dataTransporterService.fire(this.selectedChannel, this.dataSets);
         this.datasetDetails = [];
         this.notificationService.success('Dataset removed', 'from selected');
+        // Refresh the window so that the user can see that the dataset was indeed removed
+        window.location.reload();
     }
 
     claimClick() {

@@ -9,7 +9,7 @@ import {GoogleAnalyticsService} from '@shared/services/google-analytics.service'
 @Injectable()
 export class AuthService implements CanActivate {
     helper = new JwtHelperService();
-    isServer: boolean
+    isServer: boolean;
     constructor(private router: Router,
                 private profileService: ProfileService,
                 private googleAnalytics: GoogleAnalyticsService,

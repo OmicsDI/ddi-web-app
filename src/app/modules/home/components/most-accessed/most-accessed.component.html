@@ -8,7 +8,7 @@
         <ul class="nobullet" style="margin-top: 10px">
 
             <li *ngIf="isRequestMostAccessedDatasetFailed()" class="error-info">
-                Sorry, the accessing to this datasets list was temporally failed.
+                Sorry, the most accessed datasets service is temporarily unavailable.
             </li>
             <li *ngFor="let _dataset of mostAccessedDatasets " class="cut-text" style="line-height: 2">
                 <app-omics-image [omics]="_dataset?.omicsType" [size]="'small'"></app-omics-image>

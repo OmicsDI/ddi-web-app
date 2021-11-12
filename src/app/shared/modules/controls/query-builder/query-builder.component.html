@@ -26,7 +26,7 @@
                 </div>
                 <div *ngIf="null==rule.query">
                     <div class="form-inline" style="margin-top:3px; display: flex; align-items: center;">
-                        <select [(ngModel)]="rule.field" class="form-control input-sm" (select)="selectField(rule)">
+                        <select [(ngModel)]="rule.field" class="form-control input-sm" (change)="selectField(rule)">
                             <option *ngFor="let field of allFacets" [value]="field.id">{{field.label}}
                             </option>
                         </select>
@@ -38,8 +38,8 @@
                                            (valueChange)="dropDownValueChange()"></app-drop-down>
                         </div>
                         <div *ngIf="rule.condition=='range'" class="input-group" style="margin-left:3px; flex-grow: 2">
-                            <app-drop-down [(ngModel)]="rule.data2"
-                                           [facetValues]="getFieldsData(rule.field)"></app-drop-down>
+                            <app-drop-down [(value)]="rule.data2"
+                                           [facetValues]="getFieldsData(rule.field)" (valueChange)="dropDownValueChange()"></app-drop-down>
                         </div>
                         <button style="margin-left: 5px" (click)="removeCondition(i)" class="btn btn-sm btn-danger"><i
                                 class="fa fa-minus" aria-hidden="true"></i></button>

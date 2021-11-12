@@ -17,7 +17,7 @@ export class DatabaseComponent implements OnInit {
     public domainStats: Map<String, DomainStat> = new Map<String, DomainStat>();
     public p = 1;
     public config = {
-        itemsPerPage: 8,
+        itemsPerPage: 24,
         currentPage: this.p
     };
     public url: string;

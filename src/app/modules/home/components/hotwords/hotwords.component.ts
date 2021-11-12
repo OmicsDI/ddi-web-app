@@ -20,6 +20,7 @@ const cloud = require('d3-cloud');
 })
 export class HotwordsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private terms: {
         Omics_description: FrequentlyTerm[],
@@ -44,6 +45,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         if (isPlatformServer(this.platformId)) {
             return;
         }
+        this.topDomain = this.datasetService.getTopDomain();
         this.webServiceUrl = this.datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
         this.fill = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
@@ -61,9 +63,9 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         const webServiceUrl = this.webServiceUrl;
 
         const urls = [
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol'
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=description',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=data_protocol',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=sample_protocol'
         ];
         forkJoin(
             urls.map(url => this.http.get(url))
@@ -261,8 +263,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
                 const searchWord = '"' + d.label + '"';
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                // redirect logic remains to do
-                self.router.navigate(['search'], {queryParams: {q: searchWord}});
+                self.router.navigate(['search'], {queryParams: {q: self.field + ':' + searchWord}});
             })
             .on('mousemove', function (d, i) {
                 const wordcloud_tooltip = d3.select('#word_cloud_chart_tooltip')
@@ -272,7 +273,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
                     .duration(200)
                     .style('opacity', .9);
 
-                wordcloud_tooltip.html('<strong>' + d.frequent + '</strong> datasets')
+                    wordcloud_tooltip.html('Click to retrieve datasets that mention term <strong>' + d.label + '</strong> in field <strong>'+self.field+'<strong>')
                     .style('left', (mouse_coords[0] + 25) + 'px')
                     .style('top', (mouse_coords[1] - 25) + 'px');
             })
@@ -298,6 +299,6 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         d3.select('#' + this.hotwordsName)
             .append('p')
             .attr('class', 'error-info')
-            .html('Sorry, accessing to the word cloud web service was temporally failed.');
+            .html('Sorry, the word cloud service is temporarily unavailable.');
     }
 }

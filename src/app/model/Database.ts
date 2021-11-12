@@ -16,4 +16,5 @@ export class Database {
     accessionPrefix: string[];
     urlTemplate: string;
     icon: string;
+    lastUpdated: string;
 }

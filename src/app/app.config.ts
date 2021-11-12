@@ -9,6 +9,22 @@ import {INamed} from 'model/INamed';
 @Injectable()
 export class AppConfig {
 
+    getTopDomain(): string {
+        return `${environment.topDomain}`;
+    }
+
+    getLogoUri(): string {
+        return `${environment.logoUri}`;
+    }
+
+    getTitle(): string {
+        return `${environment.title}`;
+    }
+
+    getTopStripClass(): string {
+        return `${environment.topStripClass}`;
+    }
+
     /***OBSOLETE***/
     getWebServiceUrl(): string {
         return `${environment.webServiceUrl}`;
@@ -24,20 +40,23 @@ export class AppConfig {
     }
 
     getStatisticsUrl(): string {
-        return `${environment.webServiceUrl}statistics/general`;
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}statistics/general?domain=${topDomain}`;
     }
 
     getSimilarUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/getSimilar?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}dataset/getSimilar?accession=${acc}&domain=${topDomain}&database=${repository}&r=${Math.random()}`;
     }
 
     getSearchUrl(query: string, facetcount: number, size: number, sortBy: string, sortOrder: string, start: number): string {
-        return `${environment.webServiceUrl}dataset/search?query=${query}&facetcount=${facetcount}&size=${size}&` +
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}dataset/search?query=${query}&domain=${topDomain}&facetcount=${facetcount}&size=${size}&` +
             `sortfield=${sortBy}&order=${sortOrder}&start=${start}`;
     }
 
     getPublicationUrl(acc: string): string {
-        return `${environment.webServiceUrl}publication/list?acc=${acc}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}publication/list?acc=${acc}`;
     }
 
     getProfileUrl(username: string): string {
@@ -65,19 +84,23 @@ export class AppConfig {
     }
 
     getEnrichmentUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}`;
     }
 
     getSynonymsUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}`;
     }
 
     getDatasetUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/get?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/get?accession=${acc}&database=${repository}`;
     }
 
     getDatasetDownloadUrl(acc: string, repository: string): string {
         return `${environment.webServiceUrl}dataset/${repository}/${acc}.json`;
+    }
+
+    getDatasetDRSUrl(acc: string, repository: string): string {
+        return `${environment.webServiceUrl}dataset/getDRS?accession=${acc}&database=${repository}`;
     }
 
     getDatasetBatchUrl(): string {
@@ -94,19 +117,21 @@ export class AppConfig {
     }
 
     getDatasetLatestUrl(): string {
-        return `${environment.webServiceUrl}dataset/latest?size=12`;
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}dataset/latest?size=12&domain=${topDomain}`;
     }
 
     getDatasetMostAccessedUrl(): string {
-        return `${environment.webServiceUrl}dataset/mostAccessed?size=20`;
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}dataset/mostAccessed?size=20&domain=${topDomain}`;
     }
 
     getDatasetByUrl(): string {
-        return `${environment.webServiceUrl}dataset/getDatasetByUrl?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getDatasetByUrl`;
     }
 
     getAutocompleteUrl(keyword: string): string {
-        return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10&r=${Math.random()}`;
+        return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10`;
     }
 
     getProfileClaimDatasetUrl(userId: string) {
@@ -126,7 +151,15 @@ export class AppConfig {
     }
 
     getDatabasesUrl() {
-        return `${environment.webServiceUrl}database/all?r=${Math.random()}`;
+        const topDomain = this.getTopDomain();
+        var allPostFix;
+        if (topDomain == "omics") {
+           allPostFix = "all";
+        } else {
+           // rpetry: TODO: allPostFix = topDomain;
+           allPostFix = "all";
+        }
+        return `${environment.webServiceUrl}database/${allPostFix}?r=${Math.random()}`;
     }
 
     getDatabaseImageUrl(databaseName: string) {
@@ -183,12 +216,12 @@ export class AppConfig {
     }
 
     getSimilarityMoleculesUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}`;
     }
 
     getSimilarityDatasetsUrl(acc: string, repository: string) {
         return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&` +
-            `database=${repository}&r=${Math.random()}`;
+            `database=${repository}`;
     }
 
     getFeedbackUrl() {
@@ -204,19 +237,19 @@ export class AppConfig {
     }
 
     getScoreViewsUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/views/${repository}/${acc}`;
     }
 
     getScoreCitationsUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/citation/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/citation/${repository}/${acc}`;
     }
 
     getScoreReanalysisUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}`;
     }
 
     getScoreConnectionsUrl(acc: string) {
-        return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/search/${acc}`;
     }
 
     getThorUrl() {

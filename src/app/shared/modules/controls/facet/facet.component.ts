@@ -50,9 +50,9 @@ export class FacetComponent implements OnInit {
 
     labelClicked(value: string, event, isCheckboxChecked: boolean) {
         if (!isCheckboxChecked) {
-            this.facetValueRemoved.emit(value);
+            this.facetValueRemoved.emit('"' + value + '"');
         } else {
-            this.facetValueSelected.emit(value);
+            this.facetValueSelected.emit('"' + value + '"');
         }
     }
 
@@ -67,6 +67,6 @@ export class FacetComponent implements OnInit {
         if (this.facetSelected === undefined) {
             return false;
         }
-        return this.facetSelected.indexOf(value) > -1;
+        return this.facetSelected.indexOf('"' + value + '"') > -1;
     }
 }

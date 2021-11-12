@@ -63,7 +63,9 @@ export class MostAccessedComponent extends AsyncInitialisedComponent implements 
     private handleError(error: any) {
 
         MostAccessedComponent.requestMostAccessedDatasetFailed = true;
-        this.cd.detectChanges();
+        if (this) {
+            this.cd.detectChanges();
+        }
         return Promise.reject(error.message || error);
     }
 

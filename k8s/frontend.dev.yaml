@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omicsdi-frontend
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: omicsdi-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: omicsdi-frontend
+    spec:
+      containers:
+        - name: omicsdi-frontend
+          image: omicsdi/omicsdi-frontend:omicsdi.dev.01
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omicsdi-frontend
+  labels:
+    app: omicsdi-frontend
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: omicsdi-frontend

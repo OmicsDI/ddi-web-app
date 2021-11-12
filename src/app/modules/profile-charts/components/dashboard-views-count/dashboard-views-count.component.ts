@@ -75,8 +75,8 @@ export class DashboardViewsCountComponent implements OnInit {
             .ticks(yearSet.size + 2).tickFormat(function (d: any, i: number) {
                 return (i % toDisplay === 0) ? d.getFullYear() : '';
             });
-        const yAxisLeft = d3.axisLeft(y0).ticks(2);
-        const yAxisRight = d3.axisRight(y1).ticks(2);
+        const yAxisLeft = d3.axisLeft(y0).ticks(2).tickSize(2).tickPadding(1);
+        const yAxisRight = d3.axisRight(y1).ticks(2).tickSize(2).tickPadding(1);
         const yLine = d3.scaleLinear().range([15, 0]);
         const yNavLine = d3.axisBottom(yLine).ticks(0);
 
@@ -155,7 +155,7 @@ export class DashboardViewsCountComponent implements OnInit {
             .on('mouseover', function (d: any, i: number) {
                 const mouse_coords = d3.mouse(document.getElementById('barchart_views_dashboard'));
 
-                toolTip.html(d.omics_type.toString() + ': <br>' + d.value.toString() + ' datasets')
+                toolTip.html(d.omics_type.toString() + ': <br>' + d.value.toString() + ' views')
                     .style('left', ((mouse_coords[0] - 10) + 'px'))
                     .style('top', ((mouse_coords[1] - 35 ) + 'px'))
                     .style('height', '3em')

@@ -41,6 +41,16 @@ export class DatabaseListService extends BaseService {
         return null;
     }
 
+    public getLastUpdatedByDomain(domain: string, databases: Database[]): string {
+        for (const db of databases) {
+            if (db.domain === domain) {
+                return db.lastUpdated;
+            }
+        }
+        this.logger.debug('Domain with name {} can\'t be found', domain);
+        return null;
+    }
+
     public getDatabaseByAccession(accession: string, databases: Database[]): Database {
         for (const database of databases) {
             if (database.accessionPrefix) {

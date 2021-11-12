@@ -1,9 +1,9 @@
 div.mat-menu-panel {
-    width: 600px !important;
+    width: 670px !important;
 }
 
 div.mat-menu-panel {
-    max-width: 550px;
-    width: 550px;
+    max-width: 670px;
+    width: 670px;
     overflow: visible;
 }
