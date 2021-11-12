@@ -9,7 +9,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {isPlatformServer} from '@angular/common';
 import {forkJoin} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-
+ 
 @Component({
     selector: 'app-tissues-organisms',
     templateUrl: './tissues-organisms.component.html',
