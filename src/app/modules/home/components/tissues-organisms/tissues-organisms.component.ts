@@ -18,12 +18,13 @@ import {HttpClient} from '@angular/common/http';
 })
 export class TissuesOrganismsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private retryLimitTimes: number;
     private chartsErrorHandler: ChartsErrorHandler;
 
     private bubChartName = 'chart_tissues_organisms';
-    private field = 'Tissues';
+    private field;
 
     private tissues: StatisticsDomainsDetail[];
     private organisms: StatisticsDomainsDetail[];
@@ -35,18 +36,24 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
                 @Inject(PLATFORM_ID) private platformId: string) {
         super();
         this.isServer = isPlatformServer(this.platformId);
+        this.topDomain = datasetService.getTopDomain();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
+        if (this.topDomain == "omics") {
+            this.field = "Tissues";
+        } else {
+            this.field = "Organisms";
+        }
     }
 
     ngOnInit() {
         if (!isPlatformServer(this.platformId)) {
             const self = this;
             const urls = [
-                this.webServiceUrl + 'statistics/tissues?size=100',
-                this.webServiceUrl + 'statistics/organisms?size=100',
-                this.webServiceUrl + 'statistics/diseases?size=100'
+                this.webServiceUrl + 'statistics/tissues?size=100&domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/organisms?size=100&domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/diseases?size=100&domain=' + this.topDomain            
             ];
             forkJoin(
                 urls.map(url => this.http.get(url))
@@ -184,7 +191,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             .append('span');
 
         d3.select('#' + self.bubChartName + '_radio_form')
-            .select('input[value=Tissues]')
+            .select('input[value=' + this.field + ']')
             .property('checked', true);
 
         d3.select('#' + self.bubChartName + '_radio_form')
@@ -214,7 +221,15 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
 
         self.resetRadio(div_width_inside);
 
-        const value = self.field || 'Tissues';
+        var value;
+        if (self.field != undefined) {
+                value = self.field;
+        } else if (this.topDomain == "omics") {
+            this.field = "Tissues";
+        } else {
+            this.field = "Organisms";
+        }
+
         let data = []
             , searchWord_pre;
 
@@ -229,6 +244,10 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         if (value === 'Diseases') {
             data = self.diseases;
             searchWord_pre = 'disease:"';
+        }
+
+        if (data.length === 0) {
+           return;
         }
 
         svg_inside.selectAll('.node').remove();
