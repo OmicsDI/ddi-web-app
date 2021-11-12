@@ -1,11 +1,11 @@
 <div id="wrapper1" class="container_ddi" style="margin:0px;">
-    <nav class="navbar navbar-inverse navbar-fixed-top row" role="navigation" style="border: none">
+    <nav class="navbar {{this.topStripClass}} navbar-fixed-top row" role="navigation" style="border: none">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <div class="nav-item" style="padding: 10px 0 10px 15px; float: left;">
-                <a class="nav-link text-center nav-element" style="padding: 20px 15px" [routerLink]="['/']" title="OmicsDI Homepage">
-                    <img src="./static/images/logo/imageedit_2_3220380406.png" alt="logo" style="height: 25px;" />
-                    <span style="margin-left: 8px; font-size: 10pt; vertical-align: bottom">OmicsDI</span>
+                 <a class="nav-link text-center nav-element" style="padding: 20px 15px" [routerLink]="['/']" title="{{this.title}} Homepage">
+                    <img src="{{this.logoUri}}" alt="logo" style="height: 25px;" />
+                    <span style="margin-left: 8px; font-size: 10pt; vertical-align: bottom">{{this.title}}</span> 
                 </a>
             </div>
             <button type="button" class="navbar-toggle" (click)="isCollapsedNav = !isCollapsedNav">
@@ -29,11 +29,11 @@
                     <ul *dropdownMenu class="dropdown-menu" id="help-dropdown" style="background-color: #ffffff">
                         <li class="nav-item" id="li1">
                             <div class="text-center" (click)="gotoHelp()" mat-menu-item>
-                                Omics Help
+                                {{this.title}} Help
                             </div>
                         </li>
                        <li class="nav-item">
-                            <div class="text-center" (click)="gotoOmicsDISpec()" mat-menu-item>OmicsDI Specification</div>
+                            <div class="text-center" (click)="gotoOmicsDISpec()" mat-menu-item>{{this.title}} Specification</div>
                         </li>
                         <li class="nav-item">
                             <!--<div class="text-center" [routerLink]="['/help/api']" mat-menu-item>API</div>-->
@@ -47,7 +47,7 @@
                     </ul>
                 </li>
                 <li *ngIf="!profile" dropdown>
-                    <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle" data-icon="M" dropdownToggle
+                     <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle nav-element" data-icon="M" dropdownToggle
                        style="color:white; border: none" aria-controls="login-dropdown">
                         <span class="glyphicon glyphicon-user"></span> Login
                     </a>
@@ -100,18 +100,18 @@
     <div style="">
         <router-outlet></router-outlet>
     </div>
-        <div [class.indent]="inDashboardView" data-color="none" data-description="OmicsDI is an Elixir interoperability service" data-more-information-link="//www.elixir-europe.org/platforms/interoperability" data-name="OmicsDI" data-use-basic-styles="true" id="elixir-banner">        
+        <div [class.indent]="inDashboardView" data-color="none" data-use-basic-styles="true" id="elixir-banner">
         <div id="elixir-ribbon" class="elixir-ribbon">
             <div class="row">
                 <div class="column">
                     <a href="//www.elixir-europe.org/platforms/interoperability">
                         <div class="elixir-logo-kite"></div>
                         <h5>
-                            <span class="elixir-banner-name">OmicsDI</span> is part of the ELIXIR infrastructure
+                            <span class="elixir-banner-name">{{this.title}}</span> is part of the ELIXIR infrastructure
                         </h5>
                         <div id="elixir-banner-info">
                             <small>
-                                <span class="elixir-banner-description">OmicsDI is an Elixir interoperability service</span>
+                                <span class="elixir-banner-description">{{this.title}} is an Elixir interoperability service. </span>
                                 <span class="readmore">Learn more ›</span>
                             </small>
                         </div>
@@ -217,11 +217,19 @@
 
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <h3 class="about">
-                        OmicsDI Databases
+                        {{this.title}} Databases
                     </h3>
 
+                    <div *ngIf="!topDomainIsOmicsDI" class="col-md-3 col-sm-4 col-xs-4">
+                        <ul>
+                            <li><a target="_blank" href="http://physiomeproject.org/" class="no-icon">Physiome Model Repository</a></li>
+                            <li><a target="_blank" href="https://cellcollective.org/" class="no-icon">Cell Collective</a></li>
+                            <li><a target="_blank" href="https://www.ebi.ac.uk/biomodels" class="no-icon">BioModels</a></li>
+                            <li><a target="_blank" href="https://fairdomhub.org/" class="no-icon">FAIRDOMHub</a></li>
+                        </ul>
+                    </div>
 
-                    <div class="col-md-3 col-sm-4 col-xs-4">
+                    <div *ngIf="topDomainIsOmicsDI" class="col-md-3 col-sm-4 col-xs-4">
                         <ul>
 
                             <li><a target="_blank" href="http://www.ebi.ac.uk/pride/archive/" class="no-icon">PRIDE</a>
@@ -236,7 +244,7 @@
                             <li><a target="_blank" href="https://jpostdb.org/" class="no-icon">JPOST Repository</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-3 col-sm-4 col-xs-4">
+                    <div *ngIf="topDomainIsOmicsDI" class="col-md-3 col-sm-4 col-xs-4">
                         <ul>
 
                             <li><a target="_blank" href="https://www.ebi.ac.uk/ega/" class="no-icon">EGA</a></li>
@@ -248,7 +256,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-md-3 col-sm-4 col-xs-4">
+                    <div *ngIf="topDomainIsOmicsDI" class="col-md-3 col-sm-4 col-xs-4">
                         <ul>
 
 
@@ -261,11 +269,12 @@
                             <li><a target="_blank" href="https://GNPS.ucsd.edu" class="no-icon">GNPS</a>
                             </li>
                             <li><a target="_blank" href="https://www.ebi.ac.uk/biomodels" class="no-icon">BioModels</a>
+                            <li><a target="_blank" href="https://fairdomhub.org/" class="no-icon">FAIRDOMHub</a>
                             </li>
 
                         </ul>
                     </div>
-                    <div class="col-md-3 col-sm-4 col-xs-4">
+                    <div *ngIf="topDomainIsOmicsDI" class="col-md-3 col-sm-4 col-xs-4">
                         <ul>
                             <li><a target="_blank" href="https://www.ebi.ac.uk/arrayexpress/" class="no-icon">ArrayExpress</a>
                             </li>

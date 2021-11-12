@@ -13,7 +13,7 @@
                     </button>
                 </div>
             </div>
-            <span class="help-block example-searches" *ngIf="isHomeSearch" style="margin-top: 10px">
+            <span class="help-block example-searches" *ngIf="isHomeSearch && topDomainIsOmicsDI" style="margin-top: 10px">
                  <i>
                      Examples:
                      <a rel="nofollow" (click)="doSearch('Cancer')">Cancer</a>,
@@ -25,6 +25,17 @@
                      <a rel="nofollow" (click)="doSearch('PXD001416')">PXD001416</a>
                  </i>
              </span>
+             <span class="help-block example-searches" *ngIf="isHomeSearch && !topDomainIsOmicsDI" style="margin-top: 10px">
+                <i>
+                    Examples:
+                    <a rel="nofollow" (click)="doSearch('Cancer')">Cancer</a>,
+                    <a rel="nofollow" (click)="doSearch('TAXONOMY:&quot;9606&quot;')">Homo sapiens</a>,
+                    <a rel="nofollow" (click)="doSearch('MAPK')">MAPK</a>,
+                    <a rel="nofollow" (click)="doSearch('Phospho')">Phospho</a>,
+                    <a rel="nofollow" (click)="doSearch('Hela')">Hela</a>,
+                    <a rel="nofollow" (click)="doSearch('MODEL1411240019')">MODEL1411240019</a>
+                </i>
+            </span>
         </div>
     </form>
 </div>

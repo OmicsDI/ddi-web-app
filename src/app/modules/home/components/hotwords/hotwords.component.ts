@@ -20,6 +20,7 @@ const cloud = require('d3-cloud');
 })
 export class HotwordsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private terms: {
         Omics_description: FrequentlyTerm[],
@@ -44,6 +45,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         if (isPlatformServer(this.platformId)) {
             return;
         }
+        this.topDomain = this.datasetService.getTopDomain();
         this.webServiceUrl = this.datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
         this.fill = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
@@ -61,9 +63,9 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         const webServiceUrl = this.webServiceUrl;
 
         const urls = [
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol'
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=description',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=data_protocol',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=sample_protocol'        
         ];
         forkJoin(
             urls.map(url => this.http.get(url))
