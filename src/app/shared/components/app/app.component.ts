@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     topDomain: string;
     logoUri: string;
     topStripClass: string;
+    topDomainIsOmicsDI = true;
     showSmallSearch = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
