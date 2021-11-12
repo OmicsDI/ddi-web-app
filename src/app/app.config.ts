@@ -159,7 +159,7 @@ export class AppConfig {
            // rpetry: TODO: allPostFix = topDomain;
            allPostFix = "all";
         }
-        return `${environment.webServiceUrl}database/${allPostFix}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}database/${allPostFix}`;
     }
 
     getDatabaseImageUrl(databaseName: string) {
