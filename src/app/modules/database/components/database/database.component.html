@@ -33,7 +33,7 @@
 
                     <div class="panel-footer small">
                         <a rel="nofollow" [routerLink]="['/search']"
-                           [queryParams]="{q:'repository: (&quot;' + db.repository + '&quot;)'}">{{
+                           [queryParams]="{q:'repository:&quot;' + db.repository + '&quot;'}">{{
                             this.getDatasetCount(db.domain) }} datasets</a>
                             <span style="position: relative; float: right;">Last Updated: {{ db.lastUpdated }}</span>
                     </div>
