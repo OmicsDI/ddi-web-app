@@ -33,6 +33,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
     private divWidth: number;
     private fill: string[];
     private field: string;
+    topDomainIsOmicsDI = true;
 
     constructor(private datasetService: DataSetService,
                 private router: Router,
@@ -46,6 +47,9 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
             return;
         }
         this.topDomain = this.datasetService.getTopDomain();
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
+        }
         this.webServiceUrl = this.datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
         this.fill = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
@@ -114,11 +118,15 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
         const formdiv = d3.select('#' + self.hotwordsName).append('div');
         formdiv.style('margin-bottom', '20px');
+        var marginLeft = "-130px";
+        if (this.topDomainIsOmicsDI == false) {
+            marginLeft = "-70px";
+        }
         const radio_form = formdiv.append('form');
         radio_form
             .attr('id', self.hotwordsName + '_form')
             .attr('class', 'center')
-            .attr('style', 'width: 260px; position: absolute; left: 50%; margin-left: -130px; bottom: 10px')
+            .attr('style', 'width: 260px; position: absolute; left: 50%; margin-left: ' + marginLeft + '; bottom: 10px')
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
@@ -131,33 +139,34 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
             .attr('for', 'description')
             .append('span')
             .append('span');
-        radio_form
-            .append('input')
-            .attr('type', 'radio')
-            .attr('name', 'dataset')
-            .attr('value', 'sample_protocol')
-            .attr('id', 'sample')
-            .text('Sample');
-        radio_form
-            .append('label')
-            .text('Sample')
-            .attr('for', 'sample')
-            .append('span')
-            .append('span');
-        radio_form
-            .append('input')
-            .attr('type', 'radio')
-            .attr('name', 'dataset')
-            .attr('value', 'data_protocol')
-            .attr('id', 'data')
-            .text('Data');
-        radio_form
-            .append('label')
-            .text('Data')
-            .attr('for', 'data')
-            .append('span')
-            .append('span');
-
+        if (this.topDomainIsOmicsDI == true) {
+            radio_form
+            	.append('input')
+            	.attr('type', 'radio')
+            	.attr('name', 'dataset')
+            	.attr('value', 'sample_protocol')
+            	.attr('id', 'sample')
+            	.text('Sample');
+       	    radio_form
+            	.append('label')
+            	.text('Sample')
+            	.attr('for', 'sample')
+            	.append('span')
+            	.append('span');
+            radio_form
+            	.append('input')
+            	.attr('type', 'radio')
+            	.attr('name', 'dataset')
+            	.attr('value', 'data_protocol')
+            	.attr('id', 'data')
+            	.text('Data');
+            radio_form
+            	.append('label')
+            	.text('Data')
+            	.attr('for', 'data')
+            	.append('span')
+            	.append('span');
+        }
         d3.select('#hotwords_form').select('input[value=description]').property('checked', true);
 
         d3.select('#hotwords_form')

@@ -25,6 +25,10 @@ export class AppConfig {
         return `${environment.topStripClass}`;
     }
 
+    getSubmissionUrl(): string {
+        return `${environment.submissionUrl}`;
+    }
+
     /***OBSOLETE***/
     getWebServiceUrl(): string {
         return `${environment.webServiceUrl}`;
