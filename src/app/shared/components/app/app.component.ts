@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     topDomain: string;
     logoUri: string;
     topStripClass: string;
+    submissionUrl: string;
     topDomainIsOmicsDI = true;
     showSmallSearch = true;
     private lastPoppedUrl: string;
@@ -56,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.title = this.appConfig.getTitle();
         this.logoUri = this.appConfig.getLogoUri();
         this.topStripClass = this.appConfig.getTopStripClass();
+        this.submissionUrl = this.appConfig.getSubmissionUrl();
     }
 
     ngOnInit() {
@@ -137,7 +139,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     toSubmission() {
-        window.location.href = 'https://www.ebi.ac.uk/biostudies/';
+        window.location.href = this.submissionUrl;
     }
 
     ngOnDestroy(): void {

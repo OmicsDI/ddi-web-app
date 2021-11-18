@@ -5,17 +5,15 @@
         </h4>
     </div>
     <div class="mt-card-body">
-        <div class="callout-info ddi-blockquote">The Omics Discovery Index (OmicsDI) provides a knowledge discovery framework across heterogeneous omics data
+        <div *ngIf="topDomainIsOmicsDI" class="callout-info ddi-blockquote">The Omics Discovery Index (OmicsDI) provides a knowledge discovery framework across heterogeneous omics data
             (genomics, proteomics, transcriptomics and metabolomics).
-
-            This service is part of the ELIXIR infrastructure.
-            <br>
-            <a href="https://elixir-europe.org/platforms/interoperability" target="_blank">It is an ELIXIR Interoperability Platform resource.  </a>
-            <br>
-            <a href="http://blog.omicsdi.org" target="_blank">Read More about OmicsDI.</a>
+            <a href="http://blog.omicsdi.org" target="_blank">Read More.</a> 
+       </div>
+        <div *ngIf="!topDomainIsOmicsDI" class="callout-info ddi-blockquote">ModeleXchange provides a common discovery platform for systems biology models from multiple repositories.
+            <a href="http://blog.omicsdi.org" target="_blank">Read More.</a>
         </div>
 
-        <div class="callout-info ddi-blockquote" style="padding-bottom: 0; margin-bottom: 0">
+        <div *ngIf="topDomainIsOmicsDI" class="callout-info ddi-blockquote" style="padding-bottom: 0; margin-bottom: 0">
             <h5 style="font-weight: 300; margin: 0 0 10px 0; padding: 0">Publications</h5>
             <ul style="list-style-type: inherit; margin-left: 5px">
                 <li>
@@ -34,10 +32,10 @@
             </ul>
         </div>
 
-        <div class="callout-info ddi-blockquote" style="padding-top: 0; margin-top: 0">OmicsDI project has been developed on <a
+        <div class="callout-info ddi-blockquote" style="padding-top: 0; margin-top: 0">{{this.title}} project has been developed on <a
                 href="https://github.com/OmicsDI" target="_blank">GitHub</a>, you can
             check or contribute to our development <a href="https://github.com/OmicsDI"
-                                                      target="_blank">here</a>
+                                                      target="_blank">here</a>.
         </div>
 
         <div class="callout-info ddi-blockquote">The frontend is based on

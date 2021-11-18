@@ -30,6 +30,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
     isServer: boolean;
+    topDomainIsOmicsDI = true;
 
     constructor(datasetService: DataSetService, private router: Router, private logger: LogService,
                 private http: HttpClient,
@@ -50,6 +51,9 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
     ngOnInit() {
         if (!isPlatformServer(this.platformId)) {
             const self = this;
+            if (this.topDomain != "omics") {
+                this.topDomainIsOmicsDI = false;
+            }  
             const urls = [
                 this.webServiceUrl + 'statistics/tissues?size=100&domain=' + this.topDomain,
                 this.webServiceUrl + 'statistics/organisms?size=100&domain=' + this.topDomain,
@@ -138,6 +142,11 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             .style('margin-bottom', '10px')
             .attr('id', self.bubChartName + '_formdiv');
 
+        var marginLeft = "-142px";
+        if (this.topDomainIsOmicsDI == false) {
+            marginLeft = "-90px";
+        }
+
         let radio_form = formdiv.select(self.bubChartName + '_radio_form');
 
         if (d3.select('#' + self.bubChartName + '_radio_form').empty()) {
@@ -149,20 +158,23 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         radio_form
             .attr('id', self.bubChartName + '_radio_form')
             .attr('class', 'center')
-            .attr('style', 'width:285px;  position: absolute; left: 50%; margin-left: -142px; bottom: 10px')
+            .attr('style', 'width:285px;  position: absolute; left: 50%; margin-left: ' + marginLeft + '; bottom: 10px');
             //  .attr("style","width:70%")
-            .append('input')
-            .attr('type', 'radio')
-            .attr('name', 'dataset')
-            .attr('value', 'Tissues')
-            .attr('id', 'Tissues')
-            .text('Tissues');
-        radio_form
-            .append('label')
-            .text('Tissues')
-            .attr('for', 'Tissues')
-            .append('span')
-            .append('span');
+       if (this.topDomainIsOmicsDI == true) {
+            radio_form
+            	.append('input')
+            	.attr('type', 'radio')
+            	.attr('name', 'dataset')
+            	.attr('value', 'Tissues')
+            	.attr('id', 'Tissues')
+            	.text('Tissues');
+            radio_form
+            	.append('label')
+            	.text('Tissues')
+            	.attr('for', 'Tissues')
+            	.append('span')
+            	.append('span');
+        }
         radio_form
             .append('input')
             .attr('type', 'radio')

@@ -3,6 +3,7 @@ export const environment = {
     logoUri: './static/images/logo/imageedit_2_3220380406.png',
     title: 'OmicsDI',
     topStripClass: 'navbar-inverse',
+    submissionUrl: 'https://www.ebi.ac.uk/biostudies/',
     production: true,
     baseHref: '/',
     webServiceUrl : 'http://dev.omicsdi.org/ws/',
