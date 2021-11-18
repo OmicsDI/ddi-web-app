@@ -4,6 +4,7 @@ import {NgProgress} from '@ngx-progressbar/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {isPlatformServer} from '@angular/common';
 import {SchemaService} from '@shared/services/schema.service';
+import {AppConfig} from 'app/app.config';
 
 @Component({
     selector: 'app-home',
@@ -16,15 +17,22 @@ export class HomeComponent implements AfterViewInit {
     @ViewChildren(AsyncInitialisedComponent)
     asyncComponents: QueryList<AsyncInitialisedComponent>;
     schema: any;
+    private topDomain: string;
+    topDomainIsOmicsDI = true;
 
     constructor(private loadingBarService: NgProgress,
                 private metaService: Meta,
                 private schemaService: SchemaService,
+                public appConfig: AppConfig,
                 @Inject(PLATFORM_ID) private platformId: string,
                 private titleService: Title) {
+        this.topDomain = this.appConfig.getTopDomain();
     }
 
     ngAfterViewInit() {
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
+        } 
         this.titleService.setTitle('OmicsDI: Home');
         this.metaService.updateTag({name: 'description', content: 'Omics Discovery Index is an integrated and open source platform ' +
                 'facilitating the access and dissemination of omics datasets. It provides a unique infrastructure to integrate datasets ' +

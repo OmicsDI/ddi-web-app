@@ -46,7 +46,7 @@
                         </li>
                     </ul>
                 </li>
-                <li *ngIf="!profile" dropdown>
+                <li *ngIf="topDomainIsOmicsDI && !profile" dropdown>
                     <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle nav-element" data-icon="M" dropdownToggle
                        style="color:white; border: none" aria-controls="login-dropdown">
                         <span class="glyphicon glyphicon-user"></span> Login
@@ -56,7 +56,7 @@
                         <app-login-dialog></app-login-dialog>
                     </div>
                 </li>
-                <li *ngIf="profile" dropdown class="nav-item dropdown text-center nav-element">
+                <li *ngIf="topDomainIsOmicsDI && profile" dropdown class="nav-item dropdown text-center nav-element">
                     <a data-toggle="dropdown" class="nav-link text-center dropdown-toggle"
                        dropdownToggle data-icon="M" style="color:white !important;" aria-controls="profile-dropdown">
                         <span class="glyphicon glyphicon-user"></span>
@@ -202,8 +202,16 @@
         <div class="row" id="global-footer" style="border-top:none;">
 
             <nav class="col-md-12" id="global-nav-expanded">
+                <div *ngIf="!topDomainIsOmicsDI" class="col-md-2 col-sm-12 col-xs-12">
 
-                <div class="col-md-2 col-sm-12 col-xs-12">
+                    <a title="European Bioinformatics Institute homepage" target="_blank" class="no-icon"
+                       href="http://www.ebi.ac.uk/">
+                        <img class="img_at_footer ebi-img" alt="EMBL-EBI logo" src="img/logo/embl-ebi.jpg"
+                             style="width:150px; margin-top:9px">
+                    </a>                   
+                </div>
+
+                <div *ngIf="topDomainIsOmicsDI" class="col-md-2 col-sm-12 col-xs-12">
                     <a title="Elixir Interoperability" target="_blank" class="no-icon"
                        href="https://elixir-europe.org/platforms/interoperability">
                         <img class="img_at_footer ebi-img" alt="EMBL-EBI logo" src="img/logo/elixir1.png"
@@ -316,7 +324,7 @@
                         <li><a target="_blank" href="http://www.ebi.ac.uk/about/terms-of-use" class="no-icon">Terms of
                             use</a>
                         </li>
-                        <li><a href="https://www.ebi.ac.uk/biostudies/">Submit Data</a></li>
+                        <li><a href="{{this.submissionUrl}}">Submit Data</a></li>
                     </ul>
                 </div>
 

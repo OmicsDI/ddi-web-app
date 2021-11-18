@@ -1,4 +1,9 @@
 export const environment = {
+    topDomain: 'omics',
+    logoUri: './static/images/logo/imageedit_2_3220380406.png',
+    title: 'OmicsDI',
+    topStripClass: 'navbar-inverse',    
+    submissionUrl: 'https://www.ebi.ac.uk/biostudies/',    
     production: true,
     baseHref: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/',
     webServiceUrl : 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
