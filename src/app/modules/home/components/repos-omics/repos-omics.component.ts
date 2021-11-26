@@ -59,7 +59,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             if (this.topDomain = "omics") {
                allPostFix = "all"; 
             } else {
-               allPostFix = topDomain;
+               allPostFix = this.topDomain;
             }
             const urls = [
                 this.webServiceUrl + 'statistics/domains?domain=' + this.topDomain,
