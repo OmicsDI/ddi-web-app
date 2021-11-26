@@ -160,8 +160,7 @@ export class AppConfig {
         if (topDomain == "omics") {
            allPostFix = "all";
         } else {
-           // rpetry: TODO: allPostFix = topDomain;
-           allPostFix = "all";
+           allPostFix = this.topDomain;
         }
         return `${environment.webServiceUrl}database/${allPostFix}`;
     }
