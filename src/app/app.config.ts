@@ -159,8 +159,7 @@ export class AppConfig {
         if (topDomain == "omics") {
            allPostFix = "all";
         } else {
-           // rpetry: TODO: allPostFix = topDomain;
-           allPostFix = "all";
+           allPostFix = topDomain;
         }
         return `${environment.webServiceUrl}database/${allPostFix}?r=${Math.random()}`;
     }
