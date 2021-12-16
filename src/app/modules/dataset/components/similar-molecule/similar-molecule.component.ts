@@ -134,7 +134,7 @@ export class SimilarMoleculeComponent implements OnInit, OnChanges {
 
         this.prepareInputData();
 
-        const data = [this.inputdata], width = 350, height = 430, padding = .09;
+        const data = [this.inputdata], width = 400, height = 430, padding = .09;
 
         const chord2 = new Chord2();
         chord2.cwidth(width)
