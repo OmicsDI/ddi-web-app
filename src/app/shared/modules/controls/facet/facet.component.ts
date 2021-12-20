@@ -41,6 +41,10 @@ export class FacetComponent implements OnInit {
 
     ngOnInit() {
         this.facetValuesFiltered = this.facetValues.map(x => new FacetValueFiltered(x));
+        this.facetValuesFiltered.sort(function(a, b) {
+            // Sort by count in desc order
+  	    return b.count - a.count;
+	});
         this.facetSelected = (this.facetSelected !== undefined) ? this.facetSelected : [];
     }
 
