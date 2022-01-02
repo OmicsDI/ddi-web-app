@@ -1,7 +1,8 @@
 <div style="padding-bottom:20px">
-    <h3 style="display: inline; padding-left: 0; white-space: nowrap;">
-        <span id="metasearch-results-count" class="ng-binding ng-scope">{{searchCount}}</span>
-        Result<span *ngIf="convertToNumber(searchCount)>1 || convertToNumber(searchCount)==0">s</span>
+    <h3 style="display: inline; padding-left: 0">
+        <span id="metasearch-results-count" [textContent]="searchCount" class="ng-binding ng-scope">{{searchCount}}</span>
+        <span *ngIf="convertToNumber(searchCount)==1"> Result</span>
+        <span *ngIf="convertToNumber(searchCount)>1 || convertToNumber(searchCount)==0"> Results</span>    
     </h3>
     <span id="search-filter">
         <a class="showall" (click)="showAllClick()"><i class="fa fa-filter" aria-hidden="true"></i> Show all</a>&nbsp;&nbsp;
