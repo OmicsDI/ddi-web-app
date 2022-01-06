@@ -81,7 +81,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     public draw(domains: any[], omicsType: any[], databases: any[]): void {
         const self = this;
         ChartsErrorHandler.removeGettingInfo(self.pieChartName);
-        const repos = self.transformDomains(domains);
+        const repos = self.transformDomains(domains, databases);
         omicsType.shift();
         omicsType.pop();
         omicsType = self.dealCaseSensitiveIds(omicsType);
@@ -127,41 +127,41 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
 
         for (let i = 0; i < repos.length; i++) {
-            var lastUpdated = new Date(this.databaseListService.getLastUpdatedByDomain(repos[i].name,databases)).getFullYear();
-            if (self.proteomicsList.indexOf(repos[i].name) > -1) {
+            var lastUpdated = new Date(this.databaseListService.getLastUpdatedByDomain(repos[i].domain,databases)).getFullYear();
+            if (self.proteomicsList.indexOf(repos[i].domain) > -1) {
                 reposData[0].children.push({
-                    name: repos[i].name,
+                    name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
                 continue;
             }
-            if (self.genomicsList.indexOf(repos[i].name) > -1) {
+            if (self.genomicsList.indexOf(repos[i].domain) > -1) {
                 reposData[1].children.push({
-                    name: repos[i].name,
+                    name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
                 continue;
             }
-            if (self.metabolomicsList.indexOf(repos[i].name) > -1) {
+            if (self.metabolomicsList.indexOf(repos[i].domain) > -1) {
                 reposData[2].children.push({
-                    name: repos[i].name,
+                    name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
                 continue;
             }
-            if (self.transcriptomicsList.indexOf(repos[i].name) > -1) {
+            if (self.transcriptomicsList.indexOf(repos[i].domain) > -1) {
                 reposData[3].children.push({
-                    name: repos[i].name,
+                    name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
             }
-            if (self.otherList.indexOf(repos[i].name) > -1) {
+            if (self.otherList.indexOf(repos[i].domain) > -1) {
                 reposData[4].children.push({
-                    name: repos[i].name,
+                    name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
@@ -522,29 +522,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     .style('opacity', 0);
                 const index = self.findIndex(i, dataAddKey.length);
                 let searchWord = searchWordPre + dataAddKey[index].name.toString() + '"';
-                if (dataAddKey[index].name.toString() === 'MetaboLights Dataset') {
-                    searchWord = searchWordPre + 'MetaboLights' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'PRIDE') {
-                    searchWord = searchWordPre + 'Pride' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Metabolome Workbench') {
-                    searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Metabolomics Workbench') {
-                    searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Expression Atlas Experiments') {
-                    searchWord = searchWordPre + 'ExpressionAtlas' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'jPOST') {
-                    searchWord = searchWordPre + 'JPOST Repository' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Paxdb') {
-                    searchWord = searchWordPre + 'PAXDB' + '"';
-                }
-
-
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 // ---------------------------------------- redirect ----------------------------------------//
@@ -586,12 +563,22 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         return singleOmicsType;
     }
 
-    private transformDomains(domains: any[]): any[] {
+    private transformDomains(domains: any[], database: any[]): any[] {
         return domains.reduce((acc, val) => {
             return acc.concat([{
-                name: val['domain']['name'],
+                domain: val['domain']['name'],
+                repository: this.getRepository(val['domain']['name'],database),
                 value: parseInt(val['domain']['value'], 10)
             }]);
         }, []);
+    }
+
+    private getRepository(domain: string, databases: any[]) {
+        for (let i = 0; i < databases.length; i += 1) {
+            if (databases[i]['domain'] == domain) {
+                return databases[i]['repository'];
+            }
+        }
+        return null;
     }
 }
