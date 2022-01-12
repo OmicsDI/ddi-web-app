@@ -40,7 +40,10 @@ export class StatisticsPanelComponent extends AsyncInitialisedComponent implemen
                 opts[generalData[i].label] = generalData[i].value;
             }
             for (let i = 0; i < 4; i++) {
-                opts[omicsData[i].label] = omicsData[i].value;
+                if (i < omicsData.length) {
+                    // There will be less than 4 omics data points for modelexchange
+                    opts[omicsData[i].label] = omicsData[i].value;
+                }
             }
             ObjectUtils.renameKey('Different Repositories/Databases', 'Repositories', opts);
             ObjectUtils.renameKey('Different Datasets', 'Datasets', opts);

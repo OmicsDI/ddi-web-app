@@ -56,7 +56,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         if (!isPlatformServer(this.platformId)) {
             const self = this;
             var allPostFix;
-            if (this.topDomain = "omics") {
+            if (this.topDomain == "omics") {
                allPostFix = "all"; 
             } else {
                allPostFix = this.topDomain;
