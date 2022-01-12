@@ -40,7 +40,8 @@ export class AppConfig {
     }
 
     getStatisticsOmicsUrl(): string {
-        return `${environment.webServiceUrl}statistics/omics`;
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}statistics/omics?domain=${topDomain}`;
     }
 
     getStatisticsUrl(): string {
@@ -232,7 +233,8 @@ export class AppConfig {
     }
 
     getDatasetStatsUrl() {
-        return `${environment.webServiceUrl}statistics/domains`;
+        const topDomain = this.getTopDomain();
+        return `${environment.webServiceUrl}statistics/domains?domain=${topDomain}`;
     }
 
     getAltmetricUrl(PMID) {
