@@ -47,6 +47,7 @@ export class DataSetDetail {
     connectionsCountScaled: number;
     reanalysisCountScaled: number;
     viewsCountScaled: number;
+    currentStatus: string;
 
     public static toDataset(datasetDetails: DataSetDetail): DataSet {
         const dataset = new DataSet();
@@ -71,6 +72,7 @@ export class DataSetDetail {
         dataset.citationsCountScaled = datasetDetails.citationsCountScaled;
         dataset.connectionsCountScaled = datasetDetails.connectionsCountScaled;
         dataset.viewsCountScaled = datasetDetails.viewsCountScaled;
+        dataset.currentStatus = datasetDetails.currentStatus;
         return dataset;
     }
 

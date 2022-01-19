@@ -62,7 +62,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                allPostFix = this.topDomain;
             }
             const urls = [
-                this.webServiceUrl + 'statistics/domains?domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/repositories?domain=' + this.topDomain,
                 this.webServiceUrl + 'statistics/omics?domain=' + this.topDomain,
                 this.webServiceUrl + 'database/' + allPostFix + '?r=${Math.random()}`'
             ];
@@ -78,10 +78,10 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         }
     }
 
-    public draw(domains: any[], omicsType: any[], databases: any[]): void {
+    public draw(repositories: any[], omicsType: any[], databases: any[]): void {
         const self = this;
         ChartsErrorHandler.removeGettingInfo(self.pieChartName);
-        const repos = self.transformDomains(domains, databases);
+        const repos = self.transformRepositories(repositories);
         omicsType.shift();
         omicsType.pop();
         omicsType = self.dealCaseSensitiveIds(omicsType);
@@ -127,8 +127,8 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
 
         for (let i = 0; i < repos.length; i++) {
-            var lastUpdated = new Date(this.databaseListService.getLastUpdatedByDomain(repos[i].domain,databases)).getFullYear();
-            if (self.proteomicsList.indexOf(repos[i].domain) > -1) {
+            var lastUpdated = new Date(this.databaseListService.getLastUpdatedByRepository(repos[i].repository,databases)).getFullYear();
+            if (self.proteomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[0].children.push({
                     name: repos[i].repository,
                     size: repos[i].value,
@@ -136,7 +136,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 });
                 continue;
             }
-            if (self.genomicsList.indexOf(repos[i].domain) > -1) {
+            if (self.genomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[1].children.push({
                     name: repos[i].repository,
                     size: repos[i].value,
@@ -144,7 +144,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 });
                 continue;
             }
-            if (self.metabolomicsList.indexOf(repos[i].domain) > -1) {
+            if (self.metabolomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[2].children.push({
                     name: repos[i].repository,
                     size: repos[i].value,
@@ -152,20 +152,22 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 });
                 continue;
             }
-            if (self.transcriptomicsList.indexOf(repos[i].domain) > -1) {
+            if (self.transcriptomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[3].children.push({
                     name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
+                continue;
             }
-            if (self.otherList.indexOf(repos[i].domain) > -1) {
+            if (self.otherList.indexOf(repos[i].repository) > -1) {
                 reposData[4].children.push({
                     name: repos[i].repository,
                     size: repos[i].value,
                     lastUpdated: lastUpdated
                 });
-            }            
+                continue;
+            }    
         }
 
         for (let i = 0; i < reposData.length; i++) {
@@ -563,22 +565,12 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         return singleOmicsType;
     }
 
-    private transformDomains(domains: any[], database: any[]): any[] {
-        return domains.reduce((acc, val) => {
+    private transformRepositories(repositories: any[]): any[] {
+        return repositories.reduce((acc, val) => {
             return acc.concat([{
-                domain: val['domain']['name'],
-                repository: this.getRepository(val['domain']['name'],database),
-                value: parseInt(val['domain']['value'], 10)
+                repository: val['name'],
+                value: parseInt(val['value'], 10)
             }]);
         }, []);
-    }
-
-    private getRepository(domain: string, databases: any[]) {
-        for (let i = 0; i < databases.length; i += 1) {
-            if (databases[i]['domain'] == domain) {
-                return databases[i]['repository'];
-            }
-        }
-        return null;
     }
 }

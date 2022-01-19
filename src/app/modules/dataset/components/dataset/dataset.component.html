@@ -131,9 +131,12 @@
 
                     <div class="row">
                         <div class="col-lg-2 hidden-xs">
-                            <a href="{{d.full_dataset_link}}" class="btn btn-primary"
+                            <span *ngIf="this.isDeleted" class="btn btn-primary"
                                style="color: white; border: 1px solid transparent; margin-left: 9px"
-                               id="full_dataset_link">ACCESS DATA</a>
+                               id="full_dataset_link">THIS DATASET HAS BEEN DELETED</span>
+                            <a *ngIf="!this.isDeleted" href="{{d.full_dataset_link}}" class="btn btn-primary"
+                               style="color: white; border: 1px solid transparent; margin-left: 9px"
+                               id="full_dataset_link">ACCESS DATA</a>                               
                         </div>
                         <div class="col-lg-10 col-xs-12">
                             <div class="btn-group pull-right widget-btn-group" role="group">
