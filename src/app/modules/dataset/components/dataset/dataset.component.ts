@@ -77,7 +77,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     ontology_highlighted = false;
     notfound = false;
     errorOccurred = false;
-
+    isDeleted = false;
     databases: Database[];
 
     reanalysisOf = [];
@@ -271,6 +271,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                         this.sample_protocol_sections = null;
                         this.data_protocol_sections = null;
                         this.ontology_highlighted = false;
+                        this.isDeleted = this.d.currentStatus !== undefined && this.d.currentStatus === "Deleted";
                     }).catch((err) => {
                         self.slimLoadingBarService.ref().complete();
                         if (err.status == 404) {
