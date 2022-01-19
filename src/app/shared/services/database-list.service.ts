@@ -41,13 +41,13 @@ export class DatabaseListService extends BaseService {
         return null;
     }
 
-    public getLastUpdatedByDomain(domain: string, databases: Database[]): string {
+    public getLastUpdatedByRepository(repository: string, databases: Database[]): string {
         for (const db of databases) {
-            if (db.domain === domain) {
+            if (db.repository === repository) {
                 return db.lastUpdated;
             }
         }
-        this.logger.debug('Domain with name {} can\'t be found', domain);
+        this.logger.debug('Repository with name {} can\'t be found', repository);
         return null;
     }
 
