@@ -19,6 +19,7 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
 
     private web_service_url = this.appConfig.getWebServiceUrl();
     isServer: boolean;
+    topDomain: string;
     private static getName(year: any, value: any, data: any[]): string {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].omics.length; j++) {
@@ -35,10 +36,11 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
                 @Inject(PLATFORM_ID) private platformId: string) {
         super();
         this.isServer = isPlatformServer(this.platformId);
+        this.topDomain = this.appConfig.getTopDomain();
     }
 
     ngOnInit() {
-        if (!isPlatformServer(this.platformId)) {
+        if (!isPlatformServer(this.platformId) && this.topDomain === "omics") {
             const self = this;
             const urls = [
                 this.web_service_url + 'statistics/omicsByYear',
