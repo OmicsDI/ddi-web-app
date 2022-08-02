@@ -11,6 +11,7 @@ export const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
     {path: 'profile/:username', loadChildren: '@modules/profile/profile.module#ProfileModule'},
+    {path: 'validate', loadChildren:'@modules/validateschema/validateschema.module#ValidateschemaModule'},
     {path: 'database', loadChildren: '@modules/database/database.module#DatabaseModule'},
     {path: 'databases', loadChildren: '@modules/database/database.module#DatabaseModule'},
     {path: 'help', loadChildren: '@modules/help/help.module#HelpModule'},

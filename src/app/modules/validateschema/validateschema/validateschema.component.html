@@ -1,0 +1,96 @@
+<div>
+  <p>Validate XML file for Omicsdi and By Covid Portal</p>
+  <div style="padding: 10px;">
+    <label style="font-style: normal;font-weight: normal">
+      <input style="opacity:10; width: auto" type="radio" ng-model="isErrorVal" value="true"
+             name="level1" (click)="this.isError($event)" checked
+              #validateschema>
+      Errors
+    </label>
+    <label style="font-style: normal;font-weight: normal; margin-left: 10px">
+      <input style="opacity: 10; width: auto" type="radio"  value="false" name="level1" (click)="this.isError($event)"
+             ng-model="isErrorVal" #validateschema>
+      Errors and Warnings
+    </label><br/>
+  </div>
+  <div style="padding: 10px;">
+    <label style="font-style: normal;font-weight: normal">
+      <input style="opacity:10; width: auto" type="radio" ng-model="isOmicsdi" value="true"
+             name="level2" (click)="this.isOmicsValidator($event)" checked
+             #validateschema>
+      Omicsdi
+    </label>
+    <label style="font-style: normal;font-weight: normal; margin-left: 10px">
+      <input style="opacity: 10; width: auto" type="radio"  value="false" name="level2" (click)="this.isOmicsValidator($event)"
+             ng-model="isOmicsdi"  #validateschema>
+      By-Covid
+    </label><br/>
+  </div>
+  <input type="file" class="file-input"
+         [accept]="requiredFileType"
+         (click)="getErrors($event)" (change)="getErrors($event)" #validateschema>
+
+</div>
+<div class="db-list-container container_ddi">
+  <p></p>
+</div>
+<div style="padding: 5px;">
+  <button class="file-input" type="button" (click)="uploadFile()">Upload</button>
+</div>
+<div class="db-list-container container_ddi">
+  <p></p>
+</div>
+
+<div class="db-list-container container_ddi">
+  <div class="row">
+
+    <div *ngIf="errors">
+      <!--<img [src]="databases[0].image.$binary"> class="db-item col-md-3 col-sm-6 col-xs-12"-->
+      <div *ngFor="let db of errors">
+        <p>{{db}}</p>
+       <!-- <div class="panel panel-default expert-db-card ">
+
+          <div class="panel-body small">
+            {{db}}
+            &lt;!&ndash;MetabolomeExpress houses both private and public uncurated repositories as well as a quality-controlled database of highly-annotated metabolite response statistics submitted by MetabolomeExpress users.&ndash;&gt;
+          </div>
+
+        </div>-->
+      </div>
+    </div>
+
+    <div *ngIf="errors != undefined && errors.length == 0">
+      <!--<img [src]="databases[0].image.$binary"> class="db-item col-md-3 col-sm-6 col-xs-12"-->
+      <div>
+        <p>{{noErrors}}</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!--<div class="app-validateschema">
+
+  {{fileName || "No file uploaded yet."}}
+
+  <button mat-mini-fab color="primary" class="upload-btn"
+          (click)="validateschema.click()">
+    <mat-icon>attach_file</mat-icon>
+
+  </button>
+
+</div>-->
+
+<div class="progress">
+
+  <mat-progress-bar class="progress-bar" mode="determinate"
+                    [value]="uploadProgress" *ngIf="uploadProgress">
+
+  </mat-progress-bar>
+
+  <mat-icon class="cancel-upload" (click)="cancelUpload()"
+            *ngIf="uploadProgress">delete_forever</mat-icon>
+
+</div>
+<!--<validateschema requiredFileType="xml"></validateschema>-->

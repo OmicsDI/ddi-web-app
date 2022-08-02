@@ -38,6 +38,10 @@ export class AppConfig {
         return `${environment.userServiceUrl}`;
     }
 
+    getValidateUrl(): string {
+        return `${environment.webServiceUrl}dataset/checkfile`;
+    }
+
     getStatisticsOmicsUrl(): string {
         const topDomain = this.getTopDomain();
         return `${environment.webServiceUrl}statistics/omics?domain=${topDomain}`;

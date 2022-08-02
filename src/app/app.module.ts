@@ -53,6 +53,7 @@ import {GoogleAnalyticsService} from '@shared/services/google-analytics.service'
 import {SchemaService} from '@shared/services/schema.service';
 import {RedirectService} from '@shared/services/redirect.service';
 import { url } from 'inspector';
+import {ValidateService} from "@shared/services/validate.service";
 
 
 export function jwtTokenGetter() {
@@ -106,7 +107,8 @@ export function jwtTokenGetter() {
         {
             provide: TRANSFER_RESPONSE_BASE_URLS,
             useValue: [environment.webServiceUrl]
-        }
+        },
+        ValidateService
         , RedirectService
         , AuthService
         , SchemaService
