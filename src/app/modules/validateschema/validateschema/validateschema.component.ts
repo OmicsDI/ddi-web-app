@@ -57,27 +57,58 @@ export class ValidateschemaComponent implements OnInit {
     }
     //alert("final value of iserror is " + this.isErrorVal);
     event.target.checked=true;
-    this.getErrors(event);
+    //this.getErrors(event);
 
   }
 
   getErrors(event){
+    this.errors.length = 0;
+    this.exceptionMessage = "Processing....";
+    this.noErrors = "Processing....";
+    const formData:FormData = new FormData();
+    //alert(event.target.files[0].length);
     if(event.target.files != null && event.target.files[0] != null){
       const file:File = event.target.files[0];
       if (file) {
         this.fileName = file.name;
         //alert("filename is " + this.fileName);
 
-        this.formData.append("file", file);
-        this.formData.append("validatorType", "omicsdi");
+        formData.append("file", file);
+        //formData.append("validatorType", "omicsdi");
         //this.formData.append("isError", String(this.isErrorVal));
+        if(this.isOmicsdi){
+          formData.append("validatorType","omicsdi");
+        } else{
+          formData.append("validatorType","bycovid");
+        }
+        formData.append("isError", String(this.isErrorVal));
       }
+      const logresponse = this.validateService.getValidateErrors(formData);
 
+      logresponse.subscribe(result => {
+            console.log(result);
+            this.errors = result;
+            //alert("length of errros is " + this.errors.length)
+            if (this.errors.length == 0){
+              this.noErrors = "No Errors Found!";
+            }
+          },
+          error => {
+            this.exceptionMessage = error.message;
+            //alert(this.exceptionMessage);
+            console.error('There was an error!', error);
+            this.noErrors = "There was an exception while processing file!";
+          })
+      /*this.uploadSub = logresponse.subscribe(event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          this.uploadProgress = Math.round(100 * (event.loaded / event.total));
+        }
+      })*/
     }
   }
 
   uploadFile(){
-    this.getErrors(event);
+    //this.getErrors(event);
     const formDataUpload = new FormData();
     formDataUpload.append("file", this.formData.get("file"));
     if(this.isOmicsdi){
