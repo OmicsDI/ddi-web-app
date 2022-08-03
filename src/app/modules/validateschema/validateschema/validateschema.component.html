@@ -28,15 +28,15 @@
   </div>
   <input type="file" class="file-input"
          [accept]="requiredFileType"
-         (click)="getErrors($event)" (change)="getErrors($event)" hidden #fileupload>
+          (change)="getErrors($event)" #fileupload>
 
 </div>
 <div class="db-list-container container_ddi">
   <p></p>
 </div>
-<div style="padding: 5px;">
+<!--<div style="padding: 5px;">
   <button class="file-input" type="button" (click)="fileupload.click()">Click to Upload</button>
-</div>
+</div>-->
 
 <div class="db-list-container container_ddi">
   <p></p>
