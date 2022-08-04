@@ -26,7 +26,7 @@ export class ValidateschemaComponent implements OnInit {
   fileName = '';
   uploadProgress:number;
   uploadSub: Subscription;
-  errors: string[] = [];
+  errors = new Set();
   exceptionMessage: string
   public url: string;
   formData = new FormData();
@@ -62,7 +62,7 @@ export class ValidateschemaComponent implements OnInit {
   }
 
   getErrors(event){
-    this.errors.length = 0;
+    this.errors.clear();
     this.exceptionMessage = "Processing....";
     this.noErrors = "Processing....";
     const formData:FormData = new FormData();
@@ -87,9 +87,9 @@ export class ValidateschemaComponent implements OnInit {
 
       logresponse.subscribe(result => {
             console.log(result);
-            this.errors = result;
+            this.errors.add(result);
             //alert("length of errros is " + this.errors.length)
-            if (this.errors.length == 0){
+            if (this.errors.size == 0){
               this.noErrors = "No Errors Found!";
             }
           },
@@ -121,9 +121,9 @@ export class ValidateschemaComponent implements OnInit {
 
     logresponse.subscribe(result => {
           console.log(result);
-          this.errors = result;
+          this.errors.add(result);
           //alert("length of errros is " + this.errors.length)
-          if (this.errors.length == 0){
+          if (this.errors.size == 0){
             this.noErrors = "No Errors Found!";
           }
         },
