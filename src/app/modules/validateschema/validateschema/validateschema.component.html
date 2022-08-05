@@ -47,8 +47,8 @@
 
     <div *ngIf="errors">
       <!--<img [src]="databases[0].image.$binary"> class="db-item col-md-3 col-sm-6 col-xs-12"-->
-      <div *ngFor="let db of errors.values()">
-        <p>{{db}}</p> <br>
+      <div *ngFor="let db of errors">
+        <p>{{db}}</p>
        <!-- <div class="panel panel-default expert-db-card ">
 
           <div class="panel-body small">
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div *ngIf="errors != undefined && errors.size == 0">
+    <div *ngIf="errors != undefined && errors.length == 0">
       <!--<img [src]="databases[0].image.$binary"> class="db-item col-md-3 col-sm-6 col-xs-12"-->
       <div>
         <p>{{noErrors}}</p>
