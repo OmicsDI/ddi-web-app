@@ -17,12 +17,12 @@ export class ValidateService extends BaseService {
         super();
     }
 
-    public getValidateErrors(formData:FormData): Observable<Set<string>> {
+    public getValidateErrors(formData:FormData): Observable<string[]> {
         //alert(formData.get("isError"));
         const upload$ =  this.http.post(this.appConfig.getValidateUrl(), formData, {
             reportProgress: true,
             observe: 'body'
-        }).pipe(map(x => this.extractData<Set<string>>(x)));
+        }).pipe(map(x => this.extractData<string[]>(x)));
 
         return upload$;
     }
