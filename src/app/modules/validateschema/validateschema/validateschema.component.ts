@@ -61,6 +61,16 @@ export class ValidateschemaComponent implements OnInit {
 
   }
 
+  attachFile(event){
+    if(event.target.files != null && event.target.files[0] != null){
+      const file:File = event.target.files[0];
+      if (file) {
+        this.fileName = file.name;
+        this.formData.append("file", file);
+      }
+    }
+  }
+
   getErrors(event){
     this.errors = [];
     this.exceptionMessage = "Processing....";
@@ -77,9 +87,11 @@ export class ValidateschemaComponent implements OnInit {
         //formData.append("validatorType", "omicsdi");
         //this.formData.append("isError", String(this.isErrorVal));
         if(this.isOmicsdi){
-          formData.append("validatorType","omicsdi");
-        } else{
+          alert("sending validatortpe as bycovid");
           formData.append("validatorType","bycovid");
+        } else{
+          alert("sending validatortpe as omicsdi");
+          formData.append("validatorType","omicsdi");
         }
         formData.append("isError", String(this.isErrorVal));
       }
