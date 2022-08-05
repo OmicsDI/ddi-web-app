@@ -65,7 +65,9 @@ export class ValidateschemaComponent implements OnInit {
     if(event.target.files != null && event.target.files[0] != null){
       const file:File = event.target.files[0];
       if (file) {
+        //alert("file name is " + file.name)
         this.fileName = file.name;
+        this.formData = new FormData();
         this.formData.append("file", file);
       }
     }
@@ -87,10 +89,10 @@ export class ValidateschemaComponent implements OnInit {
         //formData.append("validatorType", "omicsdi");
         //this.formData.append("isError", String(this.isErrorVal));
         if(this.isOmicsdi){
-          alert("sending validatortpe as bycovid");
+          //alert("sending validatortpe as bycovid");
           formData.append("validatorType","bycovid");
         } else{
-          alert("sending validatortpe as omicsdi");
+          //alert("sending validatortpe as omicsdi");
           formData.append("validatorType","omicsdi");
         }
         formData.append("isError", String(this.isErrorVal));
@@ -120,13 +122,16 @@ export class ValidateschemaComponent implements OnInit {
   }
 
   uploadFile(){
+    this.errors = [];
+    this.exceptionMessage = "Processing....";
+    this.noErrors = "Processing....";
     //this.getErrors(event);
     const formDataUpload = new FormData();
     formDataUpload.append("file", this.formData.get("file"));
     if(this.isOmicsdi){
-      formDataUpload.append("validatorType","omicsdi");
-    } else{
       formDataUpload.append("validatorType","bycovid");
+    } else{
+      formDataUpload.append("validatorType","omicsdi");
     }
     formDataUpload.append("isError", String(this.isErrorVal));
     const logresponse = this.validateService.getValidateErrors(formDataUpload);

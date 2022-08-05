@@ -27,7 +27,7 @@
     </label><br/>
   </div>
   <input type="file" class="file-input"
-         [accept]="requiredFileType" (click)="getErrors($event)"
+         [accept]="requiredFileType" (click)="attachFile($event)" (change)="attachFile($event)"
            #fileupload>
 
 </div>
@@ -35,7 +35,7 @@
   <p></p>
 </div>
 <div style="padding: 5px;">
-  <button class="file-input" type="button" (click)="uploadFile()">Click to Upload</button>
+  <button class="file-input" type="button" (click)="uploadFile()">Validate</button>
 </div>
 
 <div class="db-list-container container_ddi">
