@@ -18,17 +18,17 @@
       <input style="opacity:10; width: auto" type="radio" ng-model="isOmicsdi" value="true"
              name="level2" (click)="this.isOmicsValidator($event)" checked
              #validateschema>
-      Omicsdi
+      By-Covid
     </label>
     <label style="font-style: normal;font-weight: normal; margin-left: 10px">
       <input style="opacity: 10; width: auto" type="radio"  value="false" name="level2" (click)="this.isOmicsValidator($event)"
              ng-model="isOmicsdi"  #validateschema>
-      By-Covid
+      Omicsdi
     </label><br/>
   </div>
   <input type="file" class="file-input"
-         [accept]="requiredFileType"
-          (change)="getErrors($event)" #fileupload>
+         [accept]="requiredFileType" (click)="getErrors($event)"
+           #fileupload>
 
 </div>
 <div class="db-list-container container_ddi">
