@@ -66,10 +66,11 @@
                         <p class="elements" *ngIf="null!=d.organisms" id="organisms">
                             <b>ORGANISM(S): </b>
                             <span *ngFor="let o of d.organisms">
-                                <a class="biological" [routerLink]="['/search']"
+                                 {{o.name}}
+                               <!-- <a class="biological" [routerLink]="['/search']"
                                    [queryParams]="{q: 'TAXONOMY:&quot;'+o.acc+'&quot;'}">
                                        {{o.name}}
-                                </a>&nbsp;
+                                </a>&nbsp;-->
                             </span>
                         </p>
                         <p class="elements ng-hide" *ngIf="null!=d.tissues" id="tissues">
