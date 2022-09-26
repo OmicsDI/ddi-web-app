@@ -50,6 +50,12 @@ export class OmicsImageComponent implements OnInit, OnChanges {
             this.omicsImage = 'img/omics/Models.svg';
         } else if (this.omics.indexOf('Metagenomics') !== -1) {
             this.omicsImage = 'img/omics/Metagenomics.svg';
+        } else if (this.omics.indexOf('RecuratedModel') !== -1) {
+            this.omicsImage = 'img/omics/Recurrated_Models.svg';
+        }else if (this.omics.indexOf('Single Cell Transcriptomics') !== -1) {
+            this.omicsImage = 'img/omics/Single_Cell_Transcriptomics.svg';
+        }else if (this.omics.indexOf('Other') !== -1) {
+            this.omicsImage = 'img/omics/OTHERS.svg';
         } else {
             this.omicsImage = 'img/omics/Unknown.svg';
         }
