@@ -243,36 +243,41 @@ export class AnnualOmicstypeComponent extends AsyncInitialisedComponent implemen
             'proteomics': {x: (width + 10) / 2, y: 45, color: 'red'}
         };
 
-        legend.append('path')
-            .attr('class', 'omics-line')
-            .style('stroke-width', '2')
-            .attr('d', d => {
-                return 'M ' + legend_coords[d]['x'] + ' ' + (legend_coords[d]['y'] + 8) +
-                    ' L ' + (legend_coords[d]['x'] + 14) + ' ' + (legend_coords[d]['y'] + 8);
-            })
-            .style('stroke', d => {
-                return legend_coords[d]['color'];
-            })
-            .style('stroke-dasharray', d => {
-                if (d === 'transcriptomics' || d === 'proteomics') {
-                    return ('3, 3');
-                } else {
-                    return ('0, 0');
-                }
-            });
 
-        legend.append('text')
-            .attr('x', d => {
-                return legend_coords[d]['x'] + 20;
-            })
-            .attr('y', d => {
-                return legend_coords[d]['y'];
-            })
-            .attr('dy', '.85em')
-            .style('text-anchor', 'start')
-            .text(d => {
-                return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
-            });
+        for (const d in legend_coords) {
+            if(legend_coords[d]){
+                legend.append('path')
+                    .attr('class', 'omics-line')
+                    .style('stroke-width', '2')
+                    .attr('d', value => {
+                        return 'M ' + legend_coords[d]['x'] + ' ' + (legend_coords[d]['y'] + 8) +
+                            ' L ' + (legend_coords[d]['x'] + 14) + ' ' + (legend_coords[d]['y'] + 8);
+                    })
+                    .style('stroke', value => {
+                        return legend_coords[d]['color'];
+                    })
+                    .style('stroke-dasharray', value => {
+                        if (d === 'transcriptomics' || d === 'proteomics') {
+                            return ('3, 3');
+                        } else {
+                            return ('0, 0');
+                        }
+                    });
+
+                legend.append('text')
+                    .attr('x', value => {
+                        return legend_coords[d]['x'] + 20;
+                    })
+                    .attr('y', value => {
+                        return legend_coords[d]['y'];
+                    })
+                    .attr('dy', '.85em')
+                    .style('text-anchor', 'start')
+                    .text(value => {
+                        return (d.substr(0, 1).toUpperCase() + d.substr(1, d.length - 1));
+                    });
+            }
+        }
 
 
     }
