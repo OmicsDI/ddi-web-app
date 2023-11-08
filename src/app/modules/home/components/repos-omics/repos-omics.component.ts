@@ -64,7 +64,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             const urls = [
                 this.webServiceUrl + 'statistics/repositories?domain=' + this.topDomain,
                 this.webServiceUrl + 'statistics/omics?domain=' + this.topDomain,
-                this.webServiceUrl + 'database/' + allPostFix + '?r=${Math.random()}`'
+                this.webServiceUrl + 'database/' + allPostFix
             ];
             forkJoin(
                 urls.map(url => this.http.get(url))

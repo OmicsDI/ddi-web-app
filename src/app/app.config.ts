@@ -54,7 +54,7 @@ export class AppConfig {
 
     getSimilarUrl(acc: string, repository: string): string {
         const topDomain = this.getTopDomain();
-        return `${environment.webServiceUrl}dataset/getSimilar?accession=${acc}&domain=${topDomain}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getSimilar?accession=${acc}&domain=${topDomain}&database=${repository}&`;
     }
 
     getSearchUrl(query: string, facetcount: number, size: number, sortBy: string, sortOrder: string, start: number): string {
@@ -64,43 +64,43 @@ export class AppConfig {
     }
 
     getPublicationUrl(acc: string): string {
-        return `${environment.webServiceUrl}publication/list?acc=${acc}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}publication/list?acc=${acc}`;
     }
 
     getProfileUrl(username: string): string {
         if (username) {
-            return `${environment.userServiceUrl}user?username=${username}&r=${Math.random()}`;
+            return `${environment.userServiceUrl}user?username=${username}`;
         } else {
-            return `${environment.userServiceUrl}user/current?r=${Math.random()}`;
+            return `${environment.userServiceUrl}user/current`;
         }
     }
 
     getAllProfilesUrl(): string {
-        return `${environment.userServiceUrl}users?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users`;
     }
 
     getUserConnectionsUrl(userId: string): string {
-        return `${environment.userServiceUrl}users/${userId}/connections?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/connections`;
     }
 
     getUserConnectionUrl(userId: string, provider: string): string {
-        return `${environment.userServiceUrl}users/${userId}/connections/${provider}?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/connections/${provider}`;
     }
 
     getUserCoAuthorsUrl(userId: string): string {
-        return `${environment.userServiceUrl}users/${userId}/coauthors?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/coauthors`;
     }
 
     getEnrichmentUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getEnrichmentInfo?accession=${acc}&database=${repository}`;
     }
 
     getSynonymsUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getSynonymsForDataset?accession=${acc}&database=${repository}`;
     }
 
     getDatasetUrl(acc: string, repository: string): string {
-        return `${environment.webServiceUrl}dataset/get?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/get?accession=${acc}&database=${repository}`;
     }
 
     getDatasetDownloadUrl(acc: string, repository: string): string {
@@ -135,27 +135,27 @@ export class AppConfig {
     }
 
     getDatasetByUrl(): string {
-        return `${environment.webServiceUrl}dataset/getDatasetByUrl?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getDatasetByUrl`;
     }
 
     getAutocompleteUrl(keyword: string): string {
-        return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10&r=${Math.random()}`;
+        return `${environment.webServiceUrl}term/getTermByPattern?q=${keyword}&size=10`;
     }
 
     getProfileClaimDatasetUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/datasets?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/datasets`;
     }
 
     getProfileSaveDatasetsUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/datasets?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/datasets`;
     }
 
     getProfileUploadImageUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/picture?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/picture`;
     }
 
     getOntologyLookupUrl(keys: string[]) {
-        return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}&r=${Math.random()}`;
+        return `${environment.userServiceUrl}ontology/ontologyLookup?key=${keys.join(',')}`;
     }
 
     getDatabasesUrl() {
@@ -166,7 +166,7 @@ export class AppConfig {
         } else {
            allPostFix = topDomain;
         }
-        return `${environment.webServiceUrl}database/${allPostFix}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}database/${allPostFix}`;
     }
 
     getDatabaseImageUrl(databaseName: string) {
@@ -179,27 +179,27 @@ export class AppConfig {
 
     getProfileImageUrl(userId: string) {
         // TODO: interpolate?
-        return `${environment.userServiceUrl}users/${userId}/picture?&r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/picture`;
     }
 
     getDeleteConnectionUrl(userId: string, provider: string) {
-        return `${environment.userServiceUrl}users/${userId}/connections/${provider}?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/connections/${provider}`;
     }
 
     getUserSavedSearchesUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/savedsearches?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/savedsearches`;
     }
 
     getUserSavedSearchesDeleteUrl(userId: string, id: string) {
-        return `${environment.userServiceUrl}users/${userId}/savedsearches/${id}?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/savedsearches/${id}`;
     }
 
     getWatchedDatasetsUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/watches?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/watches`;
     }
 
     getWatchedDatasetsDeleteUrl(userId: string, id: string) {
-        return `${environment.userServiceUrl}users/${userId}/watches/${id}?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/watches/${id}`;
     }
 
     getUserCountUrl() {
@@ -223,12 +223,12 @@ export class AppConfig {
     }
 
     getSimilarityMoleculesUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}enrichment/getSimilarityInfo?accession=${acc}&database=${repository}`;
     }
 
     getSimilarityDatasetsUrl(acc: string, repository: string) {
         return `${environment.webServiceUrl}enrichment/getSimilarDatasetsByBiologicalData?accession=${acc}&` +
-            `database=${repository}&r=${Math.random()}`;
+            `database=${repository}`;
     }
 
     getFeedbackUrl() {
@@ -245,19 +245,19 @@ export class AppConfig {
     }
 
     getScoreViewsUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/views/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/views/${repository}/${acc}`;
     }
 
     getScoreCitationsUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/citation/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/citation/${repository}/${acc}`;
     }
 
     getScoreReanalysisUrl(acc: string, repository: string) {
-        return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/reanalysis/${repository}/${acc}`;
     }
 
     getScoreConnectionsUrl(acc: string) {
-        return `${environment.webServiceUrl}scores/search/${acc}?r=${Math.random()}`;
+        return `${environment.webServiceUrl}scores/search/${acc}`;
     }
 
     getThorUrl() {
@@ -265,43 +265,43 @@ export class AppConfig {
     }
 
     getSelectedDatasetsUrl(userId: string) {
-        return `${environment.userServiceUrl}users/${userId}/selected?r=${Math.random()}`;
+        return `${environment.userServiceUrl}users/${userId}/selected`;
     }
 
     getInviteUrl(id: string) {
-        return `${environment.userServiceUrl}invites/${id}?r=${Math.random()}`;
+        return `${environment.userServiceUrl}invites/${id}`;
     }
 
     getMergeCandidateUrl(start: number, size: number) {
-        return `${environment.webServiceUrl}dataset/getMergeCandidates?start=${start}&size=${size}&r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getMergeCandidates?start=${start}&size=${size}`;
     }
 
     getUnMergeCandidateUrl() {
-        return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getAllmerged`;
     }
 
     getMergeCandidateCountUrl() {
-        return `${environment.webServiceUrl}dataset/getMergeCandidateCount?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getMergeCandidateCount`;
     }
 
     getUnMergeCandidateCountUrl() {
-        return `${environment.webServiceUrl}dataset/getAllmerged?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/getAllmerged`;
     }
 
     getMergeUrl() {
-        return `${environment.webServiceUrl}dataset/merge?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/merge`;
     }
 
     getUnMergeUrl() {
-        return `${environment.webServiceUrl}dataset/unmerge?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/unmerge`;
     }
 
     skipMergeUrl() {
-        return `${environment.webServiceUrl}dataset/skipMerge?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/skipMerge`;
     }
 
     multiomicsMerge() {
-        return `${environment.webServiceUrl}dataset/multiomicsMerge?r=${Math.random()}`;
+        return `${environment.webServiceUrl}dataset/multiomicsMerge`;
     }
 
     public isEmpty(items: INamed[]): boolean {

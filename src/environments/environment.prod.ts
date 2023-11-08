@@ -7,8 +7,8 @@ export const environment = {
     production: true,
     baseHref: '/',
     webServiceUrl: 'https://www.omicsdi.org/ws/',
-    userServiceUrl: 'https://www.omicsdi.org/profilews/api/',
-    userServiceCookiePath: '/profilews/',
+    userServiceUrl: 'https://www.omicsdi.org/ws/api/',
+    userServiceCookiePath: '/ws/api/',
     schemaServiceUrl: 'https://www.omicsdi.org/ws/seo',
     thorUrl: 'https://www.ebi.ac.uk/europepmc/thor/api/dataclaiming/'
 };

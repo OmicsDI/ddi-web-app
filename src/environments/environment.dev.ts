@@ -7,8 +7,8 @@ export const environment = {
     production: true,
     baseHref: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/',
     webServiceUrl : 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
-    userServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/profilews/api/',
-    userServiceCookiePath: '/Tools/omicsdi/profilews/',
+    userServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/api/',
+    userServiceCookiePath: '/Tools/omicsdi/ws/api/',
     schemaServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/seo',
     thorUrl: 'https://www.ebi.ac.uk/europepmc/hubthor/api/dataclaiming/'
 };
