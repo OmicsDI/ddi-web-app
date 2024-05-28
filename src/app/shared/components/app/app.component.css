@@ -9,3 +9,35 @@ ul li {
 .indent {
     margin-left: 260px;
 }
+
+.vf-banner--info {
+    background-color: #fffadc;
+    color: #373a36;
+}
+.vf-banner {
+    box-sizing: border-box;
+    padding: .75rem 0;
+}
+
+.vf-banner--alert .vf-banner__content {
+    align-items: center;
+    display: flex;
+}
+.vf-u-fullbleed .vf-banner__content {
+    padding: 0;
+}
+
+.vf-banner--alert .vf-banner__text, .vf-banner--alert [class*=vf-text], .vf-banner--alert a {
+    color: currentColor;
+    text-align: center;
+}
+.vf-banner__text {
+    font-family: IBM Plex Sans, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #373a36;
+    font-weight: 400;
+    line-height: 1.71;
+    margin: var(--vf-stack-margin, 0) 0 0 0;
+    flex-grow: 4;
+    line-height: 1.2;
+}
