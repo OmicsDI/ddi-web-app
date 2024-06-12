@@ -33,6 +33,8 @@ export class DataSet {
     reanalysisCountScaled: number;
     viewsCountScaled: number;
 
+    currentStatus: string;
+
     constructor() {
         this.omicsType = [];
     }

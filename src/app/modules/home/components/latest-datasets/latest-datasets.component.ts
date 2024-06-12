@@ -56,7 +56,9 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
     private handleError(error: any) {
 
         LatestDatasetsComponent.requestLatestDatasetFailed = true;
-        this.cd.detectChanges();
+        if (this) {
+            this.cd.detectChanges();
+        }
         return Promise.reject(error.message || error);
     }
 
@@ -64,8 +66,8 @@ export class LatestDatasetsComponent extends AsyncInitialisedComponent implement
         return LatestDatasetsComponent.requestLatestDatasetFailed;
     }
 
-    getMonthDay(dateString: string): string {
-        return TimeUtils.getMonthDay(dateString);
+    getMonthDayYear(dateString: string): string {
+        return TimeUtils.getMonthDayYear(dateString);
     }
 
 }

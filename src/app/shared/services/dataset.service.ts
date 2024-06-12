@@ -17,13 +17,14 @@ import {isPlatformServer} from '@angular/common';
 export class DataSetService extends BaseService {
 
     private proteomicsList = 'pride,peptideatlas,peptide_atlas,massive,PRIDE,PeptideAtlas,MassIVE, ' +
-        'Massive, gpmdb, GPMDB, GPMdb,LINCS,LINCS,paxdb,PAXDB,jpost,JPOST Repository,jPOST,Paxdb,BioModels';
+        'Massive, LINCS,LINCS,paxdb,PAXDB,jpost,JPOST Repository,jPOST,Paxdb,BioModels';
     private metabolomicsList = 'MetaboLights Dataset, MetaboLights,metabolights,metabolights_dataset,MetabolomicsWorkbench,' +
         ' Metabolomics Workbench, metabolomics_workbench, metabolome_express, MetabolomeExpress, Metabolomics Workbench, ' +
         'GNPS, gnps';
     private transcriptomicsList = 'ArrayExpress, arrayexpress-repository, ExpressionAtlas, expression-atlas, atlas-experiments, ' +
         'Expression Atlas Experiments, atlas-experiments,GEO';
-    private genomicsList = 'ega,EGA,EVA,dbGaP';
+    private genomicsList = 'ega,EGA,EVA,dbGaP,ENA,Omics ENA Project';
+    private otherList = 'biostudies,BioStudies,cellcollective,Cell Collective,NODE,Physiome Model Repository,PMR';
 
     constructor(private http: HttpClient, public appConfig: AppConfig, @Optional() @Inject(REQUEST) private request: Request,
                 @Inject(PLATFORM_ID) private platformId) {
@@ -35,13 +36,28 @@ export class DataSetService extends BaseService {
             .pipe(map(x => this.extractData<DataSetDetail>(x)));
     }
 
-    public getDataSetFiles(accession: string, repository: string): Observable<any> {
-        const headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        if (isPlatformServer(this.platformId)) {
-            headers.append('X-Forwarded-For', this.request.headers.get('X-Forwarded-For'));
-        }
-        return this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers});
+    public async getDataSetDetailAsync(accession: string, repository: string): Promise<DataSetDetail> {
+        return await this.http.get(this.appConfig.getDatasetUrl(accession, repository))
+            .pipe(map(x => this.extractData<DataSetDetail>(x))).toPromise();
+    }
+
+    getHeaders(): HttpHeaders {
+         const headers = new HttpHeaders();
+         headers.append('Content-Type', 'application/json');
+         if (isPlatformServer(this.platformId)) {
+             headers.append('X-Forwarded-For', this.request.headers['X-Forwarded-For']);
+         }
+        return headers;
+    }    
+
+    public async getDRSUrls(accession: string, repository: string): Promise<Object> {
+        const headers = this.getHeaders();
+        return await this.http.get(this.appConfig.getDatasetDRSUrl(accession, repository), {headers: headers}).toPromise();
+    }
+
+    public async getDownloadUrls(accession: string, repository: string): Promise<Object> {
+        const headers = this.getHeaders();
+        return await this.http.get(this.appConfig.getDatasetDownloadUrl(accession, repository), {headers: headers}).toPromise();
     }
 
     public getDatasetDetails(datasets: DataSetShort[]): Observable<DatasetBatchResult[]> {
@@ -65,14 +81,24 @@ export class DataSetService extends BaseService {
         let url = this.appConfig.getDatasetBatchUrl();
         const queries = [];
         datasets.forEach(dataset => {
-            queries.push(`accession=${dataset.id}&database=${dataset.source}`);
+            queries.push(`acc=${dataset.id}&database=${dataset.source}`);
         });
         url = url + '?' + queries.join('&');
         return this.http.get(url).pipe(map(x => this.extractData<DatasetBatchResult>(x)));
     }
 
+    public getTopDomain(): string {
+        return this.appConfig.getTopDomain();
+    }
+
     public getWebServiceUrl(): string {
         return this.appConfig.getWebServiceUrl();
+    }
+
+    public async getDataSetDRSUrl(accession: string, repository: string): Promise<Object> {
+         const headers = this.getHeaders();
+         const drsUrlsJson = await this.http.get(this.appConfig.getDatasetDRSUrl(accession, repository.toLowerCase()), {headers: headers}).toPromise();
+         return drsUrlsJson;
     }
 
     public getProfileServiceUrl(): string {
@@ -93,6 +119,10 @@ export class DataSetService extends BaseService {
 
     public getTranscriptomicsList(): string {
         return this.transcriptomicsList;
+    }
+
+    public getOtherList(): string {
+        return this.otherList;
     }
 
     public getLatestDataSets(): Promise<Object> {

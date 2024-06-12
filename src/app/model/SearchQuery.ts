@@ -38,14 +38,11 @@ export class SearchQuery {
                 }
                 if (rule.condition === 'equal') {
                     if (rule.data !== '') {
-                        strtemp = '"' + rule.data + '"';
+                        strtemp = rule.data;
                     }
                 }
 
                 if (rule.field === 'all_fields') {
-                    if (strtemp[0] === '"') {
-                        strtemp = strtemp.slice(1, strtemp.length - 1);
-                    }
                     str += strtemp;
                 } else {
                     str += rule.field + ': ' + strtemp;

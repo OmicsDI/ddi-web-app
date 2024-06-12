@@ -37,6 +37,7 @@ export class FileInfo {
     name: string;
     provider: string;
     category: string;
+    drsUrl: string;
 }
 
 export class Filter {
@@ -54,7 +55,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
     d: DataSetDetail;
     enrichmentInfo: EnrichmentInfo;
     synonymResult: SynonymResult;
-    displayedColumns: string[] = ['select', 'name', 'category', 'action'];
+    displayedColumns: string[] = ['select', 'name', 'category', 'action', "drs"];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -71,10 +72,12 @@ export class DatasetComponent implements OnInit, OnDestroy {
     index_dataset: number;
     databaseUrl: string;
     web_service_url: string;
+    drs_url: string;
     databaseByAccession: Object = {};
     ontology_highlighted = false;
     notfound = false;
-
+    errorOccurred = false;
+    isDeleted = false;
     databases: Database[];
 
     reanalysisOf = [];
@@ -129,6 +132,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
         self.reanalysisOf = [];
         self.reanalysedBy = [];
         self.relatedOmics = [];
+        if (!dataset.id) {
+            self.slimLoadingBarService.ref().complete();
+            self.notfound = true;
+            return throwError('Dataset not found');
+        }
         this.d = dataset;
         this.titleService.setTitle(this.acc + ' - ' + dataset.name + ' - ' + 'OmicsDI');
 
@@ -139,26 +147,41 @@ export class DatasetComponent implements OnInit, OnDestroy {
         }
 
         const db = this.databaseListService.getDatabaseBySource(dataset.source, this.databases);
-        this.repositoryName = db.databaseName;
-        this.databaseUrl = db.sourceUrl;
-
+        if (db != null) {
+            this.repositoryName = db.databaseName;
+            this.databaseUrl = db.sourceUrl;
+        }
         if (dataset.similars != null) {
             dataset.similars.forEach(similar => {
                 const reanalyDb = this.databaseListService.getDatabaseByDatabaseName(similar.database, this.databases);
-                if (similar.relationType === 'Reanalysis of') {
-                    self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
-                } else if (similar.relationType === 'Reanalyzed by') {
-                    self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
-                } else {
-                    self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
-                }
+                if (reanalyDb != null) {
+                    if (similar.relationType === 'Reanalysis of') {
+                        self.reanalysisOf.push({reanalysis: similar, db: reanalyDb});
+                    } else if (similar.relationType === 'Reanalyzed by') {
+                        self.reanalysedBy.push({reanalysis: similar, db: reanalyDb});
+                    } else {
+                        self.relatedOmics.push({reanalysis: similar, db: reanalyDb});
+                    }
+                }   
             });
         }
+        this.dataSetService.getDataSetDRSUrl(this.acc, this.repositoryName).then(
+            (drsUrlsJson) =>
+                {
+                    if (drsUrlsJson != null && Array.isArray(drsUrlsJson)) {
+                        drsUrlsJson.forEach(drsEntry => {
+                            if (drsEntry['name'] == this.acc) {
+                                this.drs_url = drsEntry['drsURL'];
+                            }
+                        });
+                    }
+                }).catch(() => {}); // quiesce
+
         this.slimLoadingBarService.ref().complete();
     }
 
     parseSchema(schema: any) {
-        if (schema) {
+        if (schema && schema['mainEntity']) {
             // Avoid html tags in dataset.description object
             this.metaTagService.updateTag({name: 'description', content: schema['mainEntity']['description']});
         }
@@ -174,7 +197,16 @@ export class DatasetComponent implements OnInit, OnDestroy {
         this.providers = [];
         let position = 0;
         let versions = 1;
-        files['file_versions'].forEach(version => {
+        const downloadUrlsJson = files[0];
+        const drsUrlsJson = files[1];
+        const fileName2DRSUrl = new Map<string, string[]>();
+        if (drsUrlsJson != null && Array.isArray(drsUrlsJson)) {
+            drsUrlsJson.forEach(drsEntry => {
+                fileName2DRSUrl[drsEntry['name'].split("/")[1]] = drsEntry['drsURL'];
+            });
+        }
+
+        downloadUrlsJson['file_versions'].forEach(version => {
             if (this.providers.indexOf(version['type']) > -1) {
                 this.providers.push(version['type'] + '_' + versions++);
             } else {
@@ -186,6 +218,8 @@ export class DatasetComponent implements OnInit, OnDestroy {
                     fileInfo.category = fileType;
                     fileInfo.name = file;
                     fileInfo.provider = version['type'];
+                    const auxArr = fileInfo.name.split("/");
+                    fileInfo.drsUrl = fileName2DRSUrl[auxArr[auxArr.length - 1]];
                     elements.push(fileInfo);
                 });
             });
@@ -214,23 +248,39 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.slimLoadingBarService.ref().start();
                 this.acc = params['acc'];
                 this.repository = params['domain'];
-                this.schemaService.getDatasetSchema(this.acc, this.repository).subscribe(result => {
-                    this.schema = this.parseSchema(result);
-                });
-                this.dataSetService.getDataSetDetail(this.acc, this.repository)
+                this.schemaService.getDatasetSchema(this.acc, this.repository)
                     .pipe(catchError((err: HttpErrorResponse) => {
-                        self.slimLoadingBarService.ref().complete();
-                        self.notfound = true;
-                        return throwError('Can\'t get dataset, err: ' + err.message);
+                        return throwError('Can\'t get schema, err: ' + err.message);
                     }))
                     .subscribe(result => {
+                    this.schema = this.parseSchema(result);
+                });
+                this.dataSetService.getDataSetDetailAsync(this.acc, this.repository).then(
+                    (result) => {                        
                         this.parseDataset(result);
-                        this.dataSetService.getDataSetFiles(this.acc, this.repository).subscribe(r => this.parseFiles(r));
+                        let drsUrlsJson: any = [];
+                        this.dataSetService.getDRSUrls(this.acc, this.repository).then(
+                           (r) => { drsUrlsJson = r }
+                        ).finally(() => {
+                           this.dataSetService.getDownloadUrls(this.acc, this.repository).then(
+                               (downloadUrlsJson) => { this.parseFiles([downloadUrlsJson, drsUrlsJson]) }
+                        ).catch(() => {})}); // quiesce
+
                         this.title_sections = null;
                         this.abstract_sections = null;
                         this.sample_protocol_sections = null;
                         this.data_protocol_sections = null;
                         this.ontology_highlighted = false;
+                        this.isDeleted = this.d.currentStatus !== undefined && this.d.currentStatus === "Deleted";
+                    }).catch((err) => {
+                        self.slimLoadingBarService.ref().complete();
+                        if (err.status == 404) {
+                            self.notfound = true;
+                            return;
+                        } else {
+                            self.errorOccurred = true;
+                            return throwError('Can\'t get dataset, err: ' + err.message);
+                        }
                     });
             });
         });
@@ -242,7 +292,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 this.galaxyInstances.push({'url': this.profile.galaxyInstance, 'from': 'Profile'});
             }
 
-            this.galaxyInstances.push({'url': 'https://usegalaxy.org', 'from': 'Default'});
+            this.galaxyInstances.push({'url': 'https://usegalaxy.eu', 'from': 'Default'});
             this.galaxyInstances.push({'url': 'Custom...', 'from': 'Enter your galaxy instance'});
         }
     }
@@ -350,7 +400,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
 
     processSections() {
         // TODO: encoding problems
-        const description = this.enrichmentInfo.originalAttributes.description;
+        const description = this.enrichmentInfo.originalAttributes.description.replace(/^\s+/g, "").replace(/\n+/g, " ");
 
         this.title_sections = this.getSection(this.enrichmentInfo.originalAttributes.name, this.enrichmentInfo.synonyms.name);
         this.abstract_sections = this.getSection(description, this.enrichmentInfo.synonyms.description);
@@ -386,7 +436,7 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 data => {
                     this.enrichmentInfo = data[0];
                     this.synonymResult = data[1];
-                    if (!this.synonymResult || !this.enrichmentInfo || this.synonymResult.synonymsList.length <= 0 ) {
+                    if (!this.synonymResult || !this.enrichmentInfo || !this.synonymResult.synonymsList || this.synonymResult.synonymsList.length <= 0 ) {    
                         this.dialogService.confirm('Alert' , 'no synonymous words');
                     } else if (!this.enrichmentInfo.synonyms.name && !this.enrichmentInfo.synonyms.description) {
                         this.dialogService.confirm('Alert' , 'no synonymous words in both name and description');
@@ -473,5 +523,9 @@ export class DatasetComponent implements OnInit, OnDestroy {
             'tool_id': 'omicsdi',
             'type': 'json'};
         this.redirectService.get(request, galaxyUrl);
+    }
+
+    copyDataDRSURLClick(drsURL: string) {
+        this.notificationService.success('Сopied to clipboard', drsURL);
     }
 }

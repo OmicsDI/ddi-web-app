@@ -1,5 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '@shared/services/auth.service';
+import {AppConfig} from 'app/app.config';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {isPlatformServer, Location, PopStateEvent, DOCUMENT} from '@angular/common';
 import {ProfileService} from '@shared/services/profile.service';
@@ -17,12 +18,18 @@ import {environment} from 'environments/environment';
 
 export class AppComponent implements OnInit, OnDestroy {
     title: string;
+    topDomain: string;
+    logoUri: string;
+    topStripClass: string;
+    submissionUrl: string;
+    topDomainIsOmicsDI = true;
     showSmallSearch = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
     selectedComponents = 0;
     selectedChannel: 'selected_channel';
     isCollapsedNav = true;
+    inDashboardView = false;
     profile: Profile;
     private subscriptions: Subscription[] = [];
     private locationSubcription: SubscriptionLike;
@@ -36,13 +43,21 @@ export class AppComponent implements OnInit, OnDestroy {
                 @Inject(DOCUMENT) private document,
                 private dataTransporterService: DataTransportService,
                 private googleAnalyticsService: GoogleAnalyticsService,
-                private profileService: ProfileService) {
+                private profileService: ProfileService,
+                public appConfig: AppConfig) {
 
         if (window.location.href.startsWith('http://www.omicsdi.org')) {
             window.location.href = window.location.href.replace('http:', 'https:');
         }
-
-        this.title = this.getTitle();
+        this.inDashboardView = window.location.href.includes('www.omicsdi.org/dashboard');
+        this.topDomain = this.appConfig.getTopDomain();
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
+        }
+        this.title = this.appConfig.getTitle();
+        this.logoUri = this.appConfig.getLogoUri();
+        this.topStripClass = this.appConfig.getTopStripClass();
+        this.submissionUrl = this.appConfig.getSubmissionUrl();
     }
 
     ngOnInit() {
@@ -107,18 +122,24 @@ export class AppComponent implements OnInit, OnDestroy {
         window.location.href = '/home';
     }
 
-    getTitle(): string {
-        const result = 'Omics DI 2.0';
-        return result;
-    }
-
     gotoHelp() {
         window.location.href = 'http://blog.omicsdi.org/';
     }
 
+    gotoHelpApi() {
+        window.location.href = 'http://blog.omicsdi.org/post/introduction-api/';
+    }
+
+    gotoOmicsDISpec() {
+        window.location.href = 'http://blog.omicsdi.org/post/omicsdi-spec/';
+    }
+
+    gotoWs() {
+        window.location.href = 'https://www.omicsdi.org/ws';
+    }
 
     toSubmission() {
-        window.location.href = 'https://www.ebi.ac.uk/biostudies/';
+        window.location.href = this.submissionUrl;
     }
 
     ngOnDestroy(): void {

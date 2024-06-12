@@ -41,6 +41,16 @@ export class DatabaseListService extends BaseService {
         return null;
     }
 
+    public getLastUpdatedByRepository(repository: string, databases: Database[]): string {
+        for (const db of databases) {
+            if (db.repository === repository) {
+                return db.lastUpdated;
+            }
+        }
+        this.logger.debug('Repository with name {} can\'t be found', repository);
+        return null;
+    }
+
     public getDatabaseByAccession(accession: string, databases: Database[]): Database {
         for (const database of databases) {
             if (database.accessionPrefix) {

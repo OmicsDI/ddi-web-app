@@ -22,8 +22,8 @@
         <app-profile-result [profile]="profile" (change)="updateProfile()"></app-profile-result>
 
         <div *ngIf="!(profile?.dataSets?.length>0)"
-             style="text-align:center; position: fixed; top: 50%; left:50%;">
-            No Datasets Claimed, please use <a [routerLink]="['/search']"
+            style="text-align:left; position: relative; top: 50%; left:0%;">
+	     No Datasets Claimed, please use <a [routerLink]="['/search']"
                                                [queryParams]="{q:profile?.userName}">search</a> to
             find and claim your dataset.
         </div>

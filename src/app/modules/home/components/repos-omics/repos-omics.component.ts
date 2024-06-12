@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import * as d3 from 'd3';
 import {DataSetService} from '@shared/services/dataset.service';
+import {DatabaseListService} from '@shared/services/database-list.service';
 import {ChartsErrorHandler} from '../charts-error-handler/charts-error-handler';
 import {Router} from '@angular/router';
 import {AsyncInitialisedComponent} from '@shared/components/async/async.initialised.component';
@@ -17,45 +18,58 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ReposOmicsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private proteomicsList: string;
     private genomicsList: string;
     private metabolomicsList: string;
     private transcriptomicsList: string;
+    private otherList: string;
 
     private pieChartName = 'chart_repos_omics';
     private body;
 
     private reposDataSimple = [];
     private data = [];
+    private lastUpdated = [];
     private omicsDataSimple = [];
     private omicsDataNum = [];
     isServer: boolean;
 
     constructor(dataSetService: DataSetService,
+                private databaseListService: DatabaseListService,
                 private router: Router,
                 private http: HttpClient,
                 @Inject(PLATFORM_ID) private platformId: string) {
         super();
         this.isServer = isPlatformServer(this.platformId);
+        this.topDomain = dataSetService.getTopDomain();
         this.webServiceUrl = dataSetService.getWebServiceUrl();
         this.proteomicsList = dataSetService.getProteomicsList();
         this.metabolomicsList = dataSetService.getMetabolomicsList();
         this.genomicsList = dataSetService.getGenomicsList();
         this.transcriptomicsList = dataSetService.getTranscriptomicsList();
+        this.otherList = dataSetService.getOtherList();
     }
 
     ngOnInit() {
         if (!isPlatformServer(this.platformId)) {
             const self = this;
+            var allPostFix;
+            if (this.topDomain == "omics") {
+               allPostFix = "all"; 
+            } else {
+               allPostFix = this.topDomain;
+            }
             const urls = [
-                this.webServiceUrl + 'statistics/domains',
-                this.webServiceUrl + 'statistics/omics'
+                this.webServiceUrl + 'statistics/repositories?domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/omics?domain=' + this.topDomain,
+                this.webServiceUrl + 'database/' + allPostFix
             ];
             forkJoin(
                 urls.map(url => this.http.get(url))
             ).subscribe(data => {
-                self.draw(data[0] as any[], data[1] as any[]);
+                self.draw(data[0] as any[], data[1] as any[], data[2] as any[]);
             }, err => {
                 ChartsErrorHandler.outputErrorInfo(self.pieChartName);
             }, () => {
@@ -64,10 +78,10 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         }
     }
 
-    public draw(domains: any[], omicsType: any[]): void {
+    public draw(repositories: any[], omicsType: any[], databases: any[]): void {
         const self = this;
         ChartsErrorHandler.removeGettingInfo(self.pieChartName);
-        const repos = self.transformDomains(domains);
+        const repos = self.transformRepositories(repositories);
         omicsType.shift();
         omicsType.pop();
         omicsType = self.dealCaseSensitiveIds(omicsType);
@@ -103,38 +117,57 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 'name': 'Transcriptomics',
                 'size': null,
                 'children': []
-            }
+            },
+            {
+                'name': 'Other',
+                'size': null,
+                'children': []
+            } 
         ];
 
 
         for (let i = 0; i < repos.length; i++) {
-            if (self.proteomicsList.indexOf(repos[i].name) > -1) {
+            var lastUpdated = new Date(this.databaseListService.getLastUpdatedByRepository(repos[i].repository,databases)).getFullYear();
+            if (self.proteomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[0].children.push({
-                    name: repos[i].name,
-                    size: repos[i].value
+                    name: repos[i].repository,
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
                 continue;
             }
-            if (self.genomicsList.indexOf(repos[i].name) > -1) {
+            if (self.genomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[1].children.push({
-                    name: repos[i].name,
-                    size: repos[i].value
+                    name: repos[i].repository,
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
                 continue;
             }
-            if (self.metabolomicsList.indexOf(repos[i].name) > -1) {
+            if (self.metabolomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[2].children.push({
-                    name: repos[i].name,
-                    size: repos[i].value
+                    name: repos[i].repository,
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
                 continue;
             }
-            if (self.transcriptomicsList.indexOf(repos[i].name) > -1) {
+            if (self.transcriptomicsList.indexOf(repos[i].repository) > -1) {
                 reposData[3].children.push({
-                    name: repos[i].name,
-                    size: repos[i].value
+                    name: repos[i].repository,
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
                 });
+                continue;
             }
+            if (self.otherList.indexOf(repos[i].repository) > -1) {
+                reposData[4].children.push({
+                    name: repos[i].repository,
+                    size: repos[i].value,
+                    lastUpdated: lastUpdated
+                });
+                continue;
+            }            
         }
 
         for (let i = 0; i < reposData.length; i++) {
@@ -145,10 +178,12 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
                 self.reposDataSimple.push({
                     name: reposData[i].children[j].name,
-                    size: reposData[i].children[j].size
+                    size: reposData[i].children[j].size,
+                    lastUpdated: reposData[i].children[j].lastUpdated
                 });
 
                 self.data.push(reposData[i].children[j].size);
+                self.lastUpdated.push(reposData[i].children[j].lastUpdated);
             }
             reposData[i].size = total;
         }
@@ -163,7 +198,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
 
         const body = self.body = d3.select('#' + self.pieChartName);
 
-        self.drawBarGraphic(self.data, self.reposDataSimple);
+        self.drawBarGraphic(self.data, self.lastUpdated, self.reposDataSimple);
         self.setTheRadio();
         self.showTip('repository:"', self.reposDataSimple);
     }
@@ -174,6 +209,7 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
             , omicsDataSimple = this.omicsDataSimple
             , reposDataSimple = this.reposDataSimple
             , data = this.data
+            , lastUpdated = this.lastUpdated
             , pieChartName = this.pieChartName
             , body = this.body;
 
@@ -242,13 +278,13 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 d = omicsDataNum;
                 searchWordPre = 'omics_type:"';
 
-                self.drawBarGraphic(d, omicsDataSimple);
+                self.drawBarGraphic(d, [], omicsDataSimple);
                 self.showTip(searchWordPre, omicsDataSimple);
             } else if (value === 'Resources') {
                 d = data;
                 searchWordPre = 'repository:"';
 
-                self.drawBarGraphic(d, reposDataSimple);
+                self.drawBarGraphic(d, lastUpdated, reposDataSimple);
                 self.showTip(searchWordPre, reposDataSimple);
 
             }
@@ -256,7 +292,8 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
     }
 
 //
-    private drawBarGraphic(dataNow: any[], dataAddKey: any[]): void {
+    private drawBarGraphic(dataNow: any[], lastUpdated: any[], dataAddKey: any[]): void {
+        const currentYear = new Date().getFullYear(); 
         const body = d3.select('#' + this.pieChartName);
 
         const divWidth = parseInt(body.style('width'), 10);
@@ -265,20 +302,22 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         d3.select('#' + this.pieChartName + '_svg').remove();
 
         const svgHeight = divHeight - 40;
-        const rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 3;
-        const rectWidth = (divWidth - 70) * 0.04514;
-        const marginValueBefore = (divWidth - 70 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
+        const rectHeight = (svgHeight - 20 * 2 - 8 * 2) / 4;
+        const rectWidth = (divWidth - 70) * 0.03514;
+        const marginValueBefore = (divWidth - 80 - rectWidth * dataNow.length) / dataNow.length + rectWidth;
         const marginValue = marginValueBefore > 65 ? 65 : marginValueBefore;
-        const lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
-            upper = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
-            most = d3.scaleLinear().domain([5001, 80000]).range([rectHeight + 8, 8]).clamp(true),
-            color = d3.schemeCategory10;
+        const lower = d3.scaleLinear().domain([0, 1000]).range([rectHeight * 4 + 38, rectHeight * 3 + 38]).clamp(true),
+            middle = d3.scaleLinear().domain([1001, 5000]).range([rectHeight * 3 + 28, rectHeight * 2 + 28]).clamp(true),
+            upper = d3.scaleLinear().domain([5001, 90000]).range([rectHeight * 2 + 18, rectHeight + 18]).clamp(true),
+            most = d3.scaleLinear().domain([90001, 2000000]).range([rectHeight + 8, 8]).clamp(true),
+            omicsColor = d3.schemeCategory10,
+            reposColor = d3.scaleSequential().domain([9,1]).interpolator(d3.interpolateViridis);
 
         const svg = body
             .append('svg')
             .attr('width', divWidth)
             .attr('height', svgHeight)
-            .attr('style', 'margin-top: 15px;')
+            .attr('style', 'margin-top: 15px; font-size: 10px')
             .attr('id', this.pieChartName + '_svg');
 
         if (svg.selectAll('rect')) {
@@ -292,6 +331,19 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         if (svg.selectAll('text')) {
             svg.selectAll('text').remove();
         }
+
+        svg.selectAll('legend')
+        .data(["Lighter bar colour indicates more recently updated data"])
+        .enter()
+        .append("text")
+        .attr("x", 75)
+        .attr("y", 13)
+        .text(function (d) {
+            if (lastUpdated.length > 0) {
+                // Repositories view
+                return d;
+            }
+        });
 
         svg
             .selectAll('rect.lower')
@@ -307,11 +359,45 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return lower(d);
             })
             .attr('height', function (d) {
-                return rectHeight * 3 + 28 - lower(d);
+                return rectHeight * 4 + 38 - lower(d);
             })
             .style('fill', function (d, i) {
-                return color[i % 10];
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 2);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }
             });
+
+        svg.selectAll('rect.middle')
+            .data(dataNow)
+            .enter()
+            .append('rect')
+            .attr('class', 'middle')
+            .attr('x', function (d, i) {
+                return 70 + i * marginValue;
+            })
+            .attr('width', rectWidth)
+            .attr('y', function (d) {
+                return middle(d);
+            })
+            .attr('height', function (d) {
+                return d >= 1500 ? rectHeight * 3 + 28 - middle(d) : 0;
+            })
+            .style('fill', function (d, i) {
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 2);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }            
+            });
+
 
         svg.selectAll('rect.upper')
             .data(dataNow)
@@ -326,13 +412,20 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return upper(d);
             })
             .attr('height', function (d) {
-                return d >= 1500 ? rectHeight * 2 + 18 - upper(d) : 0;
+                return d >= 10000 ? rectHeight * 2 + 18 - upper(d) : 0;
             })
             .style('fill', function (d, i) {
-                return color[i % 10];
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 2);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }
             });
 
-        svg.selectAll('rect.most')
+            svg.selectAll('rect.most')
             .data(dataNow)
             .enter()
             .append('rect')
@@ -348,18 +441,27 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                 return d >= 10000 ? rectHeight + 8 - most(d) : 0;
             })
             .style('fill', function (d, i) {
-                return color[i % 10];
+                if (lastUpdated.length > 0) {
+                    // Repositories view
+                    // + 1 is to avoid using yellow in d3.interpolateViridis
+                    return reposColor(currentYear-lastUpdated[i] + 2);
+                } else {
+                    // Omics view
+                    return omicsColor[i % 10];
+                }
             });
-
 
         svg.append('g').attr('transform', 'translate(60,0)')
             .call(d3.axisLeft(lower).ticks(4));
 
         svg.append('g').attr('transform', 'translate(60,0)')
+            .call(d3.axisLeft(middle).ticks(4));
+
+        svg.append('g').attr('transform', 'translate(60,0)')
             .call(d3.axisLeft(upper).ticks(4));
 
         svg.append('g').attr('transform', 'translate(60,0)')
-            .call(d3.axisLeft(most).ticks(4));
+            .call(d3.axisLeft(most).ticks(4));            
 
         this.setTheRadio();
     }
@@ -400,7 +502,11 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     .duration(200)
                     .style('opacity', .9);
 
-                tooltip.html(dataAddKey[i].name.toString() + ': <br>' + dataAddKey[i].size.toString() + ' datasets')
+                var lastUpdateStr = "";
+                if (dataAddKey[i].lastUpdated != undefined) {
+                    lastUpdateStr = '<br>Last updated: ' +  dataAddKey[i].lastUpdated.toString();
+                }
+                tooltip.html(dataAddKey[i].name.toString() + ': <br>' + dataAddKey[i].size.toString() + ' datasets' + lastUpdateStr)
                     .style('left', (mouseCoords[0] - 100) + 'px')
                     .style('top', parseInt(d3.select(this).attr('y'), 10) - 30 + 'px')
                     // .style('height', '2.8em')
@@ -418,32 +524,6 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
                     .style('opacity', 0);
                 const index = self.findIndex(i, dataAddKey.length);
                 let searchWord = searchWordPre + dataAddKey[index].name.toString() + '"';
-                if (dataAddKey[index].name.toString() === 'MetaboLights Dataset') {
-                    searchWord = searchWordPre + 'MetaboLights' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'PRIDE') {
-                    searchWord = searchWordPre + 'Pride' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Metabolome Workbench') {
-                    searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Metabolomics Workbench') {
-                    searchWord = searchWordPre + 'MetabolomicsWorkbench' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Expression Atlas Experiments') {
-                    searchWord = searchWordPre + 'ExpressionAtlas' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'jPOST') {
-                    searchWord = searchWordPre + 'JPOST Repository' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'GPMdb') {
-                    searchWord = searchWordPre + 'GPMDB' + '"';
-                }
-                if (dataAddKey[index].name.toString() === 'Paxdb') {
-                    searchWord = searchWordPre + 'PAXDB' + '"';
-                }
-
-
                 self.router.navigate(['search'], {queryParams: {q: searchWord}});
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
                 // ---------------------------------------- redirect ----------------------------------------//
@@ -485,11 +565,11 @@ export class ReposOmicsComponent extends AsyncInitialisedComponent implements On
         return singleOmicsType;
     }
 
-    private transformDomains(domains: any[]): any[] {
-        return domains.reduce((acc, val) => {
+    private transformRepositories(repositories: any[]): any[] {
+        return repositories.reduce((acc, val) => {
             return acc.concat([{
-                name: val['domain']['name'],
-                value: parseInt(val['domain']['value'], 10)
+                repository: val['name'],
+                value: parseInt(val['value'], 10)
             }]);
         }, []);
     }

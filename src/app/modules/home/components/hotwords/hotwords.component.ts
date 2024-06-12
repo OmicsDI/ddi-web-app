@@ -20,6 +20,7 @@ const cloud = require('d3-cloud');
 })
 export class HotwordsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private terms: {
         Omics_description: FrequentlyTerm[],
@@ -32,6 +33,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
     private divWidth: number;
     private fill: string[];
     private field: string;
+    topDomainIsOmicsDI = true;
 
     constructor(private datasetService: DataSetService,
                 private router: Router,
@@ -43,6 +45,10 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
     ngOnInit() {
         if (isPlatformServer(this.platformId)) {
             return;
+        }
+        this.topDomain = this.datasetService.getTopDomain();
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
         }
         this.webServiceUrl = this.datasetService.getWebServiceUrl();
         this.body = d3.select('#' + this.hotwordsName);
@@ -61,9 +67,9 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         const webServiceUrl = this.webServiceUrl;
 
         const urls = [
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=description',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=data_protocol',
-            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=omics&field=sample_protocol'
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=description',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=data_protocol',
+            webServiceUrl + 'term/frequentlyTerm/list?size=40&domain=' + this.topDomain + '&field=sample_protocol'
         ];
         forkJoin(
             urls.map(url => this.http.get(url))
@@ -112,11 +118,15 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
         const formdiv = d3.select('#' + self.hotwordsName).append('div');
         formdiv.style('margin-bottom', '20px');
+        var marginLeft = "-130px";
+        if (this.topDomainIsOmicsDI == false) {
+            marginLeft = "-70px";
+        }
         const radio_form = formdiv.append('form');
         radio_form
             .attr('id', self.hotwordsName + '_form')
             .attr('class', 'center')
-            .attr('style', 'width: 260px; position: absolute; left: 50%; margin-left: -130px; bottom: 10px')
+            .attr('style', 'width: 260px; position: absolute; left: 50%; margin-left: ' + marginLeft + '; bottom: 10px')
             .append('input')
             .attr('type', 'radio')
             .attr('name', 'dataset')
@@ -129,33 +139,34 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
             .attr('for', 'description')
             .append('span')
             .append('span');
-        radio_form
-            .append('input')
-            .attr('type', 'radio')
-            .attr('name', 'dataset')
-            .attr('value', 'sample_protocol')
-            .attr('id', 'sample')
-            .text('Sample');
-        radio_form
-            .append('label')
-            .text('Sample')
-            .attr('for', 'sample')
-            .append('span')
-            .append('span');
-        radio_form
-            .append('input')
-            .attr('type', 'radio')
-            .attr('name', 'dataset')
-            .attr('value', 'data_protocol')
-            .attr('id', 'data')
-            .text('Data');
-        radio_form
-            .append('label')
-            .text('Data')
-            .attr('for', 'data')
-            .append('span')
-            .append('span');
-
+        if (this.topDomainIsOmicsDI == true) {
+            radio_form
+            	.append('input')
+            	.attr('type', 'radio')
+            	.attr('name', 'dataset')
+            	.attr('value', 'sample_protocol')
+            	.attr('id', 'sample')
+            	.text('Sample');
+       	    radio_form
+            	.append('label')
+            	.text('Sample')
+            	.attr('for', 'sample')
+            	.append('span')
+            	.append('span');
+            radio_form
+            	.append('input')
+            	.attr('type', 'radio')
+            	.attr('name', 'dataset')
+            	.attr('value', 'data_protocol')
+            	.attr('id', 'data')
+            	.text('Data');
+            radio_form
+            	.append('label')
+            	.text('Data')
+            	.attr('for', 'data')
+            	.append('span')
+            	.append('span');
+        }
         d3.select('#hotwords_form').select('input[value=description]').property('checked', true);
 
         d3.select('#hotwords_form')
@@ -261,8 +272,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
 
                 const searchWord = '"' + d.label + '"';
                 // angular.element(document.getElementById('queryCtrl')).scope().meta_search(searchWord);
-                // redirect logic remains to do
-                self.router.navigate(['search'], {queryParams: {q: searchWord}});
+                self.router.navigate(['search'], {queryParams: {q: self.field + ':' + searchWord}});
             })
             .on('mousemove', function (d, i) {
                 const wordcloud_tooltip = d3.select('#word_cloud_chart_tooltip')
@@ -272,7 +282,7 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
                     .duration(200)
                     .style('opacity', .9);
 
-                wordcloud_tooltip.html('<strong>' + d.frequent + '</strong> datasets')
+                    wordcloud_tooltip.html('Click to retrieve datasets that mention term <strong>' + d.label + '</strong> in field <strong>'+self.field+'<strong>')
                     .style('left', (mouse_coords[0] + 25) + 'px')
                     .style('top', (mouse_coords[1] - 25) + 'px');
             })
@@ -298,6 +308,6 @@ export class HotwordsComponent extends AsyncInitialisedComponent implements OnIn
         d3.select('#' + this.hotwordsName)
             .append('p')
             .attr('class', 'error-info')
-            .html('Sorry, accessing to the word cloud web service was temporally failed.');
+            .html('Sorry, the word cloud service is temporarily unavailable.');
     }
 }

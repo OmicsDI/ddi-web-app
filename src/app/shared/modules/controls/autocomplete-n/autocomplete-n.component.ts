@@ -10,7 +10,6 @@ import {HttpClient} from '@angular/common/http';
     styleUrls: ['./autocomplete-n.component.css']
 })
 export class AutocompleteNComponent implements OnInit {
-    selected: string;
     downArrowPressed: Boolean = false;
 
     @Output() submit = new EventEmitter();

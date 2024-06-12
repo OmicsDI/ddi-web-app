@@ -85,6 +85,23 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "hari": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hari.ts"
+                }
+              ]
             }
           }
         },
@@ -102,6 +119,9 @@
             },
             "prod": {
               "browserTarget": "web:build:prod"
+            },
+            "hari": {
+              "browserTarget": "web:build:hari"
             }
           }
         },
@@ -175,6 +195,14 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.local.ts"
+                }
+              ]
+            },
+            "hari": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hari.ts"
                 }
               ]
             }

@@ -10,6 +10,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {DataControl} from 'model/DataControl';
 import {isPlatformServer} from '@angular/common';
 import {Subscription} from 'rxjs';
+import {AppConfig} from 'app/app.config';
 
 @Component({
     selector: '[app-search-box]',
@@ -22,6 +23,9 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
     @ViewChild(AutocompleteNComponent) autocompleteComponent: AutocompleteNComponent;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
     query: string;
+
+    topDomain: string;
+    topDomainIsOmicsDI = true;
 
     queryParams: SearchQuery = new SearchQuery();
     private subscription: Subscription;
@@ -40,7 +44,12 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
                 private searchService: SearchService,
                 private logger: LogService,
                 @Inject(PLATFORM_ID) private platformId,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                public appConfig: AppConfig) {
+        this.topDomain = this.appConfig.getTopDomain();
+        if (this.topDomain != "omics") {
+            this.topDomainIsOmicsDI = false;
+        }
     }
 
     ngOnInit() {
@@ -60,20 +69,12 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         this.params = params;
         if (this.router.url.indexOf('/dataset/') === -1) {
             this.queryParams = QueryUtils.extractQuery(params);
-            const query = this.queryParams.toQueryString();
-            if (query.match(/^"[^"]*"$/)) {
-                this.query = query.substring(1, query.length - 1);
-            } else {
-                this.query = query;
-            }
+            this.query = this.queryParams.toQueryString();
             this.logger.debug('query: {}', this.query);
         }
     }
 
     getQueryValue() {
-        if (this.query && this.query.match(/^"[^"]*"$/)) {
-            return this.query.substring(1, this.query.length - 1);
-        }
         return this.query;
     }
 
@@ -102,7 +103,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
         this.searchService.fullSearch('', this.dataControl.page, this.dataControl.pageSize, this.dataControl.sortBy,
             this.dataControl.order)
             .subscribe(result => {
-                this.dataTransportService.fire(this.facetsChannel, result.facets);
+                this.dataTransportService.fire(this.facetsChannel, QueryUtils.getSanitizedFacets(result.facets));
             });
     }
 

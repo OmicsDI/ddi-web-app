@@ -9,7 +9,7 @@ import {LogService} from '@shared/modules/logs/services/log.service';
 import {isPlatformServer} from '@angular/common';
 import {forkJoin} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-
+ 
 @Component({
     selector: 'app-tissues-organisms',
     templateUrl: './tissues-organisms.component.html',
@@ -18,35 +18,46 @@ import {HttpClient} from '@angular/common/http';
 })
 export class TissuesOrganismsComponent extends AsyncInitialisedComponent implements OnInit {
 
+    private topDomain: string;
     private webServiceUrl: string;
     private retryLimitTimes: number;
     private chartsErrorHandler: ChartsErrorHandler;
 
     private bubChartName = 'chart_tissues_organisms';
-    private field = 'Tissues';
+    private field;
 
     private tissues: StatisticsDomainsDetail[];
     private organisms: StatisticsDomainsDetail[];
     private diseases: StatisticsDomainsDetail[];
     isServer: boolean;
+    topDomainIsOmicsDI = true;
 
     constructor(datasetService: DataSetService, private router: Router, private logger: LogService,
                 private http: HttpClient,
                 @Inject(PLATFORM_ID) private platformId: string) {
         super();
         this.isServer = isPlatformServer(this.platformId);
+        this.topDomain = datasetService.getTopDomain();
         this.webServiceUrl = datasetService.getWebServiceUrl();
         this.retryLimitTimes = 2;
         this.chartsErrorHandler = new ChartsErrorHandler();
+        if (this.topDomain == "omics") {
+            this.field = "Tissues";
+        } else {
+            this.field = "Organisms";
+        }
     }
 
     ngOnInit() {
         if (!isPlatformServer(this.platformId)) {
             const self = this;
+            if (this.topDomain != "omics") {
+                this.topDomainIsOmicsDI = false;
+            }  
             const urls = [
-                this.webServiceUrl + 'statistics/tissues?size=100',
-                this.webServiceUrl + 'statistics/organisms?size=100',
-                this.webServiceUrl + 'statistics/diseases?size=100'
+                this.webServiceUrl + 'statistics/tissues?size=100&domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/organisms?size=100&domain=' + this.topDomain,
+                this.webServiceUrl + 'statistics/diseases?size=100&domain=' + this.topDomain            
             ];
             forkJoin(
                 urls.map(url => this.http.get(url))
@@ -131,6 +142,11 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             .style('margin-bottom', '10px')
             .attr('id', self.bubChartName + '_formdiv');
 
+        var marginLeft = "-142px";
+        if (this.topDomainIsOmicsDI == false) {
+            marginLeft = "-90px";
+        }
+
         let radio_form = formdiv.select(self.bubChartName + '_radio_form');
 
         if (d3.select('#' + self.bubChartName + '_radio_form').empty()) {
@@ -142,20 +158,23 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         radio_form
             .attr('id', self.bubChartName + '_radio_form')
             .attr('class', 'center')
-            .attr('style', 'width:285px;  position: absolute; left: 50%; margin-left: -142px; bottom: 10px')
+            .attr('style', 'width:285px;  position: absolute; left: 50%; margin-left: ' + marginLeft + '; bottom: 10px');
             //  .attr("style","width:70%")
-            .append('input')
-            .attr('type', 'radio')
-            .attr('name', 'dataset')
-            .attr('value', 'Tissues')
-            .attr('id', 'Tissues')
-            .text('Tissues');
-        radio_form
-            .append('label')
-            .text('Tissues')
-            .attr('for', 'Tissues')
-            .append('span')
-            .append('span');
+       if (this.topDomainIsOmicsDI == true) {
+            radio_form
+            	.append('input')
+            	.attr('type', 'radio')
+            	.attr('name', 'dataset')
+            	.attr('value', 'Tissues')
+            	.attr('id', 'Tissues')
+            	.text('Tissues');
+            radio_form
+            	.append('label')
+            	.text('Tissues')
+            	.attr('for', 'Tissues')
+            	.append('span')
+            	.append('span');
+        }
         radio_form
             .append('input')
             .attr('type', 'radio')
@@ -184,7 +203,7 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
             .append('span');
 
         d3.select('#' + self.bubChartName + '_radio_form')
-            .select('input[value=Tissues]')
+            .select('input[value=' + this.field + ']')
             .property('checked', true);
 
         d3.select('#' + self.bubChartName + '_radio_form')
@@ -214,7 +233,15 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
 
         self.resetRadio(div_width_inside);
 
-        const value = self.field || 'Tissues';
+        var value;
+        if (self.field != undefined) {
+                value = self.field;
+        } else if (this.topDomain == "omics") {
+            this.field = "Tissues";
+        } else {
+            this.field = "Organisms";
+        }
+
         let data = []
             , searchWord_pre;
 
@@ -229,6 +256,10 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
         if (value === 'Diseases') {
             data = self.diseases;
             searchWord_pre = 'disease:"';
+        }
+
+        if (data.length === 0) {
+           return;
         }
 
         svg_inside.selectAll('.node').remove();
@@ -292,12 +323,14 @@ export class TissuesOrganismsComponent extends AsyncInitialisedComponent impleme
                 .style('opacity', .9);
 
             const mouse_coords = d3.mouse(document.getElementById('tissue_organism_chart_tooltip').parentElement);
-
+            tooltip.html('Click to retrieve datasets that study <strong>' + d.data.className.toLowerCase()+ '</strong>')
+            /*
             tooltip.html('<div><strong>' + d.data.className + ': </strong></div><div>' +
                 format(d.data.value_before_log_calc) + '&nbsp;datasets</div>')
                 .style('left', (mouse_coords[0] + 25) + 'px')
                 .style('top', (mouse_coords[1] - 40) + 'px')
                 .style('padding', '3px');
+            */
             // .style("width", d.data.className.length * 5 + d.data.value_before_log_calc.toString().length * 5 + 30 + "px");
         })
             .on('mouseout', function (d) {

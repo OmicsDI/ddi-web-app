@@ -41,6 +41,10 @@ export class FacetComponent implements OnInit {
 
     ngOnInit() {
         this.facetValuesFiltered = this.facetValues.map(x => new FacetValueFiltered(x));
+        this.facetValuesFiltered.sort(function(a, b) {
+            // Sort by count in desc order
+            return parseInt(b.count) - parseInt(a.count);
+        });
         this.facetSelected = (this.facetSelected !== undefined) ? this.facetSelected : [];
     }
 
@@ -50,9 +54,9 @@ export class FacetComponent implements OnInit {
 
     labelClicked(value: string, event, isCheckboxChecked: boolean) {
         if (!isCheckboxChecked) {
-            this.facetValueRemoved.emit(value);
+            this.facetValueRemoved.emit('"' + value + '"');
         } else {
-            this.facetValueSelected.emit(value);
+            this.facetValueSelected.emit('"' + value + '"');
         }
     }
 
@@ -67,6 +71,6 @@ export class FacetComponent implements OnInit {
         if (this.facetSelected === undefined) {
             return false;
         }
-        return this.facetSelected.indexOf(value) > -1;
+        return this.facetSelected.indexOf('"' + value + '"') > -1;
     }
 }
