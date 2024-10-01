@@ -5,7 +5,7 @@ export const environment = {
     topStripClass: 'navbar-inverse',
     submissionUrl: 'https://www.ebi.ac.uk/biostudies/',
     production: true,
-    baseHref: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/',
+    baseHref: '/',
     webServiceUrl : 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
     userServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/api/',
     userServiceCookiePath: '/Tools/omicsdi/ws/api/',
