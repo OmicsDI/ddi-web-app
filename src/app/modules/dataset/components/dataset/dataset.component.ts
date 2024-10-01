@@ -202,15 +202,15 @@ export class DatasetComponent implements OnInit, OnDestroy {
                 fileName2DRSUrl[drsEntry['name'].split("/")[1]] = drsEntry['drsURL'];
             });
         }
-
         downloadUrlsJson['file_versions'].forEach(version => {
+
             if (this.providers.indexOf(version['type']) > -1) {
                 this.providers.push(version['type'] + '_' + versions++);
             } else {
                 this.providers.push(version['type']);
             }
-            Object.keys(version['files']).forEach(function(fileType, index) {
-                version['files'][fileType].forEach(file => {
+            Object.keys(version.body['files']).forEach(function(fileType, index) {
+                version.body['files'][fileType].forEach(file => {
                     const fileInfo = new FileInfo();
                     fileInfo.category = fileType;
                     fileInfo.name = file;
@@ -230,7 +230,11 @@ export class DatasetComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource<FileInfo>(elements);
         this.dataSource.filterPredicate = function(data, filter: string): boolean {
             const filterObj = JSON.parse(filter);
-            return data.provider.includes(filterObj['source']) && data.name.toLowerCase().includes(filterObj['keyword'].toLowerCase());
+            if (data.provider) {
+                return data.provider.includes(filterObj['source']) && data.name.toLowerCase().includes(filterObj['keyword'].toLowerCase());
+            } else {
+                return data.name.toLowerCase().includes(filterObj['keyword'].toLowerCase());
+            }
         };
         setTimeout(x => {
             this.dataSource.paginator = this.paginator;
