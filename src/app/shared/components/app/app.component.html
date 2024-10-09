@@ -117,7 +117,7 @@
 
     <div [class.indent]="inDashboardView" data-color="none" data-use-basic-styles="true" id="elixir-banner">
         <div id="elixir-ribbon" class="elixir-ribbon">
-            <div class="row">
+            <!--<div class="row">
                 <div class="column">
                     <a href="//www.elixir-europe.org/platforms/interoperability">
                         <div class="elixir-logo-kite"></div>
@@ -132,10 +132,41 @@
                         </div>
                     </a>
                 </div>
+            </div>-->
+
+            <div class="row panel-row">
+
+                <div class="col-md-10 col-sm-12 col-xs-12">
+                    <a href="//www.elixir-europe.org/platforms/interoperability">
+                        <div class="elixir-logo-kite"></div>
+                        <h5>
+                            <span class="elixir-banner-name">{{this.title}}</span> is part of the ELIXIR infrastructure
+                        </h5>
+                        <div id="elixir-banner-info">
+                            <small>
+                                <span class="elixir-banner-description">{{this.title}} is an Elixir interoperability service. </span>
+                                <span class="readmore">Learn more ›</span>
+                            </small>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-12 col-xs-12" >
+                    <div _ngcontent-rxc-c115="" id="twitter" class="margin-top-large">
+                        <h4 style="border-bottom-style: solid; border-color: #1bc0ea73;">
+                            <a _ngcontent-rxc-c115="" href="https://twitter.com/OmicsDI" target="_blank" mattooltip="Follow us" mattooltipposition="left" class="mat-tooltip-trigger" aria-describedby="cdk-describedby-message-rxc-1-2" cdk-describedby-host="rxc-1"><i _ngcontent-rxc-c115="" id="twitter-logo" data-icon="T" class="icon icon-socialmedia" style="color: #222 !important;"></i></a>Tweets
+                        </h4>
+                        <div _ngcontent-rxc-c115="" class="margin-top-large margin-bottom-large">
+                            <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="https://platform.twitter.com/widgets/follow_button.2f70fb173b9000da126c79afe2098f02.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=OmicsDI&amp;show_count=false&amp;show_screen_name=true&amp;size=l&amp;time=1728298690388" style="position: static; visibility: visible; width: 182px; height: 28px;" data-screen-name="OmicsDI"></iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <style>
+            i.icon-socialmedia, input.icon-socialmedia, .icon-socialmedia:before {
+                color: #222 !important;
+            }
             .elixir-ribbon {
                 padding: 1rem 0;
                 background-color: transparent;
@@ -151,7 +182,6 @@
             }
 
             .elixir-ribbon .row {
-                max-width: 1200px;
                 margin: 0 auto 1rem;
             }
 
