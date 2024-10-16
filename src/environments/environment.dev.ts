@@ -5,10 +5,10 @@ export const environment = {
     topStripClass: 'navbar-inverse',    
     submissionUrl: 'https://www.ebi.ac.uk/biostudies/',    
     production: true,
-    baseHref: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/',
-    webServiceUrl : 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
-    userServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/api/',
+    baseHref: 'https://wwwdev.ebi.ac.uk/Tools/omicsdi/',
+    webServiceUrl : 'https://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/',
+    userServiceUrl: 'https://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/api/',
     userServiceCookiePath: '/Tools/omicsdi/ws/api/',
-    schemaServiceUrl: 'http://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/seo',
+    schemaServiceUrl: 'https://wwwdev.ebi.ac.uk/Tools/omicsdi/ws/seo',
     thorUrl: 'https://www.ebi.ac.uk/europepmc/hubthor/api/dataclaiming/'
 };
